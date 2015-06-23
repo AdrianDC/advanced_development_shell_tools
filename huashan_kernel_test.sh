@@ -3,11 +3,11 @@ timestart=$(date +%s);
 currentdir=$PWD;
 
 # Configuration
-filepath=$currentdir;
+filepath="$currentdir/..";
 filename="boot.img";
 filetarget="/media/sf_Desktop";
 androidpath="/media/adriandc/UbuntuWork/Projects/Android";
-kernelbuilder="$currentdir/android_kernel_huashan_builder";
+kernelbuilder="$currentdir/android_kernel_builder";
 kernelrepository="https://github.com/AdrianDC/aosp_kernel_huashan.git";
 kernelbranch="cm-12.1";
 kernelfolder="$currentdir/../GitHub/aosp_kernel_huashan";
