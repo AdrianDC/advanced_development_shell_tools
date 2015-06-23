@@ -1,0 +1,101 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Bashs Folder ===
+bash_android_dir=$(dirname ${BASH_SOURCE[0]});
+
+# === Bashs Update ===
+alias bashup='source "$bash_android_dir/android_bash.rc"';
+
+# === Bashs Sources ===
+bash_android_sources="\
+  $bash_android_dir/android_functions.rc \
+  $bash_android_dir/android_gerrit.rc \
+  $bash_android_dir/android_kernel.rc \
+  $bash_android_dir/android_packages.rc \
+  $bash_android_dir/android_repo.rc \
+  $bash_android_dir/android_huashan.rc \
+  $bash_android_dir/android_legacyxperia.rc \
+  $bash_android_dir/android_changelog.rc \
+  $bash_android_dir/android_colors.rc \
+  $bash_android_dir/android_gerritssh.rc \
+  $bash_android_dir/android_helpers.rc \
+  $bash_android_dir/android_linux.rc \
+  $bash_android_dir/android_release.rc \
+  $bash_android_dir/android_repopicks.rc \
+  $bash_android_dir/android_temp.rc \
+  $bash_android_dir/android_tools.rc \
+";
+
+# === Bash Importations ===
+for bash_source in $bash_android_sources;
+do
+  source $bash_source;
+done;
+
+# === Bashs Helper ===
+function bashhelp()
+{
+  for bash_source in $bash_android_sources;
+  do
+    grep -ai "alias.*=\|function.*)" "$bash_source";
+  done;
+}
+
+# === Bashs Editor ===
+function bashe()
+{
+  gedit $bash_android_sources;
+  bashup;
+}
+
+# === Bashs Syncer ===
+function bashsync()
+{
+  local currentdir=${PWD};
+  cd "$bash_android_dir/";
+  git fetch origin;
+  git reset origin/$(git rev-parse --abbrev-ref HEAD);
+  git stash;
+  cd "$currentdir";
+  bashup;
+}
+
+# === Bashs Pusher ===
+function bashpush()
+{
+  local currentdir=${PWD};
+  cd "$bash_android_dir/";
+  git add . -Ap;
+  git commit --amend --no-edit;
+  git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
+  cd "$currentdir";
+  bashup;
+}
+
+# === Bashs Merger ===
+function bashmerge()
+{
+  local currentdir=${PWD};
+  cd "$bash_android_dir/";
+  git fetch origin;
+  git reset origin/$(git rev-parse --abbrev-ref HEAD);
+  git add -Ap;
+  git commit --amend --no-edit;
+  git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
+  git stash;
+  cd "$currentdir";
+  bashup;
+}
+
+# === Bashs Differ ===
+function bashdiff()
+{
+  local currentdir=${PWD};
+  cd "$bash_android_dir/";
+  git fetch origin;
+  git diff HEAD origin/$(git rev-parse --abbrev-ref HEAD);
+  cd "$currentdir";
+}

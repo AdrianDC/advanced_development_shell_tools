@@ -1,0 +1,163 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Folders Syncer ===
+function rsynca()
+{
+  if [ -z "$2" ]; then echo ' Usage: rsynca path1 path2'; return; fi;
+  rsync -av --delete "$1" "$2";
+}
+alias pcinfo='inxi -Fxz';
+
+# === Newer Files Finder ===
+function findnewer()
+{
+  if [ -z "$1" ]; then
+    echo " Usage: findnewer 20160123";
+    return;
+  fi;
+  touch -t ${1}0000.01 /tmp/filetimeref;
+  find . -type f -newer /tmp/filetimeref -print;
+  rm -f /tmp/filetimeref;
+}
+
+# === CPIO Extractor ===
+function cpioext()
+{
+  cwd=$(pwd);
+  file=$(echo "$1" | sed 's/file:\/\/\(.*\)/\1/');
+  name=$(basename "$file");
+  outdir=$(mktemp -d);
+  cp "$file" "$outdir/";
+  cd "$outdir";
+  cpio -i -F "$name";
+  nemo "$outdir/";
+  cd "$cwd";
+}
+
+# === Video Resizer ===
+function videoresize()
+{
+  command="mencoder $1 -vf scale=480 -vf rotate=2 -ovc lavc -oac pcm -lavcopts vcodec=mpeg4:autoaspect -o $1.small.mp4";
+  echo "";
+  echo "$command";
+  echo "";
+  $command;
+  echo "";
+}
+
+# === Automount Disabler ===
+function disableautomount()
+{
+  gsettings set org.cinnamon.desktop.media-handling automount-open false
+  gsettings set org.cinnamon.desktop.media-handling automount false
+  gsettings set org.gnome.desktop.media-handling automount-open false;
+  gsettings set org.gnome.desktop.media-handling automount false;
+}
+
+# === Terminal New Tab ===
+function newtab()
+{
+  if [ -z "$WID" ]; then
+    WID=$(xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)"| awk '{print $5}');
+  fi;
+  xdotool windowfocus $WID;
+  xdotool key ctrl+shift+t $WID;
+  if [ ! -z "$1" ]; then
+    if [ ! -z "$2" ]; then
+      xdotool type --clearmodifiers "echo -e '\033]2;'$2'\007';$1";
+    else
+      xdotool type --clearmodifiers "$1";
+    fi;
+    xdotool key Return;
+  fi;
+  wmctrl -i -a $WID;
+}
+
+# === Terminal New Tabs Automates ===
+function tms8960()
+{
+  basedir=/media/adriandc/AndroidDev/CM-13.0;
+  pathdirs="device/sony/huashan device/sony/mint device/sony/hayabusa device/sony/tsubasa device/sony/blue-common kernel/sony/msm8960t kernel/sony/msm8x60";
+  for pathdir in $pathdirs; do
+    newtab "cd ${basedir}/${pathdir}; cls;" "$(basename $pathdir)";
+  done;
+}
+
+# === Terminal New Tab Device ===
+function td()
+{
+  basedir=/media/adriandc/AndroidDev/CM-13.0;
+  newtab "cdd $1; cls;" "$1";
+}
+
+# === Terminal New Tabs Automates ===
+function tmsfusion3()
+{
+  basedir=/media/adriandc/AndroidDev/CM-13.0;
+  pathdirs="device/sony/fusion3-common device/sony/yuga device/sony/dogo device/sony/odin device/sony/pollux kernel/sony/apq8064";
+  for pathdir in $pathdirs; do
+    newtab "cd ${basedir}/${pathdir}; cls;" "";
+  done;
+}
+
+# === Diff Binaries ===
+function diffbin()
+{
+  if [ -z "$3" ]; then
+    diff -y <(xxd "$1") <(xxd "$2") | less | colordiff;
+  else
+    diff -y <(xxd "$1") <(xxd "$2") | less | colordiff | head -n $3;
+  fi;
+}
+
+# === Get Grub Customizer ===
+function getgrubcustomizer()
+{
+  sudo add-apt-repository ppa:danielrichter2007/grub-customizer && sudo apt-get update && sudo apt-get install grub-customizer;
+}
+
+# === Network Speed ===
+function netspeed()
+{
+  echo '';
+  dev_eth=$(grep -c eth0 /proc/net/dev);
+  dev_wlan=$(grep -c wlan0 /proc/net/dev);
+  tput sc;
+
+  while [ $dev_eth -ne 0 ] || [ $dev_wlan -ne 0 ]; do
+    if [ $dev_eth -ne 0 ]; then
+      vals_eth=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
+               <(grep eth0 /proc/net/dev) \
+               <(sleep 1; grep eth0 /proc/net/dev));
+    else
+      vals_eth='';
+    fi;
+    if [ $dev_wlan -ne 0 ]; then
+      vals_wlan=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
+                <(grep wlan0 /proc/net/dev) \
+                <(sleep 1; grep wlan0 /proc/net/dev));
+    else
+      vals_wlan='';
+    fi;
+
+    if [ ! -z "$vals_eth" ]; then
+      tput rc;
+      tput ed;
+      tput el;
+      if [ ! -z "$vals_eth" ]; then
+        echo -e " \e[1;33mEthernet:\e[0m";
+        echo -e "   Download: "$(echo "$vals_eth" | awk '{ print $1 }');
+        echo -e "   Upload: "$(echo "$vals_eth" | awk '{ print $2 }');
+      fi;
+      if [ ! -z "$vals_wlan" ]; then
+        echo -e " \e[1;33mWLAN:    \e[0m";
+        echo -e "   Download: "$(echo "$vals_wlan" | awk '{ print $1 }');
+        echo -e "   Upload: "$(echo "$vals_wlan" | awk '{ print $2 }');
+      fi;
+    fi;
+    sleep 1;
+  done;
+}

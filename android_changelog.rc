@@ -1,0 +1,82 @@
+#!/bin/bash
+# ==================================
+#  Base code from AICP repos - 2015
+#    Reworked by Adrian DC - 2016
+# ==================================
+
+# === Repo Changelog ===
+function repochangelog()
+{
+  loadcolors;
+
+  if [ -z "$ANDROID_BUILD_TOP" ] || [ -z "$OUT" ]; then
+    echo " "${txtbld}"repochangelog can only be used in a build ready environment"${txtrst};
+    echo "";
+    return;
+  elif [ "$1" == "help" ]; then
+    echo " "${txtbld}"Usage: repochangelog days_count [project1_path,project2_path,...]"${txtrst};
+    echo "";
+    return;
+  fi;
+
+  cwd=$(pwd);
+  cd $ANDROID_BUILD_TOP;
+
+  local changelogname=Changelog.txt;
+  local changelog=$OUT/$changelogname;
+
+  local changelogdays=5;
+  if [ ! -z "$1" ]; then
+    changelogdays=$1;
+  fi;
+
+  if [ -f "$changelog" ]; then
+    rm -f "$changelog";
+  fi;
+  touch "$changelog";
+
+  # Print something to build output
+  echo "";
+  echo ${bldppl}" Generating changelog..."${txtrst};
+
+  for i in $(seq $changelogdays); do
+    export After_Date=$(date --date="$i days ago" +%m-%d-%Y);
+    export Until_Date=$(date --date="$(expr $i - 1) days ago" +%m-%d-%Y);
+
+    # Line with after --- until was too long for a small ListView
+    echo ${ylw}"  Processing $Until_Date..."${txtrst};
+    echo ' ======================' >> "$changelog";
+    echo '  ChangeLog '$Until_Date >> "$changelog";
+    echo ' ======================' >> "$changelog";
+
+    # Handle the usage of repochangelog days_count project1_path,project2_path,...
+    command="git log --oneline --pretty=\"tformat:    %h - %s (%cr) <%an>\" --after=${After_Date} --until=${Until_Date}";
+    if [ ! -z "$2" ]; then
+      # Cycle through the selected projects to find commits between 2 dates
+      for projectpath in $(echo "$2" | sed 's/,/ /g'); do
+        if [ -d "$projectpath" ]; then
+          cd $projectpath/;
+          echo "" >> "$changelog";
+          echo "project $projectpath/" >> "$changelog";
+          git log --oneline --pretty="tformat:    %h - %s (%cr) <%an>" --after=${After_Date} --until=${Until_Date} >> "$changelog";
+          cd $ANDROID_BUILD_TOP;
+        fi;
+      done;
+    else
+      # Cycle through every repo to find commits between 2 dates
+      repo forall -pc 'git log --oneline --pretty="tformat:    %h - %s (%cr) <%an>" --after=${After_Date} --until=${Until_Date}' >> "$changelog";
+    fi;
+    echo >> "$changelog";
+  done;
+
+  sed -i 's/project \(.*\)\// * \1\n/g' "$changelog";
+
+  if [ -e $OUT/system/etc/$changelogname ]; then
+    rm $OUT/system/etc/$changelogname
+  fi;
+  cp "$changelog" "$OUT/system/etc/"
+  cd $cwd;
+
+  echo ${bldcya}" ChangeLog saved:"${txtrst}" "${txtbld}"$changelog"${txtrst};
+  echo "";
+}

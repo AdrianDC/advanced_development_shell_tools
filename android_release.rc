@@ -1,0 +1,187 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === ROM Automatic Releaser ===
+function romautorelease()
+{
+  # Function usage
+  if [ -z "$1" ]; then
+    echo "";
+    echo " Usage: romautorelease devicename [cm/dev/caf/oms/j1/nowipe/outcl/local/wipeout]";
+    echo "";
+    return;
+  fi;
+
+  # Internal variables
+  local cwd=$(pwd);
+  local rom_logs="/media/adriandc/AndroidDev/Logs";
+  repor;
+
+  # ROM variables
+  local rom_device="$1";
+  local rom_params="$2";
+  local rom_phone="${rom_device^}";
+  local rom_tag;
+  local rom_target;
+  
+  # CyanogenMod 13.0
+  if [[ "$rom_params" =~ "cm" ]]; then
+    rom_target="$rom_phone/CyanogenMod-13.0";
+    rom_tag="CM130";
+
+  # AOSP-CAF 6.0
+  elif [[ "$rom_params" =~ "caf" ]]; then
+    rom_target="$rom_phone/AOSP-CF-6.0";
+    rom_tag="AOSP-CAF-6.0";
+
+  # AOSP-OMS 6.0
+  elif [[ "$rom_params" =~ "oms" ]]; then
+    rom_target="$rom_phone/AOSP-OMS-6.0";
+    rom_tag="AOSP-OMS-6.0";
+
+  # AOSP-CAF 6.0
+  elif [[ "$rom_params" =~ "caf" ]]; then
+    rom_target="$rom_phone/AOSP-CAF-6.0";
+    rom_tag="AOSP-CAF-6.0";
+
+  # Development
+  elif [[ "$rom_params" =~ "dev" ]]; then
+    rom_target="Development";
+    rom_tag="CM130";
+
+  # Automatic CyanogenMod 13.0
+  else
+    rom_tag="CM130";
+
+    # Automatic per-device selection
+    case "$rom_device" in
+      huashan|hayabusa|mint|tsubasa)
+        rom_target="$rom_phone/CyanogenMod-13.0";;
+      anzu|taoshan|*)
+        rom_target="Development";;
+    esac;
+  fi;
+
+  # Cleanup output sources
+  if [[ "$rom_params" =~ "nobuild" ]]; then
+    echo " Cleaning skipped...";
+  elif [[ "$rom_params" =~ "outcl" ]]; then
+    rm -rfv "./out/target/product";
+  elif [[ ! "$rom_params" =~ "nowipe" ]]; then
+    outdevcl "$rom_device";
+  fi;
+
+  # CPU handling
+  if [[ "$rom_params" =~ "j1" ]]; then
+    build_cpu_count=1;
+  else
+    build_cpu_count=$(grep -c ^processor /proc/cpuinfo);
+  fi;
+
+  # Start the compilation
+  rom_logs_output="$rom_logs/Build.$rom_device.$rom_tag.log";
+  if [[ "$rom_params" =~ "nobuild" ]]; then
+    echo " Build skipped...";
+  elif [[ "$rom_tag" =~ "CAF" ]]; then
+    source ./build/envsetup.sh;
+    lunch aosp_$rom_device-userdebug;
+    make -j$build_cpu_count otapackage | tee $rom_logs_output;
+  elif [[ "$rom_tag" =~ "AOSP" ]]; then
+    source ./build/envsetup.sh;
+    lunch aosp_$rom_device-userdebug;
+    make -j$build_cpu_count bacon | tee $rom_logs_output;
+  else
+    repos "$rom_device";
+    brunch "$rom_device" | tee $rom_logs_output;
+  fi;
+
+  # Send the result and notify
+  pushbrom "$rom_device";
+  if [[ ! "$rom_params" =~ "local" ]]; then
+    devuplrom "$rom_device" "$rom_target";
+  fi;
+
+  # Wipe product output if requested
+  if [[ "$rom_params" =~ "wipeout" ]]; then
+    outdevcl "$rom_device";
+  fi;
+
+  cd "$cwd";
+}
+
+# === ROM Output Cleaner ===
+function outdevcl()
+{
+  if [ -z "$1" ]; then
+    echo " Usage: outdevcl devicename";
+    echo "";
+    return;
+  fi;
+
+  outdir="./out/target/product/$1";
+  rm -rfv "$outdir/combinedroot";
+  rm -rfv "$outdir/data";
+  rm -rfv "$outdir/install";
+  rm -rfv "$outdir/recovery";
+  rm -rfv "$outdir/root";
+  rm -rfv "$outdir/system";
+  rm -rfv "$outdir/utilities";
+  rm -rfv "$outdir/boot"*;
+  rm -rfv "$outdir/combined"*;
+  rm -rfv "$outdir/kernel";
+  rm -rfv "$outdir/ramdisk"*;
+  rm -rfv "$outdir/recovery"*;
+  rm -rfv "$outdir/system"*;
+  rm -rfv "$outdir/"*$1*".zip";
+  rm -rfv "$outdir/"*"ota"*".zip";
+  rm -rfv "$outdir/obj/ETC/system_build_prop_intermediates";
+  rm -rfv "$outdir/obj/PACKAGING/target_files_intermediates";
+  rm -rfv "$outdir/ota_temp/RECOVERY/RAMDISK";
+}
+
+# === MultiROM Automatic Releaser ===
+function mromautorelease()
+{
+  cdand;
+  cdmultirom;
+  repomrom "huashan";
+  for device in mint hayabusa tsubasa; do
+    repomrom "$device" "nosync";
+  done;
+}
+
+# === ROM CAF 8x60 Releaser ===
+function cafautorelease()
+{
+  cdand;
+  cdaospcaf;
+  reposycl;
+  for device in huashan mint hayabusa tsubasa; do
+    romautorelease "$device" caf;
+  done;
+}
+
+# === ROM OMS 8x60 Releaser ===
+function omsautorelease()
+{
+  cdand;
+  cdaospoms;
+  reposycl;
+  for device in huashan mint hayabusa tsubasa; do
+    romautorelease "$device" oms;
+  done;
+}
+
+# === TWRP Automatic Releaser ===
+function twrpautorelease()
+{
+  cdand;
+  cdtwrp;
+  repotwrp "huashan";
+  for device in mint hayabusa tsubasa; do
+    repotwrp "$device" "nosync";
+  done;
+}
+

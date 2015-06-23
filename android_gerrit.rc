@@ -1,0 +1,133 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Gerrit Review ===
+function gitpushreview()
+{
+  if [[ "$2" != "." ]]; then
+    projectpath="$1/$2";
+  else
+    projectpath="$1";
+  fi;
+  projectorigin=$(git remote -v | grep origin | tail -n 1);
+  if [ -z "$projectorigin" ]; then
+    projectorigin=$(git remote -v | grep $2 | tail -n 1);
+  fi;
+  projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  command="git push $projectpath/$projectname HEAD:refs/$(getine $3 for)/$(getine $4 $(repogetbranch))";
+  echo "";
+  echo " $command";
+  printf "  > Proceed with review upload (y/N) ? ";
+  read key;
+  if [[ "$key" == "y" || "$key" == "Y" ]]; then
+    echo "";
+    printf "  > Are you sure (y/N) ? ";
+    read key;
+    if [[ "$key" == "y" || "$key" == "Y" ]]; then
+      echo "";
+      $command;
+    fi;
+  fi; echo "";
+}
+
+# === Gerrit Bypasser ===
+function gitpushbypassreview()
+{
+  if [[ "$2" != "." ]]; then
+    projectpath="$1/$2";
+  else
+    projectpath="$1";
+  fi;
+  projectorigin=$(git remote -v | grep origin | tail -n 1);
+  if [ -z "$projectorigin" ]; then
+    projectorigin=$(git remote -v | grep $2 | tail -n 1);
+  fi;
+  projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  command="git push $projectpath/$projectname HEAD:refs/$(getine $3 for)/$(getine $4 $(repogetbranch))";
+  echo "";
+  echo " $command";
+  $command;
+}
+
+# === Gerrit Drafts ===
+function gitpushdrafts()
+{
+  if [[ "$2" != "." ]]; then
+    projectpath="$1/$2";
+  else
+    projectpath="$1";
+  fi;
+  projectorigin=$(git remote -v | grep origin | tail -n 1);
+  if [ -z "$projectorigin" ]; then
+    projectorigin=$(git remote -v | grep $2 | tail -n 1);
+  fi;
+  projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  command="git push $projectpath/$projectname HEAD:refs/drafts/$(getine $3 $(repogetbranch))";
+  echo ""; echo " $command"; printf "  > Proceed with review upload (y/N) ? "; read key;
+  if [[ "$key" == "y" || "$key" == "Y" ]]; then
+    echo "";
+    $command;
+  fi;
+  echo "";
+}
+
+# === Gerrit CyanogenMod ===
+alias gitpr='gitpushreview ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod for';
+alias gitprh='gitpushreview http://review.cyanogenmod.org CyanogenMod for';
+alias gitprd='gitpushdrafts ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod';
+alias gitprdh='gitpushdrafts http://review.cyanogenmod.org CyanogenMod';
+alias gitpg='gitpushreview ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod heads';
+alias gitpbr='gitpushbypassreview ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod heads';
+alias gitpgh='gitpushreview http://review.cyanogenmod.org CyanogenMod heads';
+alias gitprg='gitpr; gitpg';
+alias gitprgy='printf "y\ny\n" | gitpr; printf "y\ny" | gitpg';
+
+# === Gerrit AICP ===
+alias gitpraicp='gitpushreview ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP for mm6.0';
+alias gitprhaicp='gitpushreview http://gerrit.aicp-rom.com AICP for mm6.0';
+alias gitprdaicp='gitpushdrafts ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP mm6.0';
+alias gitprdhaicp='gitpushdrafts http://gerrit.aicp-rom.com AICP mm6.0';
+alias gitpgaicp='gitpushreview ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP heads mm6.0';
+alias gitpghaicp='gitpushreview http://gerrit.aicp-rom.com AICP heads mm6.0';
+alias gitprgaicp='gitpraicp; gitpgaicp';
+alias gitprghaicp='gitprhaicp; gitpghaicp';
+
+# === Gerrit LegacyXperia ===
+alias gitpr7='gitpushreview ssh://$gituserdefault@review.msm7x30.org:29418 LegacyXperia for';
+alias gitpr7h='gitpushreview http://review.msm7x30.org LegacyXperia for';
+alias gitpr7d='gitpushdrafts ssh://$gituserdefault@review.msm7x30.org:29418 LegacyXperia';
+alias gitpr7dh='gitpushdrafts http://review.msm7x30.org LegacyXperia';
+
+# === Gerrit Omni ===
+alias gitpromni='gitpushreview ssh://$gituserdefault@gerrit.omnirom.org:29418 . for android-6.0';
+alias gitprhomni='gitpushreview http://gerrit.omnirom.org . for android-6.0';
+alias gitprdomni='gitpushdrafts ssh://$gituserdefault@gerrit.omnirom.org:29418 . android-6.0';
+alias gitprdhomni='gitpushdrafts http://gerrit.omnirom.org . android-6.0';
+
+# === Gerrit TWRP ===
+alias gitprdtwrp='gitpushdrafts ssh://$gituserdefault@gerrit.twrp.me:29418 . android-6.0';
+
+# === GitHub Origin Cherry-Pick ===
+function gitcpo()
+{
+  # Configurations
+  gitremote='origin';
+
+  # Usage
+  echo '';
+  if [ -z $1 ] || [ -z $2 ]; then
+    echo -e '  \e[1;37mGit Origin Cherry-Pick.';
+    echo -e '    Usage :\e[0m gitcpo branch amount_of_commits';
+    echo '';
+    return;
+  fi;
+
+  # Cherry-Pick
+  git cherry-pick --abort >/dev/null 2>&1;
+  git fetch $gitremote $1;
+  if [ $? -eq 0 ] && [ $2 -gt 0 ]; then
+    git cherry-pick FETCH_HEAD~$(($2-1))^..FETCH_HEAD;
+  fi;
+}

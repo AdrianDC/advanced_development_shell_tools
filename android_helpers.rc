@@ -1,0 +1,40 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Notifications ===
+function pushb()
+{
+  # PushBullet API Credentials
+  export PushBulletToken="token";
+  export PushBulletUser="user";
+  export PushBulletNoteUrl="url";
+
+  # Create  ~/.bash_android.pushbullet.rc with the exports to override the credentials
+  if [ -f ~/.bash_android.pushbullet.rc ]; then
+    source ~/.bash_android.pushbullet.rc;
+  fi;
+
+  # PushBullet notification message
+  if [ ! -z "$1" ]; then
+    PushBulletComment="$1";
+    PushBulletNoteUrl="";
+  else
+    PushBulletComment="Done";
+  fi;
+
+  # PushBullet notification upload
+  curl --header "Access-Token: $PushBulletToken" \
+       --header "Content-Type: application/json" \
+       --data-binary "{\"body\":\"$PushBulletComment\",\"title\":\"\",\"type\":\"note\", \
+                       \"url\":\"$PushBulletNoteUrl\",\"created\":\"$(date +%s)\", \
+                       \"active\":\"true\",\"sender_name\":\"$PushBulletUser\"}" \
+       --request POST https://api.pushbullet.com/v2/pushes >/dev/null;
+}
+
+# === CleanRAM ===
+function cleanram()
+{
+  "$bash_android_dir/run_cleanram.sh";
+}

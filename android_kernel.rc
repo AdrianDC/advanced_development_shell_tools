@@ -1,0 +1,147 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Build paths ===
+export bash_android_bbootimg=$bash_android_dir/android_tools/bbootimg;
+
+# === Kernel Fast Builder ===
+function fboota()
+{
+  cwd=$(pwd);
+  croot;
+  tmpfile=$(mktemp);
+  device=${TARGET_PRODUCT#*_};
+
+  echo "";
+  echo -e " \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016 ]\e[0m";
+  echo "";
+  sudo printf "";
+
+  rm -fv ./out/target/product/$device/boot.*;
+  rm -fv ./out/target/product/$device/*.cpio;
+  rm -fv ./out/target/product/$device/*.fs;
+  rm -fv ./out/target/product/$device/*.img;
+  echo "";
+
+  if [[ "$1" =~ "unsecure" ]]; then
+    fileslist="./out/target/product/$device/root/default.prop \
+               ./out/target/product/$device/recovery/root/default.prop \
+               ./out/target/product/$device/ota_temp/\*/RAMDISK/default.prop \
+               ./out/target/product/$device/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop";
+    for file in $fileslist; do
+      echo "Unsecuring $file";
+      sudo sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' $file;
+      sudo sed -i 's/ro.secure=1/ro.secure=0/' $file;
+      sudo sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/' $file;
+    done;
+  fi;
+
+  if [[ "$1" =~ "sep" ]]; then
+    mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./external/sepolicy/;
+  fi;
+
+  if [[ ! "$1" =~ "full" ]] && $(mms -v >/dev/null 2>&1); then
+    mms bootimage | tee $tmpfile;
+  else
+    make -j$(grep -c ^processor /proc/cpuinfo) bootimage | tee $tmpfile;
+  fi;
+
+  if [[ "$1" =~ "unsecure" ]]; then
+    for file in $fileslist; do
+      echo "Resecuring $file";
+      sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' $file;
+      sed -i 's/ro.secure=0/ro.secure=1/' $file;
+      sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' $file;
+    done;
+  fi;
+
+  BootImg=$(grep -a ".*image.*boot\.img" $tmpfile | head -1 \
+          | sed "s/.*: \(.*boot\.img\).*/\1/g");
+
+  if [[ "$1" =~ "inject" ]]; then
+    fbootk $(dirname $BootImg)/kernel;
+  elif [ ! -z "$BootImg" ] && [ -f "$BootImg" ]; then
+    ModulesDir=$(grep -a ".*system/lib/.*" $tmpfile | head -1 \
+               | sed "s/.* \(\S*system\/lib\/modules\S*\);.*/\1/g");
+    Modules=$(grep -a ".*INSTALL .*\.ko.*" $tmpfile \
+            | sed "s/.*INSTALL \(.*\.ko\).*/\1/g" \
+            | uniq);
+    echo ""; echo "";
+    echo -e " \e[1;37m[ Waiting for adb root... ]\e[0m"; echo "";
+    timeout 10 adb wait-for-device
+
+    if [ ! -z "$Modules" ]; then
+      adb remount;
+      timeout 10 adb wait-for-device
+      for Module in ${Modules[*]}; do
+        ModuleFile=$(basename "$Module");
+        adb push "$ModulesDir/$ModuleFile" "/system/lib/modules/$ModuleFile";
+      done;
+    fi;
+
+    echo "";
+    echo -e " \e[1;37m[ Bootloader $BootImg... ]\e[0m";
+    export PackageResult="$BootImg";
+    echo "";
+    sudo adb reboot bootloader;
+    timeout 20 sudo fastboot flash boot "$BootImg";
+    timeout 5 sudo fastboot reboot;
+    echo "";
+  fi;
+  rm -f $tmpfile;
+  cd $cwd;
+  echo "";
+}
+
+# === Kernel Flasher ===
+function fboot()
+{
+  sudo adb reboot bootloader;
+  if [ ! -z "$1" ]; then
+    file=$(echo "$1" | sed 's/file:\/\/\(.*\)/\1/');
+    sudo fastboot flash boot "$file";
+  else
+    sudo fastboot flash boot boot.img;
+  fi;
+  sudo fastboot reboot;
+}
+
+# === Kernel Informations ===
+function fbooti()
+{
+  adbro;
+  adb push "$bash_android_bbootimg" /bbootimg;
+  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
+  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
+  adb shell /bbootimg -i /dev/block/platform/msm_sdcc.1/by-name/Kernel;
+}
+
+# === Kernel Injector ===
+function fbootk()
+{
+  if [ -z "$1" ] || [ ! -f "$1" ]; then
+    echo "  Usage: fbootk kernelpath";
+    return;
+  fi;
+  adbro;
+  adb push "$1" /tmpkernel;
+  adb push "$bash_android_bbootimg" /bbootimg;
+  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
+  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
+  adb shell /bbootimg -i /dev/block/platform/msm_sdcc.1/by-name/Kernel;
+  adb shell /bbootimg -u /dev/block/platform/msm_sdcc.1/by-name/Kernel -k /tmpkernel;
+}
+
+# === Kernel Flasher ===
+function fbooto()
+{
+  sudo adb reboot bootloader;
+  if [ ! -z "$1" ]; then
+    sudo fastboot flash boot "$1";
+  else
+    sudo fastboot flash boot boot.img;
+  fi;
+}
+
