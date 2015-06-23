@@ -21,7 +21,7 @@ timediff=$(($(date +%s)-$timestart));
 cp /media/Android/out/target/product/huashan/$filepath$filename1 /media/sf_Desktop/$filename1;
 cp /media/Android/out/target/product/huashan/$filepath$filename2 /media/sf_Desktop/$filename2;
 echo "";
-echo " [ adb push $filename1 /$filepath$filename1 & adb push $filename2 /$filepath$filename2 ]";
+echo "  \"adb push $filename1 /$filepath$filename1 & adb push $filename2 /$filepath$filename2\"";
 
 while [ 1 ]
 do

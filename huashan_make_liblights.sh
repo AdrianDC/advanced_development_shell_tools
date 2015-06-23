@@ -18,7 +18,7 @@ mmm ./device/sony/msm8960-common/liblights/;
 timediff=$(($(date +%s)-$timestart));
 cp /media/Android/out/target/product/huashan/$filepath$filename /media/sf_Desktop/$filename;
 echo "";
-echo " [ adb push $filename /$filepath$filename ]";
+echo "  \"adb push $filename /$filepath$filename\"";
 
 while [ 1 ]
 do

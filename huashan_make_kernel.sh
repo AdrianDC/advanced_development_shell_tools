@@ -19,7 +19,7 @@ mka -j8 bootimage;
 timediff=$(($(date +%s)-$timestart));
 cp /media/Android/out/target/product/huashan/$filepath$filename /media/sf_Desktop/$filename;
 echo "";
-echo " [ fastboot flash boot $filename & fastboot reboot ]";
+echo "  \"fastboot flash boot $filename & fastboot reboot\"";
 
 while [ 1 ]
 do
