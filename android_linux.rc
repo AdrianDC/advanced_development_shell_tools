@@ -1,0 +1,12 @@
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Linux Shortcuts ===
+function rsynca()
+{
+  if [ -z "$2" ]; then echo ' Usage: rsynca path1 path2'; return; fi;
+  rsync -av --delete "$1" "$2";
+}
+alias pcinfo='inxi -Fxz';
+

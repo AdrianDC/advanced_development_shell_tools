@@ -1,0 +1,84 @@
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Repo FullSync ===
+reposalx()
+{
+  # Phone Branch
+  BuildBranch="cm-13.0";
+  if [ ! -z "$1" ]; then BuildBranch="$1"; fi;
+
+  # Sources Manifest
+  if [ ! -f ".repo/local_manifests/semc.xml" ]; then
+    if [ ! -d "./.repo/local_manifests/" ]; then
+      mkdir "./.repo/local_manifests";
+    fi;
+    cd "./.repo/local_manifests/"
+    git clone --depth=1 https://github.com/LegacyXperia/local_manifests.git --single-branch -b $BuildBranch .;
+    cd "../../";
+  fi;
+
+  # Sources Sync
+  if [[ ! "$2" =~ "unsafe" ]]; then
+    repo forall -c 'echo "Cleaning project ${REPO_PROJECT}"; \
+                    git rebase --abort >/dev/null 2>&1; \
+                    git stash -u >/dev/null 2>&1; \
+                    git reset --hard HEAD >/dev/null 2>&1;';
+  fi;
+  repo sync --current-branch --detach --force-broken --force-sync;
+
+  # Sources Commands
+  source ./build/envsetup.sh;
+  repopickcommits=0;
+
+  # Cherry-picks List
+  if [[ "$BuildBranch" == "cm-13.0" ]]; then
+    # Reference : https://github.com/LegacyXperia/local_manifests/blob/cm-13.0/updates.sh
+    repopickcommits=1;
+    repolist=( \
+              # Use RECOVERY_PRE_COMMAND before calling __reboot() recovery
+              CM_115693 \
+
+              # Revert "Revert "Reenable support for non-PIE executables""
+              CM_117733 \
+
+              # arm: Allow disabling PIE for dynamically linked executables
+              CM_123032 \
+
+              # policy: Show a simple dialog about optimizing apps
+              CM_131627 \
+
+              # Barrier only messages shouldn't prevent the idle handlers from running
+              CM_131628 \
+             );
+  elif [[ "$BuildBranch" == "cm-12.1" ]]; then
+    repopickcommits=1;
+    repolist=( \
+              CM_102837 CM_92943  CM_81758  CM_103507 CM_103509 CM_103510 \
+              CM_103511 CM_103512 CM_103513 CM_103556 CM_109096 \
+              CM_116058 CM_94408 \
+             );
+  elif [[ "$BuildBranch" == "cm-11.0" ]]; then
+    ./vendor/cm/get_prebuilts;
+    repopickcommits=1;
+    repolist=( \
+              CM_66213  CM_66214  CM_63131  CM_63410  CM_63411  CM_63412 \
+              CM_103480 CM_103549 CM_103550 CM_109071 CM_123930 CM_123932 \
+              CM_123933 CM_123934 CM_123935 CM_123936 \
+             );
+  fi;
+
+  # Cherry-picks Repopick
+  if [ $repopickcommits != 0 ]; then
+    ./vendor/extra/repopick.py -b ${repolist[@]};
+  fi;
+
+  # Sync End
+  echo "";
+  notify-send "Done syncing !";
+  echo " =========== Done syncing ===========";
+  echo "";
+}
+
+export -f reposalx;

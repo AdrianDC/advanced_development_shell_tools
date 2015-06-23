@@ -1,0 +1,102 @@
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Audio LegacyToHAL helper ===
+function audioltoh()
+{
+  if [ -z "$2" ]; then
+    echo " Usage : audioltoh legacy_config hal_mixer [debug]";
+    return;
+  fi;
+
+  Legacy="$1";
+  HAL="$2";
+  Debug="$3";
+  TempFile=$(mktemp);
+
+  echo "";
+  echo -e " \e[1;37m === Checking Legacy rules to HAL presence ===\e[0m";
+  echo "";
+  grep -i -e "'.*'" "$Legacy" | uniq \
+    | sed "s/^[ \t]*'\(.*\)'\:\(.*\)\:\(.*\)/\1/" \
+    | sort | uniq >$TempFile;
+  kate $TempFile;
+  while read line;
+  do
+    if ! grep -q "$line" $HAL; then
+      echo -e "   \e[1;33mLegacy: \e[1;34m$line - \e[1;31mMissing\e[0m";
+    elif [ ! -z "$Debug" ]; then
+      echo -e "   \e[1;33mLegacy: \e[1;34m$line - \e[1;34mFound\e[0m";
+    fi;
+  done <$TempFile;
+  echo "";
+  echo -e " \e[1;34m > Done checking Legacy rules to HAL\e[0m";
+  echo "";
+
+  echo "";
+  echo -e " \e[1;37m === Checking HAL rules to Legacy presence ===\e[0m";
+  echo "";
+
+return;
+
+  grep -i -e "<ctl name=\"".*"\" value=\".*\" \/>" "$HAL" \
+    | sort | uniq -u \
+    | sed "s/.*name=\"\(.*\)\" .*value=\"\(.*\)\" \/>/\1 | \2/" >$TempFile;
+  while read line;
+  do
+    if [ -z $(grep -q "$Line" "$HAL") ]; then
+      echo -e "   \e[1;33mHAL: \e[1;34m$line - \e[1;31mMissing\e[0m";
+    elif [ ! -z "$Debug" ]; then
+      echo -e "   \e[1;33mHAL: \e[1;34m$line - \e[1;34mFound\e[0m";
+    fi;
+  done <$TempFile;
+  echo "";
+  echo -e " \e[1;34m > Done checking HAL rules to Legacy\e[0m";
+  echo "";
+
+  rm -f $TempFile;
+}
+
+# === Vendor Checker ===
+function vendorcheck()
+{
+  VendorDir="$2";
+  VendorMk="../huashan-vendor-blobs.mk";
+  echo ""; i=0;
+  for FilePath in $(cat "$1")
+  do
+    i=$((i+1));
+    if [[ "$FilePath" == -* ]]; then
+      FilePath=$(echo "$FilePath" | cut -c2-);
+    fi;
+    if [ -f "$VendorDir/$FilePath" ]; then
+      echo -e " \e[1;37mLine $i: $FilePath - File OK\e[0m";
+    else
+      echo -e " \e[1;31mLine $i: $FilePath - File Missing\e[0m";
+    fi;
+  done;
+  echo "";
+  echo -e " \e[1;37m> Press Enter to continue...\e[0m";
+  read key;
+  echo "";
+  i=0;
+  for FilePath in $(find $VendorDir -type f | sort)
+  do
+    i=$((i+1));
+    FilePath=$(echo "$FilePath" | sed 's/.*proprietary\/\(.*\)/\1/g');
+    if [ ! -z $(grep -a "$FilePath" "$1" | head -1) ]; then
+      echo -e " \e[1;37mLine $i: $FilePath - Reference OK\e[0m";
+    else
+      echo -e " \e[1;31mLine $i: $FilePath - Reference Missing\e[0m";
+    fi;
+  done;
+  echo "";
+  echo -e " \e[1;37m> Press Enter to continue...\e[0m";
+  read key;
+  i=0;
+  TempFile=$(mktemp);
+  cat "$VendorDir/$VendorMk" | sed 's/.*:system\/\(.*\)\( \\\)/\1/g' > "$TempFile";
+  meld "$1" "$TempFile";
+  rm -f $TempFile;
+}

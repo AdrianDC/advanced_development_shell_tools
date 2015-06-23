@@ -1,0 +1,42 @@
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Binary Editor ===
+function binaryeditors()
+{
+  local FPATTERNS=(libbinder.so libcamera_client.so libcutils.so libdl.so \
+                  libgui.so libhardware.so libui.so liblog.so libstdc++.so \
+                  libstlport.so libutils.so libm.so libsys-utils.so \
+                  libcamera_metadata.so libsync.so libbacktrace.so \
+                  libc_malloc_debug_leak.so libc_malloc_debug_qemu.so \
+                  libgccdemangle.so libunwind-ptrace.so libunwind.so \
+                  libgsl.so libidd.so libz.so libc++.so libEGL.so libGLESv2.so \
+                  libGLESv1_CM.so libGLES_trace.so libc.so /system/bin/linker \
+                  libaudioflinger.so libaudiopolicyservice.so libmedia.so \
+                  libmedia_jni.so libmedialogservice.so);
+  local FREPLACES=(lshbinder.so lshcamera_client.so lshcutils.so lshdl.so \
+                  lshgui.so lshhardware.so lshui.so lshlog.so lshstdc++.so \
+                  lshstlport.so lshutils.so lshm.so lshsys-utils.so \
+                  lshcamera_metadata.so lshsync.so lshbacktrace.so \
+                  lshc_malloc_debug_leak.so lshc_malloc_debug_qemu.so \
+                  lshgccdemangle.so lshunwind-ptrace.so lshunwind.so \
+                  lshgsl.so lshidd.so lshz.so lshc++.so lshEGL.so lshGLESv2.so \
+                  lshGLESv1_CM.so lshGLES_trace.so lshc.so /system/bin/lshker \
+                  lshaudioflinger.so lshaudiopolicyservice.so lshmedia.so \
+                  lshmedia_jni.so lshmedialogservice.so);
+  local PATTERNS=(libgui.so libbinder.so libui.so);
+  local REPLACES=(lshgui.so lshbinder.so lshui.so);
+
+  local i=-1;
+  local PATTERN="init";
+  local REPLACE="init";
+
+  while [ ! -z ${PATTERNS[$(($i+1))]} ];
+  do
+    i=$(($i+1));
+    PATTERN=${PATTERNS[$i]};
+    REPLACE=${REPLACES[$i]};
+    binaryeditor $1 $PATTERN $REPLACE;
+  done;
+}

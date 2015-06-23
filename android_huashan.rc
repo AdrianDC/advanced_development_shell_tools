@@ -1,0 +1,83 @@
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Repo FullSync ===
+reposa()
+{
+  # Phone Name
+  PhoneName="huashan";
+
+  # Sources Sync
+  repopickcommits=1;
+  if [[ "$1" =~ "test" ]]; then
+    repo forall -c 'gitbranch=${REPO_RREV##*/}; \
+                    echo "Reseting project ${REPO_PROJECT} [${REPO_REMOTE}/${gitbranch}]"; \
+                    git rebase --abort >/dev/null 2>&1; \
+                    git stash -u >/dev/null 2>&1; \
+                    git reset --hard ${REPO_REMOTE}/${gitbranch} >/dev/null 2>&1;';
+  elif [[ "$1" =~ "stock" ]]; then
+    repopickcommits=0;
+    repo forall -c 'gitbranch=${REPO_RREV##*/}; \
+                    gitremote=${REPO_REMOTE}; \
+                    if [ "$gitremote"="AdrianDC" ]; then gitremote="CyanogenMod"; fi; \
+                    echo "Reseting project ${REPO_PROJECT} [${gitremote}/${gitbranch}]"; \
+                    git rebase --abort >/dev/null 2>&1; \
+                    git stash -u >/dev/null 2>&1; \
+                    git reset --hard ${gitremote}/${gitbranch} >/dev/null 2>&1;';
+  elif [[ "$1" =~ "simple" ]]; then
+    repopickcommits=0;
+    repo forall -c 'echo "Cleaning project ${REPO_PROJECT}"; \
+                    git rebase --abort >/dev/null 2>&1; \
+                    git stash -u >/dev/null 2>&1; \
+                    git reset --hard HEAD >/dev/null 2>&1;';
+    repo sync --current-branch --detach --force-broken --force-sync;
+  else
+    if [[ ! "$1" =~ "unsafe" ]]; then
+      repo forall -c 'echo "Cleaning project ${REPO_PROJECT}"; \
+                      git rebase --abort >/dev/null 2>&1; \
+                      git stash -u >/dev/null 2>&1; \
+                      git reset --hard HEAD >/dev/null 2>&1;';
+    fi;
+    repo sync --current-branch --detach --force-broken --force-sync;
+  fi;
+
+  # Sources Commands
+  source ./build/envsetup.sh;
+
+  # Phone Init
+  breakfast $PhoneName;
+
+  # Cherry-picks List
+  repolist=( \
+             # WORK IN PROGRESS # 131627 131628
+             143771 146225 131997 \
+           );
+
+  # Cherry-picks Repopick
+  if [ $repopickcommits != 0 ]; then
+    for i in "${repolist[@]}"; do
+
+      if [ ! -z "$i" ]; then
+        echo "";
+        echo " V=========== RepoPick $i ===========V";
+        echo "";
+
+        repopicklog=$(repopick $i | tee /dev/tty);
+
+        if [[ "$repopicklog" =~ "ERROR:" ]]; then
+          echo "";
+          return;
+        fi;
+      fi;
+
+    done;
+  fi;
+
+  # Sync End
+  notify-send "Done syncing !";
+  echo " =========== Done syncing ===========";
+  echo "";
+}
+
+export -f reposa;
