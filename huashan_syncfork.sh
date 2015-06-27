@@ -15,11 +15,11 @@ repo sync -j8 -f device/sony/huashan \
                  device/sony/msm8960-common \
                  hardware/sony/DASH \
                  kernel/sony/msm8x60 \
-                 kernel/sony/msm8x60test \
                  vendor/sony \
                  frameworks/base \
                  packages/apps/Settings \
                  ;
+#                 kernel/sony/cm-msm8x60 \
 
 #cd ./hardware/sony/DASH/;
 #git stash;

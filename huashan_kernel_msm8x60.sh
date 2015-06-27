@@ -7,10 +7,11 @@ filepath="$currentdir/..";
 filename="boot.img";
 filetarget="/media/sf_Desktop";
 androidpath="/media/adriandc/UbuntuWork/Projects/Android";
+githubfolder="$currentdir/../GitHub";
 kernelbuilder="$currentdir/android_kernel_builder";
 kernelrepository="https://github.com/AdrianDC/android_kernel_sony_msm8x60.git";
 kernelbranch="cm-12.1";
-kernelfolder="$currentdir/../GitHub/android_kernel_sony_msm8x60";
+kernelfolder="$githubfolder/android_kernel_sony_msm8x60";
 zimagebuilt="$kernelfolder/arch/arm/boot/zImage";
 zimagefile=$kernelbuilder/zImage
 export ARCH=arm
@@ -19,20 +20,26 @@ export CROSS_COMPILE="$androidpath/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/
 export KBUILD_BUILD_USER="AdrianDC"
 export KBUILD_BUILD_HOST="KernelBuild"
 
-# Kernel folder
-cd $kernelfolder/;
-
 # Delete the target files
 if [ -f $zimagefile ]; then rm -f $zimagefile; fi;
+if [ -f $filepath/$filename ]; then rm -f $filepath/$filename; fi;
 if [ -f $filetarget/$filename ]; then rm -f $filetarget/$filename; fi;
 
 # Update the sources
 echo "";
 echo " [ Updating the sources ]";
 echo "";
-git remote rm origin >/dev/null >/dev/null 2>&1;
-git remote add origin $kernelrepository;
-git pull -f origin $kernelbranch;
+if [ -d $kernelfolder ]; then
+  cd $kernelfolder/;
+  git remote rm origin >/dev/null >/dev/null 2>&1;
+  git remote add origin $kernelrepository;
+  git fetch origin $kernelbranch;
+  git reset --hard FETCH_HEAD;
+else
+  cd $githubfolder;
+  git clone $kernelrepository;
+  cd $kernelfolder/;
+fi;
 
 # Make the kernel zImage
 echo "";
@@ -64,8 +71,8 @@ echo "  \"fastboot flash boot $filename & fastboot reboot\"";
 echo "";
 
 # Final target
-if [ -z "$filetarget" ]; then
-  cp ./kernel/boot-new.img /media/sf_Desktop/$filename;
+if [ ! -z "$filetarget" ]; then
+  cp $filepath/$filename /media/sf_Desktop/$filename;
 fi;
 
 # End of build
