@@ -18,6 +18,7 @@ repo sync -j8 -f device/sony/huashan \
                  vendor/sony \
                  frameworks/base \
                  packages/apps/Settings \
+                 bootable/recovery \
                  ;
 #                 kernel/sony/cm-msm8x60 \
 
