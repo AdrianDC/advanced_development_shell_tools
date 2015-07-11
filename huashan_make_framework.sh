@@ -3,6 +3,7 @@ timestart=$(date +%s);
 filepath="system/framework/";
 filename1="framework.jar";
 filename2="framework-res.apk";
+filetarget="/media/sf_Desktop";
 
 if [ -f /media/sf_Desktop/$filename1 ]; then rm /media/sf_Desktop/$filename1; fi;
 if [ -f /media/sf_Desktop/$filename2 ]; then rm /media/sf_Desktop/$filename2; fi;
@@ -15,13 +16,16 @@ echo "";
 source ./build/envsetup.sh;
 croot;
 breakfast huashan;
-make -j8 framework;
+mmm -j8 ./frameworks/base/;
 
 timediff=$(($(date +%s)-$timestart));
-cp /media/Android/out/target/product/huashan/$filepath$filename1 /media/sf_Desktop/$filename1;
-cp /media/Android/out/target/product/huashan/$filepath$filename2 /media/sf_Desktop/$filename2;
+if [ "$(ls -A $filetarget)" ]; then
+  cp /media/Android/out/target/product/huashan/$filepath$filename1 $filetarget/$filename1;
+  cp /media/Android/out/target/product/huashan/$filepath$filename2 $filetarget/$filename2;
+fi;
 echo "";
 echo "  \"adb push $filename1 /$filepath$filename1 & adb push $filename2 /$filepath$filename2\"";
+echo "";
 
 while [ 1 ]
 do

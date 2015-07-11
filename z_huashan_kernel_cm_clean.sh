@@ -3,8 +3,7 @@ timestart=$(date +%s);
 currentdir=$PWD;
 
 # Configuration
-filepath="$currentdir/..";
-kernelfolder="$currentdir/../GitHub/android_kernel_google_huashan";
+kernelfolder="/media/GitHub/android_kernel_google_huashan";
 
 # Kernel folder
 cd $kernelfolder/;

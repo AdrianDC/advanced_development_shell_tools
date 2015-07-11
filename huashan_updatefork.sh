@@ -2,18 +2,16 @@
 timestart=$(date +%s);
 
 # =====================================================================================
-cd ../GitHub/;
+cd /media/GitHub/;
 huashanbranch="cm-12.1";
 origin_dev_huashan="https://github.com/Mrcl1450/android_device_sony_huashan.git";
 origin_dev_msm8960="https://github.com/Mrcl1450/android_device_sony_msm8960-common.git";
 origin_kernel_msm8x60="https://github.com/Mrcl1450/android_kernel_sony_msm8x60.git";
-origin_kernel_aosp_huashan="https://github.com/Mrcl1450/aosp_kernel_huashan.git";
 origin_vendor_sony="https://github.com/Mrcl1450/proprietary_vendor_sony.git";
 origin_dash_sony="https://github.com/Mrcl1450/android_hardware_sony_DASH.git";
 upstream_dev_huashan="https://github.com/AdrianDC/android_device_sony_huashan.git";
 upstream_dev_msm8960="https://github.com/AdrianDC/android_device_sony_msm8960-common.git";
 upstream_kernel_msm8x60="https://github.com/AdrianDC/android_kernel_sony_msm8x60.git";
-upstream_kernel_aosp_huashan="https://github.com/AdrianDC/aosp_kernel_huashan.git";
 upstream_vendor_sony="https://github.com/AdrianDC/proprietary_vendor_sony.git";
 upstream_dash_sony="https://github.com/AdrianDC/android_hardware_sony_DASH.git";
 
@@ -28,7 +26,8 @@ if [ "$key" == "y" ]; then
     cd ./android_device_sony_huashan/;
     git remote rm origin >/dev/null >/dev/null 2>&1;
     git remote add origin $origin_dev_huashan;
-    git pull -f origin $huashanbranch;
+    git fetch origin $huashanbranch;
+    git reset FETCH_HEAD --hard;
     cd ../;
   else
     git clone $origin_dev_huashan;
@@ -42,7 +41,8 @@ if [ "$key" == "y" ]; then
     cd ./android_device_sony_msm8960-common/;
     git remote rm origin >/dev/null >/dev/null 2>&1;
     git remote add origin $origin_dev_msm8960;
-    git pull -f origin $huashanbranch;
+    git fetch origin $huashanbranch;
+    git reset FETCH_HEAD --hard;
     cd ../;
   else
     git clone $origin_dev_msm8960;
@@ -56,25 +56,11 @@ if [ "$key" == "y" ]; then
     cd ./android_kernel_sony_msm8x60/;
     git remote rm origin >/dev/null >/dev/null 2>&1;
     git remote add origin $origin_kernel_msm8x60;
-    git pull -f origin "cm-12.1";
-#$huashanbranch;
+    git fetch origin $huashanbranch;
+    git reset FETCH_HEAD --hard;
     cd ../;
   else
     git clone $origin_kernel_msm8x60;
-  fi;
-fi;
-echo "";
-printf " - Download aosp_kernel_huashan (y/n) ? ";
-read key;
-if [ "$key" == "y" ]; then
-  if [ -d ./aosp_kernel_huashan ]; then
-    cd ./aosp_kernel_huashan/;
-    git remote rm origin >/dev/null >/dev/null 2>&1;
-    git remote add origin $origin_kernel_aosp_huashan;
-    git pull -f origin $huashanbranch;
-    cd ../;
-  else
-    git clone $origin_kernel_aosp_huashan;
   fi;
 fi;
 echo "";
@@ -85,7 +71,8 @@ if [ "$key" == "y" ]; then
     cd ./proprietary_vendor_sony/;
     git remote rm origin >/dev/null >/dev/null 2>&1;
     git remote add origin $origin_vendor_sony;
-    git pull -f origin $huashanbranch;
+    git fetch origin $huashanbranch;
+    git reset FETCH_HEAD --hard;
     cd ../;
   else
     git clone $origin_vendor_sony;
@@ -140,17 +127,6 @@ if [ "$key" == "y" ]; then
   cd ./android_kernel_sony_msm8x60/;
   git remote rm upstream >/dev/null >/dev/null 2>&1;
   git remote add upstream $upstream_kernel_msm8x60;
-  git push -f upstream $huashanbranch;
-  cd ../;
-fi;
-echo "";
-printf " - Update aosp_kernel_huashan (y/n) ? ";
-read key;
-if [ "$key" == "y" ]; then
-  echo "";
-  cd ./aosp_kernel_huashan/;
-  git remote rm upstream >/dev/null >/dev/null 2>&1;
-  git remote add upstream $upstream_kernel_aosp_huashan;
   git push -f upstream $huashanbranch;
   cd ../;
 fi;

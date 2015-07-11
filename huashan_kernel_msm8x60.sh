@@ -6,19 +6,22 @@ currentdir=$PWD;
 filepath="$currentdir/..";
 filename="boot.img";
 filetarget="/media/sf_Desktop";
-androidpath="/media/adriandc/UbuntuWork/Projects/Android";
-githubfolder="$currentdir/../GitHub";
+androidpath="/media/Android";
+githubfolder="/media/GitHub";
 kernelbuilder="$currentdir/android_kernel_builder";
 kernelrepository="https://github.com/AdrianDC/android_kernel_sony_msm8x60.git";
 kernelbranch="cm-12.1";
 kernelfolder="$githubfolder/android_kernel_sony_msm8x60";
 zimagebuilt="$kernelfolder/arch/arm/boot/zImage";
-zimagefile=$kernelbuilder/zImage
-export ARCH=arm
-export SUBARCH=arm
-export CROSS_COMPILE="$androidpath/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-"
-export KBUILD_BUILD_USER="AdrianDC"
-export KBUILD_BUILD_HOST="KernelBuild"
+zimagefile=$kernelbuilder/zImage;
+BOARD_KERNEL_BASE=0x80208000;
+BOARD_KERNEL_RAMDISK=0x81900000;
+BOARD_KERNEL_RPM=0x00020000;
+export ARCH=arm;
+export SUBARCH=arm;
+export CROSS_COMPILE="$androidpath/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-";
+export KBUILD_BUILD_USER="AdrianDC";
+export KBUILD_BUILD_HOST="KernelBuild";
 
 # Delete the target files
 if [ -f $zimagefile ]; then rm -f $zimagefile; fi;
@@ -65,8 +68,7 @@ echo "";
 cd $kernelbuilder/;
 if [ -f ./boot.elf ]; then rm ./boot.elf; fi;
 if [ -f ./boot.img ]; then rm ./boot.img; fi;
-python ./mkelf.py -o boot.elf zImage@0x80208000 ramdisk.img@0x81900000,ramdisk RPM.bin@0x00020000,rpm cmdline.txt@0x00000000,cmdline;
-mv ./boot.elf $filepath/$filename;
+python ./mkelf.py -o $filepath/$filename zImage@$BOARD_KERNEL_BASE ramdisk.img@$BOARD_KERNEL_RAMDISK,ramdisk RPM.bin@$BOARD_KERNEL_RPM,rpm cmdline.txt@cmdline
 echo "  \"fastboot flash boot $filename & fastboot reboot\"";
 echo "";
 
@@ -80,5 +82,19 @@ timediff=$(($(date +%s)-$timestart));
 echo "";
 echo " [ Done in $timediff secs ]";
 echo "";
-read key;
+
+# Flash the kernel
+while [ 1 ]
+do
+  echo "";
+  echo " [ Upload new kernel - Bootloader USB ]";
+  echo "";
+  sudo fastboot flash boot $filepath/$filename;
+  sudo fastboot reboot;
+
+  echo "";
+  echo " [ Done ]";
+  echo "";
+  read key;
+done;
 

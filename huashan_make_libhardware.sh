@@ -1,7 +1,7 @@
 #!/bin/bash
 timestart=$(date +%s);
-filepath="root/";
-filename="selinux";
+filepath="system/lib/";
+filename="libhardware.so";
 filetarget="/media/sf_Desktop";
 
 if [ -f /media/sf_Desktop/$filename ]; then rm /media/sf_Desktop/$filename; fi;
@@ -14,7 +14,8 @@ echo "";
 source ./build/envsetup.sh;
 croot;
 breakfast huashan;
-mmm -j8 ./external/sepolicy/;
+mka libhardware;
+#mmm -j8 ./hardware/libhardware/;
 
 timediff=$(($(date +%s)-$timestart));
 if [ "$(ls -A $filetarget)" ]; then

@@ -1,7 +1,8 @@
 #!/bin/bash
 timestart=$(date +%s);
-filepath="system/lib/hw/";
-filename="lights.msm8960.so";
+filepath="system/lib/";
+filename="libril.so";
+filetarget="/media/sf_Desktop";
 
 if [ -f /media/sf_Desktop/$filename ]; then rm /media/sf_Desktop/$filename; fi;
 if [ -d "$HOME/bin" ]; then PATH="$HOME/bin:$PATH"; fi;
@@ -13,7 +14,15 @@ echo "";
 source ./build/envsetup.sh;
 croot;
 breakfast huashan;
-mmm ./device/sony/msm8960-common/liblights/;
+mmm -j8 ./hardware/qcom/audio-caf/msm8960/;
+
+timediff=$(($(date +%s)-$timestart));
+if [ "$(ls -A $filetarget)" ]; then
+  cp /media/Android/out/target/product/huashan/$filepath$filename $filetarget/$filename;
+fi;
+echo "";
+echo "  \"adb push $filename /$filepath$filename\"";
+echo "";
 
 while [ 1 ]
 do
@@ -25,9 +34,12 @@ do
 
   echo "";
   cd /media/Android/out/target/product/huashan/;
-  adb push system/lib/hw/lights.msm8960.so /system/lib/hw/lights.msm8960.so;
+  adb push $filepath$filename /$filepath$filename;
+  echo "";
+  echo " Rebooting...";
+  sleep 5;
+  adb reboot;
 
-  timediff=$(($(date +%s)-$timestart));
   echo "";
   echo " [ Done in $timediff secs ]";
   echo "";

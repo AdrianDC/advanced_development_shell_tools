@@ -2,6 +2,7 @@
 timestart=$(date +%s);
 filepath="system/priv-app/Settings/";
 filename="Settings.apk";
+filetarget="/media/sf_Desktop";
 
 if [ -f /media/sf_Desktop/$filename ]; then rm /media/sf_Desktop/$filename; fi;
 if [ -d "$HOME/bin" ]; then PATH="$HOME/bin:$PATH"; fi;
@@ -13,12 +14,15 @@ echo "";
 source ./build/envsetup.sh;
 croot;
 breakfast huashan;
-mmm ./packages/apps/Settings/;
+mmm -j8 ./packages/apps/Settings/;
 
 timediff=$(($(date +%s)-$timestart));
-cp /media/Android/out/target/product/huashan/$filepath$filename /media/sf_Desktop/$filename;
+if [ "$(ls -A $filetarget)" ]; then
+  cp /media/Android/out/target/product/huashan/$filepath$filename $filetarget/$filename;
+fi;
 echo "";
 echo "  \"adb push $filename /$filepath$filename\"";
+echo "";
 
 while [ 1 ]
 do

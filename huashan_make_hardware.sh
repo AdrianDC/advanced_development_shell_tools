@@ -2,6 +2,7 @@
 timestart=$(date +%s);
 filepath="system/framework/";
 filename="org.cyanogenmod.hardware.jar";
+filetarget="/media/sf_Desktop";
 
 if [ -f /media/sf_Desktop/$filename ]; then rm /media/sf_Desktop/$filename; fi;
 if [ -d "$HOME/bin" ]; then PATH="$HOME/bin:$PATH"; fi;
@@ -16,9 +17,12 @@ breakfast huashan;
 make -j8 org.cyanogenmod.hardware;
 
 timediff=$(($(date +%s)-$timestart));
-cp /media/Android/out/target/product/huashan/$filepath$filename /media/sf_Desktop/$filename;
+if [ "$(ls -A $filetarget)" ]; then
+  cp /media/Android/out/target/product/huashan/$filepath$filename $filetarget/$filename;
+fi;
 echo "";
 echo "  \"adb push $filename /$filepath$filename\"";
+echo "";
 
 while [ 1 ]
 do
