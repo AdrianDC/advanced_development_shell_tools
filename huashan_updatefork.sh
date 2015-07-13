@@ -2,7 +2,7 @@
 timestart=$(date +%s);
 
 # =====================================================================================
-cd /media/GitHub/;
+cd ./GitHub/;
 huashanbranch="cm-12.1";
 origin_dev_huashan="https://github.com/Mrcl1450/android_device_sony_huashan.git";
 origin_dev_msm8960="https://github.com/Mrcl1450/android_device_sony_msm8960-common.git";

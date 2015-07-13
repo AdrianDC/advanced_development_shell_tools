@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -d "$HOME/bin" ]; then PATH="$HOME/bin:$PATH"; fi;
-cd /media/Android/;
+cd ./Android/;
 
 echo "";
 echo " [ Loading the sources ]";

@@ -2,10 +2,8 @@
 timestart=$(date +%s);
 
 # =====================================================================================
-cd /media/Android/;
 username=$(whoami);
-usergroup=$(groups $username);
-sudo chown -cR $username:$usergroup /media/GitHub/
+sudo chown -cR $username:$username ./GitHub/
 
 # =====================================================================================
 timediff=$(($(date +%s)-$timestart));

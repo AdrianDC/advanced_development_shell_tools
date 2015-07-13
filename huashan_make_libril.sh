@@ -6,7 +6,7 @@ filetarget="/media/sf_Desktop";
 
 if [ -f /media/sf_Desktop/$filename ]; then rm /media/sf_Desktop/$filename; fi;
 if [ -d "$HOME/bin" ]; then PATH="$HOME/bin:$PATH"; fi;
-cd /media/Android/;
+cd ./Android/;
 
 echo "";
 echo " [ Making the requested libraries ]";
@@ -18,7 +18,7 @@ mmm -j8 ./device/sony/huashan/libril/;
 
 timediff=$(($(date +%s)-$timestart));
 if [ "$(ls -A $filetarget)" ]; then
-  cp /media/Android/out/target/product/huashan/$filepath$filename $filetarget/$filename;
+  cp ./out/target/product/huashan/$filepath$filename $filetarget/$filename;
 fi;
 echo "";
 echo "  \"adb push $filename /$filepath$filename\"";
@@ -33,7 +33,7 @@ do
   read key;
 
   echo "";
-  cd /media/Android/out/target/product/huashan/;
+  cd ./out/target/product/huashan/;
   adb push $filepath$filename /$filepath$filename;
   echo "";
   echo " Rebooting...";

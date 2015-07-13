@@ -3,7 +3,7 @@ timestart=$(date +%s);
 
 # =====================================================================================
 username=$(whoami);
-sudo chown -cR $username:$username ./Android/
+sudo chown -cR $username:$username $(pwd)
 
 # =====================================================================================
 timediff=$(($(date +%s)-$timestart));

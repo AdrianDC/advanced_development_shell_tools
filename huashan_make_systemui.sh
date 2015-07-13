@@ -1,7 +1,7 @@
 #!/bin/bash
 timestart=$(date +%s);
-filepath="system/lib/";
-filename="libril.so";
+filepath="system/priv-app/SystemUI/";
+filename="SystemUI.apk";
 filetarget="/media/sf_Desktop";
 
 if [ -f /media/sf_Desktop/$filename ]; then rm /media/sf_Desktop/$filename; fi;
@@ -14,7 +14,7 @@ echo "";
 source ./build/envsetup.sh;
 croot;
 breakfast huashan;
-mmm -j8 ./hardware/qcom/audio-caf/msm8960/;
+mmm -j8 ./frameworks/base/packages/SystemUI/;
 
 timediff=$(($(date +%s)-$timestart));
 if [ "$(ls -A $filetarget)" ]; then
