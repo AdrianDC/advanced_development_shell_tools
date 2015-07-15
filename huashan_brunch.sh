@@ -16,6 +16,7 @@ echo "";
 echo " [ Building the branch ]";
 echo "";
 if [ -f ./out/target/product/huashan/system/build.prop ]; then rm -f ./out/target/product/huashan/system/build.prop; fi;
+breakfast huashan;
 brunch huashan;
 echo "";
 

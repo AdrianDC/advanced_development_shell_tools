@@ -1,4 +1,5 @@
 #!/bin/bash
+scriptdir=$PWD;
 timestart=$(date +%s);
 filepath1="system/framework/";
 filename1="framework-res.apk";
@@ -52,6 +53,7 @@ do
   read key;
 
   echo "";
+  $scriptdir/root_adb.sh;
   cd ./out/target/product/huashan/;
   adb push $filepath1$filename1 /$filepath1$filename1;
   adb push $filepath2$filename2 /$filepath2$filename2;

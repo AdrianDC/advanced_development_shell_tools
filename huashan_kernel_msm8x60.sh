@@ -1,14 +1,14 @@
 #!/bin/bash
 timestart=$(date +%s);
-currentdir=$PWD;
+scriptdir=$PWD;
 
 # Configuration
-filepath="$currentdir/..";
+filepath="$scriptdir/..";
 filename="boot.img";
 filetarget="/media/sf_Desktop";
-androidpath="$currentdir/Android";
-githubfolder="$currentdir/GitHub";
-kernelbuilder="$currentdir/android_kernel_builder";
+androidpath="$scriptdir/Android";
+githubfolder="$scriptdir/GitHub";
+kernelbuilder="$scriptdir/android_kernel_builder_5.1.1";
 kernelrepository="https://github.com/AdrianDC/android_kernel_sony_msm8x60.git";
 kernelbranch="cm-12.1";
 kernelfolder="$githubfolder/android_kernel_sony_msm8x60";
@@ -39,7 +39,7 @@ if [ -d $kernelfolder ]; then
   git fetch origin $kernelbranch;
   git reset --hard FETCH_HEAD;
 else
-  cd $githubfolder;
+  cd $githubfolder/;
   git clone $kernelrepository;
   cd $kernelfolder/;
 fi;

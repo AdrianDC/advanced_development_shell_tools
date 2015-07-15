@@ -1,4 +1,5 @@
 #!/bin/bash
+scriptdir=$PWD;
 timestart=$(date +%s);
 filepath="system/app/Camera2/";
 filename="Camera2.apk";
@@ -33,6 +34,7 @@ do
   read key;
 
   echo "";
+  $scriptdir/root_adb.sh;
   cd ./out/target/product/huashan/;
   adb push $filepath /$filepath;
   echo "";

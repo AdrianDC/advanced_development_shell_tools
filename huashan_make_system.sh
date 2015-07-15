@@ -1,4 +1,5 @@
 #!/bin/bash
+scriptdir=$PWD;
 timestart=$(date +%s);
 filepath="system/priv-app/Settings/";
 filename="Settings.apk";
@@ -33,6 +34,7 @@ do
   read key;
 
   echo "";
+  $scriptdir/root_adb.sh;
   cd ./out/target/product/huashan/;
   adb push $filepath$filename /$filepath$filename;
   echo "";
