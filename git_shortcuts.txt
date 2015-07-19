@@ -5,7 +5,13 @@ exit;
 git add . -Av; git commit --amend --no-edit; git push -f;
 
 ===[ Repo Start ]===
-repo start cm-12.1 frameworks/base....
+git push -f AdrianDC cm-12.1;
+git fetch CyanogenMod cm-12.1; git reset FETCH_HEAD --hard;
+repo start cm-12.1 frameworks/base
+repo start cm-12.1 packages/apps/Settings
+repo start cm-12.1 hardware/libhardware
+git fetch AdrianDC cm-12.1; git reset FETCH_HEAD --hard; git log;
+git diff; repo upload .;
 
 ===[ Repo Patch ]===
 git fetch AdrianDC cm-12.1; git reset FETCH_HEAD --hard;
@@ -16,17 +22,20 @@ git add . -Av; git commit -s; repo upload .;
 git fetch origin master;
 git reset --hard FETCH_HEAD;
 
+===[ Commit Message ]===
+git add . -Av; git commit -s; echo Press Enter...; read key; git push -f AdrianDC cm-12.1;
+
 ===[ Commit Rework ]===
 git rebase HEAD~2 -i; echo Press Enter...; read key; git add . -Av; git commit --amend --no-edit; git rebase --continue;
 
 ===[ Rebase CyanogenMod ]
-git rebase HEAD~2 -i; git fetch CyanogenMod cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f origin cm-12.1;
+git rebase HEAD~5 -i; git fetch CyanogenMod cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1:cm
 
 ===[ Rebase GitHub ]
-git rebase HEAD~2 -i; git fetch github cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1;
+git rebase HEAD~5 -i; git fetch github cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1;
 
 ===[ Rebase Huashan ]
-git rebase HEAD~3 -i; git fetch source cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1;
+git rebase HEAD~5 -i; git fetch source cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1;
 
 ===[ Backup Regex ]===
 ^(.*?)$\s+?^(?=.*^\1$)

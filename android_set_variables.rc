@@ -1,0 +1,13 @@
+export AndroidDir="$PWD/Android";
+export GitHubDir="$PWD/GitHub";
+export TargetDir="$PWD/Target";
+
+export PhoneName="huashan";
+export OutDir="$AndroidDir/out/target/product/$PhoneName";
+
+export USE_CCACHE=1;
+export CCACHE_DIR=/media/adriandc/AndroidWork/CCache;
+export CCACHE_LOGFILE=/media/adriandc/AndroidWork/CCache/ccache.log;
+
+if [ -d "$HOME/bin" ]; then export PATH="$HOME/bin:$PATH"; fi;
+if [ -d "/usr/lib/ccache" ]; then export PATH="/usr/lib/ccache:$PATH"; fi;
