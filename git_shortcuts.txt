@@ -29,10 +29,11 @@ git add . -Av; git commit -s; echo Press Enter...; read key; git push -f AdrianD
 git rebase HEAD~2 -i; echo Press Enter...; read key; git add . -Av; git commit --amend --no-edit; git rebase --continue;
 
 ===[ Rebase CyanogenMod ]
-git rebase HEAD~5 -i; git fetch CyanogenMod cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1:cm
+git rebase HEAD~5 -i; git fetch CyanogenMod cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1:cm;
+git add . -Av; git commit --amend --no-edit; git push -f AdrianDC cm-12.1:cm;
 
 ===[ Rebase GitHub ]
-git rebase HEAD~5 -i; git fetch github cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1;
+git rebase HEAD~5 -i; git fetch github cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1:cm;
 
 ===[ Rebase Huashan ]
 git rebase HEAD~5 -i; git fetch source cm-12.1; git reset --hard FETCH_HEAD; git rebase --continue; git push -f AdrianDC cm-12.1;

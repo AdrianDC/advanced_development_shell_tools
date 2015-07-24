@@ -2,46 +2,57 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePath1="system/framework/";
-FileName1="framework-res.apk";
-FilePath2="system/priv-app/SettingsProvider/";
-FileName2="SettingsProvider.apk";
-FilePath3="system/lib/";
-FileName3="libandroid_servers.so";
-FilePath4="system/framework/";
-FileName4="services.jar";
-FilePath5="system/priv-app/SystemUI/";
-FileName5="SystemUI.apk";
-TargetDir="$Target";
+FilePaths=("system/framework/framework.jar" \
+           "system/framework/framework-res.apk" \
+           "system/framework/services.jar.jar" \
+           "system/lib/libandroid_servers.so" \
+           "system/lib/hw/lights.msm8960.so" \
+           "system/priv-app/SettingsProvider/SettingsProvider.apk" \
+           "system/priv-app/SystemUI/SystemUI.apk" \
+           );
+ModulesNames=("SettingsProvider" \
+              "SystemUI" \
+              "services.core" \
+              "services" \
+              "framework-res" \
+              "framework" \
+              );
 
-if [ -f $Target/$FileName1 ]; then rm $Target/$FileName1; fi;
-if [ -f $Target/$FileName2 ]; then rm $Target/$FileName2; fi;
-if [ -f $Target/$FileName3 ]; then rm $Target/$FileName3; fi;
-if [ -f $Target/$FileName4 ]; then rm $Target/$FileName4; fi;
-if [ -f $Target/$FileName5 ]; then rm $Target/$FileName5; fi;
-cd $AndroidDir/;
+for FilePath in ${FilePaths[*]}
+do
+  if [ -f $TargetDir/$FilePath ]; then rm $TargetDir/$FilePath; fi;
+done;
 
 echo "";
 echo " [ Making the requested libraries ]";
 echo "";
+cd $AndroidDir/;
 source ./build/envsetup.sh;
 croot;
 breakfast $PhoneName;
-mmm -j8 ./frameworks/base/core/res/;
-mmm -j8 ./frameworks/base/packages/SettingsProvider/;
-mmm -j8 ./frameworks/base/packages/SystemUI/;
-mmm -j8 ./frameworks/base/services/;
+mka -j 8 ${ModulesNames[*]} | tee $LogFile;
+InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
+echo "$InstallLog";
+echo "";
 
 TimeDiff=$(($(date +%s)-$TimeStart));
 if [ "$(ls -A $TargetDir)" ]; then
-  cp $OutDir/$FilePath1$FileName1 $TargetDir/$FileName1;
-  cp $OutDir/$FilePath2$FileName2 $TargetDir/$FileName2;
-  cp $OutDir/$FilePath3$FileName3 $TargetDir/$FileName3;
-  cp $OutDir/$FilePath4$FileName4 $TargetDir/$FileName4;
-  cp $OutDir/$FilePath5$FileName5 $TargetDir/$FileName5;
+  for FilePath in ${FilePaths[*]}
+  do
+    mkdir -p $(dirname $TargetDir/$FilePath);
+    cp $OutDir/$FilePath $TargetDir/$FilePath;
+  done;
 fi;
+
 echo "";
-echo "  \"adb push $FileName1 /$FilePath1$FileName1 & adb push $FileName2 /$FilePath2$FileName2 & adb push $FileName3 /$FilePath3$FileName3 & adb push $FileName4 /$FilePath4$FileName4 & adb push $FileName5 /$FilePath5$FileName5\"";
+printf "  Windows : \"adb root & adb wait-for-device & adb remount";
+for FilePath in ${FilePaths[*]}
+do
+  if [[ $InstallLog == *"$FilePath"* ]]; then
+    printf " & adb push $FilePath /$FilePath";
+  fi;
+done;
+echo " & pause & adb reboot\"";
 echo "";
 
 adbPush=1;
@@ -55,12 +66,12 @@ do
 
   echo "";
   $ScriptDir/android_root_adb.sh;
-  cd $OutDir/;
-  adb push $FilePath1$FileName1 /$FilePath1$FileName1;
-  adb push $FilePath2$FileName2 /$FilePath2$FileName2;
-  adb push $FilePath3$FileName3 /$FilePath3$FileName3;
-  adb push $FilePath4$FileName4 /$FilePath4$FileName4;
-  adb push $FilePath5$FileName5 /$FilePath5$FileName5;
+  for FilePath in ${FilePaths[*]}
+  do
+    if [[ $InstallLog == *"$FilePath"* ]]; then
+      adb push $OutDir/$FilePath /$FilePath;
+    fi;
+  done;
   if [ $? == 0 ]; then adbPush=0;
   else continue; fi;
 

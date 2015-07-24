@@ -23,7 +23,7 @@ do
     echo " [ Searching for '$pattern' ]";
     echo "";
     TimeStart=$(date +%s);
-    grep --include=\*.{java,c,cpp,h,sh,mk} -lr ./ -e "$pattern"
+    grep --include=\*.{java,c,cpp,h,sh,mk,xml} -lr ./ -e "$pattern"
     # n : show found line numbers / w : entire words / l : files matching / r : recursive
     TimeDiff=$(($(date +%s)-$TimeStart));
 

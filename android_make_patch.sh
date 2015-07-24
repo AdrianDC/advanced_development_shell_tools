@@ -2,8 +2,29 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePaths=("system/lib/hw/lights.msm8960.so");
-ModulesNames=("lights.msm8960");
+FilePaths=("system/framework/android.policy.jar" \
+           "system/framework/framework.jar" \
+           "system/framework/framework-res.apk" \
+           "system/framework/services.jar" \
+           "system/lib/libandroid_servers.so" \
+           "system/lib/libhardware.so" \
+           "system/lib/hw/lights.msm8960.so" \
+           "system/priv-app/Settings/Settings.apk" \
+           "system/priv-app/SettingsProvider/SettingsProvider.apk" \
+           "system/priv-app/SystemUI/SystemUI.apk" \
+           );
+ModulesNames=("libandroid_servers" \
+              "android.policy" \
+              "services" \
+              "services" \
+              "framework-res" \
+              "framework" \
+              "libhardware" \
+              "lights.msm8960" \
+              "Settings" \
+              "SettingsProvider" \
+              "SystemUI" \
+              );
 
 for FilePath in ${FilePaths[*]}
 do
@@ -63,6 +84,9 @@ do
   else continue; fi;
 
   echo "";
+  printf "  Press enter to reboot...";
+  read key;
+  echo "";
   echo " Rebooting...";
   sleep 5;
   adb reboot;
@@ -72,3 +96,4 @@ do
   echo "";
   read key;
 done;
+

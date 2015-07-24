@@ -2,26 +2,44 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePath="system/lib/";
-FileName="libhardware.so";
+FilePaths=("system/lib/libhardware.so");
+ModulesNames=("libhardware");
 
-if [ -f $Target/$FileName ]; then rm $Target/$FileName; fi;
-cd $AndroidDir/;
+for FilePath in ${FilePaths[*]}
+do
+  if [ -f $TargetDir/$FilePath ]; then rm $TargetDir/$FilePath; fi;
+done;
 
 echo "";
 echo " [ Making the requested libraries ]";
 echo "";
+cd $AndroidDir/;
 source ./build/envsetup.sh;
 croot;
 breakfast $PhoneName;
-mka -j8 libhardware;
+mka -j 8 ${ModulesNames[*]} | tee $LogFile;
+InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
+echo "$InstallLog";
+echo "";
 
 TimeDiff=$(($(date +%s)-$TimeStart));
 if [ "$(ls -A $TargetDir)" ]; then
-  cp $OutDir/$FilePath$FileName $TargetDir/$FileName;
+  for FilePath in ${FilePaths[*]}
+  do
+    mkdir -p $(dirname $TargetDir/$FilePath);
+    cp $OutDir/$FilePath $TargetDir/$FilePath;
+  done;
 fi;
+
 echo "";
-echo "  \"adb push $FileName /$FilePath$FileName\"";
+printf "  Windows : \"adb root & adb wait-for-device & adb remount";
+for FilePath in ${FilePaths[*]}
+do
+  if [[ $InstallLog == *"$FilePath"* ]]; then
+    printf " & adb push $FilePath /$FilePath";
+  fi;
+done;
+echo " & pause & adb reboot\"";
 echo "";
 
 adbPush=1;
@@ -35,8 +53,12 @@ do
 
   echo "";
   $ScriptDir/android_root_adb.sh;
-  cd $OutDir/;
-  adb push $FilePath$FileName /$FilePath$FileName;
+  for FilePath in ${FilePaths[*]}
+  do
+    if [[ $InstallLog == *"$FilePath"* ]]; then
+      adb push $OutDir/$FilePath /$FilePath;
+    fi;
+  done;
   if [ $? == 0 ]; then adbPush=0;
   else continue; fi;
 
