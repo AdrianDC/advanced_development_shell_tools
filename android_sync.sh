@@ -8,7 +8,7 @@ cd $AndroidDir/;
 echo "";
 echo " [ Syncing repositories ]";
 echo "";
-repo sync -j8 -f;
+repo sync -j8 -f --force-sync;
 echo "";
 
 TimeDiff=$(($(date +%s)-$TimeStart));
