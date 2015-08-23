@@ -6,7 +6,7 @@ source $ScriptDir/android_set_variables.rc;
 cd $AndroidDir/;
 
 echo "";
-echo " [ Cloning the remote repositories ]";
+echo " [ Syncing the remote repositories ]";
 echo "";
 echo "";
 
@@ -17,8 +17,8 @@ do
     echo " [ Start syncing ]";
     echo "";
 
-    repo sync -j8 -f device/sony/$PhoneName \
-                     ;
+    repo sync -j $BuildJobs -f device/oppo/msm8974-common \
+                               ;
 
     TimeDiff=$(($(date +%s)-$TimeStart));
     echo "";

@@ -12,13 +12,29 @@ source ./build/envsetup.sh;
 croot;
 echo "";
 
-echo "";
-echo " [ Building the branch ]";
-echo "";
-if [ -f $OutDir/system/build.prop ]; then rm -f $OutDir/system/build.prop; fi;
-breakfast $PhoneName;
-brunch $PhoneName;
-echo "";
+LaunchBuild=1;
+while [ $LaunchBuild != 0 ];
+do
+
+  echo "";
+  echo " [ Building the branch ]";
+  echo "";
+  if [ -f $OutDir/system/build.prop ]; then rm -f $OutDir/system/build.prop; fi;
+  breakfast $PhoneName;
+  brunch $PhoneName | tee $LogFile;
+  echo "";
+
+  if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then
+    LaunchBuild=0;
+  else
+    LaunchBuild=1;
+    printf " Press Enter to restart the build... ";
+    read key;
+    echo "";
+    echo "";
+  fi;
+
+done;
 
 rm -f $ANDROID_PRODUCT_OUT/cm_$PhoneName-ota-*.zip
 rm -f $ANDROID_PRODUCT_OUT/cm-*.zip.md5sum

@@ -3,6 +3,9 @@ export CCacheDir="$PWD/CCache";
 export GitHubDir="$PWD/GitHub";
 export TargetDir="$PWD/Target";
 
+export BuildJobs=8;
+export SwapFile="$PWD/../Install/memory.swap";
+
 export PhoneName="huashan";
 export OutDir="$AndroidDir/out/target/product/$PhoneName";
 

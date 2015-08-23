@@ -10,17 +10,35 @@ do
   if [ -f $TargetDir/$FilePath ]; then rm $TargetDir/$FilePath; fi;
 done;
 
-echo "";
-echo " [ Making the requested libraries ]";
-echo "";
 cd $AndroidDir/;
 source ./build/envsetup.sh;
 croot;
 breakfast $PhoneName;
-mka -j 8 ${ModulesNames[*]} | tee $LogFile;
-InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
-echo "$InstallLog";
-echo "";
+
+LaunchBuild=1;
+while [ $LaunchBuild != 0 ];
+do
+
+  echo "";
+  echo " [ Making the requested libraries ]";
+  echo "";
+  cd $AndroidDir/;
+  mka -j $BuildJobs ${ModulesNames[*]} | tee $LogFile;
+  InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
+  echo "$InstallLog";
+  echo "";
+
+  if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then
+    LaunchBuild=0;
+  else
+    LaunchBuild=1;
+    printf " Press Enter to restart the build... ";
+    read key;
+    echo "";
+    echo "";
+  fi;
+
+done;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
 if [ "$(ls -A $TargetDir)" ]; then

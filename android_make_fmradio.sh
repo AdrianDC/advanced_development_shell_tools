@@ -2,8 +2,8 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePaths=("system/lib/hw/lights.msm8960.so");
-ModulesNames=("lights.msm8960");
+FilePaths=("system/app/FM2/FM2.apk");
+ModulesNames=("FM2");
 
 for FilePath in ${FilePaths[*]}
 do
@@ -90,3 +90,4 @@ do
   echo "";
   read key;
 done;
+

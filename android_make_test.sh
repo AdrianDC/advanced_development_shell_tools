@@ -2,8 +2,10 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePaths=("system/lib/hw/lights.msm8960.so");
-ModulesNames=("lights.msm8960");
+FilePaths=("system/priv-app/HuashanDoze/HuashanDoze.apk" \
+           "system/libjni_huashanSensor.so");
+ModulesNames=("HuashanDoze" \
+              "libjni_huashanSensor");
 
 for FilePath in ${FilePaths[*]}
 do
@@ -23,7 +25,7 @@ do
   echo " [ Making the requested libraries ]";
   echo "";
   cd $AndroidDir/;
-  mka -j $BuildJobs ${ModulesNames[*]} | tee $LogFile;
+  mmm -B -j8 hardware/qcom/display-caf/msm8960/libhwcomposer | tee $LogFile;
   InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
   echo "$InstallLog";
   echo "";
@@ -90,3 +92,4 @@ do
   echo "";
   read key;
 done;
+

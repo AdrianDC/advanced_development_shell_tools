@@ -48,7 +48,7 @@ echo " [ Making the kernel zImage ]";
 echo "";
 #make mrproper clean;
 make cm_viskan_huashan_defconfig;
-make -j8;
+make -j $BuildJobs;
 if ! [ -a $zImageBuilt ]; then
   echo "";
   echo "  Kernel Compilation failed.";
