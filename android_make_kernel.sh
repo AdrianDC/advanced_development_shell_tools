@@ -2,7 +2,8 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePath="boot.img";
+KernelPath="boot.img";
+FilePaths=("system/lib/modules/");
 ModulesNames=("bootimage");
 
 if [ -f $TargetDir/$FilePath ]; then rm $TargetDir/$FilePath; fi;
@@ -37,27 +38,52 @@ done;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
 if [ "$(ls -A $TargetDir)" ]; then
-  cp $OutDir/$FilePath $TargetDir/$FilePath;
+  cp $OutDir/$KernelPath $TargetDir/$KernelPath;
 fi;
 
 echo "";
-echo "  \"fastboot flash boot $FilePath & fastboot reboot\"";
-echo "";
+echo "  \"fastboot flash boot $KernelPath & fastboot reboot\"";
 
 adbPush=1;
-while [ $adbPush ]
+while [ $adbPush != 0 ];
 do
   echo "";
-  echo " [ Upload new kernel - Bootloader USB ]";
   echo "";
+  echo " [ Upload new modules files - Debugging USB ]";
   echo "";
-  cd $OutDir/;
-  sudo fastboot flash boot $FilePath;
-  sudo fastboot reboot;
+  printf "  Press enter to continue...";
+  read key;
 
   echo "";
-  echo " [ Done in $TimeDiff secs ]";
-  echo "";
-  read key;
+  adbPush=0;
+  $ScriptDir/android_root_adb.sh;
+  OutDir=$AndroidDir/out/target/product/$PhoneName;
+  for FilePath in ${FilePaths[*]}
+  do
+    adb push $OutDir/$FilePath /$FilePath;
+    if [ $? != 0 ]; then adbPush=1; fi;
+  done;
+
+  if [ $adbPush == 0 ]; then
+    echo "";
+    echo " Rebooting to bootloader...";
+    echo "";
+    sleep 5;
+    adb reboot bootloader;
+  fi;
 done;
+
+echo "";
+echo "";
+echo " [ Upload new kernel - Bootloader USB ]";
+echo "";
+echo "";
+cd $OutDir/;
+sudo fastboot flash boot $KernelPath;
+sudo fastboot reboot;
+
+echo "";
+echo " [ Done in $TimeDiff secs ]";
+echo "";
+read key;
 

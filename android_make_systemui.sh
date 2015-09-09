@@ -61,7 +61,7 @@ echo " & pause & adb reboot\"";
 echo "";
 
 adbPush=1;
-while [ $adbPush ]
+while [ $adbPush != 0 ];
 do
   echo "";
   echo " [ Upload new library files - Recovery / USB / mount system ]";
@@ -70,24 +70,25 @@ do
   read key;
 
   echo "";
+  adbPush=0;
   $ScriptDir/android_root_adb.sh;
   for FilePath in ${FilePaths[*]}
   do
     if [[ $InstallLog == *"$FilePath"* ]]; then
       adb push $OutDir/$FilePath /$FilePath;
+      if [ $? != 0 ]; then adbPush=1; fi;
     fi;
   done;
-  if [ $? == 0 ]; then adbPush=0;
-  else continue; fi;
 
-  echo "";
-  echo " Rebooting...";
-  sleep 5;
-  adb reboot;
-
-  echo "";
-  echo " [ Done in $TimeDiff secs ]";
-  echo "";
-  read key;
+  if [ $adbPush == 0 ]; then
+    echo "";
+    echo " Rebooting...";
+    sleep 5;
+    adb reboot;
+    echo "";
+    echo " [ Done in $TimeDiff secs ]";
+    echo "";
+    read key;
+  fi;
 done;
 

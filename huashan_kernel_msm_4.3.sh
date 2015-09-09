@@ -55,7 +55,7 @@ echo "";
 
 # Final target
 if [ ! -z "$TargetDir" ]; then
-  cp $FilePath/$FileName $Target/$FileName;
+  cp $FilePath/$FileName $TargetDir/$FileName;
 fi;
 
 # End of build

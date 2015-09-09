@@ -1,15 +1,18 @@
-export AndroidDir="$PWD/Android";
-export CCacheDir="$PWD/CCache";
-export GitHubDir="$PWD/GitHub";
-export TargetDir="$PWD/Target";
+export AndroidDir="$PWD/Paths/Android";
+export CCacheDir="$PWD/Paths/CCache";
+export GitHubDir="$PWD/Paths/GitHub";
+export TargetDir="$PWD/Paths/Target";
 
 export BuildJobs=8;
-export SwapFile="$PWD/../Install/memory.swap";
+export SwapFile="$PWD/Paths/memory.swap";
+
+export UpstreamPrivate="AdrianDC";
 
 export PhoneName="huashan";
 export OutDir="$AndroidDir/out/target/product/$PhoneName";
 
 export LogFile="$ScriptDir/script_logs.txt";
+export SearchFile="$ScriptDir/search_logs.txt";
 
 export USE_CCACHE=1;
 export CCACHE_DIR=$CCacheDir;

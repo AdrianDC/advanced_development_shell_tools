@@ -2,10 +2,7 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePaths=("system/priv-app/HuashanDoze/HuashanDoze.apk" \
-           "system/libjni_huashanSensor.so");
-ModulesNames=("HuashanDoze" \
-              "libjni_huashanSensor");
+FilePaths=("charger_res_images");
 
 for FilePath in ${FilePaths[*]}
 do
@@ -25,7 +22,9 @@ do
   echo " [ Making the requested libraries ]";
   echo "";
   cd $AndroidDir/;
-  mmm -B -j8 hardware/qcom/display-caf/msm8960/libhwcomposer | tee $LogFile;
+  #mmm -B -j8 device/sony/huashan/liblights | tee $LogFile;
+  #mmm -B -j8 device/oppo/msm8974-common/liblight | tee $LogFile;
+  mka -j -B $BuildJobs "charger_res_images healthd" | tee $LogFile;
   InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
   echo "$InstallLog";
   echo "";
@@ -63,7 +62,7 @@ echo " & pause & adb reboot\"";
 echo "";
 
 adbPush=1;
-while [ $adbPush ]
+while [ $adbPush != 0 ];
 do
   echo "";
   echo " [ Upload new library files - Recovery / USB / mount system ]";
@@ -72,15 +71,15 @@ do
   read key;
 
   echo "";
+  adbPush=0;
   $ScriptDir/android_root_adb.sh;
   for FilePath in ${FilePaths[*]}
   do
     if [[ $InstallLog == *"$FilePath"* ]]; then
       adb push $OutDir/$FilePath /$FilePath;
+      if [ $? != 0 ]; then adbPush=1; fi;
     fi;
   done;
-  if [ $? == 0 ]; then adbPush=0;
-  else continue; fi;
 
   echo "";
   echo " Rebooting...";

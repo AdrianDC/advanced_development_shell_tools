@@ -5,9 +5,9 @@ source $ScriptDir/android_set_variables.rc;
 ProjectPaths=("frameworks/base" \
               "packages/apps/Settings" \
               "hardware/libhardware" \
-               #"device/sony/$PhoneName" \
+              #"device/sony/$PhoneName" \
               "hardware/sony/DASH" \
-              "kernel/sony/msm8x60" \
+              #"kernel/sony/msm8x60" \
               "vendor/sony" \
               );
 
@@ -22,7 +22,7 @@ do
   cd $AndroidDir/$ProjectPath;
   git fetch github cm-12.1;
   git rebase github/cm-12.1;
-  git push -f AdrianDC cm-12.1;
+  git push -f $UpstreamPrivate cm-12.1;
 
 done;
 
