@@ -2,7 +2,7 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePaths=("charger_res_images");
+FilePaths=("system/lib/hw/lights.msm8960.so");
 
 for FilePath in ${FilePaths[*]}
 do
@@ -22,9 +22,8 @@ do
   echo " [ Making the requested libraries ]";
   echo "";
   cd $AndroidDir/;
-  #mmm -B -j8 device/sony/huashan/liblights | tee $LogFile;
+  mmm -B -j8 device/sony/huashan/liblights | tee $LogFile;
   #mmm -B -j8 device/oppo/msm8974-common/liblight | tee $LogFile;
-  mka -j -B $BuildJobs "charger_res_images healthd" | tee $LogFile;
   InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
   echo "$InstallLog";
   echo "";

@@ -36,10 +36,10 @@ do
 
 done;
 
-rm -f $ANDROID_PRODUCT_OUT/cm_$PhoneName-ota-*.zip
-rm -f $ANDROID_PRODUCT_OUT/cm-*.zip.md5sum
+rm -f $ANDROID_PRODUCT_OUT/*$PhoneName-ota-*.zip
+rm -f $ANDROID_PRODUCT_OUT/*.zip.md5sum
 if [ "$(ls -A $TargetDir)" ]; then
-  cp $ANDROID_PRODUCT_OUT/cm-12.1-*-UNOFFICIAL-$PhoneName.zip $TargetDir/;
+  cp $ANDROID_PRODUCT_OUT/*-UNOFFICIAL*.zip $TargetDir/;
 fi;
 
 TimeDiff=$(($(date +%s)-$TimeStart));

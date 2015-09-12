@@ -2,6 +2,13 @@
 ScriptDir=$PWD;
 MainDir=$ScriptDir/..;
 TimeStart=$(date +%s);
+source $ScriptDir/android_set_variables.rc;
+
+FolderPaths=("CCache" \
+             "GitHub" \
+             "Scripts" \
+             "Scripts" \
+             );
 ProjectPaths=("frameworks/base" \
               "packages/apps/Settings" \
               "hardware/libhardware" \
@@ -23,35 +30,46 @@ fi;
 rm -f $ScriptDir/Paths;
 ln -dfsv $MainDir/Paths/ $ScriptDir/Paths;
 
-rm -f $MainDir/Paths/AICP;
-ln -fsv $MainDir/AICP/ $MainDir/Paths/AICP;
-
-rm -f $MainDir/Paths/Android;
-ln -fsv $MainDir/Android/ $MainDir/Paths/Android;
-
-rm -f $MainDir/Paths/CCache;
-ln -fsv $MainDir/CCache/ $MainDir/Paths/CCache;
-
-rm -f $MainDir/Paths/GitHub;
-ln -fsv $MainDir/GitHub/ $MainDir/Paths/GitHub;
-
-rm -f $MainDir/Paths/Scripts;
-ln -fsv $MainDir/Scripts/ $MainDir/Paths/Scripts;
-
-rm -f $MainDir/Paths/Target;
-ln -fsv /home/adriandc/Bureau/ $MainDir/Paths/Target;
-
-rm -f $MainDir/Paths/Output;
-ln -fsv $MainDir/Android/out/target/product/huashan/ $MainDir/Paths/Output;
-
-for ProjectPath in ${ProjectPaths[*]}
+for FolderPath in ${FolderPaths[*]}
 do
 
-  LinkFile=${ProjectPath##*/};
-  rm -f $MainDir/Paths/$LinkFile;
-  ln -fsv $MainDir/Android/$ProjectPath/ $MainDir/Paths/$LinkFile;
+  rm -f $MainDir/Paths/$FolderPath;
+  ln -fsv $MainDir/$FolderPath/ $MainDir/Paths/$FolderPath;
 
 done;
+
+for AndroidROM in ${AndroidROMs[*]}
+do
+
+  if [ ! -d $MainDir/Paths/$AndroidROM ]; then
+    mkdir $MainDir/Paths/$AndroidROM;
+  fi;
+
+  rm -f $MainDir/Paths/$AndroidROM/Repo;
+  ln -fsv $MainDir/$AndroidROM $MainDir/Paths/$AndroidROM/Repo;
+
+  for ProjectPath in ${ProjectPaths[*]}
+  do
+
+    LinkFile=${ProjectPath##*/};
+    rm -f $MainDir/Paths/$AndroidROM/$LinkFile;
+    ln -fsv $MainDir/$AndroidROM/$ProjectPath/ $MainDir/Paths/$AndroidROM/$LinkFile;
+
+  done;
+
+  rm -f $MainDir/Paths/$AndroidROM/ManifestROM.xml;
+  ln -fsv $MainDir/$AndroidROM/.repo/manifest.xml $MainDir/Paths/$AndroidROM/ManifestROM.xml;
+
+  rm -f $MainDir/Paths/$AndroidROM/ManifestLocal.xml;
+  ln -fsv $MainDir/$AndroidROM/.repo/local_manifests/*.xml $MainDir/Paths/$AndroidROM/ManifestLocal.xml;
+
+  rm -f $MainDir/Paths/$AndroidROM/Output;
+  ln -fsv $MainDir/$AndroidROM/out/target/product/huashan/ $MainDir/Paths/$AndroidROM/Output;
+
+done;
+
+rm -f $MainDir/Paths/Target;
+ln -fsv $(xdg-user-dir DESKTOP) $MainDir/Paths/Target;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
 echo "";

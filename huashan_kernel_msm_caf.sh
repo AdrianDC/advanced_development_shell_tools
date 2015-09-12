@@ -26,84 +26,89 @@ if [ -f $zImageFile ]; then rm -f $zImageFile; fi;
 if [ -f $FilePath/$FileName ]; then rm -f $FilePath/$FileName; fi;
 if [ -f $TargetDir/$FileName ]; then rm -f $TargetDir/$FileName; fi;
 
-# Loop until it builds
-while [ ! -f $zImageFile ];
+while [ 1 ];
 do
 
-  # Clear the console
-  clear;
-  echo -e \\033c;
+  # Loop until it builds
+  while [ ! -f $zImageFile ];
+  do
 
-  # Update the sources
-  #echo "";
-  #echo " [ Updating the sources ]";
-  #echo "";
-  #if [ -d $KernelFolder ]; then
-    #cd $KernelFolder/;
-    #git remote rm origin >/dev/null >/dev/null 2>&1;
-    #git remote add origin $KernelRepository;
-    #git fetch origin $KernelBranch;
-    #git reset --hard FETCH_HEAD;
-  #else
-    #cd $GitHubDir/;
-    #git clone $KernelRepository;
-    #cd $KernelFolder/;
-  #fi;
+    # Clear the console
+    clear;
+    echo -e \\033c;
 
-  # Make the kernel zImage
-  cd $KernelFolder/;
-  echo "";
-  echo " [ Making the kernel zImage ]";
-  echo "";
-  #make mrproper clean;
-  make cm_viskan_huashan_defconfig;
-  make -j $BuildJobs --ignore-errors;
-  if ! [ -a $zImageBuilt ]; then
+    # Update the sources
+    #echo "";
+    #echo " [ Updating the sources ]";
+    #echo "";
+    #if [ -d $KernelFolder ]; then
+      #cd $KernelFolder/;
+      #git remote rm origin >/dev/null >/dev/null 2>&1;
+      #git remote add origin $KernelRepository;
+      #git fetch origin $KernelBranch;
+      #git reset --hard FETCH_HEAD;
+    #else
+      #cd $GitHubDir/;
+      #git clone $KernelRepository;
+      #cd $KernelFolder/;
+    #fi;
+
+    # Make the kernel zImage
+    cd $KernelFolder/;
     echo "";
-    echo "  [ Kernel Compilation failed ]";
+    echo " [ Making the kernel zImage ]";
     echo "";
-    printf "   Press Enter to try again... ";
-    read key;
-    continue;
-  else
-    cp $zImageBuilt $zImageFile;
+    #make mrproper clean;
+    make cm_viskan_huashan_defconfig;
+    make -j $BuildJobs --ignore-errors;
+    if ! [ -a $zImageBuilt ]; then
+      echo "";
+      echo "  [ Kernel Compilation failed ]";
+      echo "";
+      printf "   Press Enter to try again... ";
+      read key;
+      continue;
+    else
+      cp $zImageBuilt $zImageFile;
+    fi;
+
+    # Make the kernel boot.img
+    echo "";
+    echo " [ Make the kernel boot.img ]";
+    echo "";
+    cd $KernelBuilder/;
+    if [ -f $FilePath/$FileName ]; then rm $FilePath/$FileName; fi;
+    python ./mkelf.py -o $FilePath/$FileName zImage@$BOARD_KERNEL_BASE ramdisk.img@$BOARD_KERNEL_RAMDISK,ramdisk RPM.bin@$BOARD_KERNEL_RPM,rpm cmdline.txt@cmdline
+    echo "  \"fastboot flash boot $FileName & fastboot reboot\"";
+    echo "";
+
+  done;
+
+  # Final target
+  if [ ! -z "$TargetDir" ]; then
+    cp $FilePath/$FileName $TargetDir/$FileName;
   fi;
 
-  # Make the kernel boot.img
+  # End of build
+  TimeDiff=$(($(date +%s)-$TimeStart));
   echo "";
-  echo " [ Make the kernel boot.img ]";
-  echo "";
-  cd $KernelBuilder/;
-  if [ -f $FilePath/$FileName ]; then rm $FilePath/$FileName; fi;
-  python ./mkelf.py -o $FilePath/$FileName zImage@$BOARD_KERNEL_BASE ramdisk.img@$BOARD_KERNEL_RAMDISK,ramdisk RPM.bin@$BOARD_KERNEL_RPM,rpm cmdline.txt@cmdline
-  echo "  \"fastboot flash boot $FileName & fastboot reboot\"";
+  echo " [ Done in $TimeDiff secs ]";
   echo "";
 
-done;
+  # Flash the kernel
+  while [ 1 ];
+  do
+    echo "";
+    echo " [ Upload new kernel - Bootloader USB ]";
+    echo "";
+    sudo fastboot flash boot $FilePath/$FileName;
+    sudo fastboot reboot;
 
-# Final target
-if [ ! -z "$TargetDir" ]; then
-  cp $FilePath/$FileName $TargetDir/$FileName;
-fi;
+    echo "";
+    echo " [ Done ]";
+    echo "";
+    read key;
+  done;
 
-# End of build
-TimeDiff=$(($(date +%s)-$TimeStart));
-echo "";
-echo " [ Done in $TimeDiff secs ]";
-echo "";
-
-# Flash the kernel
-while [ 1 ]
-do
-  echo "";
-  echo " [ Upload new kernel - Bootloader USB ]";
-  echo "";
-  sudo fastboot flash boot $FilePath/$FileName;
-  sudo fastboot reboot;
-
-  echo "";
-  echo " [ Done ]";
-  echo "";
-  read key;
 done;
 

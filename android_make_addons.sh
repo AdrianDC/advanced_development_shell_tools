@@ -21,6 +21,8 @@ FilePaths=(\
            "system/priv-app/SystemUI/SystemUI.apk" \
            "system/priv-app/Telecom/Telecom.apk" \
            "system/lib/hw/lights.msm8960.so" \
+           "system/etc/media_codecs.xml" \
+           "system/etc/media_profiles.xml" \
            );
 ModulesNames=(\
               "bootimage" \
@@ -99,7 +101,7 @@ echo "";
 echo " [ Building the new zip ]";
 echo "";
 
-cp $ScriptDir/addons_template.zip $TargetDir/$AddonsFile.unsigned.zip;
+cp $ScriptDir/android_files/addons_template.zip $TargetDir/$AddonsFile.unsigned.zip;
 zip -g $TargetDir/$AddonsFile.unsigned.zip $FilesList;
 SignApkDir=$ScriptDir/android_signapk;
 java -jar $SignApkDir/signapk-cm121.jar -w $SignApkDir/testkey.x509.pem $SignApkDir/testkey.pk8 $TargetDir/$AddonsFile.unsigned.zip $TargetDir/$AddonsFile;

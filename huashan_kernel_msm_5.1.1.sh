@@ -82,7 +82,7 @@ echo " [ Done in $TimeDiff secs ]";
 echo "";
 
 # Flash the kernel
-while [ 1 ]
+while [ 1 ];
 do
   echo "";
   echo " [ Upload new kernel - Bootloader USB ]";

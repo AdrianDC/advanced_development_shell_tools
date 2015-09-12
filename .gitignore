@@ -3,4 +3,6 @@ script_logs.txt
 search_logs.txt
 android_make_test.sh
 android_syncmanual.sh
+android_set_target.rc
+android_set_variables.rc
 

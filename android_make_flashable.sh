@@ -13,7 +13,7 @@ echo " [ Building the flashable zip ]";
 echo "";
 
 cd $TargetDir/;
-cp $ScriptDir/flashable_template.zip ./$TargetFile.unsigned.zip;
+cp $ScriptDir/android_files/flashable_template.zip ./$TargetFile.unsigned.zip;
 zip -g -r $TargetDir/$TargetFile.unsigned.zip ./system;
 SignApkDir=$ScriptDir/android_signapk;
 java -jar $SignApkDir/signapk-cm121.jar -w $SignApkDir/testkey.x509.pem $SignApkDir/testkey.pk8 ./$TargetFile.unsigned.zip ./$TargetFile;
