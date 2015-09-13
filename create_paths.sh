@@ -20,6 +20,13 @@ ProjectPaths=("frameworks/base" \
 
 echo "";
 echo "";
+echo " [ Updating scripts to executables ]";
+echo "";
+
+chmod -v +x $ScriptDir/*.sh;
+
+echo "";
+echo "";
 echo " [ Linking paths ]";
 echo "";
 

@@ -8,7 +8,7 @@ cd $AndroidDir/;
 echo "";
 echo " [ CCache ]";
 echo "";
-./prebuilts/misc/linux-x86/ccache/ccache -M 80G;
+./prebuilts/misc/linux-x86/ccache/ccache -M $CCacheSize;
 echo "";
 
 watch -d ./prebuilts/misc/linux-x86/ccache/ccache -s;

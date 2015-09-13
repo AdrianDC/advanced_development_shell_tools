@@ -7,12 +7,14 @@ if [ -f $ScriptDir/android_set_target.rc ]; then
   source $ScriptDir/android_set_target.rc;
 fi;
 
-export AndroidDir="$PWD/Paths/$AndroidROM/Repo";
-export CCacheDir="$PWD/Paths/CCache";
-export GitHubDir="$PWD/Paths/GitHub";
-export TargetDir="$PWD/Paths/Target";
+export PathsDir="$PWD/Paths";
+export AndroidDir="$PathsDir/$AndroidROM/Repo";
+export CCacheDir="$PathsDir/CCache";
+export GitHubDir="$PathsDir/GitHub";
+export TargetDir="$PathsDir/Target";
 
 export BuildJobs=8;
+export CCacheSize=80G;
 export SwapFile="$PWD/Paths/memory.swap";
 export SwapSize=$((4*1024*1024));
 
