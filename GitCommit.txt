@@ -1,0 +1,4 @@
+git push -v ssh://AdrianDC@gerrit.aicp-rom.com:29418/AICP/hardware/libhardware HEAD:refs/for/lp5.1
+git push -v ssh://AdrianDC@gerrit.aicp-rom.com:29418/AICP/frameworks_base HEAD:refs/for/lp5.1
+git push -v ssh://AdrianDC@gerrit.aicp-rom.com:29418/AICP/packages_apps_Settings HEAD:refs/for/lp5.1
+

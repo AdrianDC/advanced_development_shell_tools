@@ -13,13 +13,16 @@ FilePaths=(\
            "system/framework/telephony-common.jar" \
            "system/framework/wifi-service.jar" \
            "system/lib/libandroid_servers.so" \
+           "system/lib/libaudiopolicyservice.so" \
            "system/lib/libhardware.so" \
+           "system/app/InCallUI/InCallUI.apk" \
            "system/priv-app/Dialer/Dialer.apk" \
            "system/priv-app/SensorsDoze/SensorsDoze.apk" \
            "system/priv-app/Settings/Settings.apk" \
            "system/priv-app/SettingsProvider/SettingsProvider.apk" \
            "system/priv-app/SystemUI/SystemUI.apk" \
            "system/priv-app/Telecom/Telecom.apk" \
+           #"system/priv-app/TeleService/TeleService.apk" \
            "system/lib/hw/lights.msm8960.so" \
            "system/etc/media_codecs.xml" \
            "system/etc/media_profiles.xml" \
@@ -28,8 +31,10 @@ ModulesNames=(\
               "bootimage" \
               "libandroid_servers" \
               "android.policy" \
+              "libaudiopolicyservice" \
               "org.cyanogenmod.hardware" \
               "services" \
+              "services.core" \
               "framework-res" \
               "framework" \
               "sepolicy" \
@@ -37,12 +42,14 @@ ModulesNames=(\
               "telephony-common" \
               "wifi-service" \
               "libhardware" \
+              "InCallUI" \
               "Dialer" \
               "SensorsDoze" \
               "Settings" \
               "SettingsProvider" \
               "SystemUI" \
               "Telecom" \
+              #"TeleService" \
               "lights.msm8960" \
               );
 AddonsFile="addons-cm-12.1-"$(date +'%Y%m%d')"-NIGHTLY-huashan.zip";
@@ -64,9 +71,7 @@ do
   echo " [ Making the requested libraries ]";
   echo "";
   cd $AndroidDir/;
-  if [[ "$1" == "" ]]; then
-    mka -j 4 ${ModulesNames[*]} | tee $LogFile;
-  fi;
+  mka -j $BuildJobs ${ModulesNames[*]} | tee $LogFile;
 
   LogMemory=$(grep "make: fork" $LogFile | sort | uniq);
   LogFail=$(grep "fail" $LogFile | sort | uniq);

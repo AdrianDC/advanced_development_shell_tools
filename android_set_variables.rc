@@ -1,10 +1,15 @@
-AndroidROM=CyanogenMod;
+export AndroidROM="CyanogenMod";
 export AndroidROMs=("CyanogenMod" \
                     "AICP" \
                     );
+export GitEMail="";
+export GitUserName="";
 
 if [ -f $ScriptDir/android_set_target.rc ]; then
   source $ScriptDir/android_set_target.rc;
+fi;
+if [ -f $ScriptDir/android_set_user.rc ]; then
+  source $ScriptDir/android_set_user.rc;
 fi;
 
 export PathsDir="$PWD/Paths";
@@ -17,8 +22,6 @@ export BuildJobs=8;
 export CCacheSize=80G;
 export SwapFile="$PWD/Paths/memory.swap";
 export SwapSize=$((4*1024*1024));
-
-export UpstreamPrivate="AdrianDC";
 
 export PhoneName="huashan";
 export OutDir="$AndroidDir/out/target/product/$PhoneName";

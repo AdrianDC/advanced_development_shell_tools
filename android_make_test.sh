@@ -2,7 +2,8 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePaths=("system/lib/hw/lights.msm8960.so");
+FilePaths=("system/vendor/lib/hw/lights.msm8960.so");
+FilePaths=("system/priv-app/Dialer/Dialer.apk");
 
 for FilePath in ${FilePaths[*]}
 do
@@ -22,7 +23,11 @@ do
   echo " [ Making the requested libraries ]";
   echo "";
   cd $AndroidDir/;
-  mmm -B -j8 device/sony/huashan/liblights | tee $LogFile;
+  #mka -j $BuildJobs com.android.phone.common | tee $LogFile;
+  mka -B -j $BuildJobs Dialer | tee $LogFile;
+  #mmm -B -j8 device/sony/huashan/liblights | tee $LogFile;
+  #mmm -B -j8 device/sony/nicki/liblights | tee $LogFile;
+  #mmm -B -j8 device/moto/shamu/liblights | tee $LogFile;
   #mmm -B -j8 device/oppo/msm8974-common/liblight | tee $LogFile;
   InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
   echo "$InstallLog";
@@ -41,6 +46,14 @@ do
 done;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
+for FilePath in "$InstallLog"
+do
+  FilePath=$(printf "$FilePath" | tr -d '[:cntrl:]' | sed "s/.*$PhoneName\([^\[]*\)/\1/g");
+  echo "aaa $FilePath";
+  #mkdir -p $(dirname $TargetDir/$FilePath);
+  #cp $OutDir/$FilePath $TargetDir/$FilePath;
+done;
+
 if [ "$(ls -A $TargetDir)" ]; then
   for FilePath in ${FilePaths[*]}
   do

@@ -17,7 +17,8 @@ do
     echo " [ Start syncing ]";
     echo "";
 
-    repo sync -j $BuildJobs -f kernel/sony/msm8x60 \
+    repo sync -j $BuildJobs -f device/sony/nicki \
+                               device/moto/shamu \
                                ;
 
     TimeDiff=$(($(date +%s)-$TimeStart));

@@ -1,0 +1,56 @@
+gitdir=$(git rev-parse --git-dir); scp -p -P 29418 AdrianDC@gerrit.aicp-rom.com:hooks/commit-msg ${gitdir}/hooks/
+git commit --amend
+
+ssh-keygen -t rsa -C "radian.dc@gmail.com"
+
+eval `ssh-agent -s`
+ssh-add ~/.ssh/id_rsa
+ssh-add
+
+git fetch origin lp5.1;
+git rebase origin/lp5.1;
+git log;
+
+ssh -vv -p 29418 AdrianDC@review.cyanogenmod.org
+ssh -vv -p 29418 AdrianDC@gerrit.aicp-rom.com
+
+git push ssh://AdrianDC@gerrit.aicp-rom.com:29418/AICP/device_sony_huashan HEAD:refs/for/lp5.1
+git push ssh://AdrianDC@gerrit.aicp-rom.com:29418/AICP/frameworks_base HEAD:refs/for/lp5.1
+git push ssh://AdrianDC@gerrit.aicp-rom.com:29418/AICP/hardware_libhardware HEAD:refs/for/lp5.1
+git push ssh://AdrianDC@gerrit.aicp-rom.com:29418/AICP/packages_apps_Settings HEAD:refs/for/lp5.1
+
+git push ssh://AdrianDC@review.cyanogenmod.org:29418/CyanogenMod/android_device_sony_huashan HEAD:refs/for/cm-12.1
+git push ssh://AdrianDC@review.cyanogenmod.org:29418/CyanogenMod/android_frameworks_base HEAD:refs/for/cm-12.1
+git push ssh://AdrianDC@review.cyanogenmod.org:29418/CyanogenMod/android_hardware_libhardware HEAD:refs/for/cm-12.1
+git push ssh://AdrianDC@review.cyanogenmod.org:29418/CyanogenMod/android_packages_apps_Settings HEAD:refs/for/cm-12.1
+
+git push https://AdrianDC@review.cyanogenmod.org:29418/android_hardware_libhardware HEAD:refs/for/cm-12.1
+
+git fetch http://review.cyanogenmod.org/CyanogenMod/android_device_sony_huashan refs/changes/18/103718/12 -n; git cherry-pick FETCH_HEAD; git reset; git add -p; git commit;
+
+git config --global rerere.enabled 1
+
+git config --global mergetool.keepBackup false
+
+sudo swapon /media/adriandc/FlyingWork/Install/memory.swap
+
+
+adb shell dumpsys package r > ~/Bureau/intents.txt
+
+git remote -v
+git branch -r | grep origin/ | grep -v master | grep -v HEAD| cut -d/ -f2
+git branch -r | grep origin/ | grep -v master | grep -v HEAD| cut -d/ -f2 | while read line; do git push origin :$line; done;
+
+
+cat android_kernel_qcom_msm.git | grep "href=\"/AdrianDC/android_kernel_qcom_msm/tree/" | cut -d/ -f5 | cut -d\" -f1 | while read line; do git push origin :$line; done;
+
+git tag -l | xargs git tag -d
+
+git ls-remote --tags AdrianDC | cut -f 2 | cut -d^ -f 1 | xargs -L 1 -I {} git push AdrianDC :{}
+
+git ls-remote --tags github | cut -f 2 | cut -d^ -f 1 | awk '{print ":"$0}' | uniq | xargs git push github
+
+
+ps -A | grep meld | cut -d\  -f 1 | xargs kill
+
+

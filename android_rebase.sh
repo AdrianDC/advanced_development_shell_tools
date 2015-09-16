@@ -5,7 +5,7 @@ source $ScriptDir/android_set_variables.rc;
 ProjectPaths=("frameworks/base" \
               "packages/apps/Settings" \
               "hardware/libhardware" \
-              #"device/sony/$PhoneName" \
+              "device/sony/$PhoneName" \
               "hardware/sony/DASH" \
               #"kernel/sony/msm8x60" \
               "vendor/sony" \
@@ -22,7 +22,9 @@ do
   cd $AndroidDir/$ProjectPath;
   git fetch github cm-12.1;
   git rebase github/cm-12.1;
-  git push -f $UpstreamPrivate cm-12.1;
+  if [[ "$1" == "" ]]; then
+    git push -f $GitUserName cm-12.1;
+  fi;
 
 done;
 
@@ -31,5 +33,7 @@ echo "";
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-read key;
+if [[ "$1" == "" ]]; then
+  read key;
+fi;
 
