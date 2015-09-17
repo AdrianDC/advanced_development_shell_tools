@@ -20,9 +20,6 @@ mkdir ~/bin
 curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 chmod a+x ~/bin/repo
 
-git config --global user.name "$GitEMail"
-git config --global user.email "$GitUserName"
-
 echo "";
 echo "";
 echo " [ Copy, Paste & Adapt these lines at the end of .bashrc ]";

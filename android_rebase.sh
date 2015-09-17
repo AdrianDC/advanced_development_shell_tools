@@ -23,7 +23,7 @@ do
   git fetch github cm-12.1;
   git rebase github/cm-12.1;
   if [[ "$1" == "" ]]; then
-    git push -f $GitUserName cm-12.1;
+    git push -f $GitUserName HEAD:cm-12.1;
   fi;
 
 done;
@@ -36,4 +36,5 @@ echo "";
 if [[ "$1" == "" ]]; then
   read key;
 fi;
+echo "";
 

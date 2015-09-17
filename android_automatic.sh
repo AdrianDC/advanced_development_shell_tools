@@ -1,15 +1,16 @@
 #!/bin/bash
 ScriptDir=$PWD;
-TimeStart=$(date +%s);
+FullTimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
 
-$ScriptDir/android_rebase.sh "automatic";
-$ScriptDir/android_sync.sh "automatic";
-$ScriptDir/android_make_addons.sh "automatic";
+source $ScriptDir/android_rebase.sh "automatic";
+source $ScriptDir/android_sync.sh "automatic";
+source $ScriptDir/android_make_addons.sh "automatic";
+source $ScriptDir/android_server_upload.sh $AndroidResult "automatic";
 
-TimeDiff=$(($(date +%s)-$TimeStart));
+FullTimeDiff=$(($(date +%s)-$FullTimeStart));
 echo "";
-echo " [ Done in $TimeDiff secs ]";
+echo " [ Done in $FullTimeDiff secs ]";
 echo "";
 nautilus $ANDROID_PRODUCT_OUT >/dev/null 2>&1;
 read key;

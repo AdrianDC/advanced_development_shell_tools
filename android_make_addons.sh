@@ -112,6 +112,8 @@ SignApkDir=$ScriptDir/android_signapk;
 java -jar $SignApkDir/signapk-cm121.jar -w $SignApkDir/testkey.x509.pem $SignApkDir/testkey.pk8 $TargetDir/$AddonsFile.unsigned.zip $TargetDir/$AddonsFile;
 rm -f $TargetDir/$AddonsFile.unsigned.zip;
 
+export AndroidResult=$TargetDir/$AddonsFile;
+
 echo "";
 echo "  $AddonsFile created.";
 echo "";
@@ -120,5 +122,8 @@ TimeDiff=$(($(date +%s)-$TimeStart));
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-read key;
+if [[ "$1" == "" ]]; then
+  read key;
+fi;
+echo "";
 

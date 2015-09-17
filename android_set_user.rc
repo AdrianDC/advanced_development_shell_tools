@@ -1,3 +1,8 @@
 export GitEMail="user@domain.dot";
 export GitUserName="Username";
 
+export FTPPort="21";
+export FTPServer="uploads.androidfilehost.com";
+export FTPUserName="Username";
+export FTPPassword="Password";
+

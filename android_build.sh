@@ -48,4 +48,8 @@ echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
 nautilus $ANDROID_PRODUCT_OUT >/dev/null 2>&1;
-read key;
+if [[ "$1" == "" ]]; then
+  read key;
+fi;
+echo "";
+
