@@ -18,4 +18,5 @@ echo "";
 if [[ "$2" == "" ]]; then
   read key;
 fi;
+echo "";
 

@@ -20,11 +20,9 @@ do
   echo "";
 
   cd $AndroidDir/$ProjectPath;
-  git fetch github cm-12.1;
-  git rebase github/cm-12.1;
-  if [[ "$1" == "" ]]; then
-    git push -f $GitUserName HEAD:cm-12.1;
-  fi;
+  git fetch origin cm-12.1;
+  git rebase origin/cm-12.1;
+  git push -f $GitUserName HEAD:cm-12.1;
 
 done;
 

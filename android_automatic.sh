@@ -1,12 +1,19 @@
 #!/bin/bash
-ScriptDir=$PWD;
+ScriptsDir=$PWD;
 FullTimeStart=$(date +%s);
-source $ScriptDir/android_set_variables.rc;
+source $ScriptsDir/android_set_variables.rc;
 
-source $ScriptDir/android_rebase.sh "automatic";
-source $ScriptDir/android_sync.sh "automatic";
-source $ScriptDir/android_make_addons.sh "automatic";
-source $ScriptDir/android_server_upload.sh $AndroidResult "automatic";
+cd $ScriptsDir/;
+source $ScriptsDir/android_rebase.sh "automatic";
+
+cd $ScriptsDir/;
+source $ScriptsDir/android_sync.sh "automatic";
+
+cd $ScriptsDir/;
+source $ScriptsDir/android_make_addons.sh "automatic";
+
+cd $ScriptsDir/;
+source $ScriptsDir/android_server_upload.sh $AndroidResult "automatic";
 
 FullTimeDiff=$(($(date +%s)-$FullTimeStart));
 echo "";
