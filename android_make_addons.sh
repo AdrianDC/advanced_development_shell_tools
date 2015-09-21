@@ -22,10 +22,16 @@ FilePaths=(\
            "system/priv-app/SettingsProvider/SettingsProvider.apk" \
            "system/priv-app/SystemUI/SystemUI.apk" \
            "system/priv-app/Telecom/Telecom.apk" \
-           #"system/priv-app/TeleService/TeleService.apk" \
            "system/lib/hw/lights.msm8960.so" \
+           "system/vendor/lib/hw/power.qcom.so" \
            "system/etc/media_codecs.xml" \
            "system/etc/media_profiles.xml" \
+           "system/bin/surfaceflinger" \
+           "system/lib/libRS.so" \
+           "system/lib/libRSCpuRef.so" \
+           "system/lib/libRSDriver.so" \
+           "system/lib/libsurfaceflinger.so" \
+           "system/lib/libsurfaceflinger_ddmconnection.so" \
            );
 ModulesNames=(\
               "bootimage" \
@@ -49,10 +55,16 @@ ModulesNames=(\
               "SettingsProvider" \
               "SystemUI" \
               "Telecom" \
-              #"TeleService" \
               "lights.msm8960" \
+              "power.qcom" \
+              "surfaceflinger" \
+              "libRS" \
+              "libRSCpuRef" \
+              "libRSDriver" \
+              "libsurfaceflinger" \
+              "libsurfaceflinger_ddmconnection" \
               );
-AddonsFile="addons-cm-12.1-"$(date +'%Y%m%d')"-NIGHTLY-huashan.zip";
+AddonsFile="addons-cm-12.1-"$(date +'%Y%m%d')"-NIGHTLY-$PhoneName.zip";
 
 if [ -f $TargetDir/$AddonsFile ]; then
   rm -f $TargetDir/$AddonsFile;
@@ -88,7 +100,11 @@ do
   else
     LaunchBuild=1;
     printf " Press Enter to restart the build... ";
-    read key;
+    if [[ "$1" == "" ]]; then
+      read key;
+    else
+      exit;
+    fi;
     echo "";
     echo "";
   fi;

@@ -3,10 +3,11 @@ ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
 KernelPath="boot.img";
-FilePaths=("system/lib/modules/");
+FilePaths=("system/lib/modules/*");
 ModulesNames=("bootimage");
+KernelFile="kernel-"$(date +'%Y%m%d')"-$PhoneName.zip";
 
-if [ -f $TargetDir/$FilePath ]; then rm $TargetDir/$FilePath; fi;
+if [ -f $TargetDir/$KernelFile ]; then rm -f $TargetDir/$KernelFile; fi;
 
 cd $AndroidDir/;
 source ./build/envsetup.sh;
@@ -37,12 +38,27 @@ do
 done;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
-if [ "$(ls -A $TargetDir)" ]; then
-  cp $OutDir/$KernelPath $TargetDir/$KernelPath;
-fi;
+echo "  \"fastboot flash boot $KernelPath & fastboot reboot\"";
+echo "";
 
 echo "";
-echo "  \"fastboot flash boot $KernelPath & fastboot reboot\"";
+echo " [ Building the new zip ]";
+echo "";
+
+cd $OutDir;
+FilesList="./$KernelPath ";
+for FilePath in ${FilePaths[*]}
+do
+  FilesList="$FilesList ./$FilePath";
+done;
+
+cp $ScriptDir/android_files/kernel_template.zip $TargetDir/$KernelFile.unsigned.zip;
+zip -g $TargetDir/$KernelFile.unsigned.zip $FilesList;
+SignApkDir=$ScriptDir/android_signapk;
+java -jar $SignApkDir/signapk-cm121.jar -w $SignApkDir/testkey.x509.pem $SignApkDir/testkey.pk8 $TargetDir/$KernelFile.unsigned.zip $TargetDir/$KernelFile;
+rm -f $TargetDir/$KernelFile.unsigned.zip;
+
+export AndroidResult=$TargetDir/$KernelFile;
 
 adbPush=1;
 while [ $adbPush != 0 ];

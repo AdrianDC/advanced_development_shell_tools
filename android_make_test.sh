@@ -2,8 +2,9 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePaths=("system/vendor/lib/hw/lights.msm8960.so");
-FilePaths=("system/priv-app/Dialer/Dialer.apk");
+#FilePaths=("system/vendor/lib/hw/lights.msm8960.so");
+#FilePaths=("system/priv-app/Dialer/Dialer.apk");
+FilePaths=("system/vendor/lib/hw/power.qcom/so");
 
 for FilePath in ${FilePaths[*]}
 do
@@ -24,7 +25,8 @@ do
   echo "";
   cd $AndroidDir/;
   #mka -j $BuildJobs com.android.phone.common | tee $LogFile;
-  mka -B -j $BuildJobs Dialer | tee $LogFile;
+  #mka -B -j $BuildJobs Dialer | tee $LogFile;
+  mka -j $BuildJobs power.qcom | tee $LogFile;
   #mmm -B -j8 device/sony/huashan/liblights | tee $LogFile;
   #mmm -B -j8 device/sony/nicki/liblights | tee $LogFile;
   #mmm -B -j8 device/moto/shamu/liblights | tee $LogFile;

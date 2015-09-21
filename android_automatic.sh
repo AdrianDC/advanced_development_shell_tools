@@ -4,6 +4,9 @@ FullTimeStart=$(date +%s);
 source $ScriptsDir/android_set_variables.rc;
 
 cd $ScriptsDir/;
+source $ScriptsDir/android_syncforce.sh "automatic";
+
+cd $ScriptsDir/;
 source $ScriptsDir/android_rebase.sh "automatic";
 
 cd $ScriptsDir/;
@@ -19,5 +22,8 @@ FullTimeDiff=$(($(date +%s)-$FullTimeStart));
 echo "";
 echo " [ Done in $FullTimeDiff secs ]";
 echo "";
-nautilus $ANDROID_PRODUCT_OUT >/dev/null 2>&1;
-read key;
+
+if [[ "$1" == "" ]]; then
+  read key;
+fi;
+
