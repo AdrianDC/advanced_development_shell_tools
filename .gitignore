@@ -2,7 +2,7 @@ Paths
 script_logs.txt
 search_logs.txt
 android_make_test.sh
-android_syncmanual.sh
+android_sync_manual.sh
 android_set_target.rc
 android_set_variables.rc
 android_set_user.rc

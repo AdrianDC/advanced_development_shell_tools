@@ -25,8 +25,9 @@ do
   echo "";
   cd $AndroidDir/;
   #mka -j $BuildJobs com.android.phone.common | tee $LogFile;
-  #mka -B -j $BuildJobs Dialer | tee $LogFile;
+  #mka -j $BuildJobs libsurfaceflinger surfaceflinger libsurfaceflinger_ddmconnection | tee $LogFile;
   mka -j $BuildJobs power.qcom | tee $LogFile;
+  #mmm -j8 hardware/qcom/display/msm8960 | tee $LogFile;
   #mmm -B -j8 device/sony/huashan/liblights | tee $LogFile;
   #mmm -B -j8 device/sony/nicki/liblights | tee $LogFile;
   #mmm -B -j8 device/moto/shamu/liblights | tee $LogFile;

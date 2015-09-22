@@ -38,7 +38,7 @@ do
     echo " [ Searching for '$pattern' in ./$path ]";
     echo "";
     TimeStart=$(date +%s);
-    grep --include=\*.mk -lrw ./$path -e "$pattern" | tee $SearchFile;
+    grep --include={\*.mk,Kconfig} -nr ./$path -e "$pattern" | tee $SearchFile;
     # n : show found line numbers / w : entire words / l : files matching / r : recursive
     TimeDiff=$(($(date +%s)-$TimeStart));
 

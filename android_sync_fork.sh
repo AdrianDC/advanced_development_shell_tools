@@ -18,14 +18,14 @@ do
     echo "";
 
     repo sync -j $BuildJobs -f device/sony/$PhoneName \
-                             hardware/sony/DASH \
-                             kernel/sony/msm8x60 \
-                             vendor/sony \
-                             frameworks/base \
-                             packages/apps/Settings \
-                             bootable/recovery \
-                             hardware/libhardware \
-                             ;
+                               hardware/sony/DASH \
+                               kernel/sony/msm8x60 \
+                               vendor/sony \
+                               frameworks/base \
+                               packages/apps/Settings \
+                               bootable/recovery \
+                               hardware/libhardware \
+                               ;
 
     TimeDiff=$(($(date +%s)-$TimeStart));
     echo "";

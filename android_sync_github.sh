@@ -2,13 +2,12 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-ProjectPaths=("frameworks/base" \
-              "packages/apps/Settings" \
-              "hardware/libhardware" \
-              "device/qcom/common" \
+ProjectPaths=("device/qcom/common" \
               "device/sony/$PhoneName" \
-              #"hardware/sony/DASH" \
-              #"kernel/sony/msm8x60" \
+              "frameworks/base" \
+              "hardware/libhardware" \
+              "kernel/sony/msm8x60" \
+              "packages/apps/Settings" \
               "vendor/sony" \
               );
 
@@ -17,13 +16,14 @@ do
 
   echo "";
   echo "";
-  echo " [ Rebasing $ProjectPath ]";
+  echo " [ Downloading $ProjectPath ]";
   echo "";
 
   cd $AndroidDir/$ProjectPath;
-  git fetch origin cm-12.1;
-  git rebase origin/cm-12.1;
-  git push -f $GitUserName HEAD:cm-12.1;
+  git rebase --abort;
+  git fetch AdrianDC cm-12.1;
+  git reset FETCH_HEAD;
+  git stash -u;
 
 done;
 

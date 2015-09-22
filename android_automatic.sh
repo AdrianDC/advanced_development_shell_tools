@@ -4,13 +4,13 @@ FullTimeStart=$(date +%s);
 source $ScriptsDir/android_set_variables.rc;
 
 cd $ScriptsDir/;
-source $ScriptsDir/android_syncforce.sh "automatic";
+source $ScriptsDir/android_sync_github.sh "automatic";
 
 cd $ScriptsDir/;
 source $ScriptsDir/android_rebase.sh "automatic";
 
 cd $ScriptsDir/;
-source $ScriptsDir/android_sync.sh "automatic";
+source $ScriptsDir/android_sync_force.sh "automatic";
 
 cd $ScriptsDir/;
 source $ScriptsDir/android_make_addons.sh "automatic";

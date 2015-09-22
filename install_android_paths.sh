@@ -99,6 +99,7 @@ git update-index --assume-unchanged android_set_variables.rc;
 git update-index --assume-unchanged android_set_target.rc;
 git update-index --assume-unchanged android_set_user.rc;
 git update-index --assume-unchanged android_make_test.sh;
+git update-index --assume-unchanged android_sync_manual.sh;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
 echo "";
