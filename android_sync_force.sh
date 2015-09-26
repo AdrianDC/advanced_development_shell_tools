@@ -9,7 +9,7 @@ echo "";
 echo " [ Force-syncing repositories ]";
 echo "";
 repo forall -c 'echo ${PWD}; git rebase --abort; git reset --hard HEAD; echo "";';
-repo sync -j $BuildJobs -f --force-sync;
+repo sync -f --force-sync;
 echo "";
 
 TimeDiff=$(($(date +%s)-$TimeStart));

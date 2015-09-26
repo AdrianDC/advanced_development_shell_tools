@@ -1,8 +1,8 @@
-export GitEMail="user@domain.dot";
+export GitEMail="username@domain.com";
 export GitUserName="Username";
 
-export FTPPort="21";
-export FTPServer="uploads.androidfilehost.com";
-export FTPUserName="Username";
-export FTPPassword="Password";
+export UploadServer="s.basketbuild.com/webupload";
+export UploadUserName="Username.s";
+export UploadPassword="Password";
+export UploadFolder="Path/To/Folder";
 

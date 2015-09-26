@@ -23,7 +23,7 @@ do
   cd $AndroidDir/$ProjectPath;
   git fetch origin cm-12.1;
   git rebase origin/cm-12.1;
-  git push -f $GitUserName HEAD:cm-12.1;
+  git push -f $GitUserName cm-12.1;
 
 done;
 
