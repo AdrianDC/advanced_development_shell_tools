@@ -4,7 +4,11 @@ TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
 FilePaths=(\
            "boot.img" \
-           "system/lib/modules/*" \
+           "system/app/InCallUI/InCallUI.apk" \
+           "system/bin/surfaceflinger" \
+           "system/etc/media_codecs.xml" \
+           "system/etc/media_codecs_google_video_le.xml" \
+           "system/etc/media_profiles.xml" \
            "system/framework/android.policy.jar" \
            "system/framework/framework.jar" \
            "system/framework/framework-res.apk" \
@@ -15,56 +19,60 @@ FilePaths=(\
            "system/lib/libandroid_servers.so" \
            "system/lib/libaudiopolicyservice.so" \
            "system/lib/libhardware.so" \
-           "system/app/InCallUI/InCallUI.apk" \
+           "system/lib/libRS.so" \
+           "system/lib/libRSCpuRef.so" \
+           "system/lib/libRSDriver.so" \
+           "system/lib/libsurfaceflinger.so" \
+           "system/lib/libsurfaceflinger_ddmconnection.so" \
+           "system/lib/hw/lights.msm8960.so" \
+           "system/lib/hw/hwcomposer.msm8960.so" \
+           "system/lib/modules/*" \
            "system/priv-app/Dialer/Dialer.apk" \
            "system/priv-app/SensorsDoze/SensorsDoze.apk" \
            "system/priv-app/Settings/Settings.apk" \
            "system/priv-app/SettingsProvider/SettingsProvider.apk" \
            "system/priv-app/SystemUI/SystemUI.apk" \
            "system/priv-app/Telecom/Telecom.apk" \
-           "system/lib/hw/lights.msm8960.so" \
            "system/vendor/lib/hw/power.qcom.so" \
-           "system/etc/media_codecs.xml" \
-           "system/etc/media_profiles.xml" \
-           "system/bin/surfaceflinger" \
-           "system/lib/libRS.so" \
-           "system/lib/libRSCpuRef.so" \
-           "system/lib/libRSDriver.so" \
-           "system/lib/libsurfaceflinger.so" \
-           "system/lib/libsurfaceflinger_ddmconnection.so" \
            );
 ModulesNames=(\
               "bootimage" \
-              "libandroid_servers" \
               "android.policy" \
-              "libaudiopolicyservice" \
-              "org.cyanogenmod.hardware" \
-              "services" \
-              "services.core" \
-              "framework-res" \
-              "framework" \
-              "sepolicy" \
-              "Keyguard" \
-              "telephony-common" \
-              "wifi-service" \
-              "libhardware" \
-              "InCallUI" \
               "Dialer" \
-              "SensorsDoze" \
-              "Settings" \
-              "SettingsProvider" \
-              "SystemUI" \
-              "Telecom" \
+              "framework" \
+              "framework-res" \
+              "hwcomposer.msm8960" \
+              "InCallUI" \
+              "Keyguard" \
               "lights.msm8960" \
-              "power.qcom" \
-              "surfaceflinger" \
+              "libandroid_servers" \
+              "libaudiopolicyservice" \
+              "libhardware" \
               "libRS" \
               "libRSCpuRef" \
               "libRSDriver" \
               "libsurfaceflinger" \
               "libsurfaceflinger_ddmconnection" \
+              "org.cyanogenmod.hardware" \
+              "power.qcom" \
+              "SensorsDoze" \
+              "sepolicy" \
+              "services" \
+              "services.core" \
+              "Settings" \
+              "SettingsProvider" \
+              "surfaceflinger" \
+              "SystemUI" \
+              "Telecom" \
+              "telephony-common" \
+              "wifi-service" \
               );
-AddonsFile="addons-cm-12.1-"$(date +'%Y%m%d')"-NIGHTLY-$PhoneName.zip";
+
+if [[ "$2" == "" ]]; then
+  AddonsFile="addons-cm-12.1-"$(date +'%Y%m%d')"-NIGHTLY-$PhoneName-TEST.zip";
+else
+  AddonsFile="addons-cm-12.1-"$(date +'%Y%m%d')"-NIGHTLY-$PhoneName.zip";
+fi;
 
 if [ -f $TargetDir/$AddonsFile ]; then
   rm -f $TargetDir/$AddonsFile;

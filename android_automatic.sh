@@ -13,7 +13,7 @@ cd $ScriptsDir/;
 source $ScriptsDir/android_sync_force.sh "automatic";
 
 cd $ScriptsDir/;
-source $ScriptsDir/android_make_addons.sh "automatic";
+source $ScriptsDir/android_make_addons.sh "automatic" $1;
 
 cd $ScriptsDir/;
 source $ScriptsDir/android_server_upload.sh $AndroidResult "automatic";

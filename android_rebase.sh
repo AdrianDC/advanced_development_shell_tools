@@ -6,7 +6,7 @@ ProjectPaths=("frameworks/base" \
               "packages/apps/Settings" \
               "hardware/libhardware" \
               "device/qcom/common" \
-              "device/sony/$PhoneName" \
+              #"device/sony/$PhoneName" \
               #"hardware/sony/DASH" \
               #"kernel/sony/msm8x60" \
               "vendor/sony" \
