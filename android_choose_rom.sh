@@ -19,16 +19,37 @@ do
 done;
 
 echo "";
-AndroidROMChoice=0;
-while [ -z $AndroidROMChoice ] || [ $AndroidROMChoice -lt 1 ] || [ $AndroidROMChoice -gt $AndroidROMCount ];
-do
+AndroidROMChoice=$1;
+if [ -z $AndroidROMChoice ]; then
+  while [ -z $AndroidROMChoice ] || [ $AndroidROMChoice -lt 1 ] || [ $AndroidROMChoice -gt $AndroidROMCount ];
+  do
 
+    echo "";
+    printf " > ROM to build (1 to $AndroidROMCount) : ";
+    read AndroidROMChoice;
+
+  done;
+else
   echo "";
-  printf " > ROM to build (1 to $AndroidROMCount) : ";
-  read AndroidROMChoice;
+  echo " > ROM to build (1 to $AndroidROMCount) : $AndroidROMChoice";
+fi;
 
-done;
+echo "";
+printf " > Automatically rebase the ROM (y/N) : $2";
+if [ -z $2 ]; then
+  read AndroidDevChoice;
+else
+  AndroidDevChoice=$2;
+fi;
 
 AndroidROM=${AndroidROMs[$((AndroidROMChoice-1))]};
+
+AndroidDev="";
+if [[ $AndroidDevChoice == "y" || $AndroidDevChoice == "Y" ]]; then
+  AndroidDev="true";
+fi;
+
 echo "export AndroidROM=\"$AndroidROM\";" > $ScriptDir/android_set_target.rc;
-exit;
+echo "export AndroidDev=\"$AndroidDev\";" >> $ScriptDir/android_set_target.rc;
+echo "";
+echo "";

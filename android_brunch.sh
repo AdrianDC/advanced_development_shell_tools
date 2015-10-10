@@ -38,16 +38,28 @@ done;
 
 rm -f $ANDROID_PRODUCT_OUT/*$PhoneName-ota-*.zip
 rm -f $ANDROID_PRODUCT_OUT/*.zip.md5sum
+
+InstallLog=$(grep ".*target/product.*.zip" $LogFile);
+AndroidResult=$(printf "$InstallLog" | tail -1\
+              | sed "s/\x1B\[[0-9;]*[JKmsu]//g"\
+              | sed "s/.*$PhoneName\/\([^\[]*.zip\).*/\1/g");
+if [ -z $AndroidResult ]; then
+  export AndroidResult="";
+else
+  export AndroidResult="$ANDROID_PRODUCT_OUT/$AndroidResult";
+fi;
+
 if [ "$(ls -A $TargetDir)" ]; then
-  cp $ANDROID_PRODUCT_OUT/*-UNOFFICIAL*.zip $TargetDir/;
+  cp "$AndroidResult" $TargetDir/;
 fi;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-nautilus $ANDROID_PRODUCT_OUT >/dev/null 2>&1;
+
 if [[ "$1" == "" ]]; then
+  nautilus $ANDROID_PRODUCT_OUT >/dev/null 2>&1;
   read key;
 fi;
 echo "";

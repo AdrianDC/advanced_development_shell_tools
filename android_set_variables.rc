@@ -2,6 +2,7 @@ export AndroidROM="CyanogenMod";
 export AndroidROMs=("CyanogenMod" \
                     "AICP" \
                     );
+export AndroidDev="";
 export GitEMail="";
 export GitUserName="";
 

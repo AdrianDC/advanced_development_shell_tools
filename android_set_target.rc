@@ -1,1 +1,2 @@
 export AndroidROM="CyanogenMod";
+export AndroidDev="true";

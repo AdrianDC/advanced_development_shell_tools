@@ -22,6 +22,7 @@ do
   cd $AndroidDir/$ProjectPath;
   git rebase --abort;
   git checkout cm-12.1;
+  git fetch github cm-12.1;
   git fetch AdrianDC cm-12.1;
   git reset FETCH_HEAD;
   git stash -u;

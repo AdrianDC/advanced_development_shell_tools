@@ -8,13 +8,14 @@ echo " [ Uploading to the server ]";
 echo "";
 
 SendFile="$1";
-if [[ $SendFile != "" ]] && [ -f "$SendFile" ]; then
+if [ ! -z $SendFile ] && [ -f "$SendFile" ]; then
 
   SendFileName=$(basename "$SendFile");
   SendFileExt=${SendFileName##*.};
   SendFileSize=$(stat -c "%s" "$SendFile");
-  SendFileSize=3;
   SendFileType='';
+
+  if [ ! -z $2 ]; then UploadFolder="$2"; fi;
 
   if [[ $SendFileExt == 'zip' ]]; then SendFileType="application/zip"; fi;
 
@@ -35,8 +36,8 @@ if [[ $SendFile != "" ]] && [ -f "$SendFile" ]; then
           -H "X-File-Size: $SendFileSize" \
           -H "X-File-Type: $SendFileType" \
           -H "Content-Type: multipart/form-data" \
-          -o .uploadoutputs \
           --data-binary @"$SendFile" \
+          -o .uploadoutputs \
           "https://$UploadServer/?ftpAction=upload&filePath=";
 
   if [ -f ./.headers ]; then
@@ -54,7 +55,7 @@ echo "";
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-if [[ "$2" == "" ]]; then
+if [[ "$3" == "" ]]; then
   read key;
 fi;
 echo "";

@@ -4,17 +4,55 @@ TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
 FilePaths=(\
            "boot.img" \
+           "system/app/InCallUI/InCallUI.apk" \
            "system/app/QuickBoot/QuickBoot.apk" \
+           "system/framework/android.policy.jar" \
+           "system/framework/framework.jar" \
+           "system/framework/framework-res.apk" \
            "system/framework/org.cyanogenmod.hardware.jar" \
+           "system/framework/services.jar" \
+           "system/framework/telephony-common.jar" \
+           "system/framework/wifi-service.jar" \
+           "system/lib/libandroid_servers.so" \
+           "system/lib/libaudiopolicyservice.so" \
+           "system/lib/libhardware.so" \
+           "system/lib/hw/lights.msm8960.so" \
+           "system/lib/hw/hwcomposer.msm8960.so" \
            "system/lib/modules/*" \
+           "system/priv-app/Dialer/Dialer.apk" \
            "system/priv-app/SensorsDoze/SensorsDoze.apk" \
+           "system/priv-app/Settings/Settings.apk" \
+           "system/priv-app/SettingsProvider/SettingsProvider.apk" \
+           "system/priv-app/SystemUI/SystemUI.apk" \
+           "system/priv-app/Telecom/Telecom.apk" \
+           "system/vendor/lib/hw/power.qcom.so" \
            );
 ModulesNames=(\
               "bootimage" \
+              "android.policy" \
+              "Dialer" \
+              "framework" \
+              "framework-res" \
+              "hwcomposer.msm8960" \
+              "InCallUI" \
+              "Keyguard" \
+              "lights.msm8960" \
+              "libandroid_servers" \
+              "libaudiopolicyservice" \
+              "libhardware" \
               "org.cyanogenmod.hardware" \
+              "power.qcom" \
               "QuickBoot" \
               "SensorsDoze" \
               "sepolicy" \
+              "services" \
+              "services.core" \
+              "Settings" \
+              "SettingsProvider" \
+              "SystemUI" \
+              "Telecom" \
+              "telephony-common" \
+              "wifi-service" \
               );
 
 if [[ "$2" == "manual" ]]; then
