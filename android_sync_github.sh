@@ -2,14 +2,7 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-ProjectPaths=("device/qcom/common" \
-              "device/sony/$PhoneName" \
-              "frameworks/base" \
-              "hardware/libhardware" \
-              "kernel/sony/msm8x60" \
-              "packages/apps/Settings" \
-              "vendor/sony" \
-              );
+ProjectPaths=${ForceProjects[*]};
 
 for ProjectPath in ${ProjectPaths[*]}
 do
@@ -21,10 +14,10 @@ do
 
   cd $AndroidDir/$ProjectPath;
   git rebase --abort;
-  git checkout cm-12.1;
-  git fetch github cm-12.1;
-  git fetch AdrianDC cm-12.1;
-  git reset FETCH_HEAD;
+  git stash -u;
+  git fetch github $AndroidTag;
+  git fetch AdrianDC $AndroidTag;
+  git reset AdrianDC/$AndroidTag;
   git stash -u;
 
 done;

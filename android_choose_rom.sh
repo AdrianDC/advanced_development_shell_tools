@@ -40,16 +40,35 @@ if [ -z $2 ]; then
   read AndroidDevChoice;
 else
   AndroidDevChoice=$2;
+  echo "";
+fi;
+
+echo "";
+printf " > Force syncing all the repositories (y/N) : $3";
+if [ -z $3 ]; then
+  read AndroidForceChoice;
+else
+  AndroidForceChoice=$3;
+  echo "";
 fi;
 
 AndroidROM=${AndroidROMs[$((AndroidROMChoice-1))]};
+AndroidTag=${AndroidTags[$((AndroidROMChoice-1))]};
 
 AndroidDev="";
 if [[ $AndroidDevChoice == "y" || $AndroidDevChoice == "Y" ]]; then
   AndroidDev="true";
 fi;
 
+AndroidForce="";
+if [[ $AndroidForceChoice == "y" || $AndroidForceChoice == "Y" ]]; then
+  AndroidForce="true";
+fi;
+
+
 echo "export AndroidROM=\"$AndroidROM\";" > $ScriptDir/android_set_target.rc;
+echo "export AndroidTag=\"$AndroidTag\";" >> $ScriptDir/android_set_target.rc;
 echo "export AndroidDev=\"$AndroidDev\";" >> $ScriptDir/android_set_target.rc;
+echo "export AndroidForce=\"$AndroidForce\";" >> $ScriptDir/android_set_target.rc;
 echo "";
 echo "";

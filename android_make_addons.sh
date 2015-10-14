@@ -5,12 +5,14 @@ source $ScriptDir/android_set_variables.rc;
 FilePaths=(\
            "boot.img" \
            "system/app/QuickBoot/QuickBoot.apk" \
+           "system/framework/framework-res.apk" \
            "system/framework/org.cyanogenmod.hardware.jar" \
            "system/lib/modules/*" \
            "system/priv-app/SensorsDoze/SensorsDoze.apk" \
            );
 ModulesNames=(\
               "bootimage" \
+              "framework-res" \
               "org.cyanogenmod.hardware" \
               "QuickBoot" \
               "SensorsDoze" \

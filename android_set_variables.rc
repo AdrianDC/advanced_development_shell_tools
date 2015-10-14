@@ -1,10 +1,34 @@
-export AndroidROM="CyanogenMod";
-export AndroidROMs=("CyanogenMod" \
-                    "AICP" \
-                    );
-export AndroidDev="";
 export GitEMail="";
 export GitUserName="";
+
+export AndroidROMs=("CyanogenMod" \
+                    "AICP" \
+                    "CM-13.0" \
+                    "AOSP" \
+                    );
+export AndroidTags=("cm-12.1" \
+                    "lp5.1" \
+                    "cm-13.0" \
+                    "android-6.0.0_r1" \
+                    );
+
+export AndroidROM=${AndroidROMs[0]};
+export AndroidTag=${AndroidTags[0]};
+export AndroidForce="";
+export AndroidDev="";
+
+ForceProjects=( \
+               "device/sony/$PhoneName" \
+               "hardware/sony/DASH" \
+               "kernel/sony/msm8x60" \
+               "vendor/sony" \
+              );
+
+UpdateProjects=( \
+                "device/sony/$PhoneName" \
+                "hardware/sony/DASH" \
+                "vendor/sony" \
+               );
 
 if [ -f $ScriptDir/android_set_target.rc ]; then
   source $ScriptDir/android_set_target.rc;

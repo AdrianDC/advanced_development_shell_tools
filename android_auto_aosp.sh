@@ -24,7 +24,7 @@ if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; the
 fi;
 
 cd $ScriptsDir/;
-source $ScriptsDir/android_brunch.sh "automatic";
+source $ScriptsDir/android_lunch.sh "automatic";
 
 cd $ScriptsDir/;
 source $ScriptsDir/android_server_upload.sh $AndroidResult "Android-ROMs" "automatic";

@@ -8,8 +8,8 @@ cd $AndroidDir/;
 echo "";
 echo " [ Force-syncing repositories ]";
 echo "";
-repo forall -c 'echo ${PWD}; git rebase --abort; git reset --hard HEAD; echo "";';
-repo sync -f --force-sync;
+repo forall -c 'echo ${PWD}; git rebase --abort; git stash -u; git reset --hard HEAD; echo "";';
+repo sync --force-sync --force-broken;
 echo "";
 
 TimeDiff=$(($(date +%s)-$TimeStart));
