@@ -7,7 +7,7 @@ cd $AndroidDir/;
 pattern=":D";
 path="device/sony/$PhoneName/";
 
-while [[ $pattern != "" ]];
+while [ ! -z "$pattern" ];
 do
 
   clear;
@@ -18,14 +18,14 @@ do
   printf "  Config constant to search for : ";
   read -e pattern;
 
-  if [[ $pattern != "" ]]; then
+  if [ ! -z "$pattern" ]; then
 
     echo "";
     echo "  Path to look into...";
     printf "   * for all, or $path : ";
     read -e pathEdit;
 
-    if [[ $pathEdit != "" ]]; then
+    if [ ! -z "$pathEdit" ]; then
       if [[ $pathEdit == "*" ]]; then
         path="";
       else
@@ -38,7 +38,7 @@ do
     echo " [ Searching for '$pattern' in ./$path ]";
     echo "";
     TimeStart=$(date +%s);
-    grep --include={\*.mk,Kconfig} -nr ./$path -e "$pattern" | tee $SearchFile;
+    grep --include={\*.mk,Kconfig} -nr ./$path -e "$pattern" | tee "$SearchFile";
     # n : show found line numbers / w : entire words / l : files matching / r : recursive
     TimeDiff=$(($(date +%s)-$TimeStart));
 
@@ -57,4 +57,3 @@ echo "";
 echo " [ Done ]";
 echo "";
 read key;
-

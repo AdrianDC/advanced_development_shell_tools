@@ -2,12 +2,14 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-FilePaths=("system/priv-app/SensorsDoze/SensorsDoze.apk");
-ModulesNames=("SensorsDoze");
+FilePaths=("system/priv-app/DeviceSettings/DeviceSettings.apk");
+ModulesNames=("DeviceSettings");
 
 for FilePath in ${FilePaths[*]}
 do
-  if [ -f $TargetDir/$FilePath ]; then rm $TargetDir/$FilePath; fi;
+  if [ -f "$TargetDir/$FilePath" ]; then
+    rm "$TargetDir/$FilePath";
+  fi;
 done;
 
 cd $AndroidDir/;
@@ -23,7 +25,7 @@ do
   echo " [ Making the requested libraries ]";
   echo "";
   cd $AndroidDir/;
-  mmm -B -j8 device/sony/huashan/doze | tee $LogFile;
+  mmm -B -j8 device/sony/huashan/devicesettings | tee $LogFile;
   InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
   echo "$InstallLog";
   echo "";
@@ -44,8 +46,8 @@ TimeDiff=$(($(date +%s)-$TimeStart));
 if [ "$(ls -A $TargetDir)" ]; then
   for FilePath in ${FilePaths[*]}
   do
-    mkdir -p $(dirname $TargetDir/$FilePath);
-    cp $OutDir/$FilePath $TargetDir/$FilePath;
+    mkdir -p "$(dirname $TargetDir/$FilePath)";
+    cp "$OutDir/$FilePath" "$TargetDir/$FilePath";
   done;
 fi;
 
@@ -75,7 +77,7 @@ do
   for FilePath in ${FilePaths[*]}
   do
     if [[ $InstallLog == *"$FilePath"* ]]; then
-      adb push $OutDir/$FilePath /$FilePath;
+      adb push "$OutDir/$FilePath" "/$FilePath";
       if [ $? != 0 ]; then adbPush=1; fi;
     fi;
   done;
@@ -91,4 +93,3 @@ do
     read key;
   fi;
 done;
-

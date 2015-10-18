@@ -1,9 +1,11 @@
 echo off
 cls
 
-if "%1"=="true" goto Code
+if [ ! -z "%1" ]; then
+  goto Code
+fi;
 start "Android ADB Root System" cmd.exe /K "%0" true
-goto End
+exit
 
 :Code
 echo.
@@ -16,6 +18,4 @@ adb devices
 echo.
 echo  [ User Input ]
 echo.
-
-:End
 exit

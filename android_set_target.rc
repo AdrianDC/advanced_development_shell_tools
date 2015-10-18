@@ -1,2 +1,6 @@
 export AndroidROM="CyanogenMod";
-export AndroidDev="true";
+export AndroidTag="cm-12.1";
+export AndroidDev="";
+export AndroidForce="";
+export AndroidGitHub="github";
+export AndroidSync="CyanogenMod";

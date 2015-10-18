@@ -7,18 +7,7 @@ source $ScriptDir/android_set_variables.rc;
 FolderPaths=("CCache" \
              "GitHub" \
              "Scripts" \
-             "Scripts" \
              );
-ProjectPaths=("frameworks/base" \
-              "packages/apps/Settings" \
-              "hardware/libhardware" \
-              "device/qcom/common" \
-              "device/sony/huashan" \
-              "hardware/sony/DASH" \
-              "kernel/sony/msm8x60" \
-              "kernel/sony/msm8960t" \
-              "vendor/sony" \
-              );
 
 echo "";
 echo "";
@@ -66,15 +55,15 @@ do
 
     cd $MainDir/$AndroidROM/$ProjectPath/;
     if [ -z "$(git remote -v | grep origin$'\t')" ]; then
-       GitHubRemote=$(git remote -v | grep github -m 1 | cut -d$'\t' -f 2 | cut -d' ' -f 1);
+       GitHubRemote=$(git remote -v | grep $AndroidGitHub -m 1 | cut -d$'\t' -f 2 | cut -d' ' -f 1);
        if [[ $(printf $GitHubRemote | cut -d/ -f 4) == "$GitUserName" ]]; then
-         git remote add origin "$(printf $GitHubRemote | cut -d/ -f 1-3)/$AndroidROM/$(printf $GitHubRemote | cut -d/ -f 5)";
+         git remote add origin "$(printf $GitHubRemote | cut -d/ -f 1-3)/$AndroidSync/$(printf $GitHubRemote | cut -d/ -f 5)";
        else
          git remote add origin "$GitHubRemote";
        fi;
     fi;
     if [ -z "$(git remote -v | grep $GitUserName$'\t')" ]; then
-       GitHubRemote=$(git remote -v | grep github -m 1 | cut -d$'\t' -f 2 | cut -d' ' -f 1);
+       GitHubRemote=$(git remote -v | grep $AndroidGitHub -m 1 | cut -d$'\t' -f 2 | cut -d' ' -f 1);
        git remote add $GitUserName "$(printf $GitHubRemote | cut -d/ -f 1-3)/$GitUserName/$(printf $GitHubRemote | cut -d/ -f 5)";
     fi;
 
@@ -91,10 +80,16 @@ do
 
 done;
 
+TargetBuilds=$(xdg-user-dir DESKTOP)/Builds;
 rm -f $MainDir/Paths/Target;
-ln -fsv $(xdg-user-dir DESKTOP) $MainDir/Paths/Target;
+if [ ! -d "$TargetBuilds" ]; then
+  mkdir "$TargetBuilds/";
+fi;
+ln -fsv $TargetBuilds $MainDir/Paths/Target;
 
 cd $ScriptDir/;
+#git update-index --no-assume-unchanged android_set_variables.rc;
+#git update-index --no-assume-unchanged android_set_target.rc;
 git update-index --assume-unchanged android_set_variables.rc;
 git update-index --assume-unchanged android_set_target.rc;
 git update-index --assume-unchanged android_set_user.rc;
@@ -107,4 +102,3 @@ echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
 read key;
-

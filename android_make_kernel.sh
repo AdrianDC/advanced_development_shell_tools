@@ -7,7 +7,9 @@ FilePaths=("system/lib/modules/*");
 ModulesNames=("bootimage");
 KernelFile="kernel-"$(date +'%Y%m%d')"-$PhoneName.zip";
 
-if [ -f $TargetDir/$KernelFile ]; then rm -f $TargetDir/$KernelFile; fi;
+if [ -f "$TargetDir/$KernelFile" ]; then
+  rm -f "$TargetDir/$KernelFile";
+fi;
 
 cd $AndroidDir/;
 source ./build/envsetup.sh;
@@ -52,11 +54,11 @@ do
   FilesList="$FilesList ./$FilePath";
 done;
 
-cp $ScriptDir/android_files/kernel_template.zip $TargetDir/$KernelFile.unsigned.zip;
-zip -g $TargetDir/$KernelFile.unsigned.zip $FilesList;
+cp "$ScriptDir/android_files/kernel_template.zip" "$TargetDir/$KernelFile.unsigned.zip";
+zip -g "$TargetDir/$KernelFile.unsigned.zip" $FilesList;
 SignApkDir=$ScriptDir/android_signapk;
-java -jar $SignApkDir/signapk-cm121.jar -w $SignApkDir/testkey.x509.pem $SignApkDir/testkey.pk8 $TargetDir/$KernelFile.unsigned.zip $TargetDir/$KernelFile;
-rm -f $TargetDir/$KernelFile.unsigned.zip;
+java -jar "$SignApkDir/signapk-cm121.jar" -w "$SignApkDir/testkey.x509.pem" "$SignApkDir/testkey.pk8" "$TargetDir/$KernelFile.unsigned.zip" "$TargetDir/$KernelFile";
+rm -f "$TargetDir/$KernelFile.unsigned.zip";
 
 export AndroidResult=$TargetDir/$KernelFile;
 
@@ -72,11 +74,11 @@ do
 
   echo "";
   adbPush=0;
-  $ScriptDir/android_root_adb.sh;
+  sudo $ScriptDir/android_root_adb.sh;
   OutDir=$AndroidDir/out/target/product/$PhoneName;
   for FilePath in ${FilePaths[*]}
   do
-    adb push $OutDir/$FilePath /$FilePath;
+    adb push "$OutDir/$FilePath" "/$FilePath";
     if [ $? != 0 ]; then adbPush=1; fi;
   done;
 
@@ -95,11 +97,10 @@ echo " [ Upload new kernel - Bootloader USB ]";
 echo "";
 echo "";
 cd $OutDir/;
-sudo fastboot flash boot $KernelPath;
+sudo fastboot flash boot "$KernelPath";
 sudo fastboot reboot;
 
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
 read key;
-

@@ -6,27 +6,55 @@ export AndroidROMs=("CyanogenMod" \
                     "CM-13.0" \
                     "AOSP" \
                     );
+export AndroidSyncs=("CyanogenMod" \
+                     "AICP" \
+                     "CyanogenMod" \
+                     "AOSP" \
+                     );
 export AndroidTags=("cm-12.1" \
                     "lp5.1" \
                     "cm-13.0" \
                     "android-6.0.0_r1" \
                     );
+export AndroidGits=("github" \
+                    "aicp" \
+                    "github" \
+                    "github" \
+                    );
 
 export AndroidROM=${AndroidROMs[0]};
 export AndroidTag=${AndroidTags[0]};
+export AndroidGitHub="";
 export AndroidForce="";
+export AndroidSync="";
 export AndroidDev="";
 
+ProjectPaths=("frameworks/base" \
+              "packages/apps/Settings" \
+              "hardware/libhardware" \
+              "device/qcom/common" \
+              "device/sony/huashan" \
+              "hardware/sony/DASH" \
+              "kernel/sony/msm8x60" \
+              "vendor/cmsdk" \
+              "vendor/sony" \
+              );
 ForceProjects=( \
                "device/sony/$PhoneName" \
+               "frameworks/base" \
                "hardware/sony/DASH" \
                "kernel/sony/msm8x60" \
+               "packages/apps/Settings" \
+               "vendor/cmsdk" \
                "vendor/sony" \
               );
 
 UpdateProjects=( \
                 "device/sony/$PhoneName" \
+                "frameworks/base" \
                 "hardware/sony/DASH" \
+                "packages/apps/Settings" \
+                "vendor/cmsdk" \
                 "vendor/sony" \
                );
 

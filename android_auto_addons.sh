@@ -13,7 +13,7 @@ if [ ! -z $AndroidDev ]; then
 fi;
 
 cd $ScriptsDir/;
-if [ ! -z $AndroidForce ]; then
+if [ ! -z "$AndroidForce" ]; then
   source $ScriptsDir/android_sync_force.sh "automatic";
 else
   source $ScriptsDir/android_sync.sh "automatic";
@@ -24,17 +24,21 @@ if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; the
 fi;
 
 cd $ScriptsDir/;
-source $ScriptsDir/android_make_addons.sh "automatic" $1;
+source $ScriptsDir/android_make_addons.sh "automatic" "$2";
 
 cd $ScriptsDir/;
-source $ScriptsDir/android_server_upload.sh $AndroidResult "CM-12.1-Addons" "automatic";
+source $ScriptsDir/android_server_upload.sh "$AndroidResult" "CM-12.1-Addons" "automatic";
 
 FullTimeDiff=$(($(date +%s)-$FullTimeStart));
 echo "";
-echo " [ Done in $FullTimeDiff secs ]";
+if [ -f "$AndroidResult" ]; then
+  echo " [ Build : Success in $FullTimeDiff secs ]";
+else
+  echo " [ Build : Fail in $FullTimeDiff secs ]";
+fi;
 echo "";
 
-if [[ "$1" == "" ]]; then
+if [ -z "$2" ]; then
   read key;
 fi;
 

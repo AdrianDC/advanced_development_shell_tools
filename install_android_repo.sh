@@ -26,8 +26,8 @@ echo " [ Copy, Paste & Adapt these lines at the end of .bashrc ]";
 echo "";
 echo "export PATH=~/bin:$PATH";
 echo "export USE_CCACHE=1";
-echo "export CCACHE_DIR=/media/adriandc/AndroidWork/CCache";
-echo "export CCACHE_LOGFILE=/media/adriandc/AndroidWork/CCache/ccache.log";
+echo "export CCACHE_DIR=/media/$(whoami)/AndroidDev/CCache";
+echo "export CCACHE_LOGFILE=/media/$(whoami)/AndroidDev/CCache/ccache.log";
 echo "";
 sudo gedit ~/.bashrc
 

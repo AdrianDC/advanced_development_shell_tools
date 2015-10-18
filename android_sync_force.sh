@@ -16,7 +16,8 @@ TimeDiff=$(($(date +%s)-$TimeStart));
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-if [[ "$1" == "" ]]; then
+
+if [ -z "$1" ]; then
   read key;
 fi;
 echo "";

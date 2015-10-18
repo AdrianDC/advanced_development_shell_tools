@@ -20,7 +20,9 @@ ModulesNames=("SettingsProvider" \
 
 for FilePath in ${FilePaths[*]}
 do
-  if [ -f $TargetDir/$FilePath ]; then rm $TargetDir/$FilePath; fi;
+  if [ -f "$TargetDir/$FilePath" ]; then
+    rm "$TargetDir/$FilePath";
+  fi;
 done;
 
 cd $AndroidDir/;
@@ -57,8 +59,8 @@ TimeDiff=$(($(date +%s)-$TimeStart));
 if [ "$(ls -A $TargetDir)" ]; then
   for FilePath in ${FilePaths[*]}
   do
-    mkdir -p $(dirname $TargetDir/$FilePath);
-    cp $OutDir/$FilePath $TargetDir/$FilePath;
+    mkdir -p "$(dirname $TargetDir/$FilePath)";
+    cp "$OutDir/$FilePath" "$TargetDir/$FilePath";
   done;
 fi;
 
@@ -88,7 +90,7 @@ do
   for FilePath in ${FilePaths[*]}
   do
     if [[ $InstallLog == *"$FilePath"* ]]; then
-      adb push $OutDir/$FilePath /$FilePath;
+      adb push "$OutDir/$FilePath" "/$FilePath";
       if [ $? != 0 ]; then adbPush=1; fi;
     fi;
   done;
@@ -107,4 +109,3 @@ do
     read key;
   fi;
 done;
-

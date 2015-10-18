@@ -8,25 +8,26 @@ FilePaths=(\
            "system/framework/framework-res.apk" \
            "system/framework/org.cyanogenmod.hardware.jar" \
            "system/lib/modules/*" \
-           "system/priv-app/SensorsDoze/SensorsDoze.apk" \
+           "system/priv-app/CMSettingsProvider/CMSettingsProvider.apk" \
+           "system/priv-app/DeviceSettings/DeviceSettings.apk" \
+           "system/priv-app/Settings/Settings.apk" \
            );
 ModulesNames=(\
               "bootimage" \
+              "charger_res_images" \
+              "CMSettingsProvider" \
+              "DeviceSettings" \
               "framework-res" \
               "org.cyanogenmod.hardware" \
               "QuickBoot" \
-              "SensorsDoze" \
               "sepolicy" \
+              "Settings" \
               );
 
 if [[ "$2" == "manual" ]]; then
   AddonsFile="addons-cm-12.1-"$(date +'%Y%m%d')"-NIGHTLY-$PhoneName-TEST.zip";
 else
   AddonsFile="addons-cm-12.1-"$(date +'%Y%m%d')"-NIGHTLY-$PhoneName.zip";
-fi;
-
-if [ -f $TargetDir/$AddonsFile ]; then
-  rm -f $TargetDir/$AddonsFile;
 fi;
 
 cd $AndroidDir/;
@@ -56,10 +57,12 @@ do
 
   if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then
     LaunchBuild=0;
+  elif [ ! -z "$1" ]; then
+    return;
   else
     LaunchBuild=1;
     printf " Press Enter to restart the build... ";
-    if [[ "$1" == "" ]]; then
+    if [ -z "$1" ]; then
       read key;
     else
       return;
@@ -81,11 +84,15 @@ echo "";
 echo " [ Building the new zip ]";
 echo "";
 
-cp $ScriptDir/android_files/addons_template.zip $TargetDir/$AddonsFile.unsigned.zip;
-zip -g $TargetDir/$AddonsFile.unsigned.zip $FilesList;
+if [ -f "$TargetDir/$AddonsFile" ]; then
+  rm -f "$TargetDir/$AddonsFile";
+fi;
+
+cp "$ScriptDir/android_files/addons_template.zip" "$TargetDir/$AddonsFile.unsigned.zip";
+zip -g "$TargetDir/$AddonsFile.unsigned.zip" $FilesList;
 SignApkDir=$ScriptDir/android_signapk;
-java -jar $SignApkDir/signapk-cm121.jar -w $SignApkDir/testkey.x509.pem $SignApkDir/testkey.pk8 $TargetDir/$AddonsFile.unsigned.zip $TargetDir/$AddonsFile;
-rm -f $TargetDir/$AddonsFile.unsigned.zip;
+java -jar "$SignApkDir/signapk-cm121.jar" -w "$SignApkDir/testkey.x509.pem" "$SignApkDir/testkey.pk8" "$TargetDir/$AddonsFile.unsigned.zip" "$TargetDir/$AddonsFile";
+rm -f "$TargetDir/$AddonsFile.unsigned.zip";
 
 export AndroidResult="$TargetDir/$AddonsFile";
 
@@ -97,7 +104,8 @@ TimeDiff=$(($(date +%s)-$TimeStart));
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-if [[ "$1" == "" ]]; then
+
+if [ -z "$1" ]; then
   read key;
 fi;
 echo "";

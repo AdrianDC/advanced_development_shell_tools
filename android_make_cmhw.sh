@@ -7,7 +7,9 @@ ModulesNames=("org.cyanogenmod.hardware");
 
 for FilePath in ${FilePaths[*]}
 do
-  if [ -f $TargetDir/$FilePath ]; then rm $TargetDir/$FilePath; fi;
+  if [ -f "$TargetDir/$FilePath" ]; then
+    rm "$TargetDir/$FilePath";
+  fi;
 done;
 
 cd $AndroidDir/;
@@ -45,8 +47,8 @@ TimeDiff=$(($(date +%s)-$TimeStart));
 if [ "$(ls -A $TargetDir)" ]; then
   for FilePath in ${FilePaths[*]}
   do
-    mkdir -p $(dirname $TargetDir/$FilePath);
-    cp $OutDir/$FilePath $TargetDir/$FilePath;
+    mkdir -p "$(dirname $TargetDir/$FilePath)";
+    cp "$OutDir/$FilePath" "$TargetDir/$FilePath";
   done;
 fi;
 
@@ -75,7 +77,7 @@ do
   $ScriptDir/android_root_adb.sh;
   for FilePath in ${FilePaths[*]}
   do
-    adb push $OutDir/$FilePath /$FilePath;
+    adb push "$OutDir/$FilePath" "/$FilePath";
     if [ $? != 0 ]; then adbPush=1; fi;
   done;
 

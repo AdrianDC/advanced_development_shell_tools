@@ -1,7 +1,7 @@
 #!/bin/bash
 
 adbNoRoot=1;
-while [ $adbNoRoot == 1 ]
+while [ $adbNoRoot == 1 ];
 do
   echo "";
   echo " [ Mounting as root ]";
@@ -18,4 +18,3 @@ done;
 adb wait-for-devices;
 adb remount;
 adb devices;
-

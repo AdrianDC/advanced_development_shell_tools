@@ -12,7 +12,7 @@ read -e ZipFile;
 ZipFile=${ZipFile//[\' ]/};
 TargetFile="$ZipFile.signed.zip";
 
-if [ -f $TargetFile ]; then
+if [ -f "$TargetFile" ]; then
   rm -f $TargetFile;
 fi;
 
@@ -32,4 +32,3 @@ echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
 read key;
-

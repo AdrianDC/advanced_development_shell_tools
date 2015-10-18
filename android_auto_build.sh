@@ -13,7 +13,7 @@ if [ ! -z $AndroidDev ]; then
 fi;
 
 cd $ScriptsDir/;
-if [ ! -z $AndroidForce ]; then
+if [ ! -z "$AndroidForce" ]; then
   source $ScriptsDir/android_sync_force.sh "automatic";
 else
   source $ScriptsDir/android_sync.sh "automatic";
@@ -27,14 +27,17 @@ cd $ScriptsDir/;
 source $ScriptsDir/android_brunch.sh "automatic";
 
 cd $ScriptsDir/;
-source $ScriptsDir/android_server_upload.sh $AndroidResult "Android-ROMs" "automatic";
+source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-ROMs" "automatic";
 
 FullTimeDiff=$(($(date +%s)-$FullTimeStart));
 echo "";
-echo " [ Done in $FullTimeDiff secs ]";
+if [ -f "$AndroidResult" ]; then
+  echo " [ Build : Success in $FullTimeDiff secs ]";
+else
+  echo " [ Build : Fail in $FullTimeDiff secs ]";
+fi;
 echo "";
 
-if [[ "$1" == "" ]]; then
+if [ -z "$2" ]; then
   read key;
 fi;
-

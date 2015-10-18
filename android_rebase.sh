@@ -2,9 +2,8 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-ProjectPaths=${UpdateProjects[*]};
 
-for ProjectPath in ${ProjectPaths[*]}
+for ProjectPath in ${UpdateProjects[*]}
 do
 
   echo "";
@@ -25,8 +24,8 @@ echo "";
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-if [[ "$1" == "" ]]; then
+
+if [ -z "$1" ]; then
   read key;
 fi;
 echo "";
-

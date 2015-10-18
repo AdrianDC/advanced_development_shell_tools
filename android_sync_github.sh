@@ -2,9 +2,8 @@
 ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
-ProjectPaths=${ForceProjects[*]};
 
-for ProjectPath in ${ProjectPaths[*]}
+for ProjectPath in ${ForceProjects[*]}
 do
 
   echo "";
@@ -15,9 +14,9 @@ do
   cd $AndroidDir/$ProjectPath;
   git rebase --abort;
   git stash -u;
-  git fetch github $AndroidTag;
-  git fetch AdrianDC $AndroidTag;
-  git reset AdrianDC/$AndroidTag;
+  git fetch $AndroidGitHub $AndroidTag;
+  git fetch $GitUserName $AndroidTag;
+  git reset $GitUserName/$AndroidTag;
   git stash -u;
 
 done;
@@ -27,8 +26,8 @@ echo "";
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-if [[ "$1" == "" ]]; then
+
+if [ -z "$1" ]; then
   read key;
 fi;
 echo "";
-

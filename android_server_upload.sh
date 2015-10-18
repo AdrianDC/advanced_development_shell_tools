@@ -8,16 +8,20 @@ echo " [ Uploading to the server ]";
 echo "";
 
 SendFile="$1";
-if [ ! -z $SendFile ] && [ -f "$SendFile" ]; then
+if [ ! -z "$SendFile" ] && [ -f "$SendFile" ]; then
 
   SendFileName=$(basename "$SendFile");
   SendFileExt=${SendFileName##*.};
   SendFileSize=$(stat -c "%s" "$SendFile");
   SendFileType='';
 
-  if [ ! -z $2 ]; then UploadFolder="$2"; fi;
+  if [ ! -z "$2" ]; then
+    UploadFolder="$2";
+  fi;
 
-  if [[ $SendFileExt == 'zip' ]]; then SendFileType="application/zip"; fi;
+  if [[ "$SendFileExt" == 'zip' ]]; then
+    SendFileType='application/zip';
+  fi;
 
   curl -L -# --dump-header .headers \
           -F "ftp_user=$UploadUserName" \
@@ -40,12 +44,12 @@ if [ ! -z $SendFile ] && [ -f "$SendFile" ]; then
           -o .uploadoutputs \
           "https://$UploadServer/?ftpAction=upload&filePath=";
 
-  if [ -f ./.headers ]; then
-    rm ./.headers;
+  if [ -f "./.headers" ]; then
+    rm "./.headers";
   fi;
 
-  if [ -f ./.uploadoutputs ]; then
-    rm ./.uploadoutputs;
+  if [ -f "./.uploadoutputs" ]; then
+    rm "./.uploadoutputs";
   fi;
 
 fi;
@@ -55,8 +59,8 @@ echo "";
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
-if [[ "$3" == "" ]]; then
+
+if [ -z "$3" ]; then
   read key;
 fi;
 echo "";
-

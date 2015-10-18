@@ -19,7 +19,9 @@ do
   echo "";
   echo " [ Building the branch ]";
   echo "";
-  if [ -f $OutDir/system/build.prop ]; then rm -f $OutDir/system/build.prop; fi;
+  if [ -f "$OutDir/system/build.prop" ]; then
+    rm -f "$OutDir/system/build.prop";
+  fi;
   breakfast $PhoneName;
   make installclean;
   brunch $PhoneName | tee $LogFile;
@@ -44,14 +46,16 @@ InstallLog=$(grep ".*target/product.*.zip" $LogFile);
 AndroidResult=$(printf "$InstallLog" | tail -1\
               | sed "s/\x1B\[[0-9;]*[JKmsu]//g"\
               | sed "s/.*$PhoneName\/\([^\[]*.zip\).*/\1/g");
-if [ -z $AndroidResult ]; then
+
+if [ -z "$AndroidResult" ]; then
   export AndroidResult="";
+
 else
   export AndroidResult="$ANDROID_PRODUCT_OUT/$AndroidResult";
-fi;
 
-if [ "$(ls -A $TargetDir)" ]; then
-  cp "$AndroidResult" $TargetDir/;
+  if [ "$(ls -A $TargetDir)" ]; then
+    cp "$AndroidResult" $TargetDir/;
+  fi;
 fi;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
@@ -59,7 +63,7 @@ echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";
 
-if [[ "$1" == "" ]]; then
+if [ -z "$1" ]; then
   nautilus $ANDROID_PRODUCT_OUT >/dev/null 2>&1;
   read key;
 fi;
