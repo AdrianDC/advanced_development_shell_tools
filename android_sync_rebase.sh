@@ -6,16 +6,15 @@ source $ScriptDir/android_set_variables.rc;
 cd $AndroidDir/;
 
 echo "";
-echo " [ Force-syncing repositories ]";
+echo " [ Rebase-syncing repositories ]";
 echo "";
 repo forall -c 'gitbranch=${REPO_RREV##*/}; \
-                echo ${PWD} [${REPO_REMOTE} - ${gitbranch}]; \
+                echo ${PWD} [${REPO_REMOTE}/${gitbranch}]; \
                 git rebase --abort 2>/dev/null; \
-                git stash -u; \
-                git reset --hard HEAD; \
+                git fetch ${REPO_REMOTE} $gitbranch; \
+                git rebase FETCH_HEAD; \
+                git rebase --abort 2>/dev/null; \
                 echo "";';
-repo sync --force-sync --force-broken;
-echo "";
 
 TimeDiff=$(($(date +%s)-$TimeStart));
 echo "";

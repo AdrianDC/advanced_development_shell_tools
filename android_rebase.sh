@@ -14,7 +14,7 @@ do
   cd $AndroidDir/$ProjectPath;
   git fetch origin $AndroidTag;
   git rebase origin/$AndroidTag;
-  git rebase --abort > /dev/null;
+  git rebase --abort &>/dev/null;
   git push -f $GitUserName HEAD:$AndroidTag;
 
 done;

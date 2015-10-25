@@ -6,6 +6,8 @@ BuildLog="$ScriptsLog.CM121.log";
 BuildMode="automatic";
 if [ -z "$1" ]; then
   BuildMode="manual";
+elif [[ "$1" == "test" ]]; then
+  BuildMode="test";
 fi;
 
 # Compilation Script

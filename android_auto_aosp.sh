@@ -2,29 +2,34 @@
 ScriptDir=$PWD;
 ScriptsDir=$ScriptDir;
 FullTimeStart=$(date +%s);
+BuildMode="$2";
 source $ScriptsDir/android_set_variables.rc;
 
-cd $ScriptsDir/;
-source $ScriptsDir/android_sync_github.sh "automatic";
+if [[ ! "$BuildMode" == "test" ]]; then
 
-cd $AndroidDir/;
-source ./build/envsetup.sh;
-croot;
-cd $AndroidDir/build/;
-git stash -u;
-croot;
-repo sync build --force-sync --force-broken;
-
-if [ ! -z "$AndroidDev" ]; then
   cd $ScriptsDir/;
-  source $ScriptsDir/android_rebase.sh "automatic";
-fi;
+  source $ScriptsDir/android_sync_github.sh "automatic";
 
-cd $ScriptsDir/;
-if [ ! -z "$AndroidForce" ]; then
-  echo "nosync"; #source $ScriptsDir/android_sync_force.sh "automatic";
-else
-  echo "nosync"; #source $ScriptsDir/android_sync.sh "automatic";
+  cd $AndroidDir/;
+  source ./build/envsetup.sh;
+  croot;
+  cd $AndroidDir/build/;
+  git stash -u;
+  croot;
+  repo sync build --force-sync --force-broken;
+
+  if [ ! -z "$AndroidDev" ]; then
+    cd $ScriptsDir/;
+    source $ScriptsDir/android_rebase.sh "automatic";
+  fi;
+
+  cd $ScriptsDir/;
+  if [ ! -z "$AndroidForce" ]; then
+    echo "nosync"; #source $ScriptsDir/android_sync_force.sh "automatic";
+  else
+    echo "nosync"; #source $ScriptsDir/android_sync.sh "automatic";
+  fi;
+
 fi;
 
 if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; then

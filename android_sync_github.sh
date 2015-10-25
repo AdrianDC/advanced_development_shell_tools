@@ -12,7 +12,7 @@ do
   echo "";
 
   cd $AndroidDir/$ProjectPath;
-  git rebase --abort;
+  git rebase --abort &>/dev/null;
   git stash -u;
   git fetch $AndroidGitHub $AndroidTag;
   git fetch $GitUserName $AndroidTag;
