@@ -7,4 +7,6 @@ android_sync_manual.sh
 android_set_target.rc
 android_set_variables.rc
 android_set_user.rc
+Server/Android.ico
+Server/ScriptTerminal.pid
 
