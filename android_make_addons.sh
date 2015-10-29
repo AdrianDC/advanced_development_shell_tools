@@ -4,6 +4,7 @@ TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
 FilePaths=(\
            "boot.img" \
+           "system/app/InCallUI/InCallUI.apk" \
            "system/app/QuickBoot/QuickBoot.apk" \
            "system/framework/framework-res.apk" \
            "system/framework/org.cyanogenmod.hardware.jar" \
@@ -18,6 +19,7 @@ ModulesNames=(\
               "CMSettingsProvider" \
               "DeviceSettings" \
               "framework-res" \
+              "InCallUI" \
               "org.cyanogenmod.hardware" \
               "QuickBoot" \
               "sepolicy" \

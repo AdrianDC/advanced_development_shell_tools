@@ -1,0 +1,67 @@
+# === Clear Screen ===
+alias cls='echo -e \\033c; clear;';
+
+# === Git language ===
+#alias git='LANG=en_GB git';
+
+# === Git vars ===
+gitbranchdefault='cm-12.1';
+gitremotedefault='AdrianDC';
+gitreviewdefault='github';
+gitrebasedefault=25;
+
+# === Git commits ===
+alias gitc='git commit;';
+alias gitcs='git commit -s;';
+alias gitca='git commit --amend;';
+alias gitcae='git commit --amend --no-edit;';
+
+# === Git assets ===
+alias getine='function f() { if [ ! -z "$1" ]; then printf $1; else printf $2; fi; }; f';
+alias gitfetchreset='function f() { git fetch $(getine $1 $gitremotedefault) $(getine $2 $gitbranchdefault); git reset FETCH_HEAD --hard; }; f';
+
+# === Git fetching ===
+alias gitf='git fetch';
+alias gitfgr='function f() { gitfetchreset github $1; }; f';
+alias gitfar='function f() { gitfetchreset $gitremotedefault $1; }; f';
+alias gitfsr='function f() { gitfetchreset source $1; }; f';
+
+# === Git pushing ===
+alias gitpa='function f() { git push -f $gitremotedefault HEAD:$(getine $1 $gitbranchdefault); }; f';
+alias gitpf='git push -f;';
+alias gitrh='git reset FETCH_HEAD --hard;';
+
+# === Git rebasing ===
+alias gitr='function f() { git rebase HEAD~$(getine $1 $gitrebasedefault) -i; }; f';
+alias gitra='git rebase --abort;';
+alias gitrc='git rebase --continue;';
+alias gitrg='function f() { git fetch github $(getine $1 $gitbranchdefault); git rebase github/$(getine $1 $gitbranchdefault); }; f';
+
+# === Git branch ===
+alias gitbc='function f() { branch=$(getine $1 $gitbranchdefault); review=$(getine $2 gitreviewdefault); \
+                            git fetch $review $branch; git branch $branch --track $review/$branch; git checkout $branch; }; f';
+
+# === Git cherry-picks ===
+alias gitcp='git cherry-pick';
+alias gitaa='git add . -Av;';
+alias gitap='git add . -Ap;';
+
+# === Git tools ===
+alias gitlo='git log --pretty=oneline;';
+alias gitmt='git mergetool;';
+
+# === Git patchs ===
+alias gitacp='function f() { \
+                clear; url=$1; echo $url; \
+                if [[ ! $url =~ '.patch' ]]; then url='$url.patch'; fi; \
+                patch=$(curl -s $url 2>nul); \
+                git apply --stat '$patch'; \
+                git apply --check '$patch'; \
+              }; f';
+alias gitapp='function f() { \
+                clear; url=$1; echo $url; \
+                if [[ ! $url =~ '.patch' ]]; then url='$url.patch'; fi; \
+                patch=$(curl -s $url 2>nul); \
+                git apply --3way '$patch'; \
+              }; f';
+

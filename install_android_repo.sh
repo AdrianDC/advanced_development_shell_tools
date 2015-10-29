@@ -28,6 +28,7 @@ echo "export PATH=~/bin:$PATH";
 echo "export USE_CCACHE=1";
 echo "export CCACHE_DIR=/media/$(whoami)/AndroidDev/CCache";
 echo "export CCACHE_LOGFILE=/media/$(whoami)/AndroidDev/CCache/ccache.log";
+echo "source /media/adriandc/AndroidDev/Scripts/bash_android.rc";
 echo "";
 sudo gedit ~/.bashrc
 
