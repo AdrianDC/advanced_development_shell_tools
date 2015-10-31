@@ -29,12 +29,12 @@ if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; the
 fi;
 
 cd $ScriptsDir/;
-source $ScriptsDir/android_make_addons.sh "automatic" "$2";
+source $ScriptsDir/android_brunch.sh "automatic";
 
 if [[ ! "$BuildMode" == "test" ]]; then
 
   cd $ScriptsDir/;
-  source $ScriptsDir/android_server_upload.sh "$AndroidResult" "CM-12.1-Addons" "automatic";
+  source $ScriptsDir/android_server_upload.sh "$AndroidResult" "CM-13.0-Nightly" "automatic";
 
 fi;
 
@@ -50,4 +50,3 @@ echo "";
 if [ -z "$2" ]; then
   read key;
 fi;
-

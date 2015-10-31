@@ -39,8 +39,12 @@ fi;
 cd $ScriptsDir/;
 source $ScriptsDir/android_lunch.sh "automatic";
 
-cd $ScriptsDir/;
-source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-Developers" "automatic";
+if [[ ! "$BuildMode" == "test" ]]; then
+
+  cd $ScriptsDir/;
+  source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-Developers" "automatic";
+
+fi;
 
 FullTimeDiff=$(($(date +%s)-$FullTimeStart));
 echo "";

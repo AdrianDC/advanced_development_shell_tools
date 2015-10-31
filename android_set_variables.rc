@@ -29,6 +29,8 @@ export AndroidForce="";
 export AndroidSync="";
 export AndroidDev="";
 
+export PhoneName="huashan";
+
 ProjectPaths=("frameworks/base" \
               "packages/apps/Settings" \
               "hardware/libhardware" \
@@ -36,14 +38,17 @@ ProjectPaths=("frameworks/base" \
               "device/sony/huashan" \
               "hardware/sony/DASH" \
               "kernel/sony/msm8x60" \
+              "kernel/sony/msm8960t" \
               "vendor/cmsdk" \
               "vendor/sony" \
               );
 ForceProjects=( \
                "device/sony/$PhoneName" \
                "frameworks/base" \
+               "hardware/libhardware" \
                "hardware/sony/DASH" \
                "kernel/sony/msm8x60" \
+               "kernel/sony/msm8960t" \
                "packages/apps/Settings" \
                "vendor/cmsdk" \
                "vendor/sony" \
@@ -53,6 +58,7 @@ UpdateProjects=( \
                 "device/sony/$PhoneName" \
                 "frameworks/base" \
                 "hardware/sony/DASH" \
+                "hardware/libhardware" \
                 "packages/apps/Settings" \
                 "vendor/cmsdk" \
                 "vendor/sony" \
@@ -70,14 +76,12 @@ export AndroidDir="$PathsDir/$AndroidROM/Repo";
 export CCacheDir="$PathsDir/CCache";
 export GitHubDir="$PathsDir/GitHub";
 export TargetDir="$PathsDir/Target";
+export OutDir="$AndroidDir/out/target/product/$PhoneName";
 
 export BuildJobs=8;
 export CCacheSize=80G;
 export SwapFile="$PWD/Paths/memory.swap";
 export SwapSize=$((4*1024*1024));
-
-export PhoneName="huashan";
-export OutDir="$AndroidDir/out/target/product/$PhoneName";
 
 export LogFile="$ScriptDir/script_logs.txt";
 export SearchFile="$ScriptDir/search_logs.txt";

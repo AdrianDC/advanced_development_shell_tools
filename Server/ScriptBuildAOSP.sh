@@ -3,11 +3,9 @@ source /media/adriandc/AndroidDev/Server/ScriptVars.rc;
 BuildLog="$ScriptsLog.AOSP.log";
 
 # Launch Mode
-BuildMode="automatic";
-if [ -z "$1" ]; then
-  BuildMode="manual";
-elif [[ "$1" == "test" ]]; then
-  BuildMode="test";
+BuildMode="manual";
+if [ ! -z "$1" ]; then
+  BuildMode="$1";
 fi;
 
 # Compilation Script

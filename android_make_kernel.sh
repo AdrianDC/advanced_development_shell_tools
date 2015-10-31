@@ -24,7 +24,8 @@ do
   echo " [ Making the requested libraries ]";
   echo "";
   cd $AndroidDir/;
-  mka -j $BuildJobs ${ModulesNames[*]} | tee $LogFile;
+  mmm -B -j8 ./external/sepolicy/ | tee $LogFile;
+  mka -j $BuildJobs ${ModulesNames[*]} | tee -a $LogFile;
   echo "";
 
   if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then

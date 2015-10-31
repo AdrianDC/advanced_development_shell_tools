@@ -3,17 +3,20 @@ source /media/adriandc/AndroidDev/Server/ScriptVars.rc;
 BuildLog="$ScriptsLog.CM130.log";
 
 # Launch Mode
-BuildMode="automatic";
-if [ -z "$1" ]; then
-  BuildMode="manual";
-elif [[ "$1" == "test" ]]; then
-  BuildMode="test";
+BuildMode="manual";
+if [ ! -z "$1" ]; then
+  BuildMode="$1";
 fi;
 
 # Compilation Script
 cd $ScriptsDir;
 source ./android_choose_rom.sh 3 y n 2>&1 | tee $BuildLog;
-source ./android_auto_build.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
+source ./android_auto_nightly.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
+
+# Update repo state
+if [[ "$1" == "automatic" ]]; then
+  source ./android_repo_state.sh "automatic";
+fi;
 
 # Update script logs
 source $ServerDir/ScriptLogsSync.sh;
