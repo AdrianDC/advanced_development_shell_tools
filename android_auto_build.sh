@@ -31,11 +31,13 @@ fi;
 cd $ScriptsDir/;
 source $ScriptsDir/android_brunch.sh "automatic";
 
-if [[ ! "$BuildMode" == "test" ]]; then
-
+if [[ ! "$BuildMode" == "local" ]]; then
   cd $ScriptsDir/;
-  source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-ROMs" "automatic";
-
+  if [[ ! "$BuildMode" == "test" ]]; then
+    source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-ROMs" "automatic";
+  else
+    source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-Developers" "automatic";
+  fi;
 fi;
 
 FullTimeDiff=$(($(date +%s)-$FullTimeStart));

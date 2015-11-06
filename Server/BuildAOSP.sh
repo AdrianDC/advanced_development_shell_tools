@@ -1,6 +1,6 @@
 #!/bin/bash
-source /media/adriandc/AndroidDev/Server/ScriptVars.rc;
-BuildLog="$ScriptsLog.CM121.log";
+source /media/adriandc/AndroidDev/Server/Vars.rc;
+BuildLog="$ScriptsLog.AOSP.log";
 
 # Launch Mode
 BuildMode="manual";
@@ -10,18 +10,18 @@ fi;
 
 # Compilation Script
 cd $ScriptsDir;
-source ./android_choose_rom.sh 1 y y 2>&1 | tee $BuildLog;
-source ./android_auto_build.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
+source ./android_choose_rom.sh 4 n n 2>&1 | tee $BuildLog;
+source ./android_auto_aosp.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
 
 # Update script logs
-source $ServerDir/ScriptLogsSync.sh;
+source $ServerDir/LogsSync.sh;
 
 # PushBullet Notification
 BuildSuccess=$(grep "Build : Success" $BuildLog | uniq);
 if [ ! -z "$BuildSuccess" ]; then
-  PushBulletComment="CM12.1 ROM ready !";
+  PushBulletComment="AOSP ROM ready !";
 else
-  PushBulletComment="CM12.1 ROM failed.";
+  PushBulletComment="AOSP ROM failed.";
 fi;
 curl --header "Access-Token: $PushBulletToken" \
      --header "Content-Type: application/json" \

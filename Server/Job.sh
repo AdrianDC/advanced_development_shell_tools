@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source /media/adriandc/AndroidDev/Server/ScriptVars.rc;
+source /media/adriandc/AndroidDev/Server/Vars.rc;
 
 # Register Terminal
 echo $PPID >$ScriptTerminal;
@@ -18,5 +18,6 @@ esac;
 #
 # sudo apt-get update && sudo apt-get install gnome-schedule
 #
-# 30 08 * * * /media/spips/AndroidWork/Server/ScriptJob.sh 1
+# 30 06 * * * /media/adriandc/AndroidDev/Server/Job.sh 1
+# 30 05 * * * /media/adriandc/AndroidDev/Server/Reboot.sh
 

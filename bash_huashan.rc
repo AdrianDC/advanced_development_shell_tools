@@ -1,0 +1,28 @@
+# === Repo FullSync ===
+reposa()
+{
+  source ./build/envsetup.sh;
+
+  repo sync --current-branch --detach --force-broken --force-sync;
+
+  repolist=( "-t qcom-bringup-8960"
+             "-t legacy_ril" \
+             119275 119276 "-t leds-settings" \
+             116051 118349 118359 \
+             118449 118477 118478 118557 \
+             118591 118611 118893 );
+
+  for i in "${repolist[@]}";
+  do
+    echo "";
+    echo " V=========== RepoPick $i ===========V";
+    echo "";
+    repopick $i;
+  done;
+
+  echo "Done syncing !";
+  echo "";
+}
+
+export -f reposa;
+

@@ -31,11 +31,13 @@ fi;
 cd $ScriptsDir/;
 source $ScriptsDir/android_make_addons.sh "automatic" "$2";
 
-if [[ ! "$BuildMode" == "test" ]]; then
-
+if [[ ! "$BuildMode" == "local" ]]; then
   cd $ScriptsDir/;
-  source $ScriptsDir/android_server_upload.sh "$AndroidResult" "CM-12.1-Addons" "automatic";
-
+  if [[ ! "$BuildMode" == "test" ]]; then
+    source $ScriptsDir/android_server_upload.sh "$AndroidResult" "CM-12.1-Addons" "automatic";
+  else
+    source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-Developers" "automatic";
+  fi;
 fi;
 
 FullTimeDiff=$(($(date +%s)-$FullTimeStart));

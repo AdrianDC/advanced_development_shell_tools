@@ -1,6 +1,6 @@
 #!/bin/bash
-source /media/adriandc/AndroidDev/Server/ScriptVars.rc;
-BuildLog="$ScriptsLog.AICP.log";
+source /media/adriandc/AndroidDev/Server/Vars.rc;
+BuildLog="$ScriptsLog.CM130.log";
 
 # Launch Mode
 BuildMode="manual";
@@ -10,18 +10,23 @@ fi;
 
 # Compilation Script
 cd $ScriptsDir;
-source ./android_choose_rom.sh 2 n n 2>&1 | tee $BuildLog;
-source ./android_auto_build.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
+source ./android_choose_rom.sh 3 y n 2>&1 | tee $BuildLog;
+source ./android_auto_nightly.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
+
+# Update repo state
+if [[ "$1" == "automatic" ]]; then
+  source ./android_repo_state.sh "automatic";
+fi;
 
 # Update script logs
-source $ServerDir/ScriptLogsSync.sh;
+source $ServerDir/LogsSync.sh;
 
 # PushBullet Notification
 BuildSuccess=$(grep "Build : Success" $BuildLog | uniq);
 if [ ! -z "$BuildSuccess" ]; then
-  PushBulletComment="AICP ROM ready !";
+  PushBulletComment="CM13.0 ROM ready !";
 else
-  PushBulletComment="AICP ROM failed.";
+  PushBulletComment="CM13.0 ROM failed.";
 fi;
 curl --header "Access-Token: $PushBulletToken" \
      --header "Content-Type: application/json" \

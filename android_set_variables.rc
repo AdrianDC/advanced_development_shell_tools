@@ -37,7 +37,6 @@ ProjectPaths=("frameworks/base" \
               "device/qcom/common" \
               "device/sony/huashan" \
               "hardware/sony/DASH" \
-              "kernel/sony/msm8x60" \
               "kernel/sony/msm8960t" \
               "vendor/cmsdk" \
               "vendor/sony" \
@@ -47,7 +46,6 @@ ForceProjects=( \
                "frameworks/base" \
                "hardware/libhardware" \
                "hardware/sony/DASH" \
-               "kernel/sony/msm8x60" \
                "kernel/sony/msm8960t" \
                "packages/apps/Settings" \
                "vendor/cmsdk" \

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source /media/adriandc/AndroidDev/Server/ScriptVars.rc;
+source /media/adriandc/AndroidDev/Server/Vars.rc;
 
 # PushBullet Notification
 PushBulletComment="Server rebooting !";

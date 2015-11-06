@@ -1,0 +1,17 @@
+export MainFolder=/media/adriandc/AndroidDev;
+export ScriptsDir="$MainFolder/Scripts/";
+export ServerDir=$MainFolder/Server/;
+export LogsDir="$MainFolder/Logs";
+
+source $ServerDir/User.rc;
+
+export ScriptTerminal="$LogsDir/ScriptTerminal.pid";
+export ScriptsJob="$LogsDir/Job.log";
+export ScriptsLog="$LogsDir/Build";
+
+export ScriptBuildAddons="$ServerDir/BuildAddons.sh";
+export ScriptBuildCM121="$ServerDir/BuildCM121.sh";
+export ScriptBuildCM130="$ServerDir/BuildCM130.sh";
+export ScriptBuildAICP="$ServerDir/BuildAICP.sh";
+export ScriptBuildAOSP="$ServerDir/BuildAOSP.sh";
+

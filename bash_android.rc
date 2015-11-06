@@ -10,6 +10,16 @@ alias reposi='repo sync .';
 alias adbr='adb wait-for-devices; adb root; sleep 2; adb wait-for-devices; adb remount; sleep 1; adb wait-for-devices';
 alias adbps='function f() { if [ ! -z "$1" ]; then file=$(printf "$1" | sed "s/.*\(\/system.*\)/\1/g"); printf "$file: "; adb push "$1" "$file"; fi; }; f';
 alias adbp='adbr; adbps';
+alias adbs='adb shell';
+
+# === Debug shortcuts ===
+alias adbl='printf "" >adb.log; adb logcat | tee -a adb.log';
+alias sepaud='function f() { cat $1 | grep denied; cat $1 | grep denied | audit2allow -p sepolicy; }; f';
+alias adbk='adbr; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
+alias adbkl='adbr; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbse='adbr; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
+alias adbsel='adbkl; sepaud kmsg';
+alias grepb='function f() { grep -air $1 .; }; f';
 
 # === Build installs ===
 function adbi()
@@ -36,6 +46,7 @@ function adbi()
 
 # === Git vars ===
 gitbranchdefault='cm-13.0';
+gituserdefault='AdrianDC';
 gitremotedefault='AdrianDC';
 gitreviewdefault='github';
 gitrebasedefault=25;
@@ -45,20 +56,27 @@ alias gitc='git commit';
 alias gitcs='git commit -s';
 alias gitca='git commit --amend';
 alias gitcae='git commit --amend --no-edit';
+alias gitcid='scp -p -P 29418 $gituserdefault@review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; gitca';
 
 # === Git assets ===
 alias getine='function f() { if [ ! -z "$1" ]; then printf $1; else printf $2; fi; }; f';
-alias gitfetchreset='function f() { git fetch $(getine $1 $gitremotedefault) $(getine $2 $gitbranchdefault); git reset FETCH_HEAD --hard; }; f';
+alias gitfetchtreset='function f() { git fetch $(getine $1 $gitremotedefault) $(getine $2 $gitbranchdefault); git reset FETCH_HEAD --hard; }; f';
+alias gitfetchtcheckout='function f() { remote=$(getine $1 $gitremotedefault); branch=$(getine $2 $gitbranchdefault); git fetch $remote $branch; git checkout $remote/$branch; }; f';
 
 # === Git fetching ===
 alias gitf='git fetch';
 alias gitfmr='git fetch origin; git reset origin/master';
-alias gitfgr='function f() { gitfetchreset github $1; }; f';
-alias gitfar='function f() { gitfetchreset $gitremotedefault $1; }; f';
-alias gitfsr='function f() { gitfetchreset source $1; }; f';
+alias gitfsu='git fetch origin; git reset origin/master; git stash -p';
+alias gitfgr='gitfetchtreset github';
+alias gitfor='gitfetchtreset origin';
+alias gitfar='gitfetchtreset $gitremotedefault';
+alias gitfsr='gitfetchtreset source';
+alias gitfgc='gitfetchtcheckout github';
 
 # === Git pushing ===
-alias gitpa='function f() { git push -f $gitremotedefault HEAD:$(getine $1 $gitbranchdefault); }; f';
+alias gitpu='function f() { remote=$(getine $1 gitremotedefault); branch=$(getine $2 $gitbranchdefault); \
+                            git fetch $remote $branch; git push -f $remote HEAD:refs/heads/$branch; }; f';
+alias gitpa='gitpu $gitremotedefault';
 alias gitpf='git push -f';
 
 # === Git resetting ===
@@ -81,18 +99,32 @@ alias gitbc='function f() { branch=$(getine $1 $gitbranchdefault); review=$(geti
                             git fetch $review $branch; git branch $branch --track $review/$branch; git checkout $branch; }; f';
 alias gitbt='function f() { branch=$(getine $1 $gitbranchdefault); git branch $branch; git checkout $branch; }; f';
 alias gitbd='git branch -D';
-alias gitbv='git branch -v';
+alias gitbv='git fetch $gitreviewdefault $(git rev-parse --abbrev-ref HEAD); git branch -v';
+alias gitrv='git remote -v';
 alias gitch='git checkout';
+alias gitbaclean='git fetch $gitremotedefault; git branch -r | grep $gitremotedefault | sed "s/$gitremotedefault\/\(.*\)/\1/g" | xargs -L 1 git push $gitremotedefault --delete';
 
 # === Git cherry-picks ===
 alias gitcp='git cherry-pick';
 alias gitaa='git add . -Av';
-alias gitap='git add . -Ap';
+alias gitap='git add -p';
+alias gitaap='git add . -Ap';
 
 # === Git stash ===
 alias gits='git stash';
 alias gitsp='git stash -p';
+alias gitsu='git stash -u';
 alias gitspop='git stash pop';
+
+# === Git review ===
+alias gitpushreview='function f() { projectname=$(git remote -v | grep $2 | tail -1 | cut -f 2 | sed "s/.*\/\(.*\) .*/\1/"); \
+                                    command="git push $1/$2/$projectname HEAD:refs/for/$(getine $3 $gitbranchdefault)"; \
+                                    echo ""; echo " $command"; printf "  > Proceed with review upload (y/N) ? "; read key; \
+                                    if [[ "$key" == "y" || "$key" == "Y" ]]; then echo ""; $command; fi; echo ""; }; f';
+alias gitpr='gitpushreview ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod';
+alias gitprh='gitpushreview http://review.cyanogenmod.org CyanogenMod';
+alias gitpraicp='gitpushreview ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP';
+alias gitprhaicp='gitpushreview http://gerrit.aicp-rom.com AICP';
 
 # === Git tools ===
 alias gitlo='git log --pretty=oneline';

@@ -4,23 +4,12 @@ ScriptsDir=$ScriptDir;
 FullTimeStart=$(date +%s);
 BuildMode="$2";
 source $ScriptsDir/android_set_variables.rc;
+source $ScriptsDir/bash_huashan.rc;
 
 if [[ ! "$BuildMode" == "test" ]]; then
 
-  cd $ScriptsDir/;
-  source $ScriptsDir/android_sync_github.sh "automatic";
-
-  if [ ! -z "$AndroidDev" ]; then
-    cd $ScriptsDir/;
-    source $ScriptsDir/android_rebase.sh "automatic";
-  fi;
-
-  cd $ScriptsDir/;
-  if [ ! -z "$AndroidForce" ]; then
-    source $ScriptsDir/android_sync_force.sh "automatic";
-  else
-    source $ScriptsDir/android_sync.sh "automatic";
-  fi;
+  cd $AndroidDir/;
+  reposa;
 
 fi;
 
@@ -28,14 +17,22 @@ if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; the
   rm "$AndroidDir/device/sony/$PhoneName/"*.dependencies;
 fi;
 
+if [[ ! "$BuildMode" == "test" ]]; then
+  if [ -d "$OutDir/system" ]; then
+    rm -rf "$OutDir/system";
+  fi;
+fi;
+
 cd $ScriptsDir/;
 source $ScriptsDir/android_brunch.sh "automatic";
 
-if [[ ! "$BuildMode" == "test" ]]; then
-
+if [[ ! "$BuildMode" == "local" ]]; then
   cd $ScriptsDir/;
-  source $ScriptsDir/android_server_upload.sh "$AndroidResult" "CM-13.0-Nightly" "automatic";
-
+  if [[ ! "$BuildMode" == "test" ]]; then
+    source $ScriptsDir/android_server_upload.sh "$AndroidResult" "CM-13.0-Nightly" "automatic";
+  else
+    source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-Developers" "automatic";
+  fi;
 fi;
 
 FullTimeDiff=$(($(date +%s)-$FullTimeStart));

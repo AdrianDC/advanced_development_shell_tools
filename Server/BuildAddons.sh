@@ -1,5 +1,5 @@
 #!/bin/bash
-source /media/adriandc/AndroidDev/Server/ScriptVars.rc;
+source /media/adriandc/AndroidDev/Server/Vars.rc;
 BuildLog="$ScriptsLog.CMAddons.log";
 
 # Launch Mode
@@ -14,7 +14,7 @@ source ./android_choose_rom.sh 1 y y 2>&1 | tee $BuildLog;
 source ./android_auto_addons.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
 
 # Update script logs
-source $ServerDir/ScriptLogsSync.sh;
+source $ServerDir/LogsSync.sh;
 
 # PushBullet Notification
 BuildSuccess=$(grep "Build : Success" $BuildLog | uniq);
