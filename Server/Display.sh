@@ -9,7 +9,7 @@ echo "";
 # Registered Terminal
 TerminalPID="";
 if [ -f $ScriptTerminal ]; then
-  read TerminalPID <$ScriptTerminal;
+  read TerminalPID < $ScriptTerminal;
 fi;
 if [ ! -z $TerminalPID ] && stat /proc/$TerminalPID/fd/0 &>/dev/null; then
   tail -f $ScriptsLog;
@@ -23,4 +23,3 @@ fi;
 if [[ "$1" == "" ]]; then
   read key;
 fi;
-

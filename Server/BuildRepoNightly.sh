@@ -23,6 +23,6 @@ reposa;
 source $ServerDir/LogsSync.sh;
 
 # CronTab End
-if [[ "$1" == "" ]]; then
+if [ -z "$1" ]; then
   read key;
 fi;

@@ -5,7 +5,7 @@ FullTimeStart=$(date +%s);
 BuildMode="$2";
 source $ScriptsDir/android_set_variables.rc;
 
-if [[ ! "$BuildMode" == "test" ]]; then
+if [[ ! "$BuildMode" =~ "test" ]]; then
 
   cd $ScriptsDir/;
   source $ScriptsDir/android_sync_github.sh "automatic";
@@ -30,6 +30,10 @@ if [[ ! "$BuildMode" == "test" ]]; then
     echo "nosync"; #source $ScriptsDir/android_sync.sh "automatic";
   fi;
 
+  if [ -d "$OutDir/system" ]; then
+    rm -rf "$OutDir/system";
+  fi;
+
 fi;
 
 if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; then
@@ -39,9 +43,9 @@ fi;
 cd $ScriptsDir/;
 source $ScriptsDir/android_lunch.sh "automatic";
 
-if [[ ! "$BuildMode" == "local" ]]; then
+if [[ ! "$BuildMode" =~ "local" ]]; then
   cd $ScriptsDir/;
-  if [[ ! "$BuildMode" == "test" ]]; then
+  if [[ ! "$BuildMode" =~ "test" ]]; then
     source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-Developers" "automatic";
   else
     source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-Developers" "automatic";

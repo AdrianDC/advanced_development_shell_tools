@@ -14,10 +14,10 @@ source ./build/envsetup.sh;
 croot;
 echo "";
 
-if [[ "$2" == "manual" ]]; then
-  ROMFile="aosp-6.0.0-"$(date +'%Y%m%d')"-DEBUG-WIP-NOBOOT-$PhoneName-TEST.zip";
+if [[ "$2" =~ "manual" ]]; then
+  ROMFile="aosp-6.0.0-"$(date +'%Y%m%d')"-DEBUG-WIP-$PhoneName-TEST.zip";
 else
-  ROMFile="aosp-6.0.0-"$(date +'%Y%m%d')"-DEBUG-WIP-NOBOOT-$PhoneName.zip";
+  ROMFile="aosp-6.0.0-"$(date +'%Y%m%d')"-DEBUG-WIP-$PhoneName.zip";
 fi;
 
 LaunchBuild=1;

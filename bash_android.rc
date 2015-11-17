@@ -2,32 +2,37 @@
 alias cls='echo -e \\033c; clear';
 
 # === Repo shortcuts ===
-alias repor='function f() { currentdir=${PWD}; while [[ "${PWD}" != '/' && ! -d './device' && ! -d './frameworks' ]]; do cd ..; done; }; f';
-alias repos='function f() { currentdir=${PWD}; repor; if [ -f ./build/envsetup.sh ]; then source ./build/envsetup.sh; croot; breakfast huashan; else echo "Android Repo not found..."; fi; cd "$currentdir"; }; f';
+function repor() { currentdir=${PWD}; while [[ "${PWD}" != '/' && ! -d './device' && ! -d './frameworks' ]]; do cd ..; done; }
+function repos() { currentdir=${PWD}; repor; if [ -f ./build/envsetup.sh ]; then source ./build/envsetup.sh; croot; breakfast huashan; else echo "Android Repo not found..."; fi; cd "$currentdir"; }
 alias reposi='repo sync .';
 
 # === ADB shortcuts ===
 alias adbr='adb wait-for-devices; adb root; sleep 2; adb wait-for-devices; adb remount; sleep 1; adb wait-for-devices';
-alias adbps='function f() { if [ ! -z "$1" ]; then file=$(printf "$1" | sed "s/.*\(\/system.*\)/\1/g"); printf "$file: "; adb push "$1" "$file"; fi; }; f';
+function adbps() { if [ ! -z "$1" ]; then file=$(printf "$1" | sed "s/.*\(\/system.*\)/\1/g"); printf "$file: "; adb push "$1" "$file"; fi; }
 alias adbp='adbr; adbps';
 alias adbs='adb shell';
 
+# === Research shortcuts ===
+function highlight() { perl -pe "s/$1/\e[1;0;31m$&\e[0m/ig"; }
+function grepb() { grep -air $1 .; }
+alias grepi='grep -i';
+
 # === Debug shortcuts ===
+function sepaud() { cat $1 | grep denied; cat $1 | grep denied | audit2allow -p sepolicy; }
 alias adbl='printf "" >adb.log; adb logcat | tee -a adb.log';
-alias sepaud='function f() { cat $1 | grep denied; cat $1 | grep denied | audit2allow -p sepolicy; }; f';
 alias adbk='adbr; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
 alias adbkl='adbr; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
 alias adbse='adbr; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
 alias adbsel='adbkl; sepaud kmsg';
-alias grepb='function f() { grep -air $1 .; }; f';
+alias adblh='adb logcat -b events -b main -b radio | highlight';
+alias adbintents='adb shell dumpsys package r > intents.txt';
 
 # === Build installs ===
-function adbi()
+function adbif()
 {
   logfile=/media/adriandc/AndroidDev/Scripts/script_logs.txt;
   $@ | tee $logfile;
   InstallLog=$(grep "Install:.*target/product" $logfile | sort | uniq);
-  adbr;
   echo "";
   for FilePath in ${InstallLog[*]}
   do
@@ -39,10 +44,8 @@ function adbi()
     fi;
   done;
   echo "";
-};
-
-# === Git language ===
-#alias git='LANG=en_GB git';
+}
+alias adbi='adbr; adbif';
 
 # === Git vars ===
 gitbranchdefault='cm-13.0';
@@ -59,23 +62,24 @@ alias gitcae='git commit --amend --no-edit';
 alias gitcid='scp -p -P 29418 $gituserdefault@review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; gitca';
 
 # === Git assets ===
-alias getine='function f() { if [ ! -z "$1" ]; then printf $1; else printf $2; fi; }; f';
-alias gitfetchtreset='function f() { git fetch $(getine $1 $gitremotedefault) $(getine $2 $gitbranchdefault); git reset FETCH_HEAD --hard; }; f';
-alias gitfetchtcheckout='function f() { remote=$(getine $1 $gitremotedefault); branch=$(getine $2 $gitbranchdefault); git fetch $remote $branch; git checkout $remote/$branch; }; f';
+function getine() { if [ ! -z "$1" ]; then printf $1; else printf $2; fi; }
+function gitfetchtreset() { git fetch $(getine $1 $gitremotedefault) $(getine $2 $gitbranchdefault); git reset FETCH_HEAD --hard; }
+function gitfetchtcheckout() { remote=$(getine $1 $gitremotedefault); branch=$(getine $2 $gitbranchdefault); git fetch $remote $branch; git checkout $remote/$branch; }
 
 # === Git fetching ===
 alias gitf='git fetch';
 alias gitfmr='git fetch origin; git reset origin/master';
 alias gitfsu='git fetch origin; git reset origin/master; git stash -p';
 alias gitfgr='gitfetchtreset github';
+alias gitfir='gitfetchtreset aicp lp5.1';
 alias gitfor='gitfetchtreset origin';
 alias gitfar='gitfetchtreset $gitremotedefault';
 alias gitfsr='gitfetchtreset source';
 alias gitfgc='gitfetchtcheckout github';
 
 # === Git pushing ===
-alias gitpu='function f() { remote=$(getine $1 gitremotedefault); branch=$(getine $2 $gitbranchdefault); \
-                            git fetch $remote $branch; git push -f $remote HEAD:refs/heads/$branch; }; f';
+function gitpu() { remote=$(getine $1 gitremotedefault); branch=$(getine $2 $gitbranchdefault); \
+                   git fetch $remote $branch; git push -f $remote HEAD:refs/heads/$branch; }
 alias gitpa='gitpu $gitremotedefault';
 alias gitpf='git push -f';
 
@@ -86,18 +90,18 @@ alias gitro='git reset HEAD^ --hard';
 alias gitri='git reset HEAD^';
 
 # === Git rebasing ===
-alias gitr='function f() { git rebase HEAD~$(getine $1 $gitrebasedefault) -i; }; f';
+function gitr() { git rebase HEAD~$(getine $1 $gitrebasedefault) -i; }
 alias gitra='git rebase --abort';
 alias gitrc='git rebase --continue';
 alias gitre='git rebase --edit-todo';
 alias gitrs='git rebase --skip';
-alias gitrb='function f() { branch=$(getine $1 $gitbranchdefault); git fetch github $branch; git rebase github/$branch; }; f';
-alias gitrbo='function f() { branch=$(getine $1 $gitbranchdefault); git fetch origin $branch; git rebase origin/$branch; }; f';
+function gitrb()  { branch=$(getine $1 $gitbranchdefault); git fetch github $branch; git rebase github/$branch; }
+function gitrbo() { branch=$(getine $1 $gitbranchdefault); git fetch origin $branch; git rebase origin/$branch; }
 
 # === Git branch ===
-alias gitbc='function f() { branch=$(getine $1 $gitbranchdefault); review=$(getine $2 $gitreviewdefault); \
-                            git fetch $review $branch; git branch $branch --track $review/$branch; git checkout $branch; }; f';
-alias gitbt='function f() { branch=$(getine $1 $gitbranchdefault); git branch $branch; git checkout $branch; }; f';
+function gitbc() { branch=$(getine $1 $gitbranchdefault); review=$(getine $2 $gitreviewdefault); \
+                   git fetch $review $branch; git branch $branch --track $review/$branch; git checkout $branch; }
+function gitbt() { branch=$(getine $1 $gitbranchdefault); git branch $branch; git checkout $branch; }
 alias gitbd='git branch -D';
 alias gitbv='git fetch $gitreviewdefault $(git rev-parse --abbrev-ref HEAD); git branch -v';
 alias gitrv='git remote -v';
@@ -117,13 +121,14 @@ alias gitsu='git stash -u';
 alias gitspop='git stash pop';
 
 # === Git review ===
-alias gitpushreview='function f() { projectname=$(git remote -v | grep $2 | tail -1 | cut -f 2 | sed "s/.*\/\(.*\) .*/\1/"); \
-                                    command="git push $1/$2/$projectname HEAD:refs/for/$(getine $3 $gitbranchdefault)"; \
-                                    echo ""; echo " $command"; printf "  > Proceed with review upload (y/N) ? "; read key; \
-                                    if [[ "$key" == "y" || "$key" == "Y" ]]; then echo ""; $command; fi; echo ""; }; f';
+function gitpushreview() { projectname=$(git remote -v | grep $2 | tail -1 | cut -f 2 | sed "s/.*\/\(.*\) .*/\1/"); \
+                           command="git push $1/$2/$projectname HEAD:refs/for/$(getine $3 $gitbranchdefault)"; \
+                           echo ""; echo " $command"; printf "  > Proceed with review upload (y/N) ? "; read key; \
+                           if [[ "$key" == "y" || "$key" == "Y" ]]; then echo ""; $command; fi; echo ""; }
 alias gitpr='gitpushreview ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod';
 alias gitprh='gitpushreview http://review.cyanogenmod.org CyanogenMod';
 alias gitpraicp='gitpushreview ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP';
+alias gitpraicpl='gitpushreview ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP lp5.1';
 alias gitprhaicp='gitpushreview http://gerrit.aicp-rom.com AICP';
 
 # === Git tools ===
@@ -133,17 +138,17 @@ alias githd='git update-index --assume-unchanged';
 alias gitsh='git update-index --no-assume-unchanged';
 
 # === Git patchs ===
-alias gitacp='function f() { \
-                clear; url=$1; echo $url; \
-                if [[ ! $url =~ '.patch' ]]; then url='$url.patch'; fi; \
-                patch=$(curl -s $url 2>nul); \
-                git apply --stat '$patch'; \
-                git apply --check '$patch'; \
-              }; f';
-alias gitapp='function f() { \
-                clear; url=$1; echo $url; \
-                if [[ ! $url =~ '.patch' ]]; then url='$url.patch'; fi; \
-                patch=$(curl -s $url 2>nul); \
-                git apply --3way '$patch'; \
-              }; f';
+function gitacp() { \
+                    clear; url=$1; echo $url; \
+                    if [[ ! $url =~ '.patch' ]]; then url='$url.patch'; fi; \
+                    patch=$(curl -s $url 2>nul); \
+                    git apply --stat '$patch'; \
+                    git apply --check '$patch'; \
+                  }
+function gitapp() { \
+                    clear; url=$1; echo $url; \
+                    if [[ ! $url =~ '.patch' ]]; then url='$url.patch'; fi; \
+                    patch=$(curl -s $url 2>nul); \
+                    git apply --3way '$patch'; \
+                  }
 

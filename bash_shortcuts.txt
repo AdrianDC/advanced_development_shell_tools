@@ -43,4 +43,3 @@ git rebase HEAD~5 -i; git fetch source cm-12.1; git reset --hard FETCH_HEAD; git
 
 ===[ Backup Regex ]===
 ^(.*?)$\s+?^(?=.*^\1$)
-

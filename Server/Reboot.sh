@@ -9,5 +9,4 @@ curl --header "Access-Token: $PushBulletToken" \
      --request POST https://api.pushbullet.com/v2/pushes >/dev/null;
 
 # Reboot the server
-/sbin/shutdown -r now
-
+/sbin/shutdown -r nowr

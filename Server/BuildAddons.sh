@@ -29,6 +29,6 @@ curl --header "Access-Token: $PushBulletToken" \
      --request POST https://api.pushbullet.com/v2/pushes >/dev/null;
 
 # CronTab End
-if [[ "$1" == "" ]]; then
+if [ -z "$1" ]; then
   read key;
 fi;

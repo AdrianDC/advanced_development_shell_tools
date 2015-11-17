@@ -20,4 +20,3 @@ esac;
 #
 # 30 06 * * * /media/adriandc/AndroidDev/Server/Job.sh 1
 # 30 05 * * * /media/adriandc/AndroidDev/Server/Reboot.sh
-

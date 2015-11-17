@@ -14,7 +14,7 @@ source ./android_choose_rom.sh 3 y n 2>&1 | tee $BuildLog;
 source ./android_auto_nightly.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
 
 # Update repo state
-if [[ "$1" == "automatic" ]]; then
+if [[ "$1" =~ "automatic" ]]; then
   source ./android_repo_state.sh "automatic";
 fi;
 
@@ -34,6 +34,6 @@ curl --header "Access-Token: $PushBulletToken" \
      --request POST https://api.pushbullet.com/v2/pushes >/dev/null;
 
 # CronTab End
-if [[ "$1" == "" ]]; then
+if [ -z "$1" ]; then
   read key;
 fi;

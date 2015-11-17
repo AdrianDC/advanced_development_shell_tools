@@ -19,7 +19,7 @@ if [ ! -z "$SendFile" ] && [ -f "$SendFile" ]; then
     UploadFolder="$2";
   fi;
 
-  if [[ "$SendFileExt" == 'zip' ]]; then
+  if [[ "$SendFileExt" =~ 'zip' ]]; then
     SendFileType='application/zip';
   fi;
 

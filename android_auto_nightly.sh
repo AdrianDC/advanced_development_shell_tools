@@ -17,7 +17,7 @@ if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; the
   rm "$AndroidDir/device/sony/$PhoneName/"*.dependencies;
 fi;
 
-if [[ ! "$BuildMode" == "test" ]]; then
+if [[ ! "$BuildMode" =~ "test" ]]; then
   if [ -d "$OutDir/system" ]; then
     rm -rf "$OutDir/system";
   fi;
@@ -26,9 +26,9 @@ fi;
 cd $ScriptsDir/;
 source $ScriptsDir/android_brunch.sh "automatic";
 
-if [[ ! "$BuildMode" == "local" ]]; then
+if [[ ! "$BuildMode" =~ "local" ]]; then
   cd $ScriptsDir/;
-  if [[ ! "$BuildMode" == "test" ]]; then
+  if [[ ! "$BuildMode" =~ "test" ]]; then
     source $ScriptsDir/android_server_upload.sh "$AndroidResult" "CM-13.0-Nightly" "automatic";
   else
     source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Android-Developers" "automatic";
