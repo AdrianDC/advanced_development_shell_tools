@@ -8,13 +8,10 @@ cd $AndroidDir/;
 echo "";
 echo " [ Force-syncing repositories ]";
 echo "";
-repo forall -c 'gitbranch=${REPO_RREV##*/}; \
-                echo ${PWD} [${REPO_REMOTE} - ${gitbranch}]; \
-                git rebase --abort 2>/dev/null; \
-                git stash -u; \
-                git reset --hard HEAD; \
-                echo "";';
-repo sync --force-sync --force-broken;
+repo forall -c 'echo "Cleaning project ${REPO_PROJECT}"; \
+                git rebase --abort >/dev/null 2>&1; \
+                git stash -u >/dev/null 2>&1;';
+repo sync --current-branch --detach --force-broken --force-sync;
 echo "";
 
 TimeDiff=$(($(date +%s)-$TimeStart));

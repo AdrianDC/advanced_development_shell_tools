@@ -5,13 +5,13 @@ BuildLog="$ScriptsLog.AOSP.log";
 # Launch Mode
 BuildMode="manual";
 if [ ! -z "$1" ]; then
-  BuildMode="$1";
+  BuildMode="$@";
 fi;
 
 # Compilation Script
 cd $ScriptsDir;
 source ./android_choose_rom.sh 4 n n 2>&1 | tee $BuildLog;
-source ./android_auto_aosp.sh "automatic" $BuildMode 2>&1 | tee -a $BuildLog;
+source ./android_auto_aosp.sh "automatic" "$BuildMode" 2>&1 | tee -a $BuildLog;
 
 # Update script logs
 source $ServerDir/LogsSync.sh;

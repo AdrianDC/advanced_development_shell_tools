@@ -30,10 +30,14 @@ if [[ ! "$BuildMode" =~ "test" ]]; then
     echo "nosync"; #source $ScriptsDir/android_sync.sh "automatic";
   fi;
 
-  if [ -d "$OutDir/system" ]; then
-    rm -rf "$OutDir/system";
-  fi;
+fi;
 
+if [[ ! "$BuildMode" =~ "test" || "$BuildMode" =~ "wipe" ]] && [ -d "$OutDir/system" ]; then
+  echo " [ System - Wiping /system output ]";
+  rm -rf "$OutDir/system";
+  echo "";
+  echo "Output folder '/system' deleted";
+  echo "";
 fi;
 
 if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; then

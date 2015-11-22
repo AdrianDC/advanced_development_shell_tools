@@ -4,9 +4,9 @@ ScriptsDir=$ScriptDir;
 FullTimeStart=$(date +%s);
 BuildMode="$2";
 source $ScriptsDir/android_set_variables.rc;
-source $ScriptsDir/bash_huashan.rc;
+source $ScriptsDir/Bash/bash_huashan.rc;
 
-if [[ ! "$BuildMode" == "test" ]]; then
+if [[ ! "$BuildMode" =~ "test" ]]; then
 
   cd $AndroidDir/;
   reposa;
@@ -17,10 +17,12 @@ if ls "$AndroidDir/device/sony/$PhoneName/"*.dependencies 1> /dev/null 2>&1; the
   rm "$AndroidDir/device/sony/$PhoneName/"*.dependencies;
 fi;
 
-if [[ ! "$BuildMode" =~ "test" ]]; then
-  if [ -d "$OutDir/system" ]; then
-    rm -rf "$OutDir/system";
-  fi;
+if [[ ! "$BuildMode" =~ "test" || "$BuildMode" =~ "wipe" ]] && [ -d "$OutDir/system" ]; then
+  echo " [ System - Wiping /system output ]";
+  rm -rf "$OutDir/system";
+  echo "";
+  echo "Output folder '/system' deleted";
+  echo "";
 fi;
 
 cd $ScriptsDir/;

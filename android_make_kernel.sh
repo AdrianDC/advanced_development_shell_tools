@@ -11,12 +11,16 @@ if [ -f "$TargetDir/$KernelFile" ]; then
   rm -f "$TargetDir/$KernelFile";
 fi;
 
-cd $AndroidDir/;
-source ./build/envsetup.sh;
-croot;
-breakfast $PhoneName;
-
 LaunchBuild=1;
+if [[ "$1" == "test" ]]; then
+  LaunchBuild=0;
+else
+  cd $AndroidDir/;
+  source ./build/envsetup.sh;
+  croot;
+  breakfast $PhoneName;
+fi;
+
 while [ $LaunchBuild != 0 ];
 do
 
@@ -70,18 +74,24 @@ do
   echo "";
   echo " [ Upload new modules files - Debugging USB ]";
   echo "";
-  printf "  Press enter to continue...";
+  printf "  Proceed with the modules (Y/n) ? ";
   read key;
+  if [[ "$key" == "n" || "$key" == "N" ]]; then
+    echo "";
+    adbPush=0;
+  fi;
 
-  echo "";
-  adbPush=0;
-  sudo $ScriptDir/android_root_adb.sh;
-  OutDir=$AndroidDir/out/target/product/$PhoneName;
-  for FilePath in ${FilePaths[*]}
-  do
-    adb push "$OutDir/$FilePath" "/$FilePath";
-    if [ $? != 0 ]; then adbPush=1; fi;
-  done;
+  if [ $adbPush == 1 ]; then
+    echo "";
+    adbPush=0;
+    sudo $ScriptDir/android_root_adb.sh;
+    OutDir=$AndroidDir/out/target/product/$PhoneName;
+    for FilePath in ${FilePaths[*]}
+    do
+      adb push "$OutDir/$FilePath" "/$FilePath";
+      if [ $? != 0 ]; then adbPush=1; fi;
+    done;
+  fi;
 
   if [ $adbPush == 0 ]; then
     echo "";

@@ -18,3 +18,4 @@ done;
 adb wait-for-devices;
 adb remount;
 adb devices;
+adb wait-for-devices;
