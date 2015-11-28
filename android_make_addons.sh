@@ -11,6 +11,7 @@ FilePaths=(\
            "system/lib/modules/*" \
            "system/priv-app/CMSettingsProvider/CMSettingsProvider.apk" \
            "system/priv-app/DeviceSettings/DeviceSettings.apk" \
+           "system/priv-app/Dialer/Dialer.apk" \
            "system/priv-app/Settings/Settings.apk" \
            );
 ModulesNames=(\
@@ -18,6 +19,7 @@ ModulesNames=(\
               "charger_res_images" \
               "CMSettingsProvider" \
               "DeviceSettings" \
+              "Dialer" \
               "framework-res" \
               "InCallUI" \
               "org.cyanogenmod.hardware" \

@@ -1,6 +1,7 @@
 export MainFolder=/media/adriandc/AndroidDev;
 export ScriptsDir="$MainFolder/Scripts";
 export ServerDir=$MainFolder/Server;
+export BashsDir="$MainFolder/Bash";
 export LogsDir="$MainFolder/Logs";
 
 source $ServerDir/User.rc;

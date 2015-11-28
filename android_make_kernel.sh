@@ -3,7 +3,29 @@ ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
 KernelPath="boot.img";
-FilePaths=("system/lib/modules/*");
+MakeClean=( \
+           "root/file_contexts" \
+           "root/property_contexts" \
+           "root/seapp_contexts" \
+           "root/selinux_version" \
+           "root/sepolicy" \
+           "root/service_contexts" \
+           "system/etc/general_file_contexts" \
+           "system/etc/general_property_contexts" \
+           "system/etc/general_seapp_contexts" \
+           "system/etc/general_service_contexts" \
+           "system/etc/security/mac_permissions.xml" \
+           "system/etc/sepolicy.recovery" \
+           );
+FilePaths=( \
+           "system/lib/modules/*" \
+           "system/etc/general_file_contexts" \
+           "system/etc/general_property_contexts" \
+           "system/etc/general_seapp_contexts" \
+           "system/etc/general_service_contexts" \
+           "system/etc/security/mac_permissions.xml" \
+           "system/etc/sepolicy.recovery" \
+           );
 ModulesNames=("bootimage");
 KernelFile="kernel-"$(date +'%Y%m%d')"-$PhoneName.zip";
 
@@ -21,12 +43,23 @@ else
   breakfast $PhoneName;
 fi;
 
+if [[ "$1" =~ "clean" ]]; then
+  echo "";
+  echo " [ Cleaning the previously built kernel ]";
+  echo "";
+  cd $AndroidDir/kernel/sony/msm8960t/;
+  make mrproper;
+fi;
+
 while [ $LaunchBuild != 0 ];
 do
 
   echo "";
   echo " [ Making the requested libraries ]";
   echo "";
+  sudo echo "";
+  cd $OutDir/;
+  rm -fv ${MakeClean[*]};
   cd $AndroidDir/;
   mmm -B -j8 ./external/sepolicy/ | tee $LogFile;
   mka -j $BuildJobs ${ModulesNames[*]} | tee -a $LogFile;
@@ -56,7 +89,11 @@ cd $OutDir;
 FilesList="./$KernelPath ";
 for FilePath in ${FilePaths[*]}
 do
-  FilesList="$FilesList ./$FilePath";
+  if [ -f "./$FilePath" ]; then
+    FilesList="$FilesList ./$FilePath";
+  else
+    echo "  File not found, ignored : /$FilePath";
+  fi;
 done;
 
 cp "$ScriptDir/android_files/kernel_template.zip" "$TargetDir/$KernelFile.unsigned.zip";

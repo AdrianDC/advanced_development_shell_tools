@@ -11,9 +11,9 @@ fi;
 # Choose ROM
 cd $ScriptsDir;
 ScriptDir=$ScriptsDir;
-source $ScriptsDir/android_choose_rom.sh 3 y n 2>&1 | tee $BuildLog;
+source $ScriptsDir/android_choose_rom.sh 3 y n 2>&1 | tee "$BuildLog";
 source $ScriptsDir/android_set_variables.rc;
-source $ScriptsDir/Bash/bash_huashan.rc;
+source $BashsDir/bash_huashan.rc;
 
 # Sync Repo
 cd $AndroidDir/;
@@ -23,6 +23,9 @@ reposa "$BuildMode";
 if [[ "$BuildMode" =~ "automatic" ]]; then
   source $ServerDir/LogsSync.sh;
 fi;
+
+# Notification
+notify-send "Done syncing !";
 
 # CronTab End
 if [ -z "$1" ]; then
