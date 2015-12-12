@@ -33,6 +33,7 @@ if [ -f "$TargetDir/$KernelFile" ]; then
   rm -f "$TargetDir/$KernelFile";
 fi;
 
+sudo echo "";
 LaunchBuild=1;
 if [[ "$1" == "test" ]]; then
   LaunchBuild=0;

@@ -10,4 +10,4 @@ android_set_variables.rc
 android_set_user.rc
 Server/Android.ico
 Server/ScriptTerminal.pid
-
+android_kernel_builders
