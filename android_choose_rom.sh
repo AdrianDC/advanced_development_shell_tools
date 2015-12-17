@@ -12,6 +12,7 @@ echo " [ Choose a ROM target ]";
 echo "";
 
 AndroidROMCount=0;
+AndroidROMDefault=0;
 for AndroidROMName in ${AndroidROMs[*]}
 do
 
@@ -19,6 +20,7 @@ do
   printf "  $AndroidROMCount : $AndroidROMName";
   if [[ "$AndroidROMName" == "$AndroidROM" ]]; then
     printf " (*)";
+    AndroidROMDefault=$AndroidROMCount;
   fi;
   echo "";
 
@@ -26,14 +28,12 @@ done;
 
 echo "";
 if [ -z $AndroidROMChoice ]; then
-  while [ -z "$AndroidROMChoice" ] || [ $AndroidROMChoice -lt 1 ] || [ $AndroidROMChoice -gt $AndroidROMCount ];
-  do
-
-    echo "";
-    printf " > ROM to build (1 to $AndroidROMCount) : ";
-    read AndroidROMChoice;
-
-  done;
+  echo "";
+  printf " > ROM to build (1 to $AndroidROMCount) : ";
+  read AndroidROMChoice;
+  if [ -z "$AndroidROMChoice" ] || [ $AndroidROMChoice -lt 1 ] || [ $AndroidROMChoice -gt $AndroidROMCount ]; then
+    AndroidROMChoice=$AndroidROMDefault;
+  fi;
 else
   echo "";
   echo " > ROM to build (1 to $AndroidROMCount) : $AndroidROMChoice";

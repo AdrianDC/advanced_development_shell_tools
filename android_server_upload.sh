@@ -17,6 +17,8 @@ if [ ! -z "$SendFile" ] && [ -f "$SendFile" ]; then
 
   if [ ! -z "$2" ]; then
     UploadFolder="$2";
+  else
+    UploadFolder="Android-Developers";
   fi;
 
   if [[ "$SendFileExt" =~ 'zip' ]]; then
