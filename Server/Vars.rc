@@ -4,7 +4,15 @@ export ServerDir=$MainFolder/Server;
 export BashsDir="$MainFolder/Bash";
 export LogsDir="$MainFolder/Logs";
 
-source $ServerDir/User.rc;
+# PushBullet API Credentials
+export PushBulletToken="token";
+export PushBulletUser="user";
+export PushBulletNoteUrl="url";
+
+# Create  ~/.bash_android.pushbullet.rc with the exports to override the credentials
+if [ -f ~/.bash_android.pushbullet.rc ]; then
+  source ~/.bash_android.pushbullet.rc;
+fi;
 
 export ScriptTerminal="$LogsDir/ScriptTerminal.pid";
 export ScriptsJob="$LogsDir/Job.log";

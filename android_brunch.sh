@@ -22,6 +22,15 @@ do
   if [ -f "$OutDir/system/build.prop" ]; then
     rm -f "$OutDir/system/build.prop";
   fi;
+  if [ -f "$OutDir/obj/ETC/system_build_prop_intermediates/build.prop" ]; then
+    rm -f "$OutDir/obj/ETC/system_build_prop_intermediates/build.prop";
+  fi;
+  if [ -f "$OutDir/ota_temp/RECOVERY/RAMDISK/default.prop" ]; then
+    rm -f "$OutDir/ota_temp/RECOVERY/RAMDISK/default.prop";
+  fi;
+  if [ -f "$OutDir/recovery/root/default.prop" ]; then
+    rm -f "$OutDir/recovery/root/default.prop";
+  fi;
   breakfast $PhoneName;
   brunch $PhoneName | tee $LogFile;
   echo "";
@@ -60,6 +69,8 @@ else
 fi;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
+echo "";
+echo "   AndroidResult: $AndroidResult";
 echo "";
 echo " [ Done in $TimeDiff secs ]";
 echo "";

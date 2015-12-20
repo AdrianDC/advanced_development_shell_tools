@@ -1,6 +1,6 @@
 #!/bin/bash
 ScriptDir=$PWD;
-source $ScriptDir/android_set_user.rc;
+source $ScriptDir/android_set_variables.rc;
 
 git config --global user.name $GitUserName;
 git config --global user.email $GitEMail;

@@ -3,6 +3,17 @@ ScriptDir=$PWD;
 TimeStart=$(date +%s);
 source $ScriptDir/android_set_variables.rc;
 
+# BasketBuild Upload Credentials
+export UploadServer="s.basketbuild.com/webupload";
+export UploadUserName="Username.s";
+export UploadPassword="Password";
+export UploadFolder="Path/To/Folder";
+
+# Create  ~/.bash_android.basketbuild.rc with the exports to override the credentials
+if [ -f ~/.bash_android.basketbuild.rc ]; then
+  source ~/.bash_android.basketbuild.rc;
+fi;
+
 echo "";
 echo " [ Uploading to the server ]";
 echo "";

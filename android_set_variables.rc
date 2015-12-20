@@ -69,8 +69,14 @@ UpdateProjects=( \
 if [ -f $ScriptDir/android_set_target.rc ]; then
   source $ScriptDir/android_set_target.rc;
 fi;
-if [ -f $ScriptDir/android_set_user.rc ]; then
-  source $ScriptDir/android_set_user.rc;
+
+# GitHub Credentials
+export GitEMail="username@domain.com";
+export GitUserName="Username";
+
+# Create  ~/.bash_android.github.rc with the exports to override the credentials
+if [ -f ~/.bash_android.github.rc ]; then
+  source ~/.bash_android.github.rc;
 fi;
 
 export PathsDir="$PWD/Paths";

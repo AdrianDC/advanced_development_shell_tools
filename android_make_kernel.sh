@@ -26,7 +26,6 @@ FilePaths=( \
            "system/etc/security/mac_permissions.xml" \
            "system/etc/sepolicy.recovery" \
            );
-ModulesNames=("bootimage");
 KernelFile="kernel-"$(date +'%Y%m%d')"-$PhoneName.zip";
 
 if [ -f "$TargetDir/$KernelFile" ]; then
@@ -35,7 +34,7 @@ fi;
 
 sudo echo "";
 LaunchBuild=1;
-if [[ "$1" == "test" ]]; then
+if [[ "$1" =~ "test" ]]; then
   LaunchBuild=0;
 else
   cd $AndroidDir/;
@@ -63,7 +62,11 @@ do
   rm -fv ${MakeClean[*]};
   cd $AndroidDir/;
   mmm -B -j8 ./external/sepolicy/ | tee $LogFile;
-  mka -j $BuildJobs ${ModulesNames[*]} | tee -a $LogFile;
+  if [[ "$1" =~ "fast" ]]; then
+    mms bootimage | tee -a $LogFile;
+  else
+    mka bootimage | tee -a $LogFile;
+  fi;
   echo "";
 
   if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then
