@@ -27,11 +27,11 @@ do
   cd $AndroidDir/;
   mmm -B -j8 ./device/sony/$PhoneName/liblights/;
   #mka -j $BuildJobs ${ModulesNames[*]} | tee $LogFile;
-  InstallLog=$(grep "Install:.*target/product" $LogFile | sort | uniq);
+  InstallLog=$(grep -a "Install:.*target/product" $LogFile | sort | uniq);
   echo "$InstallLog";
   echo "";
 
-  if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then
+  if [ -z "$(grep -a "make failed to build" $LogFile | uniq)" ]; then
     LaunchBuild=0;
   else
     LaunchBuild=1;

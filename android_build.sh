@@ -27,7 +27,7 @@ do
   brunch $PhoneName | tee $LogFile;
   echo "";
 
-  if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then
+  if [ -z "$(grep -a "make failed to build" $LogFile | uniq)" ]; then
     LaunchBuild=0;
   else
     LaunchBuild=1;
@@ -42,7 +42,7 @@ done;
 rm -f $ANDROID_PRODUCT_OUT/*$PhoneName-ota-*.zip
 rm -f $ANDROID_PRODUCT_OUT/*.zip.md5sum
 
-InstallLog=$(grep ".*target/product.*.zip" $LogFile);
+InstallLog=$(grep -a ".*target/product.*.zip" $LogFile);
 AndroidResult=$(printf "$InstallLog" | tail -1\
               | sed "s/\x1B\[[0-9;]*[JKmsu]//g"\
               | sed "s/.*$PhoneName\/\([^\[]*.zip\).*/\1/g");

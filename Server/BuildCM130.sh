@@ -22,7 +22,7 @@ fi;
 source $ServerDir/LogsSync.sh;
 
 # PushBullet Notification
-BuildSuccess=$(grep "make completed successfully" $BuildLog | uniq);
+BuildSuccess=$(grep -a "make completed successfully" $BuildLog | uniq);
 if [ ! -z "$BuildSuccess" ]; then
   PushBulletComment="CM13.0 ROM ready !";
 else

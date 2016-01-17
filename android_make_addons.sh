@@ -49,17 +49,17 @@ do
   cd $AndroidDir/;
   mka -j $BuildJobs ${ModulesNames[*]} | tee $LogFile;
 
-  LogMemory=$(grep "make: fork" $LogFile | sort | uniq);
-  LogFail=$(grep "fail" $LogFile | sort | uniq);
-  LogError=$(grep "Error" $LogFile | sort | uniq);
-  LogInstall=$(grep "Install:.*target/product" $LogFile | sort | uniq);
+  LogMemory=$(grep -a "make: fork" $LogFile | sort | uniq);
+  LogFail=$(grep -a "fail" $LogFile | sort | uniq);
+  LogError=$(grep -a "Error" $LogFile | sort | uniq);
+  LogInstall=$(grep -a "Install:.*target/product" $LogFile | sort | uniq);
   echo "$LogMemory";
   echo "$LogFail";
   echo "$LogError";
   echo "$LogInstall";
   echo "";
 
-  if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then
+  if [ -z "$(grep -a "make failed to build" $LogFile | uniq)" ]; then
     LaunchBuild=0;
   elif [ ! -z "$1" ]; then
     return;

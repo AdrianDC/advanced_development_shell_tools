@@ -36,7 +36,7 @@ do
   #make -j1 keycheck extract_elf_ramdisk bootimage | tee $LogFile;
   echo "";
 
-  if [ -z "$(grep "make failed to build" $LogFile | uniq)" ]; then
+  if [ -z "$(grep -a "make failed to build" $LogFile | uniq)" ]; then
     LaunchBuild=0;
   elif [ ! -z "$1" ]; then
     return;
@@ -56,7 +56,7 @@ fi;
 
 rm -f $ANDROID_PRODUCT_OUT/*.zip.md5sum;
 
-InstallLog=$(grep ".*target/product.*-ota-.*.zip" $LogFile);
+InstallLog=$(grep -a ".*target/product.*-ota-.*.zip" $LogFile);
 AndroidResult=$(printf "$InstallLog" | tail -1\
               | sed "s/\x1B\[[0-9;]*[JKmsu]//g"\
               | sed "s/.*$PhoneName\/\([^\[]*.zip\).*/\1/g");

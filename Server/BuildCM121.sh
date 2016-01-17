@@ -17,7 +17,7 @@ source ./android_auto_build.sh "automatic" "$BuildMode" 2>&1 | tee -a "$BuildLog
 source $ServerDir/LogsSync.sh;
 
 # PushBullet Notification
-BuildSuccess=$(grep "make completed successfully" $BuildLog | uniq);
+BuildSuccess=$(grep -a "make completed successfully" $BuildLog | uniq);
 if [ ! -z "$BuildSuccess" ]; then
   PushBulletComment="CM12.1 ROM ready !";
 else
