@@ -12,11 +12,11 @@ if [ -f $ScriptTerminal ]; then
   read TerminalPID < $ScriptTerminal;
 fi;
 if [ ! -z $TerminalPID ] && stat /proc/$TerminalPID/fd/0 &>/dev/null; then
-  tail -f $ScriptsLog;
+  tail -f $ScriptsJob;
 
 # Unregistered Watcher
 else
-  cat $ScriptsLog;
+  cat ScriptsJob;
 fi;
 
 # Script End

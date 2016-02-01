@@ -6,21 +6,25 @@ export AndroidROMs=("CyanogenMod" \
                     "CM-13.0" \
                     "AOSP" \
                     "Nightly" \
+                    "LegacyXperia" \
                     );
 export AndroidSyncs=("CyanogenMod" \
                      "AICP" \
                      "CyanogenMod" \
                      "AOSP" \
                      "Nightly" \
+                    "LegacyXperia" \
                      );
 export AndroidTags=("cm-12.1" \
                     "lp5.1" \
                     "cm-13.0" \
                     "android-6.0.0_r1" \
                     "cm-13.0" \
+                    "cm-13.0" \
                     );
 export AndroidGits=("github" \
                     "aicp" \
+                    "github" \
                     "github" \
                     "github" \
                     "github" \
@@ -33,7 +37,9 @@ export AndroidForce="";
 export AndroidSync="";
 export AndroidDev="";
 
-export PhoneName="huashan";
+if [ -z "$PhoneName" ]; then
+  export PhoneName="huashan";
+fi;
 
 ProjectPaths=("frameworks/base" \
               "packages/apps/Settings" \
