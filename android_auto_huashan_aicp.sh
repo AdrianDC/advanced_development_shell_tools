@@ -5,19 +5,10 @@ FullTimeStart=$(date +%s);
 BuildMode="$2";
 source $ScriptsDir/android_set_variables.rc;
 
+
 # Dependencies Deletion
 if ls "$AndroidDir/device/"*"/$PhoneName/"*.dependencies 1> /dev/null 2>&1; then
   rm "$AndroidDir/device/"*"/$PhoneName/"*.dependencies;
-fi;
-
-# System Output Cleaning
-if [[ ! "$BuildMode" =~ "test" || "$BuildMode" =~ "wipe" ]] && [ -d "$OutDir/system" ]; then
-  echo "";
-  echo " [ System - Wiping /system output ]";
-  rm -rf "$OutDir/system";
-  echo "";
-  echo "Output folder '/system' deleted";
-  echo "";
 fi;
 
 # Sources Sync
@@ -31,6 +22,27 @@ if [[ ! "$BuildMode" =~ "test" && ! "$BuildMode" =~ "nosync" ]]; then
                   git stash -u >/dev/null 2>&1; \
                   git reset --hard HEAD >/dev/null 2>&1;';
   repo sync --current-branch --detach --force-broken --force-sync;
+fi;
+
+
+
+
+
+
+# System Output Cleaning
+if [[ "$BuildMode" =~ "clean" ]]; then
+  echo "";
+  echo " [ Cleaning outputs ]";
+  echo "";
+  cd $AndroidDir/;
+  make clean;
+elif [[ ! "$BuildMode" =~ "test" || "$BuildMode" =~ "wipe" ]] && [ -d "$OutDir/system" ]; then
+  echo "";
+  echo " [ System - Wiping /system output ]";
+  rm -rf "$OutDir/system";
+  echo "";
+  echo "Output folder '/system' deleted";
+  echo "";
 fi;
 
 # ROM Build
@@ -48,9 +60,9 @@ if [[ ! "$BuildMode" =~ "synconly" ]]; then
   if [[ ! "$BuildMode" =~ "local" ]]; then
     cd $ScriptsDir/;
     if [[ ! "$BuildMode" =~ "test" ]]; then
-      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Huashan-AICP" "automatic";
+      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Huashan/AICP-5.1" "automatic";
     else
-      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Developers-ROMs" "automatic";
+      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Development" "automatic";
     fi;
     if [ $BuildSuccess ] && [[ "$BuildMode" =~ "rmoutdevice" ]] && [ -d "$OutDir" ]; then
       rm -rf "$OutDir/";

@@ -5,6 +5,7 @@ FullTimeStart=$(date +%s);
 BuildMode="$2";
 source $ScriptsDir/android_set_variables.rc;
 
+
 # Dependencies Deletion
 if ls "$AndroidDir/device/"*"/$PhoneName/"*.dependencies 1> /dev/null 2>&1; then
   rm "$AndroidDir/device/"*"/$PhoneName/"*.dependencies;
@@ -29,7 +30,13 @@ if [[ ! "$BuildMode" =~ "test" && ! "$BuildMode" =~ "nosync" ]]; then
 fi;
 
 # System Output Cleaning
-if [[ ! "$BuildMode" =~ "test" || "$BuildMode" =~ "wipe" ]] && [ -d "$OutDir/system" ]; then
+if [[ "$BuildMode" =~ "clean" ]]; then
+  echo "";
+  echo " [ Cleaning outputs ]";
+  echo "";
+  cd $AndroidDir/;
+  make clean;
+elif [[ ! "$BuildMode" =~ "test" || "$BuildMode" =~ "wipe" ]] && [ -d "$OutDir/system" ]; then
   echo "";
   echo " [ System - Wiping /system output ]";
   rm -rf "$OutDir/system";
@@ -66,9 +73,9 @@ if [[ ! "$BuildMode" =~ "synconly" ]]; then
   if [[ ! "$BuildMode" =~ "local" ]]; then
     cd $ScriptsDir/;
     if [[ ! "$BuildMode" =~ "test" ]]; then
-      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Huashan-CM-12.1" "automatic";
+      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Huashan/CyanogenMod-12.1" "automatic";
     else
-      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Developers-ROMs" "automatic";
+      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Development" "automatic";
     fi;
     if [ $BuildSuccess ] && [[ "$BuildMode" =~ "rmoutdevice" ]] && [ -d "$OutDir" ]; then
       rm -rf "$OutDir/";

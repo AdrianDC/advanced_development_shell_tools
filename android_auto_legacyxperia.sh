@@ -11,14 +11,12 @@ if ls "$AndroidDir/device/"*"/$PhoneName/"*.dependencies 1> /dev/null 2>&1; then
   rm "$AndroidDir/device/"*"/$PhoneName/"*.dependencies;
 fi;
 
-# System Output Cleaning
-if [[ ! "$BuildMode" =~ "test" || "$BuildMode" =~ "wipe" ]] && [ -d "$OutDir/system" ]; then
-  echo "";
-  echo " [ System - Wiping /system output ]";
-  rm -rf "$OutDir/system";
-  echo "";
-  echo "Output folder '/system' deleted";
-  echo "";
+# Android Branch selection
+BuildBranch="cm-13.0";
+if [[ "$BuildMode" =~ "cm-12.1" ]]; then
+  BuildBranch="cm-12.1";
+elif [[ "$BuildMode" =~ "cm-11.0" ]]; then
+  BuildBranch="cm-11.0";
 fi;
 
 # Sources Sync
@@ -27,7 +25,24 @@ if [[ ! "$BuildMode" =~ "test" && ! "$BuildMode" =~ "nosync" ]]; then
   echo " [ Syncing $PhoneName repositories ]";
   echo "";
   cd $AndroidDir/;
-  reposalx;
+  reposalx $BuildBranch;
+fi;
+
+
+# System Output Cleaning
+if [[ "$BuildMode" =~ "clean" ]]; then
+  echo "";
+  echo " [ Cleaning outputs ]";
+  echo "";
+  cd $AndroidDir/;
+  make clean;
+elif [[ ! "$BuildMode" =~ "test" || "$BuildMode" =~ "wipe" ]] && [ -d "$OutDir/system" ]; then
+  echo "";
+  echo " [ System - Wiping /system output ]";
+  rm -rf "$OutDir/system";
+  echo "";
+  echo "Output folder '/system' deleted";
+  echo "";
 fi;
 
 # ROM Build
@@ -44,10 +59,12 @@ if [[ ! "$BuildMode" =~ "synconly" ]]; then
   # ROM Upload
   if [[ ! "$BuildMode" =~ "local" ]]; then
     cd $ScriptsDir/;
-    if [[ ! "$BuildMode" =~ "test" ]]; then
-      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "LegacyXperia-CM-13.0/$PhoneName" "automatic";
+    if [[ "$BuildMode" =~ "release" ]]; then
+      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "$PhoneName/$BuildBranch" "legacyxperia";
+    elif [[ ! "$BuildMode" =~ "test" ]]; then
+      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "LegacyXperia/$PhoneName/$BuildBranch" "automatic";
     else
-      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Developers-ROMs" "automatic";
+      source $ScriptsDir/android_server_upload.sh "$AndroidResult" "Development" "automatic";
     fi;
     if [ $BuildSuccess ] && [[ "$BuildMode" =~ "rmoutdevice" ]] && [ -d "$OutDir" ]; then
       rm -rf "$OutDir/";

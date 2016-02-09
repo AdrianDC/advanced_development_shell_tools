@@ -6,12 +6,14 @@ source $ScriptDir/android_set_variables.rc;
 # BasketBuild Upload Credentials
 export UploadServer="s.basketbuild.com/webupload";
 export UploadUserName="Username.s";
-export UploadPassword="Password";
+export UploadPassword="";
 export UploadFolder="Path/To/Folder";
 
-# Create  ~/.bash_android.basketbuild.rc with the exports to override the credentials
-if [ -f ~/.bash_android.basketbuild.rc ]; then
-  source ~/.bash_android.basketbuild.rc;
+# Create  ~/.bash_android.basketbuild.**name**.rc with the exports to override the credentials
+if [ -f ~/.bash_android.basketbuild.$1.rc ]; then
+  source ~/.bash_android.basketbuild.$1.rc;
+elif [ -f ~/.bash_android.basketbuild.main.rc ]; then
+  source ~/.bash_android.basketbuild.main.rc;
 fi;
 
 echo "";
@@ -19,7 +21,7 @@ echo " [ Uploading to the server ]";
 echo "";
 
 SendFile="$1";
-if [ ! -z "$SendFile" ] && [ -f "$SendFile" ]; then
+if [ ! -z "$SendFile" ] && [ -f "$SendFile" ] && [ ! -z "$UploadPassword" ]; then
 
   SendFileName=$(basename "$SendFile");
   SendFileExt=${SendFileName##*.};
@@ -65,6 +67,10 @@ if [ ! -z "$SendFile" ] && [ -f "$SendFile" ]; then
     rm "./.uploadoutputs";
   fi;
 
+elif [ -z "$UploadPassword" ]; then
+  echo "  FTP Credentials not found...";
+else
+  echo "  File '$SendFile' not found...";
 fi;
 
 TimeDiff=$(($(date +%s)-$TimeStart));
