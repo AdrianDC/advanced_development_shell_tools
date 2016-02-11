@@ -15,7 +15,7 @@ case $1 in
      ${jobs[3]}) $ServerDir/HuashanAICP.sh "automatic" >$ScriptsJob 2>&1;;
      ${jobs[4]}) $ServerDir/LegacyXperia130.sh "anzu" "automatic" >$ScriptsJob 2>&1;;
      ${jobs[5]}) $ServerDir/LegacyXperia130.sh "legacyxperia" "synconly" >$ScriptsJob 2>&1;&
-     ${jobs[6]}) for device in anzu coconut haida hallon iyokan mango phoenix satsuma smultron urushi zeus; do
+     ${jobs[6]}) for device in urushi anzu coconut haida hallon iyokan mango phoenix satsuma smultron zeus; do
                    $ServerDir/LegacyXperia130.sh "$device" "automatic,nosync,rmoutdevice" >>$ScriptsJob 2>&1;
                  done;;
      *) echo " No Job selected [${jobs[*]}]";
