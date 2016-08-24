@@ -15,21 +15,21 @@ function gitpushreview()
   if [ -z "$projectorigin" ]; then
     projectorigin=$(git remote -v | grep $2 | tail -n 1);
   fi;
-  projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  projectname=$(echo "$projectorigin" | cut -f 2 | sed 's/.*\/\([^.]*\).* .*/\1/');
   command="git push $projectpath/$projectname HEAD:refs/$(getine $3 for)/$(getine $4 $(repogetbranch))";
-  echo "";
+  echo '';
   echo " $command";
-  printf "  > Proceed with review upload (y/N) ? ";
+  printf '  > Proceed with review upload (y/N) ? ';
   read key;
-  if [[ "$key" == "y" || "$key" == "Y" ]]; then
-    echo "";
-    printf "  > Are you sure (y/N) ? ";
+  if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
+    echo '';
+    printf ' > Are you sure (y/N) ? ';
     read key;
-    if [[ "$key" == "y" || "$key" == "Y" ]]; then
-      echo "";
+    if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
+      echo '';
       $command;
     fi;
-  fi; echo "";
+  fi; echo '';
 }
 
 # === Gerrit Bypasser ===
@@ -54,16 +54,12 @@ function gitpushbypassreview()
 # === Gerrit Drafts ===
 function gitpushdrafts()
 {
-  if [[ "$2" != "." ]]; then
-    projectpath="$1/$2";
-  else
-    projectpath="$1";
-  fi;
+  projectpath="$1";
   projectorigin=$(git remote -v | grep origin | tail -n 1);
   if [ -z "$projectorigin" ]; then
-    projectorigin=$(git remote -v | grep $2 | tail -n 1);
+    projectorigin=$(git remote -v | grep "$2.*//" | tail -n 1);
   fi;
-  projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+   projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\/[^\/]*\/\(.*\) .*/\1/");
   command="git push $projectpath/$projectname HEAD:refs/drafts/$(getine $3 $(repogetbranch))";
   echo ""; echo " $command"; printf "  > Proceed with review upload (y/N) ? "; read key;
   if [[ "$key" == "y" || "$key" == "Y" ]]; then
@@ -83,6 +79,10 @@ alias gitpbr='gitpushbypassreview ssh://$gituserdefault@review.cyanogenmod.org:2
 alias gitpgh='gitpushreview http://review.cyanogenmod.org CyanogenMod heads';
 alias gitprg='gitpr; gitpg';
 alias gitprgy='printf "y\ny\n" | gitpr; printf "y\ny" | gitpg';
+
+# === Gerrit CyanogenMod ===
+alias gitpraosp='gitpushreview https://android-review.googlesource.com aosp for master';
+alias gitprdaosp='gitpushdrafts https://android-review.googlesource.com aosp master';
 
 # === Gerrit AICP ===
 alias gitpraicp='gitpushreview ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP for mm6.0';

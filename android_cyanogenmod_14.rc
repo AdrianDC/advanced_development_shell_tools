@@ -1,0 +1,32 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === CM 14 Patcher ===
+function cm14patcher()
+{
+  # ==========================================================
+  # Repo root
+  if [ -z "$(type -t croot)" ]; then
+    while [ ! -e './build/envsetup.sh' ]; do cd ../; done;
+    source ./build/envsetup.sh;
+  fi;
+  croot;
+
+  # ==========================================================
+  # Topic battery-customisations
+  repopick -t battery-customisations;
+
+  # ==========================================================
+  # Topic cm14-themes
+  repopick -t cm14-themes;
+
+  # ==========================================================
+  # av: Add support for CameraSource as metadata type
+  repopick 167485;
+
+  # ==========================================================
+  # repo root
+  croot;
+}

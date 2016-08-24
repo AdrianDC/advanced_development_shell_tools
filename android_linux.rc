@@ -3,6 +3,12 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
+# === Clear Screen ===
+alias cls='echo -e \\033c; clear';
+
+# === Clipboard ===
+function toclip() { xclip -selection c; }
+
 # === Folders Syncer ===
 function rsynca()
 {
@@ -79,7 +85,7 @@ function newtab()
 # === Terminal New Tabs Automates ===
 function tms8960()
 {
-  basedir=/media/adriandc/AndroidDev/CM-13.0;
+  basedir=${ANDROID_DEV_DRIVE}/CyanogenMod;
   pathdirs="device/sony/huashan device/sony/mint device/sony/hayabusa device/sony/tsubasa device/sony/blue-common kernel/sony/msm8960t kernel/sony/msm8x60";
   for pathdir in $pathdirs; do
     newtab "cd ${basedir}/${pathdir}; cls;" "$(basename $pathdir)";
@@ -89,14 +95,14 @@ function tms8960()
 # === Terminal New Tab Device ===
 function td()
 {
-  basedir=/media/adriandc/AndroidDev/CM-13.0;
+  basedir=${ANDROID_DEV_DRIVE}/CyanogenMod;
   newtab "cdd $1; cls;" "$1";
 }
 
 # === Terminal New Tabs Automates ===
 function tmsfusion3()
 {
-  basedir=/media/adriandc/AndroidDev/CM-13.0;
+  basedir=${ANDROID_DEV_DRIVE}/CyanogenMod;
   pathdirs="device/sony/fusion3-common device/sony/yuga device/sony/dogo device/sony/odin device/sony/pollux kernel/sony/apq8064";
   for pathdir in $pathdirs; do
     newtab "cd ${basedir}/${pathdir}; cls;" "";
@@ -160,4 +166,70 @@ function netspeed()
     fi;
     sleep 1;
   done;
+}
+
+# === Build Locker ===
+function buildlock()
+{
+  # Variables
+  local file_lock=~/.tmp_runlock.tag;
+
+  # Lock Detected
+  if [ -f "${file_lock}" ]; then
+    echo '';
+    echo " buildlock: The file '${file_lock}' still exists, waiting...";
+    echo '';
+    while [ -f "${file_lock}" ]; do sleep 10; done;
+  fi;
+
+  # Run work
+  echo 1 > "${file_lock}";
+  ${@};
+  rm -f "${file_lock}";
+}
+
+# === File Scheme Sorter ===
+function fileschemesorter()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: fileschemesorter file_to_sort file_reference';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local file_to_sort="${1}";
+  local file_reference="${2}";
+  local file_temp_1=$(mktemp);
+  local file_temp_2=$(mktemp);
+  local file_temp_3=$(mktemp);
+
+  # Reference browse
+  touch ${file_temp_1};
+  cat ${file_reference} | while read line; do
+
+    # Relevant lines
+    if [ ! -z "${line}" ] && grep -q "${line}$" "${file_to_sort}"; then
+      echo ${line} >> "${file_temp_1}";
+    fi;
+
+  done;
+
+  # Final comparison
+  sort "${file_to_sort}" -o "${file_temp_2}";
+  sort "${file_temp_1}" -o "${file_temp_3}";
+  meld "${file_temp_2}" "${file_temp_3}";
+  meld "${file_to_sort}" "${file_temp_1}";
+  echo '';
+  echo ' Press [ENTER] to continue...';
+  echo '';
+  read key;
+  rm "${file_to_sort}";
+  mv "${file_temp_1}" "${file_to_sort}";
+
+  # Cleanup
+  rm -f ${file_temp_2};
+  rm -f ${file_temp_3};
 }

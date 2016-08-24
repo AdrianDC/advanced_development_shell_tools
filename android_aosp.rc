@@ -1,0 +1,204 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Bash AOSP Sources ===
+source $bash_android_dir/android_aosp_marshmallow.rc;
+source $bash_android_dir/android_aosp_nougat.rc;
+source $bash_android_dir/android_cyanogenmod_14.rc;
+source $bash_android_dir/android_sony_nougat.rc;
+
+# === Repo Init AOSP ===
+function repoinitaosp()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: aosprepoinit android-7.1.0_r{XX} [reference_bool]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local release="${1}";
+  local referenced="${2}";
+  local branch="android-7.1.0_r${release}";
+
+  # Clean repo manifest
+  rm -rfv .repo/manifests;
+  rm -rfv .repo/manifests.git;
+  rm -rfv .repo/manifest.xml;
+  rm -rfv .repo/project.list;
+  rm -rfv .repo/projects;
+  rm -rfv .repo/repo;
+
+  # Repo init
+  if [ ! -z "${referenced}" ]; then
+    repo init -u https://android.googlesource.com/platform/manifest -b ${branch} \
+              --reference=$(readlink -f ../AOSP);
+  else
+    repo init -u https://android.googlesource.com/platform/manifest -b ${branch};
+  fi;
+
+  # Unneeded branches cleanup
+  cd .repo/manifests/;
+  git tag | grep -v ${branch} | xargs git tag -d;
+  cd ../../;
+}
+
+# === Repo Init CM ===
+function repoinitcm()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: cmrepoinit {14.0/14.1} [reference_bool]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local release="${1}";
+  local referenced="${2}";
+  local branch="cm-${release}";
+
+  # Clean repo manifest
+  rm -rfv .repo/manifests;
+  rm -rfv .repo/manifests.git;
+  rm -rfv .repo/manifest.xml;
+  rm -rfv .repo/project.list;
+  rm -rfv .repo/projects;
+  rm -rfv .repo/repo;
+
+  # Repo init
+  if [ ! -z "${referenced}" ]; then
+    repo init -u git://github.com/CyanogenMod/android.git -b ${branch} \
+              --reference=$(readlink -f ../CyanogenMod);
+  else
+    repo init -u git://github.com/CyanogenMod/android.git -b ${branch};
+  fi;
+
+  # Unneeded branches cleanup
+  cd .repo/manifests/;
+  git tag | grep -v "${branch}" | xargs git tag -d;
+  cd ../../;
+}
+
+# === AOSP Syncer ===
+function aospsync()
+{
+  # Android Selection
+  case $1 in
+    m)
+      # Android 6.0.1
+      repo init -u https://android.googlesource.com/platform/manifest -b android-6.0.1_r63;
+      repo sync -j$(grep -c ^processor /proc/cpuinfo) --current-branch \
+        --detach -f --force-broken --force-sync -c --no-clone-bundle --no-tags;;
+    n)
+      # Android 7.1.0
+      repo init -u https://android.googlesource.com/platform/manifest -b android-7.1.0_r6;
+      repo sync -j$(grep -c ^processor /proc/cpuinfo) --current-branch \
+        --detach -f --force-broken --force-sync -c --no-clone-bundle --no-tags;;
+    *)
+      # No selection
+      echo '';
+      echo ' Usage: aospsync [m/n]'
+      echo '';;
+  esac;
+}
+
+# === AOSP Builder ===
+function aospbuild()
+{
+  # ROM variables
+  local rom_device="${1}";
+  local rom_params="${2}";
+  local rom_logs="${ANDROID_DEV_DRIVE}/Logs";
+  local rom_logs_output="${rom_logs}/Build.${rom_device}.AOSP.log";
+  if [[ "${1}" == 'init' ]]; then
+    rom_device='huashan';
+    rom_params='nobuild';
+  fi;
+
+  # CPU handling
+  if [[ "${rom_params}" =~ "j1" ]]; then
+    build_cpu_count=1;
+  else
+    build_cpu_count=$(grep -c ^processor /proc/cpuinfo);
+  fi;
+
+  # Compilation preparation
+  source ./build/envsetup.sh;
+  lunch aosp_${rom_device}-userdebug | tee ${rom_logs_output};
+
+  # Compilation start
+  if [[ ! "${rom_params}" =~ "nobuild" ]]; then
+    make -j${build_cpu_count} otapackage | tee -a ${rom_logs_output};
+
+    # Final notification
+    if [[ ! "${rom_params}" =~ "silent" ]]; then
+      pushbrom "${rom_device}";
+    fi;
+  fi;
+}
+
+# === AOSP 8960 Pusher ===
+function aosp8960pusher()
+{
+  # Variables
+  local projectbranch;
+  local projectdir=${PWD};
+  local repodir=${PWD};
+  local target_backup;
+
+  # Check project
+  if [ ! -d "${projectdir}/.git" ]; then
+    echo '';
+    echo ' Current project was not found...';
+    echo '';
+    return;
+  fi;
+
+  # Find repository
+  while [[ "${repodir}" != '/' && ! -d "${repodir}/.repo" ]]; do
+    repodir=$(readlink -f "${repodir}/..");
+  done;
+  if [ ! -d "${repodir}/.repo" ]; then
+    echo '';
+    echo ' Repository was not found';
+    echo '';
+    return;
+  fi;
+
+  # Status
+  projectdir=${projectdir#${repodir}/};
+  projectbranch=${projectdir//\//_};
+  echo '';
+  echo " Project directory: ${projectdir}";
+  echo " Reporisory path: ${repodir}";
+  echo '';
+
+  # Checking missing backup remote
+  target_backup=$(git remote -v \
+               | grep -i backup);
+  if [ -z "${target_backup}" ]; then
+    gitrah;
+  fi;
+
+  # Fetch upstream backup
+  git fetch backup ${projectbranch};
+  git rev-list --left-right --count FETCH_HEAD...HEAD;
+  echo '';
+
+  # Confirmation
+  command="git push -f backup HEAD:refs/heads/${projectbranch}";
+  echo " $command";
+  printf "  > Proceed with project push [ENTER] ? ";
+  read key;
+
+  # Upload to backup
+  echo '';
+  ${command};
+  echo '';
+}

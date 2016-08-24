@@ -1,0 +1,98 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === SONY Nougat Patcher ===
+function sonynpatcher()
+{
+  # Repo root
+  if [ -z "$(type -t croot)" ]; then
+    while [ ! -e './build/envsetup.sh' ]; do
+      cd ../;
+    done;
+    source ./build/envsetup.sh;
+  fi;
+  croot;
+  echo '';
+
+  # ==========================================================
+  # build
+  croot;
+  cd build;
+  echo ' === build ===';
+  git fetch https://github.com/AdrianDC/aosp_development_msm8996.git build;
+  git cherry-pick f49d3c4ca17b58dcf6b1a3766a4efb8dc6ad08ab;
+  git cherry-pick 719eab8afb31d3a76ee5ac3a90811a17a2f2a6ce;
+  git cherry-pick 7de2cb7a3b4f71d25c08ab20a4d0fbf1a3640393;
+  git cherry-pick b8ee0c813965bd4a61247451ccb553e7795cf2b1;
+  git cherry-pick c99eed8b39991cc3077cca44cdf473a4ae1a4ae1;
+  git reset; git stash -u; git diff; echo '';
+
+  # ==========================================================
+  # external/toybox
+  croot;
+  cd external/toybox;
+  echo ' === external/toybox ===';
+  git fetch https://android.googlesource.com/platform/external/toybox refs/changes/74/265074/1 && git cherry-pick FETCH_HEAD;
+  git cherry-pick d3e8dd1bf56afc2277960472a46907d419e4b3da;
+  git cherry-pick 1c028ca33dc059a9d8f18daafcd77b5950268f41;
+  git cherry-pick cb49c305e3c78179b19d6f174ae73309544292b8;
+  git reset; git stash -u; git diff; echo '';
+
+  # ==========================================================
+  # hardware/qcom/audio
+  croot;
+  cd hardware/qcom/audio;
+  echo ' === hardware/qcom/audio ===';
+  git revert --no-edit 66796eef5ebf71befa37b74f6507efae80d51ea0;
+  git fetch https://android.googlesource.com/platform/hardware/qcom/audio refs/changes/91/294291/1 && git cherry-pick FETCH_HEAD;
+  git fetch https://github.com/AdrianDC/aosp_development_msm8996.git hardware_qcom_audio;
+  git cherry-pick 42a153b84fc86c8ce121bad90c95b2be983f99f6;
+  git reset; git stash -u; git diff; echo '';
+
+  # ==========================================================
+  # hardware/qcom/display
+  croot;
+  cd hardware/qcom/display;
+  echo ' === hardware/qcom/display ===';
+  git fetch https://github.com/AdrianDC/aosp_development_msm8996.git hardware_qcom_display;
+  git cherry-pick 5a50382c6499702bf023dddcff97d6858fdb4c4c;
+  # git revert --no-edit b7d1a389b00370fc9d2a7db1268ce26271ead7e2
+  # git revert --no-edit f026d04dde743a0524235ae57e2ce8ac5364d44b
+  # git revert --no-edit 3261eb2236252f9f2510c008fad451411a780b3b
+  git reset; git stash -u; git diff; echo '';
+
+  # ==========================================================
+  # hardware/qcom/media
+  croot;
+  cd hardware/qcom/media;
+  echo ' === hardware/qcom/media ===';
+  git fetch https://github.com/AdrianDC/aosp_development_msm8996.git hardware_qcom_media;
+  git cherry-pick 1a574877935ede6cb161ddc862462ab6df0c5bf4;
+  git cherry-pick aee709883762269b5f4b25d2cfbb5579973f94ac;
+  git cherry-pick 3670025bd0ba9b4272663aa304f161cf330622f5;
+  git reset; git stash -u; git diff; echo '';
+
+  # ==========================================================
+  # packages/apps/Music
+  croot;
+  cd packages/apps/Music;
+  echo ' === packages/apps/Music ===';
+  git fetch https://android.googlesource.com/platform/packages/apps/Music refs/changes/69/236369/2 && git cherry-pick FETCH_HEAD;
+  git reset; git stash -u; git diff; echo '';
+
+  # ==========================================================
+  # system/core
+  croot;
+  cd system/core/;
+  echo ' === system/core ===';
+  git fetch https://android.googlesource.com/platform/system/core refs/changes/52/269652/1 && git cherry-pick FETCH_HEAD;
+  git fetch https://github.com/AdrianDC/aosp_development_msm8996.git system_core;
+  git cherry-pick 03f332fa95885a65dabe5882a4591127eac04cef;
+  git reset; git stash -u; git diff; echo '';
+
+  # ==========================================================
+  # repo root
+  croot;
+}

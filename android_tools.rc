@@ -3,32 +3,6 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === ADB Pushes ===
-function adbpf()
-{
-  if [ ! -z "${1}" ]; then
-    for filepath in ${@}; do
-      filepath=$(readlink -f "${filepath}");
-      if [ -d "${filepath}" ]; then
-        adbpf "${filepath}/"*;
-      else
-        if [[ "${filepath}" =~ "proprietary" ]]; then
-          file=$(printf "${filepath}" | sed "s/.*proprietary\(.*\)/\/system\1/g");
-        else
-          file=$(printf "${filepath}" | sed "s/.*\(system.*\)/\/\1/g");
-        fi;
-        echo "";
-        echo -e " \e[1;36m${file} :\e[0m";
-        printf "  ";
-        adb shell ls -l "${file}" | cut -c 30-;
-        printf "   ";
-        adb push "${filepath}" "${file}";
-      fi;
-    done;
-    echo "";
-  fi;
-}
-
 # === Binary Editor ===
 function binaryeditor()
 {
@@ -102,6 +76,66 @@ function binaryeditor()
       STRINGS=$(strings ${FILE} | grep "${PATTERN}" | sort -u -r | tr '\n' ',');
       if [ ! -z "${STRINGS}" ]; then
         echo -e "   \e[1;37m${FILE}:\e[1;33m ${STRINGS}\e[0m";
+      fi;
+    fi;
+  done;
+  echo "";
+}
+
+# === Libraries Hunter ===
+function librarieshunter()
+{
+  if [ -z "$1" ]; then
+    echo " Usage : librarieshunter binariespath";
+    return;
+  fi;
+
+  local FILES="$1";
+  local FILE_NAME='';
+  local FILE_REFERENCED='';
+  local LIB_NAME='';
+
+  # Scan the libraries
+  echo "";
+  echo -e " \e[1;31m=== Searching missing libraries in ${FILES} ===\e[0m";
+  echo "";
+  for FILE in $(find ${FILES} -not -path "*.git/*" -not -path "*.repo/*" | sort);
+  do
+    FILE=$(readlink -f "${FILE}");
+    if [ -d ${FILE} ]; then continue; fi;
+
+    # Internal references
+    STRINGS=$(strings ${FILE} | grep "\\.so" | sort -u -r | tr '\n' ',');
+    if [ ! -z "${STRINGS}" ]; then
+      STRINGS=${STRINGS//,/ };
+      echo -e "   \e[1;37m${FILE}:\e[1;33m ${STRINGS}\e[0m";
+
+      # Search missing references
+      for LIB in ${STRINGS};
+      do
+        if [[ ! "${LIB}" =~ '.so' ]]; then continue; fi;
+
+        LIB_NAME=$(basename ${LIB});
+        if [ -z "$(find $(dirname ${FILES}) -name ${LIB_NAME})" ]; then
+          echo -e "    \e[1;37m- Missing reference: \e[1;31m${LIB_NAME}\e[0m";
+        fi;
+      done;
+
+      # Search unused library
+      FILE_NAME=$(basename "${FILE}");
+      FILE_REFERENCED='';
+      for FILE_SUB in $(find ${FILES} -not -path "*.git/*" -not -path "*.repo/*" | sort);
+      do
+        FILE_SUB=$(readlink -f "${FILE_SUB}");
+        if [ -d "${FILE_SUB}" ] || [ "${FILE}" = "${FILE_SUB}" ]; then continue; fi;
+        STRINGS_SUB=$(strings ${FILE_SUB} | grep "${FILE_NAME}" | sort -u -r | tr '\n' ',');
+        if [ ! -z "${STRINGS_SUB}" ]; then
+          FILE_REFERENCED='true';
+          break;
+        fi;
+      done;
+      if [ -z "${FILE_REFERENCED}" ]; then
+        echo -e "    \e[1;31m- Unused library: ${FILE_NAME}\e[0m";
       fi;
     fi;
   done;
@@ -302,3 +336,24 @@ function vendorch()
 
   vendorcheck device/$vendor/$1/proprietary-files.txt vendor/$vendor/$1/proprietary;
 }
+
+# === Hastebin ===
+haste()
+{
+  # Based upon https://github.com/seejohnrun/haste-client
+  # Usage : command | haste or haste file
+  tmp=$(mktemp);
+  if [ ! -z "$1" ] && [ -f "$1" ]; then
+    cat "$1" | tee $tmp;
+  else
+    cat | tee $tmp;
+  fi;
+  echo "";
+  url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" --connect-timeout 5 http://hastebin.com/documents \
+      | awk -F '"' '{ print "http://hastebin.com/"$4; }');
+  echo "$url";
+  xdg-open "$url" &
+  echo "";
+  rm $tmp;
+}
+

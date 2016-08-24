@@ -1,0 +1,84 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === AOSP N Patcher ===
+function aospnpatcher()
+{
+  # Repo root
+  if [ -z "$(type -t croot)" ]; then
+    while [ ! -e './build/envsetup.sh' ]; do
+      cd ../;
+    done;
+    source ./build/envsetup.sh;
+  fi;
+  croot;
+
+  # ==========================================================
+  # Projects loader
+  local git_revs_count;
+  local git_revs_count_local;
+  local path_branch;
+  for path in \
+    bionic \
+    bootable/recovery \
+    build \
+    device/qcom/common \
+    external/e2fsprogs \
+    external/libnfc-nxp \
+    external/toybox \
+    frameworks/av \
+    frameworks/opt/telephony \
+    hardware/qcom/audio \
+    hardware/qcom/display \
+    hardware/qcom/fm \
+    hardware/qcom/media \
+    hardware/ril \
+    packages/apps/Music \
+    packages/apps/Nfc \
+    packages/apps/Settings \
+    packages/providers/MediaProvider \
+    system/core \
+    system/sepolicy;
+  do
+
+    # Project selection
+    path_branch=${path//\//_};
+    echo '';
+    echo " === ${path} [${path_branch}] ===";
+    croot;
+    cd ${path}/;
+
+    # Fetch and compare
+    git fetch https://github.com/AdrianDC/aosp_development_msm8960.git ${path_branch};
+    git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
+    git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
+    echo " Differences: ${git_revs_count}";
+
+    # Handle unupdated projects
+    if [ ${git_revs_count_local} -ne 0 ]; then
+      echo '';
+      printf "  > Ignore the newest changes [ENTER] ? ";
+      read key;
+    fi;
+
+    # Pause if needed
+    git reset --hard FETCH_HEAD; git stash -u;
+
+  done;
+
+  # ==========================================================
+  # Project frameworks/base
+  echo '';
+  echo " === frameworks/base [frameworks_base] ===";
+  croot;
+  cd frameworks/base/;
+  git fetch https://github.com/AdrianDC/platform_frameworks_base.git frameworks_base;
+  git reset --hard FETCH_HEAD; git stash -u;
+
+  # ==========================================================
+  # repo root
+  echo '';
+  croot;
+}

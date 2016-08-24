@@ -1,0 +1,139 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Repo Projects Cleaner ===
+function repoprojectscleaner()
+{
+  # Usage
+  if [ ! -d '.repo' ]; then
+    echo '';
+    echo ' Usage: Run inside an Android repo root';
+    echo '';
+    return;
+  fi;
+
+  # Search
+  echo '';
+  echo ' Starting the git folders detection...';
+  echo '';
+  local git_folders=$(repo forall -c 'printf "$(dirname $(readlink -f .git/info)) ${REPO_PATH} ";');
+
+  # Analyse
+  echo '';
+  echo ' Studying the .repo /project-objects folder...';
+  echo '';
+  local git_projects=$(find .repo/project-objects -name '*.git');
+  for git_path in ${git_projects}; do
+    if [[ ! "${git_folders}" =~ "${git_path}" ]]; then
+      printf "  Objects ${git_path} are unreferenced. Delete [y/N] ? ";
+      read key;
+      if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
+        rm -rf ${git_path};
+      fi;
+    fi;
+  done;
+  echo '';
+
+  # Cleanup
+  echo '';
+  echo ' Studying the .repo/projects folder...';
+  echo '';
+  local git_project_objects=$(find .repo/project-objects -name '*.git');
+  cd .repo/projects/;
+  local git_projects=$(find . -name '*.git' | cut -c 3-);
+  for git_path in ${git_project_objects}; do
+    if [[ ! "${git_project_objects}" =~ "${git_path}" ]]; then
+      echo "  Project ${git_path} is unreferenced. Deleting [y/N] ? ";
+      read key;
+      if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
+        rm -rf ${git_path};
+      fi;
+    fi;
+  done;
+  cd ../../;
+  echo '';
+}
+
+
+# === Repo Tags Cleaner ===
+function repotagscleaner()
+{
+  # Usage
+  if [ ! -d '.repo' ]; then
+    echo '';
+    echo ' Usage: Run inside an Android repo root';
+    echo '';
+    return;
+  fi;
+
+  # Search
+  echo '';
+  echo ' Starting the projects analysis...';
+  echo '';
+  repo forall -c 'tags_output=$(git tag 2>&1 \
+                              | grep -v "${REPO_RREV##*/}$");
+                  if [ ! -z "${tags_output}" ]; then
+                    echo '';
+                    echo " Project: ${REPO_PROJECT} [${REPO_REMOTE}/${REPO_RREV##*/}]";
+                    echo '';
+                    git tag \
+                        | grep -v ${REPO_RREV##*/} \
+                        | xargs git tag -d 2> /dev/null;
+                    tags_output=$(git tag 2>&1 \
+                              | grep -v "${REPO_RREV##*/}$");
+                    if [ ! -z "${tags_output}" ]; then
+                      git fetch --all --prune --tags;
+                      git tag \
+                          | grep -v ${REPO_RREV##*/} \
+                          | xargs git tag -d 2> /dev/null;
+                    fi;
+                    git fetch --prune ${REPO_REMOTE} ${REPO_RREV##*/};
+                  fi;';
+}
+
+# === Repo Forced Sync Project ===
+function reposyrm()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: reposyrm project/relative/path';
+    echo '';
+    return;
+  fi;
+
+  # Perform actions
+  local project_path;
+  for project_paths in ${@}; do
+    project_path=${project_paths%/};
+    rm -rfv ${project_path};
+    rm -rfv .repo/projects/${project_path}.git;
+    reposy ${project_path};
+    echo '';
+  done;
+}
+
+# === Repo Forced Sync Project ===
+function reposyrmf()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: reposyrmf project/relative/path';
+    echo '';
+    return;
+  fi;
+
+  # Perform actions
+  local project_path;
+  for project_paths in ${@}; do
+    project_path=${project_paths%/};
+    rm -rfv ${project_path};
+    rm -rfv .repo/projects/${project_path}.git;
+    rm -rfv .repo/project-objects/${project_path}.git;
+    reposy ${project_path};
+    echo '';
+  done;
+}

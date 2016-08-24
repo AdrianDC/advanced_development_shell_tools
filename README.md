@@ -7,4 +7,5 @@ developing on Android, especially for the SONY Huashan.<br />
 
 ### [ Permanent installation for terminals ]
 - sudo gedit ~/.bashrc
-- Add a new line with "source /PathToThisFolder/android_bash.rc;"
+- Adapt and add "export ANDROID_DEV_DRIVE=/media/../AndroidDev;"
+- Adapt and add "source ${ANDROID_DEV_DRIVE}/Bash/android_bash.rc;"
