@@ -1,0 +1,173 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Repo Get Device ===
+function repogetdevice()
+{
+  # Variables
+  local cwd=$(pwd);
+  local product=${TARGET_PRODUCT#*_};
+
+  # Repo root
+  repor;
+
+  # Check device
+  if ! ls ./device/*/${product} 1> /dev/null 2>&1; then
+
+    # Analyse devices
+    for device_path in $(find ./device/ -name cm.mk -or -name vendorsetup.sh); do
+      if grep -q ${TARGET_PRODUCT} ${device_path}; then
+        product=$(basename $(dirname ${device_path}));
+      fi;
+    done;
+
+  fi;
+
+  # Result
+  echo ${product};
+  cd ${cwd};
+}
+
+# === Device Shortcuts ===
+function cdd()
+{
+  # Shortcut
+  local content="${1}";
+  if [ -z "${content}" ]; then
+    content=$(repogetdevice);
+  fi;
+  if [ -z "${content}" ]; then
+    content='huashan';
+  fi;
+
+  # Path generation
+  local path=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/*\/*${content}*/g");
+  for path_item in $path; do
+    if [ -d "${path_item}" ] && [[ ! "${path_item}" =~ 'generic' ]]; then
+      path="${path_item}";
+      break;
+    fi;
+  done;
+
+  # Access path
+  if [ -d ${path} ]; then
+    cd ${path};
+  elif [ -d *"${1}"* ]; then
+    cd *"${1}"*;
+  else
+    echo " ${1}: '${path}' not found...";
+  fi;
+}
+
+# === Repo Shortcuts ===
+function cdman()       { cd $(echo "$(pwd)" | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/manifests/g"); }
+function toout()
+{
+  device="$1";
+  if [ -z "$device" ]; then device="huashan"; fi;
+  echo "$(pwd)" | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/out\/target\/product\/$device*/g";
+}
+function cdout()
+{
+  cd $(toout $1);
+}
+
+# === Find Android Dev Drive ===
+function getand()
+{
+  # Variables
+  local android_dev_dir=${PWD};
+
+  # Parent navigation
+  while [[ "${android_dev_dir}" != '/' && ! -d "${android_dev_dir}/Bash" ]]; do
+    android_dev_dir=$(readlink -f "${android_dev_dir}/..");
+  done;
+
+  # Return Bash location
+  if [ -d "${android_dev_dir}/Bash" ]; then
+    echo ${android_dev_dir};
+  else
+    echo ${ANDROID_DEV_DRIVE};
+  fi;
+}
+
+# === Repo ROM Shortcut ===
+function torompaths()
+{
+  # Variables
+  local android_dev_dir=$(getand);
+  local target='';
+
+  # AndroidDev verification
+  if [ -z "${android_dev_dir}" ]; then
+    echo '';
+    echo 'Android drive with "Bash" not found...';
+    echo '';
+    return;
+  fi;
+  android_dev_dir=${android_dev_dir//\//\\\/};
+
+  # ROM subpath
+  if [ ! -z "$2" ]; then
+    target=$(pwd | sed "s/\(${android_dev_dir}\)\(\/[^/]*\(.*\)\|\)$/\1\/${1}-*${2}*\3/g");
+    target=$(echo ${target} | cut -f1 -d\ );
+  fi;
+
+  # ROM path
+  if [ -z "${target}" ] || [ ! -d ${target} ]; then
+    target=$(pwd | sed "s/\(${android_dev_dir}\)\(\/[^/]*\(.*\)\|\)$/\1\/${1}\3/g");
+    target=$(echo ${target} | cut -f1 -d\ );
+  fi;
+
+  # Return target
+  echo ${target}/;
+}
+
+# === ROMs Shortcuts ===
+function toaosp()      { torompaths 'AOSP' "${1}"; };
+function tocm()        { torompaths 'CyanogenMod' "${1}"; };
+function toaospcaf()   { torompaths 'AOSP-CAF-6.0' "${1}"; };
+function toaospoms()   { torompaths 'AOSP-OMS-6.0' "${1}"; };
+function tomultirom()  { torompaths 'MultiROM' "${1}"; };
+function totwrp()      { torompaths 'TWRP' "${1}"; };
+function cdaosp()      { cd $(toaosp ${1}); }
+function cdcm()        { cd $(tocm ${1}); }
+function cdaospcaf()   { cd $(toaospcaf); }
+function cdaospoms()   { cd $(toaospoms); }
+function cdmultirom()  { cd $(tomultirom); }
+function cdtwrp()      { cd $(totwrp); }
+
+# === Private Shortcuts ===
+function cdand()       { cd $(getand); }
+function cda()         { cdand; cdcm huashan; }
+function cdaospb()     { cd $(toaosp blue); }
+function cdaosph()     { cd $(toaosp huashan); }
+function cdaosps()     { cd $(toaosp sony); }
+function cdcmb()       { cd $(tocm blue); }
+function cdcmh()       { cd $(tocm huashan); }
+function getbash()     { echo ${bash_android_dir}; }
+function getscripts()  { echo $(getand)/Scripts; }
+function cdbash()      { cd $(getbash); }
+function cdscripts()   { cd $(getscripts); }
+function cddesk()      { cd "$(xdg-user-dir DESKTOP)"; }
+function impaospcaf()  { rsync -arv --delete --delete-after $(toaospcaf $1) ./$1 ; }
+function impaospoms()  { rsync -arv --delete --delete-after $(toaospoms $1) ./$1 ; }
+function impcm()       { rsync -arv --delete --delete-after $(tocm $1) ./$1 ; }
+function meldaosp()    { meld ./$1 $(toaosp $1); }
+function meldaospsony(){ meld ./$1 $(toaosp sony $1); }
+function meldaospcaf() { meld ./$1 $(toaospcaf $1); }
+function meldaospoms() { meld ./$1 $(toaospoms $1); }
+function meldcm()      { meld ./$1 $(tocm $1); }
+function meldmrom()    { meld ./$1 $(tomultirom $1); }
+function meldtwrp()    { meld ./$1 $(totwrp $1); }
+function nout()        { nemo $(toout $1); }
+
+# === Device Shortcuts ===
+function cdspdev()     { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/sony\/huashan/g'); }
+function cdspker()     { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8960t/g'); }
+function cdspven()     { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/vendor\/sony/g'); }
+function cdblueker()   { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8x60/g'); }
+function meldblue()    { meld ./$1 ../blue-common/$1; }
+

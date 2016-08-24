@@ -1,0 +1,41 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Git Projects Statistics ===
+function gitstat()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo " Usage: gitstat remote branch";
+    return;
+  fi;
+
+  # Informations
+  echo "git fetch ${1} ${2}; git rev-list --left-right --count HEAD...FETCH_HEAD;";
+
+  # Request
+  git fetch ${1} ${2};
+  git diff HEAD...FETCH_HEAD;
+
+  # Comparison
+  echo '';
+  printf ' New changes - missing : ';
+  git rev-list --left-right --count HEAD...FETCH_HEAD;
+}
+
+# === Git Projects Statistics (shortcuts) ===
+alias gitst='gitstat origin cm-14.1';
+alias gitst13='gitstat origin cm-13.0';
+alias gitst140='gitstat origin cm-14.0';
+alias gitsto='gitstat origin $(git rev-parse --abbrev-ref HEAD)';
+alias gitsta='gitstat AdrianDC cm-14.1';
+alias gitsta6='gitstat AdrianDC aosp-6.0';
+alias gitstaa6='gitstat AdrianDC android-6.0';
+alias gitstam='gitstat AdrianDC master';
+alias gitstatw='gitstat AdrianDC twrp';
+alias gitsti='gitstat aicp mm6.0';
+alias gitstt='gitstat twrp android-6.0';
+alias gitstaosp='gitstat aosp master';
+alias gitstsony='gitstat origin aosp/LA.UM.5.5.r1';

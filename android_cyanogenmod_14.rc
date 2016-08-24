@@ -1,0 +1,28 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === CM 14 Patcher ===
+function cm14patcher()
+{
+  # ==========================================================
+  # Repo root
+  if [ -z "$(type -t croot)" ]; then
+    while [ ! -e './build/envsetup.sh' ]; do cd ../; done;
+    source ./build/envsetup.sh;
+  fi;
+  croot;
+
+  # ==========================================================
+  # SysUI: Use VectorDrawable's for rendering battery
+  repopick 167464;
+
+  # ==========================================================
+  # av: Add support for CameraSource as metadata type
+  repopick 167485;
+
+  # ==========================================================
+  # repo root
+  croot;
+}

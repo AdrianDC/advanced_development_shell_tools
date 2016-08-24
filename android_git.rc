@@ -1,0 +1,152 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === GitHub Url Cherry-pick ===
+function gitcpup()
+{
+  # Variables
+  local tmpfile=$(mktemp);
+  echo '';
+
+  # Finish previous one
+  if [ -z "${1}" ]; then
+    git am --continue;
+    return;
+  fi;
+
+  # Inputs
+  for tmpurl in ${@}; do
+
+    # GitHub patch
+    if [[ "${tmpurl}" =~ 'github.com' ]] && [[ ! "${tmpurl}" =~ '.patch' ]]; then
+      tmpurl="${tmpurl}.patch";
+    fi;
+
+    # Cherry-pick
+    rm -rf .git/rebase-apply;
+    curl "${tmpurl}" > ${tmpfile} 2> /dev/null;
+    git am -3 ${tmpfile};
+    if [ ${?} -ne 0 ]; then
+      echo '';
+      echo " Failed on ${tmpurl}";
+      echo '';
+      return;
+    fi;
+    git log --max-count=1 --pretty=oneline;
+    echo '';
+  done;
+
+  # End of process
+  rm -f ${tmpfile};
+}
+
+# === GitHub Url Cherry-pick Renamed ===
+function gitcpur()
+{
+  # Usage
+  if [ -z "${4}" ]; then
+    echo " Usage: gitcpur githuburltoproject branch search_text replace_text";
+    return;
+  fi;
+
+  # Variables
+  local tmpfile=$(mktemp);
+  local tmpurl="${1}";
+  local branch="${2}";
+  local search="${3}";
+  local replace="${4}";
+  echo '';
+
+  # GitHub patch
+  if [[ "${tmpurl}" =~ 'github.com' ]] && [[ ! "${tmpurl}" =~ '.patch' ]]; then
+    tmpurl="${tmpurl}.patch";
+  fi;
+
+  # Cherry-pick
+  rm -rf .git/rebase-apply;
+  curl "${tmpurl}" > ${tmpfile} | sed "s/${search}/${replace}/g" 2> /dev/null;
+  git am -3 ${tmpfile};
+  if [ ${?} -ne 0 ]; then
+    echo '';
+    echo " Failed on ${tmpurl}";
+    echo '';
+    return;
+  fi;
+  git log --max-count=1 --pretty=oneline;
+  echo '';
+
+  # End of process
+  rm -f ${tmpfile};
+}
+
+# === GitHub Url Fetch-Reset ===
+function gitfcu()
+{
+  # Variables
+  link="$1";
+
+  if [ ! -z "$2" ]; then
+    branch="$2";
+  else
+    branch="cm-13.0";
+  fi;
+
+  if [ -z "$link" ]; then
+    echo " Error: Not a GitHub url '$link'";
+    return;
+  fi;
+
+  git fetch $link $branch;
+  echo "";
+  git reset --hard FETCH_HEAD;
+}
+
+# === Git Clean Tags ===
+function gitcleantags()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo " Usage: gittagsclean branch_to_keep";
+    return;
+  fi;
+
+  # Variables
+  local branch_keep=${1};
+
+  # Delete tags
+	git tag | grep -v ${branch_keep} | xargs git tag -d;
+}
+
+# === Repo Branch ===
+function repogetbranch()
+{
+  # Variables
+  local branch='';
+  local infos=$(repo info . 2>&1);
+
+  # Repo detection
+  if [[ ! "${infos}" =~ 'repo to be installed' ]] && [[ ! "${infos}" =~ 'sudo apt' ]]; then
+    branch=$(echo "${infos}" \
+          | grep -i 'Manifest branch' \
+          | head -n 1 \
+          | sed 's/.*\/heads\/\(.*\)/\1/');
+  fi;
+
+  # Recent remotes
+  if [ -z "${branch}" ] || [[ "${branch}" =~ 'Manifest' ]]; then
+    branch=$(git 'for-each-ref' --sort=-committerdate refs/remotes/ \
+           | grep 'AdrianDC\|origin' \
+           | head -n 1 \
+           | sed 's/.*remotes\/[^\/]*\/\(.*\)/\1/');
+  fi;
+
+  # Default failsafe
+  if [ -z "${branch}" ] || [[ "${branch}" =~ 'Manifest' ]]; then
+    branch='cm-14.1';
+  fi;
+
+  # Output result
+  echo "${branch}";
+}

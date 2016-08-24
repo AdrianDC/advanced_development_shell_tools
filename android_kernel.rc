@@ -5,94 +5,171 @@
 
 # === Build paths ===
 export bash_android_bbootimg=$bash_android_dir/android_tools/bbootimg;
+export bash_android_mkboot=$bash_android_dir/android_mkboot;
 
 # === Kernel Fast Builder ===
 function fboota()
 {
-  cwd=$(pwd);
+  # Usage
+  if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] || [ -z "${TARGET_PRODUCT}" ]; then
+    echo '';
+    echo ' Usage: fbooadbrecta [unsecure,sep,full,init,inject]';
+    echo '  Details: fboota needs the envbuild and lunch variables';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cwd=$(pwd);
+  local device=$(repogetdevice);
+  local device_common='';
+  local params=${1};
+  local tmpfile=$(mktemp);
+
+  # Build environment
   croot;
-  tmpfile=$(mktemp);
-  device=${TARGET_PRODUCT#*_};
+  export USE_NINJA=false;
 
-  echo "";
-  echo -e " \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016 ]\e[0m";
-  echo "";
-  sudo printf "";
+  # Header & root holder
+  echo '';
+  echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016 ]\e[0m';
+  echo '';
+  if [[ ! "${params}" =~ 'noflash' ]] && [[ ! "${params}" =~ 'zip' ]]; then
+    sudo printf '';
+  fi;
 
-  rm -fv ./out/target/product/$device/boot.*;
-  rm -fv ./out/target/product/$device/*.cpio;
-  rm -fv ./out/target/product/$device/*.fs;
-  rm -fv ./out/target/product/$device/*.img;
-  echo "";
+  # Output cleaner
+  rm -fv ./out/target/product/${device}/boot.*;
+  rm -fv ./out/target/product/${device}/*.cpio;
+  rm -fv ./out/target/product/${device}/*.fs;
+  rm -fv ./out/target/product/${device}/*.img;
+  echo '';
 
-  if [[ "$1" =~ "unsecure" ]]; then
-    fileslist="./out/target/product/$device/root/default.prop \
-               ./out/target/product/$device/recovery/root/default.prop \
-               ./out/target/product/$device/ota_temp/\*/RAMDISK/default.prop \
-               ./out/target/product/$device/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop";
-    for file in $fileslist; do
-      echo "Unsecuring $file";
-      sudo sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' $file;
-      sudo sed -i 's/ro.secure=1/ro.secure=0/' $file;
-      sudo sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/' $file;
+  # Unsecure adb changes
+  if [[ "${params}" =~ 'unsecure' ]]; then
+    local fileslist="./build/core/main.mk \
+                     ./out/target/product/${device}/root/default.prop \
+                     ./out/target/product/${device}/recovery/root/default.prop \
+                     ./out/target/product/${device}/ota_temp/\*/RAMDISK/default.prop \
+                     ./out/target/product/${device}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop";
+    for file in ${fileslist}; do
+      echo "Unsecuring ${file}";
+      sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file};
+      sed -i 's/ro.secure=1/ro.secure=0/' ${file};
+      sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' ${file};
     done;
   fi;
 
-  if [[ "$1" =~ "sep" ]]; then
-    mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./external/sepolicy/;
+  # Force init rebuild
+  if [[ "${params}" =~ 'init' ]]; then
+    rm -rf ./out/target/product/${device}/obj/EXECUTABLES/init_intermediates;
+    rm -f ./out/target/product/${device}/root/init.real;
+    rm -f ./out/target/product/${device}/root/init;
   fi;
 
-  if [[ ! "$1" =~ "full" ]] && $(mms -v >/dev/null 2>&1); then
-    mms bootimage | tee $tmpfile;
+  # Sepolicies builder
+  if [[ "${params}" =~ 'sep' ]]; then
+    if [ -d ./system/sepolicy ]; then
+      mmm -j$(grep -c ^processor /proc/cpuinfo) ./system/sepolicy/;
+    else
+      mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./external/sepolicy/;
+    fi;
+  fi;
+
+  # Ramdisk files builder
+  echo "before";
+  export USE_NINJA=false;
+  if ls ./device/*/${device}/rootdir/Android.mk 1> /dev/null 2>&1; then
+    mmm ./device/*/${device}/rootdir/;
+  fi;
+
+  # Ramdisk common files builder
+  device_common=$(cat ./device/*/${device}/device.mk \
+                | grep 'inherit-product' \
+                | grep 'device' \
+                | sed 's/.*\(device.*\)\/[^\/]*)/\1/');
+  if [ ! -z "${device_common}" ]; then
+    mmm ./${device_common}/rootdir/;
+  fi;
+
+  # Bootimage builder
+  if [[ ! "${params}" =~ "full" ]] && $(mms -v >/dev/null 2>&1); then
+    mms bootimage | tee ${tmpfile};
   else
-    make -j$(grep -c ^processor /proc/cpuinfo) bootimage | tee $tmpfile;
+    make -j$(grep -c ^processor /proc/cpuinfo) bootimage | tee ${tmpfile};
   fi;
+  export USE_NINJA=;
 
-  if [[ "$1" =~ "unsecure" ]]; then
-    for file in $fileslist; do
-      echo "Resecuring $file";
-      sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' $file;
-      sed -i 's/ro.secure=0/ro.secure=1/' $file;
-      sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' $file;
+  # Unsecure adb changes
+  if [[ "${params}" =~ 'unsecure' ]]; then
+    for file in ${fileslist}; do
+      echo "Resecuring ${file}";
+      sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file};
+      sed -i 's/ro.secure=0/ro.secure=1/' ${file};
+      sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' ${file};
     done;
   fi;
 
-  BootImg=$(grep -a ".*image.*boot\.img" $tmpfile | head -1 \
-          | sed "s/.*: \(.*boot\.img\).*/\1/g");
+  # Bootimage file path
+  BootImg=$(grep -a '.*image.*boot\.img' ${tmpfile} \
+          | head -1 \
+          | sed 's/.*: \(.*boot\.img\).*/\1/g');
 
-  if [[ "$1" =~ "inject" ]]; then
-    fbootk $(dirname $BootImg)/kernel;
-  elif [ ! -z "$BootImg" ] && [ -f "$BootImg" ]; then
-    ModulesDir=$(grep -a ".*system/lib/.*" $tmpfile | head -1 \
-               | sed "s/.* \(\S*system\/lib\/modules\S*\);.*/\1/g");
-    Modules=$(grep -a ".*INSTALL .*\.ko.*" $tmpfile \
-            | sed "s/.*INSTALL \(.*\.ko\).*/\1/g" \
+  # Inject kernel inside bootimage
+  if [[ "${params}" =~ 'inject' ]]; then
+
+    # Use the fbootk function
+    fbootk $(dirname ${BootImg})/kernel;
+
+  # Zip the bootimage
+  elif [[ "${params}" =~ 'zip' ]] && [ ! -z "${BootImg}" ] && [ -f "${BootImg}" ]; then
+    kernelbootzip ${device} "${BootImg}";
+
+  # Flash the bootimage to the device
+  elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${BootImg}" ] && [ -f "${BootImg}" ]; then
+
+    # Detect modules
+    ModulesDir=$(grep -a '.*system/lib/.*' ${tmpfile} \
+               | head -n 1 \
+               | sed 's/.* \(\S*system\/lib\/modules\S*\);.*/\1/g');
+    Modules=$(grep -a '.*INSTALL .*\.ko.*' ${tmpfile} \
+            | sed 's/.*INSTALL \(.*\.ko\).*/\1/g' \
             | uniq);
-    echo ""; echo "";
-    echo -e " \e[1;37m[ Waiting for adb root... ]\e[0m"; echo "";
-    timeout 10 adb wait-for-device
 
-    if [ ! -z "$Modules" ]; then
+    # Waiting to get adb
+    echo '';
+    echo '';
+    echo -e " \e[1;37m[ Waiting for adb root... ]\e[0m";
+    echo '';
+    timeout 10 adb 'wait-for-device';
+
+    # Handle kernel modules
+    if [ ! -z "${Modules}" ]; then
       adb remount;
-      timeout 10 adb wait-for-device
+      timeout 10 adb 'wait-for-device';
       for Module in ${Modules[*]}; do
-        ModuleFile=$(basename "$Module");
-        adb push "$ModulesDir/$ModuleFile" "/system/lib/modules/$ModuleFile";
+        ModuleFile=$(basename "${Module}");
+        adb push "${ModulesDir}/${ModuleFile}" "/system/lib/modules/${ModuleFile}";
       done;
     fi;
 
-    echo "";
-    echo -e " \e[1;37m[ Bootloader $BootImg... ]\e[0m";
-    export PackageResult="$BootImg";
+    # Flash new bootimage
+    echo '';
+    echo -e " \e[1;37m[ Bootloader ${BootImg}... ]\e[0m";
+    export PackageResult="${BootImg}";
     echo "";
     sudo adb reboot bootloader;
-    timeout 20 sudo fastboot flash boot "$BootImg";
+    timeout 20 sudo fastboot flash boot "${BootImg}";
     timeout 5 sudo fastboot reboot;
     echo "";
+
   fi;
-  rm -f $tmpfile;
-  cd $cwd;
-  echo "";
+
+  # End of process
+  export USE_NINJA=;
+  rm -f ${tmpfile};
+  cd ${cwd};
+  echo '';
 }
 
 # === Kernel Flasher ===
@@ -108,30 +185,89 @@ function fboot()
   sudo fastboot reboot;
 }
 
+# === System Flasher ===
+function fboots()
+{
+  sudo adb reboot bootloader;
+  if [ ! -z "$1" ]; then
+    file=$(echo "$1" | sed 's/file:\/\/\(.*\)/\1/');
+    sudo fastboot flash system "$file";
+  else
+    sudo fastboot flash system system.img;
+  fi;
+}
+
+# === Fastboot Reboot ===
+function fbootr()
+{
+  sudo fastboot reboot;
+}
+
 # === Kernel Informations ===
 function fbooti()
 {
+  # Variables
+  local partitiontarget=$(androidpartitionstarget boot);
+
+  # Kernel injection
   adbro;
-  adb push "$bash_android_bbootimg" /bbootimg;
+  adb push "${bash_android_bbootimg}" /bbootimg;
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell /bbootimg -i /dev/block/platform/msm_sdcc.1/by-name/Kernel;
+  adb shell /bbootimg -i ${partitiontarget};
+}
+
+# === Kernel Informations ===
+function fbooti()
+{
+  # Variables
+  local partitiontarget=$(androidpartitionstarget boot);
+
+  # Kernel injection
+  adbro;
+  adb push "${bash_android_bbootimg}" /bbootimg;
+  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
+  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
+  adb shell /bbootimg -i ${partitiontarget};
 }
 
 # === Kernel Injector ===
 function fbootk()
 {
-  if [ -z "$1" ] || [ ! -f "$1" ]; then
-    echo "  Usage: fbootk kernelpath";
+  # Usage
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
+    echo '  Usage: fbootk kernelpath [bool_fota]';
     return;
   fi;
+
+  # Variables
+  local partitiontarget=;
+  if [ ! -z "${2}" ]; then
+    partitiontarget=$(androidpartitionstarget fota);
+  else
+    partitiontarget=$(androidpartitionstarget boot);
+  fi;
+
+  # Kernel injection
   adbro;
-  adb push "$1" /tmpkernel;
-  adb push "$bash_android_bbootimg" /bbootimg;
+  adb push "${1}" /tmpkernel;
+  adb push "${bash_android_bbootimg}" /bbootimg;
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell /bbootimg -i /dev/block/platform/msm_sdcc.1/by-name/Kernel;
-  adb shell /bbootimg -u /dev/block/platform/msm_sdcc.1/by-name/Kernel -k /tmpkernel;
+  adb shell /bbootimg -i ${partitiontarget};
+  adb shell /bbootimg -u ${partitiontarget} -k /tmpkernel;
+  if [ -z "${2}" ]; then
+    adb reboot recovery;
+  fi;
+}
+
+# === Kernel Modules Pusher ===
+function fbootmodules()
+{
+  # Modules Pusher
+  for module_file in $(find ${KernelSources} -name *.ko); do
+    adb push ${module_file} /system/lib/modules/;
+  done;
 }
 
 # === Kernel Flasher ===
@@ -145,3 +281,377 @@ function fbooto()
   fi;
 }
 
+# === Recovery Flasher ===
+function frecovery()
+{
+  sudo adb reboot bootloader;
+  if [ ! -z "$1" ]; then
+    sudo fastboot flash recovery "$1";
+  else
+    sudo fastboot flash recovery boot.img;
+  fi;
+  sudo fastboot reboot;
+}
+
+# === ADB Bootimage Pusher ===
+function adbbootpush()
+{
+  # Variables
+  local boot=$(androidpartitionstarget boot);
+
+  # Installer
+  adb push ${1} /sdcard/boot.img;
+  adbsu "dd if=/dev/zero of=${boot}";
+  adbsu "dd if=/sdcard/boot.img of=${boot}";
+  adbsu 'rm -f /sdcard/boot.img';
+}
+
+# === ADB FOTA Pusher ===
+function adbfotapush()
+{
+  # Variables
+  local fota=$(androidpartitionstarget fota);
+
+  # Installer
+  adb push ${1} /sdcard/fota.img;
+  adbsu "dd if=/dev/zero of=${fota}";
+  adbsu "dd if=/sdcard/fota.img of=${fota}";
+  adbsu 'rm -f /sdcard/fota.img';
+  #adb reboot recovery;
+}
+
+# === ADB Recovery Pusher ===
+function adbrecoverypush()
+{
+  # Variables
+  local recovery=$(androidpartitionstarget recovery);
+
+  # Installer
+  adb push ${1} /sdcard/recovery.img;
+  adbsu "dd if=/dev/zero of=${recovery}";
+  adbsu "dd if=/sdcard/recovery.img of=${recovery}";
+  adbsu 'rm -f /sdcard/recovery.img';
+  #adb reboot recovery;
+}
+
+# === MKBoot Tools ===
+function mkboottools()
+{
+  # Usage
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
+    echo '  Usage: mkboottools boot.img';
+    return;
+  fi;
+
+  # Variables
+  local boot_file="${1}";
+  local out_folder="${2}";
+
+  # Extraction
+  if [ -z "${out_folder}" ]; then
+    out_folder=$(mktemp -d);
+  fi;
+
+  # Unpack
+  rm -rf "${out_folder}";
+  ${bash_android_mkboot}/mkboot "${1}" "${out_folder}";
+
+  # Edition mode
+  if [ -z "${2}" ]; then
+
+    # Edit
+    nemo "${out_folder}";
+    echo '';
+    printf ' Press Enter to continue [ENTER] ';
+    read key;
+    echo '';
+
+    # Repack
+    if [ ! -f "${1}.old" ]; then
+      cp "${1}" "${1}.old";
+    fi;
+    rm -f "${1}.tmp";
+    mv "${1}" "${1}.tmp";
+    ${bash_android_mkboot}/mkboot "${out_folder}" "${1}";
+    if [ -f "${1}.tmp" ]; then
+      rm -f "${1}.tmp";
+    fi;
+    rm -rf "${out_folder}";
+
+  fi;
+
+  # End of process
+  echo '';
+}
+
+# === Kernel DefConfig Editor ===
+function makedefconf()
+{
+  # Variables
+  local defconfig=${1};
+  local configmode=${2};
+  local diffcommon=${3};
+
+  # DiffConfig
+  local diffconfig=$(ls "arch/arm"*"/configs/diffconfig/${configmode}_diffconfig" 2> /dev/null);
+  if [ ! -z "${diffconfig}" ] && [ -f "${diffconfig}" ]; then
+    export ARCH=$(echo "${diffconfig}" | sed 's/.*\(arm[^\/]*\)\/.*/\1/');
+    export KBUILD_DIFFCONFIG="${configmode}_diffconfig";
+    diffcommon=$(dirname "${diffconfig}")/${diffcommon}_diffconfig;
+  fi;
+
+  # Architecture
+  if [ -z "${ARCH}" ]; then
+    export ARCH=arm;
+  fi;
+  export SUBARCH=arm;
+  export KCONFIG_NOTIMESTAMP=true;
+
+  # Environment
+  DEFCONFIG_PATH=./arch/${ARCH}/configs;
+  if [ ! -z "${defconfig}" ] && [ -f "${DEFCONFIG_PATH}/"*"${defconfig}"* ]; then
+    DEFCONFIG_FILE=$(basename "${DEFCONFIG_PATH}/"*"${defconfig}"*);
+  else
+    DEFCONFIG_FILE='cm_viskan_huashan_defconfig';
+  fi;
+
+  # Google configurations
+  if [[ "${defconfig}" == 'google' ]]; then
+    ./scripts/kconfig/merge_config.sh ${DEFCONFIG_PATH}/${DEFCONFIG_FILE} android/configs/android-base.cfg android/configs/android-recommended.cfg
+    mv ./.config ./.config_android;
+    make ${DEFCONFIG_FILE};
+    meld ./.config ./.config_android;
+    rm ./.config_android;
+
+  # Make full defconfig
+  elif [ ! -z "${defconfig}" ] && [ ! -f "$DEFCONFIG_PATH/"*"${defconfig}"* ] || [ ! -z "${configmode}" ]; then
+    make ${DEFCONFIG_FILE};
+    if [ -f "${diffconfig}" ]; then
+      if [ -f "${diffcommon}" ]; then
+        meld ./.config "${diffconfig}" &
+          meld ./.config "${diffcommon}" &
+          meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+      else
+        meld ./.config "${diffconfig}" &
+          meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+      fi;
+    else
+      meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+    fi;
+
+  # Make minimal defconfig
+  else
+    make "${DEFCONFIG_FILE}";
+    make menuconfig;
+    make savedefconfig;
+    meld ./defconfig "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+    rm ./defconfig;
+  fi;
+
+  # Cleanup
+  #make mrproper;
+  #rm -rf scripts/basic;
+  #rm -rf scripts/kconfig;
+  #rm -rf .config;
+}
+
+# === Kernel Injector Zip ===
+function kernelinjectorzip()
+{
+  # Usage
+  if [ -z "${2}" ] || [ ! -f "${2}" ]; then
+    echo '';
+    echo ' usage: kernelinjectorzip device kernel_file_path [kernel_sources_for_modules]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local CurDir=$(pwd);
+  local PhoneName="${1}";
+  local KernelFile=$(readlink -f "${2}");
+  local KernelSources=$(readlink -f "${3}");
+  local OutFile="kernel-injector-"$(date +'%Y%m%d')"-${PhoneName}.zip";
+  local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
+  local TmpDir=$(mktemp -d);
+
+  # Package
+  cd "${TmpDir}/";
+  mkdir ./scripts;
+  cp "${KernelFile}" './scripts/kernel';
+  cp "${bash_kernel_injector_template_zip}" "${TargetFile}.unsigned.zip";
+  zip -g "${TargetFile}.unsigned.zip" './scripts/kernel';
+
+  # Modules
+  if [ ! -z "${KernelSources}" ]; then
+    mkdir -p ./system/lib/modules/;
+    for module_file in $(find ${KernelSources} -name *.ko); do
+      cp ${module_file} ./system/lib/modules/;
+    done;
+    zip -g "${TargetFile}.unsigned.zip" './system/lib/modules/'*;
+  fi;
+
+  # Signature
+  java -jar "${bash_android_sign_apk_dir}/signapk-cm121.jar" \
+       -w "${bash_android_sign_apk_dir}/testkey.x509.pem" \
+       "${bash_android_sign_apk_dir}/testkey.pk8" \
+       "${TargetFile}.unsigned.zip" \
+       "${TargetFile}";
+  rm -f "${TargetFile}.unsigned.zip";
+  rm -rf "${TmpDir}";
+  cd "${CurDir}";
+
+  # Result
+  echo '';
+  echo -e " \e[1;37mPackage File:\e[0m ${TargetFile}";
+  echo '';
+}
+
+# === Kernel Boot Zip ===
+function kernelbootzip()
+{
+  # Usage
+  if [ -z "${2}" ] || [ ! -f "${2}" ]; then
+    echo '';
+    echo ' usage: kernelbootzip device boot_img_path';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local CurDir=$(pwd);
+  local PhoneName="${1}";
+  local BootFile=$(readlink -f "${2}");
+  local OutFile="boot-"$(date +'%Y%m%d')"-${PhoneName}.zip";
+  local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
+  local TargetPartition=$(androidpartitionstarget boot);
+  local TmpDir=$(mktemp -d);
+
+  # Copy boot.img
+  cp "${BootFile}" "${TmpDir}/boot.img";
+  cd "${TmpDir}/";
+
+  if [[ "${TargetPartition}" =~ 'bootdevice' ]]; then
+    cp "${bash_boot_template_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
+  else
+    cp "${bash_kernel_template_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
+  fi;
+
+  # Complete the zip
+  zip -g "${TmpDir}/${OutFile}.unsigned.zip" 'boot.img';
+  java -jar "${bash_android_sign_apk_dir}/signapk-cm121.jar" \
+      -w "${bash_android_sign_apk_dir}/testkey.x509.pem" \
+      "${bash_android_sign_apk_dir}/testkey.pk8" \
+      "${TmpDir}/${OutFile}.unsigned.zip" \
+      "${TmpDir}/${OutFile}";
+  rm -f "${TmpDir}/${OutFile}.unsigned.zip";
+  cp "${TmpDir}/${OutFile}" "${TargetFile}";
+  echo "";
+  echo -e " \e[1;36mPackage File:\e[0m ${TargetFile}";
+  export PackageResult="${TargetFile}";
+  echo '';
+
+  # End of process
+  rm -rf "${TmpDir}";
+  cd "${CurDir}";
+}
+
+# === Sony Copyleft Builder ===
+function mkcopyleft()
+{
+  # Environment
+  if [ -z "${KBUILD_DIFFCONFIG}" ] || [ ! -z "${1}" ]; then
+
+    # Usage
+    if [ -z "${1}" ] || ! ls arch/arm*/configs/diffconfig/${1}_diffconfig 1> /dev/null 2>&1; then
+      echo '';
+      echo ' Usage: mkcopyleft [device_name_to_init]';
+      echo '';
+      return;
+    fi;
+
+    # Environment
+    export ARCH=arm64;
+    export CROSS_COMPILE=aarch64-linux-android-;
+    export KBUILD_DIFFCONFIG=${1}_diffconfig;
+
+    # Kernel configuration
+    make msm-perf_defconfig;
+
+  fi;
+
+  # Environment
+  local cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin);
+  if [[ ! "${PATH}" =~ "${cross_compiler}" ]]; then
+    export PATH=${cross_compiler}:${PATH};
+  fi;
+
+  # CCache usage
+  local ccache_prefix='';
+  if [ "$(type -t ccache 2> /dev/null)" = 'file' ]; then
+    cache_prefix='ccache ';
+    export CC='ccache gcc';
+    export CXX='ccache g++';
+    if [[ ! "${PATH}" =~ '/usr/lib/ccache' ]]; then
+      export PATH=/usr/lib/ccache:${PATH}
+    fi;
+    echo ' CCache enabled';
+  fi;
+
+  # Kernel build
+  ${cache_prefix}make -j$(grep -c ^processor /proc/cpuinfo);
+}
+
+# === Sony Copyleft Builder ===
+function makekernel()
+{
+  # Environment
+  if [ -z "${DEVICE_DEFCONFIG}" ] || [ ! -z "${1}" ]; then
+
+    # Usage
+    if [ -z "${1}" ] || ! ls arch/arm*/configs/aosp_${1}_defconfig 1> /dev/null 2>&1; then
+      echo '';
+      echo ' Usage: makekernel [platform_device to init]';
+      echo '';
+      return;
+    fi;
+
+    # Environment
+    export ARCH=arm64;
+    export CROSS_COMPILE=aarch64-linux-android-;
+    export DEVICE_DEFCONFIG="aosp_${1}_defconfig";
+
+    # Kernel configuration
+    make ${DEVICE_DEFCONFIG};
+
+  fi;
+
+  # Environment
+  local cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin);
+  if [[ ! "${PATH}" =~ "${cross_compiler}" ]]; then
+    export PATH=${cross_compiler}:${PATH};
+  fi;
+
+  # CCache usage
+  local ccache_prefix='';
+  if [ "$(type -t ccache 2> /dev/null)" = 'file' ]; then
+    cache_prefix='ccache ';
+    export CC='ccache gcc';
+    export CXX='ccache g++';
+    if [[ ! "${PATH}" =~ '/usr/lib/ccache' ]]; then
+      export PATH=/usr/lib/ccache:${PATH}
+    fi;
+    echo ' CCache enabled';
+  fi;
+
+  # Kernel build
+  ${cache_prefix}make -j$(grep -c ^processor /proc/cpuinfo);
+}
+
+# === Xperia X Performance Shortcuts ===
+alias doradefconf='makedefconf msm-perf dora common';
+alias doracopyleft='mkcopyleft dora';
+alias doraaospdefconf='makedefconf aosp_tone_dora_defconfig';
+alias doraaospkernel='makekernel tone_dora';
+alias dorazipkernel='kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .';
+alias sonykernelrebase='git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa master';

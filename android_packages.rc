@@ -16,6 +16,7 @@ function mmmzip()
     BuildPathFirst=".";
   fi;
 
+  export USE_NINJA=false;
   LogFile="$TmpDir/mmm_logs.txt";
   OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f $BuildPathFirst))-${TARGET_PRODUCT}.zip";
   TargetFile="$(xdg-user-dir DESKTOP)/Builds/$OutFile";
@@ -30,7 +31,7 @@ function mmmzip()
   echo "";
 
   echo "";
-  if [ -d "$(readlink -f "$path")" ]; then
+  if [ -d "$(readlink -f "$path")" ] || ! $(mms -v >/dev/null 2>&1); then
     mmm -B $BuildParams | tee $LogFile;
   else
     mka $BuildParams | tee $LogFile;
@@ -76,6 +77,7 @@ function mmmzip()
   fi;
   echo "";
 
+  export USE_NINJA=;
   rm -rf "$TmpDir";
   cd "$CurDir";
 }
@@ -163,12 +165,21 @@ function packzip()
   FilesList="";
   for FilePath in ${Installs[*]}
   do
-    if [[ "$FilePath" =~ "/system" ]]; then
+    FileTarget='';
+    if [[ "$FilePath" =~ '/system' ]]; then
       FilePath=$(printf "$FilePath" | tail -1 \
                | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
                | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
       FileTarget=$(echo $FilePath \
                  | sed "s/.*\(system\/.*\)/\1/g");
+    elif [[ "$FilePath" =~ '/proprietary' ]]; then
+      FilePath=$(printf "$FilePath" | tail -1 \
+               | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
+               | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
+      FileTarget=$(echo $FilePath \
+                 | sed "s/.*proprietary\/\(.*\)/system\/\1/g");
+    fi;
+    if [ ! -z "$FileTarget" ]; then
       FileDir=$(dirname $FileTarget);
       if [ ! -d "$TmpDir/$FileDir" ]; then
         mkdir -p "$TmpDir/$FileDir";
@@ -182,17 +193,19 @@ function packzip()
 
   cd "$TmpDir/";
   cp "$bash_android_flashable_zip" "$TmpDir/$OutFile.unsigned.zip";
-  zip -g "$TmpDir/$OutFile.unsigned.zip" $FilesList;
-  java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-       -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-       "$bash_android_sign_apk_dir/testkey.pk8" \
-       "$TmpDir/$OutFile.unsigned.zip" \
-       "$TmpDir/$OutFile";
-  rm -f "$TmpDir/$OutFile.unsigned.zip";
-  cp "$TmpDir/$OutFile" "$TargetFile";
-  echo "";
-  echo -e " \e[1;37mPackage File:\e[0m $TargetFile";
-  export PackageResult="$TargetFile";
+  if [ ! -z "$FilesList" ]; then
+    zip -g "$TmpDir/$OutFile.unsigned.zip" $FilesList;
+    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
+         -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
+         "$bash_android_sign_apk_dir/testkey.pk8" \
+         "$TmpDir/$OutFile.unsigned.zip" \
+         "$TmpDir/$OutFile";
+    rm -f "$TmpDir/$OutFile.unsigned.zip";
+    cp "$TmpDir/$OutFile" "$TargetFile";
+    echo "";
+    echo -e " \e[1;37mPackage File:\e[0m $TargetFile";
+    export PackageResult="$TargetFile";
+  fi;
   echo "";
 
   rm -rf "$TmpDir";
@@ -279,4 +292,65 @@ function kerzip()
 
   rm -rf "$TmpDir";
   cd "$CurDir";
+}
+
+# === Git Zip Maker ===
+function gitzip()
+{
+  local file_path;
+  local files_list='';
+  local status;
+  local tmpfile=$(mktemp);
+  git diff-tree --no-commit-id --name-status -r ${1} > ${tmpfile};
+  while read line; do
+    status=$(echo "${line}" | awk '{ print $1 }');
+    file_path=$(echo "${line}" | awk '{ print $2 }');
+    if [[ "$status" =~ 'D' || "${line}" =~ '.mk' ]]; then
+      continue;
+    fi;
+    files_list="${files_list} ${file_path}";
+  done < ${tmpfile};
+  packzip ${files_list};
+  rm -f ${tmpfile};
+}
+
+# === Ninja Disabler ===
+function noninja()
+{
+  export USE_NINJA=false;
+  ${@};
+  export USE_NINJA=;
+}
+
+# === Build Without Ninja ===
+function mmo()
+{
+  export USE_NINJA=false;
+  mmm ${@};
+  export USE_NINJA=;
+}
+
+# === Build & Install Without Ninja ===
+function mmi()
+{
+  export USE_NINJA=false;
+  adbi mmm ${@};
+  export USE_NINJA=;
+}
+
+# === Build & Listen Without Ninja ===
+function mmil()
+{
+  export USE_NINJA=false;
+  adbil mmm ${@};
+  export USE_NINJA=;
+}
+
+# === CCache Disabler ===
+function noccache()
+{
+  local use_ccache=${USE_CCACHE};
+  export USE_CCACHE=0;
+  ${@};
+  export USE_CCACHE=${use_ccache};
 }

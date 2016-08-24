@@ -1,0 +1,160 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === File Uploader ===
+function fileupl()
+{
+  local cwd=$(pwd);
+  if [ -f "$1" ]; then
+    path=$(readlink -f "$1");
+  else
+    path="$1";
+  fi;
+  cdscripts;
+  $(getscripts)/android_server_upload.sh "$path" "$2";
+  cd $cwd;
+}
+function devupl()
+{
+  local filepath="$1";
+  if [ -z "$filepath" ] && [ -f "$PackageResult" ]; then
+    filepath="$PackageResult";
+  fi;
+
+  fileupl "$filepath" "Development";
+}
+function twrpbupl()
+{
+  device="$1";
+  name="${device^}";
+  fileupl twrp-3.0.*-r*-boot-${device}.img "${name}/TWRP-Recovery";
+  fileupl twrp-3.0.*-r*-fota-${device}.zip "${name}/TWRP-Recovery";
+}
+function mmmupl()
+{
+  if [ -z "$1" ]; then
+    echo "";
+    echo " Usage: mmmupl packageorpath";
+    echo "";
+    return;
+  fi;
+  mmmzip "$1";
+  devupl "$PackageResult";
+}
+function devuplboot()
+{
+  local cwd=$(pwd);
+  repor;
+
+  device="$1";
+  mv "./out/target/product/$device/boot.img" "./out/target/product/$device/boot-$device.img";
+  devupl "./out/target/product/$device/boot-$device.img";
+
+  cd "$cwd";
+}
+
+# === ROM Device Upload ===
+function devuplrom()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: devuplrom device [folder_path]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cwd=$(pwd);
+  local device="${1}";
+  local target="${2}";
+  local romfiles;
+  local romfile;
+  if [ -z "$target" ]; then
+    target="Development";
+  fi;
+
+  # ROM detection
+  repor;
+  romfiles=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mtime -1 | sort);
+  romfile="";
+  for romfiletest in ${romfiles}; do
+    if [ -f "${romfiletest}.md5sum" ]; then
+      romfile="${romfiletest}";
+    fi;
+  done;
+  if [ -z "${romfile}" ]; then
+    romfile=$(echo "${romfiles}" | head -n1 | awk '{ print $NF }');
+  fi;
+
+  # ROM upload
+  if [ ! -z "${romfile}" ]; then
+    fileupl "${romfile}" "${target}";
+  fi;
+
+  # End of process
+  cd "${cwd}";
+}
+
+# === Adaptive Device Upload ===
+function autodevupl()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: autodevupl device [folder_path [file_path]]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local rom_device="${1}";
+  local rom_phone="${rom_device^}";
+  local rom_target="${2}";
+  local rom_files="${3}";
+
+  # Target not final
+  if [[ ! "${rom_target}" =~ "${rom_phone}" ]]; then
+
+    # CyanogenMod
+    if [[ "${rom_target}" =~ 'cm' ]]; then
+      rom_target="${rom_phone}/CyanogenMod-14.1";
+
+    # Development
+    else
+      rom_target='Development';
+    fi;
+  fi;
+
+  # Upload files
+  if [ -z "${rom_files}" ]; then
+    devuplrom "${rom_device}" "${rom_target}";
+  else
+    fileupl "${rom_files}" "${rom_target}";
+  fi;
+}
+
+# === Pushbullet ROM Status ===
+function pushbrom()
+{
+  # Access ROM root
+  local cwd=$(pwd);
+  repor;
+
+  # Variables
+  local device="${1}";
+  local rom="${2:-ROM}";
+
+  # ROM file
+  romfile=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mmin -30 | tail -n 1);
+  if [ ! -z "$romfile" ]; then
+     pushb "${rom} for ${device} ready";
+  else
+     pushb "${rom} for ${device} failed";
+  fi;
+
+  # Restore ROM path
+  cd "${cwd}";
+}

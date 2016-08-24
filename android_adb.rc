@@ -1,0 +1,691 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === ADB Root Mounter ===
+function adbr()
+{
+  # Get root access and rw system
+  timeout 5 adb ${1} 'wait-for-devices';
+  timeout 5 adb ${1} root; sleep 2;
+  timeout 5 adb ${1} 'wait-for-devices';
+  timeout 5 adb ${1} remount; sleep 1;
+  timeout 5 adb ${1} 'wait-for-devices';
+}
+
+# === ADB Root Checked Mounter ===
+function adbro()
+{
+  # Get root access
+  local rootaccess=$(adb shell whoami);
+  if [ "${rootaccess:0:4}" != 'root' ] && [ "${rootaccess:16:5}" != 'uid 0' ]; then
+    timeout 5 adb ${1} 'wait-for-devices';
+    timeout 5 adb ${1} root; sleep 2;
+    timeout 5 adb ${1} 'wait-for-devices';
+  fi;
+
+  # Get rw system
+  local systemmount=$(adb shell mount | grep system);
+  local systemacess=$(echo "${systemmount}" | grep rw);
+  if [ ! -z "${systemmount}" ] && [ -z "${systemacess}" ]; then
+    timeout 5 adb ${1} 'wait-for-devices';
+    timeout 5 adb ${1} remount; sleep 1;
+    timeout 5 adb ${1} 'wait-for-devices';
+  fi;
+}
+
+# === ADB Access Shortcuts ===
+alias adbs='adb shell';
+alias adbroot='adb kill-server; sudo adb start-server';
+alias adbside='adb sideload';
+alias adbpo='adb shell reboot -p';
+alias adbre='adb reboot';
+function adbrh() { adb $1 shell setprop ctl.restart zygote; }
+alias adbrr='adb reboot recovery';
+alias adbw='adb wait-for-device';
+alias adbrb='adb reboot bootloader';
+alias adbscr='mkdir -p ./screenshots; adb shell screencap /sdcard/screenshot.png; adb pull /sdcard/screenshot.png ./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png';
+alias adbfotarandom='adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel';
+alias adbfotazero='adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel';
+alias adbsgdisk='adb shell sgdisk --print /dev/block/mmcblk0';
+alias adbblkp='adb shell ls -l /dev/block/bootdevice/by-name/';
+alias adbdf='adb shell df -H';
+alias adbrcbin='adb shell restorecon -R /sbin';
+alias adbmountcache='adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache';
+alias adbmountdata='adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data';
+alias adbmountmicrosd='adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext';
+alias adbumountcache='adb shell umount /cache';
+alias adbumountdata='adb shell umount /data';
+alias adbumountmicrosd='adb shell umount /storage/ext';
+alias adbmount='adbmountcache; adbmountdata; adbmountmicrosd';
+alias adbumount='adbumountcache; adbumountdata; adbumountmicrosd';
+alias adbemergencycalls='adb shell setprop ril.ecclist';
+alias adbemergencylist='adb shell getprop ril.ecclist';
+
+# === ADB System File Listener / Installer ===
+function adbif()
+{
+  # Variables
+  local repo_top=$(gettop 2> /dev/null);
+  local tmp_file=$(mktemp);
+
+  # Execute input command
+  ${@} | tee ${tmp_file};
+  echo '';
+
+  # Find new files
+  local tmp_installs=$(grep -a 'target/product/[^\/]*/system' ${tmp_file} \
+                     | sort \
+                     | uniq);
+
+  # Install new files
+  for file_path in ${tmp_installs[*]}; do
+    echo $file_path;
+    if [[ "${file_path}" =~ '/system' && ! "${file_path}" =~ '/NOTICE_FILES' ]]; then
+      file_path=$(printf "${file_path}" | tail -1 \
+                | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
+                | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
+      if [ ! -f "${file_path}" ]; then
+        file_path="${repo_top}/${file_path}";
+      fi;
+      if [ -f "${file_path}" ]; then
+        adbpf "${file_path}";
+      fi;
+    fi;
+  done;
+
+  # End of process
+  rm -f ${tmp_file};
+  echo '';
+}
+
+# === ADB System File Listener / Lister ===
+function adbil()
+{
+  # Variables
+  local tmp_file=$(mktemp);
+
+  # Execute input command
+  ${@} | tee ${tmp_file};
+  echo '';
+
+  # Find new files
+  local tmp_installs=$(grep -a "target/product/[^\/]*/system" ${tmp_file} \
+                     | sort \
+                     | uniq);
+
+  # List new files
+  for file_path in ${tmp_installs[*]}; do
+    if [[ "${file_path}" =~ '/system' && ! "${file_path}" =~ '/NOTICE_FILES' ]]; then
+      file_path=$(printf "${file_path}" | tail -1 \
+                | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
+                | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
+      if [ -f "${file_path}" ]; then
+        echo '';
+        echo -e " \e[1;36m${file_path}\e[0m";
+      fi;
+    fi;
+  done;
+
+  # End of process
+  rm -f ${tmp_file};
+  echo '';
+}
+
+# === ADB Proprietary File Listener / Installer ===
+function adbiv()
+{
+  # Variables
+  local tmp_file=$(mktemp);
+  local file_target;
+
+  # Execute input command
+  ${@} | tee ${tmp_file};
+  echo '';
+
+  # Find new files
+  local tmp_installs=$(grep -a 'Binary.*proprietary/.*' ${tmp_file} \
+                     | sed 's/.* b\/\(.*proprietary\/.*\) .*/\1/g' \
+                     | sort \
+                     | uniq);
+
+  # Install new files
+  for file_path in ${tmp_installs[*]}; do
+    if [ -f "${file_path}" ]; then
+      file_target=$(echo ${file_path} \
+                  | sed 's/.*proprietary\/\(.*\)/\/system\/\1/g');
+      if [ -f "${file_target}" ]; then
+        printf "${file_target}: ";
+        adb push ${file_path} ${file_target};
+      fi;
+    fi;
+  done;
+
+  # End of process
+  rm -f ${tmp_file};
+  echo '';
+}
+
+# === ADB File Installer Helpers ===
+function adbi()  { adbro; adbif ${@}; }
+function adbii() { adbif ${@}; }
+
+# === ADB Filer Pusher ===
+function adbpf()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo "";
+    echo " Usage: adbpf file_paths";
+    echo "";
+    return;
+  fi;
+
+  # Variables
+  local filepath='';
+  local filepathtest='';
+  local filetarget='';
+  local filepaths="${@}";
+
+  # Input files
+  for filepath in ${filepaths}; do
+    filepath=$(readlink -f "${filepath}");
+    filepathtest=${filepath};
+
+    # Iterate sub-folders
+    if [ -d "${filepath}" ]; then
+      adbpf "${filepath}/"*;
+
+    # Handle files
+    else
+      # Detect file targets
+      if [[ "${filepathtest}" =~ .mk|.py ]]; then
+        continue;
+      fi;
+      if [[ "${filepathtest}" =~ 'proprietary' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*proprietary\(.*\)/\/system\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" =~ 'vendor' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*vendor\(.*\)/\/system\/vendor\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" =~ 'configs' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*configs\(.*\)/\/system\/etc\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" =~ 'system' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*\(system.*\)/\/\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" == "${filepath}" ]]; then
+        if [[ "${filepathtest}" =~ '.xml' ]] || [[ "${filepathtest}" =~ '.conf' ]]; then
+          filetarget="/system/etc/"$(basename $filepath);
+        elif [[ "${filepathtest}" =~ '.so' ]]; then
+          filetarget="/system/lib/"$(basename $filepath);
+        else
+          filetarget=$(printf "${filepath}" | sed "s/.*\(system.*\)/\/\1/g");
+        fi;
+      fi;
+
+      # Upload file
+      echo -e " \e[1;36m${filetarget} :\e[0m";
+      #printf '  ';
+      #echo $(adb shell "ls -l ${filetarget}" 2> /dev/null);
+      adb push "${filepath}" "${filetarget}";
+    fi;
+  done;
+  echo '';
+}
+
+# === ADB Pushes ===
+alias adbp='adbro; adbpf';
+
+# === ADB Resursive File Pusher ===
+function adbpfa()
+{
+  adbro;
+  for file in $@; do
+    adbpf "$(readlink -f $file)";
+  done;
+}
+
+# === system/etc File Pusher ===
+function adbpetc()
+{
+  adb push "${1}" /system/etc/;
+}
+
+# === MultiROM File Pusher ===
+function adbpmrom()
+{
+  if [ ! -z "${2}" ]; then
+    adb push "${1}" /sdcard/multirom/${2}/;
+  else
+    adb push "${1}" /sdcard/multirom/;
+  fi;
+}
+function adbpmromenc()
+{
+  adbpmrom ${1} enc;
+}
+
+# === ADB IP Connector ===
+function adbco()
+{
+  echo "";
+  if [ ! -z "$1" ]; then export ADB_IP_ADDRESS="$1"; fi;
+  if [ -z "${ADB_IP_ADDRESS}" ]; then
+    echo " Usage: adbco [ipaddressonlyonce]";
+    echo "";
+    return;
+  fi;
+  export ADB_IP_PORT="5555";
+
+  echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
+  timeout 5 adb connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
+  echo -e "\e[1;36mConnected...\e[0m";
+  timeout 5 adb 'wait-for-devices';
+  echo -e "\e[1;36mGetting root access...\e[0m";
+  timeout 5 adb root;
+  sleep 2;
+  echo -e "\e[1;36mReconnecting...\e[0m";
+  timeout 5 adb connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
+  echo -e "\e[1;36mConnected...\e[0m";
+  timeout 5 adb 'wait-for-devices';
+  echo -e "\e[1;36mMounting as root...\e[0m";
+  timeout 5 adb remount;
+  sleep 1;
+  timeout 5 adb 'wait-for-devices';
+  echo -e "\e[1;36mReady...\e[0m";
+  echo "";
+}
+
+# === Android Partitions Target ===
+function androidpartitionstarget()
+{
+  # Variables
+  local device=${TARGET_PRODUCT#*_};
+  local request=${1};
+  local platform='';
+  local partition='';
+  local target_devices="dora suzu huashan hayabusa mint tsubasa";
+
+  # Autodetect
+  if [ -z "${device}" ]; then
+    device=${KBUILD_DIFFCONFIG%_*};
+  fi;
+  if [ -z "${device}" ]; then
+    device=${ANDROID_DEVICE_TARGET};
+  fi;
+  if [ -z "${device}" ]; then
+    local fullpath=$(pwd);
+    for devicename in ${target_devices}; do
+      if [[ "${fullpath}" =~ "${devicename}" ]]; then
+        device="${devicename}";
+      fi;
+    done;
+  fi;
+  if [ -z "${device}" ]; then
+    >&2 echo '';
+    >&2 printf " Device target [${target_devices}] : ";
+    read device;
+    >&2 echo '';
+    export ANDROID_DEVICE_TARGET=${device};
+  fi;
+
+  # Platform
+  case "${device}" in
+    dora|f8131|suzu|f5121)
+      platform='/dev/block/bootdevice/by-name';;
+    huashan|hayabusa|mint|tsubasa|*)
+      platform='/dev/block/platform/msm_sdcc.1/by-name';;
+  esac;
+
+  # Partition
+  case "${request}" in
+    boot)
+      case "${device}" in
+        dora|f8131)
+          partition='boot';;
+        huashan|hayabusa|mint|tsubasa|*)
+          partition='Kernel';;
+      esac;;
+    fota)
+      partition='FOTAKernel';;
+    recovery)
+      case "${device}" in
+        dora|f8131)
+          partition='recovery';;
+        huashan|hayabusa|mint|tsubasa|*)
+          partition='FOTAKernel';;
+      esac;;
+    *)
+      partition='unknown';;
+  esac;
+
+  # Result
+  echo "${platform}/${partition}";
+}
+
+# === ADB Bootimage Worker ===
+function adbbootdump()
+{
+  local kernel=$(androidpartitionstarget boot);
+  local cmdaddr=$(adb shell od -j 152 -N 4 -tx4 -An ${kernel} \
+                | cut -c 2-9);
+  local cmdsize=$(adb shell od -j 164 -N 4 -tx4 -An ${kernel} \
+                | cut -c 2-9);
+  if [ ! -z "${cmdaddr}" ] && [ $(echo "${cmdaddr}" | wc -l) -eq 1 ] && \
+     [ ! -z "${cmdsize}" ] && [ $(echo "${cmdsize}" | wc -l) -eq 1 ]; then
+    local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
+    adbsu "dd if=${kernel} of=/sdcard/boot.img skip=0 bs=${bootsize} count=1";
+    adb pull /sdcard/boot.img;
+  else
+    adbsu "dd if=${kernel} of=/sdcard/boot.dump";
+    adb pull /sdcard/boot.dump;
+    adbbootcut boot.dump;
+  fi;
+}
+
+# === ADB Bootimage Resizer ===
+function adbbootcut()
+{
+  local cmdaddr=$(od -j 152 -N 4 -tx4 -An ${1} \
+                | cut -c 2-9);
+  local cmdsize=$(od -j 164 -N 4 -tx4 -An ${1} \
+                | cut -c 2-9);
+  local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
+  dd if=${1} of=boot.img skip=0 bs=${bootsize} count=1;
+}
+
+# === ADB TWRP Installer ===
+function adbrecoveryinstall()
+{
+  if [ -z "$1" ] || [ ! -f "$1" ]; then
+    echo "";
+    echo " Usage: adbrecoveryinstall file_path";
+    echo "";
+    return;
+  fi;
+
+  local filename=$(basename $1);
+  adbro;
+  adb shell mkdir -p /sdcard/;
+  adb push "$1" /sdcard/${filename};
+  adb shell "mkdir -p /cache/recovery";
+  adb shell "echo 'install /sdcard/${filename}' > /cache/recovery/command";
+  adb shell 'echo /cache/recovery/command: $(/cache/recovery/command)';
+  adb reboot recovery;
+}
+
+# === ADB File Editor ===
+function adbedit()
+{
+  adbro;
+  path="$1";
+  if [ -z "$path" ]; then
+    path="/system/build.prop";
+  fi;
+  name=$(basename "$path");
+  adb pull "$path";
+  gedit "$name";
+  printf " Ok ? [ENTER] ";
+  read key;
+  adb push "$name" "$path";
+  rm "$name";
+}
+
+# === ADB Binaries Updater ===
+function adbupdate()
+{
+  adb version;
+  sudo rm -f adb;
+  wget -O - https://skia.googlesource.com/skia/+archive/cd048d18e0b81338c1a04b9749a00444597df394/platform_tools/android/bin/linux.tar.gz | tar -zxvf - adb;
+  sudo rm -f /usr/bin/adb;
+  sudo mv adb /usr/bin/adb;
+  sudo chmod +x /usr/bin/adb;
+  adb version;
+}
+
+# === ADB Inputs Reader ===
+function adbinputs()
+{
+  #grep . /sys/class/input/event*/device/name
+  #adbs hexdump -C /dev/input/event7
+  command="cat /proc/bus/input/devices";
+  echo "";
+  echo "adb shell $command";
+  echo "";
+  adb shell "$command";
+}
+
+# === ADB Events Reader ===
+function adbreadevents()
+{
+  if [ -z "$1" ]; then
+    echo "usage: adbreadevents eventNUM";
+    return;
+  fi;
+
+  adb shell od -x /dev/input/$1 \
+   | awk -Wposix '{ if ($7) printf(" Key %4d - State %4d\n", "0x" $7, "0x" $8) }';
+}
+
+# === ADB Huashan Events Reader ===
+alias adbgpio='adbreadevents event11';
+alias adbkeypad='adbreadevents event1';
+alias adbtouchpad='adbreadevents event7';
+
+# === ADB Alsa Reader ===
+function adbalsa()
+{
+  printf "" | tee alsalog;
+  adb shell "cat /proc/asound/card0/id" | tee -a alsalog;
+  for line in $(adb shell find /proc/asound/card0 -name info); do
+    path=$(printf $line | tr -dc 'a-zA-Z0-9/');
+    echo "" | tee -a alsalog;
+    echo "=== $path ===" | tee -a alsalog;
+    adb shell "cat $path" | tee -a alsalog;
+    if [[ "$path" =~ "sub" ]]; then
+      folder=$(dirname "$path");
+      adb shell "cat $folder/hw_params" | tee -a alsalog;
+      adb shell "cat $folder/status" | tee -a alsalog;
+      adb shell "cat $folder/sw_params" | tee -a alsalog;
+    fi;
+  done;
+  adb shell "cat /proc/asound/devices" | tee -a alsalog;
+  adb shell "cat /proc/asound/pcm" | tee -a alsalog;
+  adb shell "cat /proc/asound/timers" | tee -a alsalog;
+}
+
+# === ADB Init Bootchart ===
+function adbbootchart()
+{
+  rm -rf /tmp/android-bootchart/;
+  rm -f ./bootchart.png;
+  printf " Timeout in seconds ? [Enter] ";
+  read timeinput;
+  if [ -z "$timeinput" ]; then timeinput=120; fi;
+  adb shell "echo $timeinput > /data/bootchart/start";
+  printf " Reboot Android ? [Enter] ";
+  adb reboot;
+  read;
+  echo " Waiting for the device to boot...";
+  adb 'wait-for-device';
+  printf " Export Logs now ? [Enter] ";
+  read -t $timeinput;
+  adb shell 'echo 1 > /data/bootchart/stop'
+  adb shell 'rm /data/bootchart/start';
+  sleep 1;
+  ${ANDROID_DEV_DRIVE}/CyanogenMod/system/core/init/grab-bootchart.sh;
+}
+
+# === Sepolicies Extractor ===
+function sepaud()
+{
+  cat $1 | grep -a avc.*denied;
+  cat $1 | grep -a 'does not have a SELinux domain defined';
+  cat $1 | grep -a avc.*denied | audit2allow -p sepolicy;
+}
+
+# === ADB Logcat Reader ===
+function adbl()
+{
+  # Buffer selection
+  local adb_buffer='';
+  case "${1}" in
+    all)    adb_buffer='-b all';;
+    crash)  adb_buffer='-b crash';;
+    events) adb_buffer='-b events';;
+    main)   adb_buffer='-b main';;
+    radio)  adb_buffer='-b radio';;
+    system) adb_buffer='-b system';;
+    help)
+      echo '';
+      echo ' Usage: adbl [all/crash/events/main/radio/system]';
+      echo '';
+      return;;
+  esac;
+
+  # Logs filename
+  local adb_log=${2:-adb.log};
+
+  # Logcat read
+  while [ 1 ]; do
+    cls;
+    printf '' > "${adb_log}";
+
+    # Logs output
+    if [[ "${3}" =~ 'clean' ]]; then
+      adb logcat ${adb_buffer} -v threadtime *:V \
+        | cut -c 32- \
+        | sed -E "s/[0-9]{8}/00000000/g" \
+        | sed -E "s/\[[0-9]*\]/[...]/g" \
+        | tee -a "${adb_log}";
+    else
+      adb logcat ${adb_buffer} -v threadtime *:V \
+        | tee -a "${adb_log}";
+    fi;
+
+    # End of logs
+    echo '';
+    printf 'Press Enter to continue... ';
+    read key;
+  done;
+}
+
+# === ADB Loggers ===
+alias adblr='adbl radio';
+alias adblb='while [ 1 ]; do cls; printf "" >adb.log; adb logcat -v audit2allow *:V | tee -a adb.log;
+             echo ""; printf "Press Enter to continue... "; read key; done';
+alias adblc='adb logcat -c; adbl';
+alias adbk='adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
+alias adbdm='adbro; printf "" >dmesg; adb shell dmesg | tee -a dmesg';
+alias adbkd='printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
+alias adbkl='cls; adbro; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbkld='cls; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbpl='cls; adbro; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbpld='cls; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbse='adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
+alias adbdumpsensors='adb shell dumpsys sensorservice';
+alias adbsel='adbkl; sepaud kmsg';
+alias adblf='adb logcat -v audit2allow';
+alias adblh='adb logcat -b events -b main -b radio | highlight';
+alias adbtrampoline='adb shell "dmesg | grep -i trampoline"';
+function adblcln() { cat ${1} | cut -c 32- | tee ${1}.clean; }
+function adbkcln() { cat ${1} | cut -c 15- | tee ${1}.clean; }
+function adbcl() { filename=$(getine ${1} adb.log);
+                   cat "${filename}" \
+                     | grep -v chatty \
+                     | cut -c ${2:-32}- \
+                     | sed -E "s/[0-9]{8}/00000000/g" \
+                     | sed -E "s/\[[0-9]*\]/[...]/g" \
+                     | tee "${filename}.cut.log"; }
+
+# === ADB Intents ===
+alias adbintents='adb shell dumpsys package r > intents.txt';
+alias adbcamera='adb shell pm enable com.android.camera2/com.android.camera.CameraLauncher; \
+                 adb shell pm enable com.google.android.GoogleCamera/com.android.camera.CameraLauncher; \
+                 adb shell "am start -a android.media.action.IMAGE_CAPTURE"';
+alias adblkl='adb root; adb wait-for-device; adb shell killall zigote; adbl';
+
+# === ADB Crash Debuggers ===
+function adbpk() { pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
+                   adb root; adb 'wait-for-device';
+                   adb logcat -c;
+                   adb shell kill $pid;
+                   adb shell ps | grep mediaserver;
+                   sleep 2; adbl; }
+function adbms() { pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
+                   adb root; adb 'wait-for-device';
+                   adb logcat -c;
+                   adb shell kill $pid;
+                   pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
+                   adb shell strace -p $pid; }
+function adbst()
+{
+  if [ -z "$2" ]; then adb 'wait-for-device'; adb root; adb 'wait-for-device'; fi;
+  adb shell ps | grep $1;
+  pid=$(adb shell ps | grep $1 | awk '{ print $2 }');
+  adb shell strace -p ${pid};
+}
+function adbkp()
+{
+  adb 'wait-for-device'; adb root; adb 'wait-for-device';
+  adb shell ps | grep $1;
+  pid=$(adb shell ps | grep $1 | awk '{ print $2 }');
+  adb shell kill ${pid};
+}
+
+function adblibs() { adb shell grep -air "$1" $(getine $2 /system/lib/); }
+alias ndkstack="ndk-stack -sym ${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols -dump";
+function adbwtch() { adbr; while [ 1 ]; do adb shell cat "$1"; done; }
+alias adbservices='adb shell service list';
+alias adbsl='adb shell ls -l';
+alias adbslz='adb shell ls -lZ';
+alias adbsc='adb shell cat';
+alias adbsg='adb shell getprop';
+function adbsw() { adbro; adb shell "echo $1 > $2"; }
+alias isdone='notify-send "Process execution finished !"';
+function adbgitpf()
+{
+  adbro;
+  local tmpfile=$(mktemp);
+  git diff-tree --no-commit-id --name-status -r $1 >"$tmpfile";
+  while read line; do
+    local status=$(echo "$line" | awk '{ print $1 }');
+    local file_path=$(echo "$line" | awk '{ print $2 }');
+    if [[ "$status" =~ "D" || "$file_path" =~ ".mk" ]]; then
+      continue;
+    fi;
+    adbpf "$file_path";
+  done <$tmpfile;
+  rm -f $tmpfile;
+}
+function adbdu()
+{
+  tmp=$(mktemp);
+  adbro;
+  adbsu 'du /data/ | sort -hr' > $tmp;
+  gedit $tmp;
+}
+
+# === ADB Root Stock ===
+function adbrstock()
+{
+  adb shell su -c 'setprop ro.secure 0; setprop ro.debuggable 1; setprop persist.service.adb.enable 1';
+  adb shell getprop ro.secure;
+}
+
+# === ADB Shell Root ===
+function adbsu()
+{
+  if [ -z $(adb shell type su | grep 'no found') ]; then
+    adbro;
+    adb shell $@;
+  else
+    adb shell su -c "$@";
+  fi;
+}

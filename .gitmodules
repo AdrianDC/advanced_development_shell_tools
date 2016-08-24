@@ -1,0 +1,3 @@
+[submodule "android_mkboot"]
+	path = android_mkboot
+	url = https://github.com/xiaolu/mkbootimg_tools.git
