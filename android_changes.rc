@@ -15,7 +15,7 @@ function repochanges()
   # Diff execution
   echo '';
   echo -n ' Scanning...';
-  repo forall -c "
+  repo forall -j8 -c "
 
      # Filter out projects
      if [ ! -z \$(echo \"\${REPO_PATH}\" | grep -i \"${ignored_projects}\") ]; then
