@@ -35,10 +35,10 @@ function repoinitaosp()
 
   # Repo init
   if [ ! -z "${referenced}" ]; then
-    repo init -u https://android.googlesource.com/platform/manifest -b ${branch} \
+    repo init -u http://android.googlesource.com/platform/manifest -b ${branch} \
               --reference=$(readlink -f ../AOSP);
   else
-    repo init -u https://android.googlesource.com/platform/manifest -b ${branch};
+    repo init -u http://android.googlesource.com/platform/manifest -b ${branch};
   fi;
 
   # Unneeded branches cleanup
@@ -73,10 +73,10 @@ function repoinitcm()
 
   # Repo init
   if [ ! -z "${referenced}" ]; then
-    repo init -u git://github.com/CyanogenMod/android.git -b ${branch} \
+    repo init -u http://github.com/CyanogenMod/android.git -b ${branch} \
               --reference=$(readlink -f ../CyanogenMod);
   else
-    repo init -u git://github.com/CyanogenMod/android.git -b ${branch};
+    repo init -u http://github.com/CyanogenMod/android.git -b ${branch};
   fi;
 
   # Unneeded branches cleanup
