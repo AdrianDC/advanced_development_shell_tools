@@ -15,14 +15,14 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: aosprepoinit android-7.1.0_r{XX} [reference_bool]';
+    echo ' Usage: aosprepoinit android-7.1.0_r{XX} [referenced,clean]';
     echo '';
     return;
   fi;
 
   # Variables
   local release="${1}";
-  local referenced="${2}";
+  local params="${2}";
   local branch="android-7.1.0_r${release}";
 
   # Clean repo manifest
@@ -32,9 +32,13 @@ function repoinitaosp()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
+  if [[ "${params}" =~ 'clean' ]]; then
+    rm -rfv .repo/project-objects;
+    find * -maxdepth 0 -not -name 'out' -print0 | xargs -0 rm -rfv;
+  fi;
 
   # Repo init
-  if [ ! -z "${referenced}" ]; then
+  if [[ "${params}" =~ 'referenced' ]]; then
     repo init -u http://android.googlesource.com/platform/manifest -b ${branch} \
               --reference=$(readlink -f ../AOSP);
   else
@@ -53,14 +57,14 @@ function repoinitcm()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: cmrepoinit {14.0/14.1} [reference_bool]';
+    echo ' Usage: cmrepoinit {14.0/14.1} [referenced,clean]';
     echo '';
     return;
   fi;
 
   # Variables
   local release="${1}";
-  local referenced="${2}";
+  local params="${2}";
   local branch="cm-${release}";
 
   # Clean repo manifest
@@ -70,9 +74,13 @@ function repoinitcm()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
+  if [[ "${params}" =~ 'clean' ]]; then
+    rm -rfv .repo/project-objects;
+    find * -maxdepth 0 -not -name 'out' -print0 | xargs -0 rm -rfv;
+  fi;
 
   # Repo init
-  if [ ! -z "${referenced}" ]; then
+  if [[ "${params}" =~ 'referenced' ]]; then
     repo init -u http://github.com/CyanogenMod/android.git -b ${branch} \
               --reference=$(readlink -f ../CyanogenMod);
   else
