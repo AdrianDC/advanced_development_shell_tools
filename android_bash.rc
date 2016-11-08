@@ -9,7 +9,7 @@ bash_android_dir=$(dirname ${BASH_SOURCE[0]});
 # === Bashs Update ===
 function bashup()
 {
-  source "$bash_android_dir/android_bash.rc";
+  source "${bash_android_dir}/android_bash.rc";
   echo '';
   echo -e ' \e[1;33mandroid_shell_tools by AdrianDC: \e[0;33mFunctions loaded properly\e[0m';
   echo '';
@@ -18,79 +18,72 @@ function bashup()
 # === Bashs Sources ===
 bash_android_sources="\
   \
-  $bash_android_dir/android_functions.rc \
-  $bash_android_dir/android_gerrit.rc \
-  $bash_android_dir/android_git.rc \
-  $bash_android_dir/android_kernel.rc \
-  $bash_android_dir/android_projects.rc \
-  $bash_android_dir/android_repo.rc \
-  $bash_android_dir/android_tools.rc \
+  ${bash_android_dir}/android_functions.rc \
+  ${bash_android_dir}/android_gerrit.rc \
+  ${bash_android_dir}/android_git.rc \
+  ${bash_android_dir}/android_kernel.rc \
+  ${bash_android_dir}/android_projects.rc \
+  ${bash_android_dir}/android_repo.rc \
+  ${bash_android_dir}/android_tools.rc \
   \
-  $bash_android_dir/android_cleaners.rc \
-  $bash_android_dir/android_fetch.rc \
-  $bash_android_dir/android_huashan.rc \
-  $bash_android_dir/android_legacyxperia.rc \
-  $bash_android_dir/android_linux.rc \
-  $bash_android_dir/android_aosp.rc \
-  $bash_android_dir/android_helpers.rc \
-  $bash_android_dir/android_packages.rc \
-  $bash_android_dir/android_release.rc \
-  $bash_android_dir/android_repopicks.rc \
-  $bash_android_dir/android_shortcuts.rc \
-  $bash_android_dir/android_uploads.rc \
+  ${bash_android_dir}/android_cleaners.rc \
+  ${bash_android_dir}/android_fetch.rc \
+  ${bash_android_dir}/android_huashan.rc \
+  ${bash_android_dir}/android_legacyxperia.rc \
+  ${bash_android_dir}/android_linux.rc \
+  ${bash_android_dir}/android_aosp.rc \
+  ${bash_android_dir}/android_helpers.rc \
+  ${bash_android_dir}/android_packages.rc \
+  ${bash_android_dir}/android_release.rc \
+  ${bash_android_dir}/android_repopicks.rc \
+  ${bash_android_dir}/android_shortcuts.rc \
+  ${bash_android_dir}/android_uploads.rc \
   \
-  $bash_android_dir/android_adb.rc \
-  $bash_android_dir/android_colors.rc \
-  $bash_android_dir/android_changelog.rc \
-  $bash_android_dir/android_changes.rc \
-  $bash_android_dir/android_gerritssh.rc \
-  $bash_android_dir/android_temp.rc \
+  ${bash_android_dir}/android_adb.rc \
+  ${bash_android_dir}/android_colors.rc \
+  ${bash_android_dir}/android_changelog.rc \
+  ${bash_android_dir}/android_changes.rc \
+  ${bash_android_dir}/android_gerritssh.rc \
+  ${bash_android_dir}/android_temp.rc \
 ";
 
 # === Bash Importations ===
 for bash_source in $bash_android_sources;
 do
-  source $bash_source;
+  source ${bash_source};
 done;
 
 # === Bashs Helper ===
 function bashhelp()
 {
-  for bash_source in $bash_android_sources;
+  for bash_source in ${bash_android_sources};
   do
-    grep -ai "alias.*=\|function.*)" "$bash_source" | grep -i "$1";
+    grep -ai "alias.*=\|function.*)" "${bash_source}" | grep -i "${1}";
   done;
-}
-
-# === Bashs Editor ===
-function bashe()
-{
-  gedit $bash_android_sources;
-  bashup;
 }
 
 # === Bashs Android 7.0 Editor ===
 function bashea()
 {
-  gedit $bash_android_dir/android_sony_nougat.rc \
-        $bash_android_dir/android_cyanogenmod_14.rc \
-        $bash_android_dir/android_aosp_nougat.rc;
+  gedit ${bash_android_dir}/android_sony_nougat.rc \
+        ${bash_android_dir}/android_cyanogenmod_14.rc \
+        ${bash_android_dir}/android_aosp_nougat.rc;
   bashup;
 }
 
 # === Bashs Functions Editor ===
-function bashes()
+function bashe()
 {
   local files='';
-  for bash_source in $bash_android_sources;
+  for bash_source in ${bash_android_sources};
   do
-    grep -aiq "$1" "$bash_source";
-    if [ $? -eq 0 ]; then
-      files="$files $bash_source";
+    grep -aiq "${1}" "${bash_source}";
+    if [ ${?} -eq 0 ]; then
+      files="${files} ${bash_source}";
     fi;
   done;
-  if [ ! -z "$files" ]; then
-    gedit $files;
+  if [ ! -z "${files}" ]; then
+    gedit ${files};
   fi;
 }
 
@@ -98,13 +91,13 @@ function bashes()
 function bashsync()
 {
   local currentdir=${PWD};
-  cd "$bash_android_dir/";
+  cd "${bash_android_dir}/";
   git fetch origin;
   git reset origin/$(git rev-parse --abbrev-ref HEAD);
   git stash;
   git submodule init;
   git submodule update;
-  cd "$currentdir";
+  cd "${currentdir}/";
   bashup;
 }
 
@@ -112,11 +105,23 @@ function bashsync()
 function bashpush()
 {
   local currentdir=${PWD};
-  cd "$bash_android_dir/";
+  cd "${bash_android_dir}/";
   git add . -Ap;
-  git commit --amend --no-edit;
+  git commit -s;
   git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
-  cd "$currentdir";
+  cd "${currentdir}/";
+  bashup;
+}
+
+# === Bashs Amend ===
+function bashamend()
+{
+  local currentdir=${PWD};
+  cd "${bash_android_dir}/";
+  git add . -Ap;
+  git commit -s --amend --no-edit;
+  git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
+  cd "${currentdir}/";
   bashup;
 }
 
@@ -124,14 +129,14 @@ function bashpush()
 function bashmerge()
 {
   local currentdir=${PWD};
-  cd "$bash_android_dir/";
+  cd "${bash_android_dir}/";
   git fetch origin;
   git reset origin/$(git rev-parse --abbrev-ref HEAD);
   git add -Ap;
   git commit --amend --no-edit;
   git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
   git stash;
-  cd "$currentdir";
+  cd "${currentdir}/";
   bashup;
 }
 
@@ -139,8 +144,8 @@ function bashmerge()
 function bashdiff()
 {
   local currentdir=${PWD};
-  cd "$bash_android_dir/";
+  cd "${bash_android_dir}/";
   git fetch origin;
   git diff HEAD origin/$(git rev-parse --abbrev-ref HEAD);
-  cd "$currentdir";
+  cd "${currentdir}/";
 }
