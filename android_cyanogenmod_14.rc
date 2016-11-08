@@ -19,10 +19,6 @@ function cm14patcher()
   repopick 167464;
 
   # ==========================================================
-  # av: Add support for CameraSource as metadata type
-  repopick 167485;
-
-  # ==========================================================
   # repo root
   croot;
 }
