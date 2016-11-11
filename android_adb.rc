@@ -62,6 +62,7 @@ alias adbmount='adbmountcache; adbmountdata; adbmountmicrosd';
 alias adbumount='adbumountcache; adbumountdata; adbumountmicrosd';
 alias adbemergencycalls='adb shell setprop ril.ecclist';
 alias adbemergencylist='adb shell getprop ril.ecclist';
+alias adbsetradiolog='adb shell setprop persist.radio.adb_log_on';
 
 # === ADB System File Listener / Installer ===
 function adbif()
