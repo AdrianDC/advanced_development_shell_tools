@@ -93,6 +93,13 @@ function repoinitcm()
   cd ../../;
 }
 
+# === Repo Init Symlinks ===
+function repoinitsymlinks()
+{
+  # Snapdraggon LLVM prebuilts
+  ln -sv ../../CyanogenMod/prebuilts/snapdragon-llvm ./prebuilts/snapdragon-llvm;
+}
+
 # === AOSP Syncer ===
 function aospsync()
 {
