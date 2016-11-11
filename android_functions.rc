@@ -488,54 +488,6 @@ function gitbvv() { branch=$(getine $1 $(repogetbranch));
                     git branch -D tempbck;
                     echo ""; gitbv; }
 alias gitrv='git remote -v';
-function gitremoteset()
-{
-  git remote add $1 $2 2> /dev/null;
-  git remote set-url $1 $2;
-  git remote -v | grep $1;
-}
-function gitremoteadaptset()
-{
-  local repository='CyanogenMod';
-  local remote='origin';
-  if [ ! -z "$1" ]; then remote="$1"; fi;
-  if [ ! -z "$2" ]; then repository="$2"; fi;
-  local target=$(git remote -v \
-               | grep -i github \
-               | head -n 1 \
-               | awk '{ print $2 }');
-  if [ -z "$target" ]; then
-    local project=$(git remote -v \
-                 | grep -v -i github \
-                 | head -n 1 \
-                 | awk '{ print $2 }' \
-                 | sed 's/.*\.com\///' \
-                 | sed 's/platform/android/' \
-                 | sed 's/\//_/g');
-    echo $project;
-    target='http://github.com/'$repository'/'$project;
-  fi;
-  echo $target;
-  target=$(echo $target \
-         | sed "s/\(http:\/\/\|https:\/\/\|git:\/\/\)\(.*\)\/[^\/]*\/\(.*\)/http:\/\/\2\/$repository\/\3/");
-  if [ ! -z "$3" ]; then
-    target=$(echo "$target" | sed "s/$3//");
-  fi;
-  gitremoteset $remote $target;
-}
-function gitraa()  { gitremoteadaptset 'AdrianDC' 'AdrianDC' ''; }
-function gitrao()  { gitremoteadaptset 'origin' 'CyanogenMod' ''; }
-function gitraoo() { gitremoteadaptset 'origin' "$1" ''; }
-function gitraot() { gitremoteadaptset 'origin' 'TheMuppets' ''; }
-function gitraos() { gitremoteadaptset 'origin' 'sonyxperiadev'; }
-function gitrat()  { gitremoteadaptset 'twrp' 'TeamWin' ''; }
-function gitrai()  { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
-alias gitraau='git remote set-url AdrianDC';
-alias gitraou='git remote set-url origin';
-function gitrab()  { gitremoteset backup https://github.com/AdrianDC/android_development_backup.git; }
-function gitradb() { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
-function gitrah()  { gitremoteset backup https://github.com/AdrianDC/aosp_development_msm8960.git; }
-function gitras()  { gitremoteset backup https://github.com/AdrianDC/aosp_development_msm8996.git; }
 alias gitch='git checkout';
 alias gitbaclean='git fetch $gitremotedefault; git branch -r | grep $gitremotedefault | sed "s/$gitremotedefault\/\(.*\)/\1/g" | xargs -L 1 git push $gitremotedefault --delete';
 

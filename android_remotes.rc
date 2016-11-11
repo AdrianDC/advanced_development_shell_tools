@@ -1,0 +1,72 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Git Remote Setter ===
+function gitremoteset()
+{
+  # Set, update and display the remote
+  git remote add ${1} ${2} 2> /dev/null;
+  git remote set-url ${1} ${2};
+  git remote -v | grep ${1};
+}
+
+# === Git Remote Adapter ===
+function gitremoteadaptset()
+{
+  # Variables
+  local project;
+  local target;
+  local remote="${1:-origin}";
+  local repository="${2:-CyanogenMod}";
+  local remove_identifier="${3}";
+
+  # Target detection
+  target=$(git remote -v \
+               | grep -v -i backup \
+               | grep -i github \
+               | head -n 1 \
+               | awk '{ print $2 }');
+
+  # Build repository target
+  if [ -z "${target}" ]; then
+    project=$(git remote -v \
+                 | grep -v -i github\|backup \
+                 | head -n 1 \
+                 | awk '{ print $2 }' \
+                 | sed 's/.*\.com\///' \
+                 | sed 's/platform/android/' \
+                 | sed 's/\//_/g');
+    echo ${project};
+    target='http://github.com/'${repository}'/'${project};
+  fi;
+
+  # Parse the target to repository
+  echo ${target};
+  target=$(echo ${target} \
+         | sed "s/\(http:\/\/\|https:\/\/\|git:\/\/\)\(.*\)\/[^\/]*\/\(.*\)/http:\/\/\2\/${repository}\/\3/");
+
+  # Remove additional content
+  if [ ! -z "${remove_identifier}" ]; then
+    target=${target//${remove_identifier}};
+  fi;
+
+  # Set new remote
+  gitremoteset "${remote}" "${target}";
+}
+
+# === Git Remotes Helpers ===
+function gitraa()  { gitremoteadaptset 'AdrianDC' 'AdrianDC' ''; }
+function gitrao()  { gitremoteadaptset 'origin' 'CyanogenMod' ''; }
+function gitraoo() { gitremoteadaptset 'origin' "${1}" ''; }
+function gitraot() { gitremoteadaptset 'origin' 'TheMuppets' ''; }
+function gitraos() { gitremoteadaptset 'origin' 'sonyxperiadev'; }
+function gitrat()  { gitremoteadaptset 'twrp' 'TeamWin' ''; }
+function gitrai()  { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
+function gitrab()  { gitremoteset backup https://github.com/AdrianDC/android_development_backup.git; }
+function gitradb() { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
+function gitrah()  { gitremoteset backup https://github.com/AdrianDC/aosp_development_msm8960.git; }
+function gitras()  { gitremoteset backup https://github.com/AdrianDC/aosp_development_msm8996.git; }
+alias gitraau='git remote set-url AdrianDC';
+alias gitraou='git remote set-url origin';
