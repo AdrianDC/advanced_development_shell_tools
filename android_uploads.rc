@@ -6,53 +6,74 @@
 # === File Uploader ===
 function fileupl()
 {
-  local cwd=$(pwd);
-  if [ -f "$1" ]; then
-    path=$(readlink -f "$1");
-  else
-    path="$1";
-  fi;
-  cdscripts;
-  $(getscripts)/android_server_upload.sh "$path" "$2";
-  cd $cwd;
-}
-function devupl()
-{
-  local filepath="$1";
-  if [ -z "$filepath" ] && [ -f "$PackageResult" ]; then
-    filepath="$PackageResult";
+  # Variables
+  local path="${1}";
+  local target="${2}";
+
+  # File full path
+  if [ -f "${path}" ]; then
+    path=$(readlink -f "${path}");
   fi;
 
-  fileupl "$filepath" "Development";
+  # Upload file to target
+  $(getbash)/android_server_upload.sh "${path}" "${target}";
 }
+
+# === Dev File Uploader ===
+function devupl()
+{
+  # Variables
+  local filepath="${1}";
+  if [ -z "${filepath}" ] && [ -f "${PackageResult}" ]; then
+    filepath="${PackageResult}";
+  fi;
+
+  # File upload to Development
+  fileupl "${filepath}" 'Development';
+}
+
+# === TWRP File Uploader ===
 function twrpbupl()
 {
-  device="$1";
-  name="${device^}";
+  # Variables
+  local device="${1}";
+  local name="${device^}";
+
+  # File uploads to TWRP
   fileupl twrp-3.0.*-r*-boot-${device}.img "${name}/TWRP-Recovery";
   fileupl twrp-3.0.*-r*-fota-${device}.zip "${name}/TWRP-Recovery";
 }
+
+# === Make and upload ===
 function mmmupl()
 {
-  if [ -z "$1" ]; then
-    echo "";
-    echo " Usage: mmmupl packageorpath";
-    echo "";
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: mmmupl packageorpath';
+    echo '';
     return;
   fi;
-  mmmzip "$1";
-  devupl "$PackageResult";
+
+  # Build and upload to Development
+  mmmzip "${1}";
+  devupl "${PackageResult}";
 }
+
+# === Bootimage File Uploader ===
 function devuplboot()
 {
+  # Variables
   local cwd=$(pwd);
+  local device="${1}";
   repor;
 
-  device="$1";
-  mv "./out/target/product/$device/boot.img" "./out/target/product/$device/boot-$device.img";
-  devupl "./out/target/product/$device/boot-$device.img";
+  # Rename and upload
+  mv "./out/target/product/${device}/boot.img" "./out/target/product/${device}/boot-${device}.img";
+  devupl "./out/target/product/${device}/boot-${device}.img";
 
-  cd "$cwd";
+  # Restore path
+  cd "${cwd}/";
 }
 
 # === ROM Device Upload ===
