@@ -20,6 +20,8 @@ function aospnpatcher()
   local git_revs_count;
   local git_revs_count_local;
   local path_branch;
+  local project_github;
+  local project_unfinished;
   for path in \
     bionic \
     bootable/recovery \
@@ -29,6 +31,7 @@ function aospnpatcher()
     external/libnfc-nxp \
     external/toybox \
     frameworks/av \
+    frameworks/base \
     frameworks/opt/telephony \
     hardware/qcom/audio \
     hardware/qcom/display \
@@ -50,32 +53,49 @@ function aospnpatcher()
     croot;
     cd ${path}/;
 
-    # Fetch and compare
-    git fetch https://github.com/AdrianDC/aosp_development_msm8960.git ${path_branch};
-    git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-    git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
-    echo " Differences: ${git_revs_count}";
+    # Targets selection
+    case "${path}" in
+      frameworks\/base)
+        project_github='https://github.com/AdrianDC/platform_frameworks_base.git';;
+      *)
+        project_github='https://github.com/AdrianDC/aosp_development_msm8960.git';;
+    esac;
 
-    # Handle unupdated projects
-    if [ ${git_revs_count_local} -ne 0 ]; then
-      echo '';
-      printf "  > Ignore the newest changes [ENTER] ? ";
-      read key;
-    fi;
+    # Loop until project ready
+    project_unfinished=1;
+    while [ ${project_unfinished} -eq 1 ]; do
+
+      # Fetch and compare
+      git fetch ${project_github} ${path_branch};
+      git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
+      git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
+      git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
+      echo " Differences: ${git_revs_count}";
+
+      # Handle unupdated projects
+      if [ ${git_revs_count_local} -ne 0 ]; then
+        echo '';
+        printf "  > Rebase onto newest changes [y/N] ? ";
+        read key;
+
+        # Rebase the tree
+        if [[ "${key}" == "y" ]] || [[ "${key}" == "Y" ]]; then
+          git cherry-pick --abort;
+          git cherry-pick FETCH_HEAD~${git_revs_count_remote}..FETCH_HEAD;
+          aosp8960pusher;
+        fi;
+
+      # Project is ready, break the loop
+      else
+        project_unfinished=0;
+      fi;
+
+    done;
 
     # Pause if needed
     git reset --hard FETCH_HEAD; git stash -u;
 
   done;
-
-  # ==========================================================
-  # Project frameworks/base
-  echo '';
-  echo " === frameworks/base [frameworks_base] ===";
-  croot;
-  cd frameworks/base/;
-  git fetch https://github.com/AdrianDC/platform_frameworks_base.git frameworks_base;
-  git reset --hard FETCH_HEAD; git stash -u;
 
   # ==========================================================
   # repo root
