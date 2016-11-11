@@ -7,9 +7,9 @@
 function gerritssh()
 {
   # Gerrit Credentials
-  export GerritUsername="Username";
-  export GerritHTTPUsername="Username";
-  export GerritHTTPPassword="abcdefgh12345678";
+  export GerritUsername='Username';
+  export GerritHTTPUsername='Username';
+  export GerritHTTPPassword='abcdefgh12345678';
 
   # Create  ~/.bash_android.gerrit.rc with the exports to override the credentials
   if [ -f ~/.bash_android.gerrit.rc ]; then
@@ -19,15 +19,15 @@ function gerritssh()
   # Configurations
   gerritremote='review.cyanogenmod.org';
   projectgroup='CyanogenMod';
-  if [ ! -z "$3" ]; then gerritremote="$2"; projectgroup="$3"; fi;
-  gerritssh="ssh -p 29418 $GerritUsername@$gerritremote gerrit";
-  projectbranch='cm-13.0';
+  if [ ! -z "${3}" ]; then gerritremote="${2}"; projectgroup="${3}"; fi;
+  gerritssh="ssh -p 29418 ${GerritUsername}@${gerritremote} gerrit";
+  projectbranch='cm-14.1';
   projectbranchmerger=false;
-  projectbranchprimary='cm-13.0';
-  projectbranchsecondary='cm-12.1';
+  projectbranchprimary='cm-14.1';
+  projectbranchsecondary='cm-13.0';
 
   # First Parameter Branch Override
-  if [ ! -z "$1" ]; then projectbranch="$1"; fi;
+  if [ ! -z "${1}" ]; then projectbranch="${1}"; fi;
 
   # Splash Text
   echo '';
@@ -35,147 +35,147 @@ function gerritssh()
 
   # Project Loading
   projectorigin=$(git remote -v | grep origin | tail -n 1);
-  if [ -z "$projectorigin" ]; then
-    projectorigin=$(git remote -v | grep $2 | tail -n 1);
+  if [ -z "${projectorigin}" ]; then
+    projectorigin=$(git remote -v | grep ${2} | tail -n 1);
   fi;
-  projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
   tmpdir=$(mktemp -d);
-  tmpfilestate=$tmpdir/state;
-  tmpfileids=$tmpdir/ids;
-  tmpfileidsfor=$tmpdir/for;
-  tmpfilebranch=$tmpdir/branch;
-  tmpfilenames=$tmpdir/names;
-  tmpfileparents=$tmpdir/parents;
-  tmpfilepatchsets=$tmpdir/ps;
-  tmpfilepatchinfo=$tmpdir/pi;
-  tmpfilepatchmessage=$tmpdir/pm;
-  tmpfilepatchdrafts=$tmpdir/drafts;
-  $gerritssh query --current-patch-set "status:open project:$projectgroup/$projectname branch:$projectbranch" > $tmpfilestate;
-  cat $tmpfilestate | egrep '^\  number' | cut -d' ' -f4- > $tmpfileids;
-  cat $tmpfilestate | egrep '^\  branch' | cut -d' ' -f4- > $tmpfilebranch;
-  cat $tmpfilestate | egrep '^\  subject' | cut -d' ' -f4- > $tmpfilenames;
-  cat $tmpfilestate | egrep '^\ \[' | sed 's/.*\[\(.*\)\].*/\1/' > $tmpfileparents;
-  cat $tmpfilestate | egrep '^\    number' | cut -d' ' -f6- > $tmpfilepatchsets;
-  cat $tmpfilestate | egrep '^\    isDraft' | cut -d' ' -f6- > $tmpfilepatchdrafts;
-  cat $tmpfileids | sort > $tmpfileidsfor;
+  tmpfilestate="${tmpdir}/state";
+  tmpfileids="${tmpdir}/ids";
+  tmpfileidsfor="${tmpdir}/for";
+  tmpfilebranch="${tmpdir}/branch";
+  tmpfilenames="${tmpdir}/names";
+  tmpfileparents="${tmpdir}/parents";
+  tmpfilepatchsets="${tmpdir}/ps";
+  tmpfilepatchinfo="${tmpdir}/pi";
+  tmpfilepatchmessage="${tmpdir}/pm";
+  tmpfilepatchdrafts="${tmpdir}/drafts";
+  ${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} branch:${projectbranch}" > ${tmpfilestate};
+  cat ${tmpfilestate} | egrep '^\  number' | cut -d' ' -f4- > ${tmpfileids};
+  cat ${tmpfilestate} | egrep '^\  branch' | cut -d' ' -f4- > ${tmpfilebranch};
+  cat ${tmpfilestate} | egrep '^\  subject' | cut -d' ' -f4- > ${tmpfilenames};
+  cat ${tmpfilestate} | egrep '^\ \[' | sed 's/.*\[\(.*\)\].*/\1/' > ${tmpfileparents};
+  cat ${tmpfilestate} | egrep '^\    number' | cut -d' ' -f6- > ${tmpfilepatchsets};
+  cat ${tmpfilestate} | egrep '^\    isDraft' | cut -d' ' -f6- > ${tmpfilepatchdrafts};
+  cat ${tmpfileids} | sort > ${tmpfileidsfor};
 
   # Project Connected
   echo -e \\033c;
   clear;
   echo '';
-  echo -e " \e[1;31m\e[4;31mConnected to Gerrit - $projectgroup/$projectname - $projectbranch\e[0m";
+  echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${projectgroup}/${projectname} - ${projectbranch}\e[0m";
   echo '';
   echo -e "    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - CyanogenMod 2015\e[0m ";
   echo -e "      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)\e[0m ";
 
   # Commits Selection
-  for i in $(cat $tmpfileidsfor); do
+  for i in $(cat ${tmpfileidsfor}); do
 
     # Commit Details
     gerritidpos=-1;
     gerritidcount=0;
-    for j in $(cat $tmpfileids); do
+    for j in $(cat ${tmpfileids}); do
       gerritidcount=$((gerritidcount+1));
-      if [[ "$i" == "$j" ]]; then
-        gerritidpos=$gerritidcount;
+      if [[ "${i}" == "${j}" ]]; then
+        gerritidpos=${gerritidcount};
         break;
       fi;
     done;
-    patchbranch=$(sed $gerritidpos'!d' $tmpfilebranch);
-    patchname=$(sed $gerritidpos'!d' $tmpfilenames);
-    patchparent=$(sed $gerritidpos'!d' $tmpfileparents);
-    patchset=$(sed $gerritidpos'!d' $tmpfilepatchsets);
-    patchdraft=$(sed $gerritidpos'!d' $tmpfilepatchdrafts);
+    patchbranch=$(sed ${gerritidpos}'!d' ${tmpfilebranch});
+    patchname=$(sed ${gerritidpos}'!d' ${tmpfilenames});
+    patchparent=$(sed ${gerritidpos}'!d' ${tmpfileparents});
+    patchset=$(sed ${gerritidpos}'!d' ${tmpfilepatchsets});
+    patchdraft=$(sed ${gerritidpos}'!d' ${tmpfilepatchdrafts});
 
     # Commit Work
     echo '';
-    echo -e "  \e[1;34m\e[4;34mChange $i :\e[0m";
-    echo "    \"$patchname\"";
+    echo -e "  \e[1;34m\e[4;34mChange ${i} :\e[0m";
+    echo "    \"${patchname}\"";
     echo '';
-    printf "    \e[1;32m> Work on commit $patchbranch/$i (y/N/q) ?\e[0m ";
+    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/q) ?\e[0m ";
     read key;
-    if [[ "$key" == 'q' || "$key" == 'q' ]]; then
+    if [[ "${key}" == 'q' || "${key}" == 'q' ]]; then
       break;
-    elif [[ "$key" != 'y' && "$key" != 'Y' ]]; then
+    elif [[ "${key}" != 'y' && "${key}" != 'Y' ]]; then
       continue;
     fi;
 
     # Read remote current HEAD
-    git fetch "https://$gerritremote/$projectgroup/$projectname" "$projectbranch" 2>/dev/null;  
+    git fetch "https://${gerritremote}/${projectgroup}/${projectname}" "${projectbranch}" 2>/dev/null;  
     remotecurrenthead=$(git rev-parse FETCH_HEAD);
 
     # Commit Rebase
-    if [[ ! "$remotecurrenthead" == "$patchparent" ]]; then
-      printf "      \e[1;31m> Rebase on HEAD  \e[1;37m$i/$patchset\e[1;31m (y/N) ?\e[0m ";
+    if [[ ! "${remotecurrenthead}" == "${patchparent}" ]]; then
+      printf "      \e[1;31m> Rebase on HEAD  \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
       read key;
-      if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
-        $gerritssh review --rebase --project $projectgroup/$projectname $i,$patchset;
-        patchset=$($gerritssh query --current-patch-set "status:open project:$projectgroup/$projectname change:$i" | egrep '^\    number' | cut -d' ' -f6-);
+      if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
+        ${gerritssh} review --rebase --project ${projectgroup}/${projectname} ${i},${patchset};
+        patchset=$(${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} change:${i}" | egrep '^\    number' | cut -d' ' -f6-);
       fi;
     fi;
 
     # Commit Draft Publish
-    if [[ ! "$patchdraft" == 'false' ]]; then
-      printf "      \e[1;31m> Publish draft   \e[1;37m$i/$patchset\e[1;31m (y/N) ?\e[0m "; read key;
-      if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
-        $gerritssh review --publish --project $projectgroup/$projectname $i,$patchset;
+    if [[ ! "${patchdraft}" == 'false' ]]; then
+      printf "      \e[1;31m> Publish draft   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m "; read key;
+      if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
+        ${gerritssh} review --publish --project ${projectgroup}/${projectname} ${i},${patchset};
       fi;
     fi;
 
     # Commit Branch Merger
-    if [[ ! "$projectbranchmerger" == 'false' ]]; then
+    if [[ ! "${projectbranchmerger}" == 'false' ]]; then
 
       # Commit Cherry-Pick Branch
       projectbranchcp='';
-      if [[ "$projectbranch" == "$projectbranchprimary" ]]; then
-        projectbranchcp="$projectbranchsecondary";
-      elif [[ "$projectbranch" == "$projectbranchsecondary" ]]; then
-        projectbranchcp="$projectbranchprimary";
+      if [[ "${projectbranch}" == "${projectbranchprimary}" ]]; then
+        projectbranchcp="${projectbranchsecondary}";
+      elif [[ "${projectbranch}" == "${projectbranchsecondary}" ]]; then
+        projectbranchcp="${projectbranchprimary}";
       fi;
 
       # Commit Cherry-Pick Commit
-      if [ ! -z "$projectbranchcp" ]; then
-        printf "      \e[1;31m> Copy to $projectbranchcp \e[1;37m$i/$patchset\e[1;31m (y/N) ?\e[0m "; read key;
-        if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
+      if [ ! -z "${projectbranchcp}" ]; then
+        printf "      \e[1;31m> Copy to ${projectbranchcp} \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m "; read key;
+        if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
 
           # Get Commit Details
-          $gerritssh query --current-patch-set "status:open project:$projectgroup/$projectname change:$i" > $tmpfilepatchinfo;
-          patchcommit=$(cat $tmpfilepatchinfo | egrep '^\    revision' | cut -d' ' -f6-);
-          cat $tmpfilepatchinfo | sed -n '/commitMessage/,/createdOn/ p' | sed '$d' | cut -c 18- > $tmpfilepatchmessage;
-          echo "(cherry picked from commit $patchcommit)" >> $tmpfilepatchmessage;
-          patchmessage=$(cat $tmpfilepatchmessage | sed 's/\"/\\\"/g' | sed ':begin;$!N;s/\n/\\n/;tbegin');
-          echo "{\"destination\":\"$projectbranchcp\",\"message\":\"${patchmessage}\"}" > $tmpfilepatchmessage;
+          ${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} change:${i}" > ${tmpfilepatchinfo};
+          patchcommit=$(cat ${tmpfilepatchinfo} | egrep '^\    revision' | cut -d' ' -f6-);
+          cat ${tmpfilepatchinfo} | sed -n '/commitMessage/,/createdOn/ p' | sed '${d}' | cut -c 18- > ${tmpfilepatchmessage};
+          echo "(cherry picked from commit ${patchcommit})" >> ${tmpfilepatchmessage};
+          patchmessage=$(cat ${tmpfilepatchmessage} | sed 's/\"/\\\"/g' | sed ':begin;$!N;s/\n/\\n/;tbegin');
+          echo "{\"destination\":\"${projectbranchcp}\",\"message\":\"${patchmessage}\"}" > ${tmpfilepatchmessage};
 
           # Post Cherry-Pick Request
           curl -X POST --digest \
                -H "Content-Type: application/json" \
-               --data @$tmpfilepatchmessage \
-               --user $GerritHTTPUsername:$GerritHTTPPassword \
-               http://review.cyanogenmod.org/a/changes/$i/revisions/$patchcommit/cherrypick;
+               --data @${tmpfilepatchmessage} \
+               --user ${GerritHTTPUsername}:${GerritHTTPPassword} \
+               http://review.cyanogenmod.org/a/changes/${i}/revisions/${patchcommit}/cherrypick;
         fi;
       fi;
     fi;
 
     # Commit Review
-    printf "      \e[1;31m> Review +1/+2    \e[1;37m$i/$patchset\e[1;31m (y/N) ?\e[0m "; read key;
-    if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
-      $gerritssh review --verified 1 --code-review 2 --project $projectgroup/$projectname $i,$patchset;
+    printf "      \e[1;31m> Review +1/+2    \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m "; read key;
+    if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
+      ${gerritssh} review --verified 1 --code-review 2 --project ${projectgroup}/${projectname} ${i},${patchset};
     fi;
 
     # Commit Submission
-    printf "      \e[1;31m> Submit commit   \e[1;37m$i/$patchset\e[1;31m (y/N) ?\e[0m "; read key;
-    if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
-      $gerritssh review --submit --project $projectgroup/$projectname $i,$patchset;
+    printf "      \e[1;31m> Submit commit   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m "; read key;
+    if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
+      ${gerritssh} review --submit --project ${projectgroup}/${projectname} ${i},${patchset};
     fi;
 
     # Commit Finished
-    echo -e "    \e[1;32m> Done working on $i\e[0m ";
+    echo -e "    \e[1;32m> Done working on ${i}\e[0m ";
 
   # End of Project
   done;
-  rm -rf "$tmpdir";
+  rm -rf "${tmpdir}";
   echo '';
-  echo -e "  \e[1;37m\e[4;37mDone with $projectgroup/$projectname - $projectbranch\e[0m ";
+  echo -e "  \e[1;37m\e[4;37mDone with ${projectgroup}/${projectname} - ${projectbranch}\e[0m ";
   echo '';
 }
 
