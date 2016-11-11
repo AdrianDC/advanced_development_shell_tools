@@ -45,7 +45,6 @@ bash_android_sources="\
   ${bash_android_dir}/android_changelog.rc \
   ${bash_android_dir}/android_changes.rc \
   ${bash_android_dir}/android_gerritssh.rc \
-  ${bash_android_dir}/android_temp.rc \
 ";
 
 # === Bash Importations ===
