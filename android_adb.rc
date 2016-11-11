@@ -624,13 +624,33 @@ function adbms() { pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
                    adb shell kill $pid;
                    pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
                    adb shell strace -p $pid; }
+
+# === ADB Strace Helper ===
 function adbst()
 {
-  if [ -z "$2" ]; then adb 'wait-for-device'; adb root; adb 'wait-for-device'; fi;
-  adb shell ps | grep $1;
-  pid=$(adb shell ps | grep $1 | awk '{ print $2 }');
-  adb shell strace -p ${pid};
+  # Usage
+  if [ -z "${1}" ]; then
+    echo "";
+    echo " Usage: adbst process_name [bool_get_root]";
+    echo "";
+    return;
+  fi;
+
+  # Get adb root access
+  if [ -z "${2}" ]; then
+    adb 'wait-for-device';
+    adb root;
+    adb 'wait-for-device';
+  fi;
+
+  # Get process identifier
+  local pid=$(adb shell ps | grep "${1}" | awk '{ print $2 }');
+  adb shell ps | grep "${1}";
+
+  # Strace the process
+  adb shell strace -s 4096 -p ${pid};
 }
+
 function adbkp()
 {
   adb 'wait-for-device'; adb root; adb 'wait-for-device';
