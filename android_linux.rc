@@ -236,3 +236,18 @@ function fileschemesorter()
   rm -f ${file_temp_2};
   rm -f ${file_temp_3};
 }
+
+# === Linux Hibernation ===
+function gohibernate()
+{
+  sudo swapon -a;
+  sudo swapon -s;
+  sudo pm-hibernate;
+}
+
+# === USB MTP Mounts ===
+function mtpmountdisable()
+{
+  gsettings set org.cinnamon.desktop.media-handling automount-open false;
+  gsettings set org.cinnamon.desktop.media-handling automount false;
+}

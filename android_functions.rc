@@ -55,7 +55,6 @@ function repothis()
     fi;';
 }
 
-
 function repoupdate()
 {
   repo --version;
@@ -195,24 +194,6 @@ function glc() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --inc
 function glj() { GREP_COLORS='fn=1;1' grep --include \*.java -anr '.\{100,\}' .; }
 function gle() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h  --include \*.java -anr '.* $' .; }
 
-# === ZIP Signer ===
-function zipsign()
-{
-  local cwd=$(pwd);
-  if [ ! -z "$1" ]; then  
-    for file in $@; do
-      path="$(readlink -f $file)";
-      cdscripts;
-      $(getscripts)/android_sign_zip.sh "$path" "inline";
-      cd $cwd;
-    done;
-  else
-    cdscripts;
-    $(getscripts)/android_sign_zip.sh "" "inline";
-    cd $cwd;
-  fi;
-}
-
 # === Updates Helpers ===
 function twrpbluekernel()
 {
@@ -265,31 +246,6 @@ function rmempty()
   fi;
 }
 
-# === Zip AutoPackAndSign ===
-function autozipsign()
-{
-  name=$(echo "$1" | sed 's/\///g');
-  rm $name.zip;
-  cd $name/;
-  rm -f META-INF/CERT.RSA;
-  rm -f META-INF/CERT.SF;
-  rm -f META-INF/MANIFEST.MF;
-  rm -rf META-INF/com/android;
-  zip ../$name.zip * -r;
-  cd ..;
-  if [ -z "$2" ]; then
-    zipsign $name.zip;
-  fi;
-  adb sideload $name.zip
-}
-
-# === Log Cleaner ===
-function logcl() { cat $1 | sed 's/0x[[:xdigit:]]\{8,8\}/0xaddress/g' | tr -d '\015' > $1.clean; }
-
-# === ADB Tests ===
-function adbfb() { adbr; adbs mv $1 $1.temp; }
-function adbfr() { adbr; adbs mv $1.temp $1; }
-
 # === Kill and Log Debug ===
 function adblk()
 {
@@ -308,26 +264,10 @@ function adblk()
   adb logcat | tee -a adb.log;
 }
 
-# === Backtracing shortcuts ===
-alias adebug='repor; repos; adbr; \
-              adb shell setprop debug.db.uid 100000; \
-              adb forward tcp:5039 tcp:5039; \
-              gdbclient /system/bin/mediaserver :5039 1141';
-#alias ad2li='addr2line -f -e /media/adriandc/AndroidDev/CM-13.0/out/target/product/huashan/symbols/system/lib/libc.so';
-
 # === WIP shortcuts ===
 function meldk() { printf " Subpath : "; read a; meld ./$a $1/$a; }
 alias permme='UserName="$(whoami)"; sudo chown -cRv $UserName:$UserName ./';
-alias touchall='find . -mindepth 1 -exec touch {} \;';
-alias dlog='path=$(xdg-user-dir DESKTOP); xargs log.$(date).log';
 function dupl() { cat $1 | sort | uniq -cd; }
-alias lsmk='ls -1 | sed "s/\(.*\)/    utils\/\1 \\\/"';
-function gitkdev()
-{
-  chromium-browser https://github.com/CyanogenMod/android_kernel_sony_msm/blob/cm-13.0/$1;
-  chromium-browser https://github.com/CyanogenMod/android_kernel_google_msm/blob/cm-13.0/$1;
-  chromium-browser https://github.com/CyanogenMod/android_kernel_sony_msm8960t/blob/cm-12.1/$1;
-}
 
 function meldt() { meld $1 ../msm8960t/$1; }
 function adbkillsetup() { adb root; adb wait-for-device; while [ 1 ]; do adb shell kill $(adb shell ps | grep setup | awk '{ print $2 }'); done; }
@@ -354,28 +294,6 @@ alias gitcauthor='git commit -S --amend --no-edit --author="$(git config --globa
 alias gitcid='scp -p -P 29418 $gituserdefault@review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
 alias gitcidh='scp -p http://review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
 alias gitrevert='git revert -S --no-edit';
-
-# === Git commit with infos ===
-function gitcci()
-{
-  clear; url=$1;
-  if [[ $url =~ 'github' && ! $url =~ '.patch' ]]; then url='$url.patch'; fi;
-  file=$(mktemp);
-  curl -s $url 2>nul >"$file";
-
-  local line_subject=$(($(sed -n "1,/Subject:/=" "$file" | tail -1)+1));
-  local line_messageend=$(($(sed -n "1,/---/=" "$file" | tail -1)-1));
-  local subject=$(grep "Subject: " "$file" | tail -1 | cut -c10-);
-
-  cat $file;
-  git add -Ap;
-  git commit \
-    -m "$subject"$'\n'"$(sed -n "${line_subject},${line_messageend}p" "$file")" \
-    --date="$(grep "Date:" "$file" | tail -1) \
-    --author="$(grep "Author:" "$file" | tail -1);
-
-  rm "$file";
-}
 
 # === Git pushing ===
 function gitpu()
@@ -714,97 +632,3 @@ function gitmerges()
     fi;
   done;
 }
-
-# === Git repos / folders comparator ===
-function gitlodc()
-{
-  dirlog=${3:-.};
-  if [ -z "$2" ]; then
-    echo " Usage: gitlodc repo_one_path repo_two_path sub_folder [sort]";
-    return;
-  fi;
-
-  dircur=$(pwd);
-  tmpdir=$(mktemp -d);
-  cd "$1";
-  gitlod "$dirlog" | cut -d' ' -f2- > "$tmpdir/gitdir1.log";
-  if [ -z "$4" ]; then
-    sort "$tmpdir/gitdir1.log" -o "$tmpdir/gitdir1.log";
-  fi;
-  cd "$2";
-  gitlod "$dirlog" | cut -d' ' -f2- > "$tmpdir/gitdir2.log";
-  if [ -z "$4" ]; then
-    sort "$tmpdir/gitdir2.log" -o "$tmpdir/gitdir2.log";
-  fi;
-  meld "$tmpdir/gitdir1.log" "$tmpdir/gitdir2.log";
-  rm -rf "$tmpdir";
-  cd "$dircur";
-}
-
-# === Git killers ===
-function gitonebranch()
-{
-  git fetch AdrianDC;
-  git fetch AdrianDC refs/heads/*:refs/heads/*;
-  git fetch AdrianDC refs/tags/*:refs/tags/*;
-  git branch -r | sed 's/AdrianDC\/\(.*\)/\1/' \
-                | grep -v "HEAD" \
-                | grep -v $(git rev-parse --abbrev-ref HEAD) \
-                | xargs -I {} sh -c 'printf " Removing branch {} : "; git push AdrianDC :{};';
-  git tag -l | xargs -I {} sh -c 'printf " Removing tag {} : "; git push AdrianDC :{}; printf "  "; git tag -d {};';
-}
-
-# === Compilations ===
-alias kernelcfg='make ARCH=arm CROSS_COMPILE=arm-linux-androideabi- cm_viskan_huashan_defconfig; \
-                 cp -fv ./.config ./arch/arm/configs/cm_viskan_huashan_defconfig; rm -f ./.config';
-alias kernelcln='rm ';
-
-# === Linux Commands ===
-function gohibernate() { \
-                         sudo swapon -a; \
-                         sudo swapon -s; \
-                         sudo pm-hibernate; \
-                       }
-
-# === Linux Functions ===
-function mtpmountdisable()
-{
-  gsettings set org.cinnamon.desktop.media-handling automount-open false;
-  gsettings set org.cinnamon.desktop.media-handling automount false;
-}
-
-# === Debug builds ===
-function kernelmassbuilder()
-{
-  CurHead=3bb6504b937f9cd4828a78c45c0194752f67d37e;
-  Counter=760;
-
-  while [ $Counter -ge 0 ]; do
-    echo $Counter
-    git reset --hard $CurHead~$Counter;
-    kerzip $Counter;
-    Counter=$((Counter - 10));
-  done;
-}
-
-# === BACKUP : Git patchs ===
-function gitacp()
-{
-  clear; url=$1; echo $url;
-  #url="http://kernel.opensuse.org/cgit/kernel/patch/?id=620e5050827008ab207a8dfcc44cb79f07f1942c";
-  if [[ ! $url =~ '.patch' ]]; then url='$url.patch'; fi;
-  curl -s $url 2>nul > /tmp/bash_android_tmp.patch;
-  git apply --stat "/tmp/bash_android_tmp.patch";
-  git am --abort;
-  git am -3 "/tmp/bash_android_tmp.patch";
-}
-
-# === BACKUP : gerrit-cherry-pick ===
-alias gerrit-cherry-pick='if ! hash gerrit-cherry-pick 2>/dev/null; then \
-                            curl -Lo ~/bin/gerrit-cherry-pick http://review.cyanogenmod.org/tools/bin/gerrit-cherry-pick; \
-                            chmod +x ~/bin/gerrit-cherry-pick; \
-                          fi; \
-                          gerrit-cherry-pick';
-
-# find . -type f | cut -c 2- | xargs adb shell ls -l
-

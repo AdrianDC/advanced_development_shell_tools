@@ -150,3 +150,21 @@ function repogetbranch()
   # Output result
   echo "${branch}";
 }
+
+# === Git One Branch Keeper ===
+function gitonebranch()
+{
+  # Fetch remotes
+  git fetch AdrianDC;
+  git fetch AdrianDC refs/heads/*:refs/heads/*;
+  git fetch AdrianDC refs/tags/*:refs/tags/*;
+
+  # Remove branches
+  git branch -r | sed 's/AdrianDC\/\(.*\)/\1/' \
+                | grep -v "HEAD" \
+                | grep -v $(git rev-parse --abbrev-ref HEAD) \
+                | xargs -I {} sh -c 'printf " Removing branch {} : "; git push AdrianDC :{};';
+
+  # Remove tags
+  git tag -l | xargs -I {} sh -c 'printf " Removing tag {} : "; git push AdrianDC :{}; printf "  "; git tag -d {};';
+}
