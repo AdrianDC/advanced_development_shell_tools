@@ -20,7 +20,7 @@ function repos()
 {
   local currentdir=${PWD}; repor;
   if [ -f ./build/envsetup.sh ]; then
-    local device=$(getine "$1" "huashan");
+    local device=${1:-huashan};
     source ./build/envsetup.sh; croot;
     breakfast $device;
   else
@@ -34,7 +34,7 @@ function reposaosp()
 {
   local currentdir=${PWD}; repor;
   if [ -f ./build/envsetup.sh ]; then
-    local device=$(getine "$1" "huashan");
+    local device=${1:-huashan};
     source ./build/envsetup.sh; croot;
     lunch aosp_${device}-userdebug;
   else

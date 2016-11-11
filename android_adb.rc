@@ -670,7 +670,7 @@ function adbkp()
   adb shell kill ${pid};
 }
 
-function adblibs() { adb shell grep -air "$1" $(getine $2 /system/lib/); }
+function adblibs() { adb shell grep -air "${1}" ${2:-/system/lib/}; }
 alias ndkstack="ndk-stack -sym ${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols -dump";
 function adbwtch() { adbr; while [ 1 ]; do adb shell cat "$1"; done; }
 alias adbservices='adb shell service list';

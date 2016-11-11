@@ -16,7 +16,7 @@ function gitpushreview()
     projectorigin=$(git remote -v | grep $2 | tail -n 1);
   fi;
   projectname=$(echo "$projectorigin" | cut -f 2 | sed 's/.*\/\([^.]*\).* .*/\1/');
-  command="git push $projectpath/$projectname HEAD:refs/$(getine $3 for)/$(getine $4 $(repogetbranch))";
+  command="git push $projectpath/$projectname HEAD:refs/${3:-for}/${4:-$(repogetbranch)}";
   echo '';
   echo " $command";
   printf '  > Proceed with review upload (y/N) ? ';
@@ -45,7 +45,7 @@ function gitpushbypassreview()
     projectorigin=$(git remote -v | grep $2 | tail -n 1);
   fi;
   projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
-  command="git push $projectpath/$projectname HEAD:refs/$(getine $3 for)/$(getine $4 $(repogetbranch))";
+  command="git push $projectpath/$projectname HEAD:refs/${3:-for}/${4:-$(repogetbranch)}";
   echo "";
   echo " $command";
   $command;
@@ -60,7 +60,7 @@ function gitpushdrafts()
     projectorigin=$(git remote -v | grep "$2.*//" | tail -n 1);
   fi;
    projectname=$(echo "$projectorigin" | cut -f 2 | sed "s/.*\/\/[^\/]*\/\(.*\) .*/\1/");
-  command="git push $projectpath/$projectname HEAD:refs/drafts/$(getine $3 $(repogetbranch))";
+  command="git push $projectpath/$projectname HEAD:refs/drafts/${3:-$(repogetbranch)}";
   echo ""; echo " $command"; printf "  > Proceed with review upload (y/N) ? "; read key;
   if [[ "$key" == "y" || "$key" == "Y" ]]; then
     echo "";

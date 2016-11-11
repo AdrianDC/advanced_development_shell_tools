@@ -120,7 +120,7 @@ function bashamend()
   local currentdir=${PWD};
   cd "${bash_android_dir}/";
   git add . -Ap;
-  git commit -s --amend --no-edit;
+  git commit -s --amend;
   git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
   cd "${currentdir}/";
   bashup;

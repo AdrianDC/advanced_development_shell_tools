@@ -6,16 +6,16 @@
 # === Git Fetch Reset Assets ===
 function gitfetchtreset()
 {
-  git fetch $(getine $1 $gitremotedefault) $(getine $2 $(repogetbranch));
+  git fetch ${1:-$gitremotedefault} ${2:-$(repogetbranch)};
   git reset FETCH_HEAD --hard;
 }
 # === Git Fetch Checkout Assets ===
 function gitfetchcheckout()
 {
-  remote=$(getine $1 $gitremotedefault);
-  branch=$(getine $2 $(repogetbranch));
-  git fetch $remote $branch;
-  git checkout $remote/$branch;
+  remote=${1:-$gitremotedefault};
+  branch=${2:-$(repogetbranch)};
+  git fetch ${remote} ${branch};
+  git checkout ${remote}/${branch};
 }
 
 # === Git Fetch Shortcuts ===
@@ -40,6 +40,6 @@ alias gitfbr='gitfetchtreset backup';
 alias gitfsr='gitfetchtreset source';
 alias gitfgc='gitfetchcheckout github';
 alias gitfard='gitfetchtreset ADC';
-function gitfdr() { git fetch "$1"; git reset --hard FETCH_HEAD; }
+function gitfdr() { git fetch "${1}"; git reset --hard FETCH_HEAD; }
 function gitfkl() { git fetch git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git linux-3.4.y; }
 
