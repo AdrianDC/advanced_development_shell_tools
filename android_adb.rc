@@ -564,8 +564,8 @@ function adbl()
         | cut -c 32- \
         | sed -E "s/[0-9]{8}/00000000/g" \
         | sed -E "s/\[[0-9]*\]/[...]/g" \
-        | sed -E "s/@[0-9a-f]{6-7}/@......./g" \
-        | sed -E "s/\{[0-9a-f]{6-7}\}/{.......}/g" \
+        | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
+        | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
         | tee -a "${adb_log}";
     else
       adb logcat ${adb_buffer} -v threadtime *:V \
@@ -589,8 +589,8 @@ function adbcl()
       | cut -c ${2:-32}- \
       | sed -E "s/[0-9]{8}/00000000/g" \
       | sed -E "s/\[[0-9]*\]/[...]/g" \
-      | sed -E "s/@[0-9a-f]{6-7}/@......./g" \
-      | sed -E "s/\{[0-9a-f]{6-7}\}/{.......}/g" \
+      | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
+      | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
       | tee "${filename}.cut.log";
 }
 
