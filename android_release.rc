@@ -164,10 +164,15 @@ function romautorelease()
   # Upload the result and notify
   pushbrom "${rom_device}" "${rom_tag}";
   if [[ ! "${rom_params}" =~ 'local' ]]; then
-    gnome-terminal -x bash -c "\
-        source $(getbash)/android_bash.rc; \
+    if [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
+      gnome-terminal -x bash -c "\
+        source $(getbash)/android_bash.rc;\
         devuplrom \"${rom_device}\" \"${rom_target}\"; \
         pushb \"${rom_tag} for ${rom_device} uploaded\"";
+    else
+      devuplrom "${rom_device}" "${rom_target}";
+      pushb "${rom_tag} for ${rom_device} uploaded";
+    fi;
   fi;
 
   # Wipe product output if requested
