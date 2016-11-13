@@ -168,3 +168,173 @@ function gitonebranch()
   # Remove tags
   git tag -l | xargs -I {} sh -c 'printf " Removing tag {} : "; git push AdrianDC :{}; printf "  "; git tag -d {};';
 }
+# === Git Stash Helpers ===
+alias gits='git stash';
+alias gitsp='git stash -p';
+alias gitsu='git stash -u';
+alias gitspop='git stash pop';
+
+# === Git Diff Helpers ===
+function gitdi()
+{
+  # Show unmerged diffs
+  git diff --name-status;
+  git ls-files --others --exclude-standard | awk '{print "U       " $0}';
+}
+function gitdfs()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitdfs sha1commit';
+    echo '';
+    return;
+  fi;
+
+  # Diff commits
+  git diff-tree --no-commit-id --name-status -r ${1};
+}
+function gitdf()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitdf sha1commit filepath';
+    echo '';
+    return;
+  fi;
+
+  # Diff commits with paths
+  git diff ${1}^:${2} ${1}:${2};
+}
+
+# === Git Log Helpers ===
+alias gitlo='git log --pretty=oneline';
+alias gitlod='git log --pretty=oneline --';
+alias gitloo='git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --';
+function gitlos()
+{
+  # Variables
+  local cnt=${2:-30};
+
+  # Search related commits
+  echo '';
+  echo -e " \e[1;37mSearching for ${1} in last ${cnt} commits...\e[0m";
+  echo '';
+  for sha1 in $(git log --max-count=${cnt} --format=format:%H -- .); do
+    if [ ! -z "$(git show ${sha1} | grep -i "${1}")" ]; then
+      git show --name-only --oneline ${sha1};
+      echo '';
+    fi;
+  done;
+}
+
+# === Git Show Helpers ===
+alias gitshow='git show --name-status';
+alias gitshf='git show --pretty=full';
+
+# === Git Add Helpers ===
+alias gitap='git add -p';
+alias gitaa='git add . -Av';
+function gite() { gedit ${1}; printf ' Done ? [Enter] '; read; git add ${1}; }
+
+# === Git Branch Helpers ===
+alias gitbd='git branch -D';
+alias gitbv='git fetch ${gitreviewdefault} $(git rev-parse --abbrev-ref HEAD); git branch -vv';
+
+# === Git Checkout Helpers ===
+alias gitch='git checkout';
+
+# === Git Cherry-Pick Helpers ===
+alias gitcp='git cherry-pick';
+alias gitcpc='git reset; git cherry-pick --continue';
+function gitcpf() { git fetch ${1} ${2}; git cherry-pick FETCH_HEAD; }
+function gitcpr() { git show ${1} --no-color | sed "s/${2}/${3}/g" | patch; }
+
+# === Git Commits Helpers ===
+alias gitc='git commit -S';
+alias gitcs='git commit -S -s';
+alias gitca='git commit -S --amend';
+alias gitcae='git commit -S --amend --no-edit';
+alias gitcauthor='git commit -S --amend --no-edit --author="$(git config --global --get user.name) <$(git config --global --get user.email)>"';
+alias gitcid='scp -p -P 29418 $gituserdefault@review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
+alias gitcidh='scp -p http://review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
+alias gitrevert='git revert -S --no-edit';
+alias gitfix='rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp';
+
+# === Git Push Helpers ===
+alias gitpf='git push -f';
+
+# === Git Rebase Helpers ===
+alias gitra='git rebase --abort';
+alias gitrc='git rebase --continue';
+alias gitre='git rebase --edit-todo';
+alias gitrs='git rebase --skip';
+function gitrf() { git rebase ${1}^ -i; }
+function gitr() { git rebase HEAD~${1:-5} -i; }
+function gitrfedit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase ${1} -i; }
+function gitredit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase HEAD~${1:-5} -i; }
+
+# === Git Remote Helpers ===
+alias gitrv='git remote -v';
+
+# === Git Reset Helpers ===
+alias gitrh='git reset FETCH_HEAD --hard';
+alias githd='git reset HEAD --hard';
+alias gitcl='git reset HEAD --hard; git stash -u';
+alias gitro='git reset HEAD^ --hard';
+alias gitsl='git reset HEAD^; gitap; gitcae';
+alias gitrl='git revert HEAD -n; git commit -m "Revert"; git reset HEAD^; git add -p';
+alias gitri='git reset HEAD^';
+alias gitrt='git reset --hard';
+
+# === Git Config Helpers ===
+alias gitrerere='git config --global rerere.enabled';
+alias gitdiffpermhide='git config core.filemode false';
+alias gitdiffpermshow='git config core.filemode true';
+alias gpglist='gpg --list-secret-keys --keyid-format LONG';
+alias gpgsilent='echo "no-tty" >> ~/.gnupg/gpg.conf';
+alias gpgenable='git config --global commit.gpgsign true';
+alias gpgdisable='git config --global commit.gpgsign false';
+alias gpgsigning='git config --global user.signingkey';
+alias gitshowsg='git config --global alias.logs "log --show-signature"';
+alias gitpwstore='git config --global credential.helper store';
+alias githi='git update-index --assume-unchanged';
+alias gitsh='git update-index --no-assume-unchanged';
+
+# === Git MergeTool Helpers ===
+alias gitmt='git mergetool';
+function gitme()
+{
+  # Read next unmerged file
+  local path=$(timeout 1 git mergetool 2>/dev/null \
+             | head -n 2 \
+             | tail -1);
+
+  # If unmerged file found
+  if [ -f "${path}" ]; then
+    gedit "${path}";
+    echo '';
+    printf "${path} ? [Enter] ";
+    read;
+    echo '';
+    git add "${path}";
+  else
+    echo " '${path}' not found...";
+  fi;
+}
+function gitmte()
+{
+  # Files differences
+  git diff --name-only | uniq;
+  echo '';
+
+  # Edit all unmerged files
+  for file in $(git diff --name-only | uniq); do
+    printf " - ${file} : ";
+    gedit ${file};
+    printf ' Done ? [Enter / Ctrl+C] ';
+    read;
+    git add ${file};
+  done;
+}

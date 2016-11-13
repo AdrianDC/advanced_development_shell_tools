@@ -283,17 +283,6 @@ function ntf() { notify-send "$*"; }
 gituserdefault='AdrianDC';
 gitremotedefault='AdrianDC';
 gitreviewdefault='github';
-gitrebasedefault=25;
-
-# === Git commits ===
-alias gitc='git commit -S';
-alias gitcs='git commit -S -s';
-alias gitca='git commit -S --amend';
-alias gitcae='git commit -S --amend --no-edit';
-alias gitcauthor='git commit -S --amend --no-edit --author="$(git config --global --get user.name) <$(git config --global --get user.email)>"';
-alias gitcid='scp -p -P 29418 $gituserdefault@review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
-alias gitcidh='scp -p http://review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
-alias gitrevert='git revert -S --no-edit';
 
 # === Git pushing ===
 function gitpu()
@@ -333,7 +322,6 @@ function gitpo() { command="git push origin ${1:-$(repogetbranch)}"; \
                    git remote -v | grep origin | head -1 | cut -f2 | cut -d' ' -f1;
                    echo -e " \e[1;37mCommand: $command\e[0m"; printf "    > Proceed with origin push (y/N) ? "; read key; \
                    if [[ "$key" == "y" || "$key" == "Y" ]]; then echo ""; $command; fi; echo ""; }
-alias gitpf='git push -f';
 function gitck() { branch=${1:-$(repogetbranch)}; git fetch github $branch >/dev/null; git diff HEAD github/$branch; }
 function gitcn() { branch=${1:-$(repogetbranch)}; git fetch github $branch; git diff HEAD github/$branch; }
 
@@ -348,25 +336,7 @@ function gitpamrom()
   git reset --hard HEAD~4;
 }
 
-# === Git resetting ===
-alias gitrh='git reset FETCH_HEAD --hard';
-alias githd='git reset HEAD --hard';
-alias gitcl='git reset HEAD --hard; git stash -u';
-alias gitro='git reset HEAD^ --hard';
-alias gitsl='git reset HEAD^; gitap; gitcae';
-alias gitrl='git revert HEAD -n; git commit -m "Revert"; git reset HEAD^; git add -p';
-alias gitri='git reset HEAD^';
-alias gitrt='git reset --hard';
-
 # === Git rebasing ===
-function gitr() { git rebase HEAD~${1:-${gitrebasedefault}} -i; }
-function gitredit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase HEAD~${1:-${gitrebasedefault}} -i; }
-function gitrfedit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase $1 -i; }
-function gitrf() { git rebase $1^ -i; }
-alias gitra='git rebase --abort';
-alias gitrc='git rebase --continue';
-alias gitre='git rebase --edit-todo';
-alias gitrs='git rebase --skip';
 function gitrb()  { branch=${1:-$(repogetbranch)}; git fetch github $branch; git rebase github/$branch; }
 function gitrbo() { branch=${1:-$(repogetbranch)}; git fetch origin $branch; git rebase origin/$branch; }
 function gitrbs() { branch=${1:-$(repogetbranch)}; git fetch source $branch; git rebase source/$branch; }
@@ -378,23 +348,9 @@ function gitrbma() { branch=${1:-cm-13.0}; git fetch ADC $branch; git rebase ADC
 function gitbc() { branch=${1:-$(repogetbranch)}; review=${2:-${gitreviewdefault}};
                    git fetch $review $branch; git branch $branch --track $review/$branch; git checkout $branch; }
 function gitbt() { branch=${1:-$(repogetbranch)}; git branch $branch; git checkout $branch; }
-alias gitbd='git branch -D';
-alias gitbv='git fetch $gitreviewdefault $(git rev-parse --abbrev-ref HEAD); git branch -vv';
-alias gitrv='git remote -v';
-alias gitch='git checkout';
 alias gitbaclean='git fetch $gitremotedefault; git branch -r | grep $gitremotedefault | sed "s/$gitremotedefault\/\(.*\)/\1/g" | xargs -L 1 git push $gitremotedefault --delete';
 
-# === Git adds ===
-alias gitaa='git add . -Av';
-alias gitap='git add -p';
-alias gitaap='git add . -Ap';
-alias gitacf='gitap; gitcae; gitpf';
-
-# === Git cherry-picks ===
-alias gitcp='git cherry-pick';
-alias gitcpc='git reset; git cherry-pick --continue';
 alias g='gedit';
-function gitcpf() { git fetch $1; git cherry-pick FETCH_HEAD; }
 function gitcpl() { while [ 1 ]; do echo ""; printf " Commit : "; read commit; gitcp $commit; done; echo ""; }
 function gitcpa() { a="$1"; b="$2"; if [ -z "$b" ] && [ -z "${a##*[!0-9]*}" ]; then b="$a"; a=""; fi;
                     git fetch $gitremotedefault ${b:-$(repogetbranch)}; git cherry-pick FETCH_HEAD~${a:-0}; }
@@ -410,11 +366,6 @@ function gitcpal()
   git cherry-pick --abort;
   git fetch ${gitremotedefault} ${1:-$(repogetbranch)};
   git cherry-pick ${2}^..FETCH_HEAD;
-}
-function gitfcp() { git fetch ${1} ${2}; git cherry-pick FETCH_HEAD; }
-function gitcpr()
-{
-  git show $1 --no-color | sed "s/$2/$3/g" | patch;
 }
 function gitcpd()
 {
@@ -520,95 +471,15 @@ function gitcpupt()
   fi;
 }
 
-# === Git stash ===
-alias gits='git stash';
-alias gitsp='git stash -p';
-alias gitsu='git stash -u';
-alias gitspop='git stash pop';
-
-# === Git tools ===
-alias gitd='git diff';
-function gitdi()
-{
-  git diff --name-status;
-  git ls-files --others --exclude-standard | awk '{print "U       " $0}';
-}
-alias gitlo='git log --pretty=oneline';
-alias gitloo='git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --';
-alias gitshow='git show --name-status;';
-alias gitshf='git show --pretty=full;';
-alias gitdfs='git diff-tree --no-commit-id --name-status -r';
-function gitdf()
-{
-  if [ -z "$2" ]; then
-    echo " Usage: gitdf sha1commit filepath";
-    return;
-  fi;
-  git diff $1^:$2 $1:$2;
-}
-
 function gitsf() { echo ""; for i in `seq 1 ${1:-1}`; do
                      git show --name-only --oneline HEAD~$(($i-1)); echo ""; done; }
 function gitsfd() { echo ""; for i in $(git log --format=format:%H -- ${1:-}); do
                       git show --name-only --oneline $i; echo ""; printf " > Press Enter... "; read key; done; }
-alias gitmt='git mergetool';
-function gitme()
-{
-  path=$(timeout 1 git mergetool 2>/dev/null \
-       | head -n 2 \
-       | tail -1);
-  if [ -f "$path" ]; then
-    gedit "$path";
-    echo '';
-    printf "${path} ? [Enter] ";
-    read;
-    echo '';
-    git add "$path";
-  else
-    echo " '$path' not found...";
-  fi;
-}
-function gitmte()
-{
-  git diff --name-only | uniq;
-  echo "";
-  for file in $(git diff --name-only | uniq); do
-    printf " - $file : ";
-    gedit $file;
-    printf "Done ? [Enter / Ctrl+C] ";
-    read;
-    git add $file;
-  done;
-}
-alias githi='git update-index --assume-unchanged';
-alias gitsh='git update-index --no-assume-unchanged';
-alias gitlod='git log --pretty=oneline --';
+
 function gitloc() { path=$(xdg-user-dir DESKTOP);
                     git log --pretty=oneline --no-merges HEAD -- . | tee $path/gitloc$1.full.log;
                     cat $path/gitloc$1.full.log | cut -c 42-| sort | tee $path/gitloc$1.comp.log; }
-function gitlos()
-{
-  if [ ! -z "$2" ]; then cnt=$2; else cnt=30; fi;
-  echo -e " \e[1;37mSearching for $1 in last $cnt commits...\e[0m";
-  echo "";
-  for sha1 in $(git log --max-count=$cnt --format=format:%H -- .); do
-    if [ ! -z "$(git show $sha1 | grep -i "$1")" ]; then
-      git show --name-only --oneline $sha1; echo "";
-    fi;
-  done;
-}
-function gite() { gedit $1; printf "Done ? [Enter] "; read; git add $1; }
-alias gitrerere='git config --global rerere.enabled';
-alias gitdiffpermhide='git config core.filemode false';
-alias gitdiffpermshow='git config core.filemode true';
-alias gpglist='gpg --list-secret-keys --keyid-format LONG';
-alias gpgsilent='echo "no-tty" >> ~/.gnupg/gpg.conf';
-alias gpgenable='git config --global commit.gpgsign true';
-alias gpgdisable='git config --global commit.gpgsign false';
-alias gpgsigning='git config --global user.signingkey';
-alias gitshowsg='git config --global alias.logs "log --show-signature"';
-alias gitpwstore='git config --global credential.helper store';
-alias gitfix='rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp';
+
 
 # === Git mergers ===
 function gitmerges()
