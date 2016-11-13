@@ -55,7 +55,7 @@ function romautorelease()
   # Function usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: romautorelease devicename {aosp/cm/caf/oms},j1,nowipe/outcl,local/wipeout]';
+    echo ' Usage: romautorelease devicename {aosp/cm/oms},j1,nowipe/outcl,local/wipeout]';
     echo '';
     return;
   fi;
@@ -85,15 +85,10 @@ function romautorelease()
     rom_tag='CM141';
     rom_target="${rom_phone}/CyanogenMod-14.1";
 
-  # AOSP-CAF 6.0
-  elif [[ "${rom_params}" =~ 'caf' ]]; then
-    rom_tag='CAF60';
-    rom_target="${rom_phone}/AOSP-CAF-6.0";
-
-  # AOSP-OMS 6.0
+  # AOSP-OMS 7.1
   elif [[ "${rom_params}" =~ 'oms' ]]; then
-    rom_tag='OMS60';
-    rom_target="${rom_phone}/AOSP-OMS-6.0";
+    rom_tag='OMS71';
+    rom_target="${rom_phone}/AOSP-OMS-7.1";
 
   # Automatic per-device selection
   else
