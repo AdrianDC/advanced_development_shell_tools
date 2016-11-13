@@ -232,6 +232,7 @@ function gitlos()
 # === Git Show Helpers ===
 alias gitshow='git show --name-status';
 alias gitshf='git show --pretty=full';
+function gitshl() { git show --oneline --name-only ${1} | tail -n +2 | cut -c $((1+${2:-0}))-; }
 
 # === Git Add Helpers ===
 alias gitap='git add -p';
