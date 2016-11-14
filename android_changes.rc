@@ -14,23 +14,24 @@ function repochanges()
 
   # Diff execution
   echo '';
-  echo -n ' Scanning...';
+  printf ' Scanning...';
   repo forall -j$(grep -c ^processor /proc/cpuinfo) -c "
 
      # Filter out projects
      if [ ! -z \$(echo \"\${REPO_PATH}\" | grep -i \"${ignored_projects}\") ]; then
-       echo -n \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
        return;
      fi;
 
      # Show and fetch projects
-     echo -n \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+     printf \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
      git fetch --quiet \${REPO_REMOTE} \${REPO_RREV##*/};
 
      # Detect new remote commits
      changescount=\$(git rev-list --right-only --count HEAD...FETCH_HEAD);
      if [ \${changescount} -ne 0 ]; then
-       echo \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
+       printf \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
+       echo '';
        git log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
        echo '';
      fi;
@@ -38,14 +39,16 @@ function repochanges()
      # Detect local commits
      changescount=\$(git rev-list --left-only --count HEAD...FETCH_HEAD);
      if [ \${changescount} -ne 0 ]; then
-       echo \"\r\033[K Project \${REPO_PROJECT}: \${changescount} local changes\";
+       printf \"\r\033[K Project \${REPO_PROJECT}: \${changescount} local changes\";
+       echo '';
        git log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
        echo '';
      fi;
 
      # Detect local differences
      if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
-       echo \"\r\033[K Project \${REPO_PROJECT}: Unmerged differences\";
+       printf \"\r\033[K Project \${REPO_PROJECT}: Unmerged differences\";
+       echo '';
        git diff;
        echo '';
      fi;
