@@ -32,6 +32,19 @@ function devupl()
   fileupl "${filepath}" 'Development';
 }
 
+# === Private File Uploader ===
+function privupl()
+{
+  # Variables
+  local filepath="${1}";
+  if [ -z "${filepath}" ] && [ -f "${PackageResult}" ]; then
+    filepath="${PackageResult}";
+  fi;
+
+  # File upload to .private
+  fileupl "${filepath}" '.private';
+}
+
 # === TWRP File Uploader ===
 function twrpbupl()
 {
