@@ -529,23 +529,42 @@ function adbalsa()
 # === ADB Init Bootchart ===
 function adbbootchart()
 {
+  # Clean previous bootcharts
   rm -rf /tmp/android-bootchart/;
   rm -f ./bootchart.png;
-  printf " Timeout in seconds ? [Enter] ";
+
+  # Timeout configuration
+  echo '';
+  printf ' Timeout in seconds ? [Enter] ';
   read timeinput;
-  if [ -z "$timeinput" ]; then timeinput=120; fi;
-  adb shell "echo $timeinput > /data/bootchart/start";
-  printf " Reboot Android ? [Enter] ";
-  adb reboot;
+  if [ -z "${timeinput}" ]; then
+    timeinput=120;
+  fi;
+
+  # Set bootchart timeout
+  adb shell "echo ${timeinput} > /data/bootchart/start";
+
+  # Reboot
+  printf ' Reboot Android ? [Enter] ';
   read;
-  echo " Waiting for the device to boot...";
+  adb reboot;
+
+  # Listen for device
+  echo ' Waiting for the device to boot...';
   adb 'wait-for-device';
+
+  # Wait for timeout or break
   printf " Export Logs now ? [Enter] ";
-  read -t $timeinput;
+  read -t ${timeinput} key;
+
+  # End bootchart
   adb shell 'echo 1 > /data/bootchart/stop'
   adb shell 'rm /data/bootchart/start';
+
+  # Export bootchart results
   sleep 1;
   ${ANDROID_DEV_DRIVE}/CyanogenMod/system/core/init/grab-bootchart.sh;
+  echo '';
 }
 
 # === Sepolicies Extractor ===
