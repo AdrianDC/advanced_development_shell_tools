@@ -75,14 +75,14 @@ function aospnpatcher()
       # Handle unupdated projects
       if [ ${git_revs_count_local} -ne 0 ]; then
         echo '';
-        printf "  > Rebase onto newest changes [y/N] ? ";
+        printf '  > Rebase onto newest changes [y/N] ? ';
         read key;
 
         # Rebase the tree
-        if [[ "${key}" == "y" ]] || [[ "${key}" == "Y" ]]; then
+        if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
           git cherry-pick --abort;
           git cherry-pick FETCH_HEAD~${git_revs_count_remote}..FETCH_HEAD;
-          aosp8960pusher;
+          aospprojectpusher;
         fi;
 
       # Project is ready, break the loop
