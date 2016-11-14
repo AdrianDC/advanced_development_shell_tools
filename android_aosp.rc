@@ -104,7 +104,7 @@ function repoinitsymlinks()
 function aospsync()
 {
   # Android Selection
-  case $1 in
+  case ${1} in
     m)
       # Android 6.0.1
       repo init -u https://android.googlesource.com/platform/manifest -b android-6.0.1_r63;
@@ -126,18 +126,26 @@ function aospsync()
 # === AOSP Builder ===
 function aospbuild()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: aospbuild device_name [j1,nobuild,init,silent]';
+    echo '';
+    return;
+  fi;
+
   # ROM variables
   local rom_device="${1}";
   local rom_params="${2}";
   local rom_logs="${ANDROID_DEV_DRIVE}/Logs";
   local rom_logs_output="${rom_logs}/Build.${rom_device}.AOSP.log";
-  if [[ "${1}" == 'init' ]]; then
+  if [[ "${1}" =~ 'init' ]]; then
     rom_device='huashan';
     rom_params='nobuild';
   fi;
 
   # CPU handling
-  if [[ "${rom_params}" =~ "j1" ]]; then
+  if [[ "${rom_params}" =~ 'j1' ]]; then
     build_cpu_count=1;
   else
     build_cpu_count=$(grep -c ^processor /proc/cpuinfo);
@@ -148,11 +156,11 @@ function aospbuild()
   lunch aosp_${rom_device}-userdebug | tee ${rom_logs_output};
 
   # Compilation start
-  if [[ ! "${rom_params}" =~ "nobuild" ]]; then
+  if [[ ! "${rom_params}" =~ 'nobuild' ]]; then
     make -j${build_cpu_count} otapackage | tee -a ${rom_logs_output};
 
     # Final notification
-    if [[ ! "${rom_params}" =~ "silent" ]]; then
+    if [[ ! "${rom_params}" =~ 'silent' ]]; then
       pushbrom "${rom_device}";
     fi;
   fi;
