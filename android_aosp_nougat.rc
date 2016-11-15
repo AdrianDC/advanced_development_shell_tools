@@ -16,35 +16,41 @@ function aospnpatcher()
   croot;
 
   # ==========================================================
-  # Projects loader
+  # Constants
+  local projects_paths='
+    bionic
+    bootable/recovery
+    build
+    device/qcom/common
+    external/e2fsprogs
+    external/libnfc-nxp
+    external/toybox
+    frameworks/av
+    frameworks/base
+    frameworks/opt/telephony
+    hardware/qcom/audio
+    hardware/qcom/display
+    hardware/qcom/fm
+    hardware/qcom/media
+    hardware/ril
+    packages/apps/Music
+    packages/apps/Nfc
+    packages/apps/Settings
+    packages/providers/MediaProvider
+    system/core
+    system/sepolicy
+    ';
+
+  # ==========================================================
+  # Variables
   local git_revs_count;
   local git_revs_count_local;
   local path_branch;
   local project_github;
   local project_unfinished;
-  for path in \
-    bionic \
-    bootable/recovery \
-    build \
-    device/qcom/common \
-    external/e2fsprogs \
-    external/libnfc-nxp \
-    external/toybox \
-    frameworks/av \
-    frameworks/base \
-    frameworks/opt/telephony \
-    hardware/qcom/audio \
-    hardware/qcom/display \
-    hardware/qcom/fm \
-    hardware/qcom/media \
-    hardware/ril \
-    packages/apps/Music \
-    packages/apps/Nfc \
-    packages/apps/Settings \
-    packages/providers/MediaProvider \
-    system/core \
-    system/sepolicy;
-  do
+
+  # Projects loader
+  for path in ${1:-${projects_paths}}; do
 
     # Project selection
     path_branch=${path//\//_};

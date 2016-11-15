@@ -16,21 +16,27 @@ function sonynpatcher()
   croot;
 
   # ==========================================================
-  # Projects loader
+  # Constants
+  local projects_paths='
+    build
+    external/toybox
+    hardware/qcom/audio
+    hardware/qcom/display
+    hardware/qcom/media
+    packages/apps/Music
+    system/core
+    ';
+
+  # ==========================================================
+  # Variables
   local git_revs_count;
   local git_revs_count_local;
   local path_branch;
   local project_github;
   local project_unfinished;
-  for path in \
-    build \
-    external/toybox \
-    hardware/qcom/audio \
-    hardware/qcom/display \
-    hardware/qcom/media \
-    packages/apps/Music \
-    system/core;
-  do
+
+  # Projects loader
+  for path in ${1:-${projects_paths}}; do
 
     # Project selection
     path_branch=${path//\//_};
