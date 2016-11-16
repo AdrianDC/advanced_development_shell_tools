@@ -65,7 +65,7 @@ function aospnpatcher()
       frameworks\/base)
         project_github='https://github.com/AdrianDC/platform_frameworks_base.git';;
       *)
-        project_github='https://github.com/AdrianDC/aosp_development_msm8960.git';;
+        project_github='https://github.com/AdrianDC/aosp_development_sony8960.git';;
     esac;
 
     # Loop until project ready

@@ -46,7 +46,7 @@ function sonynpatcher()
     cd ${path}/;
 
     # Targets selection
-    project_github='https://github.com/AdrianDC/aosp_development_msm8996.git';
+    project_github='https://github.com/AdrianDC/aosp_development_sony8996.git';
 
     # Loop until project ready
     project_unfinished=1;
