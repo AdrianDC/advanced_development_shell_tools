@@ -27,6 +27,7 @@ function aospnpatcher()
     external/toybox
     frameworks/av
     frameworks/base
+    frameworks/native
     frameworks/opt/telephony
     hardware/qcom/audio
     hardware/qcom/display
