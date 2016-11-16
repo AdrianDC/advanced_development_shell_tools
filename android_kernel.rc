@@ -13,7 +13,7 @@ function fboota()
   # Usage
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] || [ -z "${TARGET_PRODUCT}" ]; then
     echo '';
-    echo ' Usage: fbooadbrecta [unsecure,sep,full,init,inject]';
+    echo ' Usage: fboota [unsecure,sep,full,init,inject]';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;

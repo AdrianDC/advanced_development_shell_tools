@@ -49,6 +49,7 @@ alias adbscr='mkdir -p ./screenshots; adb shell screencap /sdcard/screenshot.png
 alias adbfotarandom='adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel';
 alias adbfotazero='adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel';
 alias adbsgdisk='adb shell sgdisk --print /dev/block/mmcblk0';
+alias adbinfomem='adb shell dumpsys meminfo';
 alias adbblkp='adb shell ls -l /dev/block/bootdevice/by-name/';
 alias adbdf='adb shell df -H';
 alias adbrcbin='adb shell restorecon -R /sbin';
