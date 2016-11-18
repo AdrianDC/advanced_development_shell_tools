@@ -153,7 +153,7 @@ function aospbuild()
 
   # Compilation preparation
   source ./build/envsetup.sh;
-  lunch aosp_${rom_device}-userdebug | tee ${rom_logs_output};
+  lunch aosp_${rom_device}-userdebug;
 
   # Compilation start
   if [[ ! "${rom_params}" =~ 'nobuild' ]]; then
