@@ -46,7 +46,7 @@ function sonynpatcher()
     cd ${path}/;
 
     # Targets selection
-    project_github='https://github.com/AdrianDC/aosp_development_sony8996.git';
+    project_github='https://github.com/AdrianDC/aosp_development_sonyaosp.git';
 
     # Loop until project ready
     project_unfinished=1;
@@ -80,7 +80,7 @@ function sonynpatcher()
     done;
 
     # Cleanup
-    git reset --hard HEAD;
+    git reset --hard FETCH_HEAD;
     git stash -u;
 
   done;
