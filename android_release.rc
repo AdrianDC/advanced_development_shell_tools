@@ -55,7 +55,7 @@ function romautorelease()
   # Function usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: romautorelease devicename {aosp/cm/oms},j1,nowipe/outcl,local/wipeout]';
+    echo ' Usage: romautorelease devicename {aosp/cm/lx/oms},j1,nowipe/outcl,local/wipeout]';
     echo '';
     return;
   fi;
@@ -89,6 +89,11 @@ function romautorelease()
   elif [[ "${rom_params}" =~ 'oms' ]]; then
     rom_tag='OMS71';
     rom_target="${rom_phone}/AOSP-OMS-7.1";
+
+  # LegacyXperia 14.1
+  elif [[ "${rom_params}" =~ 'lx' ]]; then
+    rom_tag='LX141';
+    rom_target="LegacyXperia/${rom_device}/cm-14.1";
 
   # Automatic per-device selection
   else
@@ -149,6 +154,11 @@ function romautorelease()
     source ./build/envsetup.sh;
     lunch aosp_${rom_device}-userdebug;
     make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
+
+  # Build Android LegacyXperia
+  elif [[ "${rom_tag}" =~ 'LX' ]]; then
+    repos "${rom_device}";
+    brunch "${rom_device}" | tee ${rom_logs_output};
 
   # Build Android CyanogenMod
   else
