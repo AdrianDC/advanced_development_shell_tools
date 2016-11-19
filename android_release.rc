@@ -183,6 +183,10 @@ function romautorelease()
   # Wipe product output if requested
   if [[ "${rom_params}" =~ 'wipeout' ]]; then
     outdevcl "${rom_device}";
+
+  # Delete the product outputs
+  elif [[ "${rom_params}" =~ 'outcl' ]]; then
+    rm -rfv './out/target/product';
   fi;
 
   # Restore original path
