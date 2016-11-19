@@ -136,13 +136,13 @@ function sonynrebaser()
     echo '';
     echo " === ${path} [${path_branch}] ===";
     croot;
-    cd ${path}/;
 
     # Ignore non-git projects
-    if [ ! -d .git ]; then
+    if [ ! -d ${path}/.git ]; then
       echo '  .git project not found, ignoring...';
       continue;
     fi;
+    cd ${path}/;
 
     # Loop until project ready
     project_unfinished=1;

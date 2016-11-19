@@ -22,6 +22,11 @@ function aospnpatcher()
     bootable/recovery
     build
     device/qcom/common
+    device/sony/blue-common
+    device/sony/hayabusa
+    device/sony/huashan
+    device/sony/mint
+    device/sony/tsubasa
     external/e2fsprogs
     external/libnfc-nxp
     external/toybox
@@ -58,6 +63,12 @@ function aospnpatcher()
     echo '';
     echo " === ${path} [${path_branch}] ===";
     croot;
+
+    # Ignore missing git projects
+    if [ ! -d ${path}/.git ]; then
+      echo '  .git project not found, ignoring...';
+      continue;
+    fi;
     cd ${path}/;
 
     # Targets selection
