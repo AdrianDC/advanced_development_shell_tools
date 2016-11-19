@@ -207,9 +207,9 @@ function aospprojectpusher()
                | grep -i backup);
   if [ -z "${target_backup}" ]; then
     if [[ "${repodir}" =~ 'sony' ]]; then
-      gitra96;
+      gitrasonyaosp;
     else
-      gitra60;
+      gitrasony8960;
     fi;
   fi;
 

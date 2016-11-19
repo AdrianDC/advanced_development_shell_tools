@@ -66,7 +66,20 @@ function gitrat()  { gitremoteadaptset 'twrp' 'TeamWin' ''; }
 function gitrai()  { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
 function gitrab()  { gitremoteset backup https://github.com/AdrianDC/android_development_backup.git; }
 function gitradb() { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
-function gitra60() { gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960.git; }
-function gitra96() { gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8996.git; }
+
 alias gitraau='git remote set-url AdrianDC';
 alias gitraou='git remote set-url origin';
+
+# === Git Remotes AOSP Projects ===
+function gitrasony8960()
+{
+  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+    gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
+  else
+    gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960.git;
+  fi;
+}
+function gitrasonyaosp()
+{
+  gitremoteset backup https://github.com/AdrianDC/aosp_development_sonyaosp.git;
+}
