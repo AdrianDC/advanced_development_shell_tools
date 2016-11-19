@@ -142,11 +142,11 @@ function cdtwrp()      { cd $(totwrp); }
 # === Private Shortcuts ===
 function cdand()       { cd $(getand); }
 function cda()         { cdand; cdcm huashan; }
-function cdaospb()     { cd $(toaosp blue); }
 function cdaosph()     { cd $(toaosp huashan); }
+function cdaospm()     { cd $(toaosp mint); }
 function cdaosps()     { cd $(toaosp sony); }
-function cdcmb()       { cd $(tocm blue); }
 function cdcmh()       { cd $(tocm huashan); }
+function cdcmm()       { cd $(tocm mint); }
 function getbash()     { echo ${bash_android_dir}; }
 function cdbash()      { cd $(getbash); }
 function cddesk()      { cd "$(xdg-user-dir DESKTOP)"; }
