@@ -4,31 +4,30 @@
 # ======================================
 
 # === Repo FullSync ===
-reposalx()
+function reposalx()
 {
   # Phone Branch
-  BuildBranch="cm-13.0";
-  if [ ! -z "$1" ]; then BuildBranch="$1"; fi;
+  local BuildBranch="${1:-cm-14.1}";
 
   # Sources Manifest
-  if [ ! -f ".repo/local_manifests/semc.xml" ]; then
-    if [ ! -d "./.repo/local_manifests/" ]; then
-      mkdir "./.repo/local_manifests";
+  if [ ! -f '.repo/local_manifests/semc.xml' ]; then
+    if [ ! -d './.repo/local_manifests/' ]; then
+      mkdir './.repo/local_manifests';
     fi;
-    cd "./.repo/local_manifests/"
-    git clone --depth=1 https://github.com/LegacyXperia/local_manifests.git --single-branch -b $BuildBranch .;
-    cd "../../";
+    cd './.repo/local_manifests/'
+    git clone --depth=1 https://github.com/LegacyXperia/local_manifests.git --single-branch -b ${BuildBranch} .;
+    cd '../../';
   fi;
 
   # Sources Sync
-  if [[ ! "$2" =~ "nosync" ]]; then
-    if [[ ! "$2" =~ "unsafe" ]]; then
+  if [[ ! "${2}" =~ 'nosync' ]]; then
+    if [[ ! "${2}" =~ 'unsafe' ]]; then
       repo forall -c 'echo "Cleaning project ${REPO_PROJECT}"; \
                       git rebase --abort >/dev/null 2>&1; \
                       git stash -u >/dev/null 2>&1; \
                       git reset --hard HEAD >/dev/null 2>&1;';
     fi;
-    repo sync --current-branch --detach --force-broken --force-sync;
+    reposy;
   fi;
 
   # Sources Commands
@@ -38,10 +37,10 @@ reposalx()
   ./.repo/local_manifests/updates.sh;
 
   # Sync End
-  echo "";
-  notify-send "Done syncing !";
-  echo " =========== Done syncing ===========";
-  echo "";
+  echo '';
+  notify-send 'Done syncing !';
+  echo ' =========== Done syncing ===========';
+  echo '';
 }
 
 export -f reposalx;
