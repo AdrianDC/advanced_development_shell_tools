@@ -39,6 +39,7 @@ function aospnpatcher()
     hardware/qcom/fm
     hardware/qcom/media
     hardware/ril
+    packages/apps/CellBroadcastReceiver
     packages/apps/Music
     packages/apps/Nfc
     packages/apps/Settings
@@ -96,10 +97,21 @@ function aospnpatcher()
         printf '  > Rebase onto newest changes [y/N] ? ';
         read key;
 
-        # Rebase the tree
+        # Update the tree
         if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
           git cherry-pick --abort;
           git cherry-pick FETCH_HEAD~${git_revs_count_remote}..FETCH_HEAD;
+
+          # Failed update
+          if [ ${?} -ne 0 ]; then
+            echo '';
+            echo '  < Automatic update failed...';
+            echo '     Stopping, push with : aospprojectpusher;';
+            echo '';
+            return;
+          fi;
+
+          # Automatic push
           aospprojectpusher;
         fi;
 
@@ -110,7 +122,7 @@ function aospnpatcher()
 
     done;
 
-    # Pause if needed
+    # Cleanup
     git reset --hard FETCH_HEAD; git stash -u;
 
   done;
