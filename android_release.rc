@@ -53,9 +53,10 @@ function outdevcl()
 function romautorelease()
 {
   # Function usage
+  local function_usage='romautorelease devicename {aosp/cm/lx/oms},j1,nowipe/outcl,dev/local/wipeout]';
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: romautorelease devicename {aosp/cm/lx/oms},j1,nowipe/outcl,local/wipeout]';
+    echo " Usage: ${function_usage}";
     echo '';
     return;
   fi;
@@ -99,9 +100,14 @@ function romautorelease()
   else
     echo '';
     echo ' Error: ROM target has not been found...';
-    echo ' Usage: romautorelease devicename {aosp/cm/caf/oms},j1,nowipe/outcl,local/wipeout]';
+    echo " Usage: ${function_usage}";
     echo '';
     return;
+  fi;
+
+  # Development build
+  if [[ "${rom_params}" =~ 'dev' ]]; then
+    rom_target='Development';
   fi;
 
   # Ignore the build
