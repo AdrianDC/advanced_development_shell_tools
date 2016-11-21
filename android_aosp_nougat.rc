@@ -44,6 +44,7 @@ function aospnpatcher()
     packages/apps/Music
     packages/apps/Nfc
     packages/apps/Settings
+    packages/inputmethods/LatinIME
     packages/providers/MediaProvider
     system/core
     system/sepolicy
