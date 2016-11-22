@@ -765,3 +765,23 @@ function adbsu()
     adb shell su -c "$@";
   fi;
 }
+
+# === ADB Force Optimization ===
+function adbu()
+{
+  # Introduction
+  echo '';
+  echo " [ Launching '${1}' ]";
+  echo '';
+
+  # Optimize
+  echo '    Optimizing...';
+  adb ${2} shell pm force-dex-opt ${1};
+
+  # Force close
+  echo '    Killing...';
+  adb ${2} shell pkill ${1};
+  local pid=$(adb shell ps | grep ${1} | awk '{ print $2 }');
+  adb shell kill ${pid} >/dev/null;
+  echo '';
+}

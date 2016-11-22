@@ -227,9 +227,6 @@ function adbkillsetup() { adb root; adb wait-for-device; while [ 1 ]; do adb she
 function adbtinymix() { adb shell /system/bin/tinymix; }
 
 # === Apps shortcuts ===
-function adbu() { echo ""; echo " [ Launching '$1' ]"; echo ""; \
-                  echo "    Optimizing..."; adb $2 shell pm force-dex-opt $1; \
-                  echo "    Killing..."; adb $2 shell pkill $1; echo ""; }
 function ntf() { notify-send "$*"; }
 
 # === Git vars ===
