@@ -62,6 +62,7 @@ function aospnpatcher()
   for path in ${1:-${projects_paths}}; do
 
     # Project selection
+    path=${path%/};
     path_branch=${path//\//_};
     echo '';
     echo " === ${path} [${path_branch}] ===";
