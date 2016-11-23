@@ -258,10 +258,21 @@ alias gitcs='git commit -S -s';
 alias gitca='git commit -S --amend';
 alias gitcae='git commit -S --amend --no-edit';
 alias gitcauthor='git commit -S --amend --no-edit --author="$(git config --global --get user.name) <$(git config --global --get user.email)>"';
-alias gitcid='scp -p -P 29418 $gituserdefault@review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
-alias gitcidh='scp -p http://review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
+alias gitcidupstream='scp -p -P 29418 $gituserdefault@review.cyanogenmod.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
 alias gitrevert='git revert -S --no-edit';
 alias gitfix='rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp';
+
+# === Git Commits Change-ID ===
+function gitcid()
+{
+  # Copy commit-msg
+  cp -fv "${bash_android_dir}/android_tools/commit-msg" '.git/hooks/commit-msg';
+  chmod u+x ./.git/hooks/commit-msg;
+
+  # Update commit with Change-ID
+  git commit --amend --no-edit;
+  git commit --amend;
+}
 
 # === Git Push Helpers ===
 alias gitpf='git push -f';
