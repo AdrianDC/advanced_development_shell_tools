@@ -64,7 +64,7 @@ function gitraot() { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitraos() { gitremoteadaptset 'origin' 'sonyxperiadev'; }
 function gitrat()  { gitremoteadaptset 'twrp' 'TeamWin' ''; }
 function gitrai()  { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
-function gitrab()  { gitremoteset backup https://github.com/AdrianDC/android_development_backup.git; }
+function gitrab()  { gitremoteset backup https://github.com/AdrianDC/cm_development_sony8960.git; }
 function gitradb() { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
 
 alias gitraau='git remote set-url AdrianDC';
