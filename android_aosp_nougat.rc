@@ -79,7 +79,8 @@ function aospnpatcher()
     # Targets selection
     case "${path}" in
       frameworks\/base)
-        project_github='https://github.com/AdrianDC/platform_frameworks_base.git';;
+        project_github='https://github.com/AdrianDC/platform_frameworks_base.git';
+        path_branch='aosp_sony8960';;
       *)
         project_github='https://github.com/AdrianDC/aosp_development_sony8960.git';;
     esac;

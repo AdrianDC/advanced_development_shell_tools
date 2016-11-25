@@ -196,7 +196,12 @@ function aospprojectpusher()
 
   # Status
   projectdir=${projectdir#${repodir}/};
-  projectbranch=${projectdir//\//_};
+  case "${projectdir}" in
+    frameworks\/base)
+      projectbranch='aosp_sony8960';;
+    *)
+      projectbranch=${projectdir//\//_};;
+  esac;
   echo '';
   echo " Project directory: ${projectdir}";
   echo " Reporisory path: ${repodir}";
