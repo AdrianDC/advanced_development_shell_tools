@@ -17,7 +17,7 @@ function gitstat()
 
   # Request
   git fetch ${1} ${2};
-  git diff HEAD...FETCH_HEAD;
+  git --no-pager diff HEAD...FETCH_HEAD;
 
   # Comparison
   echo '';
