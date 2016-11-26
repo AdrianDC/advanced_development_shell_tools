@@ -58,12 +58,13 @@ function gitremoteadaptset()
 
 # === Git Remotes Helpers ===
 function gitraa()  { gitremoteadaptset 'AdrianDC' 'AdrianDC' ''; }
+function gitrai()  { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
 function gitrao()  { gitremoteadaptset 'origin' 'CyanogenMod' ''; }
 function gitraoo() { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot() { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitraos() { gitremoteadaptset 'origin' 'sonyxperiadev'; }
 function gitrat()  { gitremoteadaptset 'twrp' 'TeamWin' ''; }
-function gitrai()  { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
+function gitrax()  { gitremoteadaptset 'xperia' 'XperiaMultiROM' ''; }
 function gitrab()  { gitremoteset backup https://github.com/AdrianDC/cm_development_sony8960.git; }
 function gitradb() { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
 
