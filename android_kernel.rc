@@ -209,7 +209,7 @@ function fbooti()
   # Variables
   local partitiontarget=$(androidpartitionstarget boot);
 
-  # Kernel injection
+  # Kernel informations
   adbro;
   adb push "${bash_android_bbootimg}" /bbootimg;
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
@@ -217,13 +217,13 @@ function fbooti()
   adb shell /bbootimg -i ${partitiontarget};
 }
 
-# === Kernel Informations ===
-function fbooti()
+# === FOTA Informations ===
+function adbfotainfos()
 {
   # Variables
-  local partitiontarget=$(androidpartitionstarget boot);
+  local partitiontarget=$(androidpartitionstarget fota);
 
-  # Kernel injection
+  # FOTA informations
   adbro;
   adb push "${bash_android_bbootimg}" /bbootimg;
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
