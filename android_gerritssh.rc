@@ -31,7 +31,7 @@ function gerritssh()
 
   # Splash Text
   echo '';
-  printf "    \e[1;37mShell Gerrit Reviewer by Adrian DC - Connecting...\e[0m";
+  printf "    \e[1;37mShell Gerrit Reviewer by Adrian DC - Connecting to ${projectbranch}\e[0m";
 
   # Project Loading
   projectorigin=$(git remote -v | grep origin | tail -n 1);
@@ -58,6 +58,32 @@ function gerritssh()
   cat ${tmpfilestate} | egrep '^\    number' | cut -d' ' -f6- > ${tmpfilepatchsets};
   cat ${tmpfilestate} | egrep '^\    isDraft' | cut -d' ' -f6- > ${tmpfilepatchdrafts};
   cat ${tmpfileids} | sort > ${tmpfileidsfor};
+
+  # Branch empty
+  if [ ! -s ${tmpfileidsfor} ]; then
+    echo '';
+    printf '     \e[1;32m> No commit on review. ';
+
+    # Exit on second execution
+    if [ ! -z "${2}" ]; then
+      echo -e 'Exiting...\e[0m';
+      echo '';
+      rm -rf "${tmpdir}";
+      return;
+    fi;
+
+    # Switch branches
+    if [[ "${projectbranch}" == "${projectbranchprimary}" ]]; then
+      projectbranch="${projectbranchsecondary}";
+    elif [[ "${projectbranch}" == "${projectbranchsecondary}" ]]; then
+      projectbranch="${projectbranchprimary}";
+    fi;
+    echo -e "Moving to ${projectbranch}...\e[0m";
+    rm -rf "${tmpdir}";
+    gerritssh ${projectbranch} true;
+    return;
+
+  fi;
 
   # Project Connected
   echo -e \\033c;
