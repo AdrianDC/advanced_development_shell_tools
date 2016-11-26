@@ -35,6 +35,7 @@ alias gitsta6='gitstat AdrianDC aosp-6.0';
 alias gitstaa6='gitstat AdrianDC android-6.0';
 alias gitstam='gitstat AdrianDC master';
 alias gitstatw='gitstat AdrianDC twrp';
+alias gitstg='gitstat github';
 alias gitsti='gitstat aicp mm6.0';
 alias gitstt='gitstat twrp android-6.0';
 alias gitstaosp='gitstat aosp master';
