@@ -231,7 +231,6 @@ function ntf() { notify-send "$*"; }
 
 # === Git vars ===
 gituserdefault='AdrianDC';
-gitremotedefault='AdrianDC';
 gitreviewdefault='github';
 
 function gitpo() { command="git push origin ${1:-$(repogetbranch)}"; \
@@ -252,12 +251,11 @@ function gitrbma() { branch=${1:-cm-13.0}; git fetch ADC $branch; git rebase ADC
 function gitbc() { branch=${1:-$(repogetbranch)}; review=${2:-${gitreviewdefault}};
                    git fetch $review $branch; git branch $branch --track $review/$branch; git checkout $branch; }
 function gitbt() { branch=${1:-$(repogetbranch)}; git branch $branch; git checkout $branch; }
-alias gitbaclean='git fetch $gitremotedefault; git branch -r | grep $gitremotedefault | sed "s/$gitremotedefault\/\(.*\)/\1/g" | xargs -L 1 git push $gitremotedefault --delete';
 
 alias g='gedit';
 function gitcpl() { while [ 1 ]; do echo ""; printf " Commit : "; read commit; gitcp $commit; done; echo ""; }
 function gitcpa() { a="$1"; b="$2"; if [ -z "$b" ] && [ -z "${a##*[!0-9]*}" ]; then b="$a"; a=""; fi;
-                    git fetch $gitremotedefault ${b:-$(repogetbranch)}; git cherry-pick FETCH_HEAD~${a:-0}; }
+                    git fetch AdrianDC ${b:-$(repogetbranch)}; git cherry-pick FETCH_HEAD~${a:-0}; }
 function gitcpal()
 {
   # Usage
@@ -268,7 +266,7 @@ function gitcpal()
 
   # Cherrypick multiple commits
   git cherry-pick --abort;
-  git fetch ${gitremotedefault} ${1:-$(repogetbranch)};
+  git fetch AdrianDC ${1:-$(repogetbranch)};
   git cherry-pick ${2}^..FETCH_HEAD;
 }
 function gitcpd()

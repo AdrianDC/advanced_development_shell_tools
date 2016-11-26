@@ -6,13 +6,13 @@
 # === Git Fetch Reset Assets ===
 function gitfetchtreset()
 {
-  git fetch ${1:-$gitremotedefault} ${2:-$(repogetbranch)};
+  git fetch ${1:-AdrianDC} ${2:-$(repogetbranch)};
   git reset FETCH_HEAD --hard;
 }
 # === Git Fetch Checkout Assets ===
 function gitfetchcheckout()
 {
-  remote=${1:-$gitremotedefault};
+  remote=${1:-AdrianDC};
   branch=${2:-$(repogetbranch)};
   git fetch ${remote} ${branch};
   git checkout ${remote}/${branch};
