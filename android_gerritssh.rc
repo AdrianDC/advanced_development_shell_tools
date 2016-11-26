@@ -17,39 +17,44 @@ function gerritssh()
   fi;
 
   # Configurations
-  gerritremote='review.cyanogenmod.org';
-  projectgroup='CyanogenMod';
-  if [ ! -z "${3}" ]; then gerritremote="${2}"; projectgroup="${3}"; fi;
-  gerritssh="ssh -p 29418 ${GerritUsername}@${gerritremote} gerrit";
-  projectbranch='cm-14.1';
-  projectbranchmerger=false;
-  projectbranchprimary='cm-14.1';
-  projectbranchsecondary='cm-13.0';
+  local gerritremote='review.cyanogenmod.org';
+  local projectgroup='CyanogenMod';
+  if [ ! -z "${3}" ]; then
+    gerritremote="${2}";
+    projectgroup="${3}";
+  fi;
+  local gerritssh="ssh -p 29418 ${GerritUsername}@${gerritremote} gerrit";
+  local projectbranch='cm-14.1';
+  local projectbranchmerger=false;
+  local projectbranchprimary='cm-14.1';
+  local projectbranchsecondary='cm-13.0';
 
-  # First Parameter Branch Override
-  if [ ! -z "${1}" ]; then projectbranch="${1}"; fi;
+  # First Parameter: Branch Override
+  if [ ! -z "${1}" ]; then
+    projectbranch="${1}";
+  fi;
 
   # Splash Text
   echo '';
   printf "    \e[1;37mShell Gerrit Reviewer by Adrian DC - Connecting to ${projectbranch}\e[0m";
 
   # Project Loading
-  projectorigin=$(git remote -v | grep origin | tail -n 1);
+  local projectorigin=$(git remote -v | grep origin | tail -n 1);
   if [ -z "${projectorigin}" ]; then
     projectorigin=$(git remote -v | grep ${2} | tail -n 1);
   fi;
-  projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
-  tmpdir=$(mktemp -d);
-  tmpfilestate="${tmpdir}/state";
-  tmpfileids="${tmpdir}/ids";
-  tmpfileidsfor="${tmpdir}/for";
-  tmpfilebranch="${tmpdir}/branch";
-  tmpfilenames="${tmpdir}/names";
-  tmpfileparents="${tmpdir}/parents";
-  tmpfilepatchsets="${tmpdir}/ps";
-  tmpfilepatchinfo="${tmpdir}/pi";
-  tmpfilepatchmessage="${tmpdir}/pm";
-  tmpfilepatchdrafts="${tmpdir}/drafts";
+  local projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  local tmpdir=$(mktemp -d);
+  local tmpfilestate="${tmpdir}/state";
+  local tmpfileids="${tmpdir}/ids";
+  local tmpfileidsfor="${tmpdir}/for";
+  local tmpfilebranch="${tmpdir}/branch";
+  local tmpfilenames="${tmpdir}/names";
+  local tmpfileparents="${tmpdir}/parents";
+  local tmpfilepatchsets="${tmpdir}/ps";
+  local tmpfilepatchinfo="${tmpdir}/pi";
+  local tmpfilepatchmessage="${tmpdir}/pm";
+  local tmpfilepatchdrafts="${tmpdir}/drafts";
   ${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} branch:${projectbranch}" > ${tmpfilestate};
   cat ${tmpfilestate} | egrep '^\  number' | cut -d' ' -f4- > ${tmpfileids};
   cat ${tmpfilestate} | egrep '^\  branch' | cut -d' ' -f4- > ${tmpfilebranch};
@@ -98,8 +103,8 @@ function gerritssh()
   for i in $(cat ${tmpfileidsfor}); do
 
     # Commit Details
-    gerritidpos=-1;
-    gerritidcount=0;
+    local gerritidpos=-1;
+    local gerritidcount=0;
     for j in $(cat ${tmpfileids}); do
       gerritidcount=$((gerritidcount+1));
       if [[ "${i}" == "${j}" ]]; then
@@ -107,11 +112,11 @@ function gerritssh()
         break;
       fi;
     done;
-    patchbranch=$(sed ${gerritidpos}'!d' ${tmpfilebranch});
-    patchname=$(sed ${gerritidpos}'!d' ${tmpfilenames});
-    patchparent=$(sed ${gerritidpos}'!d' ${tmpfileparents});
-    patchset=$(sed ${gerritidpos}'!d' ${tmpfilepatchsets});
-    patchdraft=$(sed ${gerritidpos}'!d' ${tmpfilepatchdrafts});
+    local patchbranch=$(sed ${gerritidpos}'!d' ${tmpfilebranch});
+    local patchname=$(sed ${gerritidpos}'!d' ${tmpfilenames});
+    local patchparent=$(sed ${gerritidpos}'!d' ${tmpfileparents});
+    local patchset=$(sed ${gerritidpos}'!d' ${tmpfilepatchsets});
+    local patchdraft=$(sed ${gerritidpos}'!d' ${tmpfilepatchdrafts});
 
     # Commit Work
     echo '';
@@ -128,7 +133,7 @@ function gerritssh()
 
     # Read remote current HEAD
     git fetch "https://${gerritremote}/${projectgroup}/${projectname}" "${projectbranch}" 2>/dev/null;  
-    remotecurrenthead=$(git rev-parse FETCH_HEAD);
+    local remotecurrenthead=$(git rev-parse FETCH_HEAD);
 
     # Commit Rebase
     if [[ ! "${remotecurrenthead}" == "${patchparent}" ]]; then
@@ -152,7 +157,7 @@ function gerritssh()
     if [[ ! "${projectbranchmerger}" == 'false' ]]; then
 
       # Commit Cherry-Pick Branch
-      projectbranchcp='';
+      local projectbranchcp='';
       if [[ "${projectbranch}" == "${projectbranchprimary}" ]]; then
         projectbranchcp="${projectbranchsecondary}";
       elif [[ "${projectbranch}" == "${projectbranchsecondary}" ]]; then
@@ -166,10 +171,10 @@ function gerritssh()
 
           # Get Commit Details
           ${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} change:${i}" > ${tmpfilepatchinfo};
-          patchcommit=$(cat ${tmpfilepatchinfo} | egrep '^\    revision' | cut -d' ' -f6-);
+          local patchcommit=$(cat ${tmpfilepatchinfo} | egrep '^\    revision' | cut -d' ' -f6-);
           cat ${tmpfilepatchinfo} | sed -n '/commitMessage/,/createdOn/ p' | sed '${d}' | cut -c 18- > ${tmpfilepatchmessage};
           echo "(cherry picked from commit ${patchcommit})" >> ${tmpfilepatchmessage};
-          patchmessage=$(cat ${tmpfilepatchmessage} | sed 's/\"/\\\"/g' | sed ':begin;$!N;s/\n/\\n/;tbegin');
+          local patchmessage=$(cat ${tmpfilepatchmessage} | sed 's/\"/\\\"/g' | sed ':begin;$!N;s/\n/\\n/;tbegin');
           echo "{\"destination\":\"${projectbranchcp}\",\"message\":\"${patchmessage}\"}" > ${tmpfilepatchmessage};
 
           # Post Cherry-Pick Request
