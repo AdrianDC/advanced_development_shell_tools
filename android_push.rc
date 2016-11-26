@@ -11,6 +11,9 @@ function gitpu()
   local branch=${2:-$(repogetbranch)};
   local cmd;
 
+  # Get remote stats
+  gitstat ${remote} ${branch};
+
   # Introduction
   echo '';
   local cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
