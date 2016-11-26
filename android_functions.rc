@@ -234,39 +234,6 @@ gituserdefault='AdrianDC';
 gitremotedefault='AdrianDC';
 gitreviewdefault='github';
 
-# === Git pushing ===
-function gitpu()
-{
-  remote=${1:-$gitremotedefault};
-  if [ ! -z "$2" ]; then
-    branch=$2;
-  else
-    branch=$(repogetbranch);
-  fi;
-  echo "";
-  command="git push -f $remote HEAD:refs/heads/$branch";
-  printf "  $command [Enter] ? "; read key;
-  echo "";
-  git fetch $remote $branch;
-  $command;
-  echo "";
-}
-alias gitpa='gitpu $gitremotedefault';
-alias gitpa14='gitpu $gitremotedefault cm-14.1';
-alias gitpa6='gitpu $gitremotedefault aosp-6.0';
-alias gitpaa6='gitpu $gitremotedefault android-6.0';
-alias gitpala='gitpu $gitremotedefault LA.UM.5.5_rb1.10';
-alias gitpam='gitpu $gitremotedefault multirom';
-alias gitpama='gitpu $gitremotedefault master';
-alias gitpamm='gitpu $gitremotedefault marshmallow';
-alias gitpan='gitpu $gitremotedefault nougat';
-alias gitpat='gitpu $gitremotedefault twrp';
-alias gitpp='gitpu project master';
-alias gitpx='gitpu xperia';
-alias gitpb='gitpu backup';
-alias gitpaicp='gitpu aicp mm6.0';
-alias gitpold='gitpu old';
-
 function gitpo() { command="git push origin ${1:-$(repogetbranch)}"; \
                    echo ""; printf " \e[1;31mTarget: \e[0m";
                    git remote -v | grep origin | head -1 | cut -f2 | cut -d' ' -f1;
