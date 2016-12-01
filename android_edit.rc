@@ -1,0 +1,83 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Edit Replace Match ===
+function editreplacematch()
+{
+  # Usage
+  if [ -z "${3}" ]; then
+    echo '';
+    echo ' Usage: editreplacematch "match_line" "to_write" "files"';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local match_line=${1};
+  local to_write=${2};
+  local files=${@:3};
+
+  # Replace
+  sed -i "s/\(^.*${match_line}.*\)/${to_write}/g" ${files};
+}
+
+# === Edit Remove Match ===
+function editremovematch()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: editremovematch "match_line" "files"';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local match_line=${1};
+  local files=${@:2};
+
+  # Remove
+  sed -i "/^.*${match_line}.*/d" ${files};
+}
+
+# === Edit Insert Above ===
+function editinsertabove()
+{
+  # Usage
+  if [ -z "${3}" ]; then
+    echo '';
+    echo ' Usage: editinsertabove "match_line" "to_insert" "files"';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local match_line=${1};
+  local to_insert=${2};
+  local files=${@:3};
+
+  # Insert above
+  sed -i "s/\(^.*${match_line}.*\)/${to_insert}\n\1/g" ${files};
+}
+
+# === Edit Insert Below ===
+function editinsertbelow()
+{
+  # Usage
+  if [ -z "${3}" ]; then
+    echo '';
+    echo ' Usage: editinsertbelow "match_line" "to_insert" "files"';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local match_line=${1};
+  local to_insert=${2};
+  local files=${@:3};
+
+  # Insert below
+  sed -i "s/\(^.*${match_line}.*\)/\1\n${to_insert}/g" ${files};
+}

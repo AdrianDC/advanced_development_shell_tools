@@ -27,6 +27,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_tools.rc \
   \
   ${bash_android_dir}/android_cleaners.rc \
+  ${bash_android_dir}/android_edit.rc \
   ${bash_android_dir}/android_fetch.rc \
   ${bash_android_dir}/android_grep.rc \
   ${bash_android_dir}/android_huashan.rc \
