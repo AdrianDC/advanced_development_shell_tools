@@ -53,7 +53,7 @@ function outdevcl()
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/cm/lx/oms},j1,nowipe/outcl,dev/local/wipeout]';
+  local function_usage='romautorelease devicename {aosp/cm/lx/oms/rr},j1,nowipe/outcl,dev/local/wipeout]';
   if [ -z "${1}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
@@ -95,6 +95,11 @@ function romautorelease()
   elif [[ "${rom_params}" =~ 'lx' ]]; then
     rom_tag='LX141';
     rom_target="LegacyXperia/${rom_device}/cm-14.1";
+
+  # ResurrectionRemix Nougat
+  elif [[ "${rom_params}" =~ 'rr' ]]; then
+    rom_tag='RR71';
+    rom_target="${rom_phone}/ResurrectionRemix-N";
 
   # Automatic per-device selection
   else
@@ -154,6 +159,11 @@ function romautorelease()
     source ./build/envsetup.sh;
     lunch aosp_${rom_device}-userdebug;
     make -j${build_cpu_count} bacon | tee ${rom_logs_output};
+
+  # Build Android ResurrectionRemix
+  elif [[ "${rom_tag}" =~ 'RR' ]]; then
+    repos "${rom_device}";
+    brunch "${rom_device}" | tee ${rom_logs_output};
 
   # Build Android Sony AOSP
   elif [[ "${rom_tag}" =~ 'SONY' ]]; then

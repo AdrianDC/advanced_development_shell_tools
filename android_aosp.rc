@@ -93,6 +93,48 @@ function repoinitcm()
   cd ../../;
 }
 
+# === Repo Init ResurrectionRemix ===
+function repoinitrr()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: repoinitrr {nougat} [referenced,clean]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local release="${1}";
+  local params="${2}";
+  local branch="${release}";
+
+  # Clean repo manifest
+  rm -rfv .repo/manifests;
+  rm -rfv .repo/manifests.git;
+  rm -rfv .repo/manifest.xml;
+  rm -rfv .repo/project.list;
+  rm -rfv .repo/projects;
+  rm -rfv .repo/repo;
+  if [[ "${params}" =~ 'clean' ]]; then
+    rm -rfv .repo/project-objects;
+    find * -maxdepth 0 -not -name 'out' -print0 | xargs -0 rm -rfv;
+  fi;
+
+  # Repo init
+  if [[ "${params}" =~ 'referenced' ]]; then
+    repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch} \
+              --reference=$(readlink -f ../CyanogenMod);
+  else
+    repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch};
+  fi;
+
+  # Unneeded branches cleanup
+  cd .repo/manifests/;
+  git tag | grep -v "${branch}" | xargs git tag -d;
+  cd ../../;
+}
+
 # === Repo Init Symlinks ===
 function repoinitsymlinks()
 {
