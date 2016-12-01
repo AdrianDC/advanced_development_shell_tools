@@ -301,6 +301,36 @@ function lxautorelease()
   done;
 }
 
+# === ResurrectionRemix Automatic Releaser ===
+function rrautorelease()
+{
+  # AndroidDev
+  cdand;
+
+  # Repository sync
+  if [ -z "${1}" ]; then
+    cdcm;
+    reposy;
+  fi;
+
+  # Devices to build
+  local devices=${1:-huashan mint hayabusa tsubasa nicki};
+
+  # Walk through devices
+  for device in ${devices}; do
+
+    # Device sync
+    cdrr ${device};
+    if [ -z "${2}" ]; then
+      reposy;
+    fi;
+
+    # ROM build and release
+    romautorelease ${device} rr,outcl;
+
+  done;
+}
+
 # === MultiROM Automatic Releaser ===
 function mromautorelease()
 {
