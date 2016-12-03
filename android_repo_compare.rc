@@ -1,0 +1,73 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Repo Compare Stable ===
+function repocomparestable()
+{
+  # Default variables
+  local default_github_account='CyanogenMod';
+  local default_to_insert='ZNH5Y';
+  local default_see_translations=;
+
+  # Usage
+  if [[ "${1}" =~ 'help' ]]; then
+    echo '';
+    echo ' Usage: repocomparestable [stable_tag ('${default_to_insert}')] [github_account ('${default_github_account}')] [full_diff]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local stable_tag=${1:-${default_to_insert}};
+  local github_account=${2:-${default_github_account}};
+  local full_diff=${3:-};
+
+  # Diff execution
+  echo '';
+  printf ' Scanning...';
+  repo forall -c "
+
+     # Filter out projects
+     if [ -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${github_account}\") ]; then
+       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       return;
+     fi;
+
+     # Parse the branch
+     project_branch=\$(echo \"\${REPO_RREV##*/}\" \
+                     | sed 's/stable\///' \
+                     | sed 's/-${stable_tag}//');
+
+     # Show and fetch projects
+     printf \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+     git fetch --quiet \${REPO_REMOTE} \${project_branch};
+
+     # Detect local differences
+     if [ \$(git diff --quiet HEAD FETCH_HEAD; echo \${?}) -ne 0 ]; then
+       printf \"\r\033[K==========================================================\n\";
+       printf \"Project \${REPO_PROJECT} [\${REPO_RREV##*/} // \${project_branch}]\n\";
+       if [ -z \"${full_diff}\" ]; then
+         git --no-pager diff --stat HEAD FETCH_HEAD  -- . \":(exclude)*res/*-*/*\";
+       elif [ ! -z \"\${default_see_translations}\" ]; then
+         git --no-pager diff HEAD FETCH_HEAD  -- . \":(exclude)*res/*-*/*\";
+       else
+         git --no-pager diff HEAD FETCH_HEAD;
+       fi;
+       echo '';
+     fi;
+
+     # Detect local differences
+     if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
+       printf \"\r\033[K==========================================================\n\";
+       printf \"Project \${REPO_PROJECT} // \${project_branch}: Unmerged differences\n\";
+       git --no-pager diff;
+       echo '';
+     fi;
+    " 2> /dev/null;
+
+  # Done
+  echo '';
+}
+
