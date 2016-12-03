@@ -277,17 +277,20 @@ function gitcid()
 # === Git Commit Stable
 function gitcommitstable
 {
+  # Default variables
+  local to_insert_default='RM-290';
+
   # Usage
-  if [ -z "${2}" ]; then
+  if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitcommitstable "commit_range" "to_insert"';
+    echo ' Usage: gitcommitstable "commit_range" "to_insert (default '${to_insert_default}')"';
     echo '';
     return;
   fi;
 
   # Variables
   local commit_range=${1};
-  local to_insert=${2};
+  local to_insert=${2:-${to_insert_default}};
 
   # Single commits changes
   if [[ ! "${commit_range}" =~ '..' ]]; then
