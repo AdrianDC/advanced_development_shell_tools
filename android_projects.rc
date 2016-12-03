@@ -8,7 +8,7 @@ function gitstat()
 {
   # Usage
   if [ -z "${2}" ]; then
-    echo " Usage: gitstat remote branch";
+    echo " Usage: gitstat remote branch [stats_only]";
     return;
   fi;
 
@@ -17,7 +17,11 @@ function gitstat()
 
   # Request
   git fetch ${1} ${2};
-  git --no-pager diff HEAD...FETCH_HEAD;
+  if [ ! -z "${3}" ]; then
+    git --no-pager diff --stat HEAD FETCH_HEAD;
+  else
+    git --no-pager diff HEAD...FETCH_HEAD;
+  fi;
 
   # Comparison
   echo '';
@@ -41,3 +45,5 @@ alias gitstt='gitstat twrp android-6.0';
 alias gitsts13='gitstat origin stable/cm-13.0-ZNH5Y';
 alias gitstaosp='gitstat aosp master';
 alias gitstsony='gitstat origin aosp/LA.UM.5.5.r1';
+alias gitstf13='gitrao; gitstat origin cm-13.0 true';
+alias gitstfs13='gitrao; gitstat origin stable/cm-13.0-ZNH5Y true';
