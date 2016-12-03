@@ -97,7 +97,8 @@ function gerritssh()
   echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${projectgroup}/${projectname} - ${projectbranch}\e[0m";
   echo '';
   echo -e "    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - CyanogenMod 2015\e[0m ";
-  echo -e "      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)\e[0m ";
+  echo -e "      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)";
+  echo -e "                 p (Publish, +1+2 only)\e[0m ";
 
   # Commits Selection
   for i in $(cat ${tmpfileidsfor}); do
@@ -123,13 +124,31 @@ function gerritssh()
     echo -e "  \e[1;34m\e[4;34mChange ${i} :\e[0m";
     echo "    \"${patchname}\"";
     echo '';
-    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/q) ?\e[0m ";
+    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/q) ?\e[0m ";
     read key;
-    if [[ "${key}" == 'q' || "${key}" == 'q' ]]; then
+    if [[ 'qQ' =~ "${key}" ]]; then
       break;
-    elif [[ "${key}" != 'y' && "${key}" != 'Y' ]]; then
+    elif [[ ! 'yYpP' =~ "${key}" ]]; then
       continue;
     fi;
+
+    # Commands variables
+    local cmd_rebase=;
+    local cmd_publish=;
+    local cmd_review=;
+    local cmd_submit=;
+
+    # Commands selection
+    case ${key} in
+      p|P)
+        cmd_rebase=n;
+        cmd_publish=y;
+        cmd_review=y;
+        cmd_submit=n;
+        ;;
+      *)
+        ;;
+    esac;
 
     # Read remote current HEAD
     git fetch "https://${gerritremote}/${projectgroup}/${projectname}" "${projectbranch}" 2>/dev/null;  
@@ -138,16 +157,29 @@ function gerritssh()
     # Commit Rebase
     if [[ ! "${remotecurrenthead}" == "${patchparent}" ]]; then
       printf "      \e[1;31m> Rebase on HEAD  \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
-      read key;
+      if [ -z "${cmd_rebase}" ]; then
+        read key;
+      else
+        echo "${cmd_rebase}";
+        key=${cmd_rebase};
+      fi;
       if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
         ${gerritssh} review --rebase --project ${projectgroup}/${projectname} ${i},${patchset};
-        patchset=$(${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} change:${i}" | egrep '^\    number' | cut -d' ' -f6-);
+        patchset=$(${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} change:${i}" \
+                 | egrep '^\    number' \
+                 | cut -d' ' -f6-);
       fi;
     fi;
 
     # Commit Draft Publish
     if [[ ! "${patchdraft}" == 'false' ]]; then
-      printf "      \e[1;31m> Publish draft   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m "; read key;
+      printf "      \e[1;31m> Publish draft   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+      if [ -z "${cmd_publish}" ]; then
+        read key;
+      else
+        echo "${cmd_publish}";
+        key=${cmd_publish};
+      fi;
       if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
         ${gerritssh} review --publish --project ${projectgroup}/${projectname} ${i},${patchset};
       fi;
@@ -166,15 +198,23 @@ function gerritssh()
 
       # Commit Cherry-Pick Commit
       if [ ! -z "${projectbranchcp}" ]; then
-        printf "      \e[1;31m> Copy to ${projectbranchcp} \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m "; read key;
+        printf "      \e[1;31m> Copy to ${projectbranchcp} \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+        read key;
         if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
 
           # Get Commit Details
           ${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} change:${i}" > ${tmpfilepatchinfo};
-          local patchcommit=$(cat ${tmpfilepatchinfo} | egrep '^\    revision' | cut -d' ' -f6-);
-          cat ${tmpfilepatchinfo} | sed -n '/commitMessage/,/createdOn/ p' | sed '${d}' | cut -c 18- > ${tmpfilepatchmessage};
+          local patchcommit=$(cat ${tmpfilepatchinfo} \
+                            | egrep '^\    revision' \
+                            | cut -d' ' -f6-);
+          cat ${tmpfilepatchinfo} \
+            | sed -n '/commitMessage/,/createdOn/ p' \
+            | sed '${d}' \
+            | cut -c 18- > ${tmpfilepatchmessage};
           echo "(cherry picked from commit ${patchcommit})" >> ${tmpfilepatchmessage};
-          local patchmessage=$(cat ${tmpfilepatchmessage} | sed 's/\"/\\\"/g' | sed ':begin;$!N;s/\n/\\n/;tbegin');
+          local patchmessage=$(cat ${tmpfilepatchmessage} \
+                             | sed 's/\"/\\\"/g' \
+                             | sed ':begin;$!N;s/\n/\\n/;tbegin');
           echo "{\"destination\":\"${projectbranchcp}\",\"message\":\"${patchmessage}\"}" > ${tmpfilepatchmessage};
 
           # Post Cherry-Pick Request
@@ -188,13 +228,25 @@ function gerritssh()
     fi;
 
     # Commit Review
-    printf "      \e[1;31m> Review +1/+2    \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m "; read key;
+    printf "      \e[1;31m> Review +1/+2    \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+    if [ -z "${cmd_review}" ]; then
+      read key;
+    else
+      echo "${cmd_review}";
+      key=${cmd_review};
+    fi;
     if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
       ${gerritssh} review --verified 1 --code-review 2 --project ${projectgroup}/${projectname} ${i},${patchset};
     fi;
 
     # Commit Submission
-    printf "      \e[1;31m> Submit commit   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m "; read key;
+    printf "      \e[1;31m> Submit commit   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+    if [ -z "${cmd_submit}" ]; then
+      read key;
+    else
+      echo "${cmd_submit}";
+      key=${cmd_submit};
+    fi;
     if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
       ${gerritssh} review --submit --project ${projectgroup}/${projectname} ${i},${patchset};
     fi;
