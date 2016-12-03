@@ -274,6 +274,33 @@ function gitcid()
   git commit --amend;
 }
 
+# === Git Commit Stable
+function gitcommitstable
+{
+  # Usage
+  if [ -z "${3}" ]; then
+    echo '';
+    echo ' Usage: gitcommitstable "commit_start" "commit_end" "to_insert"';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local commit_start=${1};
+  local commit_end=${2};
+  local to_insert=${3};
+
+  # Pick and edit
+  for commit_sha1 in $(git rev-list --reverse ${commit_start}^..${commit_end}); do
+    rm -f .git/COMMIT_EDITMSG;
+    rm -f .git/.COMMIT_EDITMSG.swp;
+    git cherry-pick ${commit_sha1};
+    sed -i -e "2,/^[^ ]*: .*/s/^\([^ ]*: .*\)/${to_insert}\n\n\1/" .git/COMMIT_EDITMSG;
+    git commit --amend --edit --file=.git/COMMIT_EDITMSG;
+    echo '';
+  done;
+}
+
 # === Git Push Helpers ===
 alias gitpf='git push -f';
 
