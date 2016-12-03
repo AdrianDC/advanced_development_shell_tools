@@ -278,20 +278,24 @@ function gitcid()
 function gitcommitstable
 {
   # Usage
-  if [ -z "${3}" ]; then
+  if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitcommitstable "commit_start" "commit_end" "to_insert"';
+    echo ' Usage: gitcommitstable "commit_range" "to_insert"';
     echo '';
     return;
   fi;
 
   # Variables
-  local commit_start=${1};
-  local commit_end=${2};
-  local to_insert=${3};
+  local commit_range=${1};
+  local to_insert=${2};
+
+  # Single commits changes
+  if [[ ! "${commit_range}" =~ '..' ]]; then
+    commit_range=${commit_range}^..${commit_range};
+  fi;
 
   # Pick and edit
-  for commit_sha1 in $(git rev-list --reverse ${commit_start}^..${commit_end}); do
+  for commit_sha1 in $(git rev-list --reverse ${commit_range}); do
     rm -f .git/COMMIT_EDITMSG;
     rm -f .git/.COMMIT_EDITMSG.swp;
     git cherry-pick ${commit_sha1};
