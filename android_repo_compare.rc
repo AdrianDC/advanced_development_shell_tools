@@ -55,6 +55,8 @@ function repocomparestable()
        else
          git --no-pager diff HEAD FETCH_HEAD;
        fi;
+       printf ' Stable commits / Mainline new commits :  ';
+       git rev-list --left-right --count HEAD...FETCH_HEAD;
        echo '';
      fi;
 
