@@ -161,10 +161,14 @@ function aospbuild()
   # ROM variables
   local rom_device="${1}";
   local rom_params="${2}";
+  local rom_target=$(codenametotarget "${rom_device}");
   local rom_logs="${ANDROID_DEV_DRIVE}/Logs";
   local rom_logs_output="${rom_logs}/Build.${rom_device}.AOSP.log";
+
+  # Init mode
   if [[ "${1}" =~ 'init' ]]; then
     rom_device='huashan';
+    rom_target='huashan';
     rom_params='nobuild';
   fi;
 
@@ -177,7 +181,7 @@ function aospbuild()
 
   # Compilation preparation
   source ./build/envsetup.sh;
-  lunch aosp_${rom_device}-userdebug;
+  lunch aosp_${rom_target}-userdebug;
 
   # Compilation start
   if [[ ! "${rom_params}" =~ 'nobuild' ]]; then

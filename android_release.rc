@@ -73,33 +73,34 @@ function romautorelease()
   local rom_device="${1}";
   local rom_params="${2}";
   local rom_phone="${rom_device^}";
+  local rom_target=$(codenametotarget "${rom_device}");
   local rom_tag;
-  local rom_target;
-  
+  local rom_upload;
+
   # AOSP 7.1
   if [[ "${rom_params}" =~ 'aosp' ]]; then
     rom_tag='AOSP71';
-    rom_target="${rom_phone}/AOSP-7.1";
+    rom_upload="${rom_phone}/AOSP-7.1";
 
   # CyanogenMod 14.1
   elif [[ "${rom_params}" =~ 'cm' ]]; then
     rom_tag='CM141';
-    rom_target="${rom_phone}/CyanogenMod-14.1";
+    rom_upload="${rom_phone}/CyanogenMod-14.1";
 
   # AOSP-OMS 7.1
   elif [[ "${rom_params}" =~ 'oms' ]]; then
     rom_tag='OMS71';
-    rom_target="${rom_phone}/AOSP-OMS-7.1";
+    rom_upload="${rom_phone}/AOSP-OMS-7.1";
 
   # LegacyXperia 14.1
   elif [[ "${rom_params}" =~ 'lx' ]]; then
     rom_tag='LX141';
-    rom_target="LegacyXperia/${rom_device}/cm-14.1";
+    rom_upload="LegacyXperia/${rom_device}/cm-14.1";
 
   # ResurrectionRemix Nougat
   elif [[ "${rom_params}" =~ 'rr' ]]; then
     rom_tag='RR71';
-    rom_target="${rom_phone}/ResurrectionRemix-N";
+    rom_upload="${rom_phone}/ResurrectionRemix-N";
 
   # Automatic per-device selection
   else
@@ -112,7 +113,7 @@ function romautorelease()
 
   # Development build
   if [[ "${rom_params}" =~ 'dev' ]]; then
-    rom_target='Development';
+    rom_upload='Development';
   fi;
 
   # Ignore the build
@@ -145,41 +146,41 @@ function romautorelease()
   # Build Android AOSP
   elif [[ "${rom_tag}" =~ 'AOSP71' ]]; then
     source ./build/envsetup.sh;
-    lunch aosp_${rom_device}-userdebug;
+    lunch aosp_${rom_target}-userdebug;
     make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
 
   # Build Android AOSP-CAF
   elif [[ "${rom_tag}" =~ 'CAF' ]]; then
     source ./build/envsetup.sh;
-    lunch aosp_${rom_device}-userdebug;
+    lunch aosp_${rom_target}-userdebug;
     make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
 
   # Build Android AOSP-OMS
   elif [[ "${rom_tag}" =~ 'OMS' ]]; then
     source ./build/envsetup.sh;
-    lunch aosp_${rom_device}-userdebug;
+    lunch aosp_${rom_target}-userdebug;
     make -j${build_cpu_count} bacon | tee ${rom_logs_output};
 
   # Build Android ResurrectionRemix
   elif [[ "${rom_tag}" =~ 'RR' ]]; then
-    repos "${rom_device}";
-    brunch "${rom_device}" | tee ${rom_logs_output};
+    repos "${rom_target}";
+    brunch "${rom_target}" | tee ${rom_logs_output};
 
   # Build Android Sony AOSP
   elif [[ "${rom_tag}" =~ 'SONY' ]]; then
     source ./build/envsetup.sh;
-    lunch aosp_${rom_device}-userdebug;
+    lunch aosp_${rom_target}-userdebug;
     make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
 
   # Build Android LegacyXperia
   elif [[ "${rom_tag}" =~ 'LX' ]]; then
-    repos "${rom_device}";
-    brunch "${rom_device}" | tee ${rom_logs_output};
+    repos "${rom_target}";
+    brunch "${rom_target}" | tee ${rom_logs_output};
 
   # Build Android CyanogenMod
   else
-    repos "${rom_device}";
-    brunch "${rom_device}" | tee ${rom_logs_output};
+    repos "${rom_target}";
+    brunch "${rom_target}" | tee ${rom_logs_output};
   fi;
 
   # Upload the result and notify
@@ -188,10 +189,10 @@ function romautorelease()
     if [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
       gnome-terminal -x bash -c "\
         source $(getbash)/android_bash.rc;\
-        devuplrom \"${rom_device}\" \"${rom_target}\"; \
+        devuplrom \"${rom_device}\" \"${rom_upload}\"; \
         pushb \"${rom_tag} for ${rom_device} uploaded\"";
     else
-      devuplrom "${rom_device}" "${rom_target}";
+      devuplrom "${rom_device}" "${rom_upload}";
       pushb "${rom_tag} for ${rom_device} uploaded";
     fi;
   fi;
@@ -207,6 +208,18 @@ function romautorelease()
 
   # Restore original path
   cd "${cwd}";
+}
+
+# === Phone Codename to Target ===
+function codenametotarget()
+{
+  # Filter devices from input
+  case "${1}" in
+    dora)
+      echo 'f8131';;
+    *)
+      echo "${1}";;
+  esac;
 }
 
 # === AOSP Automatic Releaser ===

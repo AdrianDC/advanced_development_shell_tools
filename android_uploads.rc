@@ -103,16 +103,17 @@ function devuplrom()
   # Variables
   local cwd=$(pwd);
   local device="${1}";
-  local target="${2}";
+  local upload="${2}";
+  local target=$(codenametotarget "${device}");
   local romfiles;
   local romfile;
-  if [ -z "$target" ]; then
-    target="Development";
+  if [ -z "${upload}" ]; then
+    upload="Development";
   fi;
 
   # ROM detection
   repor;
-  romfiles=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mtime -1 | sort);
+  romfiles=$(find "./out/target/product/${device}/"*"${target}"*".zip" -mtime -1 | sort);
   romfile="";
   for romfiletest in ${romfiles}; do
     if [ -f "${romfiletest}.md5sum" ]; then
@@ -125,7 +126,7 @@ function devuplrom()
 
   # ROM upload
   if [ ! -z "${romfile}" ]; then
-    fileupl "${romfile}" "${target}";
+    fileupl "${romfile}" "${upload}";
   fi;
 
   # End of process
@@ -180,9 +181,10 @@ function pushbrom()
   # Variables
   local device="${1}";
   local rom="${2:-ROM}";
+  local target=$(codenametotarget "${device}");
 
   # ROM file
-  romfile=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mmin -30 | tail -n 1);
+  romfile=$(find "./out/target/product/${device}/"*"${target}"*".zip" -mmin -30 | tail -n 1);
   if [ ! -z "$romfile" ]; then
      pushb "${rom} for ${device} ready";
   else
