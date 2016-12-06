@@ -15,7 +15,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: aosprepoinit android-7.1.0_r{XX} [referenced,clean]';
+    echo ' Usage: aosprepoinit android-7.1.1_r{XX} [referenced,clean]';
     echo '';
     return;
   fi;
@@ -23,7 +23,7 @@ function repoinitaosp()
   # Variables
   local release="${1}";
   local params="${2}";
-  local branch="android-7.1.0_r${release}";
+  local branch="android-7.1.1_r${release}";
 
   # Clean repo manifest
   rm -rfv .repo/manifests;
@@ -140,29 +140,6 @@ function repoinitsymlinks()
 {
   # Snapdraggon LLVM prebuilts
   ln -sv ../../CyanogenMod/prebuilts/snapdragon-llvm ./prebuilts/snapdragon-llvm;
-}
-
-# === AOSP Syncer ===
-function aospsync()
-{
-  # Android Selection
-  case ${1} in
-    m)
-      # Android 6.0.1
-      repo init -u https://android.googlesource.com/platform/manifest -b android-6.0.1_r63;
-      repo sync -j$(grep -c ^processor /proc/cpuinfo) --current-branch \
-        --detach -f --force-broken --force-sync -c --no-clone-bundle --no-tags;;
-    n)
-      # Android 7.1.0
-      repo init -u https://android.googlesource.com/platform/manifest -b android-7.1.0_r6;
-      repo sync -j$(grep -c ^processor /proc/cpuinfo) --current-branch \
-        --detach -f --force-broken --force-sync -c --no-clone-bundle --no-tags;;
-    *)
-      # No selection
-      echo '';
-      echo ' Usage: aospsync [m/n]'
-      echo '';;
-  esac;
 }
 
 # === AOSP Builder ===
