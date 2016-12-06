@@ -152,6 +152,7 @@ function sonynrebaser()
       # Check origin remote
       git ls-remote --exit-code origin >/dev/null 2>&1;
       if [ $? -ne 0 ]; then
+        echo ' Branch origin was not found...';
         gitraos;
         continue;
       fi;
@@ -159,6 +160,7 @@ function sonynrebaser()
       # Check private remote
       git ls-remote --exit-code AdrianDC >/dev/null 2>&1;
       if [ $? -ne 0 ]; then
+        echo ' Branch AdrianDC was not found...';
         gitraa;
         continue;
       fi;
