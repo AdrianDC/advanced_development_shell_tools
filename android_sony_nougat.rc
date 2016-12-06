@@ -6,6 +6,17 @@
 # === SONY Nougat Patcher ===
 function sonynpatcher()
 {
+  # GitHub Credentials
+  export GitEMail="user.name@gmail.com";
+  export GitFullName="Full Name";
+  export GitUserName="Username";
+
+  # Create  ~/.bash_android.github.rc with the exports to override the credentials
+  if [ -f ~/.bash_android.github.rc ]; then
+    source ~/.bash_android.github.rc;
+  fi;
+
+  # ==========================================================
   # Repo root
   if [ -z "$(type -t croot)" ]; then
     while [ ! -e './build/envsetup.sh' ]; do
@@ -29,6 +40,7 @@ function sonynpatcher()
 
   # ==========================================================
   # Variables
+  local commits_list;
   local git_revs_count;
   local git_revs_count_local;
   local path_branch;
@@ -63,13 +75,36 @@ function sonynpatcher()
       # Handle unupdated projects
       if [ ${git_revs_count_local} -ne 0 ]; then
         echo '';
-        printf '  > Rebase onto newest changes [y/N] ? ';
+        printf '  > Recreate onto newest changes [y/N] ? ';
         read key;
 
         # Rebase the tree
         if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
-          git cherry-pick --abort;
-          git cherry-pick FETCH_HEAD~${git_revs_count_remote}..FETCH_HEAD;
+          git cherry-pick --abort &> /dev/null;
+
+          # Detect commits to pick
+          commits_list=$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD);
+          if [ -z "${commits_list}" ]; then
+            commits_list=$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD);
+          else
+            commits_list=$(git rev-list --reverse FETCH_HEAD~${git_revs_count_remote}..FETCH_HEAD);
+          fi;
+
+          # Pick all commits
+          for sha1 in ${commits_list}; do
+            git cherry-pick ${sha1};
+
+            # Failed update
+            if [ ${?} -ne 0 ]; then
+              echo '';
+              echo '  < Automatic update failed...';
+              echo '     Stopping, push with : aospprojectpusher;';
+              echo '';
+              return;
+            fi;
+          done;
+
+          # Automatic push
           aospprojectpusher;
         fi;
 
