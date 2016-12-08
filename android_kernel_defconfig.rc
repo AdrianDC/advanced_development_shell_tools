@@ -1,0 +1,91 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Kernel DefConfig Editor ===
+function makedefconf()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo '  Usage: makedefconf <device_name> [bool_full_config] [diff_config]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local defconfig=${1};
+  local configmode=${2};
+  local diffcommon=${3};
+
+  # DiffConfig
+  local diffconfig=$(ls "arch/arm"*"/configs/diffconfig/${configmode}_diffconfig" 2> /dev/null);
+  if [ ! -z "${diffconfig}" ] && [ -f "${diffconfig}" ]; then
+    export ARCH=$(echo "${diffconfig}" | sed 's/.*\(arm[^\/]*\)\/.*/\1/');
+    export KBUILD_DIFFCONFIG="${configmode}_diffconfig";
+    diffcommon=$(dirname "${diffconfig}")/${diffcommon}_diffconfig;
+  fi;
+
+  # Architecture
+  if [ -z "${ARCH}" ]; then
+    export ARCH=arm;
+  fi;
+  export SUBARCH=arm;
+  export KCONFIG_NOTIMESTAMP=true;
+
+  # Kernel input
+  local DEFCONFIG_PATH=./arch/${ARCH}/configs;
+  local DEFCONFIG_INPUT=("${DEFCONFIG_PATH}/"*"${defconfig}"*);
+  if [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
+    if [ ${#DEFCONFIG_INPUT[@]} -eq 1 ]; then
+      DEFCONFIG_INPUT=();
+    fi;
+    echo '';
+    echo '  Error: makedefconf found '${#DEFCONFIG_INPUT[@]}' defconfigs';
+    echo '';
+    return;
+  fi;
+
+  # Kernel defconfig
+  local DEFCONFIG_FILE=$(basename "${DEFCONFIG_INPUT}");
+
+  # Google configurations
+  if [[ "${defconfig}" == 'google' ]]; then
+    ./scripts/kconfig/merge_config.sh ${DEFCONFIG_PATH}/${DEFCONFIG_FILE} android/configs/android-base.cfg android/configs/android-recommended.cfg
+    mv ./.config ./.config_android;
+    make ${DEFCONFIG_FILE};
+    meld ./.config ./.config_android;
+    rm ./.config_android;
+
+  # Make full defconfig
+  elif [ ! -z "${configmode}" ]; then
+    make ${DEFCONFIG_FILE};
+    if [ -f "${diffconfig}" ]; then
+      if [ -f "${diffcommon}" ]; then
+        meld ./.config "${diffconfig}" &
+          meld ./.config "${diffcommon}" &
+          meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+      else
+        meld ./.config "${diffconfig}" &
+          meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+      fi;
+    else
+      meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+    fi;
+
+  # Make minimal defconfig
+  else
+    make "${DEFCONFIG_FILE}";
+    make menuconfig;
+    make savedefconfig;
+    meld ./defconfig "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+    rm ./defconfig;
+  fi;
+
+  # Cleanup
+  #make mrproper;
+  #rm -rf scripts/basic;
+  #rm -rf scripts/kconfig;
+  #rm -rf .config;
+}
