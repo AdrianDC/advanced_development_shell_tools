@@ -74,3 +74,69 @@ function repocomparestable()
   echo '';
 }
 
+# === Repo Compare Upstream ===
+function repocompareupstream()
+{
+  # Default variables
+  local default_github_account='CyanogenMod';
+  local default_filtered_projects='chromium-webview';
+  local default_see_translations=;
+
+  # Upstream branch
+  local upstream_branch=$(cat .repo/manifest.xml 2> /dev/null \
+                        | grep revision \
+                        | grep android- \
+                        | head -n 1 \
+                        | sed 's/.*"\(refs.*\)".*/\1/');
+
+  # Usage
+  if [[ "${1}" =~ 'help' ]]; then
+    echo '';
+    echo ' Usage: repocompareupstream [github_account ('${default_github_account}')] [full_diff]';
+    echo ' Information: Need to be started from the repo root';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local github_account=${1:-${default_github_account}};
+  local full_diff=${2:-};
+
+  # Diff execution
+  echo '';
+  printf ' Scanning...';
+  repo forall -c "
+
+     # Filter out projects
+     if [ -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${github_account}\") ] || \
+             [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_filtered_projects}\") ]; then
+       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       return;
+     fi;
+
+     # Create the AOSP path
+     project_upstream=https://android.googlesource.com;
+     if (echo \${REPO_PATH} | grep -qv '^device'); then
+         project_upstream=\${project_upstream}/platform;
+     fi
+     project_upstream=\${project_upstream}/\${REPO_PATH};
+
+     # Show and fetch projects
+     printf \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+     git fetch -v \${project_upstream} ${upstream_branch};
+
+     # Detect new remote commits
+     changescount=\$(git rev-list --right-only --count HEAD...FETCH_HEAD);
+     if [ \${changescount} -ne 0 ]; then
+       printf \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
+       echo '';
+       git log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
+       echo '';
+     fi;
+
+    " 2> /dev/null;
+
+  # Done
+  printf '\r\033[K Done searching';
+  echo '';
+}
