@@ -107,6 +107,13 @@ function torompaths()
     echo '';
     return;
   fi;
+
+  # AndroidDev access
+  if ! pwd | grep -q "${android_dev_dir}"; then
+    cdand;
+  fi;
+
+  # AndroidDev escaping
   android_dev_dir=${android_dev_dir//\//\\\/};
 
   # ROM subpath
@@ -143,7 +150,7 @@ function cdtwrp()      { cd $(totwrp); }
 
 # === Private Shortcuts ===
 function cdand()       { cd $(getand); }
-function cda()         { cdand; cdcm huashan; }
+function cda()         { cdcm huashan; }
 function cdaosph()     { cd $(toaosp huashan); }
 function cdaospm()     { cd $(toaosp mint); }
 function cdaosps()     { cd $(toaosp sony); }
