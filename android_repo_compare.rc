@@ -47,7 +47,7 @@ function repocomparestable()
      # Detect local differences
      if [ \$(git diff --quiet HEAD FETCH_HEAD; echo \${?}) -ne 0 ]; then
        printf \"\r\033[K==========================================================\n\";
-       printf \"Project \${REPO_PROJECT} [\${REPO_RREV##*/} // \${project_branch}]\n\";
+       printf \"Project \${REPO_PROJECT} [\${REPO_RREV##*/} / \${project_branch}]\n\";
        if [ -z \"${full_diff}\" ]; then
          git --no-pager diff --stat HEAD FETCH_HEAD  -- . \":(exclude)*res/*-*/*\";
        elif [ ! -z \"\${default_see_translations}\" ]; then
@@ -63,13 +63,14 @@ function repocomparestable()
      # Detect local differences
      if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
        printf \"\r\033[K==========================================================\n\";
-       printf \"Project \${REPO_PROJECT} // \${project_branch}: Unmerged differences\n\";
+       printf \"Project \${REPO_PROJECT} / \${project_branch}: Unmerged differences\n\";
        git --no-pager diff;
        echo '';
      fi;
     " 2> /dev/null;
 
   # Done
+  printf '\r\033[K Done searching';
   echo '';
 }
 
