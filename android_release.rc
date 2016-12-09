@@ -87,10 +87,10 @@ function romautorelease()
     rom_tag='CM141';
     rom_upload="${rom_phone}/CyanogenMod-14.1";
 
-  # AOSP-OMS 7.1
+  # AOSP-OMS 7.x
   elif [[ "${rom_params}" =~ 'oms' ]]; then
     rom_tag='OMS71';
-    rom_upload="${rom_phone}/AOSP-OMS-7.1";
+    rom_upload="${rom_phone}/AOSP-OMS-7.x";
 
   # LegacyXperia 14.1
   elif [[ "${rom_params}" =~ 'lx' ]]; then
@@ -366,25 +366,31 @@ function twrpautorelease()
   done;
 }
 
-# === ROM CAF 8x60 Releaser ===
-#function cafautorelease()
-#{
-#  cdand;
-#  cdaospcaf;
-#  reposycl;
-#  for device in huashan mint hayabusa tsubasa; do
-#    romautorelease "$device" caf;
-#  done;
-#}
-
 # === ROM OMS 8x60 Releaser ===
-#function omsautorelease()
-#{
-#  cdand;
-#  cdaospoms;
-#  reposycl;
-#  for device in huashan mint hayabusa tsubasa; do
-#    romautorelease "$device" oms;
-#  done;
-#}
+function omsautorelease()
+{
+  # AndroidDev
+  cdand;
+  cdaospoms;
 
+  # Repository sync
+  if [ -z "${1}" ]; then
+    reposycl;
+  fi;
+
+  # Devices to build
+  local devices=${1:-huashan mint hayabusa tsubasa};
+
+  # Walk through devices
+  for device in ${devices}; do
+
+    # Device sync
+    if [ -z "${2}" ]; then
+      reposy;
+    fi;
+
+    # ROM build and release
+    romautorelease ${device} oms;
+
+  done;
+}
