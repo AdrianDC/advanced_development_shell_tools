@@ -41,6 +41,7 @@ function sonynpatcher()
   # ==========================================================
   # Variables
   local commits_list;
+  local commits_result;
   local git_revs_count;
   local git_revs_count_local;
   local path_branch;
@@ -93,11 +94,13 @@ function sonynpatcher()
           # Pick all commits
           for sha1 in ${commits_list}; do
             git cherry-pick ${sha1};
+            commits_result=${?};
 
             # Failed update
-            if [ ${?} -ne 0 ]; then
+            if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ]; then
               echo '';
               echo '  < Automatic update failed...';
+              echo '     Tried to add following commits: '${commits_list};
               echo '     Stopping, push with : aospprojectpusher;';
               echo '';
               return;
