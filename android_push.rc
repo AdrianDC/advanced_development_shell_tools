@@ -32,6 +32,7 @@ alias gitpa='gitpu AdrianDC';
 alias gitpa14='gitpu AdrianDC cm-14.1';
 alias gitpa6='gitpu AdrianDC aosp-6.0';
 alias gitpaa6='gitpu AdrianDC android-6.0';
+alias gitpal='gitpu AdrianDC local_manifests';
 alias gitpala='gitpu AdrianDC LA.UM.5.5_rb1.10';
 alias gitpam='gitpu AdrianDC multirom';
 alias gitpama='gitpu AdrianDC master';
