@@ -384,11 +384,6 @@ function omsautorelease()
   # Walk through devices
   for device in ${devices}; do
 
-    # Device sync
-    if [ -z "${2}" ]; then
-      reposy;
-    fi;
-
     # ROM build and release
     romautorelease ${device} oms;
 
