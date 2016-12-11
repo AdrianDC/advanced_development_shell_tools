@@ -96,9 +96,10 @@ function gerritssh()
   echo '';
   echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${projectgroup}/${projectname} - ${projectbranch}\e[0m";
   echo '';
-  echo -e "    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - CyanogenMod 2015\e[0m ";
-  echo -e "      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)";
-  echo -e "                 p (Publish, +1+2 only)\e[0m ";
+  echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - CyanogenMod 2015\e[0m';
+  echo -e '      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)';
+  echo -e '                 p (Publish, +1+2 only)';
+  echo -e '                 a (+1+2 Submit all)\e[0m';
 
 
   # Commits on Review
@@ -132,6 +133,14 @@ function gerritssh()
   done;
   echo '';
 
+  # Commands variables
+  local cmd_global=;
+  local cmd_rebase=;
+  local cmd_publish=;
+  local cmd_review=;
+  local cmd_submit=;
+  local key;
+
   # Commits Selection
   for i in $(cat ${tmpfileidsfor}); do
 
@@ -156,19 +165,18 @@ function gerritssh()
     echo -e "  \e[1;34m\e[4;34mChange ${i}/${patchset}\e[0m";
     echo "    \"${patchname}\"";
     echo '';
-    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/q) ?\e[0m ";
-    read key;
+    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/a/q) ?\e[0m ";
+    if [ -z "${cmd_global}" ]; then
+      read key;
+    else
+      key=${cmd_global};
+      echo "${key}";
+    fi;
     if [[ 'qQ' =~ "${key}" ]]; then
       break;
-    elif [[ ! 'yYpP' =~ "${key}" ]]; then
+    elif [[ ! 'yYpPaA' =~ "${key}" ]]; then
       continue;
     fi;
-
-    # Commands variables
-    local cmd_rebase=;
-    local cmd_publish=;
-    local cmd_review=;
-    local cmd_submit=;
 
     # Commands selection
     case ${key} in
@@ -177,6 +185,13 @@ function gerritssh()
         cmd_publish=y;
         cmd_review=y;
         cmd_submit=n;
+        ;;
+      a|A)
+        cmd_global=${key};
+        cmd_rebase=n;
+        cmd_publish=y;
+        cmd_review=y;
+        cmd_submit=y;
         ;;
       *)
         ;;
