@@ -62,12 +62,22 @@ function gitrai()  { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
 function gitrao()  { gitremoteadaptset 'origin' 'CyanogenMod' ''; }
 function gitraoo() { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot() { gitremoteadaptset 'origin' 'TheMuppets' ''; }
-function gitraos() { gitremoteadaptset 'origin' 'sonyxperiadev'; }
 function gitrat()  { gitremoteadaptset 'twrp' 'TeamWin' ''; }
 function gitrax()  { gitremoteadaptset 'xperia' 'XperiaMultiROM' ''; }
 function gitrab()  { gitremoteset backup https://github.com/AdrianDC/cm_development_sony8960.git; }
 function gitradb() { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
 
+# === Git Remotes sonyxperiadev Helper ===
+function gitraos()
+{
+  if [[ "$(pwd)/" =~ "kernel/sony/msm/" ]]; then
+    gitremoteset origin https://github.com/sonyxperiadev/kernel.git;
+  else
+    gitremoteadaptset 'origin' 'sonyxperiadev';
+  fi;
+}
+
+# === Git Remotes set-url Shortcuts ===
 alias gitraau='git remote set-url AdrianDC';
 alias gitraou='git remote set-url origin';
 
