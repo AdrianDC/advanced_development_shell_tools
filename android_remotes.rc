@@ -6,10 +6,16 @@
 # === Git Remote Setter ===
 function gitremoteset()
 {
-  # Set, update and display the remote
+  # Set and update the remote
   git remote add ${1} ${2} 2> /dev/null;
   git remote set-url ${1} ${2};
-  git remote -v | grep ${1};
+
+  # Debug the remote
+  printf ' \e[1;32mRemote :\e[0m ';
+  git remote -v | grep ${1} \
+                | grep -i '(fetch)' \
+                | awk '{ printf("%s -> %s", $1, $2); }';
+  echo '';
 }
 
 # === Git Remote Adapter ===
