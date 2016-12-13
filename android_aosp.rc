@@ -97,6 +97,60 @@ function repoinitcm()
   cd ../../;
 }
 
+# === Repo Init AOSP Devices ===
+function repoinitaospall()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: repoinitaospall android-7.1.1_r{XX}';
+    echo '';
+    return;
+  fi;
+
+  # Update common repo
+  cdaosp;
+  repoinitaosp ${1};
+  reposy;
+
+  # Walk through devices
+  for device in huashan mint hayabusa tsubasa sony; do
+
+    # Update device repo
+    cdaosp ${device};
+    repoinitaosp ${1} referenced;
+    reposy;
+
+  done;
+}
+
+# === Repo Init AOSP Devices ===
+function repoinitcmall()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: repoinitcmall {14.0/14.1}';
+    echo '';
+    return;
+  fi;
+
+  # Update common repo
+  cdcm;
+  repoinitcm ${1};
+  reposy;
+
+  # Walk through devices
+  for device in huashan mint hayabusa tsubasa sony; do
+
+    # Update device repo
+    cdcm ${device};
+    repoinitcm ${1} referenced;
+    reposy;
+
+  done;
+}
+
 # === Repo Init ResurrectionRemix ===
 function repoinitrr()
 {
