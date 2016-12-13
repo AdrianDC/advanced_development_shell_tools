@@ -12,7 +12,8 @@ function gitpu()
   local cmd;
 
   # Get remote stats
-  gitstat ${remote} ${branch};
+  echo '';
+  gitstat ${remote} ${branch} true;
 
   # Introduction
   echo '';
