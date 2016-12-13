@@ -280,7 +280,11 @@ function aospprojectpusher()
   projectdir=${projectdir#${repodir}/};
   case "${projectdir}" in
     frameworks\/base)
-      projectbranch='aosp_sony8960';;
+      if [[ "${repodir}" =~ 'CyanogenMod-sony' ]]; then
+        projectbranch='cm_sonyaosp';
+      else
+        projectbranch='aosp_sony8960';
+      fi;;
     *)
       projectbranch=${projectdir//\//_};;
   esac;
@@ -289,15 +293,13 @@ function aospprojectpusher()
   echo " Reporisory path: ${repodir}";
   echo '';
 
-  # Checking missing backup remote
-  target_backup=$(git remote -v \
-               | grep -i backup);
-  if [ -z "${target_backup}" ]; then
-    if [[ "${repodir}" =~ 'sony' ]]; then
-      gitrasonyaosp;
-    else
-      gitrasony8960;
-    fi;
+  # Update backup remote
+  if [[ "${repodir}" =~ 'CyanogenMod-sony' ]]; then
+    gitrasonycm;
+  elif [[ "${repodir}" =~ 'sony' ]]; then
+    gitrasonyaosp;
+  else
+    gitrasony8960;
   fi;
 
   # Fetch upstream backup

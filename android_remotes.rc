@@ -87,7 +87,7 @@ function gitraos()
 alias gitraau='git remote set-url AdrianDC';
 alias gitraou='git remote set-url origin';
 
-# === Git Remotes AOSP Projects ===
+# === Git Remotes AOSP (8960) Project ===
 function gitrasony8960()
 {
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
@@ -96,7 +96,15 @@ function gitrasony8960()
     gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960.git;
   fi;
 }
+
+# === Git Remotes AOSP (Sony) Project ===
 function gitrasonyaosp()
 {
   gitremoteset backup https://github.com/AdrianDC/aosp_development_sonyaosp.git;
+}
+
+# === Git Remotes CM (Sony) Project ===
+function gitrasonycm()
+{
+  gitremoteset backup https://github.com/AdrianDC/cm_development_sonyaosp.git;
 }
