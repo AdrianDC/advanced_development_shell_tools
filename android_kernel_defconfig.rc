@@ -98,3 +98,47 @@ function makedefconf()
   #rm -rf scripts/kconfig;
   #rm -rf .config;
 }
+
+# === Kernel Config Updater ===
+function kernelconfigupdater()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo '  Usage: kernelconfigupdater <CONFIG_NAME=VALUE_or_# CONFIG_NAME is not set>';
+    echo '';
+    return;
+  fi;
+
+  # Detect .config
+  if [ ! -f .config ]; then
+    echo '';
+    echo '  Error: .config was not found';
+    echo '';
+    return;
+  fi;
+
+  # Configuration variables
+  local config_string=(${1})
+  local config_name='';
+  local config_output='';
+
+  # Configuration parsing
+  if [ "${config_string[0]:0:1}" = "#" ]; then
+    config_name=${config_string[1]};
+    config_output="# ${config_name} is not set";
+  else
+    config_name=${config_string[@]%%=*};
+    config_output="${config_name}=${config_string[@]##*=}";
+  fi;
+
+  # Configuration output
+  sed -i "/# ${config_name} is not set/d" .config;
+  sed -i "/${config_name}=/d" .config;
+  echo ${config_output} >> .config;
+  rm -f .config.old;
+  cp .config .config.old;
+
+  # Update .config
+  make oldconfig;
+}
