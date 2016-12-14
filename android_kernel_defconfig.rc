@@ -9,7 +9,7 @@ function makedefconf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo '  Usage: makedefconf <device_name> [bool_full_config] [diff_config]';
+    echo '  Usage: makedefconf <device_name> [bool_full_config] [diff_config] [force_config=value]';
     echo '';
     return;
   fi;
@@ -18,6 +18,7 @@ function makedefconf()
   local defconfig=${1};
   local configmode=${2};
   local diffcommon=${3};
+  local forceconfig=${4};
 
   # DiffConfig
   local diffconfig=$(ls "arch/arm"*"/configs/diffconfig/${configmode}_diffconfig" 2> /dev/null);
@@ -64,12 +65,18 @@ function makedefconf()
     ./scripts/kconfig/merge_config.sh ${DEFCONFIG_PATH}/${DEFCONFIG_FILE} android/configs/android-base.cfg android/configs/android-recommended.cfg
     mv ./.config ./.config_android;
     make ${DEFCONFIG_FILE};
+    if [ ! -z "${forceconfig}" ]; then
+      kernelconfigupdater "${forceconfig}";
+    fi;
     meld ./.config ./.config_android;
     rm ./.config_android;
 
   # Make full defconfig
   elif [ ! -z "${configmode}" ]; then
     make ${DEFCONFIG_FILE};
+    if [ ! -z "${forceconfig}" ]; then
+      kernelconfigupdater "${forceconfig}";
+    fi;
     if [ -f "${diffconfig}" ]; then
       if [ -f "${diffcommon}" ]; then
         meld ./.config "${diffconfig}" &
@@ -86,6 +93,9 @@ function makedefconf()
   # Make minimal defconfig
   else
     make "${DEFCONFIG_FILE}";
+    if [ ! -z "${forceconfig}" ]; then
+      kernelconfigupdater "${forceconfig}";
+    fi;
     make menuconfig;
     make savedefconfig;
     meld ./defconfig "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
@@ -141,4 +151,19 @@ function kernelconfigupdater()
 
   # Update .config
   make oldconfig;
+}
+
+# === Kernel DefConfig Setter ===
+function makedefconfset()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo '  Usage: makedefconfset <device_name> [force_config=value]';
+    echo '';
+    return;
+  fi;
+
+  # Use makedefconf
+  makedefconf "${1}" '' '' "${2}";
 }
