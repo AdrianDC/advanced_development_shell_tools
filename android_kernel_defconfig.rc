@@ -96,7 +96,6 @@ function makedefconf()
     if [ ! -z "${forceconfig}" ]; then
       kernelconfigupdater "${forceconfig}";
     fi;
-    make menuconfig;
     make savedefconfig;
     meld ./defconfig "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
     rm ./defconfig;
