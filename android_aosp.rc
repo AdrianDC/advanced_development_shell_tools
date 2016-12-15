@@ -141,7 +141,7 @@ function repoinitcmall()
   reposy;
 
   # Walk through devices
-  for device in huashan mint hayabusa tsubasa sony; do
+  for device in huashan mint hayabusa tsubasa sony lx; do
 
     # Update device repo
     cdcm ${device};
