@@ -108,18 +108,27 @@ function repoinitaospall()
     return;
   fi;
 
+  # Variables
+  local repocommon;
+
   # Update common repo
   cdaosp;
+  repocommon=$(pwd);
   repoinitaosp ${1} ${2};
   reposy;
 
   # Walk through devices
   for device in huashan mint hayabusa tsubasa sony; do
 
-    # Update device repo
+    # Select and verify the path existence
     cdaosp ${device};
-    repoinitaosp ${1} referenced,${2};
-    reposy;
+    if [ ! "$(pwd)" = "${repocommon}" ]; then
+
+      # Update device repo
+      repoinitaosp ${1} referenced,${2};
+      reposy;
+
+    fi;
 
   done;
 }
@@ -135,18 +144,27 @@ function repoinitcmall()
     return;
   fi;
 
+  # Variables
+  local repocommon;
+
   # Update common repo
   cdcm;
+  repocommon=$(pwd);
   repoinitcm ${1} ${2};
   reposy;
 
   # Walk through devices
   for device in huashan mint hayabusa tsubasa sony lx; do
 
-    # Update device repo
+    # Select and verify the path existence
     cdcm ${device};
-    repoinitcm ${1} referenced,${2};
-    reposy;
+    if [ ! "$(pwd)" = "${repocommon}" ]; then
+
+      # Update device repo
+      repoinitcm ${1} referenced,${2};
+      reposy;
+
+    fi;
 
   done;
 }
