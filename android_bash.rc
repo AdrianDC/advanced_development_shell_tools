@@ -154,3 +154,12 @@ function bashdiff()
   git diff HEAD origin/$(git rev-parse --abbrev-ref HEAD);
   cd "${currentdir}/";
 }
+
+# === Bashs Reset ===
+function bashreset()
+{
+  cd "${bash_android_dir}/";
+  git fetch origin;
+  git reset origin/$(git rev-parse --abbrev-ref HEAD);
+  git diff --stat HEAD;
+}
