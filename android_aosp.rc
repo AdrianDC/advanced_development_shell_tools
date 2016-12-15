@@ -103,14 +103,14 @@ function repoinitaospall()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaospall android-7.1.1_r{XX}';
+    echo ' Usage: repoinitaospall android-7.1.1_r{XX} [clean]';
     echo '';
     return;
   fi;
 
   # Update common repo
   cdaosp;
-  repoinitaosp ${1};
+  repoinitaosp ${1} ${2};
   reposy;
 
   # Walk through devices
@@ -118,7 +118,7 @@ function repoinitaospall()
 
     # Update device repo
     cdaosp ${device};
-    repoinitaosp ${1} referenced;
+    repoinitaosp ${1} referenced,${2};
     reposy;
 
   done;
@@ -130,14 +130,14 @@ function repoinitcmall()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitcmall {14.0/14.1}';
+    echo ' Usage: repoinitcmall {14.0/14.1} [clean]';
     echo '';
     return;
   fi;
 
   # Update common repo
   cdcm;
-  repoinitcm ${1};
+  repoinitcm ${1} ${2};
   reposy;
 
   # Walk through devices
@@ -145,7 +145,7 @@ function repoinitcmall()
 
     # Update device repo
     cdcm ${device};
-    repoinitcm ${1} referenced;
+    repoinitcm ${1} referenced,${2};
     reposy;
 
   done;
