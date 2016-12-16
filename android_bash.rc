@@ -41,6 +41,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_release.rc \
   ${bash_android_dir}/android_remotes.rc \
   ${bash_android_dir}/android_repo_compare.rc \
+  ${bash_android_dir}/android_repo_init.rc \
   ${bash_android_dir}/android_repopicks.rc \
   ${bash_android_dir}/android_shortcuts.rc \
   ${bash_android_dir}/android_uploads.rc \
