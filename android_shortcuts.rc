@@ -170,24 +170,8 @@ function meldtwrp()    { meld ./$1 $(totwrp $1); }
 function nout()        { nemo $(toout $1); }
 
 # === Syncer Shortcuts ===
-function aospsyncall()
-{
-  cdaosp;
-  reposy;
-  for device in huashan mint hayabusa tsubasa sony; do
-    cdaosp ${device};
-    reposy;
-  done;
-}
-function cmsyncall()
-{
-  cdcm;
-  reposy;
-  for device in huashan mint hayabusa tsubasa; do
-    cdcm ${device};
-    reposy;
-  done;
-}
+function aospsyncall() { reporeferencedaosp "reposy"; }
+function cmsyncall() { reporeferencedcm "reposy"; }
 
 # === Device Shortcuts ===
 function cdspdev()     { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/sony\/huashan/g'); }
