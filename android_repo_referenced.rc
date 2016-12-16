@@ -1,0 +1,76 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === Repo Referenced AOSP Devices ===
+function reporeferencedaosp()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: reporeferencedaosp "{command_to_run}" "[device1 device2 ...]"';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local repocommon;
+  local command_to_run=${1};
+  local referenced_devices=${2:-huashan mint hayabusa tsubasa sony};
+
+  # Execute on common repo
+  cdaosp;
+  repocommon=$(pwd);
+  ${command_to_run};
+
+  # Walk through devices
+  for device in ${referenced_devices}; do
+
+    # Select and verify the path existence
+    cdaosp ${device};
+    if [ ! "$(pwd)" = "${repocommon}" ]; then
+
+      # Execute on device repo
+      ${command_to_run};
+
+    fi;
+
+  done;
+}
+
+# === Repo Referenced CM Devices ===
+function reporeferencedcm()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: reporeferencedcm "{command_to_run}" "[device1 device2 ...]"';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local repocommon;
+  local command_to_run=${1};
+  local referenced_devices=${2:-huashan mint hayabusa tsubasa sony lx};
+
+  # Execute on common repo
+  cdcm;
+  repocommon=$(pwd);
+  ${command_to_run};
+
+  # Walk through devices
+  for device in ${referenced_devices}; do
+
+    # Select and verify the path existence
+    cdcm ${device};
+    if [ ! "$(pwd)" = "${repocommon}" ]; then
+
+      # Execute on device repo
+      ${command_to_run};
+
+    fi;
+
+  done;
+}
