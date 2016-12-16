@@ -3,6 +3,10 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
+# === Repo References Variables ===
+export bash_android_referenced_aosp='huashan mint hayabusa tsubasa sony';
+export bash_android_referenced_cm='huashan mint hayabusa tsubasa sony lx fusion3';
+
 # === Repo Referenced AOSP Devices ===
 function reporeferencedaosp()
 {
@@ -17,7 +21,7 @@ function reporeferencedaosp()
   # Variables
   local repocommon;
   local command_to_run=${1};
-  local referenced_devices=${2:-huashan mint hayabusa tsubasa sony};
+  local referenced_devices=${2:-${bash_android_referenced_aosp}};
 
   # Execute on common repo
   cdaosp;
@@ -53,7 +57,7 @@ function reporeferencedcm()
   # Variables
   local repocommon;
   local command_to_run=${1};
-  local referenced_devices=${2:-huashan mint hayabusa tsubasa sony lx};
+  local referenced_devices=${2:-${bash_android_referenced_cm}};
 
   # Execute on common repo
   cdcm;

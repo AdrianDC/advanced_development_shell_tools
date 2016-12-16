@@ -112,7 +112,7 @@ function repoinitaospall()
   reposy;
 
   # Walk through devices
-  for device in huashan mint hayabusa tsubasa sony; do
+  for device in ${bash_android_referenced_aosp}; do
 
     # Select and verify the path existence
     cdaosp ${device};
@@ -148,7 +148,7 @@ function repoinitcmall()
   reposy;
 
   # Walk through devices
-  for device in huashan mint hayabusa tsubasa sony lx; do
+  for device in ${bash_android_referenced_cm}; do
 
     # Select and verify the path existence
     cdcm ${device};
