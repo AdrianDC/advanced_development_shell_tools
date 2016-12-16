@@ -57,7 +57,18 @@ function reporoomserv()
 alias reposi='repo sync .';
 
 # === Repo Sync Efficiently ===
-alias reposy='repo sync -j$(grep -c ^processor /proc/cpuinfo) --current-branch --detach -f --force-broken --force-sync -c --no-clone-bundle --no-tags';
+function reposy()
+{
+  repo sync -j$(grep -c ^processor /proc/cpuinfo) \
+            --current-branch \
+            --detach \
+            -f \
+            --force-broken \
+            --force-sync \
+            -c \
+            --no-clone-bundle\
+            --no-tags;
+}
 
 # === Repo Branch Sync ===
 function reposybranch()
