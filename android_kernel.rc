@@ -256,7 +256,7 @@ function fbootk()
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell /bbootimg -i ${partitiontarget};
   adb shell /bbootimg -u ${partitiontarget} -k /tmpkernel;
-  if [ -z "${2}" ]; then
+  if [ ! -z "${2}" ]; then
     adb reboot recovery;
   fi;
 }
