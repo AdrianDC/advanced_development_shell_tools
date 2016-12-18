@@ -67,7 +67,8 @@ function reposy()
             --force-sync \
             -c \
             --no-clone-bundle\
-            --no-tags;
+            --no-tags \
+            ${@};
 }
 
 # === Repo Branch Sync ===
