@@ -163,6 +163,7 @@ function romautorelease()
 
   # Build Android ResurrectionRemix
   elif [[ "${rom_tag}" =~ 'RR' ]]; then
+    export RR_BUILDTYPE=OFFICIAL;
     repos "${rom_target}";
     brunch "${rom_target}" | tee ${rom_logs_output};
 
