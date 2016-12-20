@@ -65,7 +65,7 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
 
   # Upload done
   echo '';
-  echo -e "  \e[1;32mUploaded to :\e[0m https://basketbuild.com/filedl/devs?dev=${UploadUserName:0:-2}&dl=${UploadUserName:0:-2}/${UploadFolder}/${SendFileName} ";
+  echo -e "  \e[1;32mDownload :\e[0m https://basketbuild.com/filedl/devs?dev=${UploadUserName:0:-2}&dl=${UploadUserName:0:-2}/${UploadFolder}/${SendFileName} ";
 
   # Clean curl files
   rm -f ./.headers ./.uploadoutputs;
