@@ -583,4 +583,4 @@ alias doracopyleft='mkcopyleft dora';
 alias doraaospdefconf='makedefconf aosp_tone_dora_defconfig';
 alias doraaospkernel='makekernel tone_dora';
 alias dorazipkernel='kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .';
-alias sonykernelrebase='git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa master';
+alias sonykernelrebase='git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa';
