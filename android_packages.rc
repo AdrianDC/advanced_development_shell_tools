@@ -118,6 +118,7 @@ function systozip()
     if [ ! -d "$TmpDir/$FileDir" ]; then
       mkdir -p "$TmpDir/$FileDir";
     fi;
+    FilePath=$(readlink -f "${BuildParams}/${FilePath}");
     if [ -f "$FilePath" ]; then
       cp "$FilePath" "$TmpDir/$FileTarget";
       FilesList="$FilesList ./$FileTarget";
