@@ -45,5 +45,6 @@ alias gitstt='gitstat twrp android-6.0';
 alias gitsts13='gitstat origin stable/cm-13.0-ZNH5Y';
 alias gitstaosp='gitstat aosp master';
 alias gitstsony='gitstat origin aosp/LA.UM.5.5.r1';
+alias gitstfa='gitrao; gitstat AdrianDC cm-14.1 true';
 alias gitstf13='gitrao; gitstat origin cm-13.0 true';
 alias gitstfs13='gitrao; gitstat origin stable/cm-13.0-ZNH5Y true';
