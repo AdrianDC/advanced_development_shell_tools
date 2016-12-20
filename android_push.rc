@@ -42,6 +42,7 @@ alias gitpan='gitpu AdrianDC nougat';
 alias gitpat='gitpu AdrianDC twrp';
 alias gitpaicp='gitpu aicp mm6.0';
 alias gitpb='gitpu backup';
+alias gitpc='gitpu cm cm-14.1';
 alias gitpold='gitpu old';
 alias gitpp='gitpu project master';
 alias gitpx='gitpu xperia';

@@ -71,6 +71,7 @@ function gitraot() { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitrat()  { gitremoteadaptset 'twrp' 'TeamWin' ''; }
 function gitrax()  { gitremoteadaptset 'xperia' 'XperiaMultiROM' ''; }
 function gitrab()  { gitremoteset backup https://github.com/AdrianDC/cm_development_sony8960.git; }
+function gitrac()  { gitremoteset cm "${1}"; }
 function gitradb() { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
 
 # === Git Remotes sonyxperiadev Helper ===
