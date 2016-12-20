@@ -157,6 +157,9 @@ function cdcmm()       { cd $(tocm mint); }
 function getbash()     { echo ${bash_android_dir}; }
 function cdbash()      { cd $(getbash); }
 function cddesk()      { cd "$(xdg-user-dir DESKTOP)"; }
+function cdref()       { cd $(getand)/References/${1}; }
+function cdaospref()   { cdref; cd ./aosp*${1}*; }
+function cdcmref()     { cdref; cd ./cm*${1}*; }
 function impaospcaf()  { rsync -arv --delete --delete-after $(toaospcaf $1) ./$1 ; }
 function impaospoms()  { rsync -arv --delete --delete-after $(toaospoms $1) ./$1 ; }
 function impcm()       { rsync -arv --delete --delete-after $(tocm $1) ./$1 ; }
