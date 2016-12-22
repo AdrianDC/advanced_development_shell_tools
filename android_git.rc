@@ -229,6 +229,24 @@ function gitlos()
   done;
 }
 
+# === Git Commit Finder ===
+function gitfindsha1()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitfindsha1 <remote/branch> "title text to search"';
+    echo '';
+    return;
+  fi;
+
+  # Search
+  git log --pretty=oneline ${1} \
+    | grep "${2}" \
+    | head -n 1 \
+    | cut -f 1 -d ' ';
+}
+
 # === Git Show Helpers ===
 alias gitshow='git show --name-status';
 alias gitshf='git show --pretty=full';
