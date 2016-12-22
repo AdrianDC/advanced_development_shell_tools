@@ -18,9 +18,14 @@ function gitpu()
   # Introduction
   echo '';
   local cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
-  printf "  ${cmd} [Enter] ? ";
+  printf "  ${cmd} [Y/n] ? ";
   read key;
   echo '';
+
+  # Abort push
+  if [[ "${key}" == 'n' ]] || [[ "${key}" == 'N' ]]; then
+    return;
+  fi;
 
   # Fetch and push
   git fetch ${remote} ${branch};
