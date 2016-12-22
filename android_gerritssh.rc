@@ -99,6 +99,7 @@ function gerritssh()
   echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - CyanogenMod 2015\e[0m';
   echo -e '      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)';
   echo -e '                 p (Publish, +1+2 only)';
+  echo -e '                 s (+1+2 Submit commit)';
   echo -e '                 a (+1+2 Submit all)\e[0m';
 
 
@@ -165,7 +166,7 @@ function gerritssh()
     echo -e "  \e[1;34m\e[4;34mChange ${i}/${patchset}\e[0m";
     echo "    \"${patchname}\"";
     echo '';
-    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/a/q) ?\e[0m ";
+    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/s/a/q) ?\e[0m ";
     if [ -z "${cmd_global}" ]; then
       read key;
     else
@@ -174,7 +175,7 @@ function gerritssh()
     fi;
     if [[ 'qQ' =~ "${key}" ]]; then
       break;
-    elif [[ ! 'yYpPaA' =~ "${key}" ]]; then
+    elif [[ ! 'yYpPsSaA' =~ "${key}" ]]; then
       continue;
     fi;
 
@@ -185,6 +186,12 @@ function gerritssh()
         cmd_publish=y;
         cmd_review=y;
         cmd_submit=n;
+        ;;
+      s|S)
+        cmd_rebase=y;
+        cmd_publish=y;
+        cmd_review=y;
+        cmd_submit=y;
         ;;
       a|A)
         cmd_global=${key};
