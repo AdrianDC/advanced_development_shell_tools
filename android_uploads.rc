@@ -127,6 +127,9 @@ function devuplrom()
   # ROM upload
   if [ ! -z "${romfile}" ]; then
     fileupl "${romfile}" "${upload}";
+    export bash_android_uploaded_file="${romfile}";
+  else
+    export bash_android_uploaded_file='';
   fi;
 
   # End of process

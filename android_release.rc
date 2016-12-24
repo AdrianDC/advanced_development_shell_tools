@@ -191,10 +191,14 @@ function romautorelease()
       gnome-terminal -x bash -c "\
         source $(getbash)/android_bash.rc;\
         devuplrom \"${rom_device}\" \"${rom_upload}\"; \
-        pushb \"${rom_tag} for ${rom_device} uploaded\"";
+        if [ ! -z "\${bash_android_uploaded_file}" ]; then \
+          pushb \"${rom_tag} for ${rom_device} uploaded\"; \
+        fi";
     else
       devuplrom "${rom_device}" "${rom_upload}";
-      pushb "${rom_tag} for ${rom_device} uploaded";
+      if [ ! -z "${bash_android_uploaded_file}" ]; then
+        pushb "${rom_tag} for ${rom_device} uploaded";
+      fi;
     fi;
   fi;
 
