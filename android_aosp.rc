@@ -7,6 +7,7 @@
 source $bash_android_dir/android_aosp_marshmallow.rc;
 source $bash_android_dir/android_aosp_nougat.rc;
 source $bash_android_dir/android_cyanogenmod_14.rc;
+source $bash_android_dir/android_rom_aospoms.rc;
 source $bash_android_dir/android_sony_nougat.rc;
 
 # === AOSP Builder ===
