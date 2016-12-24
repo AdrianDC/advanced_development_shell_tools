@@ -29,6 +29,14 @@ function gitremoteset()
 # === Git Remote Adapter ===
 function gitremoteadaptset()
 {
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitremoteadaptset <remote_name> <remote_github> [prefix_removal]';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local project;
   local target;
