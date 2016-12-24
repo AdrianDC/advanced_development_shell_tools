@@ -91,7 +91,7 @@ function gitremoteadaptset()
 # === Git Remotes Helpers ===
 function gitraa()  { gitremoteadaptset 'AdrianDC' 'AdrianDC' ''; }
 function gitrai()  { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
-function gitrao()  { gitremoteadaptset 'origin' 'CyanogenMod' ''; }
+function gitrao()  { gitremoteadaptset 'origin' 'CyanogenMod' '' 'true'; }
 function gitraoo() { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot() { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitrat()  { gitremoteadaptset 'twrp' 'TeamWin' ''; }
