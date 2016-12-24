@@ -32,7 +32,7 @@ function gitremoteadaptset()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitremoteadaptset <remote_name> <remote_github> [prefix_removal]';
+    echo ' Usage: gitremoteadaptset <remote_name> <remote_github> [prefix_removal] [bool_prefix_android]';
     echo '';
     return;
   fi;
@@ -42,7 +42,8 @@ function gitremoteadaptset()
   local target;
   local remote="${1:-origin}";
   local repository="${2:-CyanogenMod}";
-  local remove_identifier="${3}";
+  local prefix_removal="${3}";
+  local prefix_android="${4}";
 
   # Target detection
   target=$(git remote -v \
@@ -64,14 +65,23 @@ function gitremoteadaptset()
     target='http://github.com/'${repository}'/'${project};
   fi;
 
+  # Remove additional content
+  if [ ! -z "${prefix_android}" ]; then
+    if [[ "${target}" =~ 'device_' ]]; then
+      target=${target/device_/android_device_};
+    else
+      target=${target/platform_/android_};
+    fi;
+  fi;
+
   # Parse the target to repository
   echo ${target};
   target=$(echo ${target} \
          | sed "s/\(http:\/\/\|https:\/\/\|git:\/\/\)\(.*\)\/[^\/]*\/\(.*\)/http:\/\/\2\/${repository}\/\3/");
 
   # Remove additional content
-  if [ ! -z "${remove_identifier}" ]; then
-    target=${target//${remove_identifier}};
+  if [ ! -z "${prefix_removal}" ]; then
+    target=${target//${prefix_removal}};
   fi;
 
   # Set new remote
