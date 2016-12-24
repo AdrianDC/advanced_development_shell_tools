@@ -6,6 +6,14 @@
 # === Git Remote Setter ===
 function gitremoteset()
 {
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitremoteset <remote_name> <remote_url>';
+    echo '';
+    return;
+  fi;
+
   # Set and update the remote
   git remote add ${1} ${2} 2> /dev/null;
   git remote set-url ${1} ${2};
