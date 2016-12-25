@@ -36,6 +36,8 @@ function repochangelog()
     changelogdays=${1};
   fi;
 
+  # Prepare and clean the log
+  mkdir -p "${OUT}/";
   if [ -f "${changelog}" ]; then
     rm -f "${changelog}";
   fi;
@@ -77,8 +79,10 @@ function repochangelog()
 
   sed -i 's/project \(.*\)\// * \1\n/g' "${changelog}";
 
-  if [ -e ${OUT}/system/etc/${changelogname} ]; then
-    rm ${OUT}/system/etc/${changelogname};
+  # Copy change to system/etc/
+  mkdir -p "${OUT}/system/etc/";
+  if [ -e "${OUT}/system/etc/${changelogname}" ]; then
+    rm "${OUT}/system/etc/${changelogname}";
   fi;
   cp "${changelog}" "${OUT}/system/etc/";
   cd ${cwd};
