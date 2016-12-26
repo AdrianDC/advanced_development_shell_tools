@@ -32,7 +32,7 @@ function gitremoteadaptset()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitremoteadaptset <remote_name> <remote_github> [prefix_removal] [bool_prefix_android]';
+    echo ' Usage: gitremoteadaptset <remote_name> <remote_github> [prefix_removal] [bool_prefix_android] [bool_underscore_to_dash]';
     echo '';
     return;
   fi;
@@ -44,6 +44,7 @@ function gitremoteadaptset()
   local repository="${2:-CyanogenMod}";
   local prefix_removal="${3}";
   local prefix_android="${4}";
+  local underscore_to_dash="${5}";
 
   # Target detection
   target=$(git remote -v \
@@ -75,13 +76,17 @@ function gitremoteadaptset()
   fi;
 
   # Parse the target to repository
-  echo ${target};
   target=$(echo ${target} \
          | sed "s/\(http:\/\/\|https:\/\/\|git:\/\/\)\(.*\)\/[^\/]*\/\(.*\)/http:\/\/\2\/${repository}\/\3/");
 
   # Remove additional content
   if [ ! -z "${prefix_removal}" ]; then
     target=${target//${prefix_removal}};
+  fi;
+
+  # Replace _ with -
+  if [ ! -z "${underscore_to_dash}" ]; then
+    target=${target//_/-};
   fi;
 
   # Set new remote
@@ -107,7 +112,7 @@ function gitraos()
   if [[ "$(pwd)/" =~ "kernel/sony/msm/" ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/kernel.git;
   else
-    gitremoteadaptset 'origin' 'sonyxperiadev' 'android_';
+    gitremoteadaptset 'origin' 'sonyxperiadev' 'android_' '' 'true';
   fi;
 }
 
