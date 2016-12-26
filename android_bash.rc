@@ -18,47 +18,67 @@ function bashup()
 # === Bashs Sources ===
 bash_android_sources="\
   \
-  ${bash_android_dir}/android_gerrit.rc \
-  ${bash_android_dir}/android_git.rc \
-  ${bash_android_dir}/android_kernel.rc \
-  ${bash_android_dir}/android_tools.rc \
-  \
-  ${bash_android_dir}/android_cleaners.rc \
-  ${bash_android_dir}/android_edit.rc \
-  ${bash_android_dir}/android_fetch.rc \
-  ${bash_android_dir}/android_git_stats.rc \
-  ${bash_android_dir}/android_grep.rc \
-  ${bash_android_dir}/android_legacyxperia.rc \
-  ${bash_android_dir}/android_linux.rc \
-  ${bash_android_dir}/android_aosp.rc \
-  ${bash_android_dir}/android_rom_aicp.rc \
-  ${bash_android_dir}/android_kernel_defconfig.rc \
-  ${bash_android_dir}/android_kernel_helpers.rc \
-  ${bash_android_dir}/android_push.rc \
-  ${bash_android_dir}/android_pushbullet.rc \
-  ${bash_android_dir}/android_release_builders.rc \
-  ${bash_android_dir}/android_release_helpers.rc \
-  ${bash_android_dir}/android_release_packages.rc \
-  ${bash_android_dir}/android_remotes.rc \
-  ${bash_android_dir}/android_repo_builders.rc \
-  ${bash_android_dir}/android_repo_compare.rc \
-  ${bash_android_dir}/android_repo_helpers.rc \
-  ${bash_android_dir}/android_repo_init.rc \
-  ${bash_android_dir}/android_repo_referenced.rc \
-  ${bash_android_dir}/android_repopicks.rc \
-  ${bash_android_dir}/android_shortcuts.rc \
-  ${bash_android_dir}/android_uploads.rc \
-  \
   ${bash_android_dir}/android_adb.rc \
   ${bash_android_dir}/android_adb_assets.rc \
   ${bash_android_dir}/android_adb_devices.rc \
   ${bash_android_dir}/android_adb_flash.rc \
   ${bash_android_dir}/android_adb_installers.rc \
   ${bash_android_dir}/android_adb_logs.rc \
-  ${bash_android_dir}/android_colors.rc \
+  \
   ${bash_android_dir}/android_changelog.rc \
-  ${bash_android_dir}/android_changes.rc \
+  \
+  ${bash_android_dir}/android_colors.rc \
+  \
+  ${bash_android_dir}/android_edit.rc \
+  \
+  ${bash_android_dir}/android_fetch.rc \
+  \
+  ${bash_android_dir}/android_gerrit.rc \
   ${bash_android_dir}/android_gerritssh.rc \
+  \
+  ${bash_android_dir}/android_git.rc \
+  ${bash_android_dir}/android_git_pick.rc \
+  ${bash_android_dir}/android_git_stats.rc \
+  \
+  ${bash_android_dir}/android_grep.rc \
+  \
+  ${bash_android_dir}/android_kernel.rc \
+  ${bash_android_dir}/android_kernel_defconfig.rc \
+  ${bash_android_dir}/android_kernel_helpers.rc \
+  \
+  ${bash_android_dir}/android_linux.rc \
+  \
+  ${bash_android_dir}/android_push.rc \
+  \
+  ${bash_android_dir}/android_pushbullet.rc \
+  \
+  ${bash_android_dir}/android_release_builders.rc \
+  ${bash_android_dir}/android_release_helpers.rc \
+  ${bash_android_dir}/android_release_packages.rc \
+  \
+  ${bash_android_dir}/android_remotes.rc \
+  \
+  ${bash_android_dir}/android_repo_builders.rc \
+  ${bash_android_dir}/android_repo_changes.rc \
+  ${bash_android_dir}/android_repo_cleaners.rc \
+  ${bash_android_dir}/android_repo_compare.rc \
+  ${bash_android_dir}/android_repo_helpers.rc \
+  ${bash_android_dir}/android_repo_init.rc \
+  ${bash_android_dir}/android_repo_referenced.rc \
+  \
+  ${bash_android_dir}/android_rom_aicp.rc \
+  ${bash_android_dir}/android_rom_aosp.rc \
+  ${bash_android_dir}/android_rom_aospoms.rc \
+  ${bash_android_dir}/android_rom_aosp_sony8960.rc \
+  ${bash_android_dir}/android_rom_aosp_sonyaosp.rc \
+  ${bash_android_dir}/android_rom_cyanogenmod.rc \
+  ${bash_android_dir}/android_rom_legacyxperia.rc \
+  \
+  ${bash_android_dir}/android_shortcuts.rc \
+  \
+  ${bash_android_dir}/android_tools.rc \
+  \
+  ${bash_android_dir}/android_uploads.rc \
 ";
 
 # === Bash Importations ===
@@ -76,12 +96,10 @@ function bashhelp()
   done;
 }
 
-# === Bashs Android 7.0 Editor ===
+# === Bashs ROMs Editor ===
 function bashea()
 {
-  gedit ${bash_android_dir}/android_sony_nougat.rc \
-        ${bash_android_dir}/android_cyanogenmod_14.rc \
-        ${bash_android_dir}/android_aosp_nougat.rc;
+  gedit ${bash_android_dir}/android_rom_*.rc;
   bashup;
 }
 
