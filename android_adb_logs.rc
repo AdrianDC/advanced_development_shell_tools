@@ -1,0 +1,129 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === ADB Logcat Reader ===
+function adbl()
+{
+  # Buffer selection
+  local adb_buffer='';
+  case "${1}" in
+    all)    adb_buffer='-b all';;
+    crash)  adb_buffer='-b crash';;
+    events) adb_buffer='-b events';;
+    main)   adb_buffer='-b main';;
+    radio)  adb_buffer='-b radio';;
+    system) adb_buffer='-b system';;
+    help)
+      echo '';
+      echo ' Usage: adbl [all/crash/events/main/radio/system]';
+      echo '';
+      return;;
+  esac;
+
+  # Logs filename
+  local adb_log=${2:-adb.log};
+
+  # Logcat read
+  while [ 1 ]; do
+    cls;
+    printf '' > "${adb_log}";
+
+    # Logs output
+    if [[ "${3}" =~ 'clean' ]]; then
+      adb logcat ${adb_buffer} -v threadtime *:V \
+        | cut -c 32- \
+        | sed -E "s/[0-9]{8}/00000000/g" \
+        | sed -E "s/\[[0-9]*\]/[...]/g" \
+        | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
+        | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
+        | tee -a "${adb_log}";
+    else
+      adb logcat ${adb_buffer} -v threadtime *:V \
+        | tee -a "${adb_log}";
+    fi;
+
+    # End of logs
+    echo '';
+    printf 'Press Enter to continue... ';
+    read key;
+  done;
+}
+
+# === ADB Logcat Cleaner ===
+function adbcl()
+{
+  # Clean input file
+  filename=${1:-adb.log};
+  cat "${filename}" \
+      | grep -v chatty \
+      | cut -c ${2:-32}- \
+      | sed -E "s/[0-9]{8}/00000000/g" \
+      | sed -E "s/\[[0-9]*\]/[...]/g" \
+      | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
+      | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
+      | tee "${filename}.cut.log";
+}
+
+# === ADB Loggers ===
+alias adblr='adbl radio';
+alias adblb='while [ 1 ]; do cls; printf "" >adb.log; adb logcat -v audit2allow *:V | tee -a adb.log;
+             echo ""; printf "Press Enter to continue... "; read key; done';
+alias adblc='adb logcat -c; adbl';
+alias adbk='adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
+alias adbdm='adbro; printf "" >dmesg; adb shell dmesg | tee -a dmesg';
+alias adbkd='printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
+alias adbkl='cls; adbro; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbkld='cls; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbpl='cls; adbro; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbpld='cls; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbse='adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
+alias adbdumpsensors='adb shell dumpsys sensorservice';
+alias adbsel='adbkl; sepaud kmsg';
+alias adblf='adb logcat -v audit2allow';
+alias adblh='adb logcat -b events -b main -b radio | highlight';
+alias adbtrampoline='adb shell "dmesg | grep -i trampoline"';
+function adblcln() { cat ${1} | cut -c 32- | tee ${1}.clean; }
+function adbkcln() { cat ${1} | cut -c 15- | tee ${1}.clean; }
+
+# === ADB Init Bootchart ===
+function adbbootchart()
+{
+  # Clean previous bootcharts
+  rm -rf /tmp/android-bootchart/;
+  rm -f ./bootchart.png;
+
+  # Timeout configuration
+  echo '';
+  printf ' Timeout in seconds ? [Enter] ';
+  read timeinput;
+  if [ -z "${timeinput}" ]; then
+    timeinput=120;
+  fi;
+
+  # Set bootchart timeout
+  adb shell "echo ${timeinput} > /data/bootchart/start";
+
+  # Reboot
+  printf ' Reboot Android ? [Enter] ';
+  read;
+  adb reboot;
+
+  # Listen for device
+  echo ' Waiting for the device to boot...';
+  adb 'wait-for-device';
+
+  # Wait for timeout or break
+  printf " Export Logs now ? [Enter] ";
+  read -t ${timeinput} key;
+
+  # End bootchart
+  adb shell 'echo 1 > /data/bootchart/stop'
+  adb shell 'rm /data/bootchart/start';
+
+  # Export bootchart results
+  sleep 1;
+  ${ANDROID_DEV_DRIVE}/CyanogenMod/system/core/init/grab-bootchart.sh;
+  echo '';
+}
