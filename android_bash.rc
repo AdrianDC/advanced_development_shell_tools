@@ -23,7 +23,6 @@ bash_android_sources="\
   ${bash_android_dir}/android_git.rc \
   ${bash_android_dir}/android_kernel.rc \
   ${bash_android_dir}/android_projects.rc \
-  ${bash_android_dir}/android_repo.rc \
   ${bash_android_dir}/android_tools.rc \
   \
   ${bash_android_dir}/android_cleaners.rc \
@@ -41,6 +40,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_remotes.rc \
   ${bash_android_dir}/android_repo_builders.rc \
   ${bash_android_dir}/android_repo_compare.rc \
+  ${bash_android_dir}/android_repo_helpers.rc \
   ${bash_android_dir}/android_repo_init.rc \
   ${bash_android_dir}/android_repo_referenced.rc \
   ${bash_android_dir}/android_repopicks.rc \
