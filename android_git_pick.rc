@@ -1,0 +1,67 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === GitHub Url Cherry-Pick ===
+function gitcpu()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitcpu githuburltocommit [branch]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local link="${1}";
+  local project=$(echo "${link}" \
+                | sed 's/.*\(github.com\/.*\)\/commit\/.*/http:\/\/\1/');
+  local commit=$(echo "${link}" \
+               | sed 's/.*\/commit\/\(.*\)/\1/');
+  local branch=${2:-cm-14.1};
+
+  # Input verification
+  if [ -z "${project}" ] || [ -z "${commit}" ]; then
+    echo '';
+    echo " Error: Not a GitHub commit url '${link}'";
+    echo '';
+    return;
+  fi;
+
+  # Fetch and pick
+  git fetch ${project} ${branch};
+  echo '';
+  git show --oneline --stat ${commit};
+  echo '';
+  git cherry-pick ${commit};
+}
+
+# === Git Merger ===
+function gitmerges()
+{
+  # Variables
+  cnt=${2:-30};
+
+  # Introduction
+  echo '';
+  echo -e " \e[1;37mSearching mergeable commits in ${1} tree...\e[0m";
+  echo '';
+
+  # Search commits
+  git rev-list ${1} --reverse --pretty=oneline -- . \
+    | tail -n ${cnt} \
+    | while read line;
+  do
+    sha1=$(echo ${line} | cut -c -40);
+    title=$(echo ${line} | cut -c 42-);
+    if [ -z "$(git rev-list HEAD --pretty=oneline -- . \
+       | grep -i "${title}")" ]; then
+      echo -e " \e[1;31m${sha1} : \e[1;37m${title}\e[0m";
+      git cherry-pick ${sha1};
+      git reset --hard HEAD;
+      echo '';
+    fi;
+  done;
+}
