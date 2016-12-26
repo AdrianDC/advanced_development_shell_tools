@@ -3,8 +3,8 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === AOSP N Patcher ===
-function aospnpatcher()
+# === AOSP 8960 Patcher ===
+function aosp8960patcher()
 {
   # GitHub Credentials
   export GitEMail="user.name@gmail.com";

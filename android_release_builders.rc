@@ -194,7 +194,7 @@ function aospautorelease()
     fi;
 
     # ROM build and release
-    aospnpatcher;
+    aosp8960patcher;
     romautorelease ${device} aosp;
 
   done;
