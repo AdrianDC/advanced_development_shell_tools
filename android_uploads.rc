@@ -16,7 +16,7 @@ function fileupl()
   fi;
 
   # Upload file to target
-  $(getbash)/android_server_upload.sh "${path}" "${target}";
+  $(getbash)/android_upload_basketbuild.sh "${path}" "${target}";
 }
 
 # === Dev File Uploader ===
