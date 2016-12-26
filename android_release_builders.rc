@@ -3,52 +3,6 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === ROM Output Cleaner ===
-function outdevcl()
-{
-  # Function usage
-  if [ -z "${1}" ]; then
-    echo " Usage: outdevcl devicename";
-    echo "";
-    return;
-  fi;
-
-  # Out path
-  out_device_path="./out/target/product/${1}";
-
-  # Rebuild the build properties
-  if [ -f "${out_device_path}/obj/ETC/system_build_prop_intermediates/build.prop" ]; then
-    rm -f "${out_device_path}/obj/ETC/system_build_prop_intermediates/build.prop";
-  fi;
-  if [ -f "${out_device_path}/ota_temp/RECOVERY/RAMDISK/default.prop" ]; then
-    rm -f "${out_device_path}/ota_temp/RECOVERY/RAMDISK/default.prop";
-  fi;
-  if [ -f "${out_device_path}/recovery/root/default.prop" ]; then
-    rm -f "${out_device_path}/recovery/root/default.prop";
-  fi;
-
-  # Delete relevant outputs
-  rm -rfv "${out_device_path}/"*${1}*".zip";
-  rm -rfv "${out_device_path}/"*${1}*".zip.md5sum";
-  rm -rfv "${out_device_path}/boot"*;
-  rm -rfv "${out_device_path}/combinedroot";
-  rm -rfv "${out_device_path}/data";
-  rm -rfv "${out_device_path}/install";
-  rm -rfv "${out_device_path}/kernel";
-  rm -rfv "${out_device_path}/obj/ETC/system_build_prop_intermediates";
-  rm -rfv "${out_device_path}/obj/PACKAGING/target_files_intermediates";
-  rm -rfv "${out_device_path}/ota_temp/RECOVERY/RAMDISK";
-  rm -rfv "${out_device_path}/"*"ota"*".zip";
-  rm -rfv "${out_device_path}/recovery";
-  rm -rfv "${out_device_path}/root";
-  rm -rfv "${out_device_path}/system";
-  rm -rfv "${out_device_path}/utilities";
-  rm -rfv "${out_device_path}/combined"*;
-  rm -rfv "${out_device_path}/ramdisk"*;
-  rm -rfv "${out_device_path}/recovery"*;
-  rm -rfv "${out_device_path}/system"*;
-}
-
 # === ROM Automatic Releaser ===
 function romautorelease()
 {
@@ -213,18 +167,6 @@ function romautorelease()
 
   # Restore original path
   cd "${cwd}";
-}
-
-# === Phone Codename to Target ===
-function codenametotarget()
-{
-  # Filter devices from input
-  case "${1}" in
-    dora)
-      echo 'f8131';;
-    *)
-      echo "${1}";;
-  esac;
 }
 
 # === AOSP Automatic Releaser ===
