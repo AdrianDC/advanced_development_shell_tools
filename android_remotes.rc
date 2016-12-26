@@ -107,7 +107,7 @@ function gitraos()
   if [[ "$(pwd)/" =~ "kernel/sony/msm/" ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/kernel.git;
   else
-    gitremoteadaptset 'origin' 'sonyxperiadev';
+    gitremoteadaptset 'origin' 'sonyxperiadev' 'android_';
   fi;
 }
 
