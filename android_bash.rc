@@ -18,7 +18,6 @@ function bashup()
 # === Bashs Sources ===
 bash_android_sources="\
   \
-  ${bash_android_dir}/android_functions.rc \
   ${bash_android_dir}/android_gerrit.rc \
   ${bash_android_dir}/android_git.rc \
   ${bash_android_dir}/android_kernel.rc \
