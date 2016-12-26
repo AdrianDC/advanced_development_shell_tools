@@ -1,0 +1,212 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# === ADB System File Listener / Installer ===
+function adbif()
+{
+  # Variables
+  local repo_top=$(gettop 2> /dev/null);
+  local tmp_file=$(mktemp);
+
+  # Execute input command
+  ${@} | tee ${tmp_file};
+  echo '';
+
+  # Find new files
+  local tmp_installs=$(grep -a 'target/product/[^\/]*/system' ${tmp_file} \
+                     | sort \
+                     | uniq);
+
+  # Install new files
+  for file_path in ${tmp_installs[*]}; do
+    echo $file_path;
+    if [[ "${file_path}" =~ '/system' && ! "${file_path}" =~ '/NOTICE_FILES' ]]; then
+      file_path=$(printf "${file_path}" | tail -1 \
+                | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
+                | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
+      if [ ! -f "${file_path}" ]; then
+        file_path="${repo_top}/${file_path}";
+      fi;
+      if [ -f "${file_path}" ]; then
+        adbpf "${file_path}";
+      fi;
+    fi;
+  done;
+
+  # End of process
+  rm -f ${tmp_file};
+  echo '';
+}
+
+# === ADB System File Listener / Lister ===
+function adbil()
+{
+  # Variables
+  local tmp_file=$(mktemp);
+
+  # Execute input command
+  ${@} | tee ${tmp_file};
+  echo '';
+
+  # Find new files
+  local tmp_installs=$(grep -a "target/product/[^\/]*/system" ${tmp_file} \
+                     | sort \
+                     | uniq);
+
+  # List new files
+  for file_path in ${tmp_installs[*]}; do
+    if [[ "${file_path}" =~ '/system' && ! "${file_path}" =~ '/NOTICE_FILES' ]]; then
+      file_path=$(printf "${file_path}" | tail -1 \
+                | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
+                | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
+      if [ -f "${file_path}" ]; then
+        echo '';
+        echo -e " \e[1;36m${file_path}\e[0m";
+      fi;
+    fi;
+  done;
+
+  # End of process
+  rm -f ${tmp_file};
+  echo '';
+}
+
+# === ADB Proprietary File Listener / Installer ===
+function adbiv()
+{
+  # Variables
+  local tmp_file=$(mktemp);
+  local file_target;
+
+  # Execute input command
+  ${@} | tee ${tmp_file};
+  echo '';
+
+  # Find new files
+  local tmp_installs=$(grep -a 'Binary.*proprietary/.*' ${tmp_file} \
+                     | sed 's/.* b\/\(.*proprietary\/.*\) .*/\1/g' \
+                     | sort \
+                     | uniq);
+
+  # Install new files
+  for file_path in ${tmp_installs[*]}; do
+    if [ -f "${file_path}" ]; then
+      file_target=$(echo ${file_path} \
+                  | sed 's/.*proprietary\/\(.*\)/\/system\/\1/g');
+      if [ -f "${file_target}" ]; then
+        printf "${file_target}: ";
+        adb push ${file_path} ${file_target};
+      fi;
+    fi;
+  done;
+
+  # End of process
+  rm -f ${tmp_file};
+  echo '';
+}
+
+# === ADB File Installer Helpers ===
+function adbi()  { adbro; adbif ${@}; }
+function adbii() { adbif ${@}; }
+
+# === ADB Filer Pusher ===
+function adbpf()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo "";
+    echo " Usage: adbpf file_paths";
+    echo "";
+    return;
+  fi;
+
+  # Variables
+  local filepath='';
+  local filepathtest='';
+  local filetarget='';
+  local filepaths="${@}";
+
+  # Input files
+  for filepath in ${filepaths}; do
+    filepath=$(readlink -f "${filepath}");
+    filepathtest=${filepath};
+
+    # Iterate sub-folders
+    if [ -d "${filepath}" ]; then
+      adbpf "${filepath}/"*;
+
+    # Handle files
+    else
+      # Detect file targets
+      if [[ "${filepathtest}" =~ .mk|.py ]]; then
+        continue;
+      fi;
+      if [[ "${filepathtest}" =~ 'proprietary' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*proprietary\(.*\)/\/system\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" =~ 'vendor' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*vendor\(.*\)/\/system\/vendor\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" =~ 'configs' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*configs\(.*\)/\/system\/etc\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" =~ 'system' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*\(system.*\)/\/\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" == "${filepath}" ]]; then
+        if [[ "${filepathtest}" =~ '.xml' ]] || [[ "${filepathtest}" =~ '.conf' ]]; then
+          filetarget="/system/etc/"$(basename $filepath);
+        elif [[ "${filepathtest}" =~ '.so' ]]; then
+          filetarget="/system/lib/"$(basename $filepath);
+        else
+          filetarget=$(printf "${filepath}" | sed "s/.*\(system.*\)/\/\1/g");
+        fi;
+      fi;
+
+      # Upload file
+      echo -e " \e[1;36m${filetarget} :\e[0m";
+      #printf '  ';
+      #echo $(adb shell "ls -l ${filetarget}" 2> /dev/null);
+      adb push "${filepath}" "${filetarget}";
+    fi;
+  done;
+  echo '';
+}
+
+# === ADB Pushes ===
+alias adbp='adbro; adbpf';
+
+# === ADB Resursive File Pusher ===
+function adbpfa()
+{
+  adbro;
+  for file in $@; do
+    adbpf "$(readlink -f $file)";
+  done;
+}
+
+# === system/etc File Pusher ===
+function adbpetc()
+{
+  adb push "${1}" /system/etc/;
+}
+
+# === MultiROM File Pusher ===
+function adbpmrom()
+{
+  if [ ! -z "${2}" ]; then
+    adb push "${1}" /sdcard/multirom/${2}/;
+  else
+    adb push "${1}" /sdcard/multirom/;
+  fi;
+}
+function adbpmromenc()
+{
+  adbpmrom ${1} enc;
+}
