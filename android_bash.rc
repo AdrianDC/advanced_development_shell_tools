@@ -22,12 +22,12 @@ bash_android_sources="\
   ${bash_android_dir}/android_gerrit.rc \
   ${bash_android_dir}/android_git.rc \
   ${bash_android_dir}/android_kernel.rc \
-  ${bash_android_dir}/android_projects.rc \
   ${bash_android_dir}/android_tools.rc \
   \
   ${bash_android_dir}/android_cleaners.rc \
   ${bash_android_dir}/android_edit.rc \
   ${bash_android_dir}/android_fetch.rc \
+  ${bash_android_dir}/android_git_stats.rc \
   ${bash_android_dir}/android_grep.rc \
   ${bash_android_dir}/android_legacyxperia.rc \
   ${bash_android_dir}/android_linux.rc \
