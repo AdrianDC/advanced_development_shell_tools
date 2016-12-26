@@ -120,56 +120,6 @@ function adbco()
   echo -e "\e[1;36mReady...\e[0m";
   echo "";
 }
-# === ADB Bootimage Worker ===
-function adbbootdump()
-{
-  local kernel=$(androidpartitionstarget boot);
-  local cmdaddr=$(adb shell od -j 152 -N 4 -tx4 -An ${kernel} \
-                | cut -c 2-9);
-  local cmdsize=$(adb shell od -j 164 -N 4 -tx4 -An ${kernel} \
-                | cut -c 2-9);
-  if [ ! -z "${cmdaddr}" ] && [ $(echo "${cmdaddr}" | wc -l) -eq 1 ] && \
-     [ ! -z "${cmdsize}" ] && [ $(echo "${cmdsize}" | wc -l) -eq 1 ]; then
-    local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
-    adbsu "dd if=${kernel} of=/sdcard/boot.img skip=0 bs=${bootsize} count=1";
-    adb pull /sdcard/boot.img;
-  else
-    adbsu "dd if=${kernel} of=/sdcard/boot.dump";
-    adb pull /sdcard/boot.dump;
-    adbbootcut boot.dump;
-  fi;
-}
-
-# === ADB Bootimage Resizer ===
-function adbbootcut()
-{
-  local cmdaddr=$(od -j 152 -N 4 -tx4 -An ${1} \
-                | cut -c 2-9);
-  local cmdsize=$(od -j 164 -N 4 -tx4 -An ${1} \
-                | cut -c 2-9);
-  local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
-  dd if=${1} of=boot.img skip=0 bs=${bootsize} count=1;
-}
-
-# === ADB TWRP Installer ===
-function adbrecoveryinstall()
-{
-  if [ -z "$1" ] || [ ! -f "$1" ]; then
-    echo "";
-    echo " Usage: adbrecoveryinstall file_path";
-    echo "";
-    return;
-  fi;
-
-  local filename=$(basename $1);
-  adbro;
-  adb shell mkdir -p /sdcard/;
-  adb push "$1" /sdcard/${filename};
-  adb shell "mkdir -p /cache/recovery";
-  adb shell "echo 'install /sdcard/${filename}' > /cache/recovery/command";
-  adb shell 'echo /cache/recovery/command: $(/cache/recovery/command)';
-  adb reboot recovery;
-}
 
 # === ADB File Editor ===
 function adbedit()
