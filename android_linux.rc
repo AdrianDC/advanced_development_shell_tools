@@ -116,9 +116,9 @@ function tmsfusion3()
 function diffbin()
 {
   if [ -z "$3" ]; then
-    diff -y <(xxd "$1") <(xxd "$2") | less | colordiff;
+    diff -sy <(xxd "$1") <(xxd "$2") | less | colordiff;
   else
-    diff -y <(xxd "$1") <(xxd "$2") | less | colordiff | head -n $3;
+    diff -sy <(xxd "$1") <(xxd "$2") | less | colordiff | head -n $3;
   fi;
 }
 
