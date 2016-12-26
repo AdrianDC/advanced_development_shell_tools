@@ -28,4 +28,3 @@ function loadcolors()
   export blurev=${rev}$(tput setaf 4);
   export normal='tput sgr0';
 }
-
