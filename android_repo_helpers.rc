@@ -18,15 +18,22 @@ function repor()
 # === Repo Environment Starter for CM ===
 function repos()
 {
-  local currentdir=${PWD}; repor;
+  # Variables
+  local currentdir=${PWD};
+  local device=${1:-huashan};
+
+  # Repo root, sources and breakfast
+  repor;
   if [ -f ./build/envsetup.sh ]; then
-    local device=${1:-huashan};
-    source ./build/envsetup.sh; croot;
-    breakfast $device;
+    source ./build/envsetup.sh;
+    croot;
+    breakfast ${device};
   else
     echo "Android Repo not found...";
   fi;
-  cd "$currentdir";
+
+  # Return to current folder
+  cd "${currentdir}";
 }
 
 # === Repo Environment Starter for AOSP ===
