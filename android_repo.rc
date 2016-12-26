@@ -181,7 +181,6 @@ export bash_android_twrp_fota_new_zip=$bash_android_dir/android_files/twrp_fota_
 export bash_android_twrp_multirom_old_zip=$bash_android_dir/android_files/twrp_multirom_old_template.zip;
 export bash_android_twrp_multirom_new_zip=$bash_android_dir/android_files/twrp_multirom_new_template.zip;
 export bash_android_sign_apk_dir=$bash_android_dir/android_signapk;
-export bash_android_tools_mkuserimg=$bash_android_dir/android_tools/mkuserimg.sh;
 
 # === Repo TWRP ===
 function repotwrp()
