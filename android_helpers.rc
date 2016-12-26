@@ -32,9 +32,3 @@ function pushb()
                        \"active\":\"true\",\"sender_name\":\"$PushBulletUser\"}" \
        --request POST https://api.pushbullet.com/v2/pushes >/dev/null;
 }
-
-# === CleanRAM ===
-function cleanram()
-{
-  "$bash_android_dir/run_cleanram.sh";
-}

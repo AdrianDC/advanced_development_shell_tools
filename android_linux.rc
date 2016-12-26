@@ -251,3 +251,9 @@ function mtpmountdisable()
   gsettings set org.cinnamon.desktop.media-handling automount-open false;
   gsettings set org.cinnamon.desktop.media-handling automount false;
 }
+
+# === CleanRAM ===
+function cleanram()
+{
+  "${bash_android_dir}/run_cleanram.sh";
+}
