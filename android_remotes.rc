@@ -41,7 +41,7 @@ function gitremoteadaptset()
   local project;
   local target;
   local remote="${1:-origin}";
-  local repository="${2:-CyanogenMod}";
+  local repository="${2:-LineageOS}";
   local prefix_removal="${3}";
   local prefix_android="${4}";
   local underscore_to_dash="${5}";
@@ -96,15 +96,15 @@ function gitremoteadaptset()
 # === Git Remotes Helpers ===
 function gitraa()   { gitremoteadaptset 'AdrianDC' 'AdrianDC' ''; }
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
-function gitrao()   { gitremoteadaptset 'origin' 'CyanogenMod' '' 'true'; }
+function gitrao()   { gitremoteadaptset 'origin' 'LineageOS' '' 'true'; }
 function gitraoo()  { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitraoms() { gitremoteadaptset 'oms' 'AOSP-RRO' 'android_'; }
 function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin' ''; }
 function gitrax()   { gitremoteadaptset 'xperia' 'XperiaMultiROM' ''; }
-function gitrab()   { gitremoteset backup https://github.com/AdrianDC/cm_development_sony8960.git; }
-function gitrac()   { gitremoteset cm "${1}"; }
+function gitrab()   { gitremoteset backup https://github.com/AdrianDC/laos_development_sony8960.git; }
 function gitradb()  { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
+function gitral()   { gitremoteset laos "${1}"; }
 
 # === Git Remotes sonyxperiadev Helper ===
 function gitraos()
@@ -136,8 +136,8 @@ function gitrasonyaosp()
   gitremoteset backup https://github.com/AdrianDC/aosp_development_sonyaosp.git;
 }
 
-# === Git Remotes CM (Sony) Project ===
-function gitrasonycm()
+# === Git Remotes LAOS (Sony) Project ===
+function gitrasonylaos()
 {
-  gitremoteset backup https://github.com/AdrianDC/cm_development_sonyaosp.git;
+  gitremoteset backup https://github.com/AdrianDC/laos_development_sonyaosp.git;
 }

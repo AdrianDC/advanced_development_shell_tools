@@ -69,18 +69,18 @@ function gitpushdrafts()
   echo "";
 }
 
-# === Gerrit CyanogenMod ===
-alias gitpr='gitpushreview ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod for';
-alias gitprh='gitpushreview http://review.cyanogenmod.org CyanogenMod for';
-alias gitprd='gitpushdrafts ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod';
-alias gitprdh='gitpushdrafts http://review.cyanogenmod.org CyanogenMod';
-alias gitpg='gitpushreview ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod heads';
-alias gitpbr='gitpushbypassreview ssh://$gituserdefault@review.cyanogenmod.org:29418 CyanogenMod heads';
-alias gitpgh='gitpushreview http://review.cyanogenmod.org CyanogenMod heads';
+# === Gerrit LineageOS ===
+alias gitpr='gitpushreview ssh://$gituserdefault@review.lineageos.org:29418 LineageOS for';
+alias gitprh='gitpushreview http://review.lineageos.org LineageOS for';
+alias gitprd='gitpushdrafts ssh://$gituserdefault@review.lineageos.org:29418 LineageOS';
+alias gitprdh='gitpushdrafts http://review.lineageos.org LineageOS';
+alias gitpg='gitpushreview ssh://$gituserdefault@review.lineageos.org:29418 LineageOS heads';
+alias gitpbr='gitpushbypassreview ssh://$gituserdefault@review.lineageos.org:29418 LineageOS heads';
+alias gitpgh='gitpushreview http://review.lineageos.org LineageOS heads';
 alias gitprg='gitpr; gitpg';
 alias gitprgy='printf "y\ny\n" | gitpr; printf "y\ny" | gitpg';
 
-# === Gerrit CyanogenMod ===
+# === Gerrit AOSP ===
 alias gitpraosp='gitpushreview https://android-review.googlesource.com aosp for master';
 alias gitprdaosp='gitpushdrafts https://android-review.googlesource.com aosp master';
 

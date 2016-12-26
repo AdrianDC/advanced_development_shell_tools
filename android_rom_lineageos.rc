@@ -3,8 +3,8 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === CyanogenMod Rebaser ===
-function cmrebaser()
+# === LineageOS Rebaser ===
+function laosrebaser()
 {
   # Repo root
   if [ -z "$(type -t croot)" ]; then

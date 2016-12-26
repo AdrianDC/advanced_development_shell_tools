@@ -17,8 +17,8 @@ function gerritssh()
   fi;
 
   # Configurations
-  local gerritremote='review.cyanogenmod.org';
-  local projectgroup='CyanogenMod';
+  local gerritremote='review.lineageos.org';
+  local projectgroup='LineageOS';
   if [ ! -z "${3}" ]; then
     gerritremote="${2}";
     projectgroup="${3}";
@@ -96,7 +96,7 @@ function gerritssh()
   echo '';
   echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${projectgroup}/${projectname} - ${projectbranch}\e[0m";
   echo '';
-  echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - CyanogenMod 2015\e[0m';
+  echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2016\e[0m';
   echo -e '      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)';
   echo -e '                 p (Publish, +1+2 only)';
   echo -e '                 s (+1+2 Submit commit)';
@@ -276,7 +276,7 @@ function gerritssh()
                -H "Content-Type: application/json" \
                --data @${tmpfilepatchmessage} \
                --user ${GerritHTTPUsername}:${GerritHTTPPassword} \
-               http://review.cyanogenmod.org/a/changes/${i}/revisions/${patchcommit}/cherrypick;
+               http://review.lineageos.org/a/changes/${i}/revisions/${patchcommit}/cherrypick;
         fi;
       fi;
     fi;

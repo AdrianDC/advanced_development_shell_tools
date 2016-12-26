@@ -134,13 +134,13 @@ function torompaths()
 
 # === ROMs Shortcuts ===
 function toaosp()      { torompaths 'AOSP' "${1}"; };
-function tocm()        { torompaths 'CyanogenMod' "${1}"; };
+function tolaos()      { torompaths 'LineageOS' "${1}"; };
 function toaospoms()   { torompaths 'AOSP-OMS' "${1}"; };
 function tomultirom()  { torompaths 'MultiROM' "${1}"; };
 function torr()        { torompaths 'ResurrectionRemix' "${1}"; };
 function totwrp()      { torompaths 'TWRP' "${1}"; };
 function cdaosp()      { cd $(toaosp ${1}); }
-function cdcm()        { cd $(tocm ${1}); }
+function cdlaos()      { cd $(tolaos ${1}); }
 function cdaospoms()   { cd $(toaospoms); }
 function cdmultirom()  { cd $(tomultirom); }
 function cdrr()        { cd $(torr ${1}); }
@@ -148,33 +148,33 @@ function cdtwrp()      { cd $(totwrp); }
 
 # === Private Shortcuts ===
 function cdand()       { cd $(getand); }
-function cda()         { cdcm huashan; }
+function cda()         { cdlaos huashan; }
 function cdaosph()     { cd $(toaosp huashan); }
 function cdaospm()     { cd $(toaosp mint); }
 function cdaosps()     { cd $(toaosp sony); }
-function cdcmh()       { cd $(tocm huashan); }
-function cdcmm()       { cd $(tocm mint); }
+function cdlaosh()     { cd $(tolaos huashan); }
+function cdlaosm()     { cd $(tolaos mint); }
 function getbash()     { echo ${bash_android_dir}; }
 function cdbash()      { cd $(getbash); }
 function cddesk()      { cd "$(xdg-user-dir DESKTOP)"; }
 function cdref()       { cd $(getand)/References/${1}; }
 function cdaospref()   { cdref; cd ./aosp*${1}*; }
-function cdcmref()     { cdref; cd ./cm*${1}*; }
+function cdlaosref()   { cdref; cd ./laos*${1}*; }
 function impaospcaf()  { rsync -arv --delete --delete-after $(toaospcaf $1) ./$1 ; }
 function impaospoms()  { rsync -arv --delete --delete-after $(toaospoms $1) ./$1 ; }
-function impcm()       { rsync -arv --delete --delete-after $(tocm $1) ./$1 ; }
+function implaos()     { rsync -arv --delete --delete-after $(tolaos $1) ./$1 ; }
 function meldaosp()    { meld ./$1 $(toaosp $1); }
 function meldaospsony(){ meld ./$1 $(toaosp sony $1); }
 function meldaospcaf() { meld ./$1 $(toaospcaf $1); }
 function meldaospoms() { meld ./$1 $(toaospoms $1); }
-function meldcm()      { meld ./$1 $(tocm $1); }
+function meldlaos()      { meld ./$1 $(tolaos $1); }
 function meldmrom()    { meld ./$1 $(tomultirom $1); }
 function meldtwrp()    { meld ./$1 $(totwrp $1); }
 function nout()        { nemo $(toout $1); }
 
 # === Syncer Shortcuts ===
 function aospsyncall() { reporeferencedaosp "reposy"; }
-function cmsyncall() { reporeferencedcm "reposy"; }
+function laossyncall() { reporeferencedlaos "reposy"; }
 
 # === Device Shortcuts ===
 function cdspdev()     { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/sony\/huashan/g'); }

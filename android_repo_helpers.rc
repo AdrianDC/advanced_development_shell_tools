@@ -15,7 +15,7 @@ function repor()
   fi;
 }
 
-# === Repo Environment Starter for CM ===
+# === Repo Environment Starter for LineageOS ===
 function repos()
 {
   # Variables
@@ -133,17 +133,17 @@ function reposyaosp()
   cd "$cwd";
 }
 
-# === Repo CM Syncer ===
-function reposycm()
+# === Repo LineageOS Syncer ===
+function reposylaos()
 {
   cwd=$(pwd);
   repor;
-  cdcm;
+  cdlaos;
   reposy;
-  cd "$cwd";
+  cd "${cwd}";
   repor;
   reposy;
-  cd "$cwd";
+  cd "${cwd}";
 }
 
 # === Repo Sync Clean ===

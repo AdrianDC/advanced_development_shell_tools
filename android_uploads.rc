@@ -156,9 +156,9 @@ function autodevupl()
   # Target not final
   if [[ ! "${rom_target}" =~ "${rom_phone}" ]]; then
 
-    # CyanogenMod
-    if [[ "${rom_target}" =~ 'cm' ]]; then
-      rom_target="${rom_phone}/CyanogenMod-14.1";
+    # LineageOS
+    if [[ "${rom_target}" =~ 'laos' ]]; then
+      rom_target="${rom_phone}/LineageOS-14.1";
 
     # Development
     else

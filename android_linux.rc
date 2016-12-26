@@ -88,7 +88,7 @@ function newtab()
 # === Terminal New Tabs Automates ===
 function tms8960()
 {
-  basedir=${ANDROID_DEV_DRIVE}/CyanogenMod;
+  basedir=${ANDROID_DEV_DRIVE}/LineageOS;
   pathdirs="device/sony/huashan device/sony/mint device/sony/hayabusa device/sony/tsubasa device/sony/blue-common kernel/sony/msm8960t kernel/sony/msm8x60";
   for pathdir in $pathdirs; do
     newtab "cd ${basedir}/${pathdir}; cls;" "$(basename $pathdir)";
@@ -98,14 +98,14 @@ function tms8960()
 # === Terminal New Tab Device ===
 function td()
 {
-  basedir=${ANDROID_DEV_DRIVE}/CyanogenMod;
+  basedir=${ANDROID_DEV_DRIVE}/LineageOS;
   newtab "cdd $1; cls;" "$1";
 }
 
 # === Terminal New Tabs Automates ===
 function tmsfusion3()
 {
-  basedir=${ANDROID_DEV_DRIVE}/CyanogenMod;
+  basedir=${ANDROID_DEV_DRIVE}/LineageOS;
   pathdirs="device/sony/fusion3-common device/sony/yuga device/sony/dogo device/sony/odin device/sony/pollux kernel/sony/apq8064";
   for pathdir in $pathdirs; do
     newtab "cd ${basedir}/${pathdir}; cls;" "";

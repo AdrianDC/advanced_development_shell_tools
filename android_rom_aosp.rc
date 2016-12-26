@@ -82,8 +82,8 @@ function aospprojectpusher()
   projectdir=${projectdir#${repodir}/};
   case "${projectdir}" in
     frameworks\/base)
-      if [[ "${repodir}" =~ 'CyanogenMod-sony' ]]; then
-        projectbranch='cm_sonyaosp';
+      if [[ "${repodir}" =~ 'LineageOS-sony' ]]; then
+        projectbranch='laos_sonyaosp';
       else
         projectbranch='aosp_sony8960';
       fi;;
@@ -96,8 +96,8 @@ function aospprojectpusher()
   echo '';
 
   # Update backup remote
-  if [[ "${repodir}" =~ 'CyanogenMod-sony' ]]; then
-    gitrasonycm;
+  if [[ "${repodir}" =~ 'LineageOS-sony' ]]; then
+    gitrasonylaos;
   elif [[ "${repodir}" =~ 'sony' ]]; then
     gitrasonyaosp;
   else

@@ -7,7 +7,7 @@
 function repocomparestable()
 {
   # Default variables
-  local default_github_account='CyanogenMod';
+  local default_github_account='LineageOS';
   local default_to_insert='ZNH5Y';
   local default_see_translations=;
 
@@ -78,7 +78,7 @@ function repocomparestable()
 function repocompareupstream()
 {
   # Default variables
-  local default_github_account='CyanogenMod';
+  local default_github_account='LineageOS';
   local default_filtered_projects='chromium-webview';
   local default_see_translations=;
 
@@ -145,7 +145,7 @@ function repocompareupstream()
 function repocomparetags()
 {
   # Default variables
-  local default_ignore_account='CyanogenMod';
+  local default_ignore_account='LineageOS';
   local default_filtered_projects='chromium-webview';
   local default_see_translations=;
 

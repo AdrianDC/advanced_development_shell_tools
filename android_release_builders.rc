@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/cm/lx/oms/rr},j1,nowipe/outcl,dev/local/wipeout]';
+  local function_usage='romautorelease devicename {aosp/laos/lx/oms/rr},j1,nowipe/outcl,dev/local/wipeout]';
   if [ -z "${1}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
@@ -36,10 +36,10 @@ function romautorelease()
     rom_tag='AOSP71';
     rom_upload="${rom_phone}/AOSP-7.1";
 
-  # CyanogenMod 14.1
-  elif [[ "${rom_params}" =~ 'cm' ]]; then
-    rom_tag='CM141';
-    rom_upload="${rom_phone}/CyanogenMod-14.1";
+  # LineageOS 14.1
+  elif [[ "${rom_params}" =~ 'laos' ]]; then
+    rom_tag='LAOS141';
+    rom_upload="${rom_phone}/LineageOS-14.1";
 
   # AOSP-OMS 7.x
   elif [[ "${rom_params}" =~ 'oms' ]]; then
@@ -132,7 +132,7 @@ function romautorelease()
     repos "${rom_target}";
     brunch "${rom_target}" | tee ${rom_logs_output};
 
-  # Build Android CyanogenMod
+  # Build Android LineageOS
   else
     repos "${rom_target}";
     brunch "${rom_target}" | tee ${rom_logs_output};
@@ -200,15 +200,15 @@ function aospautorelease()
   done;
 }
 
-# === CyanogenMod Automatic Releaser ===
-function cmautorelease()
+# === LineageOS Automatic Releaser ===
+function laosautorelease()
 {
   # AndroidDev
   cdand;
 
   # Repository sync
   if [ -z "${1}" ]; then
-    cdcm;
+    cdlaos;
     reposy;
   fi;
 
@@ -219,14 +219,13 @@ function cmautorelease()
   for device in ${devices}; do
 
     # Device sync
-    cdcm ${device};
+    cdlaos ${device};
     if [ -z "${2}" ]; then
       reposy;
     fi;
 
     # ROM build and release
-    cm14patcher;
-    romautorelease ${device} cm;
+    romautorelease ${device} laos;
 
   done;
 }
@@ -239,7 +238,7 @@ function lxautorelease()
 
   # Repository sync
   if [ -z "${1}" ]; then
-    cdcm;
+    cdlaos;
     reposy;
   fi;
 
@@ -247,7 +246,7 @@ function lxautorelease()
   local devices=${1:-anzu haida coconut urushi smultron mango hallon iyokan satsuma zeus phoenix};
 
   # Devices sync
-  cdcm lx;
+  cdlaos lx;
   if [ -z "${2}" ]; then
     reposalx;
   fi;
@@ -269,7 +268,7 @@ function rrautorelease()
 
   # Repository sync
   if [ -z "${1}" ]; then
-    cdcm;
+    cdlaos;
     reposy;
   fi;
 

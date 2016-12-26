@@ -5,7 +5,7 @@
 
 # === Repo References Variables ===
 export bash_android_referenced_aosp='huashan mint hayabusa tsubasa sony';
-export bash_android_referenced_cm='huashan mint hayabusa tsubasa sony dora z3 lx fusion3';
+export bash_android_referenced_laos='huashan mint hayabusa tsubasa sony dora z3 lx fusion3';
 
 # === Repo Referenced AOSP Devices ===
 function reporeferencedaosp()
@@ -43,13 +43,13 @@ function reporeferencedaosp()
   done;
 }
 
-# === Repo Referenced CM Devices ===
-function reporeferencedcm()
+# === Repo Referenced LineageOS Devices ===
+function reporeferencedlaos()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reporeferencedcm "{command_to_run}" "[device1 device2 ...]"';
+    echo ' Usage: reporeferencedlaos "{command_to_run}" "[device1 device2 ...]"';
     echo '';
     return;
   fi;
@@ -57,10 +57,10 @@ function reporeferencedcm()
   # Variables
   local repocommon;
   local command_to_run=${1};
-  local referenced_devices=${2:-${bash_android_referenced_cm}};
+  local referenced_devices=${2:-${bash_android_referenced_laos}};
 
   # Execute on common repo
-  cdcm;
+  cdlaos;
   repocommon=$(pwd);
   ${command_to_run};
 
@@ -68,7 +68,7 @@ function reporeferencedcm()
   for device in ${referenced_devices}; do
 
     # Select and verify the path existence
-    cdcm ${device};
+    cdlaos ${device};
     if [ ! "$(pwd)" = "${repocommon}" ]; then
 
       # Execute on device repo

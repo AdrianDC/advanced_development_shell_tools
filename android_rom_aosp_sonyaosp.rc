@@ -247,8 +247,8 @@ function sonynrebaser()
   croot;
 }
 
-# === SONY CM Patcher ===
-function sonycmpatcher()
+# === SONY LineageOS Patcher ===
+function sonylaospatcher()
 {
   # GitHub Credentials
   export GitEMail="user.name@gmail.com";
@@ -297,7 +297,7 @@ function sonycmpatcher()
     cd ${path}/;
 
     # Targets selection
-    project_github='https://github.com/AdrianDC/cm_development_sonyaosp.git';
+    project_github='https://github.com/AdrianDC/laos_development_sonyaosp.git';
 
     # Loop until project ready
     project_unfinished=1;
