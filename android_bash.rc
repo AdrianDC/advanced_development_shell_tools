@@ -50,6 +50,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_uploads.rc \
   \
   ${bash_android_dir}/android_adb.rc \
+  ${bash_android_dir}/android_adb_devices.rc \
   ${bash_android_dir}/android_adb_installers.rc \
   ${bash_android_dir}/android_colors.rc \
   ${bash_android_dir}/android_changelog.rc \
