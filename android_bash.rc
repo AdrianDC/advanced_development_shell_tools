@@ -33,6 +33,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_linux.rc \
   ${bash_android_dir}/android_aosp.rc \
   ${bash_android_dir}/android_kernel_defconfig.rc \
+  ${bash_android_dir}/android_kernel_helpers.rc \
   ${bash_android_dir}/android_helpers.rc \
   ${bash_android_dir}/android_push.rc \
   ${bash_android_dir}/android_release_builders.rc \
