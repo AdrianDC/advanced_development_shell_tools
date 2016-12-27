@@ -53,7 +53,7 @@ function repoinitlaos()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlaos {14.0/14.1} [referenced,clean]';
+    echo ' Usage: repoinitlaos {13.0/14.1} [referenced,clean]';
     echo '';
     return;
   fi;
@@ -133,7 +133,7 @@ function repoinitlaosall()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlaosall {14.0/14.1} [clean]';
+    echo ' Usage: repoinitlaosall {13.0/14.1} [clean]';
     echo '';
     return;
   fi;
