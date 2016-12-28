@@ -25,6 +25,7 @@ function reporeferencedaosp()
 
   # Execute on common repo
   cdaosp;
+  source ./build/envsetup.sh;
   repocommon=$(pwd);
   ${command_to_run};
 
@@ -36,6 +37,7 @@ function reporeferencedaosp()
     if [ ! "$(pwd)" = "${repocommon}" ]; then
 
       # Execute on device repo
+      source ./build/envsetup.sh;
       ${command_to_run};
 
     fi;
@@ -61,6 +63,7 @@ function reporeferencedlaos()
 
   # Execute on common repo
   cdlaos;
+  source ./build/envsetup.sh;
   repocommon=$(pwd);
   ${command_to_run};
 
@@ -72,6 +75,7 @@ function reporeferencedlaos()
     if [ ! "$(pwd)" = "${repocommon}" ]; then
 
       # Execute on device repo
+      source ./build/envsetup.sh;
       ${command_to_run};
 
     fi;
