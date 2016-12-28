@@ -67,7 +67,7 @@ function gitremoteadaptset()
   fi;
 
   # Remove additional content
-  if [ ! -z "${prefix_android}" ]; then
+  if [ ! -z "${prefix_android}" ] && [[ "${target}" =~ "${prefix_android}" ]]; then
     if [[ "${target}" =~ 'device_' ]]; then
       target=${target/device_/android_device_};
     else
