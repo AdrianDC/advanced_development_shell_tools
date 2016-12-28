@@ -96,7 +96,6 @@ function gitremoteadaptset()
 # === Git Remotes Helpers ===
 function gitraa()   { gitremoteadaptset 'AdrianDC' 'AdrianDC' ''; }
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
-function gitrao()   { gitremoteadaptset 'origin' 'LineageOS' '' 'true'; }
 function gitraoo()  { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitraoms() { gitremoteadaptset 'oms' 'AOSP-RRO' 'android_'; }
@@ -105,6 +104,16 @@ function gitrax()   { gitremoteadaptset 'xperia' 'XperiaMultiROM' ''; }
 function gitrab()   { gitremoteset backup https://github.com/AdrianDC/laos_development_sony8960.git; }
 function gitradb()  { gitremoteset backup https://github.com/AdrianDC/device-sony-dora-bringup.git; }
 function gitral()   { gitremoteset laos "${1}"; }
+
+# === Git Remotes LineageOS Helper ===
+function gitrao()
+{
+  if [[ "$(pwd)/" =~ "vendor/sony/" ]]; then
+    gitremoteadaptset 'origin' 'TheMuppets' '' 'true';
+  else
+    gitremoteadaptset 'origin' 'LineageOS' '' 'true';
+  fi;
+}
 
 # === Git Remotes sonyxperiadev Helper ===
 function gitraos()
