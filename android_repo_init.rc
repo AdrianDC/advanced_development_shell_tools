@@ -44,6 +44,12 @@ function repoinitaosp()
     repo init -u http://android.googlesource.com/platform/manifest -b ${branch};
   fi;
 
+  # Exit on repo init failure
+  if [ ! -d .repo/manifests ]; then
+    echo "repoinitaosp failed for ${branch}";
+    return;
+  fi;
+
   # Unneeded branches cleanup
   cd .repo/manifests/;
   git tag | grep -v ${branch} | xargs git tag -d > /dev/null;
@@ -91,6 +97,12 @@ function repoinitlaos()
               --reference=$(readlink -f ../LineageOS);
   else
     repo init -u http://github.com/LineageOS/android.git -b ${branch};
+  fi;
+
+  # Exit on repo init failure
+  if [ ! -d .repo/manifests ]; then
+    echo "repoinitaosp failed for ${branch}";
+    return;
   fi;
 
   # Unneeded branches cleanup
@@ -212,6 +224,12 @@ function repoinitrr()
               --reference=$(readlink -f ../LineageOS);
   else
     repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch};
+  fi;
+
+  # Exit on repo init failure
+  if [ ! -d .repo/manifests ]; then
+    echo "repoinitaosp failed for ${branch}";
+    return;
   fi;
 
   # Unneeded branches cleanup
