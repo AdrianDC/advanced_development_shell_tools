@@ -244,7 +244,6 @@ alias gitcs='git commit -S -s';
 alias gitca='git commit -S --amend';
 alias gitcae='git commit -S --amend --no-edit';
 alias gitcauthor='git commit -S --amend --no-edit --author="$(git config --global --get user.name) <$(git config --global --get user.email)>"';
-alias gitcidupstream='scp -p -P 29418 $gituserdefault@review.lineageos.org:hooks/commit-msg .git/hooks/; chmod u+x ./.git/hooks/commit-msg; git commit --amend --no-edit; git commit --amend';
 alias gitrevert='git revert -S --no-edit';
 alias gitfix='rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp';
 
@@ -256,6 +255,29 @@ function gitcid()
   chmod u+x ./.git/hooks/commit-msg;
 
   # Update commit with Change-ID
+  git commit --amend --no-edit;
+  git commit --amend;
+}
+
+# === Git Commits Change-ID (Upstream) ===
+function gitcidupstream()
+{
+  # Gerrit Credentials
+  export GerritUsername='Username';
+  export GerritHTTPUsername='Username';
+  export GerritHTTPPassword='abcdefgh12345678';
+
+  # Create  ~/.bash_android.gerrit.rc with the exports to override the credentials
+  if [ -f ~/.bash_android.gerrit.rc ]; then
+    source ~/.bash_android.gerrit.rc;
+  fi;
+
+  # Fetch commit-msg file
+  scp -p -P 29418 ${GerritUsername}@review.lineageos.org:hooks/commit-msg .git/hooks/;
+  cp -fv '.git/hooks/commit-msg' "${bash_android_dir}/android_tools/commit-msg";
+  chmod u+x ./.git/hooks/commit-msg;
+
+  # Usage commit message
   git commit --amend --no-edit;
   git commit --amend;
 }
