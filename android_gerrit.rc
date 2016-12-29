@@ -135,11 +135,11 @@ alias gitpraosp='gerritpushreview https://android-review.googlesource.com aosp f
 alias gitprdaosp='gerritpushdrafts https://android-review.googlesource.com aosp master';
 
 # === Gerrit AICP ===
-alias gitpraicp='gerritpushreview ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP for n7.1';
+alias gitpraicp='gerritpushreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP for n7.1';
 alias gitprhaicp='gerritpushreview http://gerrit.aicp-rom.com AICP for n7.1';
-alias gitprdaicp='gerritpushdrafts ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP n7.1';
+alias gitprdaicp='gerritpushdrafts ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP n7.1';
 alias gitprdhaicp='gerritpushdrafts http://gerrit.aicp-rom.com AICP n7.1';
-alias gitpgaicp='gerritpushreview ssh://AdrianDC@gerrit.aicp-rom.com:29418 AICP heads n7.1';
+alias gitpgaicp='gerritpushreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP heads n7.1';
 alias gitpghaicp='gerritpushreview http://gerrit.aicp-rom.com AICP heads n7.1';
 alias gitprgaicp='gitpraicp; gitpgaicp';
 alias gitprghaicp='gitprhaicp; gitpghaicp';
