@@ -3,6 +3,23 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
+# === GitHub Username ===
+function githubusername()
+{
+  # GitHub Credentials
+  export GitEMail="user.name@gmail.com";
+  export GitFullName="Full Name";
+  export GitUserName="Username";
+
+  # Create  ~/.bash_android.github.rc with the exports to override the credentials
+  if [ -f ~/.bash_android.github.rc ]; then
+    source ~/.bash_android.github.rc;
+  fi;
+
+  # Return username
+  echo "${GitUserName}";
+}
+
 # === GitHub Url Cherry-pick ===
 function gitcpup()
 {
