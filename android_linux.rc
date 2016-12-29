@@ -85,6 +85,16 @@ function newtab()
   wmctrl -i -a $WID;
 }
 
+# === Terminal New Tabs Inputs ===
+function tmtab()
+{
+  # Open input paths in tabs
+  basedir=$(pwd);
+  for pathdir in ${@}; do
+    newtab "cd ${basedir}/${pathdir}; cls;" "$(basename ${pathdir})";
+  done;
+}
+
 # === Terminal New Tabs Automates ===
 function tms8960()
 {
