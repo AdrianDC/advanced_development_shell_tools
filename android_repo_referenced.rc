@@ -82,3 +82,55 @@ function reporeferencedlaos()
 
   done;
 }
+
+# === Repo References Updater ===
+function reporefupdate()
+{
+  # Detect and update AOSP references
+  for project in sony8960 sonyaosp; do
+    cdaospdev ${project};
+    if ! git diff-index --quiet HEAD --; then
+      echo '';
+      echo " Updating AOSP ${project} references...";
+      gitap;
+      gitcae;
+      gitpu origin local_manifests;
+    fi;
+  done;
+
+  # Detect and update LineageOS references
+  for project in sony8960 sonyaosp; do
+    cdlaosdev ${project};
+    if ! git diff-index --quiet HEAD --; then
+      echo '';
+      echo " Updating LineageOS ${project} references...";
+      gitap;
+      gitcae;
+      gitpu origin local_manifests;
+    fi;
+  done;
+}
+
+# === Repo References Syncer ===
+function reporefsync()
+{
+  # Fetch and update AOSP references
+  for project in sony8960 sonyaosp; do
+    cdaospdev ${project};
+    echo '';
+    echo " Syncing AOSP ${project} references...";
+    git fetch origin local_manifests;
+    git reset FETCH_HEAD;
+    git stash -u;
+  done;
+
+  # Fetch and update LineageOS references
+  for project in sony8960 sonyaosp; do
+    cdlaosdev ${project};
+    echo '';
+    echo " Syncing LineageOS ${project} references...";
+    git fetch origin local_manifests;
+    git reset FETCH_HEAD;
+    git stash -u;
+  done;
+}
