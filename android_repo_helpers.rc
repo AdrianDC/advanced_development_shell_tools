@@ -193,7 +193,7 @@ function repogetbranch()
   # Recent remotes
   if [ -z "${branch}" ] || [[ "${branch}" =~ 'Manifest' ]]; then
     branch=$(git 'for-each-ref' --sort=committerdate refs/remotes/ \
-           | grep 'AdrianDC\|origin\|xperia' \
+           | grep "$(githubusername)\|origin\|xperia" \
            | head -n 1 \
            | sed 's/.*remotes\/[^\/]*\/\(.*\)/\1/');
   fi;

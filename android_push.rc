@@ -34,17 +34,17 @@ function gitpu()
 }
 
 # === Git Push Helpers ===
-alias gitpa='gitpu AdrianDC';
-alias gitpa14='gitpu AdrianDC cm-14.1';
-alias gitpa6='gitpu AdrianDC aosp-6.0';
-alias gitpaa6='gitpu AdrianDC android-6.0';
-alias gitpala='gitpu AdrianDC LA.UM.5.5_rb1.10';
-alias gitpam='gitpu AdrianDC multirom';
-alias gitpama='gitpu AdrianDC master';
-alias gitpamm='gitpu AdrianDC marshmallow';
+alias gitpa='gitpu $(githubusername)';
+alias gitpa14='gitpu $(githubusername) cm-14.1';
+alias gitpa6='gitpu $(githubusername) aosp-6.0';
+alias gitpaa6='gitpu $(githubusername) android-6.0';
+alias gitpala='gitpu $(githubusername) LA.UM.5.5_rb1.10';
+alias gitpam='gitpu $(githubusername) multirom';
+alias gitpama='gitpu $(githubusername) master';
+alias gitpamm='gitpu $(githubusername) marshmallow';
 alias gitpalaos='gitpu laos cm-14.1';
-alias gitpan='gitpu AdrianDC nougat';
-alias gitpat='gitpu AdrianDC twrp';
+alias gitpan='gitpu $(githubusername) nougat';
+alias gitpat='gitpu $(githubusername) twrp';
 alias gitpaicp='gitpu aicp mm6.0';
 alias gitpb='gitpu backup';
 alias gitpold='gitpu old';

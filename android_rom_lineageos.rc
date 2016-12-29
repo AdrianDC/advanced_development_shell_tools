@@ -33,6 +33,7 @@ function laosrebaser()
   # Variables
   local git_revs_count;
   local git_revs_count_local;
+  local git_username=$(githubusername);
   local path_name;
   local project_github;
   local project_unfinished;
@@ -66,9 +67,9 @@ function laosrebaser()
       fi;
 
       # Check private remote
-      git ls-remote --exit-code AdrianDC >/dev/null 2>&1;
+      git ls-remote --exit-code ${git_username} >/dev/null 2>&1;
       if [ $? -ne 0 ]; then
-        echo ' Branch AdrianDC was not found...';
+        echo " Branch ${git_username} was not found...";
         gitraa;
         continue;
       fi;
@@ -90,7 +91,7 @@ function laosrebaser()
         if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
           git rebase --abort;
           git rebase FETCH_HEAD;
-          push_command="git push -f AdrianDC HEAD:refs/heads/${projects_branch}";
+          push_command="git push -f ${git_username} HEAD:refs/heads/${projects_branch}";
           echo '';
           printf "  > ${push_command} [Enter] ? ";
           read key;

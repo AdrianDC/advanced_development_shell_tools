@@ -244,7 +244,7 @@ function repomrom()
   # Kernels building
   if [[ "$BuildParams" =~ "kfetch" ]]; then
     cd ./kernel/sony/msm8960t/;
-    git fetch AdrianDC "$3";
+    git fetch $(githubusername) "$3";
     git reset --hard FETCH_HEAD;
     git cherry-pick c1e3c40963f9126a9672ee724880c43b3a0aea9c;
     git cherry-pick 6715415a35153fd64d73b117f0f40d00db53ea35;

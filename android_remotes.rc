@@ -94,7 +94,7 @@ function gitremoteadaptset()
 }
 
 # === Git Remotes Helpers ===
-function gitraa()   { gitremoteadaptset 'AdrianDC' 'AdrianDC' ''; }
+function gitraa()   { local git_username=$(githubusername); gitremoteadaptset ${git_username} ${git_username} ''; }
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
 function gitraoo()  { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
@@ -130,7 +130,7 @@ function gitraos()
 }
 
 # === Git Remotes set-url Shortcuts ===
-alias gitraau='git remote set-url AdrianDC';
+alias gitraau='git remote set-url $(githubusername)';
 alias gitraou='git remote set-url origin';
 
 # === Git Remotes AOSP (8960) Project ===

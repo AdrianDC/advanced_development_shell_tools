@@ -160,6 +160,7 @@ function sonyrebaser()
   # Variables
   local git_revs_count;
   local git_revs_count_local;
+  local git_username=$(githubusername);
   local path_name;
   local path_branch;
   local project_github;
@@ -196,9 +197,9 @@ function sonyrebaser()
       fi;
 
       # Check private remote
-      git ls-remote --exit-code AdrianDC >/dev/null 2>&1;
+      git ls-remote --exit-code ${git_username} >/dev/null 2>&1;
       if [ $? -ne 0 ]; then
-        echo ' Branch AdrianDC was not found...';
+        echo " Branch ${git_username} was not found...";
         gitraa;
         continue;
       fi;
@@ -220,7 +221,7 @@ function sonyrebaser()
         if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
           git rebase --abort;
           git rebase FETCH_HEAD;
-          push_command="git push -f AdrianDC HEAD:refs/heads/${path_branch}";
+          push_command="git push -f ${git_username} HEAD:refs/heads/${path_branch}";
           echo '';
           printf "  > ${push_command} [Enter] ? ";
           read key;
