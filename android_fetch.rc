@@ -9,6 +9,7 @@ function gitfetchtreset()
   git fetch ${1:-AdrianDC} ${2:-$(repogetbranch)};
   git reset FETCH_HEAD --hard;
 }
+
 # === Git Fetch Checkout Assets ===
 function gitfetchcheckout()
 {
@@ -25,8 +26,6 @@ alias gitfs='git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEA
 alias gitfsu='git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash -p';
 alias gitfsm='git stash -u; git fetch origin cm-14.1; git checkout cm-14.1';
 alias gitfgr='gitfetchtreset github';
-alias gitfir='gitfetchtreset aicp mm6.0';
-alias gitfblr='gitfetchtreset blue';
 alias gitfor='gitfetchtreset origin';
 alias gitforla='gitfetchtreset origin aosp/LA.UM.5.5_rb1.10';
 alias gitfar='gitfetchtreset AdrianDC';
@@ -37,7 +36,5 @@ alias gitfart='gitfetchtreset AdrianDC twrp';
 alias gitfbr='gitfetchtreset backup';
 alias gitfsr='gitfetchtreset source';
 alias gitfgc='gitfetchcheckout github';
-alias gitfard='gitfetchtreset ADC';
 function gitfdr() { git fetch "${1}"; git reset --hard FETCH_HEAD; }
 function gitfkl() { git fetch git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git linux-3.4.y; }
-
