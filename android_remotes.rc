@@ -101,7 +101,6 @@ function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitraoms() { gitremoteadaptset 'oms' 'AOSP-RRO' 'android_'; }
 function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin' ''; }
 function gitrax()   { gitremoteadaptset 'xperia' 'XperiaMultiROM' ''; }
-function gitrab()   { gitremoteset backup https://github.com/AdrianDC/laos_development_sony8960.git; }
 function gitral()   { gitremoteset laos "${1}"; }
 
 # === Git Remotes LineageOS Helper ===
@@ -132,8 +131,28 @@ function gitraos()
 alias gitraau='git remote set-url $(githubusername)';
 alias gitraou='git remote set-url origin';
 
+# === Git Remotes Backup Helper ===
+function gitrab()
+{
+  if pwd | grep AOSP | grep -q -e '-huashan\|-hayabusa\|-mint\|-tsubasa'; then
+    gitra8960aosp;
+  elif pwd | grep AOSP | grep -q -e '-sony\|-dora'; then
+    gitrasonyaosp;
+  elif pwd | grep LineageOS | grep -q -e '-sony\|-dora\|-z3'; then
+    gitrasonylaos;
+  else
+    gitra8960laos;
+  fi;
+}
+
+# === Git Remotes LAOS (8960) Project ===
+function gitra8960laos()
+{
+  gitremoteset backup https://github.com/AdrianDC/laos_development_sony8960.git;
+}
+
 # === Git Remotes AOSP (8960) Project ===
-function gitrasony8960()
+function gitra8960aosp()
 {
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;

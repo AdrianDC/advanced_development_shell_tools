@@ -101,7 +101,7 @@ function aospprojectpusher()
   elif [[ "${repodir}" =~ 'sony' ]]; then
     gitrasonyaosp;
   else
-    gitrasony8960;
+    gitra8960aosp;
   fi;
 
   # Fetch upstream backup
