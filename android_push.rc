@@ -34,20 +34,20 @@ function gitpu()
 }
 
 # === Git Push Helpers ===
-alias gitpa='gitpu $(githubusername)';
-alias gitpa14='gitpu $(githubusername) cm-14.1';
-alias gitpa6='gitpu $(githubusername) aosp-6.0';
-alias gitpaa6='gitpu $(githubusername) android-6.0';
-alias gitpala='gitpu $(githubusername) LA.UM.5.5_rb1.10';
-alias gitpam='gitpu $(githubusername) multirom';
-alias gitpama='gitpu $(githubusername) master';
-alias gitpamm='gitpu $(githubusername) marshmallow';
-alias gitpalaos='gitpu laos cm-14.1';
-alias gitpan='gitpu $(githubusername) nougat';
-alias gitpat='gitpu $(githubusername) twrp';
-alias gitpaicp='gitpu aicp mm6.0';
-alias gitpb='gitpu backup';
-alias gitpold='gitpu old';
-alias gitpoms='gitpu oms nougat';
-alias gitpp='gitpu project master';
-alias gitpx='gitpu xperia';
+alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';
+alias gitpa14='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1';
+alias gitpa6='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) aosp-6.0';
+alias gitpaa6='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) android-6.0';
+alias gitpala='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) LA.UM.5.5_rb1.10';
+alias gitpam='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) multirom';
+alias gitpama='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master';
+alias gitpamm='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) marshmallow';
+alias gitpalaos='gitremoteverify laos gitrao && gitpu laos cm-14.1';
+alias gitpan='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) nougat';
+alias gitpat='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) twrp';
+alias gitpaicp='gitremoteverify aicp gitrai && gitpu aicp mm6.0';
+alias gitpb='gitremoteverify backup gitrab && gitpu backup';
+alias gitpold='gitremoteverify old false && gitpu old';
+alias gitpoms='gitremoteverify oms gitraoms && gitpu oms nougat';
+alias gitpp='gitremoteverify project false && gitpu project master';
+alias gitpx='gitremoteverify xperia gitrax && gitpu xperia';
