@@ -134,11 +134,11 @@ function reposyaosp()
 }
 
 # === Repo LineageOS Syncer ===
-function reposylaos()
+function reposylineage()
 {
   cwd=$(pwd);
   repor;
-  cdlaos;
+  cdlineage;
   reposy;
   cd "${cwd}";
   repor;

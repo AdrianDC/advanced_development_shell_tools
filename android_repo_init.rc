@@ -58,13 +58,13 @@ function repoinitaosp()
   cd ../../;
 }
 
-# === Repo Init LAOS ===
-function repoinitlaos()
+# === Repo Init LineageOS ===
+function repoinitlineage()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlaos {13.0/14.1} [referenced,clean,wipeout]';
+    echo ' Usage: repoinitlineage {13.0/14.1} [referenced,clean,wipeout]';
     echo '';
     return;
   fi;
@@ -108,7 +108,7 @@ function repoinitlaos()
   # Unneeded branches cleanup
   cd .repo/manifests/;
   git tag | grep -v "${branch}" | xargs git tag -d > /dev/null;
-  echo "repoinitlaos done for ${branch}";
+  echo "repoinitlineage done for ${branch}";
   echo '';
   cd ../../;
 }
@@ -150,12 +150,12 @@ function repoinitaospall()
 }
 
 # === Repo Init AOSP Devices ===
-function repoinitlaosall()
+function repoinitlineageall()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlaosall {13.0/14.1} [clean,wipeout]';
+    echo ' Usage: repoinitlineageall {13.0/14.1} [clean,wipeout]';
     echo '';
     return;
   fi;
@@ -164,20 +164,20 @@ function repoinitlaosall()
   local repocommon;
 
   # Update common repo
-  cdlaos;
+  cdlineage;
   repocommon=$(pwd);
-  repoinitlaos ${1} ${2};
+  repoinitlineage ${1} ${2};
   reposy;
 
   # Walk through devices
-  for device in ${bash_android_referenced_laos}; do
+  for device in ${bash_android_referenced_lineage}; do
 
     # Select and verify the path existence
-    cdlaos ${device};
+    cdlineage ${device};
     if [ ! "$(pwd)" = "${repocommon}" ]; then
 
       # Update device repo
-      repoinitlaos ${1} referenced,${2};
+      repoinitlineage ${1} referenced,${2};
       reposy;
 
     fi;

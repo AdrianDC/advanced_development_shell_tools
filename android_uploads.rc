@@ -157,7 +157,7 @@ function autodevupl()
   if [[ ! "${rom_target}" =~ "${rom_phone}" ]]; then
 
     # LineageOS
-    if [[ "${rom_target}" =~ 'laos' ]]; then
+    if [[ "${rom_target}" =~ 'lineage' ]]; then
       rom_target="${rom_phone}/LineageOS-14.1";
 
     # Development

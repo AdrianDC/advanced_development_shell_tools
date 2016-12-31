@@ -5,7 +5,7 @@
 
 # === Repo References Variables ===
 export bash_android_referenced_aosp='huashan mint hayabusa tsubasa sony';
-export bash_android_referenced_laos='huashan mint hayabusa tsubasa sony dora z3 lx fusion3';
+export bash_android_referenced_lineage='huashan mint hayabusa tsubasa sony dora z3 lx fusion3';
 
 # === Repo Referenced AOSP Devices ===
 function reporeferencedaosp()
@@ -46,12 +46,12 @@ function reporeferencedaosp()
 }
 
 # === Repo Referenced LineageOS Devices ===
-function reporeferencedlaos()
+function reporeferencedlineage()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reporeferencedlaos "{command_to_run}" "[device1 device2 ...]"';
+    echo ' Usage: reporeferencedlineage "{command_to_run}" "[device1 device2 ...]"';
     echo '';
     return;
   fi;
@@ -59,10 +59,10 @@ function reporeferencedlaos()
   # Variables
   local repocommon;
   local command_to_run=${1};
-  local referenced_devices=${2:-${bash_android_referenced_laos}};
+  local referenced_devices=${2:-${bash_android_referenced_lineage}};
 
   # Execute on common repo
-  cdlaos;
+  cdlineage;
   source ./build/envsetup.sh;
   repocommon=$(pwd);
   ${command_to_run};
@@ -71,7 +71,7 @@ function reporeferencedlaos()
   for device in ${referenced_devices}; do
 
     # Select and verify the path existence
-    cdlaos ${device};
+    cdlineage ${device};
     if [ ! "$(pwd)" = "${repocommon}" ]; then
 
       # Execute on device repo
@@ -100,7 +100,7 @@ function reporefupdate()
 
   # Detect and update LineageOS references
   for project in sony8960 sonyaosp; do
-    cdlaosdev ${project};
+    cdlineagedev ${project};
     if ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
@@ -126,7 +126,7 @@ function reporefsync()
 
   # Fetch and update LineageOS references
   for project in sony8960 sonyaosp; do
-    cdlaosdev ${project};
+    cdlineagedev ${project};
     echo '';
     echo " Syncing LineageOS ${project} references...";
     git fetch origin local_manifests;

@@ -83,7 +83,7 @@ function aospprojectpusher()
   case "${projectdir}" in
     frameworks\/base)
       if [[ "${repodir}" =~ 'LineageOS-sony' ]]; then
-        projectbranch='laos_sonyaosp';
+        projectbranch='lineage_sonyaosp';
       else
         projectbranch='aosp_sony8960';
       fi;;
@@ -97,7 +97,7 @@ function aospprojectpusher()
 
   # Update backup remote
   if [[ "${repodir}" =~ 'LineageOS-sony' ]]; then
-    gitrasonylaos;
+    gitrasonylineage;
   elif [[ "${repodir}" =~ 'sony' ]]; then
     gitrasonyaosp;
   else

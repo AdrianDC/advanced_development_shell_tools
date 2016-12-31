@@ -122,7 +122,7 @@ function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitraoms() { gitremoteadaptset 'oms' 'AOSP-RRO' 'android_'; }
 function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin' ''; }
 function gitrax()   { gitremoteadaptset 'xperia' 'XperiaMultiROM' ''; }
-function gitral()   { gitremoteset laos "${1}"; }
+function gitral()   { gitremoteset lineage "${1}"; }
 
 # === Git Remotes LineageOS Helper ===
 function gitrao()
@@ -160,16 +160,16 @@ function gitrab()
   elif pwd | grep AOSP | grep -q -e '-sony\|-dora'; then
     gitrasonyaosp;
   elif pwd | grep LineageOS | grep -q -e '-sony\|-dora\|-z3'; then
-    gitrasonylaos;
+    gitrasonylineage;
   else
-    gitra8960laos;
+    gitra8960lineage;
   fi;
 }
 
-# === Git Remotes LAOS (8960) Project ===
-function gitra8960laos()
+# === Git Remotes LineageOS (8960) Project ===
+function gitra8960lineage()
 {
-  gitremoteset backup https://github.com/AdrianDC/laos_development_sony8960.git;
+  gitremoteset backup https://github.com/AdrianDC/lineage_development_sony8960.git;
 }
 
 # === Git Remotes AOSP (8960) Project ===
@@ -188,8 +188,8 @@ function gitrasonyaosp()
   gitremoteset backup https://github.com/AdrianDC/aosp_development_sonyaosp.git;
 }
 
-# === Git Remotes LAOS (Sony) Project ===
-function gitrasonylaos()
+# === Git Remotes LineageOS (Sony) Project ===
+function gitrasonylineage()
 {
-  gitremoteset backup https://github.com/AdrianDC/laos_development_sonyaosp.git;
+  gitremoteset backup https://github.com/AdrianDC/lineage_development_sonyaosp.git;
 }

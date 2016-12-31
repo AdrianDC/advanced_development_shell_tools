@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/laos/lx/oms/rr},j1,nowipe/outcl,dev/local/wipeout]';
+  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr},j1,nowipe/outcl,dev/local/wipeout]';
   if [ -z "${1}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
@@ -37,8 +37,8 @@ function romautorelease()
     rom_upload="${rom_phone}/AOSP-7.1";
 
   # LineageOS 14.1
-  elif [[ "${rom_params}" =~ 'laos' ]]; then
-    rom_tag='LAOS141';
+  elif [[ "${rom_params}" =~ 'lineage' ]]; then
+    rom_tag='LINEAGE141';
     rom_upload="${rom_phone}/LineageOS-14.x";
 
   # AOSP-OMS 7.x
@@ -201,14 +201,14 @@ function aospautorelease()
 }
 
 # === LineageOS Automatic Releaser ===
-function laosautorelease()
+function lineageautorelease()
 {
   # AndroidDev
   cdand;
 
   # Repository sync
   if [ -z "${1}" ]; then
-    cdlaos;
+    cdlineage;
     reposy;
   fi;
 
@@ -219,16 +219,16 @@ function laosautorelease()
   for device in ${devices}; do
 
     # Device sync
-    cdlaos ${device};
+    cdlineage ${device};
     if [ -z "${2}" ]; then
       reposy;
     fi;
 
     # Import pending reviews
-    laospatcher;
+    lineagepatcher;
 
     # ROM build and release
-    romautorelease ${device} laos;
+    romautorelease ${device} lineage;
 
   done;
 }
@@ -241,7 +241,7 @@ function lxautorelease()
 
   # Repository sync
   if [ -z "${1}" ]; then
-    cdlaos;
+    cdlineage;
     reposy;
   fi;
 
@@ -249,7 +249,7 @@ function lxautorelease()
   local devices=${1:-anzu haida coconut urushi smultron mango hallon iyokan satsuma zeus phoenix};
 
   # Devices sync
-  cdlaos lx;
+  cdlineage lx;
   if [ -z "${2}" ]; then
     reposalx;
   fi;
@@ -271,7 +271,7 @@ function rrautorelease()
 
   # Repository sync
   if [ -z "${1}" ]; then
-    cdlaos;
+    cdlineage;
     reposy;
   fi;
 
