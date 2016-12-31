@@ -39,7 +39,7 @@ function romautorelease()
   # LineageOS 14.1
   elif [[ "${rom_params}" =~ 'laos' ]]; then
     rom_tag='LAOS141';
-    rom_upload="${rom_phone}/LineageOS-14.1";
+    rom_upload="${rom_phone}/LineageOS-14.x";
 
   # AOSP-OMS 7.x
   elif [[ "${rom_params}" =~ 'oms' ]]; then
