@@ -224,6 +224,9 @@ function laosautorelease()
       reposy;
     fi;
 
+    # Import pending reviews
+    laospatcher;
+
     # ROM build and release
     romautorelease ${device} laos;
 

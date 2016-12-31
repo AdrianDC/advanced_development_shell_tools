@@ -118,6 +118,25 @@ function laosrebaser()
   croot;
 }
 
+# === LineageOS Commits Patcher ===
+function laospatcher()
+{
+  # Repo root
+  if [ -z "$(type -t croot)" ]; then
+    while [ ! -e './build/envsetup.sh' ]; do
+      cd ../;
+    done;
+    source ./build/envsetup.sh;
+  fi;
+  croot;
+
+  # Import commits from topic "rebrand"
+  repopick -i -t rebrand;
+
+  # Import commits from topic "network-traffic"
+  repopick -i -t network-traffic;
+}
+
 # === LineageOS SONY Open Devices Patcher ===
 function laossonypatcher()
 {
