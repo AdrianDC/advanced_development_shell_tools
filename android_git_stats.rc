@@ -30,18 +30,18 @@ function gitstat()
 }
 
 # === Git Projects Statistics (shortcuts) ===
-alias gitst='gitstat origin cm-14.1';
-alias gitsto='gitstat origin $(git rev-parse --abbrev-ref HEAD)';
-alias gitsta='gitstat $(githubusername) cm-14.1';
-alias gitsta6='gitstat $(githubusername) aosp-6.0';
-alias gitstaa6='gitstat $(githubusername) android-6.0';
-alias gitstam='gitstat $(githubusername) master';
-alias gitstatw='gitstat $(githubusername) twrp';
-alias gitstg='gitstat github';
-alias gitsti='gitstat aicp mm6.0';
-alias gitstt='gitstat twrp android-6.0';
-alias gitsts13='gitstat origin stable/cm-13.0-ZNH5Y';
-alias gitstaosp='gitstat aosp master';
-alias gitstsony='gitstat origin aosp/LA.UM.5.5.r1';
-alias gitstfa='gitrao; gitstat $(githubusername) cm-14.1 true';
-alias gitstfs13='gitrao; gitstat origin stable/cm-13.0-ZNH5Y true';
+alias gitst='gitremoteverify origin gitrao && gitstat origin cm-14.1';
+alias gitsto='gitremoteverify origin gitrao && gitstat origin $(git rev-parse --abbrev-ref HEAD)';
+alias gitsta='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) cm-14.1';
+alias gitsta6='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) aosp-6.0';
+alias gitstaa6='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) android-6.0';
+alias gitstam='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master';
+alias gitstatw='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) twrp';
+alias gitstg='gitremoteverify github false && gitstat github';
+alias gitsti='gitremoteverify aicp gitrai && gitstat aicp mm6.0';
+alias gitstt='gitremoteverify twrp gitrat && gitstat twrp android-6.0';
+alias gitsts13='gitremoteverify origin gitrao && gitstat origin stable/cm-13.0-ZNH5Y';
+alias gitstaosp='gitremoteverify aosp false && gitstat aosp master';
+alias gitstsony='gitremoteverify origin gitraos && gitstat origin aosp/LA.UM.5.5.r1';
+alias gitstfa='gitrao; gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) cm-14.1 true';
+alias gitstfs13='gitrao; gitremoteverify origin gitrao && gitstat origin stable/cm-13.0-ZNH5Y true';

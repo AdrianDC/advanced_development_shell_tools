@@ -43,6 +43,7 @@ function gitcpaicp()
     echo '';
     git reset --hard ${headsha1}~${i};
     git show HEAD;
+    gitremoteverify aicp gitrai;
     gitstat aicp ${branch_target};
     gitpushreview http://gerrit.aicp-rom.com AICP 'for' ${branch_target};
     gitpushreview http://gerrit.aicp-rom.com AICP 'heads' ${branch_target};
