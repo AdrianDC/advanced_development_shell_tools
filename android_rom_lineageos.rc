@@ -121,14 +121,11 @@ function laosrebaser()
 # === LineageOS Commits Patcher ===
 function laospatcher()
 {
-  # Repo root
-  if [ -z "$(type -t croot)" ]; then
-    while [ ! -e './build/envsetup.sh' ]; do
-      cd ../;
-    done;
-    source ./build/envsetup.sh;
-  fi;
-  croot;
+  # Build environment
+  while [ ! -e './build/envsetup.sh' ]; do
+    cd ../;
+  done;
+  source ./build/envsetup.sh;
 
   # Import commits from topic "rebrand"
   repopick -i -t rebrand;
