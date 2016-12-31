@@ -93,6 +93,27 @@ function gitremoteadaptset()
   gitremoteset "${remote}" "${target}";
 }
 
+# === Git Remote Verify ===
+function gitremoteverify()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitremoteverify <remote_name> "command_to_run_if_missing"';
+    echo '';
+    return 1;
+  fi;
+
+  # Check remote existence
+  git ls-remote --exit-code ${1} >/dev/null 2>&1;
+  if [ ${?} -ne 0 ]; then
+    echo '';
+    echo -e " \e[1;32mInformation :\e[0m Remote ${1} not found, executing '${2}'...";
+    ${2};
+  fi;
+  return ${?};
+}
+
 # === Git Remotes Helpers ===
 function gitraa()   { local git_username=$(githubusername); gitremoteadaptset ${git_username} ${git_username} ''; }
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
