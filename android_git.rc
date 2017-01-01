@@ -241,6 +241,7 @@ function gitshl() { git show --oneline --name-only ${1} | tail -n +2 | cut -c $(
 # === Git Add Helpers ===
 alias gitap='git add -p';
 alias gitaa='git add . -Av';
+alias gitan='git add . -An';
 function gite() { gedit ${1}; printf ' Done ? [Enter] '; read; git add ${1}; }
 
 # === Git Branch Helpers ===
