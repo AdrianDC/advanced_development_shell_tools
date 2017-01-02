@@ -118,6 +118,136 @@ function lineagerebaser()
   croot;
 }
 
+# === LineageOS SONY Open Devices Rebaser ===
+function lineagesonyrebaser()
+{
+  # Repo root
+  if [ -z "$(type -t croot)" ]; then
+    while [ ! -e './build/envsetup.sh' ]; do
+      cd ../;
+    done;
+    source ./build/envsetup.sh;
+  fi;
+  croot;
+
+  # ==========================================================
+  # Constants
+  local projects_branch='cm-14.1';
+  local projects_paths='
+    device/sony/common-aosp::device-sony-common::master
+    device/sony/dora::device-sony-dora::master
+    device/sony/honami::device-sony-honami::master
+    device/sony/ivy::device-sony-ivy::master
+    device/sony/rhine-common::device-sony-rhine::master
+    device/sony/satsuki::device-sony-satsuki::master
+    device/sony/sepolicy::device-sony-sepolicy::master
+    device/sony/shinano-common::device-sony-shinano::master
+    device/sony/sirius::device-sony-sirius::master
+    device/sony/tone-common::device-sony-tone::master
+    device/sony/z3::device-sony-leo::master
+    device/sony/z3c::device-sony-aries::master
+    kernel/sony/msm::kernel::aosp/LA.UM.5.5.r1
+    kernel/sony/msm8974::kernel::aosp/LA.BR.1.3.3_rb2.14
+    hardware/sony/camera::camera::aosp/LA.UM.5.5.r1
+    hardware/sony/dataservices::vendor-qcom-opensource-dataservices::master
+    ';
+
+  # ==========================================================
+  # Variables
+  local git_revs_count;
+  local git_revs_count_local;
+  local git_username=$(githubusername);
+  local path;
+  local path_temp;
+  local project_github;
+  local project_unfinished;
+  local push_command;
+  local upstream_branch;
+  local upstream_project;
+
+  # Projects loader
+  for project in ${1:-${projects_paths}}; do
+
+    # Project selection
+    path=${project%%::*};
+    path_temp=${project#*::};
+    upstream_project=sonyxperiadev/${path_temp%::*};
+    upstream_branch=${path_temp#*::};
+    echo '';
+    echo " === ${path} [${upstream_project} @${upstream_branch}] ===";
+    croot;
+
+    # Ignore non-git projects
+    if [ ! -d ${path}/.git ]; then
+      echo '  .git project not found, ignoring...';
+      continue;
+    fi;
+    cd ${path}/;
+
+    # Loop until project ready
+    project_unfinished=1;
+    while [ ${project_unfinished} -eq 1 ]; do
+
+      # Check upstream remote
+      git ls-remote --exit-code upstream >/dev/null 2>&1;
+      if [ $? -ne 0 ]; then
+        echo ' Branch upstream was not found...';
+        gitremoteset upstream https://github.com/${upstream_project};
+        continue;
+      fi;
+
+      # Check private remote
+      git ls-remote --exit-code ${git_username} >/dev/null 2>&1;
+      if [ $? -ne 0 ]; then
+        echo " Branch ${git_username} was not found...";
+        gitraa;
+        continue;
+      fi;
+
+      # Fetch and compare
+      git fetch upstream ${upstream_branch};
+      git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
+      git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
+      git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
+      echo " Differences: ${git_revs_count}";
+
+      # Handle unupdated projects
+      if [ ${git_revs_count_remote} -ne 0 ]; then
+        echo '';
+        printf '  > Rebase onto newest changes [y/N] ? ';
+        read key;
+
+        # Rebase the tree
+        if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
+          git rebase --abort;
+          git rebase FETCH_HEAD;
+          push_command="git push -f ${git_username} HEAD:refs/heads/${projects_branch}";
+          echo '';
+          printf "  > ${push_command} [Enter] ? ";
+          read key;
+          echo '';
+          ${push_command};
+        fi;
+
+      # Project is ready, break the loop
+      else
+        project_unfinished=0;
+      fi;
+
+    done;
+
+    # Cleanup
+    git reset --hard HEAD;
+    git stash -u;
+
+  done;
+
+  # ==========================================================
+  # repo root
+  echo '';
+  croot;
+}
+
 # === LineageOS Commits Patcher ===
 function lineagepatcher()
 {
