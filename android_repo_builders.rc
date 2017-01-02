@@ -215,6 +215,7 @@ function repomrom()
   case "$PhoneName" in
     dora)
         FlashableZipNewType='true';
+        MultiROMBootableTWRP='';
         MultiROMRecoveryInjector='true';
         MultiROMUninstaller='true';;
   esac;
