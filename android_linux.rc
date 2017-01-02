@@ -255,6 +255,13 @@ function gohibernate()
   sudo pm-hibernate;
 }
 
+# === FileZilla Fix ===
+function filezillafix()
+{
+  sed -i 's/\(Last local directory">\).*\(<\)/\1\2/' ~/.config/filezilla/filezilla.xml;
+  filezilla;
+}
+
 # === USB MTP Mounts ===
 function mtpmountdisable()
 {
