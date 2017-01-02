@@ -130,8 +130,8 @@ function aospsonypatcher()
   croot;
 }
 
-# === SONY Open Devices Rebaser ===
-function sonyrebaser()
+# === AOSP SONY Open Devices Rebaser ===
+function aospsonyrebaser()
 {
   # Repo root
   if [ -z "$(type -t croot)" ]; then
