@@ -36,6 +36,11 @@ function romautorelease()
     rom_tag='AOSP71';
     rom_upload="${rom_phone}/AOSP-7.1";
 
+    # Handle Sony AOSP kernel build
+    if echo "${rom_device}" | grep -q -e 'dora\|f8131'; then
+      doraaospkernelupdate;
+    fi;
+
   # LineageOS 14.1
   elif [[ "${rom_params}" =~ 'lineage' ]]; then
     rom_tag='LINEAGE141';
