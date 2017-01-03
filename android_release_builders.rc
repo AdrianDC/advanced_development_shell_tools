@@ -39,6 +39,7 @@ function romautorelease()
   # LineageOS 14.1
   elif [[ "${rom_params}" =~ 'lineage' ]]; then
     rom_tag='LINEAGE141';
+    rom_target="${rom_device}";
     rom_upload="${rom_phone}/LineageOS-14.x";
 
   # AOSP-OMS 7.x
