@@ -296,6 +296,10 @@ function lineagesonypatcher()
   # ==========================================================
   # Constants
   local projects_paths='
+    hardware/qcom/audio/default
+    hardware/qcom/display
+    packages/apps/FMRadio
+    vendor/cm
     ';
 
   # ==========================================================
