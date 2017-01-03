@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr},j1,nowipe/outcl,dev/local/wipeout]';
+  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr},j1,nowipe/outcl,dev/local/priv/wipeout]';
   if [ -z "${1}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
@@ -74,6 +74,10 @@ function romautorelease()
   # Development build
   if [[ "${rom_params}" =~ 'dev' ]]; then
     rom_upload='Development';
+
+  # Private build
+  elif [[ "${rom_params}" =~ 'priv' ]]; then
+    rom_upload='.private';
   fi;
 
   # Ignore the build
