@@ -31,9 +31,6 @@ function aospsonypatcher()
   local projects_paths='
     build
     external/toybox
-    hardware/qcom/audio
-    hardware/qcom/display
-    hardware/qcom/media
     packages/apps/Music
     system/core
     ';
