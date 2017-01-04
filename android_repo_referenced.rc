@@ -92,8 +92,8 @@ function reporefupdate()
     if ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating AOSP ${project} references...";
-      gitap;
-      gitcae;
+      git add -Ap;
+      git commit --amend;
       gitpu origin local_manifests;
     fi;
   done;
@@ -104,8 +104,8 @@ function reporefupdate()
     if ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
-      gitap;
-      gitcae;
+      git add -Ap;
+      git commit --amend;
       gitpu origin local_manifests;
     fi;
   done;
