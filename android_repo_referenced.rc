@@ -4,7 +4,7 @@
 # ======================================
 
 # === Repo References Variables ===
-export bash_android_referenced_aosp='huashan mint hayabusa tsubasa sony';
+export bash_android_referenced_aosp='huashan blue sony';
 export bash_android_referenced_lineage='huashan mint hayabusa tsubasa sony dora z3 lx fusion3';
 
 # === Repo Referenced AOSP Devices ===

@@ -197,8 +197,14 @@ function aospautorelease()
   # Walk through devices
   for device in ${devices}; do
 
+    # Device selection
+    if echo ${device} | grep -q -e 'hayabusa\|mint\|tsubasa'; then
+      cdaosp blue;
+    else
+      cdaosp ${device};
+    fi;
+
     # Device sync
-    cdaosp ${device};
     if [ -z "${2}" ]; then
       reposy;
     fi;
