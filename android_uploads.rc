@@ -113,7 +113,9 @@ function devuplrom()
 
   # ROM detection
   repor;
-  romfiles=$(find "./out/target/product/${device}/"*"${target}"*".zip" -mtime -1 | sort);
+  romfiles=$(find "./out/target/product/${device}/"*"${device}"*".zip" \
+                  "./out/target/product/${device}/"*"${target}"*".zip" \
+                  -mtime -1 | sort);
   romfile="";
   for romfiletest in ${romfiles}; do
     if [ -f "${romfiletest}.md5sum" ]; then
