@@ -258,12 +258,12 @@ function gitcpf() { git fetch ${1} ${2}; git cherry-pick FETCH_HEAD; }
 function gitcpr() { git show ${1} --no-color | sed "s/${2}/${3}/g" | patch; }
 
 # === Git Commits Helpers ===
-alias gitc='git commit -S';
-alias gitcs='git commit -S -s';
-alias gitca='git commit -S --amend';
-alias gitcae='git commit -S --amend --no-edit';
-alias gitcauthor='git commit -S --amend --no-edit --author="$(git config --global --get user.name) <$(git config --global --get user.email)>"';
-alias gitrevert='git revert -S --no-edit';
+alias gitc='git commit $(gitgpgparam)';
+alias gitcs='git commit $(gitgpgparam) -s';
+alias gitca='git commit $(gitgpgparam) --amend';
+alias gitcae='git commit $(gitgpgparam) --amend --no-edit';
+alias gitcauthor='git commit $(gitgpgparam) --amend --no-edit --author="$(git config --global --get user.name) <$(git config --global --get user.email)>"';
+alias gitrevert='git revert $(gitgpgparam) --no-edit';
 alias gitfix='rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp';
 
 # === Git Commits Change-ID ===
@@ -374,6 +374,14 @@ alias gitshowsg='git config --global alias.logs "log --show-signature"';
 alias gitpwstore='git config --global credential.helper store';
 alias githi='git update-index --assume-unchanged';
 alias gitsh='git update-index --no-assume-unchanged';
+
+# === Git GPG Parameter ===
+function gitgpgparam()
+{
+  if [ "$(git config --global --get commit.gpgsign)" = 'true' ]; then
+    echo '-S';
+  fi;
+}
 
 # === Git MergeTool Helpers ===
 alias gitmt='git mergetool';
