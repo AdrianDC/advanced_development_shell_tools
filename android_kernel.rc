@@ -404,12 +404,23 @@ function kernelinjectorzip()
   local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
   local TmpDir=$(mktemp -d);
 
-  # Package
+  # Generate zip and updater-script files
   cd "${TmpDir}/";
-  mkdir ./scripts;
-  cp "${KernelFile}" './scripts/kernel';
-  cp "${bash_kernel_injector_template_zip}" "${TargetFile}.unsigned.zip";
-  zip -g "${TargetFile}.unsigned.zip" './scripts/kernel';
+  mkdir -p ./META-INF/com/google/android/;
+  mkdir -p ./scripts/;
+  cp "${bash_flashable_android_base}" "${TargetFile}.unsigned.zip";
+  cp "${bash_updater_kernel_injector}" ./META-INF/com/google/android/updater-script;
+  cp -rfv "${bash_scripts_kernel_injector}/"* ./scripts/;
+  local BootPartition=$(androidpartitionstarget boot);
+  local SystemPartition=$(androidpartitionstarget system);
+  sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./scripts/bootdev;
+  zip -g "${TargetFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
+  zip -g "${TargetFile}.unsigned.zip" ./scripts/*;
+
+  # Pack kernel file
+  cp "${KernelFile}" ./scripts/kernel;
+  zip -g "${TargetFile}.unsigned.zip" ./scripts/kernel;
 
   # Modules
   if [ ! -z "${KernelSources}" ]; then
@@ -453,21 +464,22 @@ function bootzip()
   local BootFile=$(readlink -f "${2}");
   local OutFile="boot-"$(date +'%Y%m%d')"-${PhoneName}.zip";
   local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
-  local TargetPartition=$(androidpartitionstarget boot);
   local TmpDir=$(mktemp -d);
 
-  # Copy boot.img
-  cp "${BootFile}" "${TmpDir}/boot.img";
+  # Generate zip and updater-script files
   cd "${TmpDir}/";
+  mkdir -p ./META-INF/com/google/android/;
+  cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
+  cp "${bash_updater_flash_boot}" ./META-INF/com/google/android/updater-script;
+  local BootPartition=$(androidpartitionstarget boot);
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+  zip -g "${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
 
-  if [[ "${TargetPartition}" =~ 'bootdevice' ]]; then
-    cp "${bash_boot_template_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
-  else
-    cp "${bash_kernel_template_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
-  fi;
+  # Pack bootimage file
+  cp "${BootFile}" "${TmpDir}/boot.img";
+  zip -g "${OutFile}.unsigned.zip" 'boot.img';
 
   # Complete the zip
-  zip -g "${TmpDir}/${OutFile}.unsigned.zip" 'boot.img';
   java -jar "${bash_android_sign_apk_dir}/signapk-cm121.jar" \
       -w "${bash_android_sign_apk_dir}/testkey.x509.pem" \
       "${bash_android_sign_apk_dir}/testkey.pk8" \

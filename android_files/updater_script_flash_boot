@@ -1,0 +1,16 @@
+ui_print(" ");
+ui_print(" ");
+ui_print(" ===========================");
+ui_print(" | Adrian DC - Kernel ZIPs |");
+ui_print(" ===========================");
+ui_print(" ");
+
+show_progress(1.000000, 0);
+ui_print("  - Flashing the kernel...");
+package_extract_file("boot.img", "ANDROID_BOOT_PARTITION");
+ui_print("     Done.");
+ui_print(" ");
+
+set_progress(1.000000);
+ui_print("  Update Completed.");
+ui_print(" ");

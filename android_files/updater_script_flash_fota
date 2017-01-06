@@ -1,0 +1,17 @@
+ui_print(" ");
+ui_print(" ");
+ui_print(" ==============================");
+ui_print(" | Adrian DC - TWRP Installer |");
+ui_print(" ==============================");
+ui_print(" ");
+
+show_progress(1.000000, 0);
+ui_print("  - Flashing TWRP Recovery to FOTA...");
+run_program("/sbin/dd", "if=/dev/zero", "of=ANDROID_FOTA_PARTITION");
+package_extract_file("twrp.img", "ANDROID_FOTA_PARTITION");
+ui_print("     Done.");
+ui_print(" ");
+
+set_progress(1.000000);
+ui_print("  Update Completed.");
+ui_print(" ");

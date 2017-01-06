@@ -4,14 +4,12 @@
 # ======================================
 
 # === Build paths ===
-export bash_android_flashable_zip=$bash_android_dir/android_files/flashable_template.zip;
-export bash_boot_template_zip=$bash_android_dir/android_files/boot_template.zip;
-export bash_kernel_injector_template_zip=$bash_android_dir/android_files/kernel_injector_template.zip;
-export bash_kernel_template_zip=$bash_android_dir/android_files/kernel_template.zip;
-export bash_android_twrp_fota_old_zip=$bash_android_dir/android_files/twrp_fota_old_template.zip;
-export bash_android_twrp_fota_new_zip=$bash_android_dir/android_files/twrp_fota_new_template.zip;
-export bash_android_twrp_multirom_old_zip=$bash_android_dir/android_files/twrp_multirom_old_template.zip;
-export bash_android_twrp_multirom_new_zip=$bash_android_dir/android_files/twrp_multirom_new_template.zip;
+export bash_flashable_android_base=${bash_android_dir}/android_files/flashable_android_base.zip;
+export bash_scripts_kernel_injector=${bash_android_dir}/android_files/scripts_kernel_injector;
+export bash_updater_flash_boot=${bash_android_dir}/android_files/updater_script_flash_boot;
+export bash_updater_flash_fota=${bash_android_dir}/android_files/updater_script_flash_fota;
+export bash_updater_kernel_injector=${bash_android_dir}/android_files/updater_script_kernel_injector;
+export bash_updater_multirom_secondary=${bash_android_dir}/android_files/updater_script_multirom_secondary;
 export bash_android_sign_apk_dir=$bash_android_dir/android_signapk;
 
 # === Repo TWRP ===
@@ -82,6 +80,11 @@ function repotwrp()
     mkdir -p "$TargetDir/";
   fi;
 
+  # Partitions
+  local FOTAPartition=$(androidpartitionstarget fota);
+  local SystemPartition=$(androidpartitionstarget system);
+
+  # Clean old releases
   if [ -f "$TargetDir/$OutTWRP" ]; then rm -f "$TargetDir/$OutTWRP"; fi;
   if [ -f "$TargetDir/$OutBootImg" ]; then rm "$TargetDir/$OutBootImg"; fi;
   if [ -f "$TargetDir/$OutMultiROMZip" ]; then rm "$TargetDir/$OutMultiROMZip"; fi;
@@ -94,19 +97,34 @@ function repotwrp()
     cd ${CurDir};
     return;
   fi;
+
+  # Export TWRP images
   cp "$TWRPImg" "$TargetDir/$OutTWRP";
   cp "$TWRPImg" "$TargetDir/$OutBootImg";
-  if [ ! -z "$FlashableZipNewType" ]; then
-    cp "$bash_android_twrp_fota_new_zip" "$TargetDir/$OutFOTAZip.unsigned.zip";
-    cp "$bash_android_twrp_multirom_new_zip" "$TargetDir/$OutMultiROMZip.unsigned.zip";
-  else
-    cp "$bash_android_twrp_fota_old_zip" "$TargetDir/$OutFOTAZip.unsigned.zip";
-    cp "$bash_android_twrp_multirom_old_zip" "$TargetDir/$OutMultiROMZip.unsigned.zip";
-  fi;
-  zip -j -g "$TargetDir/$OutFOTAZip.unsigned.zip" "$TargetDir/$OutTWRP";
-  zip -j -g "$TargetDir/$OutMultiROMZip.unsigned.zip" "$TargetDir/$OutTWRP";
-  cd ./out/target/product/$PhoneName/;
-  zip -g "$TargetDir/$OutMultiROMZip.unsigned.zip" -r "system/build.prop";
+
+  # Generate recovery zip, updater-script and recovery files
+  cd "${TargetDir}/";
+  mkdir -p ./META-INF/com/google/android/;
+  mkdir -p ./scripts/;
+  cp "${bash_flashable_android_base}" "${TargetDir}/${OutFOTAZip}.unsigned.zip";
+  cp "${bash_updater_flash_fota}" ./META-INF/com/google/android/updater-script;
+  sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+  zip -g "${TargetDir}/${OutFOTAZip}.unsigned.zip" ./META-INF/com/google/android/updater-script;
+  zip -j -g "${TargetDir}/${OutFOTAZip}.unsigned.zip" "${TargetDir}/${OutTWRP}";
+
+  # Generate secondary zip, updater-script and recovery files
+  mkdir -p ./META-INF/com/google/android/;
+  mkdir -p ./scripts/;
+  cp "${bash_flashable_android_base}" "${TargetDir}/${OutMultiROMZip}.unsigned.zip";
+  cp "${bash_updater_multirom_secondary}" ./META-INF/com/google/android/updater-script;
+  sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+  sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+  zip -g "${TargetDir}/${OutMultiROMZip}.unsigned.zip" ./META-INF/com/google/android/updater-script;
+  zip -j -g "${TargetDir}/${OutMultiROMZip}.unsigned.zip" "${TargetDir}/${OutTWRP}";
+  cd ${RootDir}/out/target/product/${PhoneName}/;
+  zip -g "${TargetDir}/${OutMultiROMZip}.unsigned.zip" -r ./system/build.prop;
+
+  # Complete the zips
   cd ../../../../;
   java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
        -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
@@ -196,6 +214,7 @@ function repomrom()
 
   export CurDir=${PWD};
   repor;
+  local RootDir=$(pwd);
 
   # Phone and params
   PhoneParams="$1";
@@ -208,13 +227,11 @@ function repomrom()
   fi;
 
   # Handle boot types
-  FlashableZipNewType='';
   MultiROMBootableTWRP='true';
   MultiROMRecoveryInjector='';
   MultiROMUninstaller='';
   case "$PhoneName" in
     dora)
-        FlashableZipNewType='true';
         MultiROMBootableTWRP='';
         MultiROMRecoveryInjector='true';
         MultiROMUninstaller='true';;
@@ -276,6 +293,10 @@ function repomrom()
   TargetDir="$(xdg-user-dir DESKTOP)";
   BuildDir=./out/target/product/$PhoneName;
   cp $BuildDir/obj/ETC/system_build_prop_intermediates/build.prop $BuildDir/system/build.prop;
+
+  # Partitions
+  local FOTAPartition=$(androidpartitionstarget fota);
+  local SystemPartition=$(androidpartitionstarget system);
 
   # Built files
   BuiltInstaller="multirom-*-v33x-UNOFFICIAL-${PhoneName}.zip";
@@ -348,18 +369,30 @@ function repomrom()
     cp "$BuildDir/$BuiltRecovery" "$TargetDir/twrp.img";
     if [ -f "$TargetDir/$PublishRecoveryFOTA" ]; then rm -f "$TargetDir/$PublishRecoveryFOTA"; fi;
     if [ -f "$TargetDir/$PublishRecoveryMultiROM" ]; then rm -f "$TargetDir/$PublishRecoveryMultiROM"; fi;
-    if [ ! -z "$FlashableZipNewType" ]; then
-      cp "$bash_android_twrp_fota_new_zip" "$TargetDir/$PublishRecoveryFOTA.unsigned.zip";
-      cp "$bash_android_twrp_multirom_new_zip" "$TargetDir/$PublishRecoveryMultiROM.unsigned.zip";
-    else
-      cp "$bash_android_twrp_fota_old_zip" "$TargetDir/$PublishRecoveryFOTA.unsigned.zip";
-      cp "$bash_android_twrp_multirom_old_zip" "$TargetDir/$PublishRecoveryMultiROM.unsigned.zip";
-    fi;
-    zip -j -g "$TargetDir/$PublishRecoveryFOTA.unsigned.zip" "$TargetDir/twrp.img";
-    cd ./out/target/product/$PhoneName/;
-    zip -g "$TargetDir/$PublishRecoveryMultiROM.unsigned.zip" -r "system/build.prop";
+
+    # Generate recovery zip, updater-script and recovery files
+    cd "${TargetDir}/${PublishDir}";
+    mkdir -p ./META-INF/com/google/android/;
+    cp "${bash_flashable_android_base}" "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip";
+    cp "${bash_updater_flash_fota}" ./META-INF/com/google/android/updater-script;
+    sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+    zip -g "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip" ./META-INF/com/google/android/updater-script;
+    zip -j -g "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip" "${TargetDir}/twrp.img";
+    rm -rf ./META-INF;
+
+    # Generate secondary zip, updater-script and recovery files
+    mkdir -p ./META-INF/com/google/android/;
+    cp "${bash_flashable_android_base}" "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip";
+    cp "${bash_updater_multirom_secondary}" ./META-INF/com/google/android/updater-script;
+    sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+    sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+    zip -g "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" ./META-INF/com/google/android/updater-script;
+    zip -j -g "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" "${TargetDir}/twrp.img";
+    rm -rf ./META-INF;
+    cd ${RootDir}/out/target/product/${PhoneName}/;
+    zip -g "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" -r ./system/build.prop;
+
     cd ../../../../;
-    zip -j -g "$TargetDir/$PublishRecoveryMultiROM.unsigned.zip" "$TargetDir/twrp.img";
     java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
         -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
         "$bash_android_sign_apk_dir/testkey.pk8" \

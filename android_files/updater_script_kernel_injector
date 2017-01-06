@@ -1,0 +1,43 @@
+ui_print(" ");
+ui_print(" ");
+ui_print(" ===============================");
+ui_print(" | Adrian DC - Kernel Injector |");
+ui_print(" ===============================");
+ui_print(" ");
+
+ifelse(is_mounted("/system"), unmount("/system"));
+mount("ext4", "EMMC", "ANDROID_SYSTEM_PARTITION", "/system");
+
+show_progress(1.000000, 0);
+ui_print("  - Injecting kernel image...");
+package_extract_dir("scripts", "/tmp/");
+set_perm(0, 0, 0777, "/tmp/kernel_inject.sh");
+set_perm(0, 0, 0777, "/tmp/kernel_inject");
+assert(run_program("/tmp/kernel_inject.sh") == 0);
+ui_print("     Done.");
+ui_print(" ");
+
+set_progress(0.250000);
+ui_print("  - Cleaning the system...");
+delete_recursive("/system/lib/modules");
+ui_print("     Done.");
+
+set_progress(0.500000);
+ui_print("  - Updating the system...");
+package_extract_dir("system", "/system");
+ui_print("     Done.");
+ui_print(" ");
+
+set_progress(0.750000);
+ui_print("  - Cleaning up...");
+delete("/tmp/inject_kernel.sh");
+delete("/tmp/inject_kernel");
+delete("/tmp/bootdev");
+delete("/tmp/kernel");
+ui_print("     Done.");
+ui_print(" ");
+
+unmount("/system");
+set_progress(1.000000);
+ui_print("  Installation Completed.");
+ui_print(" ");
