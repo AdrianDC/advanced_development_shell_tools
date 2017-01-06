@@ -297,12 +297,6 @@ function repomrom()
   PublishRecoveryInjector="$PublishDir/multirom-$DateTag-recovery-injector-${PhoneName}.zip";
   PublishUninstaller="$PublishDir/multirom-$DateTag-uninstaller-${PhoneName}.zip";
 
-  # Released files
-  ReleaseDir="MultiROM-Release";
-  ReleaseInstall="$ReleaseDir/multirom-$DateTag-v33x-UNOFFICIAL-${PhoneName}.zip";
-  ReleaseRecovery="$ReleaseDir/multirom-$DateTag-recovery-${PhoneName}.img";
-  ReleaseUninstall="$ReleaseDir/multirom-$DateTag-uninstaller-${PhoneName}.zip";
-
   if [ ! -f "$BuildDir/$BuiltRecovery" ]; then
     echo " Error: Output files missing";
     echo "";
@@ -312,9 +306,6 @@ function repomrom()
 
   if [ ! -d "$TargetDir/$PublishDir" ]; then
     mkdir -p "$TargetDir/$PublishDir";
-  fi;
-  if [ ! -d "$TargetDir/$ReleaseDir" ]; then
-    mkdir -p "$TargetDir/$ReleaseDir";
   fi;
 
   BuiltInstaller="$(find $BuildDir -maxdepth 1 -name $BuiltInstaller -print \
@@ -328,9 +319,6 @@ function repomrom()
         "$TargetDir/$PublishInstaller.unsigned.zip" \
         "$TargetDir/$PublishInstaller";
     rm -f "$TargetDir/$PublishInstaller.unsigned.zip";
-    cp "$TargetDir/$PublishInstaller" "$TargetDir/$ReleaseInstall";
-    stat --printf="%s " "$TargetDir/$ReleaseInstall" >"$TargetDir/$ReleaseInstall.md5sum";
-    md5sum "$TargetDir/$ReleaseInstall" >>"$TargetDir/$ReleaseInstall.md5sum";
   fi;
 
   BuiltKernel="$(find $BuildDir -maxdepth 1 -name $BuiltKernel -print)";
@@ -354,9 +342,6 @@ function repomrom()
          "$TargetDir/$PublishUninstaller.unsigned.zip" \
          "$TargetDir/$PublishUninstaller";
     rm -f "$TargetDir/$PublishUninstaller.unsigned.zip";
-    cp "$TargetDir/$PublishUninstaller" "$TargetDir/$ReleaseUninstall";
-    stat --printf="%s " "$TargetDir/$ReleaseUninstall" >"$TargetDir/$ReleaseUninstall.md5sum";
-    md5sum "$TargetDir/$ReleaseUninstall" >>"$TargetDir/$ReleaseUninstall.md5sum";
   fi;
 
   if [ -f "$BuildDir/$BuiltRecovery" ]; then
@@ -388,9 +373,6 @@ function repomrom()
         "$TargetDir/$PublishRecoveryMultiROM";
     rm -f "$TargetDir/$PublishRecoveryMultiROM.unsigned.zip";
     rm -f "$TargetDir/twrp.img";
-    cp "$BuildDir/$BuiltRecovery" "$TargetDir/$ReleaseRecovery";
-    stat --printf="%s " "$TargetDir/$ReleaseRecovery" >"$TargetDir/$ReleaseRecovery.md5sum";
-    md5sum "$TargetDir/$ReleaseRecovery" >>"$TargetDir/$ReleaseRecovery.md5sum";
   fi;
 
   rm -f "$TargetDir/$PublishRecoveryInjector";
