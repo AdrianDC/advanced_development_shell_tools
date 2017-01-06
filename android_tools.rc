@@ -142,61 +142,6 @@ function librarieshunter()
   echo "";
 }
 
-# === Audio LegacyToHAL helper ===
-function audioltoh()
-{
-  if [ -z "$2" ]; then
-    echo " Usage : audioltoh legacy_config hal_mixer [debug]";
-    return;
-  fi;
-
-  Legacy="$1";
-  HAL="$2";
-  Debug="$3";
-  TempFile=$(mktemp);
-
-  echo "";
-  echo -e " \e[1;37m === Checking Legacy rules to HAL presence ===\e[0m";
-  echo "";
-  grep -i -e "'.*'" "$Legacy" | uniq \
-    | sed "s/^[ \t]*'\(.*\)'\:\(.*\)\:\(.*\)/\1/" \
-    | sort | uniq >$TempFile;
-  kate $TempFile;
-  while read line; do
-    if ! grep -q "$line" $HAL; then
-      echo -e "   \e[1;33mLegacy: \e[1;34m$line - \e[1;31mMissing\e[0m";
-    elif [ ! -z "$Debug" ]; then
-      echo -e "   \e[1;33mLegacy: \e[1;34m$line - \e[1;34mFound\e[0m";
-    fi;
-  done < "$TempFile";
-  echo "";
-  echo -e " \e[1;34m > Done checking Legacy rules to HAL\e[0m";
-  echo "";
-
-  echo "";
-  echo -e " \e[1;37m === Checking HAL rules to Legacy presence ===\e[0m";
-  echo "";
-
-return;
-
-  grep -i -e "<ctl name=\"".*"\" value=\".*\" \/>" "$HAL" \
-    | sort | uniq -u \
-    | sed "s/.*name=\"\(.*\)\" .*value=\"\(.*\)\" \/>/\1 | \2/" >$TempFile;
-  while read line;
-  do
-    if [ -z $(grep -q "$Line" "$HAL") ]; then
-      echo -e "   \e[1;33mHAL: \e[1;34m$line - \e[1;31mMissing\e[0m";
-    elif [ ! -z "$Debug" ]; then
-      echo -e "   \e[1;33mHAL: \e[1;34m$line - \e[1;34mFound\e[0m";
-    fi;
-  done <$TempFile;
-  echo "";
-  echo -e " \e[1;34m > Done checking HAL rules to Legacy\e[0m";
-  echo "";
-
-  rm -f $TempFile;
-}
-
 # === Hastebin ===
 haste()
 {
