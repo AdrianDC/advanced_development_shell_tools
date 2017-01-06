@@ -3,6 +3,26 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
+# === Sign Package ===
+function signzip()
+{
+  # Usage
+  if [ ! -f "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' usage: signzip <unsigned_input_zip> <signed_output_zip>';
+    echo '';
+    return;
+  fi;
+
+  # Sign ZIP and remove unsigned file
+  java -jar "${bash_sign_apk_dir}/signapk-cm121.jar" \
+      -w "${bash_sign_apk_dir}/testkey.x509.pem" \
+      "${bash_sign_apk_dir}/testkey.pk8" \
+      "${1}" \
+      "${2}";
+  rm -f "${1}";
+}
+
 # === Module Zip Maker ===
 function mmmzip()
 {
@@ -62,14 +82,13 @@ function mmmzip()
   if [ ! -z "$FilesList" ]; then
     cp "$bash_android_flashable_zip" "$TmpDir/$OutFile.unsigned.zip";
     zip -g "$TmpDir/$OutFile.unsigned.zip" $FilesList;
-    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-         -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-         "$bash_android_sign_apk_dir/testkey.pk8" \
-         "$TmpDir/$OutFile.unsigned.zip" \
-         "$TmpDir/$OutFile";
-    rm -f "$TmpDir/$OutFile.unsigned.zip";
-    cp "$TmpDir/$OutFile" "$TargetFile";
-    export PackageResult="$TargetFile";
+
+    # Zip signature
+    signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
+    cp "${TmpDir}/${OutFile}" "${TargetFile}";
+    export PackageResult="${TargetFile}";
+
+    # End of work
     echo "";
     echo -e " \e[1;37mPackage File:\e[0m $TargetFile";
   else
@@ -129,14 +148,13 @@ function systozip()
   if [ ! -z "$FilesList" ]; then
     cp "$bash_android_flashable_zip" "$TmpDir/$OutFile.unsigned.zip";
     zip -g "$TmpDir/$OutFile.unsigned.zip" $FilesList;
-    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-         -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-         "$bash_android_sign_apk_dir/testkey.pk8" \
-         "$TmpDir/$OutFile.unsigned.zip" \
-         "$TmpDir/$OutFile";
-    rm -f "$TmpDir/$OutFile.unsigned.zip";
-    cp "$TmpDir/$OutFile" "$TargetFile";
-    export PackageResult="$TargetFile";
+
+    # Zip signature
+    signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
+    cp "${TmpDir}/${OutFile}" "${TargetFile}";
+    export PackageResult="${TargetFile}";
+
+    # End of work
     echo "";
     echo -e " \e[1;37mPackage File:\e[0m $TargetFile";
   else
@@ -196,13 +214,12 @@ function packzip()
   cp "$bash_android_flashable_zip" "$TmpDir/$OutFile.unsigned.zip";
   if [ ! -z "$FilesList" ]; then
     zip -g "$TmpDir/$OutFile.unsigned.zip" $FilesList;
-    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-         -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-         "$bash_android_sign_apk_dir/testkey.pk8" \
-         "$TmpDir/$OutFile.unsigned.zip" \
-         "$TmpDir/$OutFile";
-    rm -f "$TmpDir/$OutFile.unsigned.zip";
-    cp "$TmpDir/$OutFile" "$TargetFile";
+
+    # Zip signature
+    signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
+    cp "${TmpDir}/${OutFile}" "${TargetFile}";
+
+    # End of work
     echo "";
     echo -e " \e[1;37mPackage File:\e[0m $TargetFile";
     export PackageResult="$TargetFile";

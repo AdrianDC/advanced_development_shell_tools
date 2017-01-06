@@ -6,11 +6,11 @@
 # === Build paths ===
 export bash_flashable_android_base=${bash_android_dir}/android_files/flashable_android_base.zip;
 export bash_scripts_kernel_injector=${bash_android_dir}/android_files/scripts_kernel_injector;
+export bash_sign_apk_dir=${bash_android_dir}/android_signapk;
 export bash_updater_flash_boot=${bash_android_dir}/android_files/updater_script_flash_boot;
 export bash_updater_flash_fota=${bash_android_dir}/android_files/updater_script_flash_fota;
 export bash_updater_kernel_injector=${bash_android_dir}/android_files/updater_script_kernel_injector;
 export bash_updater_multirom_secondary=${bash_android_dir}/android_files/updater_script_multirom_secondary;
-export bash_android_sign_apk_dir=$bash_android_dir/android_signapk;
 
 # === Repo TWRP ===
 function repotwrp()
@@ -124,21 +124,11 @@ function repotwrp()
   cd ${RootDir}/out/target/product/${PhoneName}/;
   zip -g "${TargetDir}/${OutMultiROMZip}.unsigned.zip" -r ./system/build.prop;
 
-  # Complete the zips
+  # Zips signatures
   cd ../../../../;
-  java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-       -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-       "$bash_android_sign_apk_dir/testkey.pk8" \
-       "$TargetDir/$OutFOTAZip.unsigned.zip" \
-       "$TargetDir/$OutFOTAZip";
-  rm -f "$TargetDir/$OutFOTAZip.unsigned.zip";
-  java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-       -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-       "$bash_android_sign_apk_dir/testkey.pk8" \
-       "$TargetDir/$OutMultiROMZip.unsigned.zip" \
-       "$TargetDir/$OutMultiROMZip";
-  rm -f "$TargetDir/$OutMultiROMZip.unsigned.zip";
-  rm -f "$TargetDir/$OutTWRP";
+  signzip "${TargetDir}/${OutFOTAZip}.unsigned.zip" "${TargetDir}/${OutFOTAZip}";
+  signzip "${TargetDir}/${OutMultiROMZip}.unsigned.zip" "${TargetDir}/${OutMultiROMZip}";
+  rm -f "${TargetDir}/${OutTWRP}";
 
   echo "";
   echo -e " \e[1;37mPackage Boot File:\e[0m $TargetDir/$OutMultiROMZip";
@@ -332,37 +322,19 @@ function repomrom()
   BuiltInstaller="$(find $BuildDir -maxdepth 1 -name $BuiltInstaller -print \
                 | tail -n 1)";
   if [ ! -z "$BuiltInstaller" ]; then
-    if [ -f "$TargetDir/$PublishInstaller" ]; then rm -f "$TargetDir/$PublishInstaller"; fi;
-    cp "$BuiltInstaller" "$TargetDir/$PublishInstaller.unsigned.zip";
-    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-        -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-        "$bash_android_sign_apk_dir/testkey.pk8" \
-        "$TargetDir/$PublishInstaller.unsigned.zip" \
-        "$TargetDir/$PublishInstaller";
-    rm -f "$TargetDir/$PublishInstaller.unsigned.zip";
+    cp -f "${BuiltInstaller}" "${TargetDir}/${PublishInstaller}.unsigned.zip";
+    signzip "${TargetDir}/${PublishInstaller}.unsigned.zip" "${TargetDir}/${PublishInstaller}";
   fi;
 
   BuiltKernel="$(find $BuildDir -maxdepth 1 -name $BuiltKernel -print)";
   if [ ! -z "$BuiltKernel" ]; then
-    if [ -f "$TargetDir/$PublishKernel" ]; then rm -f "$TargetDir/$PublishKernel"; fi;
-    cp "$BuiltKernel" "$TargetDir/$PublishKernel.unsigned.zip";
-    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-        -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-        "$bash_android_sign_apk_dir/testkey.pk8" \
-        "$TargetDir/$PublishKernel.unsigned.zip" \
-        "$TargetDir/$PublishKernel";
-    rm -f "$TargetDir/$PublishKernel.unsigned.zip";
+    cp -f "${BuiltKernel}" "${TargetDir}/${PublishKernel}.unsigned.zip";
+    signzip "${TargetDir}/${PublishKernel}.unsigned.zip" "${TargetDir}/${PublishKernel}";
   fi;
 
-  if [ -f "$BuildDir/$BuiltUninstaller" ]; then
-    if [ -f "$TargetDir/$PublishUninstaller" ]; then rm -f "$TargetDir/$PublishUninstaller"; fi;
-    cp "$BuildDir/$BuiltUninstaller" "$TargetDir/$PublishUninstaller.unsigned.zip";
-    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-         -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-         "$bash_android_sign_apk_dir/testkey.pk8" \
-         "$TargetDir/$PublishUninstaller.unsigned.zip" \
-         "$TargetDir/$PublishUninstaller";
-    rm -f "$TargetDir/$PublishUninstaller.unsigned.zip";
+  if [ -f "${BuildDir}/${BuiltUninstaller}" ]; then
+    cp -f "${BuildDir}/${BuiltUninstaller}" "${TargetDir}/${PublishUninstaller}.unsigned.zip";
+    signzip "${TargetDir}/${PublishUninstaller}.unsigned.zip" "${TargetDir}/${PublishUninstaller}";
   fi;
 
   if [ -f "$BuildDir/$BuiltRecovery" ]; then
@@ -392,20 +364,11 @@ function repomrom()
     cd ${RootDir}/out/target/product/${PhoneName}/;
     zip -g "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" -r ./system/build.prop;
 
+    # Zips signatures
     cd ../../../../;
-    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-        -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-        "$bash_android_sign_apk_dir/testkey.pk8" \
-        "$TargetDir/$PublishRecoveryFOTA.unsigned.zip" \
-        "$TargetDir/$PublishRecoveryFOTA";
-    rm -f "$TargetDir/$PublishRecoveryFOTA.unsigned.zip";
-    java -jar "$bash_android_sign_apk_dir/signapk-cm121.jar" \
-        -w "$bash_android_sign_apk_dir/testkey.x509.pem" \
-        "$bash_android_sign_apk_dir/testkey.pk8" \
-        "$TargetDir/$PublishRecoveryMultiROM.unsigned.zip" \
-        "$TargetDir/$PublishRecoveryMultiROM";
-    rm -f "$TargetDir/$PublishRecoveryMultiROM.unsigned.zip";
-    rm -f "$TargetDir/twrp.img";
+    signzip "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip" "${TargetDir}/${PublishRecoveryFOTA}";
+    signzip "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" "${TargetDir}/${PublishRecoveryMultiROM}";
+    rm -f "${TargetDir}/twrp.img";
   fi;
 
   rm -f "$TargetDir/$PublishRecoveryInjector";

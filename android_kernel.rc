@@ -431,13 +431,10 @@ function kernelinjectorzip()
     zip -g "${TargetFile}.unsigned.zip" './system/lib/modules/'*;
   fi;
 
-  # Signature
-  java -jar "${bash_android_sign_apk_dir}/signapk-cm121.jar" \
-       -w "${bash_android_sign_apk_dir}/testkey.x509.pem" \
-       "${bash_android_sign_apk_dir}/testkey.pk8" \
-       "${TargetFile}.unsigned.zip" \
-       "${TargetFile}";
-  rm -f "${TargetFile}.unsigned.zip";
+  # Zip signature
+  signzip "${TargetFile}.unsigned.zip" "${TargetFile}";
+
+  # End of work
   rm -rf "${TmpDir}";
   cd "${CurDir}";
 
@@ -479,14 +476,11 @@ function bootzip()
   cp "${BootFile}" "${TmpDir}/boot.img";
   zip -g "${OutFile}.unsigned.zip" 'boot.img';
 
-  # Complete the zip
-  java -jar "${bash_android_sign_apk_dir}/signapk-cm121.jar" \
-      -w "${bash_android_sign_apk_dir}/testkey.x509.pem" \
-      "${bash_android_sign_apk_dir}/testkey.pk8" \
-      "${TmpDir}/${OutFile}.unsigned.zip" \
-      "${TmpDir}/${OutFile}";
-  rm -f "${TmpDir}/${OutFile}.unsigned.zip";
+  # Zip signature
+  signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
   cp "${TmpDir}/${OutFile}" "${TargetFile}";
+
+  # End of work
   echo "";
   echo -e " \e[1;36mPackage File:\e[0m ${TargetFile}";
   export PackageResult="${TargetFile}";
