@@ -140,6 +140,7 @@ function tomultirom()   { torompaths 'MultiROM' "${1}"; };
 function torr()         { torompaths 'ResurrectionRemix' "${1}"; };
 function totwrp()       { torompaths 'TWRP' "${1}"; };
 function cdaosp()       { cd $(toaosp ${1}); }
+function cdl()          { cd $(tolineage ${1}); }
 function cdlineage()    { cd $(tolineage ${1}); }
 function cdaospoms()    { cd $(toaospoms); }
 function cdmultirom()   { cd $(tomultirom); }
