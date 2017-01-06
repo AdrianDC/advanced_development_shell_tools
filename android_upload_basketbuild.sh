@@ -38,7 +38,7 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
 
   # Notify the file name
   echo "   File '$(basename ${SendFile})' uploading...";
-  echo "";
+  echo '';
 
   # Login to BasketBuild
   curl -L -# --dump-header .headers \
@@ -72,7 +72,7 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
 
 # Credentials missing
 elif [ -z "${UploadPassword}" ]; then
-  echo "  FTP Credentials not found...";
+  echo '  FTP Credentials not found...';
 
 # File missing
 else

@@ -26,62 +26,65 @@ function signzip()
 # === Module Zip Maker ===
 function mmmzip()
 {
-  CurDir=$(pwd);
-  TmpDir=$(mktemp -d);
-  BuildParams="$@";
-  BuildPathFirst="$1";
-
-  if [ -z "$BuildParams" ]; then
-    BuildParams=".";
-    BuildPathFirst=".";
-  fi;
-
-  export USE_NINJA=false;
-  LogFile="$TmpDir/mmm_logs.txt";
-  OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f $BuildPathFirst))-${TARGET_PRODUCT}.zip";
-  TargetFile="$(xdg-user-dir DESKTOP)/Builds/$OutFile";
-  mkdir -p $(dirname $TargetFile);
-  path=$(readlink -f "$BuildPathFirst");
-  if [ ! -d "$path" ]; then
+  local CurDir=$(pwd);
+  local TmpDir=$(mktemp -d);
+  local BuildParams="${@:-.}";
+  local BuildPathFirst="${1:-.}";
+  local LogFile="${TmpDir}/mmm_logs.txt";
+  local OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f ${BuildPathFirst}))-${TARGET_PRODUCT}.zip";
+  local path=$(readlink -f "${BuildPathFirst}");
+  local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
+  mkdir -p $(dirname ${TargetFile});
+  if [ ! -d "${path}" ]; then
     croot;
   fi;
 
-  echo "";
-  echo -e " \e[1;37m[ Module Zip Maker by Adrian DC - 2016 ]\e[0m";
-  echo "";
+  # Disable Ninja
+  export USE_NINJA=false;
 
-  echo "";
-  if [ -d "$(readlink -f "$path")" ] || ! $(mms -v >/dev/null 2>&1); then
-    mmm -B $BuildParams | tee $LogFile;
+  # Header
+  echo '';
+  echo -e ' \e[1;37m[ Module Zip Maker by Adrian DC - 2016 ]\e[0m';
+  echo '';
+  echo '';
+
+  # Make the modules
+  if [ -d "$(readlink -f "${path}")" ] || ! $(mms -v >/dev/null 2>&1); then
+    mmm -B ${BuildParams} | tee ${LogFile};
   else
-    mka $BuildParams | tee $LogFile;
+    mka ${BuildParams} | tee ${LogFile};
   fi;
-  Installs=$(grep "target/product/.*/system" $LogFile | sort | uniq);
 
-  FilesList="";
-  for FilePath in ${Installs[*]}
-  do
-    if [[ "$FilePath" =~ "/system" ]]; then
-      FilePath=$(printf "$FilePath" | tail -1 \
+  # Files handling
+  local Installs=$(grep "target/product/.*/system" ${LogFile} | sort | uniq);
+  local FilesList='';
+  for FilePath in ${Installs[*]}; do
+
+    # Target selection
+    if [[ "${FilePath}" =~ '/system' ]]; then
+      FilePath=$(printf "${FilePath}" | tail -1 \
                | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
                | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
-      FileTarget=$(echo $FilePath \
+      FileTarget=$(echo ${FilePath} \
                  | sed "s/.*\(system\/.*\)/\1/g");
-      FileDir=$(dirname $FileTarget);
-      if [ ! -d "$TmpDir/$FileDir" ]; then
-        mkdir -p "$TmpDir/$FileDir";
+      FileDir=$(dirname ${FileTarget});
+      if [ ! -d "${TmpDir}/${FileDir}" ]; then
+        mkdir -p "${TmpDir}/${FileDir}";
       fi;
-      if [ -f "$FilePath" ]; then
-        cp "$FilePath" "$TmpDir/$FileTarget";
-        FilesList="$FilesList ./$FileTarget";
+
+    # Target copy
+      if [ -f "${FilePath}" ]; then
+        cp "${FilePath}" "${TmpDir}/${FileTarget}";
+        FilesList="${FilesList} ./${FileTarget}";
       fi;
     fi;
   done;
 
-  cd "$TmpDir/";
-  if [ ! -z "$FilesList" ]; then
-    cp "$bash_android_flashable_zip" "$TmpDir/$OutFile.unsigned.zip";
-    zip -g "$TmpDir/$OutFile.unsigned.zip" $FilesList;
+  # Pack zip output
+  cd "${TmpDir}/";
+  if [ ! -z "${FilesList}" ]; then
+    cp "${bash_android_flashable_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
+    zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
 
     # Zip signature
     signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
@@ -89,163 +92,181 @@ function mmmzip()
     export PackageResult="${TargetFile}";
 
     # End of work
-    echo "";
-    echo -e " \e[1;37mPackage File:\e[0m $TargetFile";
+    echo '';
+    echo -e " \e[1;37mPackage File:\e[0m ${TargetFile}";
   else
-    export PackageResult="";
+    export PackageResult='';
   fi;
-  echo "";
+  echo '';
 
+  # Restore Ninja
   export USE_NINJA=;
-  rm -rf "$TmpDir";
-  cd "$CurDir";
+
+  # End of work
+  rm -rf "${TmpDir}";
+  cd "${CurDir}";
 }
 
 # === System Zip Maker ===
 function systozip()
 {
-  CurDir=$(pwd);
-  TmpDir=$(mktemp -d);
-  BuildParams="$1";
-  BuildPathFirst="$1";
+  # Variables
+  local CurDir=$(pwd);
+  local TmpDir=$(mktemp -d);
+  local BuildParams="${1:-.}";
+  local BuildPathFirst="${1:-.}";
+  local LogFile="${TmpDir}/mmm_logs.txt";
+  local OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f ${BuildPathFirst}))-${TARGET_PRODUCT}.zip";
+  local path=$(readlink -f "${BuildPathFirst}");
+  local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
+  mkdir -p $(dirname ${TargetFile});
 
-  if [ -z "$BuildParams" ]; then
-    BuildParams=".";
-    BuildPathFirst=".";
-  fi;
+  # Header
+  echo '';
+  echo -e ' \e[1;37m[ System To Zip Maker by Adrian DC - 2016 ]\e[0m';
+  echo '';
 
-  LogFile="$TmpDir/mmm_logs.txt";
-  OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f $BuildPathFirst))-${TARGET_PRODUCT}.zip";
-  TargetFile="$(xdg-user-dir DESKTOP)/Builds/$OutFile";
-  mkdir -p $(dirname $TargetFile);
-  path=$(readlink -f "$BuildPathFirst");
+  # Files handling
+  local Installs=$(find "${BuildParams}" -type f -printf '%P\n');
+  local FilesList='';
+  for FilePath in ${Installs[*]}; do
 
-  echo "";
-  echo -e " \e[1;37m[ System To Zip Maker by Adrian DC - 2016 ]\e[0m";
-  echo "";
-
-  Installs=$(find "$BuildParams" -type f -printf '%P\n');
-
-  FilesList="";
-  for FilePath in ${Installs[*]}
-  do
-    FilePath=$(printf "$FilePath" | tail -1 \
+    # Target selection
+    FilePath=$(printf "${FilePath}" | tail -1 \
              | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
              | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
-    FileTarget="system/$FilePath";
-    FileDir=$(dirname $FileTarget);
-    if [ ! -d "$TmpDir/$FileDir" ]; then
-      mkdir -p "$TmpDir/$FileDir";
+    FileTarget="system/${FilePath}";
+    FileDir=$(dirname ${FileTarget});
+    if [ ! -d "${TmpDir}/${FileDir}" ]; then
+      mkdir -p "${TmpDir}/${FileDir}";
     fi;
+
+    # Target copy
     FilePath=$(readlink -f "${BuildParams}/${FilePath}");
-    if [ -f "$FilePath" ]; then
-      cp "$FilePath" "$TmpDir/$FileTarget";
-      FilesList="$FilesList ./$FileTarget";
+    if [ -f "${FilePath}" ]; then
+      cp "${FilePath}" "${TmpDir}/${FileTarget}";
+      FilesList="${FilesList} ./${FileTarget}";
     fi;
   done;
 
-  cd "$TmpDir/";
-  if [ ! -z "$FilesList" ]; then
-    cp "$bash_android_flashable_zip" "$TmpDir/$OutFile.unsigned.zip";
-    zip -g "$TmpDir/$OutFile.unsigned.zip" $FilesList;
+  # Pack zip output
+  cd "${TmpDir}/";
+  if [ ! -z "${FilesList}" ]; then
+    cp "${bash_android_flashable_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
+    zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
 
     # Zip signature
     signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
     cp "${TmpDir}/${OutFile}" "${TargetFile}";
     export PackageResult="${TargetFile}";
 
-    # End of work
-    echo "";
-    echo -e " \e[1;37mPackage File:\e[0m $TargetFile";
+    # Package result
+    echo '';
+    echo -e " \e[1;37mPackage File:\e[0m ${TargetFile}";
   else
-    export PackageResult="";
+    export PackageResult='';
   fi;
-  echo "";
+  echo '';
 
-  rm -rf "$TmpDir";
-  cd "$CurDir";
+  # End of work
+  rm -rf "${TmpDir}";
+  cd "${CurDir}";
 }
 
 # === Output Zip Maker ===
 function packzip()
 {
-  CurDir=$(pwd);
-  TmpDir=$(mktemp -d);
-  BuildParams="$@";
-  OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f $1))-${TARGET_PRODUCT}.zip";
-  TargetFile="$(xdg-user-dir DESKTOP)/Builds/$OutFile";
-  mkdir -p $(dirname $TargetFile);
+  # Variables
+  local CurDir=$(pwd);
+  local TmpDir=$(mktemp -d);
+  local BuildParams="${@}";
+  local OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f ${1}))-${TARGET_PRODUCT}.zip";
+  local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
+  mkdir -p $(dirname ${TargetFile});
 
-  echo "";
-  echo -e " \e[1;37m[ Packed Zip Maker by Adrian DC - 2016 ]\e[0m";
-  echo "";
+  # Header
+  echo '';
+  echo -e ' \e[1;37m[ Packed Zip Maker by Adrian DC - 2016 ]\e[0m';
+  echo '';
 
-  Installs=$@;
-  FilesList="";
-  for FilePath in ${Installs[*]}
-  do
+  # Files handling
+  local Installs=${@};
+  local FilesList='';
+  local FileTarget;
+  for FilePath in ${Installs[*]}; do
+
+    # Target selection
     FileTarget='';
-    if [[ "$FilePath" =~ '/system' ]]; then
-      FilePath=$(printf "$FilePath" | tail -1 \
+    if [[ "${FilePath}" =~ '/system' ]]; then
+      FilePath=$(printf "${FilePath}" | tail -1 \
                | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
                | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
-      FileTarget=$(echo $FilePath \
+      FileTarget=$(echo ${FilePath} \
                  | sed "s/.*\(system\/.*\)/\1/g");
-    elif [[ "$FilePath" =~ '/proprietary' ]]; then
-      FilePath=$(printf "$FilePath" | tail -1 \
+    elif [[ "${FilePath}" =~ '/proprietary' ]]; then
+      FilePath=$(printf "${FilePath}" | tail -1 \
                | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
                | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
-      FileTarget=$(echo $FilePath \
+      FileTarget=$(echo ${FilePath} \
                  | sed "s/.*proprietary\/\(.*\)/system\/\1/g");
     fi;
-    if [ ! -z "$FileTarget" ]; then
-      FileDir=$(dirname $FileTarget);
-      if [ ! -d "$TmpDir/$FileDir" ]; then
-        mkdir -p "$TmpDir/$FileDir";
+
+    # Target copy
+    if [ ! -z "${FileTarget}" ]; then
+      FileDir=$(dirname ${FileTarget});
+      if [ ! -d "${TmpDir}/${FileDir}" ]; then
+        mkdir -p "${TmpDir}/${FileDir}";
       fi;
-      if [ -f "$FilePath" ]; then
-        cp "$FilePath" "$TmpDir/$FileTarget";
-        FilesList="$FilesList ./$FileTarget";
+      if [ -f "${FilePath}" ]; then
+        cp "${FilePath}" "${TmpDir}/${FileTarget}";
+        FilesList="${FilesList} ./${FileTarget}";
       fi;
     fi;
   done;
 
-  cd "$TmpDir/";
-  cp "$bash_android_flashable_zip" "$TmpDir/$OutFile.unsigned.zip";
-  if [ ! -z "$FilesList" ]; then
-    zip -g "$TmpDir/$OutFile.unsigned.zip" $FilesList;
+  # Pack zip output
+  cd "${TmpDir}/";
+  cp "${bash_android_flashable_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
+  if [ ! -z "${FilesList}" ]; then
+    zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
 
     # Zip signature
     signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
     cp "${TmpDir}/${OutFile}" "${TargetFile}";
 
     # End of work
-    echo "";
-    echo -e " \e[1;37mPackage File:\e[0m $TargetFile";
-    export PackageResult="$TargetFile";
+    echo '';
+    echo -e " \e[1;37mPackage File:\e[0m ${TargetFile}";
+    export PackageResult="${TargetFile}";
   fi;
-  echo "";
+  echo '';
 
-  rm -rf "$TmpDir";
-  cd "$CurDir";
+  # End of work
+  rm -rf "${TmpDir}";
+  cd "${CurDir}";
 }
 
 # === Git Zip Maker ===
 function gitzip()
 {
+  # Variables
   local file_path;
   local files_list='';
   local status;
   local tmpfile=$(mktemp);
+
+  # Files parsing
   git diff-tree --no-commit-id --name-status -r ${1} > ${tmpfile};
   while read line; do
     status=$(echo "${line}" | awk '{ print $1 }');
     file_path=$(echo "${line}" | awk '{ print $2 }');
-    if [[ "$status" =~ 'D' || "${line}" =~ '.mk' ]]; then
+    if [[ "${status}" =~ 'D' || "${line}" =~ '.mk' ]]; then
       continue;
     fi;
     files_list="${files_list} ${file_path}";
   done < ${tmpfile};
+
+  # Pack into zip
   packzip ${files_list};
   rm -f ${tmpfile};
 }

@@ -47,7 +47,7 @@ function reposaosp()
   else
     echo "Android Repo not found...";
   fi;
-  cd "$currentdir";
+  cd "${currentdir}";
 }
 
 # === Roomservice Manifest ===
@@ -57,7 +57,7 @@ function reporoomserv()
   repor;
   mkdir -p .repo/local_manifests/;
   gedit .repo/local_manifests/roomservice.xml .repo/manifest.xml;
-  cd "$cwd";
+  cd "${cwd}";
 }
 
 # === Repo Sync Project ===
@@ -127,10 +127,10 @@ function reposyaosp()
   repor;
   cdaosp;
   reposy;
-  cd "$cwd";
+  cd "${cwd}";
   repor;
   reposy;
-  cd "$cwd";
+  cd "${cwd}";
 }
 
 # === Repo LineageOS Syncer ===
@@ -208,4 +208,4 @@ function repogetbranch()
 }
 
 # === Repo CCache Cleaner ===
-alias repocleancache='if [ ! -z "$CCACHE_DIR" ]; then rm -rfv "$CCACHE_DIR/"*; fi';
+alias repocleancache='if [ ! -z "${CCACHE_DIR}" ]; then rm -rfv "${CCACHE_DIR}/"*; fi';

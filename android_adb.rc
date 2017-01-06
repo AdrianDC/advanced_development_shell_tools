@@ -41,7 +41,7 @@ alias adbroot='adb kill-server; sudo adb start-server';
 alias adbside='adb sideload';
 alias adbpo='adb shell reboot -p';
 alias adbre='adb reboot';
-function adbrh() { adb $1 shell setprop ctl.restart zygote; }
+function adbrh() { adb ${1} shell setprop ctl.restart zygote; }
 alias adbrr='adb reboot recovery';
 alias adbw='adb wait-for-device';
 alias adbrb='adb reboot bootloader';
@@ -67,49 +67,48 @@ alias adbemergencylist='adb shell getprop ril.ecclist';
 # === ADB IP Connector ===
 function adbco()
 {
-  echo "";
-  if [ ! -z "$1" ]; then export ADB_IP_ADDRESS="$1"; fi;
+  echo '';
+  if [ ! -z "${1}" ]; then
+    export ADB_IP_ADDRESS="${1}";
+  fi;
   if [ -z "${ADB_IP_ADDRESS}" ]; then
-    echo " Usage: adbco [ipaddressonlyonce]";
-    echo "";
+    echo ' Usage: adbco [ipaddressonlyonce]';
+    echo '';
     return;
   fi;
-  export ADB_IP_PORT="5555";
+  export ADB_IP_PORT='5555';
 
   echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
   timeout 5 adb connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
-  echo -e "\e[1;36mConnected...\e[0m";
+  echo -e '\e[1;36mConnected...\e[0m';
   timeout 5 adb 'wait-for-devices';
-  echo -e "\e[1;36mGetting root access...\e[0m";
+  echo -e '\e[1;36mGetting root access...\e[0m';
   timeout 5 adb root;
   sleep 2;
-  echo -e "\e[1;36mReconnecting...\e[0m";
+  echo -e '\e[1;36mReconnecting...\e[0m';
   timeout 5 adb connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
-  echo -e "\e[1;36mConnected...\e[0m";
+  echo -e '\e[1;36mConnected...\e[0m';
   timeout 5 adb 'wait-for-devices';
-  echo -e "\e[1;36mMounting as root...\e[0m";
+  echo -e '\e[1;36mMounting as root...\e[0m';
   timeout 5 adb remount;
   sleep 1;
   timeout 5 adb 'wait-for-devices';
-  echo -e "\e[1;36mReady...\e[0m";
-  echo "";
+  echo -e '\e[1;36mReady...\e[0m';
+  echo '';
 }
 
 # === ADB File Editor ===
 function adbedit()
 {
   adbro;
-  path="$1";
-  if [ -z "$path" ]; then
-    path="/system/build.prop";
-  fi;
-  name=$(basename "$path");
-  adb pull "$path";
-  gedit "$name";
-  printf " Ok ? [ENTER] ";
+  local path="${1:-/system/build.prop}";
+  local name=$(basename "${path}");
+  adb pull "${path}";
+  gedit "${name}";
+  printf ' Ok ? [ENTER] ';
   read key;
-  adb push "$name" "$path";
-  rm "$name";
+  adb push "${name}" "${path}";
+  rm "${name}";
 }
 
 # === ADB Binaries Updater ===
@@ -129,22 +128,24 @@ function adbinputs()
 {
   #grep . /sys/class/input/event*/device/name
   #adbs hexdump -C /dev/input/event7
-  command="cat /proc/bus/input/devices";
-  echo "";
-  echo "adb shell $command";
-  echo "";
-  adb shell "$command";
+  command='cat /proc/bus/input/devices';
+  echo '';
+  echo "adb shell ${command}";
+  echo '';
+  adb shell "${command}";
 }
 
 # === ADB Events Reader ===
 function adbreadevents()
 {
-  if [ -z "$1" ]; then
-    echo "usage: adbreadevents eventNUM";
+  if [ -z "${1}" ]; then
+    echo '';
+    echo 'usage: adbreadevents eventNUM';
+    echo '';
     return;
   fi;
 
-  adb shell od -x /dev/input/$1 \
+  adb shell od -x /dev/input/${1} \
    | awk -Wposix '{ if ($7) printf(" Key %4d - State %4d\n", "0x" $7, "0x" $8) }';
 }
 
@@ -153,9 +154,9 @@ function adbst()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo "";
+    echo '';
     echo " Usage: adbst process_name [bool_get_root]";
-    echo "";
+    echo '';
     return;
   fi;
 
@@ -177,8 +178,8 @@ function adbst()
 function adbkp()
 {
   adb 'wait-for-device'; adb root; adb 'wait-for-device';
-  adb shell ps | grep $1;
-  pid=$(adb shell ps | grep $1 | awk '{ print $2 }');
+  adb shell ps | grep ${1};
+  pid=$(adb shell ps | grep ${1} | awk '{ print $2 }');
   adb shell kill ${pid};
 }
 
@@ -187,22 +188,22 @@ alias adbsl='adb shell ls -l';
 alias adbslz='adb shell ls -lZ';
 alias adbsc='adb shell cat';
 alias adbsg='adb shell getprop';
-function adbsw() { adbro; adb shell "echo $1 > $2"; }
+function adbsw() { adbro; adb shell "echo ${1} > ${2}"; }
 alias isdone='notify-send "Process execution finished !"';
 function adbgitpf()
 {
   adbro;
   local tmpfile=$(mktemp);
-  git diff-tree --no-commit-id --name-status -r $1 >"$tmpfile";
+  git diff-tree --no-commit-id --name-status -r ${1} >"${tmpfile}";
   while read line; do
-    local status=$(echo "$line" | awk '{ print $1 }');
-    local file_path=$(echo "$line" | awk '{ print $2 }');
-    if [[ "$status" =~ "D" || "$file_path" =~ ".mk" ]]; then
+    local status=$(echo "${line}" | awk '{ print $1 }');
+    local file_path=$(echo "${line}" | awk '{ print $2 }');
+    if [[ "${status}" =~ "D" || "${file_path}" =~ ".mk" ]]; then
       continue;
     fi;
-    adbpf "$file_path";
-  done <$tmpfile;
-  rm -f $tmpfile;
+    adbpf "${file_path}";
+  done <${tmpfile};
+  rm -f ${tmpfile};
 }
 
 # === ADB Shell Root ===
@@ -210,9 +211,9 @@ function adbsu()
 {
   if [ -z $(adb shell type su | grep 'no found') ]; then
     adbro;
-    adb shell $@;
+    adb shell ${@};
   else
-    adb shell su -c "$@";
+    adb shell su -c "${@}";
   fi;
 }
 

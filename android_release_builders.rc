@@ -314,9 +314,9 @@ function mromautorelease()
 {
   cdand;
   cdmultirom;
-  repomrom "huashan";
+  repomrom 'huashan';
   for device in mint hayabusa tsubasa; do
-    repomrom "${device}" "nosync";
+    repomrom "${device}" 'nosync';
   done;
 }
 
@@ -325,9 +325,9 @@ function twrpautorelease()
 {
   cdand;
   cdtwrp;
-  repotwrp "huashan";
+  repotwrp 'huashan';
   for device in mint hayabusa tsubasa; do
-    repotwrp "${device}" "nosync";
+    repotwrp "${device}" 'nosync';
   done;
 }
 

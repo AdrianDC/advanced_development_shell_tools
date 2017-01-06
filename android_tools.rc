@@ -103,20 +103,20 @@ function binaryeditor()
 # === Libraries Hunter ===
 function librarieshunter()
 {
-  if [ -z "$1" ]; then
+  if [ -z "${1}" ]; then
     echo " Usage : librarieshunter binariespath";
     return;
   fi;
 
-  local FILES="$1";
+  local FILES="${1}";
   local FILE_NAME='';
   local FILE_REFERENCED='';
   local LIB_NAME='';
 
   # Scan the libraries
-  echo "";
+  echo '';
   echo -e " \e[1;31m=== Searching missing libraries in ${FILES} ===\e[0m";
-  echo "";
+  echo '';
   for FILE in $(find ${FILES} -not -path "*.git/*" -not -path "*.repo/*" | sort);
   do
     FILE=$(readlink -f "${FILE}");
@@ -157,26 +157,26 @@ function librarieshunter()
       fi;
     fi;
   done;
-  echo "";
+  echo '';
 }
 
 # === Hastebin ===
-haste()
+function haste()
 {
   # Based upon https://github.com/seejohnrun/haste-client
   # Usage : command | haste or haste file
   tmp=$(mktemp);
-  if [ ! -z "$1" ] && [ -f "$1" ]; then
-    cat "$1" | tee $tmp;
+  if [ ! -z "${1}" ] && [ -f "${1}" ]; then
+    cat "${1}" | tee ${tmp};
   else
-    cat | tee $tmp;
+    cat | tee ${tmp};
   fi;
-  echo "";
+  echo '';
   url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" --connect-timeout 5 http://hastebin.com/documents \
-      | awk -F '"' '{ print "http://hastebin.com/"$4; }');
-  echo "$url";
-  xdg-open "$url" &
-  echo "";
-  rm $tmp;
+      | awk -F '"' '{ print "http://hastebin.com/"${4}; }');
+  echo "${url}";
+  xdg-open "${url}" &
+  echo '';
+  rm ${tmp};
 }
 

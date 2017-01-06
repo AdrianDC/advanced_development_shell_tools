@@ -116,7 +116,7 @@ function devuplrom()
   romfiles=$(find "./out/target/product/${device}/"*"${device}"*".zip" \
                   "./out/target/product/${device}/"*"${target}"*".zip" \
                   -mtime -1 | sort);
-  romfile="";
+  romfile='';
   for romfiletest in ${romfiles}; do
     if [ -f "${romfiletest}.md5sum" ]; then
       romfile="${romfiletest}";
@@ -190,7 +190,7 @@ function pushbrom()
 
   # ROM file
   romfile=$(find "./out/target/product/${device}/"*"${target}"*".zip" -mmin -30 | tail -n 1);
-  if [ ! -z "$romfile" ]; then
+  if [ ! -z "${romfile}" ]; then
      pushb "${rom} for ${device} ready";
   else
      pushb "${rom} for ${device} failed";

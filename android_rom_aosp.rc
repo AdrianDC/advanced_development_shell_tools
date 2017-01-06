@@ -111,7 +111,7 @@ function aospprojectpusher()
 
   # Confirmation
   command="git push -f backup HEAD:refs/heads/${projectbranch}";
-  echo " $command";
+  echo " ${command}";
   printf '  > Proceed with project push [ENTER] ? ';
   read key;
 

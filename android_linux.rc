@@ -15,15 +15,15 @@ alias findn='find -name';
 # === Folders Syncer ===
 function rsynca()
 {
-  if [ -z "$2" ]; then echo ' Usage: rsynca path1 path2'; return; fi;
-  rsync -av --delete "$1" "$2";
+  if [ -z "${2}" ]; then echo ' Usage: rsynca path1 path2'; return; fi;
+  rsync -av --delete "${1}" "${2}";
 }
 alias pcinfo='inxi -Fxz';
 
 # === Newer Files Finder ===
 function findnewer()
 {
-  if [ -z "$1" ]; then
+  if [ -z "${1}" ]; then
     echo " Usage: findnewer 20160123";
     return;
   fi;
@@ -36,25 +36,25 @@ function findnewer()
 function cpioext()
 {
   cwd=$(pwd);
-  file=$(echo "$1" | sed 's/file:\/\/\(.*\)/\1/');
-  name=$(basename "$file");
+  file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
+  name=$(basename "${file}");
   outdir=$(mktemp -d);
-  cp "$file" "$outdir/";
-  cd "$outdir";
-  cpio -i -F "$name";
-  nemo "$outdir/";
-  cd "$cwd";
+  cp "${file}" "${outdir}/";
+  cd "${outdir}";
+  cpio -i -F "${name}";
+  nemo "${outdir}/";
+  cd "${cwd}";
 }
 
 # === Video Resizer ===
 function videoresize()
 {
-  command="mencoder $1 -vf scale=480 -vf rotate=2 -ovc lavc -oac pcm -lavcopts vcodec=mpeg4:autoaspect -o $1.small.mp4";
-  echo "";
-  echo "$command";
-  echo "";
-  $command;
-  echo "";
+  command="mencoder ${1} -vf scale=480 -vf rotate=2 -ovc lavc -oac pcm -lavcopts vcodec=mpeg4:autoaspect -o ${1}.small.mp4";
+  echo '';
+  echo "${command}";
+  echo '';
+  ${command};
+  echo '';
 }
 
 # === Automount Disabler ===
@@ -69,20 +69,20 @@ function disableautomount()
 # === Terminal New Tab ===
 function newtab()
 {
-  if [ -z "$WID" ]; then
+  if [ -z "${WID}" ]; then
     WID=$(xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)"| awk '{print $5}');
   fi;
-  xdotool windowfocus $WID;
-  xdotool key ctrl+shift+t $WID;
-  if [ ! -z "$1" ]; then
-    if [ ! -z "$2" ]; then
-      xdotool type --clearmodifiers "echo -e '\033]2;'$2'\007';$1";
+  xdotool windowfocus ${WID};
+  xdotool key ctrl+shift+t ${WID};
+  if [ ! -z "${1}" ]; then
+    if [ ! -z "${2}" ]; then
+      xdotool type --clearmodifiers "echo -e '\033]2;'${2}'\007';${1}";
     else
-      xdotool type --clearmodifiers "$1";
+      xdotool type --clearmodifiers "${1}";
     fi;
     xdotool key Return;
   fi;
-  wmctrl -i -a $WID;
+  wmctrl -i -a ${WID};
 }
 
 # === Terminal New Tabs Inputs ===
@@ -100,8 +100,8 @@ function tms8960()
 {
   basedir=${ANDROID_DEV_DRIVE}/LineageOS;
   pathdirs="device/sony/huashan device/sony/mint device/sony/hayabusa device/sony/tsubasa device/sony/blue-common kernel/sony/msm8960t kernel/sony/msm8x60";
-  for pathdir in $pathdirs; do
-    newtab "cd ${basedir}/${pathdir}; cls;" "$(basename $pathdir)";
+  for pathdir in ${pathdirs}; do
+    newtab "cd ${basedir}/${pathdir}; cls;" "$(basename ${pathdir})";
   done;
 }
 
@@ -109,7 +109,7 @@ function tms8960()
 function td()
 {
   basedir=${ANDROID_DEV_DRIVE}/LineageOS;
-  newtab "cdd $1; cls;" "$1";
+  newtab "cdd ${1}; cls;" "${1}";
 }
 
 # === Terminal New Tabs Automates ===
@@ -117,18 +117,21 @@ function tmsfusion3()
 {
   basedir=${ANDROID_DEV_DRIVE}/LineageOS;
   pathdirs="device/sony/fusion3-common device/sony/yuga device/sony/dogo device/sony/odin device/sony/pollux kernel/sony/apq8064";
-  for pathdir in $pathdirs; do
-    newtab "cd ${basedir}/${pathdir}; cls;" "";
+  for pathdir in ${pathdirs}; do
+    newtab "cd ${basedir}/${pathdir}; cls;" '';
   done;
 }
 
 # === Diff Binaries ===
 function diffbin()
 {
-  if [ -z "$3" ]; then
-    diff -sy <(xxd "$1") <(xxd "$2") | less | colordiff;
+  # Full view
+  if [ -z "${3}" ]; then
+    diff -sy <(xxd "${1}") <(xxd "${2}") | less | colordiff;
+
+  # Partial view
   else
-    diff -sy <(xxd "$1") <(xxd "$2") | less | colordiff | head -n $3;
+    diff -sy <(xxd "${1}") <(xxd "${2}") | less | colordiff | head -n ${3};
   fi;
 }
 
@@ -146,15 +149,15 @@ function netspeed()
   dev_wlan=$(grep -c wlan0 /proc/net/dev);
   tput sc;
 
-  while [ $dev_eth -ne 0 ] || [ $dev_wlan -ne 0 ]; do
-    if [ $dev_eth -ne 0 ]; then
+  while [ ${dev_eth} -ne 0 ] || [ ${dev_wlan} -ne 0 ]; do
+    if [ ${dev_eth} -ne 0 ]; then
       vals_eth=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
                <(grep eth0 /proc/net/dev) \
                <(sleep 1; grep eth0 /proc/net/dev));
     else
       vals_eth='';
     fi;
-    if [ $dev_wlan -ne 0 ]; then
+    if [ ${dev_wlan} -ne 0 ]; then
       vals_wlan=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
                 <(grep wlan0 /proc/net/dev) \
                 <(sleep 1; grep wlan0 /proc/net/dev));
@@ -162,19 +165,19 @@ function netspeed()
       vals_wlan='';
     fi;
 
-    if [ ! -z "$vals_eth" ]; then
+    if [ ! -z "${vals_eth}" ]; then
       tput rc;
       tput ed;
       tput el;
-      if [ ! -z "$vals_eth" ]; then
+      if [ ! -z "${vals_eth}" ]; then
         echo -e " \e[1;33mEthernet:\e[0m";
-        echo -e "   Download: "$(echo "$vals_eth" | awk '{ print $1 }');
-        echo -e "   Upload: "$(echo "$vals_eth" | awk '{ print $2 }');
+        echo -e "   Download: "$(echo "${vals_eth}" | awk '{ print $1 }');
+        echo -e "   Upload: "$(echo "${vals_eth}" | awk '{ print $2 }');
       fi;
-      if [ ! -z "$vals_wlan" ]; then
+      if [ ! -z "${vals_wlan}" ]; then
         echo -e " \e[1;33mWLAN:    \e[0m";
-        echo -e "   Download: "$(echo "$vals_wlan" | awk '{ print $1 }');
-        echo -e "   Upload: "$(echo "$vals_wlan" | awk '{ print $2 }');
+        echo -e "   Download: "$(echo "${vals_wlan}" | awk '{ print $1 }');
+        echo -e "   Upload: "$(echo "${vals_wlan}" | awk '{ print $2 }');
       fi;
     fi;
     sleep 1;

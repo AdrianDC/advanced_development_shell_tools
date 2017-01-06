@@ -29,7 +29,7 @@ function repoprojectscleaner()
     if [[ ! "${git_folders}" =~ "${git_path}" ]]; then
       printf "  Objects ${git_path} are unreferenced. Delete [y/N] ? ";
       read key;
-      if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
+      if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
         rm -rf ${git_path};
       fi;
     fi;
@@ -47,7 +47,7 @@ function repoprojectscleaner()
     if [[ ! "${git_project_objects}" =~ "${git_path}" ]]; then
       echo "  Project ${git_path} is unreferenced. Deleting [y/N] ? ";
       read key;
-      if [[ "$key" == 'y' || "$key" == 'Y' ]]; then
+      if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
         rm -rf ${git_path};
       fi;
     fi;

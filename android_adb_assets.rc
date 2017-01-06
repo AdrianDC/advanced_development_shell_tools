@@ -6,9 +6,9 @@
 # === Sepolicies Extractor ===
 function sepaud()
 {
-  cat $1 | grep -a avc.*denied;
-  cat $1 | grep -a 'does not have a SELinux domain defined';
-  cat $1 | grep -a avc.*denied | audit2allow -p sepolicy;
+  cat ${1} | grep -a avc.*denied;
+  cat ${1} | grep -a 'does not have a SELinux domain defined';
+  cat ${1} | grep -a avc.*denied | audit2allow -p sepolicy;
 }
 
 # === ADB Intents ===
@@ -19,29 +19,35 @@ alias adbcamera='adb shell pm enable com.android.camera2/com.android.camera.Came
 alias adblkl='adb root; adb wait-for-device; adb shell killall zigote; adbl';
 
 # === ADB Crash Debuggers ===
-function adbpk() { pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
-                   adb root; adb 'wait-for-device';
-                   adb logcat -c;
-                   adb shell kill $pid;
-                   adb shell ps | grep mediaserver;
-                   sleep 2; adbl; }
-function adbms() { pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
-                   adb root; adb 'wait-for-device';
-                   adb logcat -c;
-                   adb shell kill $pid;
-                   pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
-                   adb shell strace -p $pid; }
+function adbpk()
+{
+  pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
+  adb root; adb 'wait-for-device';
+  adb logcat -c;
+  adb shell kill ${pid};
+  adb shell ps | grep mediaserver;
+  sleep 2; adbl;
+}
+function adbms()
+{
+  pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
+  adb root; adb 'wait-for-device';
+  adb logcat -c;
+  adb shell kill ${pid};
+  pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
+  adb shell strace -p ${pid};
+}
 
 function adblibs() { adb shell grep -air "${1}" ${2:-/system/lib/}; }
 alias ndkstack="ndk-stack -sym ${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols -dump";
-function adbwtch() { adbr; while [ 1 ]; do adb shell cat "$1"; done; }
+function adbwtch() { adbr; while [ 1 ]; do adb shell cat "${1}"; done; }
 
 function adbdu()
 {
   tmp=$(mktemp);
   adbro;
-  adbsu 'du /data/ | sort -hr' > $tmp;
-  gedit $tmp;
+  adbsu 'du /data/ | sort -hr' > ${tmp};
+  gedit ${tmp};
 }
 
 # === ADB Property Radio Logs ===
@@ -80,18 +86,18 @@ function adbrstock()
 # === ADB Alsa Reader ===
 function adbalsa()
 {
-  printf "" | tee alsalog;
+  printf '' | tee alsalog;
   adb shell "cat /proc/asound/card0/id" | tee -a alsalog;
   for line in $(adb shell find /proc/asound/card0 -name info); do
-    path=$(printf $line | tr -dc 'a-zA-Z0-9/');
-    echo "" | tee -a alsalog;
-    echo "=== $path ===" | tee -a alsalog;
-    adb shell "cat $path" | tee -a alsalog;
-    if [[ "$path" =~ "sub" ]]; then
-      folder=$(dirname "$path");
-      adb shell "cat $folder/hw_params" | tee -a alsalog;
-      adb shell "cat $folder/status" | tee -a alsalog;
-      adb shell "cat $folder/sw_params" | tee -a alsalog;
+    path=$(printf ${line} | tr -dc 'a-zA-Z0-9/');
+    echo '' | tee -a alsalog;
+    echo "=== ${path} ===" | tee -a alsalog;
+    adb shell "cat ${path}" | tee -a alsalog;
+    if [[ "${path}" =~ 'sub' ]]; then
+      folder=$(dirname "${path}");
+      adb shell "cat ${folder}/hw_params" | tee -a alsalog;
+      adb shell "cat ${folder}/status" | tee -a alsalog;
+      adb shell "cat ${folder}/sw_params" | tee -a alsalog;
     fi;
   done;
   adb shell "cat /proc/asound/devices" | tee -a alsalog;

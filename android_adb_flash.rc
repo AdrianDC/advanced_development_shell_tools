@@ -37,18 +37,18 @@ function adbbootcut()
 # === ADB TWRP Installer ===
 function adbrecoveryinstall()
 {
-  if [ -z "$1" ] || [ ! -f "$1" ]; then
-    echo "";
-    echo " Usage: adbrecoveryinstall file_path";
-    echo "";
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: adbrecoveryinstall file_path';
+    echo '';
     return;
   fi;
 
-  local filename=$(basename $1);
+  local filename=$(basename ${1});
   adbro;
   adb shell mkdir -p /sdcard/;
-  adb push "$1" /sdcard/${filename};
-  adb shell "mkdir -p /cache/recovery";
+  adb push "${1}" /sdcard/${filename};
+  adb shell 'mkdir -p /cache/recovery';
   adb shell "echo 'install /sdcard/${filename}' > /cache/recovery/command";
   adb shell 'echo /cache/recovery/command: $(/cache/recovery/command)';
   adb reboot recovery;

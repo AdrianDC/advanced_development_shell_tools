@@ -8,8 +8,9 @@ function outdevcl()
 {
   # Function usage
   if [ -z "${1}" ]; then
-    echo " Usage: outdevcl devicename";
-    echo "";
+    echo '';
+    echo ' Usage: outdevcl devicename';
+    echo '';
     return;
   fi;
 

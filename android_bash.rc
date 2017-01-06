@@ -83,7 +83,7 @@ bash_android_sources="\
 ";
 
 # === Bash Importations ===
-for bash_source in $bash_android_sources;
+for bash_source in ${bash_android_sources};
 do
   source ${bash_source};
 done;
@@ -180,6 +180,7 @@ function bashdiff()
   cd "${bash_android_dir}/";
   git fetch origin;
   git diff HEAD origin/$(git rev-parse --abbrev-ref HEAD);
+  git diff HEAD;
   cd "${currentdir}/";
 }
 

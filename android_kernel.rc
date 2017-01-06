@@ -4,8 +4,8 @@
 # ======================================
 
 # === Build paths ===
-export bash_android_bbootimg=$bash_android_dir/android_tools/bbootimg;
-export bash_android_mkboot=$bash_android_dir/android_mkboot;
+export bash_android_bbootimg=${bash_android_dir}/android_tools/bbootimg;
+export bash_android_mkboot=${bash_android_dir}/android_mkboot;
 
 # === Kernel Fast Builder ===
 function fboota()
@@ -77,7 +77,6 @@ function fboota()
   fi;
 
   # Ramdisk files builder
-  echo "before";
   export USE_NINJA=false;
   if ls ./device/*/${device}/rootdir/Android.mk 1> /dev/null 2>&1; then
     mmm ./device/*/${device}/rootdir/;
@@ -93,7 +92,7 @@ function fboota()
   fi;
 
   # Bootimage builder
-  if [[ ! "${params}" =~ "full" ]] && $(mms -v >/dev/null 2>&1); then
+  if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
     mms bootimage | tee ${tmpfile};
   else
     make -j$(grep -c ^processor /proc/cpuinfo) bootimage | tee ${tmpfile};
@@ -157,11 +156,11 @@ function fboota()
     echo '';
     echo -e " \e[1;37m[ Bootloader ${BootImg}... ]\e[0m";
     export PackageResult="${BootImg}";
-    echo "";
+    echo '';
     sudo adb reboot bootloader;
     timeout 20 sudo fastboot flash boot "${BootImg}";
     timeout 5 sudo fastboot reboot;
-    echo "";
+    echo '';
 
   fi;
 
@@ -176,9 +175,9 @@ function fboota()
 function fboot()
 {
   sudo adb reboot bootloader;
-  if [ ! -z "$1" ]; then
-    file=$(echo "$1" | sed 's/file:\/\/\(.*\)/\1/');
-    sudo fastboot flash boot "$file";
+  if [ ! -z "${1}" ]; then
+    local file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
+    sudo fastboot flash boot "${file}";
   else
     sudo fastboot flash boot boot.img;
   fi;
@@ -189,9 +188,9 @@ function fboot()
 function fboots()
 {
   sudo adb reboot bootloader;
-  if [ ! -z "$1" ]; then
-    file=$(echo "$1" | sed 's/file:\/\/\(.*\)/\1/');
-    sudo fastboot flash system "$file";
+  if [ ! -z "${1}" ]; then
+    local file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
+    sudo fastboot flash system "${file}";
   else
     sudo fastboot flash system system.img;
   fi;
@@ -274,8 +273,8 @@ function fbootmodules()
 function fbooto()
 {
   sudo adb reboot bootloader;
-  if [ ! -z "$1" ]; then
-    sudo fastboot flash boot "$1";
+  if [ ! -z "${1}" ]; then
+    sudo fastboot flash boot "${1}";
   else
     sudo fastboot flash boot boot.img;
   fi;
@@ -285,8 +284,8 @@ function fbooto()
 function frecovery()
 {
   sudo adb reboot bootloader;
-  if [ ! -z "$1" ]; then
-    sudo fastboot flash recovery "$1";
+  if [ ! -z "${1}" ]; then
+    sudo fastboot flash recovery "${1}";
   else
     sudo fastboot flash recovery boot.img;
   fi;
@@ -481,7 +480,7 @@ function bootzip()
   cp "${TmpDir}/${OutFile}" "${TargetFile}";
 
   # End of work
-  echo "";
+  echo '';
   echo -e " \e[1;36mPackage File:\e[0m ${TargetFile}";
   export PackageResult="${TargetFile}";
   echo '';

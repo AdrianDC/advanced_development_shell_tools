@@ -30,13 +30,13 @@ function gerritpushreview()
   printf '  > Proceed with review upload (y/N) ? ';
   read key;
   echo '';
-  if [[ "${key}" == 'y' || "$key" == 'Y' ]]; then
+  if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
     printf ' > Are you sure (y/N) ? ';
     read key;
     echo '';
 
     # Command execution
-    if [[ "${key}" == 'y' || "$key" == 'Y' ]]; then
+    if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
       ${command};
       echo '';
     fi;

@@ -60,7 +60,7 @@ echo '';
 sudo gedit ~/.bashrc;
 
 # Done
-TimeDiff=$(($(date +%s)-$TimeStart));
+TimeDiff=$(($(date +%s)-${TimeStart}));
 echo '';
 echo '';
 echo " [ Done in ${TimeDiff} secs ]";

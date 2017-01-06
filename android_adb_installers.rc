@@ -21,7 +21,7 @@ function adbif()
 
   # Install new files
   for file_path in ${tmp_installs[*]}; do
-    echo $file_path;
+    echo ${file_path};
     if [[ "${file_path}" =~ '/system' && ! "${file_path}" =~ '/NOTICE_FILES' ]]; then
       file_path=$(printf "${file_path}" | tail -1 \
                 | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
@@ -116,9 +116,9 @@ function adbpf()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo "";
-    echo " Usage: adbpf file_paths";
-    echo "";
+    echo '';
+    echo ' Usage: adbpf file_paths';
+    echo '';
     return;
   fi;
 
@@ -161,9 +161,9 @@ function adbpf()
       fi;
       if [[ "${filepathtest}" == "${filepath}" ]]; then
         if [[ "${filepathtest}" =~ '.xml' ]] || [[ "${filepathtest}" =~ '.conf' ]]; then
-          filetarget="/system/etc/"$(basename $filepath);
+          filetarget="/system/etc/"$(basename ${filepath});
         elif [[ "${filepathtest}" =~ '.so' ]]; then
-          filetarget="/system/lib/"$(basename $filepath);
+          filetarget="/system/lib/"$(basename ${filepath});
         else
           filetarget=$(printf "${filepath}" | sed "s/.*\(system.*\)/\/\1/g");
         fi;
@@ -186,8 +186,8 @@ alias adbp='adbro; adbpf';
 function adbpfa()
 {
   adbro;
-  for file in $@; do
-    adbpf "$(readlink -f $file)";
+  for file in ${@}; do
+    adbpf "$(readlink -f ${file})";
   done;
 }
 

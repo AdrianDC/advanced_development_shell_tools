@@ -15,13 +15,13 @@ echo 3 > /proc/sys/vm/drop_caches
 swapon -a' \
 | sed 's/^ *//g');
 
-OLDIFS="$IFS";
+OLDIFS="${IFS}";
 IFS=$'\n';
-for command in $commands; do
-  echo " [$command]";
-  sudo sh -c "timeout 5 $command";
+for command in ${commands}; do
+  echo " [${command}]";
+  sudo sh -c "timeout 5 ${command}";
 done;
-IFS="$OLDIFS";
+IFS="${OLDIFS}";
 
 echo "";
 free;
