@@ -123,7 +123,7 @@ function fboota()
 
   # Zip the bootimage
   elif [[ "${params}" =~ 'zip' ]] && [ ! -z "${BootImg}" ] && [ -f "${BootImg}" ]; then
-    kernelbootzip ${device} "${BootImg}";
+    bootzip ${device} "${BootImg}";
 
   # Flash the bootimage to the device
   elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${BootImg}" ] && [ -f "${BootImg}" ]; then
@@ -436,13 +436,13 @@ function kernelinjectorzip()
   echo '';
 }
 
-# === Kernel Boot Zip ===
-function kernelbootzip()
+# === Boot Zip Packer ===
+function bootzip()
 {
   # Usage
   if [ -z "${2}" ] || [ ! -f "${2}" ]; then
     echo '';
-    echo ' usage: kernelbootzip device boot_img_path';
+    echo ' usage: bootzip device boot_img_path';
     echo '';
     return;
   fi;
