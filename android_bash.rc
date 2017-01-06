@@ -20,7 +20,6 @@ bash_android_sources="\
   \
   ${bash_android_dir}/android_adb.rc \
   ${bash_android_dir}/android_adb_assets.rc \
-  ${bash_android_dir}/android_adb_devices.rc \
   ${bash_android_dir}/android_adb_flash.rc \
   ${bash_android_dir}/android_adb_installers.rc \
   ${bash_android_dir}/android_adb_logs.rc \
@@ -28,6 +27,8 @@ bash_android_sources="\
   ${bash_android_dir}/android_changelog.rc \
   \
   ${bash_android_dir}/android_colors.rc \
+  \
+  ${bash_android_dir}/android_devices.rc \
   \
   ${bash_android_dir}/android_edit.rc \
   \

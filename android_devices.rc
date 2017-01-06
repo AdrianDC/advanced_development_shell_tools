@@ -46,6 +46,8 @@ function androidpartitionstarget()
 
   # Partition
   case "${request}" in
+
+    # Boot partition
     boot)
       case "${device}" in
         dora|f8131)
@@ -53,8 +55,12 @@ function androidpartitionstarget()
         huashan|hayabusa|mint|tsubasa|*)
           partition='Kernel';;
       esac;;
+
+    # FOTAKernel partition
     fota)
       partition='FOTAKernel';;
+
+    # Boot partition
     recovery)
       case "${device}" in
         dora|f8131)
@@ -62,6 +68,17 @@ function androidpartitionstarget()
         huashan|hayabusa|mint|tsubasa|*)
           partition='FOTAKernel';;
       esac;;
+
+    # System partition
+    system)
+      case "${device}" in
+        huashan|hayabusa|mint|tsubasa)
+          partition='System';;
+        dora|f8131|*)
+          partition='system';;
+      esac;;
+
+    # Unknown partition
     *)
       partition='unknown';;
   esac;
