@@ -3,103 +3,84 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === Gerrit Review ===
-function gerritpushreview()
+# === Gerrit Review Uploader ===
+function gerritreview()
 {
   # Variables
-  local projectpath="${1}/${2}";
-  if [ "${2}" = '.' ]; then
-    projectpath="${1}";
+  local gerrit_url="${1}";
+  local gerrit_organisation="${2}";
+  local gerrit_type="${3}";
+  local gerrit_branch="${4:-$(repogetbranch)}";
+  local gerrit_confirm_twice='';
+  local gerrit_project='';
+  local gerrit_remote='';
+
+  # Handle gerrit commit types
+  case "${gerrit_type}" in
+    drafts)
+      ;;
+    for|heads)
+      gerrit_confirm_twice='true';;
+    *)
+      gerrit_type='';;
+  esac;
+
+  # Usage
+  if [ -z "${gerrit_url}" ] || [ -z "${gerrit_organisation}" ] || [ -z "${gerrit_type}" ] || [ -z "${gerrit_branch}" ]; then
+    echo '';
+    echo ' Usage: gerritreview <gerrit_ssh_or_http> <project_name_or_.> <drafts/for/heads> [branch]';
+    echo '';
+    return;
   fi;
-  local projectorigin=$(git remote -v \
-                      | grep origin \
-                      | tail -n 1);
-  if [ -z "${projectorigin}" ]; then
-    projectorigin=$(git remote -v \
-                  | grep ${2} \
-                  | tail -n 1);
+
+  # Remote detection
+  if [ ! "${gerrit_organisation}" = '.' ]; then
+    gerrit_remote=$(git remote -v | grep "/${gerrit_organisation}/" | tail -n 1);
   fi;
-  local projectname=$(echo "${projectorigin}" \
-                    | cut -f 2 \
-                    | sed 's/.*\/\([^.]*\).* .*/\1/');
-  local command="git push ${projectpath}/${projectname} HEAD:refs/${3:-for}/${4:-$(repogetbranch)}";
+  if [ -z "${gerrit_remote}" ]; then
+    gerrit_remote=$(git remote -v | grep origin | tail -n 1);
+  fi;
+  if [ -z "${gerrit_remote}" ]; then
+    gerrit_remote=$(git remote -v | grep "${gerrit_organisation}.*//" | tail -n 1);
+  fi;
+
+  # Project detection
+  gerrit_project=$(echo "${gerrit_remote}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  if [ ! "${gerrit_organisation}" = '.' ]; then
+    gerrit_project="${gerrit_organisation}/${gerrit_project}";
+  fi;
+
+  # Command creation
+  local command="git push ${gerrit_url}/${gerrit_project} HEAD:refs/${gerrit_type}/${gerrit_branch}";
 
   # Command confirmation
   echo '';
   echo " ${command}";
   printf '  > Proceed with review upload (y/N) ? ';
   read key;
-  echo '';
-  if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-    printf ' > Are you sure (y/N) ? ';
+
+  # Abort if denied
+  if [ ! "${key}" = 'y' ] && [ ! "${key}" = 'Y' ]; then
+    echo '';
+    return;
+  fi;
+
+  # Command second confirmation
+  if [ ! -z "${gerrit_confirm_twice}" ]; then
+    printf '  > Are you sure (y/N) ? ';
     read key;
     echo '';
 
-    # Command execution
-    if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-      ${command};
+    # Abort if denied
+    if [ ! "${key}" = 'y' ] && [ ! "${key}" = 'Y' ]; then
       echo '';
+      return;
     fi;
   fi;
-}
-
-# === Gerrit Bypasser ===
-function gerritpushbypassreview()
-{
-  # Variables
-  local projectpath="${1}/${2}";
-  if [ "${2}" = '.' ]; then
-    projectpath="${1}";
-  fi;
-  local projectorigin=$(git remote -v \
-                      | grep origin \
-                      | tail -n 1);
-  if [ -z "${projectorigin}" ]; then
-    projectorigin=$(git remote -v \
-                  | grep ${2} \
-                  | tail -n 1);
-  fi;
-  local projectname=$(echo "${projectorigin}" \
-                    | cut -f 2 \
-                    | sed "s/.*\/\([^.]*\).* .*/\1/");
-  local command="git push ${projectpath}/${projectname} HEAD:refs/${3:-for}/${4:-$(repogetbranch)}";
 
   # Command execution
-  echo '';
-  echo " ${command}";
   ${command};
-}
-
-# === Gerrit Drafts ===
-function gerritpushdrafts()
-{
-  # Variables
-  local projectpath="${1}";
-  local projectorigin=$(git remote -v \
-                      | grep origin \
-                      | tail -n 1);
-  if [ -z "${projectorigin}" ]; then
-    projectorigin=$(git remote -v \
-                  | grep "${2}.*//" \
-                  | tail -n 1);
-  fi;
-  local projectname=$(echo "${projectorigin}" \
-                    | cut -f 2 \
-                    | sed "s/.*\/\/[^\/]*\/\(.*\) .*/\1/");
-  local command="git push ${projectpath}/${projectname} HEAD:refs/drafts/${3:-$(repogetbranch)}";
-
-  # Command confirmation
   echo '';
-  echo " ${command}";
-  printf "  > Proceed with review upload (y/N) ? ";
-  read key;
-  echo '';
-
-  # Command execution
-  if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-    ${command};
-    echo '';
-  fi;
 }
 
 # === Gerrit Username ===
@@ -120,44 +101,44 @@ function gerritusername()
 }
 
 # === Gerrit LineageOS ===
-alias gitpr='gerritpushreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS for';
-alias gitprh='gerritpushreview http://review.lineageos.org LineageOS for';
-alias gitprd='gerritpushdrafts ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS';
-alias gitprdh='gerritpushdrafts http://review.lineageos.org LineageOS';
-alias gitpg='gerritpushreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS heads';
-alias gitpbr='gerritpushbypassreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS heads';
-alias gitpgh='gerritpushreview http://review.lineageos.org LineageOS heads';
+alias gitpr='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS for';
+alias gitprh='gerritreview http://review.lineageos.org LineageOS for';
+alias gitprd='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS drafts';
+alias gitprdh='gerritreview http://review.lineageos.org LineageOS drafts';
+alias gitpg='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS heads';
+alias gitpgh='gerritreview http://review.lineageos.org LineageOS heads';
 alias gitprg='gitpr; gitpg';
 alias gitprgy='printf "y\ny\n" | gitpr; printf "y\ny" | gitpg';
 
 # === Gerrit AOSP ===
-alias gitpraosp='gerritpushreview https://android-review.googlesource.com aosp for master';
-alias gitprdaosp='gerritpushdrafts https://android-review.googlesource.com aosp master';
+alias gitpraosp='gerritreview https://android-review.googlesource.com aosp for master';
+alias gitprdaosp='gerritreview https://android-review.googlesource.com aosp drafts master';
 
 # === Gerrit AICP ===
-alias gitpraicp='gerritpushreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP for n7.1';
-alias gitprhaicp='gerritpushreview http://gerrit.aicp-rom.com AICP for n7.1';
-alias gitprdaicp='gerritpushdrafts ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP n7.1';
-alias gitprdhaicp='gerritpushdrafts http://gerrit.aicp-rom.com AICP n7.1';
-alias gitpgaicp='gerritpushreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP heads n7.1';
-alias gitpghaicp='gerritpushreview http://gerrit.aicp-rom.com AICP heads n7.1';
+alias gitpraicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP for n7.1';
+alias gitprhaicp='gerritreview http://gerrit.aicp-rom.com AICP for n7.1';
+alias gitprdaicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP drafts n7.1';
+alias gitprdhaicp='gerritreview http://gerrit.aicp-rom.com AICP drafts n7.1';
+alias gitpgaicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP heads n7.1';
+alias gitpghaicp='gerritreview http://gerrit.aicp-rom.com AICP heads n7.1';
 alias gitprgaicp='gitpraicp; gitpgaicp';
 alias gitprghaicp='gitprhaicp; gitpghaicp';
 
 # === Gerrit LegacyXperia ===
-alias gitpr7='gerritpushreview ssh://$(gerritusername)@review.msm7x30.org:29418 LegacyXperia for';
-alias gitpr7h='gerritpushreview http://review.msm7x30.org LegacyXperia for';
-alias gitpr7d='gerritpushdrafts ssh://$(gerritusername)@review.msm7x30.org:29418 LegacyXperia';
-alias gitpr7dh='gerritpushdrafts http://review.msm7x30.org LegacyXperia';
+alias gitpr7='gerritreview ssh://$(gerritusername)@review.msm7x30.org:29418 LegacyXperia for';
+alias gitpr7h='gerritreview http://review.msm7x30.org LegacyXperia for';
+alias gitpr7d='gerritreview ssh://$(gerritusername)@review.msm7x30.org:29418 LegacyXperia drafts';
+alias gitpr7dh='gerritreview http://review.msm7x30.org LegacyXperia drafts';
 
 # === Gerrit Omni ===
-alias gitpromni='gerritpushreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . for android-6.0';
-alias gitprhomni='gerritpushreview http://gerrit.omnirom.org . for android-6.0';
-alias gitprdomni='gerritpushdrafts ssh://$(gerritusername)@gerrit.omnirom.org:29418 . android-6.0';
-alias gitprdhomni='gerritpushdrafts http://gerrit.omnirom.org . android-6.0';
+alias gitpromni='gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . for android-6.0';
+alias gitprhomni='gerritreview http://gerrit.omnirom.org . for android-6.0';
+alias gitprdomni='gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . drafts android-6.0';
+alias gitprdhomni='gerritreview http://gerrit.omnirom.org . drafts android-6.0';
 
 # === Gerrit TWRP ===
-alias gitprdtwrp='gerritpushdrafts ssh://$(gerritusername)@gerrit.twrp.me:29418 . android-6.0';
+alias gitprtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . for android-6.0';
+alias gitprdtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . drafts android-6.0';
 
 # === GitHub Origin Cherry-Pick ===
 function gitcpo()
