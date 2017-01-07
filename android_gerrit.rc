@@ -3,6 +3,9 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_gerrit.rc)
+
 # === Gerrit Review Uploader ===
 function gerritreview()
 {

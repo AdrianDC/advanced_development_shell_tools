@@ -4,7 +4,7 @@
 # ======================================
 
 # === Standalone Source Helper ===
-# source <(curl -s https://github.com/AdrianDC/android_shell_tools/raw/master/android_kernel_defconfig.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_kernel_defconfig.rc)
 
 # === Kernel DefConfig Editor ===
 function makedefconf()
