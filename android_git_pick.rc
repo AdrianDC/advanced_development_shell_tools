@@ -65,3 +65,26 @@ function gitmerges()
     fi;
   done;
 }
+
+# === GitHub Origin Cherry-Pick ===
+function gitcpo()
+{
+  # Configurations
+  gitremote='origin';
+
+  # Usage
+  echo '';
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo -e '  \e[1;37mGit Origin Cherry-Pick.';
+    echo -e '    Usage :\e[0m gitcpo branch amount_of_commits';
+    echo '';
+    return;
+  fi;
+
+  # Cherry-Pick
+  git cherry-pick --abort >/dev/null 2>&1;
+  git fetch ${gitremote} ${1};
+  if [ ${?} -eq 0 ] && [ ${2} -gt 0 ]; then
+    git cherry-pick FETCH_HEAD~$((${2}-1))^..FETCH_HEAD;
+  fi;
+}
