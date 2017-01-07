@@ -71,11 +71,18 @@ function cdman()
 # === Repo Out Access ===
 function toout()
 {
-  local device="${1}";
-  if [ -z "${device}" ]; then
-    device="huashan";
+  # Variables
+  local device="${1:-huashan}";
+
+  # Get out target path
+  local outtargetpath=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/out\/target\/product/g");
+
+  # Path detection
+  if [ -d "${outtargetpath}/*${device}*" ]; then
+    echo "${outtargetpath}/*${device}*";
+  else
+    echo "${outtargetpath}/*";
   fi;
-  echo "$(pwd)" | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/out\/target\/product\/{${device}}*/g";
 }
 function cdout()
 {
