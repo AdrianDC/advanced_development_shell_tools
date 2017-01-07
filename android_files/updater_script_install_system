@@ -1,0 +1,20 @@
+ui_print(" ");
+ui_print(" ");
+ui_print(" ===========================");
+ui_print(" | Adrian DC - Update ZIPs |");
+ui_print(" ===========================");
+ui_print(" ");
+
+ifelse(is_mounted("/system"), unmount("/system"));
+mount("ext4", "EMMC", "ANDROID_SYSTEM_PARTITION", "/system", "");
+
+show_progress(1.000000, 0);
+ui_print("  - Updating the system...");
+package_extract_dir("system", "/system");
+ui_print("     Done.");
+ui_print(" ");
+
+unmount("/system");
+set_progress(1.000000);
+ui_print("  Update Completed.");
+ui_print(" ");

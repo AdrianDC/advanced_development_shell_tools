@@ -9,6 +9,7 @@ export bash_scripts_kernel_injector=${bash_android_dir}/android_files/scripts_ke
 export bash_sign_apk_dir=${bash_android_dir}/android_signapk;
 export bash_updater_flash_boot=${bash_android_dir}/android_files/updater_script_flash_boot;
 export bash_updater_flash_fota=${bash_android_dir}/android_files/updater_script_flash_fota;
+export bash_updater_install_system=${bash_android_dir}/android_files/updater_script_install_system;
 export bash_updater_kernel_injector=${bash_android_dir}/android_files/updater_script_kernel_injector;
 export bash_updater_multirom_secondary=${bash_android_dir}/android_files/updater_script_multirom_secondary;
 

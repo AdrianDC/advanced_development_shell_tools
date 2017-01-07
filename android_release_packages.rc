@@ -83,8 +83,18 @@ function mmmzip()
   # Pack zip output
   cd "${TmpDir}/";
   if [ ! -z "${FilesList}" ]; then
-    cp "${bash_android_flashable_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
+
+    # Partitions
+    local SystemPartition=$(androidpartitionstarget system);
+
+    # Generate zip, updater-script and include files
+    mkdir -p ./META-INF/com/google/android/;
+    cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
+    cp "${bash_updater_install_system}" ./META-INF/com/google/android/updater-script;
+    sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+    zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
+    rm -rf ./META-INF;
 
     # Zip signature
     signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
@@ -152,8 +162,18 @@ function systozip()
   # Pack zip output
   cd "${TmpDir}/";
   if [ ! -z "${FilesList}" ]; then
-    cp "${bash_android_flashable_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
+
+    # Partitions
+    local SystemPartition=$(androidpartitionstarget system);
+
+    # Generate zip, updater-script and include files
+    mkdir -p ./META-INF/com/google/android/;
+    cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
+    cp "${bash_updater_install_system}" ./META-INF/com/google/android/updater-script;
+    sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+    zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
+    rm -rf ./META-INF;
 
     # Zip signature
     signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
@@ -224,9 +244,19 @@ function packzip()
     fi;
   done;
 
-  # Pack zip output
+  # Partitions
+  local SystemPartition=$(androidpartitionstarget system);
+
+  # Generate zip, updater-script and include files
   cd "${TmpDir}/";
-  cp "${bash_android_flashable_zip}" "${TmpDir}/${OutFile}.unsigned.zip";
+  mkdir -p ./META-INF/com/google/android/;
+  cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
+  cp "${bash_updater_install_system}" ./META-INF/com/google/android/updater-script;
+  sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+  zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
+  rm -rf ./META-INF;
+
+  # Pack zip output
   if [ ! -z "${FilesList}" ]; then
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
 

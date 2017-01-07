@@ -403,6 +403,10 @@ function kernelinjectorzip()
   local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
   local TmpDir=$(mktemp -d);
 
+  # Partitions
+  local BootPartition=$(androidpartitionstarget boot);
+  local SystemPartition=$(androidpartitionstarget system);
+
   # Generate zip and updater-script files
   cd "${TmpDir}/";
   mkdir -p ./META-INF/com/google/android/;
@@ -410,8 +414,6 @@ function kernelinjectorzip()
   cp "${bash_flashable_android_base}" "${TargetFile}.unsigned.zip";
   cp "${bash_updater_kernel_injector}" ./META-INF/com/google/android/updater-script;
   cp -rfv "${bash_scripts_kernel_injector}/"* ./scripts/;
-  local BootPartition=$(androidpartitionstarget boot);
-  local SystemPartition=$(androidpartitionstarget system);
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./scripts/bootdev;
   zip -g "${TargetFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
@@ -462,12 +464,14 @@ function bootzip()
   local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
   local TmpDir=$(mktemp -d);
 
+  # Partitions
+  local BootPartition=$(androidpartitionstarget boot);
+
   # Generate zip and updater-script files
   cd "${TmpDir}/";
   mkdir -p ./META-INF/com/google/android/;
   cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
   cp "${bash_updater_flash_boot}" ./META-INF/com/google/android/updater-script;
-  local BootPartition=$(androidpartitionstarget boot);
   sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
 
