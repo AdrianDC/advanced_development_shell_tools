@@ -7,20 +7,37 @@
 function signzip()
 {
   # Usage
-  if [ ! -f "${1}" ] || [ -z "${2}" ]; then
+  local zip_input="${1}";
+  local zip_output="${2}";
+  echo $zip_input
+  if [ ! -f "${zip_input}" ]; then
     echo '';
-    echo ' usage: signzip <unsigned_input_zip> <signed_output_zip>';
+    echo ' usage: signzip <unsigned_input_zip_or_zip_to_sign> [signed_output_zip]';
     echo '';
     return;
   fi;
 
-  # Sign ZIP and remove unsigned file
+  # Direct ZIP signature
+  if [ -z "${zip_output}" ]; then
+    zip_output="${zip_input}";
+    zip_input="${zip_input}.unsigned.zip";
+    mv -v "${zip_output}" "${zip_input}";
+  fi;
+
+  # Remove output file
+  rm -f "${zip_output}";
+
+  # Sign ZIP
   java -jar "${bash_sign_apk_dir}/signapk-cm121.jar" \
       -w "${bash_sign_apk_dir}/testkey.x509.pem" \
       "${bash_sign_apk_dir}/testkey.pk8" \
-      "${1}" \
-      "${2}";
-  rm -f "${1}";
+      "${zip_input}" \
+      "${zip_output}";
+
+  # Remove unsigned file if successful
+  if [ -f "${zip_input}" ]; then
+    rm -f "${zip_input}";
+  fi;
 }
 
 # === Module Zip Maker ===
