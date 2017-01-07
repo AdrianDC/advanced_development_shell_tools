@@ -54,6 +54,12 @@ function aospsonypatcher()
     echo '';
     echo " === ${path} [${path_branch}] ===";
     croot;
+
+    # Ignore missing git projects
+    if [ ! -d ${path}/.git ]; then
+      echo '  .git project not found, ignoring...';
+      continue;
+    fi;
     cd ${path}/;
 
     # Targets selection
