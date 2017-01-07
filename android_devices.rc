@@ -50,17 +50,17 @@ function androidpartitionstarget()
     # Boot partition
     boot)
       case "${device}" in
-        dora|f8131)
-          partition='boot';;
-        huashan|hayabusa|mint|tsubasa|*)
+        huashan|hayabusa|mint|tsubasa)
           partition='Kernel';;
+        dora|f8131|*)
+          partition='boot';;
       esac;;
 
     # FOTAKernel partition
     fota)
       partition='FOTAKernel';;
 
-    # Boot partition
+    # Recovery partition
     recovery)
       case "${device}" in
         dora|f8131)
