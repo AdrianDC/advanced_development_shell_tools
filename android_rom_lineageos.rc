@@ -370,14 +370,14 @@ function lineagesonypatcher()
               echo '';
               echo '  < Automatic update failed...';
               echo '     Tried to add following commits: '${commits_list};
-              echo '     Stopping, push with : aospprojectpusher;';
+              echo '     Stopping, push with : gitbranchpusher;';
               echo '';
               return;
             fi;
           done;
 
           # Automatic push
-          aospprojectpusher;
+          gitbranchpusher;
         fi;
 
       # Project is ready, break the loop

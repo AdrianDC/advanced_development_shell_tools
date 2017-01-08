@@ -74,6 +74,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_rom_aospoms.rc \
   ${bash_android_dir}/android_rom_legacyxperia.rc \
   ${bash_android_dir}/android_rom_lineageos.rc \
+  ${bash_android_dir}/android_rom_projects.rc \
   \
   ${bash_android_dir}/android_shortcuts.rc \
   \
