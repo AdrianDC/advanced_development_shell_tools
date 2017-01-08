@@ -182,7 +182,7 @@ function repomrom()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repotwrp {device} [nosync,nowipe,outcl,fota,local +fotareboot]';
+    echo ' Usage: repomrom {device} [nosync,nowipe,outcl,fota,local +fotareboot]';
     echo '';
     return;
   fi;
