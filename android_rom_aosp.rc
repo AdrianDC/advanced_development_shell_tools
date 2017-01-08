@@ -98,6 +98,10 @@ function aospprojectpusher()
   # Update backup remote
   if [[ "${repodir}" =~ 'LineageOS' ]]; then
     gitrasonylineage;
+  elif [[ "${repodir}" =~ 'MultiROM' ]]; then
+    gitramultirom;
+  elif [[ "${repodir}" =~ 'TWRP' ]]; then
+    gitratwrp;
   elif [[ "${repodir}" =~ 'sony' ]]; then
     gitrasonyaosp;
   else
