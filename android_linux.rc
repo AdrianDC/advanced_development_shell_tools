@@ -4,7 +4,11 @@
 # ======================================
 
 # === Clear Screen ===
-alias cls='echo -e \\033c; clear';
+function cls()
+{
+  echo -e \\033c;
+  clear;
+}
 
 # === Clipboard ===
 function toclip() { xclip -selection c; }
