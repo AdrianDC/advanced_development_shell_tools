@@ -78,6 +78,7 @@ alias adbkl='cls; adbro; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | t
 alias adbkld='cls; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
 alias adbpl='cls; adbro; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
 alias adbpld='cls; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbrl='cls; printf "" >recovery_log; adb shell cat /tmp/recovery.log | tee -a recovery_log';
 alias adbse='adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
 alias adbdumpsensors='adb shell dumpsys sensorservice';
 alias adbsel='adbkl; sepaud kmsg';
