@@ -86,6 +86,9 @@ function reporeferencedlineage()
 # === Repo References Updater ===
 function reporefupdate()
 {
+  # Path backup
+  local current_dir=$(pwd);
+
   # Detect and update AOSP references
   for project in sony8960 sonyaosp; do
     cdaospdev ${project};
@@ -109,11 +112,17 @@ function reporefupdate()
       gitpu origin local_manifests;
     fi;
   done;
+
+  # Path restore
+  cd ${current_dir};
 }
 
 # === Repo References Syncer ===
 function reporefsync()
 {
+  # Path backup
+  local current_dir=$(pwd);
+
   # Fetch and update AOSP references
   for project in sony8960 sonyaosp; do
     cdaospdev ${project};
@@ -133,4 +142,7 @@ function reporefsync()
     git reset FETCH_HEAD;
     git stash -u;
   done;
+
+  # Path restore
+  cd ${current_dir};
 }
