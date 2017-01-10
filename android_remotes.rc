@@ -159,8 +159,10 @@ function gitrab()
     gitra8960aosp;
   elif pwd | grep AOSP | grep -q -e '-sony\|-dora'; then
     gitrasonyaosp;
-  elif pwd | grep LineageOS | grep -q -e '-sony\|-dora\|-z3'; then
+  elif pwd | grep LineageOS | grep -q -e '-sony\|-z3'; then
     gitrasonylineage;
+  elif pwd | grep LineageOS | grep -q -e '-dora'; then
+    gitra8996lineage;
   else
     gitra8960lineage;
   fi;
@@ -170,6 +172,12 @@ function gitrab()
 function gitra8960lineage()
 {
   gitremoteset backup https://github.com/AdrianDC/lineage_development_sony8960.git;
+}
+
+# === Git Remotes LineageOS (8996) Project ===
+function gitra8996lineage()
+{
+  gitremoteset backup https://github.com/AdrianDC/lineage_development_sony8996.git;
 }
 
 # === Git Remotes AOSP (8960) Project ===

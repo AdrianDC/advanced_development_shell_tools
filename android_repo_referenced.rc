@@ -99,7 +99,7 @@ function reporefupdate()
   done;
 
   # Detect and update LineageOS references
-  for project in sony8960 sonyaosp; do
+  for project in sony8960 sony8996 sonyaosp; do
     cdlineagedev ${project};
     if ! git diff-index --quiet HEAD --; then
       echo '';
