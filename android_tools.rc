@@ -173,7 +173,7 @@ function haste()
   fi;
   echo '';
   url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" --connect-timeout 5 http://hastebin.com/documents \
-      | awk -F '"' '{ print "http://hastebin.com/"${4}; }');
+      | awk -F '"' '{ print "http://hastebin.com/"$4; }');
   echo "${url}";
   xdg-open "${url}" &
   echo '';
