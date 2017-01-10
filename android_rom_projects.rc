@@ -53,12 +53,8 @@ function gitbranchpusher()
     gitramultirom;
   elif [[ "${repo_dir}" =~ 'TWRP' ]]; then
     gitratwrp;
-  elif [[ "${repo_dir}" =~ 'LineageOS' ]]; then
-    gitrasonylineage;
-  elif [[ "${repo_dir}" =~ 'sony' ]]; then
-    gitrasonyaosp;
   else
-    gitra8960aosp;
+    gitrab;
   fi;
 
   # Fetch upstream backup
