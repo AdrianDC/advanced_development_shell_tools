@@ -501,7 +501,7 @@ function makekernel()
   if [ -z "${DEVICE_DEFCONFIG}" ] || [ ! -z "${1}" ]; then
 
     # Usage
-    if [ -z "${1}" ] || ! ls arch/arm*/configs/aosp_${1}_defconfig 1> /dev/null 2>&1; then
+    if [ -z "${1}" ] || ! ls arch/arm*/configs/${1}_defconfig 1> /dev/null 2>&1; then
       echo '';
       echo ' Usage: makekernel [platform_device to init]';
       echo '';
@@ -511,7 +511,7 @@ function makekernel()
     # Environment
     export ARCH=arm64;
     export CROSS_COMPILE=aarch64-linux-android-;
-    export DEVICE_DEFCONFIG="aosp_${1}_defconfig";
+    export DEVICE_DEFCONFIG="${1}_defconfig";
 
     # Kernel configuration
     make ${DEVICE_DEFCONFIG};
