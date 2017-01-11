@@ -10,7 +10,6 @@ function gitbranchpusher()
   local project_branch;
   local project_dir=${PWD};
   local repo_dir=${PWD};
-  local target_backup;
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -71,5 +70,69 @@ function gitbranchpusher()
   # Upload to backup
   echo '';
   ${command};
+  echo '';
+}
+
+# === Git Fetch Backup Branch ===
+function gitfbranch()
+{
+  # Variables
+  local project_branch;
+  local project_dir=${PWD};
+  local repo_dir=${PWD};
+
+  # Check project
+  if [ ! -d "${project_dir}/.git" ]; then
+    echo '';
+    echo ' Current project was not found...';
+    echo '';
+    return;
+  fi;
+
+  # Find repository
+  while [[ "${repo_dir}" != '/' && ! -d "${repo_dir}/.repo" ]]; do
+    repo_dir=$(readlink -f "${repo_dir}/..");
+  done;
+  if [ ! -d "${repo_dir}/.repo" ]; then
+    echo '';
+    echo ' Repository was not found';
+    echo '';
+    return;
+  fi;
+
+  # Status
+  project_dir=${project_dir#${repo_dir}/};
+  case "${project_dir}" in
+    frameworks\/base)
+      if [[ "${repo_dir}" =~ 'LineageOS' ]]; then
+        project_branch='lineage_sonyaosp';
+      else
+        project_branch='aosp_sony8960';
+      fi;;
+    *)
+      project_branch=${project_dir//\//_};;
+  esac;
+  echo '';
+  echo " Project directory: ${project_dir}";
+  echo " Reporisory path: ${repo_dir}";
+  echo '';
+
+  # Update backup remote
+  if [[ "${repo_dir}" =~ 'MultiROM' ]]; then
+    gitramultirom;
+  elif [[ "${repo_dir}" =~ 'TWRP' ]]; then
+    gitratwrp;
+  else
+    gitrab;
+  fi;
+
+  # Fetch upstream backup
+  git fetch backup ${project_branch};
+  git diff --stat FETCH_HEAD;
+  echo '';
+
+  # Reset local sources
+  git reset FETCH_HEAD;
+  git stash -u;
   echo '';
 }
