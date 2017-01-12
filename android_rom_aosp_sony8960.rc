@@ -53,6 +53,7 @@ function aosp8960patcher()
     packages/apps/CellBroadcastReceiver
     packages/apps/DeskClock
     packages/apps/Music
+    packages/apps/Launcher3
     packages/apps/Nfc
     packages/apps/Settings
     packages/inputmethods/LatinIME
