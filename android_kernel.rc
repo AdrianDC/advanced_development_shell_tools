@@ -70,7 +70,7 @@ function fboota()
   # Sepolicies builder
   if [[ "${params}" =~ 'sep' ]]; then
     if [ -d ./system/sepolicy ]; then
-      mmm -j$(grep -c ^processor /proc/cpuinfo) ./system/sepolicy/;
+      mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./system/sepolicy/;
     else
       mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./external/sepolicy/;
     fi;
