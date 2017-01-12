@@ -210,3 +210,39 @@ function adbpmromenc()
 {
   adbpmrom ${1} enc;
 }
+
+# === Android Copy Files Pusher ===
+function adbicopymk()
+{
+  # Usage
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
+    echo '';
+    echo ' usage: adbicopymk <mk_file_path>';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local file=${1};
+  local repo_top=$(gettop 2> /dev/null);
+  local files_list;
+  local file_path;
+  local file_target;
+
+  # File parsing
+  files_list=$(cat "${file}" | grep ':' | grep -v '#');
+
+  # File push
+  echo '';
+  for item in ${files_list}; do
+    file_path=${repo_top}/${item%:*};
+    file_target=/${item/*:};
+
+    # Validate file details
+    if [ -f "${file_path}" ] && [ ! -z "${file_target}" ]; then
+      echo -e " \e[1;36m${file_target} :\e[0m";
+      adb push "${file_path}" "${file_target}";
+    fi;
+  done;
+  echo '';
+}
