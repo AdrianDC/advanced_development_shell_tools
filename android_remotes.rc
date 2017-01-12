@@ -155,7 +155,7 @@ alias gitraou='git remote set-url origin';
 # === Git Remotes Backup Helper ===
 function gitrab()
 {
-  if pwd | grep AOSP | grep -q -e '-huashan\|-hayabusa\|-mint\|-tsubasa'; then
+  if pwd | grep AOSP | grep -q -e '-huashan\|-blue\|-hayabusa\|-mint\|-tsubasa'; then
     gitra8960aosp;
   elif pwd | grep AOSP | grep -q -e '-sony\|-dora'; then
     gitrasonyaosp;
