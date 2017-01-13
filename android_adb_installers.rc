@@ -73,40 +73,6 @@ function adbil()
   echo '';
 }
 
-# === ADB Proprietary File Listener / Installer ===
-function adbiv()
-{
-  # Variables
-  local tmp_file=$(mktemp);
-  local file_target;
-
-  # Execute input command
-  ${@} | tee ${tmp_file};
-  echo '';
-
-  # Find new files
-  local tmp_installs=$(grep -a 'Binary.*proprietary/.*' ${tmp_file} \
-                     | sed 's/.* b\/\(.*proprietary\/.*\) .*/\1/g' \
-                     | sort \
-                     | uniq);
-
-  # Install new files
-  for file_path in ${tmp_installs[*]}; do
-    if [ -f "${file_path}" ]; then
-      file_target=$(echo ${file_path} \
-                  | sed 's/.*proprietary\/\(.*\)/\/system\/\1/g');
-      if [ -f "${file_target}" ]; then
-        printf "${file_target}: ";
-        adb push ${file_path} ${file_target};
-      fi;
-    fi;
-  done;
-
-  # End of process
-  rm -f ${tmp_file};
-  echo '';
-}
-
 # === ADB File Installer Helpers ===
 function adbi()  { adbro; adbif ${@}; }
 function adbii() { adbif ${@}; }
