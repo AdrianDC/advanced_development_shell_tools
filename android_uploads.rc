@@ -79,7 +79,7 @@ function devuplboot()
   # Variables
   local cwd=$(pwd);
   local device="${1}";
-  repor;
+  croot;
 
   # Rename and upload
   mv "./out/target/product/${device}/boot.img" "./out/target/product/${device}/boot-${device}.img";
@@ -112,7 +112,7 @@ function devuplrom()
   fi;
 
   # ROM detection
-  repor;
+  croot;
   romfiles=$(find "./out/target/product/${device}/"*"${device}"*".zip" \
                   "./out/target/product/${device}/"*"${target}"*".zip" \
                   -mtime -1 | sort);
@@ -181,7 +181,7 @@ function pushbrom()
 {
   # Access ROM root
   local cwd=$(pwd);
-  repor;
+  croot;
 
   # Variables
   local device="${1}";

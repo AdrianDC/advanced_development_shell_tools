@@ -11,7 +11,7 @@ function repogetdevice()
   local product=${TARGET_PRODUCT#*_};
 
   # Repo root
-  repor;
+  croot;
 
   # Check device
   if ! ls ./device/*/${product} 1> /dev/null 2>&1; then

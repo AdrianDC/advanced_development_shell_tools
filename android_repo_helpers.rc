@@ -3,15 +3,38 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === Repo Root Directory ===
-function repor()
+# === Android gettop ===
+function gettop()
 {
-  local repodir=${PWD};
-  while [[ "${repodir}" != '/' && ! -d "${repodir}/.repo" ]]; do
-    repodir=$(readlink -f "${repodir}/..");
+  # Variables
+  local TOPFILE=build/core/envsetup.mk;
+  local CURDIR=${PWD};
+  local TOP=${CURDIR};
+
+  # Access parent until found or root
+  while [ ! -f "${TOPFILE}" ] && [ ! "${PWD}" = '/' ]; do
+    cd ../;
+    TOP=$(PWD= /bin/pwd -P);
   done;
-  if [ -d "${repodir}/.repo" ]; then
-    cd ${repodir};
+
+  # Echo if path is valid
+  cd "${CURDIR}";
+  if [ -f "${TOP}/${TOPFILE}" ]; then
+    echo "${TOP}";
+  fi;
+}
+
+# === Android croot ===
+function croot()
+{
+  # Variables
+  local TOP=$(gettop);
+
+  # Access if valid
+  if [ "${TOP}" ]; then
+    cd $(gettop);
+  else
+    echo "Couldn't locate the top of the tree.  Try setting TOP.";
   fi;
 }
 
@@ -23,7 +46,7 @@ function repos()
   local device=${1:-huashan};
 
   # Repo root, sources and breakfast
-  repor;
+  croot;
   if [ -f ./build/envsetup.sh ]; then
     source ./build/envsetup.sh;
     croot;
@@ -39,7 +62,8 @@ function repos()
 # === Repo Environment Starter for AOSP ===
 function reposaosp()
 {
-  local currentdir=${PWD}; repor;
+  local currentdir=${PWD};
+  croot;
   if [ -f ./build/envsetup.sh ]; then
     local device=${1:-huashan};
     source ./build/envsetup.sh; croot;
@@ -53,8 +77,8 @@ function reposaosp()
 # === Roomservice Manifest ===
 function reporoomserv()
 {
-  cwd=$(pwd);
-  repor;
+  local cwd=$(pwd);
+  croot;
   mkdir -p .repo/local_manifests/;
   gedit .repo/local_manifests/roomservice.xml .repo/manifest.xml;
   cd "${cwd}";
@@ -124,11 +148,11 @@ function repoheadscleaner()
 function reposyaosp()
 {
   cwd=$(pwd);
-  repor;
+  croot;
   cdaosp;
   reposy;
   cd "${cwd}";
-  repor;
+  croot;
   reposy;
   cd "${cwd}";
 }
@@ -137,11 +161,11 @@ function reposyaosp()
 function reposylineage()
 {
   cwd=$(pwd);
-  repor;
+  croot;
   cdlineage;
   reposy;
   cd "${cwd}";
-  repor;
+  croot;
   reposy;
   cd "${cwd}";
 }
@@ -161,7 +185,7 @@ function repocache()
 {
   # Variables & repo root
   local currentdir=$(pwd);
-  repor;
+  croot;
 
   # Update the maximum on input (example 20G)
   if [ ! -z "${1}" ]; then

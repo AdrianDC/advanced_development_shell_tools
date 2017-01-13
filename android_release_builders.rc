@@ -21,7 +21,7 @@ function romautorelease()
   local rom_logs_output;
 
   # Access ROM root
-  repor;
+  croot;
 
   # ROM variables
   local rom_device="${1}";

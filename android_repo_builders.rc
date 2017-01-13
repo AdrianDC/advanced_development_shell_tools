@@ -18,7 +18,7 @@ function repotwrp()
   local CurDir=${PWD};
   local PhoneName="${1}";
   local BuildParams="${2}";
-  repor;
+  croot;
 
   # Sources Sync
   if [[ ! "${BuildParams}" =~ 'nosync' ]]; then
@@ -191,7 +191,7 @@ function repomrom()
   local CurDir=${PWD};
   local PhoneName="${1}";
   local BuildParams="${2}";
-  repor;
+  croot;
   local RootDir=$(pwd);
 
   # Handle boot types

@@ -44,7 +44,7 @@ function gitbranchpusher()
   esac;
   echo '';
   echo " Project directory: ${project_dir}";
-  echo " Reporisory path: ${repo_dir}";
+  echo " Repository path: ${repo_dir}";
   echo '';
 
   # Update backup remote
@@ -114,7 +114,7 @@ function gitfbranch()
   esac;
   echo '';
   echo " Project directory: ${project_dir}";
-  echo " Reporisory path: ${repo_dir}";
+  echo " Repository path: ${repo_dir}";
   echo '';
 
   # Update backup remote
