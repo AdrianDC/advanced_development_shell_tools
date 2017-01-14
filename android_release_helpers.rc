@@ -98,6 +98,8 @@ function codenametotarget()
   case "${1}" in
     dora)
       echo 'f8131';;
+    kagura)
+      echo 'f8331';;
     *)
       echo "${1}";;
   esac;

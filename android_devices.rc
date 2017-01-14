@@ -11,7 +11,7 @@ function androidpartitionstarget()
   local request=${1};
   local platform='';
   local partition='';
-  local target_devices="dora suzu huashan hayabusa mint tsubasa";
+  local target_devices="dora kagura suzu huashan hayabusa mint tsubasa";
 
   # Autodetect
   if [ -z "${device}" ]; then
@@ -38,7 +38,7 @@ function androidpartitionstarget()
 
   # Platform
   case "${device}" in
-    dora|f8131|suzu|f5121)
+    dora|kagura|suzu)
       platform='/dev/block/bootdevice/by-name';;
     huashan|hayabusa|mint|tsubasa|*)
       platform='/dev/block/platform/msm_sdcc.1/by-name';;
