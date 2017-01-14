@@ -267,7 +267,7 @@ function lxautorelease()
   # Devices sync
   cdlineage lx;
   if [ -z "${2}" ]; then
-    reposalx;
+    lineagelxpatcher;
   fi;
 
   # Walk through devices

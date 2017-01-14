@@ -3,44 +3,28 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === Repo FullSync ===
-function reposalx()
+# === LineageOS Commits Patcher for LegacyXperia ===
+function lineagelxpatcher()
 {
-  # Phone Branch
+  # Build environment
+  while [ ! -e './build/envsetup.sh' ]; do
+    cd ../;
+  done;
+  source ./build/envsetup.sh;
+
+  # Variables
   local BuildBranch="${1:-cm-14.1}";
 
   # Sources Manifest
   if [ ! -f '.repo/local_manifests/semc.xml' ]; then
     if [ ! -d './.repo/local_manifests/' ]; then
-      mkdir './.repo/local_manifests';
+      mkdir './.repo/local_manifests/';
     fi;
     cd './.repo/local_manifests/'
-    git clone --depth=1 https://github.com/LegacyXperia/local_manifests.git --single-branch -b ${BuildBranch} .;
+    git clone https://github.com/LegacyXperia/local_manifests.git --single-branch -b ${BuildBranch} .;
     cd '../../';
   fi;
 
-  # Sources Sync
-  if [[ ! "${2}" =~ 'nosync' ]]; then
-    if [[ ! "${2}" =~ 'unsafe' ]]; then
-      repo forall -c 'echo "Cleaning project ${REPO_PROJECT}"; \
-                      git rebase --abort >/dev/null 2>&1; \
-                      git stash -u >/dev/null 2>&1; \
-                      git reset --hard HEAD >/dev/null 2>&1;';
-    fi;
-    reposy;
-  fi;
-
-  # Sources Commands
-  source ./build/envsetup.sh;
-
-  # Cherry-picks
+  # LegacyXperia patches
   ./.repo/local_manifests/updates.sh;
-
-  # Sync End
-  echo '';
-  notify-send 'Done syncing !';
-  echo ' =========== Done syncing ===========';
-  echo '';
 }
-
-export -f reposalx;
