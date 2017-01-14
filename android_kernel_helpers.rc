@@ -11,6 +11,9 @@ alias doraaospkernel='makekernel tone_dora';
 alias dorazipkernel='kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .';
 alias sonykernelrebase='git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa';
 
+# === Xperia XZ Shortcuts ===
+alias kaguradefconf='makedefconf msm-perf kagura common';
+
 # === Sony AOSP Kernel Updater ===
 function sonyaospkernelupdate()
 {
