@@ -40,7 +40,6 @@ function makedefconf()
   local DEFCONFIG_CHECKS;
   for arch_check in arm arm64; do
     DEFCONFIG_CHECKS=("./arch/${arch_check}/configs/"*"${defconfig}"*);
-    echo ${DEFCONFIG_CHECKS[@]};
     if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS}" ]; then
       export ARCH=${arch_check};
       break;
