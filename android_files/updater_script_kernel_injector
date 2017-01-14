@@ -6,7 +6,7 @@ ui_print(" ===============================");
 ui_print(" ");
 
 ifelse(is_mounted("/system"), unmount("/system"));
-mount("ext4", "EMMC", "ANDROID_SYSTEM_PARTITION", "/system");
+mount("ext4", "EMMC", "ANDROID_SYSTEM_PARTITION", "/system", "");
 
 show_progress(1.000000, 0);
 ui_print("  - Injecting kernel image...");
