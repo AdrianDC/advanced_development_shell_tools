@@ -37,8 +37,8 @@ function romautorelease()
     rom_upload="${rom_phone}/AOSP-7.1";
 
     # Handle Sony AOSP kernel build
-    if echo "${rom_device}" | grep -q -e 'dora\|f8131'; then
-      doraaospkernelupdate;
+    if [ ! "${rom_device}" = "${rom_target}" ]; then
+      sonyaospkernelupdate "${rom_device}";
     fi;
 
   # LineageOS 14.1
