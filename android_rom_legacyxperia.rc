@@ -28,3 +28,31 @@ function lineagelxpatcher()
   # LegacyXperia patches
   ./.repo/local_manifests/updates.sh;
 }
+
+# === LegacyXperia Repopick ===
+function lxrepopick()
+{
+  # Build environment
+  while [ ! -e './build/envsetup.sh' ]; do
+    cd ../;
+  done;
+
+  # If LegacyXperia script is absent
+  if [ ! -f './vendor/extra/repopick.py' ]; then
+    echo '';
+    echo ' LegacyXperia repopick.py was not found...';
+    echo '';
+    return;
+  fi;
+
+  # If LegacyXperia script is absent
+  if [ -z "${1}" ] || [ ! -z "${2}" ]; then
+    echo '';
+    echo ' Usage: lxrepopick <commit_id>';
+    echo '';
+    return;
+  fi;
+
+  # Execute repopick command
+  vendor/extra/repopick.py -b LX_${1};
+}
