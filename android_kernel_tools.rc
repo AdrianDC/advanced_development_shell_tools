@@ -416,7 +416,7 @@ function kernelinjectorzip()
   cp "${bash_updater_kernel_injector}" ./META-INF/com/google/android/updater-script;
   cp -rfv "${bash_scripts_kernel_injector}/"* ./scripts/;
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
-  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./scripts/bootdev;
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./scripts/kernel_inject.sh;
   zip -g "${TargetFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
   zip -g "${TargetFile}.unsigned.zip" ./scripts/*;
 

@@ -10,10 +10,9 @@ mount("ext4", "EMMC", "ANDROID_SYSTEM_PARTITION", "/system", "");
 
 show_progress(1.000000, 0);
 ui_print("  - Injecting kernel image...");
-package_extract_dir("scripts", "/tmp/");
-set_perm(0, 0, 0777, "/tmp/kernel_inject.sh");
-set_perm(0, 0, 0777, "/tmp/kernel_inject");
-assert(run_program("/tmp/kernel_inject.sh") == 0);
+package_extract_dir("scripts", "/tmp/scripts");
+set_metadata_recursive("/tmp/scripts", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0755);
+assert(run_program("/tmp/scripts/kernel_inject.sh") == 0);
 ui_print("     Done.");
 ui_print(" ");
 
