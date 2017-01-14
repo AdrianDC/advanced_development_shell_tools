@@ -56,3 +56,15 @@ function lxrepopick()
   # Execute repopick command
   vendor/extra/repopick.py -b LX_${1};
 }
+
+# === LegacyXperia Kernel Defconfig ===
+function lxdefconfig()
+{
+  # Find all defconfigs
+  local defconfigs=$(ls arch/arm/configs/lx_*);
+
+  # Update all defconfigs
+  for defconfig in ${defconfigs}; do
+    makedefconf ${defconfig//*\/};
+  done;
+}
