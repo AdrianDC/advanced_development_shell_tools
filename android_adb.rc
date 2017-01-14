@@ -35,10 +35,19 @@ function adbro()
   fi;
 }
 
+# === ADB Sideload Helper ===
+function adbside()
+{
+  adb shell twrp sideload;
+  while ! adb devices | grep -q 'sideload'; do
+    sleep 1;
+  done;
+  adb sideload ${1};
+}
+
 # === ADB Access Shortcuts ===
 alias adbs='adb shell';
 alias adbroot='adb kill-server; sudo adb start-server';
-alias adbside='adb sideload';
 alias adbpo='adb shell reboot -p';
 alias adbre='adb reboot';
 function adbrh() { adb ${1} shell setprop ctl.restart zygote; }
