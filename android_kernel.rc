@@ -535,22 +535,22 @@ function makekernel()
     # Kernel defconfig
     local DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
 
-    # Adapt to arm64
+    # Architecture environment
+    local cross_compiler=;
     if [ "${ARCH}" = 'arm64' ]; then
+      cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin);
       export CROSS_COMPILE=aarch64-linux-android-;
     else
-      export CROSS_COMPILE=;
+      cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin);
+      export CROSS_COMPILE=arm-linux-androideabi-;
+    fi;
+    if [[ ! "${PATH}" =~ "${cross_compiler}" ]]; then
+      export PATH=${cross_compiler}:${PATH};
     fi;
 
     # Kernel configuration
     make ${DEFCONFIG_NAME};
 
-  fi;
-
-  # Environment
-  local cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin);
-  if [[ ! "${PATH}" =~ "${cross_compiler}" ]]; then
-    export PATH=${cross_compiler}:${PATH};
   fi;
 
   # CCache usage
