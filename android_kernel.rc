@@ -498,23 +498,52 @@ function bootzip()
 function makekernel()
 {
   # Environment
-  if [ -z "${DEVICE_DEFCONFIG}" ] || [ ! -z "${1}" ]; then
+  if [ -z "${DEFCONFIG_NAME}" ] || [ ! -z "${1}" ]; then
 
     # Usage
-    if [ -z "${1}" ] || ! ls arch/arm*/configs/${1}_defconfig 1> /dev/null 2>&1; then
+    if [ -z "${1}" ] || ! ls arch/arm*/configs/*${1}*_defconfig 1> /dev/null 2>&1; then
       echo '';
       echo ' Usage: makekernel [platform_device to init]';
       echo '';
       return;
     fi;
 
-    # Environment
-    export ARCH=arm64;
-    export CROSS_COMPILE=aarch64-linux-android-;
-    export DEVICE_DEFCONFIG="${1}_defconfig";
+    # Detect arm / arm64
+    export ARCH=arm;
+    local DEFCONFIG_CHECKS;
+    for arch_check in arm arm64; do
+      DEFCONFIG_CHECKS=("./arch/${arch_check}/configs/"*"${1}"*);
+      if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS}" ]; then
+        export ARCH=${arch_check};
+        break;
+      fi;
+    done;
+
+    # Defconfig detection
+    local DEFCONFIG_PATH=./arch/${ARCH}/configs;
+    local DEFCONFIG_INPUT=("${DEFCONFIG_PATH}/"*"${1}"*);
+    if [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
+      if [ ${#DEFCONFIG_INPUT[@]} -eq 1 ]; then
+        DEFCONFIG_INPUT=();
+      fi;
+      echo '';
+      echo '  Error: makedefconf found '${#DEFCONFIG_INPUT[@]}' defconfigs';
+      echo '';
+      return;
+    fi;
+
+    # Kernel defconfig
+    local DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
+
+    # Adapt to arm64
+    if [ "${ARCH}" = 'arm64' ]; then
+      export CROSS_COMPILE=aarch64-linux-android-;
+    else
+      export CROSS_COMPILE=;
+    fi;
 
     # Kernel configuration
-    make ${DEVICE_DEFCONFIG};
+    make ${DEFCONFIG_NAME};
 
   fi;
 
