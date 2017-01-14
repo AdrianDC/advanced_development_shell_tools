@@ -39,7 +39,7 @@ function repoinitaosp()
   # Repo init
   if [[ "${params}" =~ 'referenced' ]]; then
     repo init -u http://android.googlesource.com/platform/manifest -b ${branch} \
-              --reference=$(readlink -f ../AOSP);
+              --reference=$(readlink -f $(getand)/AOSP);
   else
     repo init -u http://android.googlesource.com/platform/manifest -b ${branch};
   fi;
@@ -94,7 +94,7 @@ function repoinitlineage()
   # Repo init
   if [[ "${params}" =~ 'referenced' ]]; then
     repo init -u http://github.com/LineageOS/android.git -b ${branch} \
-              --reference=$(readlink -f ../LineageOS);
+              --reference=$(readlink -f $(getand)/LineageOS);
   else
     repo init -u http://github.com/LineageOS/android.git -b ${branch};
   fi;
@@ -221,7 +221,7 @@ function repoinitrr()
   # Repo init
   if [[ "${params}" =~ 'referenced' ]]; then
     repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch} \
-              --reference=$(readlink -f ../LineageOS);
+              --reference=$(readlink -f $(getand)/LineageOS);
   else
     repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch};
   fi;
