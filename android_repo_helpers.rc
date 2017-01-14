@@ -66,8 +66,9 @@ function reposaosp()
   croot;
   if [ -f ./build/envsetup.sh ]; then
     local device=${1:-huashan};
+    local target=$(codenametotarget "${device}");
     source ./build/envsetup.sh; croot;
-    lunch aosp_${device}-userdebug;
+    lunch aosp_${target}-userdebug;
   else
     echo "Android Repo not found...";
   fi;
