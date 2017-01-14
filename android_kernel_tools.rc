@@ -404,6 +404,7 @@ function kernelinjectorzip()
   local TmpDir=$(mktemp -d);
 
   # Partitions
+  export ANDROID_DEVICE_TARGET="${PhoneName}";
   local BootPartition=$(androidpartitionstarget boot);
   local SystemPartition=$(androidpartitionstarget system);
 
