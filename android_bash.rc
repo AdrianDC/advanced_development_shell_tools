@@ -195,6 +195,15 @@ function bashdiff()
   cd "${currentdir}/";
 }
 
+# === Bashs Log ===
+function bashlog()
+{
+  local currentdir=${PWD};
+  cd "${bash_android_dir}/";
+  git log --pretty=oneline -n 10;
+  cd "${currentdir}/";
+}
+
 # === Bashs Reset ===
 function bashreset()
 {
