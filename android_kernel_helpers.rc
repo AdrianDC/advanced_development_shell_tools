@@ -57,9 +57,20 @@ alias doraaospkernel='makekernel tone_dora';
 alias dorazipkernel='kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .';
 alias sonykernelrebase='git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa';
 
-# === Xperia X Performance Kernel Updater ===
-function doraaospkernelupdate()
+# === Sony AOSP Kernel Updater ===
+function sonyaospkernelupdate()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: sonyaospkernelupdate <device_name>';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local device_name="${1}";
+
   # Build environment
   while [ ! -e './build/envsetup.sh' ]; do
     cd ../;
@@ -78,15 +89,15 @@ function doraaospkernelupdate()
   cd ./kernel/sony/msm/;
 
   # Compile kernel
-  doraaospkernel;
+  makekernel "${device_name}";
 
   # Copy prebuilt kernel
   croot;
-  cp -v ./kernel/sony/msm/arch/arm64/boot/Image.gz-dtb ./device/sony/common-kernel/kernel-dtb-dora;
+  cp -v ./kernel/sony/msm/arch/arm64/boot/Image.gz-dtb ./device/sony/common-kernel/kernel-dtb-${device_name};
 
   # Commit prebuilt kernel
   cd ./device/sony/common-kernel/;
-  git add -v kernel-dtb-dora;
-  git commit --no-edit -m "sony: dora: Update Xperia X Performance prebuilt kernel";
+  git add -v kernel-dtb-${device_name};
+  git commit --no-edit -m "sony: ${device_name}: Update prebuilt kernel";
   croot;
 }
