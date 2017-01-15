@@ -111,22 +111,22 @@ function fboota()
   fi;
 
   # Bootimage file path
-  BootImg=$(grep -a '.*image.*boot\.img' ${tmpfile} \
-          | head -1 \
-          | sed 's/.*: \(.*boot\.img\).*/\1/g');
+  local bootimg=$(grep -a '.*image.*boot\.img' ${tmpfile} \
+                | head -1 \
+                | sed 's/.*: \(.*boot\.img\).*/\1/g');
 
   # Inject kernel inside bootimage
   if [[ "${params}" =~ 'inject' ]]; then
 
     # Use the fbootk function
-    fbootk $(dirname ${BootImg})/kernel;
+    fbootk $(dirname ${bootimg})/kernel;
 
   # Zip the bootimage
-  elif [[ "${params}" =~ 'zip' ]] && [ ! -z "${BootImg}" ] && [ -f "${BootImg}" ]; then
-    bootzip ${device} "${BootImg}";
+  elif [[ "${params}" =~ 'zip' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
+    bootzip ${device} "${bootimg}";
 
   # Flash the bootimage to the device
-  elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${BootImg}" ] && [ -f "${BootImg}" ]; then
+  elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
 
     # Detect modules
     local modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
@@ -135,17 +135,18 @@ function fboota()
     # Waiting to get adb
     echo '';
     echo '';
-    echo -e " \e[1;37m[ Waiting for adb root... ]\e[0m";
+    echo -e ' \e[1;37m[ Waiting for adb root... ]\e[0m';
     echo '';
     timeout 10 adb 'wait-for-device';
 
     # Handle kernel modules
     if [ ! -z "${modules}" ]; then
       echo '';
-      echo -e ' \e[1;37m[ Kernel modules ${BootImg}... ]\e[0m';
+      echo -e ' \e[1;37m[ Kernel modules... ]\e[0m';
       echo '';
       adb remount;
       timeout 10 adb 'wait-for-device';
+      adb shell rm -rf '/system/lib/modules/';
       for module in ${modules[*]}; do
         module_file=$(basename "${module}");
         adb push "${module}" "/system/lib/modules/${module_file}";
@@ -154,11 +155,11 @@ function fboota()
 
     # Flash new bootimage
     echo '';
-    echo -e " \e[1;37m[ Bootloader ${BootImg}... ]\e[0m";
-    export PackageResult="${BootImg}";
+    echo -e " \e[1;37m[ Bootloader ${bootimg}... ]\e[0m";
+    export PackageResult="${bootimg}";
     echo '';
     sudo adb reboot bootloader;
-    timeout 20 sudo fastboot flash boot "${BootImg}";
+    timeout 20 sudo fastboot flash boot "${bootimg}";
     timeout 5 sudo fastboot reboot;
     echo '';
 
