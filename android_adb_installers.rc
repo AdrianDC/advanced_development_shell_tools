@@ -30,7 +30,7 @@ function adbpushfile()
 
   # Debug missing file
   else
-    printf "\e[1;31m | ${filepath} does not exist...";
+    printf "\e[1;31m | ${filepath} does not exist...\n";
   fi;
 
   # Restore colours
@@ -129,14 +129,18 @@ function adbpf()
   local filepaths="${@}";
 
   # Input files
-  echo '';
+  if [ -z "${recursive_call}" ]; then
+    echo '';
+  fi;
   for filepath in ${filepaths}; do
     filepath=$(readlink -f "${filepath}");
     filepathtest=${filepath};
 
     # Iterate sub-folders
     if [ -d "${filepath}" ]; then
+      recursive_call=true;
       adbpf "${filepath}/"*;
+      recursive_call=;
 
     # Handle files
     else
@@ -174,7 +178,6 @@ function adbpf()
       adbpushfile "${filepath}" "${filetarget}";
     fi;
   done;
-  echo '';
 }
 
 # === ADB Pushes ===
