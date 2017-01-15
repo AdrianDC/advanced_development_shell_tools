@@ -43,6 +43,7 @@ function fboota()
   rm -fv ./out/target/product/${device}/*.cpio;
   rm -fv ./out/target/product/${device}/*.fs;
   rm -fv ./out/target/product/${device}/*.img;
+  rm -fv ./out/target/product/${device}/system/lib/modules/*;
   echo '';
 
   # Unsecure adb changes
@@ -128,12 +129,8 @@ function fboota()
   elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${BootImg}" ] && [ -f "${BootImg}" ]; then
 
     # Detect modules
-    ModulesDir=$(grep -a '.*system/lib/.*' ${tmpfile} \
-               | head -n 1 \
-               | sed 's/.* \(\S*system\/lib\/modules\S*\);.*/\1/g');
-    Modules=$(grep -a '.*INSTALL .*\.ko.*' ${tmpfile} \
-            | sed 's/.*INSTALL \(.*\.ko\).*/\1/g' \
-            | uniq);
+    local modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
+    local module_file;
 
     # Waiting to get adb
     echo '';
@@ -143,12 +140,15 @@ function fboota()
     timeout 10 adb 'wait-for-device';
 
     # Handle kernel modules
-    if [ ! -z "${Modules}" ]; then
+    if [ ! -z "${modules}" ]; then
+      echo '';
+      echo -e ' \e[1;37m[ Kernel modules ${BootImg}... ]\e[0m';
+      echo '';
       adb remount;
       timeout 10 adb 'wait-for-device';
-      for Module in ${Modules[*]}; do
-        ModuleFile=$(basename "${Module}");
-        adb push "${ModulesDir}/${ModuleFile}" "/system/lib/modules/${ModuleFile}";
+      for module in ${modules[*]}; do
+        module_file=$(basename "${module}");
+        adb push "${module}" "/system/lib/modules/${module_file}";
       done;
     fi;
 
