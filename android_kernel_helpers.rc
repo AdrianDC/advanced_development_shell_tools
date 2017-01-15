@@ -3,6 +3,22 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
+# === Kernel Builder and Injector Packer===
+function makekernelinjector()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo ' Usage: makekernelinjector <device_name>';
+    return;
+  fi;
+
+  # Make the kernel
+  makekernel ${1};
+
+  # Package kernel injector
+  kernelinjectorzip ${1} arch/arm/boot/zImage;
+}
+
 # === Xperia X Performance Shortcuts ===
 alias doradefconf='makedefconf msm-perf dora common';
 alias doracopyleft='mkcopyleft dora';
