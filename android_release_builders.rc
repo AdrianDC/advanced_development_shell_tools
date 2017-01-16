@@ -55,7 +55,7 @@ function romautorelease()
   # LegacyXperia 14.1
   elif [[ "${rom_params}" =~ 'lx' ]]; then
     rom_tag='LX141';
-    rom_upload="LegacyXperia/${rom_device}/cm-14.1";
+    rom_upload="LegacyXperia/${rom_device}/LineageOS-14.x";
 
   # ResurrectionRemix Nougat
   elif [[ "${rom_params}" =~ 'rr' ]]; then
