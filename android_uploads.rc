@@ -186,10 +186,9 @@ function pushbrom()
   # Variables
   local device="${1}";
   local rom="${2:-ROM}";
-  local target=$(codenametotarget "${device}");
 
   # ROM file
-  romfile=$(find "./out/target/product/${device}/"*"${target}"*".zip" -mmin -30 | tail -n 1);
+  romfile=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mmin -30 | tail -n 1);
   if [ ! -z "${romfile}" ]; then
      pushb "${rom} for ${device} ready";
   else

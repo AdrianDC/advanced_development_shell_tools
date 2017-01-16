@@ -45,7 +45,7 @@ function aospbuild()
 
     # Final notification
     if [[ ! "${rom_params}" =~ 'silent' ]]; then
-      pushbrom "${rom_device}";
+      pushbrom "${rom_target}";
     fi;
   fi;
 }
