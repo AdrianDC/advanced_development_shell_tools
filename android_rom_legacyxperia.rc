@@ -25,8 +25,18 @@ function lineagelxpatcher()
     cd '../../';
   fi;
 
+  # Reset local_manifest contents
+  cd ./vendor/extra/;
+  git fetch msm7x30 cm-14.1;
+  git reset FETCH_HEAD;
+  git stash -u;
+  croot;
+
+  # Retrieve work in progress holder
+  ./vendor/extra/repopick.py -b LX_1563;
+
   # LegacyXperia patches
-  ./.repo/local_manifests/updates.sh;
+  ./vendor/extra/updates.sh;
 }
 
 # === LegacyXperia Repopick ===
