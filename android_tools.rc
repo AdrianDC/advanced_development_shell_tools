@@ -111,7 +111,12 @@ function librarieshunter()
   local FILES="${1}";
   local FILE_NAME='';
   local FILE_REFERENCED='';
+  local SYSTEM_PATH='';
+  local LIB_ARCH='';
   local LIB_NAME='';
+  local DIR_NAMES='';
+  local DIR_COMMON_NAMES='';
+  local DIR_VENDOR_NAMES='';
 
   # Scan the libraries
   echo '';
@@ -126,16 +131,24 @@ function librarieshunter()
     STRINGS=$(strings ${FILE} | grep "\\.so" | sort -u -r | tr '\n' ',');
     if [ ! -z "${STRINGS}" ]; then
       STRINGS=${STRINGS//,/ };
-      echo -e "   \e[1;37m${FILE}:\e[1;33m ${STRINGS}\e[0m";
+      echo -e "   \e[1;37m${FILE}:\e[0m";
 
       # Search missing references
       for LIB in ${STRINGS};
       do
-        if [[ ! "${LIB}" =~ '.so' ]]; then continue; fi;
+        if [[ ! "${LIB}" == *'lib'*'.so' ]]; then continue; fi;
+        if [[ "${LIB}" =~ '%' ]]; then continue; fi;
 
         LIB_NAME=$(basename ${LIB});
-        if [ -z "$(find $(dirname ${FILES}) -name ${LIB_NAME})" ]; then
-          echo -e "    \e[1;37m- Missing reference: \e[1;31m${LIB_NAME}\e[0m";
+        SYSTEM_PATH=${FILES%system\/*}system;
+        LIB_ARCH=${FILES//vendor\//};
+        LIB_ARCH=${LIB_ARCH/*system\/lib};
+        LIB_ARCH=${LIB_ARCH%%\/*};
+        DIR_COMMON_NAMES="${SYSTEM_PATH}/lib${LIB_ARCH}";
+        DIR_VENDOR_NAMES="${SYSTEM_PATH}/vendor/lib${LIB_ARCH}";
+        DIR_NAMES="${DIR_COMMON_NAMES} ${DIR_COMMON_NAMES}/*/ ${DIR_VENDOR_NAMES} ${DIR_VENDOR_NAMES}/*/";
+        if [ -z "$(find ${DIR_NAMES} -name ${LIB_NAME})" ]; then
+          echo -e "    \e[1;31m- Missing reference: \e[1;31m${LIB_NAME}\e[0m";
         fi;
       done;
 
@@ -153,7 +166,7 @@ function librarieshunter()
         fi;
       done;
       if [ -z "${FILE_REFERENCED}" ]; then
-        echo -e "    \e[1;31m- Unused library: ${FILE_NAME}\e[0m";
+        echo -e "    \e[1;33m- Unused library: ${FILE_NAME}\e[0m";
       fi;
     fi;
   done;
