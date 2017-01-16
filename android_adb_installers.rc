@@ -272,3 +272,12 @@ function adbicopymk()
   done;
   echo '';
 }
+
+# === ADB apk Installers ===
+function adbapkinstall()
+{
+  # Install all available apk files
+  for file in *.apk; do
+    adb install ${file};
+  done;
+}
