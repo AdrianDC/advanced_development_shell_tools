@@ -103,6 +103,22 @@ function reposy()
             ${@};
 }
 
+# === Repo Branch Sync with Safeguard ===
+function reposysafe()
+{
+  echo '';
+  repo forall -j$(grep -c ^processor /proc/cpuinfo) -c '
+        false;
+        while [ $? -ne 0 ]; do
+          timeout 20 git fetch --progress ${REPO_REMOTE} ${REPO_RREV##*/};
+        done;
+        echo '';
+        echo " Project ${REPO_PROJECT} : ${REPO_REMOTE}/${REPO_RREV##*/}";
+        git checkout ${REPO_RREV##*/};
+        ';
+  echo '';
+}
+
 # === Repo Branch Sync ===
 function reposybranch()
 {
