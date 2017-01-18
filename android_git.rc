@@ -354,7 +354,7 @@ alias gitrv='git remote -v';
 # === Git Reset Helpers ===
 alias gitrh='git reset FETCH_HEAD --hard';
 alias githd='git reset HEAD --hard';
-alias gitcl='git reset HEAD --hard; git stash -u';
+alias gitcl='git reset HEAD --hard; git stash -u; git am --abort';
 alias gitro='git reset HEAD^ --hard';
 alias gitsl='git reset HEAD^; gitap; gitcae';
 alias gitrl='git revert HEAD -n; git commit -m "Revert"; git reset HEAD^; git add -p';
