@@ -270,6 +270,9 @@ function lineagepatcher()
 
   # Import commits from topic "long-press-power-torch"
   repopick -i -t long-press-power-torch;
+
+  # Enable SU inclusion for now
+  export WITH_SU=true;
 }
 
 # === LineageOS SONY Open Devices Patcher ===
