@@ -23,15 +23,10 @@ function gerritssh()
 
   # Configurations
   local gerritssh="ssh -p 29418 ${GerritUsername}@${GerritRemote} gerrit";
-  local projectbranch='cm-14.1';
+  local projectbranch="${1:-cm-14.1}";
   local projectbranchmerger=false;
   local projectbranchprimary='cm-14.1';
   local projectbranchsecondary='cm-13.0';
-
-  # First Parameter: Branch Override
-  if [ ! -z "${1}" ]; then
-    projectbranch="${1}";
-  fi;
 
   # Splash Text
   echo '';
