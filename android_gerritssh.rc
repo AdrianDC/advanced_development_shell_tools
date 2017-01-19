@@ -10,6 +10,8 @@
 function gerritssh()
 {
   # Gerrit Credentials
+  export GerritReview='LineageOS';
+  export GerritRemote='review.lineageos.org';
   export GerritUsername='Username';
   export GerritHTTPUsername='Username';
   export GerritHTTPPassword='abcdefgh12345678';
@@ -20,13 +22,7 @@ function gerritssh()
   fi;
 
   # Configurations
-  local gerritremote='review.lineageos.org';
-  local projectgroup='LineageOS';
-  if [ ! -z "${3}" ]; then
-    gerritremote="${2}";
-    projectgroup="${3}";
-  fi;
-  local gerritssh="ssh -p 29418 ${GerritUsername}@${gerritremote} gerrit";
+  local gerritssh="ssh -p 29418 ${GerritUsername}@${GerritRemote} gerrit";
   local projectbranch='cm-14.1';
   local projectbranchmerger=false;
   local projectbranchprimary='cm-14.1';
@@ -58,7 +54,7 @@ function gerritssh()
   local tmpfilepatchinfo="${tmpdir}/pi";
   local tmpfilepatchmessage="${tmpdir}/pm";
   local tmpfilepatchdrafts="${tmpdir}/drafts";
-  ${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} branch:${projectbranch}" > ${tmpfilestate};
+  ${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} branch:${projectbranch}" > ${tmpfilestate};
   cat ${tmpfilestate} | egrep '^\  number' | cut -d' ' -f4- > ${tmpfileids};
   cat ${tmpfilestate} | egrep '^\  branch' | cut -d' ' -f4- > ${tmpfilebranch};
   cat ${tmpfilestate} | egrep '^\  subject' | cut -d' ' -f4- > ${tmpfilenames};
@@ -97,7 +93,7 @@ function gerritssh()
   echo -e \\033c;
   clear;
   echo '';
-  echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${projectgroup}/${projectname} - ${projectbranch}\e[0m";
+  echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${GerritReview}/${projectname} - ${projectbranch}\e[0m";
   echo '';
   echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2016\e[0m';
   echo -e '      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)';
@@ -208,7 +204,7 @@ function gerritssh()
     esac;
 
     # Read remote current HEAD
-    git fetch "https://${gerritremote}/${projectgroup}/${projectname}" "${projectbranch}" 2>/dev/null;  
+    git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2>/dev/null;
     local remotecurrenthead=$(git rev-parse FETCH_HEAD);
 
     # Commit Rebase
@@ -221,8 +217,8 @@ function gerritssh()
         key=${cmd_rebase};
       fi;
       if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-        ${gerritssh} review --rebase --project ${projectgroup}/${projectname} ${i},${patchset};
-        patchset=$(${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} change:${i}" \
+        ${gerritssh} review --rebase --project ${GerritReview}/${projectname} ${i},${patchset};
+        patchset=$(${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" \
                  | egrep '^\    number' \
                  | cut -d' ' -f6-);
       fi;
@@ -238,7 +234,7 @@ function gerritssh()
         key=${cmd_publish};
       fi;
       if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-        ${gerritssh} review --publish --project ${projectgroup}/${projectname} ${i},${patchset};
+        ${gerritssh} review --publish --project ${GerritReview}/${projectname} ${i},${patchset};
       fi;
     fi;
 
@@ -260,7 +256,7 @@ function gerritssh()
         if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
 
           # Get Commit Details
-          ${gerritssh} query --current-patch-set "status:open project:${projectgroup}/${projectname} change:${i}" > ${tmpfilepatchinfo};
+          ${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" > ${tmpfilepatchinfo};
           local patchcommit=$(cat ${tmpfilepatchinfo} \
                             | egrep '^\    revision' \
                             | cut -d' ' -f6-);
@@ -293,7 +289,7 @@ function gerritssh()
       key=${cmd_review};
     fi;
     if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-      ${gerritssh} review --verified 1 --code-review 2 --project ${projectgroup}/${projectname} ${i},${patchset};
+      ${gerritssh} review --verified 1 --code-review 2 --project ${GerritReview}/${projectname} ${i},${patchset};
     fi;
 
     # Commit Submission
@@ -305,7 +301,7 @@ function gerritssh()
       key=${cmd_submit};
     fi;
     if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-      ${gerritssh} review --submit --project ${projectgroup}/${projectname} ${i},${patchset};
+      ${gerritssh} review --submit --project ${GerritReview}/${projectname} ${i},${patchset};
     fi;
 
     # Commit Finished
@@ -315,7 +311,7 @@ function gerritssh()
   done;
   rm -rf "${tmpdir}";
   echo '';
-  echo -e "  \e[1;37m\e[4;37mDone with ${projectgroup}/${projectname} - ${projectbranch}\e[0m ";
+  echo -e "  \e[1;37m\e[4;37mDone with ${GerritReview}/${projectname} - ${projectbranch}\e[0m ";
   echo '';
 }
 
