@@ -64,12 +64,16 @@ function gitbranchpusher()
   # Confirmation
   command="git push -f backup HEAD:refs/heads/${project_branch}";
   echo " ${command}";
-  printf '  > Proceed with project push [ENTER] ? ';
-  read key;
+  printf '  > Proceed with project push [y/N] ? ';
+  read -t 20 key;
 
   # Upload to backup
   echo '';
-  ${command};
+  if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
+    ${command};
+  else
+    echo '  < Upload ignored after timeout... Consider uploading later';
+  fi;
   echo '';
 }
 

@@ -84,19 +84,27 @@ function lineagerebaser()
       # Handle unupdated projects
       if [ ${git_revs_count_remote} -ne 0 ]; then
         echo '';
-        printf '  > Rebase onto newest changes [y/N] ? ';
-        read key;
+        printf '  > Rebase onto newest changes [Y/n] ? ';
+        read -t 20 key;
 
         # Rebase the tree
-        if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
+        if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
+          echo '';
           git rebase --abort;
           git rebase FETCH_HEAD;
           push_command="git push -f ${git_username} HEAD:refs/heads/${projects_branch}";
           echo '';
-          printf "  > ${push_command} [Enter] ? ";
-          read key;
+          printf "  > ${push_command} [y/N] ? ";
+          read -t 20 key;
+
+          # Push the tree
           echo '';
-          ${push_command};
+          if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
+            ${push_command};
+          else
+            echo '  < Upload ignored after timeout... Consider uploading later';
+            echo '';
+          fi;
         fi;
 
       # Project is ready, break the loop
@@ -219,19 +227,27 @@ function lineagesonyrebaser()
       # Handle unupdated projects
       if [ ${git_revs_count_remote} -ne 0 ]; then
         echo '';
-        printf '  > Rebase onto newest changes [y/N] ? ';
-        read key;
+        printf '  > Rebase onto newest changes [Y/n] ? ';
+        read -t 20 key;
 
         # Rebase the tree
-        if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
+        if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
+          echo '';
           git rebase --abort;
           git rebase FETCH_HEAD;
           push_command="git push -f ${git_username} HEAD:refs/heads/${projects_branch}";
           echo '';
-          printf "  > ${push_command} [Enter] ? ";
-          read key;
+          printf "  > ${push_command} [y/N] ? ";
+          read -t 20 key;
+
+          # Push the tree
           echo '';
-          ${push_command};
+          if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
+            ${push_command};
+          else
+            echo '  < Upload ignored after timeout... Consider uploading later';
+            echo '';
+          fi;
         fi;
 
       # Project is ready, break the loop
@@ -345,11 +361,12 @@ function lineagesonypatcher()
       # Handle unupdated projects
       if [ ${git_revs_count_local} -ne 0 ]; then
         echo '';
-        printf '  > Recreate onto newest changes [y/N] ? ';
-        read key;
+        printf '  > Recreate onto newest changes [Y/n] ? ';
+        read -t 20 key;
 
         # Rebase the tree
-        if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
+        if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
+          echo '';
           git cherry-pick --abort &> /dev/null;
 
           # Detect commits to pick

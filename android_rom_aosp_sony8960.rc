@@ -113,11 +113,11 @@ function aosp8960patcher()
       # Handle unupdated projects
       if [ ${git_revs_count_local} -ne 0 ]; then
         echo '';
-        printf '  > Recreate onto newest changes [y/N] ? ';
-        read key;
+        printf '  > Recreate onto newest changes [Y/n] ? ';
+        read -t 20 key;
 
         # Update the tree
-        if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
+        if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
           git cherry-pick --abort &> /dev/null;
 
           # Detect commits to pick
