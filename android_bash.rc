@@ -119,14 +119,23 @@ function bashea()
 # === Bashs Functions Editor ===
 function bashe()
 {
+  # Variables
   local files='';
-  for bash_source in ${bash_android_sources};
-  do
-    grep -aiq "${1}" "${bash_source}";
-    if [ ${?} -eq 0 ]; then
-      files="${files} ${bash_source}";
-    fi;
+
+  # Study all script files
+  for bash_source in ${bash_android_sources}; do
+    for word in ${@}; do
+      grep -aiq "${word}" "${bash_source}";
+
+      # List found files
+      if [ ${?} -eq 0 ]; then
+        files="${files} ${bash_source}";
+        continue;
+      fi;
+    done;
   done;
+
+  # Open listed files
   if [ ! -z "${files}" ]; then
     gedit ${files};
   fi;
