@@ -146,6 +146,10 @@ function aosp8960patcher()
 
           # Automatic push
           gitbranchpusher;
+
+        # Project is ready, break the loop
+        else
+          project_unfinished=0;
         fi;
 
       # Project is ready, break the loop

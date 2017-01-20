@@ -94,6 +94,10 @@ function omsrebaser()
           read key;
           echo '';
           ${push_command};
+
+        # Project is ready, break the loop
+        else
+          project_unfinished=0;
         fi;
 
       # Project is ready, break the loop

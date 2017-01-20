@@ -105,6 +105,10 @@ function lineagerebaser()
             echo '  < Upload ignored after timeout... Consider uploading later';
             echo '';
           fi;
+
+        # Project is ready, break the loop
+        else
+          project_unfinished=0;
         fi;
 
       # Project is ready, break the loop
@@ -248,6 +252,10 @@ function lineagesonyrebaser()
             echo '  < Upload ignored after timeout... Consider uploading later';
             echo '';
           fi;
+
+        # Project is ready, break the loop
+        else
+          project_unfinished=0;
         fi;
 
       # Project is ready, break the loop
@@ -395,6 +403,10 @@ function lineagesonypatcher()
 
           # Automatic push
           gitbranchpusher;
+
+        # Project is ready, break the loop
+        else
+          project_unfinished=0;
         fi;
 
       # Project is ready, break the loop
