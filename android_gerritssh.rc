@@ -50,6 +50,8 @@ function gerritssh()
   local tmpfilepatchinfo="${tmpdir}/pi";
   local tmpfilepatchmessage="${tmpdir}/pm";
   local tmpfilepatchdrafts="${tmpdir}/drafts";
+
+  # Query gerrit and parse relevant informations
   ${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} branch:${projectbranch}" > ${tmpfilestate};
   cat ${tmpfilestate} | egrep '^\  number' | cut -d' ' -f4- > ${tmpfileids};
   cat ${tmpfilestate} | egrep '^\  branch' | cut -d' ' -f4- > ${tmpfilebranch};
@@ -68,6 +70,7 @@ function gerritssh()
 
     # Reverse merging variables
     local tmpcommitid=${projectreversemerge};
+    local tmpcommitidsearch;
     local tmpcommitpos;
     local tmpcommitparent;
     local tmpcommitspattern='';
@@ -80,7 +83,7 @@ function gerritssh()
     while true; do
       tmpcommitpos=$(grep -n "${tmpcommitid}" ${tmpfileids} | cut -d : -f 1);
       tmpcommitparent=$(sed "${tmpcommitpos}!d" ${tmpfileparents});
-      tmpcommitid=$(grep -n "${tmpcommitparent}" ${tmpfilesha1} | cut -d : -f 1);
+      tmpcommitidsearch=$(grep -n "${tmpcommitparent}" ${tmpfilesha1} | cut -d : -f 1);
 
       # Reverse to HEAD succesful
       if [ "${tmpcommitparent}" = "${remotecurrenthead}" ]; then
@@ -88,14 +91,15 @@ function gerritssh()
         break;
 
       # Valid ID available to continue
-      elif [ ! -z "${tmpcommitid}" ]; then
-        tmpcommitid=$(sed "${tmpcommitid}!d" ${tmpfileids});
+      elif [ ! -z "${tmpcommitidsearch}" ]; then
+        tmpcommitid=$(sed "${tmpcommitidsearch}!d" ${tmpfileids});
         tmpcommitspattern="${tmpcommitspattern} ${tmpcommitpos}";
 
       # Exit on failed reverse search
-      elif [ -z "${tmpcommitparent}" ] || [ -z "${tmpcommitid}" ]; then
+      elif [ -z "${tmpcommitparent}" ] || [ -z "${tmpcommitidsearch}" ]; then
         echo '';
         echo -e "     \e[1;31m> Aborting... ${projectreversemerge} could not be reversed to HEAD\e[0m";
+        echo -e "     \e[1;33m> Commit ${tmpcommitid} has no valid parent ${tmpcommitparent}\e[0m";
         echo '';
         rm -rf "${tmpdir}";
         return;
