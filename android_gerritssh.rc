@@ -36,7 +36,7 @@ function gerritssh()
   # Project Loading
   local projectorigin=$(git remote -v | grep origin | tail -n 1);
   if [ -z "${projectorigin}" ]; then
-    projectorigin=$(git remote -v | grep ${2} | tail -n 1);
+    projectorigin=$(git remote -v | grep ${GerritReview} | tail -n 1);
   fi;
   local projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
   local tmpdir=$(mktemp -d);
