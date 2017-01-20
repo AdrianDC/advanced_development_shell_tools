@@ -87,13 +87,13 @@ function gerritssh()
 
       # Reverse to HEAD succesful
       if [ "${tmpcommitparent}" = "${remotecurrenthead}" ]; then
-        tmpcommitspattern="${tmpcommitspattern} ${tmpcommitpos}";
+        tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
         break;
 
       # Valid ID available to continue
       elif [ ! -z "${tmpcommitidsearch}" ]; then
         tmpcommitid=$(sed "${tmpcommitidsearch}!d" ${tmpfileids});
-        tmpcommitspattern="${tmpcommitspattern} ${tmpcommitpos}";
+        tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
 
       # Exit on failed reverse search
       elif [ -z "${tmpcommitparent}" ] || [ -z "${tmpcommitidsearch}" ]; then
@@ -123,7 +123,6 @@ function gerritssh()
 
     # Regenerate gerrit files
     for lineid in ${tmpcommitspattern}; do
-      echo $lineid;
       sed "${lineid}!d" ${tmpfileids}.tmp >> ${tmpfileids};
       sed "${lineid}!d" ${tmpfilebranch}.tmp >> ${tmpfilebranch};
       sed "${lineid}!d" ${tmpfilenames}.tmp >> ${tmpfilenames};
