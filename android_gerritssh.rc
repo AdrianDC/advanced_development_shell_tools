@@ -24,6 +24,7 @@ function gerritssh()
   # Configurations
   local gerritssh="ssh -p 29418 ${GerritUsername}@${GerritRemote} gerrit";
   local projectbranch="${1:-cm-14.1}";
+  local projectreversemerge="${2}";
   local projectbranchmerger=false;
   local projectbranchprimary='cm-14.1';
   local projectbranchsecondary='cm-13.0';
@@ -57,6 +58,77 @@ function gerritssh()
   cat ${tmpfilestate} | egrep '^\    number' | cut -d' ' -f6- > ${tmpfilepatchsets};
   cat ${tmpfilestate} | egrep '^\    isDraft' | cut -d' ' -f6- > ${tmpfilepatchdrafts};
   cat ${tmpfileids} | sort > ${tmpfileidsfor};
+
+  # Handle commit reverse merging
+  if [ ! -z "${projectreversemerge}" ]; then
+
+    # Read remote current HEAD
+    git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2>/dev/null;
+    local remotecurrenthead=$(git rev-parse FETCH_HEAD);
+
+    # Reverse merging variables
+    local tmpcommitid=${projectreversemerge};
+    local tmpcommitpos;
+    local tmpcommitparent;
+    local tmpcommitspattern='';
+
+    # Parse commits SHA1
+    local tmpfilesha1="${tmpdir}/sha1";
+    cat ${tmpfilestate} | egrep '^\    revision' | cut -d' ' -f6- > ${tmpfilesha1};
+
+    # Parse the reverse indexes
+    while true; do
+      tmpcommitpos=$(grep -n "${tmpcommitid}" ${tmpfileids} | cut -d : -f 1);
+      tmpcommitparent=$(sed "${tmpcommitpos}!d" ${tmpfileparents});
+      tmpcommitid=$(grep -n "${tmpcommitparent}" ${tmpfilesha1} | cut -d : -f 1);
+
+      # Reverse to HEAD succesful
+      if [ "${tmpcommitparent}" = "${remotecurrenthead}" ]; then
+        tmpcommitspattern="${tmpcommitspattern} ${tmpcommitpos}";
+        break;
+
+      # Valid ID available to continue
+      elif [ ! -z "${tmpcommitid}" ]; then
+        tmpcommitid=$(sed "${tmpcommitid}!d" ${tmpfileids});
+        tmpcommitspattern="${tmpcommitspattern} ${tmpcommitpos}";
+
+      # Exit on failed reverse search
+      elif [ -z "${tmpcommitparent}" ] || [ -z "${tmpcommitid}" ]; then
+        echo '';
+        echo -e "     \e[1;31m> Aborting... ${projectreversemerge} could not be reversed to HEAD\e[0m";
+        echo '';
+        rm -rf "${tmpdir}";
+        return;
+      fi;
+    done;
+
+    # Prepare gerrit state files
+    tmpcommitparent=$(sed "${tmpcommitpos}!d" ${tmpfileparents});
+    mv ${tmpfileids} ${tmpfileids}.tmp;
+    mv ${tmpfilebranch} ${tmpfilebranch}.tmp;
+    mv ${tmpfilenames} ${tmpfilenames}.tmp;
+    mv ${tmpfileparents} ${tmpfileparents}.tmp;
+    mv ${tmpfilepatchsets} ${tmpfilepatchsets}.tmp;
+    mv ${tmpfilepatchdrafts} ${tmpfilepatchdrafts}.tmp;
+    touch ${tmpfileids};
+    touch ${tmpfilebranch};
+    touch ${tmpfilenames};
+    touch ${tmpfileparents};
+    touch ${tmpfilepatchsets};
+    touch ${tmpfilepatchdrafts};
+
+    # Regenerate gerrit files
+    for lineid in ${tmpcommitspattern}; do
+      echo $lineid;
+      sed "${lineid}!d" ${tmpfileids}.tmp >> ${tmpfileids};
+      sed "${lineid}!d" ${tmpfilebranch}.tmp >> ${tmpfilebranch};
+      sed "${lineid}!d" ${tmpfilenames}.tmp >> ${tmpfilenames};
+      sed "${lineid}!d" ${tmpfileparents}.tmp >> ${tmpfileparents};
+      sed "${lineid}!d" ${tmpfilepatchsets}.tmp >> ${tmpfilepatchsets};
+      sed "${lineid}!d" ${tmpfilepatchdrafts}.tmp >> ${tmpfilepatchdrafts};
+    done;
+    cp ${tmpfileids} ${tmpfileidsfor};
+  fi;
 
   # Branch empty
   if [ ! -s ${tmpfileidsfor} ]; then
