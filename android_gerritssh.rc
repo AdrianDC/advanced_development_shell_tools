@@ -31,7 +31,7 @@ function gerritssh()
 
   # Splash Text
   echo '';
-  printf "    \e[1;37mShell Gerrit Reviewer by Adrian DC - Connecting to ${projectbranch}\e[0m";
+  echo -e "    \e[1;37mShell Gerrit Reviewer by Adrian DC - Connecting to ${projectbranch}\e[0m";
 
   # Project Loading
   local projectorigin=$(git remote -v | grep origin | tail -n 1);
@@ -51,8 +51,19 @@ function gerritssh()
   local tmpfilepatchmessage="${tmpdir}/pm";
   local tmpfilepatchdrafts="${tmpdir}/drafts";
 
-  # Query gerrit and parse relevant informations
+  # Query gerrit through ssh
   ${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} branch:${projectbranch}" > ${tmpfilestate};
+
+  # Exit on failed ssh connection
+  if [ ${?} -ne 0 ]; then
+    echo '';
+    echo -e "     \e[1;31m> Error... '${gerritssh}' did not connect properly\e[0m";
+    echo '';
+    rm -rf "${tmpdir}";
+    return;
+  fi;
+
+  # Parse relevant informations
   cat ${tmpfilestate} | egrep '^\  number' | cut -d' ' -f4- > ${tmpfileids};
   cat ${tmpfilestate} | egrep '^\  branch' | cut -d' ' -f4- > ${tmpfilebranch};
   cat ${tmpfilestate} | egrep '^\  subject' | cut -d' ' -f4- > ${tmpfilenames};
@@ -131,6 +142,7 @@ function gerritssh()
       sed "${lineid}!d" ${tmpfilepatchdrafts}.tmp >> ${tmpfilepatchdrafts};
     done;
     cp ${tmpfileids} ${tmpfileidsfor};
+    echo '';
   fi;
 
   # Branch empty
@@ -162,7 +174,6 @@ function gerritssh()
   # Project Connected
   echo -e \\033c;
   clear;
-  echo '';
   echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${GerritReview}/${projectname} - ${projectbranch}\e[0m";
   echo '';
   echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2016\e[0m';
