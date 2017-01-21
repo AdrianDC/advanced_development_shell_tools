@@ -292,7 +292,7 @@ function rrautorelease()
   fi;
 
   # Devices to build
-  local devices=${1:-huashan mint hayabusa tsubasa nicki};
+  local devices=${1:-huashan mint hayabusa tsubasa nicki taoshan};
 
   # Walk through devices
   for device in ${devices}; do
