@@ -6,6 +6,14 @@
 # === File Uploader ===
 function fileupl()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fileupl <file_path> <target_folder>';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local path="${1}";
   local target="${2}";
