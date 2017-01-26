@@ -286,9 +286,6 @@ function lineagepatcher()
   done;
   source ./build/envsetup.sh;
 
-  # Import commits from topic "rebrand"
-  repopick -i -t rebrand;
-
   # Import commits from topic "network-traffic"
   repopick -i -t network-traffic;
 
