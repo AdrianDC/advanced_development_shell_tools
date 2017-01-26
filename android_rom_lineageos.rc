@@ -427,3 +427,13 @@ function lineagesonypatcher()
   echo '';
   croot;
 }
+
+# === LineageOS Web Jekyll ===
+function lineagewebjekyll()
+{
+  # Open webviewer
+  xdg-open "http://127.0.0.1:4001" &
+
+  # Launch Jekyll
+  jekyll serve --port 4001;
+}
