@@ -91,6 +91,8 @@ do
 done;
 
 # === Build Prebuilt Files ===
+export bash_files_strace_32=${bash_android_dir}/android_files/strace_arm32;
+export bash_files_strace_64=${bash_android_dir}/android_files/strace_arm64;
 export bash_flashable_android_base=${bash_android_dir}/android_files/flashable_android_base.zip;
 export bash_scripts_kernel_injector=${bash_android_dir}/android_files/scripts_kernel_injector;
 export bash_sign_apk_dir=${bash_android_dir}/android_signapk;

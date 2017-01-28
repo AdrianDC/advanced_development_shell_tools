@@ -176,12 +176,22 @@ function adbst()
     adb 'wait-for-device';
   fi;
 
+  # Detect strace requirement
+  if [ $(adb shell 'ls -q /sbin/strace 1> /dev/null 2>&1; echo ${?}') -ne 0 ]; then
+    if [ ! -z "$(adb shell cat /proc/cpuinfo | grep '64')" ]; then
+      adb push "${bash_files_strace_64}" /sbin/strace;
+    else
+      adb push "${bash_files_strace_32}" /sbin/strace;
+    fi;
+    adb shell chmod 777 /sbin/strace;
+  fi;
+
   # Get process identifier
   local pid=$(adb shell ps | grep "${1}" | awk '{ print $2 }');
   adb shell ps | grep "${1}";
 
   # Strace the process
-  adb shell strace -s 4096 -p ${pid};
+  adb shell /sbin/strace -s 4096 -p ${pid};
 }
 
 function adbkp()
