@@ -7,13 +7,13 @@
 export bash_android_bbootimg=${bash_android_dir}/android_tools/bbootimg;
 export bash_android_mkboot=${bash_android_dir}/android_mkboot;
 
-# === Kernel Fast Builder ===
+# === Fast Bootimage Builder ===
 function fboota()
 {
   # Usage
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] || [ -z "${TARGET_PRODUCT}" ]; then
     echo '';
-    echo ' Usage: fboota [unsecure,sep,full,init,inject]';
+    echo ' Usage: fboota [unsecure,sep,full,init,inject,recovery]';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -25,6 +25,7 @@ function fboota()
   local device_common='';
   local params=${1};
   local tmpfile=$(mktemp);
+  local imagename='boot';
 
   # Build environment
   croot;
@@ -93,10 +94,24 @@ function fboota()
   fi;
 
   # Bootimage builder
-  if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
-    mms bootimage | tee ${tmpfile};
+  if [[ ! "${params}" =~ 'recovery' ]]; then
+
+    if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
+      mms bootimage | tee ${tmpfile};
+    else
+      make -j$(grep -c ^processor /proc/cpuinfo) bootimage | tee ${tmpfile};
+    fi;
+
+  # Recoveryimage builder
   else
-    make -j$(grep -c ^processor /proc/cpuinfo) bootimage | tee ${tmpfile};
+
+    imagename='recovery';
+    if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
+      mms recoveryimage | tee ${tmpfile};
+    else
+      make -j$(grep -c ^processor /proc/cpuinfo) recoveryimage | tee ${tmpfile};
+    fi;
+
   fi;
   export USE_NINJA=;
 
@@ -111,9 +126,9 @@ function fboota()
   fi;
 
   # Bootimage file path
-  local bootimg=$(grep -a '.*image.*boot\.img' ${tmpfile} \
+  local bootimg=$(grep -a ".*image.*${imagename}\.img" ${tmpfile} \
                 | head -1 \
-                | sed 's/.*: \(.*boot\.img\).*/\1/g');
+                | sed "s/.*: \(.*${imagename}\.img\).*/\1/g");
 
   # Inject kernel inside bootimage
   if [[ "${params}" =~ 'inject' ]]; then
