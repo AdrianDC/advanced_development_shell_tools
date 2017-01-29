@@ -221,7 +221,7 @@ function fbootr()
 function fbooti()
 {
   # Variables
-  local partitiontarget=$(androidpartitionstarget boot);
+  local partitiontarget=$(androiddevicestarget boot);
 
   # Kernel informations
   adbro;
@@ -235,7 +235,7 @@ function fbooti()
 function adbfotainfos()
 {
   # Variables
-  local partitiontarget=$(androidpartitionstarget fota);
+  local partitiontarget=$(androiddevicestarget fota);
 
   # FOTA informations
   adbro;
@@ -257,9 +257,9 @@ function fbootk()
   # Variables
   local partitiontarget=;
   if [ ! -z "${2}" ]; then
-    partitiontarget=$(androidpartitionstarget fota);
+    partitiontarget=$(androiddevicestarget fota);
   else
-    partitiontarget=$(androidpartitionstarget boot);
+    partitiontarget=$(androiddevicestarget boot);
   fi;
 
   # Kernel injection
@@ -311,7 +311,7 @@ function frecovery()
 function adbbootpush()
 {
   # Variables
-  local boot=$(androidpartitionstarget boot);
+  local boot=$(androiddevicestarget boot);
 
   # Installer
   adb push ${1} /sdcard/boot.img;
@@ -324,7 +324,7 @@ function adbbootpush()
 function adbfotapush()
 {
   # Variables
-  local fota=$(androidpartitionstarget fota);
+  local fota=$(androiddevicestarget fota);
 
   # Installer
   adb push ${1} /sdcard/fota.img;
@@ -338,7 +338,7 @@ function adbfotapush()
 function adbrecoverypush()
 {
   # Variables
-  local recovery=$(androidpartitionstarget recovery);
+  local recovery=$(androiddevicestarget recovery);
 
   # Installer
   adb push ${1} /sdcard/recovery.img;
@@ -370,8 +370,8 @@ function kernelinjectorzip()
 
   # Partitions
   export ANDROID_DEVICE_TARGET="${PhoneName}";
-  local BootPartition=$(androidpartitionstarget boot);
-  local SystemPartition=$(androidpartitionstarget system);
+  local BootPartition=$(androiddevicestarget boot);
+  local SystemPartition=$(androiddevicestarget system);
 
   # Generate zip and updater-script files
   cd "${TmpDir}/";
@@ -431,7 +431,7 @@ function bootzip()
   local TmpDir=$(mktemp -d);
 
   # Partitions
-  local BootPartition=$(androidpartitionstarget boot);
+  local BootPartition=$(androiddevicestarget boot);
 
   # Generate zip and updater-script files
   cd "${TmpDir}/";

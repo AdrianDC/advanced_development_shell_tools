@@ -102,7 +102,7 @@ function mmmzip()
   if [ ! -z "${FilesList}" ]; then
 
     # Partitions
-    local SystemPartition=$(androidpartitionstarget system);
+    local SystemPartition=$(androiddevicestarget system);
 
     # Generate zip, updater-script and include files
     mkdir -p ./META-INF/com/google/android/;
@@ -181,7 +181,7 @@ function systozip()
   if [ ! -z "${FilesList}" ]; then
 
     # Partitions
-    local SystemPartition=$(androidpartitionstarget system);
+    local SystemPartition=$(androiddevicestarget system);
 
     # Generate zip, updater-script and include files
     mkdir -p ./META-INF/com/google/android/;
@@ -262,7 +262,7 @@ function packzip()
   done;
 
   # Partitions
-  local SystemPartition=$(androidpartitionstarget system);
+  local SystemPartition=$(androiddevicestarget system);
 
   # Generate zip, updater-script and include files
   cd "${TmpDir}/";

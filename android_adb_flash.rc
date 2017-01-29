@@ -6,7 +6,7 @@
 # === ADB Bootimage Dumper ===
 function adbbootdump()
 {
-  local kernel=$(androidpartitionstarget boot);
+  local kernel=$(androiddevicestarget boot);
   local cmdaddr=$(adb shell od -j 152 -N 4 -tx4 -An ${kernel} \
                 | cut -c 2-9);
   local cmdsize=$(adb shell od -j 164 -N 4 -tx4 -An ${kernel} \

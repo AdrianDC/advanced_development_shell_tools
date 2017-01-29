@@ -64,8 +64,8 @@ function repotwrp()
   mkdir -p "${TargetDir}/";
 
   # Partitions
-  local FOTAPartition=$(androidpartitionstarget fota);
-  local SystemPartition=$(androidpartitionstarget system);
+  local FOTAPartition=$(androiddevicestarget fota);
+  local SystemPartition=$(androiddevicestarget system);
 
   # Clean old releases
   rm -f "${TargetDir}/${OutTWRP}";
@@ -253,8 +253,8 @@ function repomrom()
   cp ${BuildDir}/obj/ETC/system_build_prop_intermediates/build.prop ${BuildDir}/system/build.prop;
 
   # Partitions
-  local FOTAPartition=$(androidpartitionstarget fota);
-  local SystemPartition=$(androidpartitionstarget system);
+  local FOTAPartition=$(androiddevicestarget fota);
+  local SystemPartition=$(androiddevicestarget system);
 
   # Built files
   local BuiltInstaller="multirom-*-v33x-UNOFFICIAL-${PhoneName}.zip";

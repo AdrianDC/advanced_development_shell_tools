@@ -3,8 +3,8 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === Android Partitions Target ===
-function androidpartitionstarget()
+# === Android Device Targets ===
+function androiddevicestarget()
 {
   # Variables
   local device=${TARGET_PRODUCT#*_};
@@ -44,8 +44,13 @@ function androidpartitionstarget()
       platform='/dev/block/platform/msm_sdcc.1/by-name';;
   esac;
 
-  # Partition
+  # Input request
   case "${request}" in
+
+    # Device codename
+    codename)
+      echo "${device}";
+      return;;
 
     # Boot partition
     boot)
