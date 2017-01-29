@@ -5,6 +5,7 @@
 
 # === Build paths ===
 export bash_android_mkboot=${bash_android_dir}/android_mkboot;
+export bash_android_mkelf=${bash_android_dir}/android_files/mkelf.py;
 
 # === Boot Tools ===
 function boottools()
@@ -53,5 +54,158 @@ function boottools()
   fi;
 
   # End of process
+  echo '';
+}
+
+# === Boot ELF ===
+function bootelf()
+{
+  # Usage
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
+    echo '  Usage: bootelf boot.img';
+    return;
+  fi;
+
+  # Variables
+  local boot_file="${1}";
+  local out_folder="${2}";
+  local pwd_folder="$(pwd)";
+
+  # Path generations
+  boot_file=$(readlink -f "${boot_file}");
+  if [ -z "${out_folder}" ]; then
+    out_folder=$(mktemp -d);
+  else
+    mkdir -p "${out_folder}";
+    out_folder=$(readlink -f "${out_folder}");
+  fi;
+
+  # Unpack
+  rm -rf "${out_folder}/*";
+  cp ${boot_file} ${out_folder}/boot.elf;
+  cd ${out_folder}/;
+  7z e ./boot.elf;
+  rm ./boot.elf;
+
+  # If the boot.img hasn't been extracted correctly
+  if [ ! -f ./0 ] || [ ! -f ./1 ] || [ ! -f ./2 ] || [ ! -f ./3 ]; then
+    echo '';
+    echo ' [ The boot.img is corrupted, extraction failed ]';
+    echo '';
+    read key;
+    exit;
+  fi;
+
+  # Reorganize and rename the extracted files
+  mv -f ./0 ./kernel;
+  mv -f ./1 ./ramdisk.img;
+  mv -f ./2 ./RPM.bin;
+  mv -f ./3 ./cmdline.txt;
+
+  # Extract the ramdisk image
+  echo '';
+  echo ' [ Extracting ramdisk image ]';
+  echo '';
+  cp ./ramdisk.img ./ramdisk.cpio.gz;
+  mkdir ./ramdisk;
+  cd ./ramdisk/;
+  gzip -d ../ramdisk.cpio.gz;
+  cpio -i -F ../ramdisk.cpio;
+
+  # Extract the cpio archives
+  echo '';
+  echo ' [ Extracting ramdisk cpios ]';
+  echo '';
+  cd ./sbin/;
+  if [ -f ./ramdisk.cpio ]; then
+    mkdir ./ramdiskcpio;
+    cd ./ramdiskcpio/;
+    cpio -i -F ../ramdisk.cpio;
+    cd ../;
+  fi;
+  if [ -f ./ramdisk-recovery.cpio ]; then
+    mkdir ./ramdiskrecoverycpio;
+    cd ./ramdiskrecoverycpio/;
+    cpio -i -F ../ramdisk-recovery.cpio;
+    cd ../;
+  fi;
+
+  # Edition mode
+  if [ -z "${2}" ]; then
+
+    # Edit
+    nemo "${out_folder}";
+    echo '';
+    printf ' Press Enter to continue [ENTER] ';
+    read key;
+    echo '';
+
+    # Backup original file
+    if [ ! -f "${boot_file}.old" ]; then
+      cp "${boot_file}" "${boot_file}.old";
+    fi;
+
+    # Compile the ramdisk.cpio and ramdisk.recovery.cpio if needed
+    echo '';
+    echo ' [ Compiling the ramdisk cpios ]';
+    echo '';
+    cd ${out_folder}/ramdisk/sbin/;
+    if [ -d ./ramdiskcpio ]; then
+      cd ./ramdiskcpio/;
+      rm -f ../ramdisk.cpio;
+      find . | cpio -o -R 0:0 -H newc -O ../ramdisk.cpio;
+      cd ../;
+      rm -rf ./ramdiskcpio;
+    fi;
+    if [ -d ./ramdiskrecoverycpio ]; then
+      cd ./ramdiskrecoverycpio/;
+      rm -f ../ramdisk-recovery.cpio;
+      find . | cpio -o -R 0:0 -H newc -O ../ramdisk-recovery.cpio;
+      cd ../;
+      rm -rf ./ramdiskrecoverycpio;
+    fi;
+
+    # Compile ramdisk image
+    echo '';
+    echo ' [ Compiling the ramdisk image ]';
+    echo '';
+    cd ${out_folder}/ramdisk/;
+    rm -f ../ramdisk.cpio;
+    find . | cpio -o -R 0:0 -H newc -O ../ramdisk.cpio;
+    rm -f ../ramdisk.cpio.gz;
+    gzip -9 -n ../ramdisk.cpio;
+    rm -f ../ramdisk.img;
+    mv ../ramdisk.cpio.gz ../ramdisk.img;
+
+    # boot.img contents missing
+    cd ${out_folder}/;
+    if [ ! -f ./kernel ] || [ ! -f ./ramdisk.img ] || [ ! -f ./RPM.bin ] || [ ! -f ./cmdline.txt ]; then
+      echo '';
+      echo ' [ A file is missing for the boot.img compilation ]';
+      echo '';
+      read key;
+      exit;
+    fi;
+
+    # Compile elf image
+    echo '';
+    echo ' [ Compiling the boot.img ]';
+    echo '';
+    cp "${bash_android_mkelf}" ./mkelf.py;
+    python ./mkelf.py -o boot-new.elf kernel@0x80208000 ramdisk.img@0x81900000,ramdisk RPM.bin@0x00020000,rpm cmdline.txt@0x00000000,cmdline;
+
+    # Replace input bootimage
+    mv ./boot-new.elf "${boot_file}";
+    echo '';
+    echo ' [ Done ]';
+    echo '';
+
+    # Delete temp folder
+    rm -rf "${out_folder}";
+
+  fi;
+
+  # End of process
+  cd "${pwd_folder}";
   echo '';
 }
