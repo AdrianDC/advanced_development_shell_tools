@@ -432,5 +432,5 @@ function lineagewebjekyll()
   xdg-open "http://127.0.0.1:4001" &
 
   # Launch Jekyll
-  jekyll serve --port 4001;
+  jekyll serve --incremental --port 4001;
 }
