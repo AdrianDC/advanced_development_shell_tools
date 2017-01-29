@@ -165,6 +165,8 @@ function gitrab()
     gitrasonylineage;
   elif pwd | grep LineageOS | grep -q -e '-dora'; then
     gitra8996lineage;
+  elif pwd | grep -q AOSP; then
+    gitra8960aosp;
   else
     gitra8960lineage;
   fi;
