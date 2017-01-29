@@ -216,6 +216,37 @@ function aosp8960autorelease()
   done;
 }
 
+# === AOSP SODP Automatic Releaser ===
+function aospsodpautorelease()
+{
+  # AndroidDev
+  cdand;
+
+  # Repository sync
+  if [ -z "${1}" ]; then
+    cdaosp;
+    reposy;
+  fi;
+
+  # Project selection, sync and patch
+  cdaosp sony;
+  if [ -z "${2}" ]; then
+    reposy;
+  fi;
+  aospsonypatcher;
+
+  # Devices to build
+  local devices=${1:-dora};
+
+  # Walk through devices
+  for device in ${devices}; do
+
+    # ROM build and release
+    romautorelease ${device} aosp;
+
+  done;
+}
+
 # === LineageOS Automatic Releaser ===
 function lineageautorelease()
 {
