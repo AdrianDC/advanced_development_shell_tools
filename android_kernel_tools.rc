@@ -5,7 +5,6 @@
 
 # === Build paths ===
 export bash_android_bbootimg=${bash_android_dir}/android_tools/bbootimg;
-export bash_android_mkboot=${bash_android_dir}/android_mkboot;
 
 # === Fast Bootimage Builder ===
 function fboota()
@@ -347,56 +346,6 @@ function adbrecoverypush()
   adbsu "dd if=/sdcard/recovery.img of=${recovery}";
   adbsu 'rm -f /sdcard/recovery.img';
   #adb reboot recovery;
-}
-
-# === MKBoot Tools ===
-function mkboottools()
-{
-  # Usage
-  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
-    echo '  Usage: mkboottools boot.img';
-    return;
-  fi;
-
-  # Variables
-  local boot_file="${1}";
-  local out_folder="${2}";
-
-  # Extraction
-  if [ -z "${out_folder}" ]; then
-    out_folder=$(mktemp -d);
-  fi;
-
-  # Unpack
-  rm -rf "${out_folder}";
-  ${bash_android_mkboot}/mkboot "${1}" "${out_folder}";
-
-  # Edition mode
-  if [ -z "${2}" ]; then
-
-    # Edit
-    nemo "${out_folder}";
-    echo '';
-    printf ' Press Enter to continue [ENTER] ';
-    read key;
-    echo '';
-
-    # Repack
-    if [ ! -f "${1}.old" ]; then
-      cp "${1}" "${1}.old";
-    fi;
-    rm -f "${1}.tmp";
-    mv "${1}" "${1}.tmp";
-    ${bash_android_mkboot}/mkboot "${out_folder}" "${1}";
-    if [ -f "${1}.tmp" ]; then
-      rm -f "${1}.tmp";
-    fi;
-    rm -rf "${out_folder}";
-
-  fi;
-
-  # End of process
-  echo '';
 }
 
 # === Kernel Injector Zip ===

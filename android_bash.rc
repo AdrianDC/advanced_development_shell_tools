@@ -45,6 +45,7 @@ bash_android_sources="\
   \
   ${bash_android_dir}/android_kernel_builders.rc \
   ${bash_android_dir}/android_kernel_defconfig.rc \
+  ${bash_android_dir}/android_kernel_editors.rc \
   ${bash_android_dir}/android_kernel_helpers.rc \
   ${bash_android_dir}/android_kernel_tools.rc \
   \
