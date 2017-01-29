@@ -179,8 +179,8 @@ function romautorelease()
   cd "${cwd}";
 }
 
-# === AOSP Automatic Releaser ===
-function aospautorelease()
+# === AOSP 8960 Automatic Releaser ===
+function aosp8960autorelease()
 {
   # AndroidDev
   cdand;
