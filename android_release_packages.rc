@@ -9,7 +9,6 @@ function signzip()
   # Usage
   local zip_input="${1}";
   local zip_output="${2}";
-  echo $zip_input
   if [ ! -f "${zip_input}" ]; then
     echo '';
     echo ' usage: signzip <unsigned_input_zip_or_zip_to_sign> [signed_output_zip]';
@@ -17,12 +16,28 @@ function signzip()
     return;
   fi;
 
+  # Variables
+  local pwd_folder=$(pwd);
+  local tmp_folder=$(mktemp -d);
+
   # Direct ZIP signature
   if [ -z "${zip_output}" ]; then
     zip_output="${zip_input}";
-    zip_input="${zip_input}.unsigned.zip";
+    zip_input=$(readlink -f "${zip_input}.unsigned.zip");
     mv -v "${zip_output}" "${zip_input}";
   fi;
+
+  # Apply the metadata file
+  #cd ${tmp_folder}/;
+  #mkdir -p ./META-INF/com/android/;
+  #echo 'ota-required-cache=0' > ./META-INF/com/android/metadata;
+  #echo 'ota-type=FILE' >> ./META-INF/com/android/metadata;
+  #echo 'post-build=' >> ./META-INF/com/android/metadata;
+  #echo 'post-timestamp='$(date +%s) >> ./META-INF/com/android/metadata;
+  #echo 'pre-device=' >> ./META-INF/com/android/metadata;
+  #zip -d "${zip_input}" ./META-INF/com/android/metadata;
+  #zip -g "${zip_input}" ./META-INF/com/android/metadata;
+  #cd ${pwd_folder}/;
 
   # Remove output file
   rm -f "${zip_output}";
