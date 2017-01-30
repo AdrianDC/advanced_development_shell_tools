@@ -10,6 +10,7 @@ function gitbranchpusher()
   local project_branch;
   local project_dir=${PWD};
   local repo_dir=${PWD};
+  local param_send=${1};
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -65,7 +66,12 @@ function gitbranchpusher()
   command="git push -f backup HEAD:refs/heads/${project_branch}";
   echo " ${command}";
   printf '  > Proceed with project push [y/N] ? ';
-  read -t 20 key;
+  if [ -z "${param_send}" ]; then
+    read -t 20 key;
+  else
+    key='y';
+    echo "${key}";
+  fi;
 
   # Upload to backup
   echo '';
