@@ -240,7 +240,7 @@ function repogetbranch()
   fi;
 
   # Default failsafe
-  if [ -z "${branch}" ] || [[ "${branch}" =~ 'Manifest' ]]; then
+  if [ -z "${branch}" ] || [[ "${branch}" =~ 'Manifest' ]] || [[ "${branch}" =~ 'HEAD' ]]; then
     branch='cm-14.1';
   fi;
 
