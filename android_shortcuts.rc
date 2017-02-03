@@ -169,6 +169,8 @@ function getbash()      { echo ${bash_android_dir}; }
 function cdbash()       { cd $(getbash); }
 function cddesk()       { cd "$(xdg-user-dir DESKTOP)"; }
 function cddev()        { cd $(getand)/Development/${1}; }
+function cdref()        { cd $(getand)/References/${1}; }
+function cdrefapk()     { cd $(getand)/References/apk; }
 function cdaospdev()    { cddev; cd ./aosp*${1}*; }
 function impaospcaf()   { rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}; }
 function impaospoms()   { rsync -arv --delete --delete-after $(toaospoms ${1}) ./${1}; }
