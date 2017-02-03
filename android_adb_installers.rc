@@ -160,8 +160,8 @@ function adbpf()
         filetarget=$(printf "${filepathtest}" | sed "s/.*configs\(.*\)/\/system\/etc\1/g");
         filepathtest=${filetarget};
       fi;
-      if [[ "${filepathtest}" =~ 'system' ]]; then
-        filetarget=$(printf "${filepathtest}" | sed "s/.*\(system.*\)/\/\1/g");
+      if [[ "${filepathtest}" =~ 'system/' ]]; then
+        filetarget=$(printf "${filepathtest}" | sed "s/.*\(system\/.*\)/\/\1/g");
         filepathtest=${filetarget};
       fi;
       if [[ "${filepathtest}" == "${filepath}" ]]; then
