@@ -459,3 +459,25 @@ function bootzip()
   rm -rf "${TmpDir}";
   cd "${CurDir}";
 }
+
+# === Make Sepolicy ===
+function makesep()
+{
+  # Access repo root
+  local cwd=$(pwd);
+  croot;
+
+  # Disable Ninja
+  export USE_NINJA=false;
+
+  # Start sepolicies full compilations
+  if [ -d ./system/sepolicy ]; then
+    mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./system/sepolicy/;
+  else
+    mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./external/sepolicy/;
+  fi;
+
+  # Restore Ninja and path
+  export USE_NINJA=;
+  cd ${cwd}/;
+}
