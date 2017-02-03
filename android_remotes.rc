@@ -137,7 +137,7 @@ function gitrao()
 # === Git Remotes sonyxperiadev Helper ===
 function gitraos()
 {
-  if [[ "$(pwd)/" =~ 'kernel/sony/copyleft/' ]]; then
+  if [[ "$(pwd)/" =~ 'copyleft' ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/kernel-copyleft.git;
   elif [[ "$(pwd)/" =~ 'kernel/sony/msm/' ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/kernel.git;
