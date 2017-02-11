@@ -70,7 +70,6 @@ bash_android_sources="\
   ${bash_android_dir}/android_repo_referenced.rc \
   \
   ${bash_android_dir}/android_rom_aicp.rc \
-  ${bash_android_dir}/android_rom_aosp.rc \
   ${bash_android_dir}/android_rom_aosp_sony8960.rc \
   ${bash_android_dir}/android_rom_aosp_sonyaosp.rc \
   ${bash_android_dir}/android_rom_aospoms.rc \
