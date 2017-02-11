@@ -34,7 +34,9 @@ function gitcpaicp()
   echo '';
   printf "  \e[1;34m\e[4;34mPress Enter to diff with origin/${branch_origin} :\e[0m ";
   read key;
-  git diff HEAD origin/${branch_origin};
+  git diff HEAD origin/${branch_origin} \
+    | filterdiff -p1 -x aicp.dependencies -x system.prop \
+    | colordiff
 
   # Upload changes
   echo '';
