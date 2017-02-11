@@ -3,267 +3,31 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
-# === AOSP SONY Patcher ===
+# === AOSP Sony Patcher ===
 function aospsonypatcher()
 {
-  # GitHub Credentials
-  export GitEMail="user.name@gmail.com";
-  export GitFullName="Full Name";
-  export GitUserName="Username";
-
-  # Create  ~/.bash_android.github.rc with the exports to override the credentials
-  if [ -f ~/.bash_android.github.rc ]; then
-    source ~/.bash_android.github.rc;
-  fi;
-
-  # ==========================================================
-  # Repo root
-  if [ -z "$(type -t croot)" ]; then
-    while [ ! -e './build/envsetup.sh' ]; do
-      cd ../;
-    done;
-    source ./build/envsetup.sh;
-  fi;
-  croot;
-
-  # ==========================================================
-  # Constants
-  local projects_paths='
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'aosp_development_sonyaosp' 'aosp_sonyaosp' '
     build
     external/toybox
     packages/apps/Music
     system/core
-    ';
-
-  # ==========================================================
-  # Variables
-  local commits_list;
-  local commits_result;
-  local git_revs_count;
-  local git_revs_count_local;
-  local path_branch;
-  local project_github;
-  local project_unfinished;
-
-  # Projects loader
-  for path in ${1:-${projects_paths}}; do
-
-    # Project selection
-    path=${path%/};
-    path_branch=${path//\//_};
-    echo '';
-    echo " === ${path} [${path_branch}] ===";
-    croot;
-
-    # Ignore missing git projects
-    if [ ! -d ${path}/.git ]; then
-      echo '  .git project not found, ignoring...';
-      continue;
-    fi;
-    cd ${path}/;
-
-    # Targets selection
-    project_github='https://github.com/AdrianDC/aosp_development_sonyaosp.git';
-
-    # Loop until project ready
-    project_unfinished=1;
-    while [ ${project_unfinished} -eq 1 ]; do
-
-      # Fetch and compare
-      git fetch ${project_github} ${path_branch};
-      git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-      git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
-      git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
-      echo " Differences: ${git_revs_count}";
-
-      # Handle unupdated projects
-      if [ ${git_revs_count_local} -ne 0 ]; then
-        echo '';
-        printf '  > Recreate onto newest changes [Y/n] ? ';
-        read -t 20 key;
-
-        # Rebase the tree
-        if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
-          echo '';
-          git cherry-pick --abort &> /dev/null;
-
-          # Detect commits to pick
-          commits_list=$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD);
-          if [ -z "${commits_list}" ]; then
-            commits_list=$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD);
-          else
-            commits_list=$(git rev-list --reverse FETCH_HEAD~${git_revs_count_remote}..FETCH_HEAD);
-          fi;
-
-          # Pick all commits
-          for sha1 in ${commits_list}; do
-            git cherry-pick ${sha1};
-            commits_result=${?};
-
-            # Failed update
-            if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ]; then
-              echo '';
-              echo '  < Automatic update failed...';
-              echo '     Tried to add following commits: '${commits_list};
-              echo '     Stopping, push with : gitbranchpusher;';
-              echo '';
-              return;
-            fi;
-          done;
-
-          # Automatic push
-          gitbranchpusher;
-
-        # Project is ready, break the loop
-        else
-          project_unfinished=0;
-        fi;
-
-      # Project is ready, break the loop
-      else
-        project_unfinished=0;
-      fi;
-
-    done;
-
-    # Cleanup
-    git reset --hard FETCH_HEAD;
-    git stash -u;
-
-  done;
-
-  # ==========================================================
-  # repo root
-  echo '';
-  croot;
+    ' "${1}";
 }
 
-# === AOSP SONY Open Devices Rebaser ===
+# === AOSP Sony Rebaser ===
 function aospsonyrebaser()
 {
-  # Repo root
-  if [ -z "$(type -t croot)" ]; then
-    while [ ! -e './build/envsetup.sh' ]; do
-      cd ../;
-    done;
-    source ./build/envsetup.sh;
-  fi;
-  croot;
-
-  # ==========================================================
-  # Constants
-  local projects_paths='
-    device/sony/common::master
-    device/sony/common-init::master
-    device/sony/common-headers::aosp/LA.UM.5.5.r1
-    device/sony/common-kernel::aosp/LA.UM.5.5.r1
-    device/sony/dora::master
-    device/sony/tone::master
-    kernel/sony/msm::aosp/LA.UM.5.5.r1
-    vendor/qcom/prebuilt::master
-    vendor/sony::master
-    ';
-
-  # ==========================================================
-  # Variables
-  local git_revs_count;
-  local git_revs_count_local;
-  local git_username=$(githubusername);
-  local path_name;
-  local path_branch;
-  local project_github;
-  local project_unfinished;
-  local push_command;
-
-  # Projects loader
-  for project in ${1:-${projects_paths}}; do
-
-    # Project selection
-    path_branch=${project#*::};
-    path=${project%::*};
-    echo '';
-    echo " === ${path} [${path_branch}] ===";
-    croot;
-
-    # Ignore non-git projects
-    if [ ! -d ${path}/.git ]; then
-      echo '  .git project not found, ignoring...';
-      continue;
-    fi;
-    cd ${path}/;
-
-    # Loop until project ready
-    project_unfinished=1;
-    while [ ${project_unfinished} -eq 1 ]; do
-
-      # Check origin remote
-      git ls-remote --exit-code origin >/dev/null 2>&1;
-      if [ $? -ne 0 ]; then
-        echo ' Branch origin was not found...';
-        gitraos;
-        continue;
-      fi;
-
-      # Check private remote
-      git ls-remote --exit-code ${git_username} >/dev/null 2>&1;
-      if [ $? -ne 0 ]; then
-        echo " Branch ${git_username} was not found...";
-        gitraa;
-        continue;
-      fi;
-
-      # Fetch and compare
-      git fetch origin ${path_branch};
-      git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-      git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
-      git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
-      echo " Differences: ${git_revs_count}";
-
-      # Handle unupdated projects
-      if [ ${git_revs_count_remote} -ne 0 ]; then
-        echo '';
-        printf '  > Rebase onto newest changes [Y/n] ? ';
-        read -t 20 key;
-
-        # Rebase the tree
-        if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
-          echo '';
-          git rebase --abort;
-          git rebase FETCH_HEAD;
-          push_command="git push -f ${git_username} HEAD:refs/heads/${path_branch}";
-          echo '';
-          printf "  > ${push_command} [y/N] ? ";
-          read -t 20 key;
-
-          # Push the tree
-          echo '';
-          if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
-            ${push_command};
-          else
-            echo '  < Upload ignored after timeout... Consider uploading later';
-            echo '';
-          fi;
-
-        # Project is ready, break the loop
-        else
-          project_unfinished=0;
-        fi;
-
-      # Project is ready, break the loop
-      else
-        project_unfinished=0;
-      fi;
-
-    done;
-
-    # Cleanup
-    git reset --hard HEAD;
-    git stash -u;
-
-  done;
-
-  # ==========================================================
-  # repo root
-  echo '';
-  croot;
+  # Use the androidprojectrebaser helper
+  androidprojectrebaser 'sodp' '' '
+    device/sony/common::::master
+    device/sony/common-init::::master
+    device/sony/common-headers::::aosp/LA.UM.5.5.r1
+    device/sony/common-kernel::::aosp/LA.UM.5.5.r1
+    device/sony/dora::::master
+    device/sony/tone::::master
+    kernel/sony/msm::::aosp/LA.UM.5.5.r1
+    vendor/qcom/prebuilt::::master
+    vendor/sony::::master
+    ' "${1}";
 }
