@@ -91,7 +91,7 @@ function reporefupdate()
 
   # Detect and update AOSP references
   for project in sony8960 sonyaosp; do
-    cdaospdev ${project};
+    cddevaosp ${project};
     if ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating AOSP ${project} references...";
@@ -103,7 +103,7 @@ function reporefupdate()
 
   # Detect and update LineageOS references
   for project in sony8960 sony8996 sonyaosp; do
-    cdlineagedev ${project};
+    cddevlineage ${project};
     if ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
@@ -125,7 +125,7 @@ function reporefsync()
 
   # Fetch and update AOSP references
   for project in sony8960 sonyaosp; do
-    cdaospdev ${project};
+    cddevaosp ${project};
     echo '';
     echo " Syncing AOSP ${project} references...";
     git fetch origin local_manifests;
@@ -135,7 +135,7 @@ function reporefsync()
 
   # Fetch and update LineageOS references
   for project in sony8960 sony8996 sonyaosp; do
-    cdlineagedev ${project};
+    cddevlineage ${project};
     echo '';
     echo " Syncing LineageOS ${project} references...";
     git fetch origin local_manifests;
