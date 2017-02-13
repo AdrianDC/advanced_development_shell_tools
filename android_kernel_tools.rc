@@ -481,6 +481,7 @@ function bootimagedebuggable()
 
   # Enumerate related files
   local files_list="./build/core/main.mk \
+                    ./build/tools/post_process_props.py \
                     ./out/target/product/${1}/root/default.prop \
                     ./out/target/product/${1}/recovery/root/default.prop \
                     ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
@@ -494,8 +495,9 @@ function bootimagedebuggable()
         if [ -f ${file} ]; then
           echo "Bootimage: Making debug secure in ${file}";
           sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file};
-          sed -i 's/ro.secure=0/ro.secure=1/' ${file};
+          sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/' ${file};
           sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' ${file};
+          sed -i 's/"persist.sys.usb.config", "mtp,adb"/"persist.sys.usb.config", "none"/' ${file};
         fi;
       done;;
 
@@ -504,8 +506,9 @@ function bootimagedebuggable()
         if [ -f ${file} ]; then
           echo "Bootimage: Making debug unsecure in ${file}";
           sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file};
-          sed -i 's/ro.secure=1/ro.secure=0/' ${file};
+          sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/' ${file};
           sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' ${file};
+          sed -i 's/"persist.sys.usb.config", "none"/"persist.sys.usb.config", "mtp,adb"/' ${file};
         fi;
       done;;
 
