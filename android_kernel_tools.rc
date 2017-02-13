@@ -482,6 +482,7 @@ function bootimagedebuggable()
   # Enumerate related files
   local files_list="./build/core/main.mk \
                     ./build/tools/post_process_props.py \
+                    ./vendor/cm/config/common.mk \
                     ./out/target/product/${1}/root/default.prop \
                     ./out/target/product/${1}/recovery/root/default.prop \
                     ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
