@@ -129,6 +129,7 @@ function reporefsync()
     echo '';
     echo " Syncing AOSP ${project} references...";
     git fetch origin local_manifests;
+    git diff FETCH_HEAD;
     git reset FETCH_HEAD;
     git stash -u;
   done;
@@ -139,6 +140,7 @@ function reporefsync()
     echo '';
     echo " Syncing LineageOS ${project} references...";
     git fetch origin local_manifests;
+    git diff FETCH_HEAD;
     git reset FETCH_HEAD;
     git stash -u;
   done;
