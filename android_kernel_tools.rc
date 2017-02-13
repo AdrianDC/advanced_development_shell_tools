@@ -48,17 +48,8 @@ function fboota()
 
   # Unsecure adb changes
   if [[ "${params}" =~ 'unsecure' ]]; then
-    local fileslist="./build/core/main.mk \
-                     ./out/target/product/${device}/root/default.prop \
-                     ./out/target/product/${device}/recovery/root/default.prop \
-                     ./out/target/product/${device}/ota_temp/\*/RAMDISK/default.prop \
-                     ./out/target/product/${device}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop";
-    for file in ${fileslist}; do
-      echo "Unsecuring ${file}";
-      sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file};
-      sed -i 's/ro.secure=1/ro.secure=0/' ${file};
-      sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' ${file};
-    done;
+    bootimagedebuggable "${device}" true;
+    echo '';
   fi;
 
   # Force init rebuild
@@ -116,12 +107,7 @@ function fboota()
 
   # Unsecure adb changes
   if [[ "${params}" =~ 'unsecure' ]]; then
-    for file in ${fileslist}; do
-      echo "Resecuring ${file}";
-      sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file};
-      sed -i 's/ro.secure=0/ro.secure=1/' ${file};
-      sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' ${file};
-    done;
+    bootimagedebuggable "${device}" false;
   fi;
 
   # Bootimage file path
@@ -480,4 +466,48 @@ function makesep()
   # Restore Ninja and path
   export USE_NINJA=;
   cd ${cwd}/;
+}
+
+# === Bootimage Debuggable ===
+function bootimagedebuggable()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: bootimagedebuggable <device_product> <true/false>';
+    echo '';
+    return;
+  fi;
+
+  # Enumerate related files
+  local files_list="./build/core/main.mk \
+                    ./out/target/product/${1}/root/default.prop \
+                    ./out/target/product/${1}/recovery/root/default.prop \
+                    ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
+                    ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop";
+
+  # Apply requested changes
+  case "${2}" in
+
+    false)
+      for file in ${files_list}; do
+        if [ -f ${file} ]; then
+          echo "Bootimage: Making debug secure in ${file}";
+          sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file};
+          sed -i 's/ro.secure=0/ro.secure=1/' ${file};
+          sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' ${file};
+        fi;
+      done;;
+
+    *)
+      for file in ${files_list}; do
+        if [ -f ${file} ]; then
+          echo "Bootimage: Making debug unsecure in ${file}";
+          sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file};
+          sed -i 's/ro.secure=1/ro.secure=0/' ${file};
+          sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' ${file};
+        fi;
+      done;;
+
+  esac;
 }
