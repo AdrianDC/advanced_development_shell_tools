@@ -498,6 +498,8 @@ function bootimagedebuggable()
           sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file};
           sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/' ${file};
           sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' ${file};
+          sed -i 's/val = "mtp,adb"/val = "adb"/' ${file};
+          sed -i 's/val = val + ",mtp,adb"/val = val + ",adb"/' ${file};
           sed -i 's/"persist.sys.usb.config", "mtp,adb"/"persist.sys.usb.config", "none"/' ${file};
         fi;
       done;;
@@ -509,6 +511,8 @@ function bootimagedebuggable()
           sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file};
           sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/' ${file};
           sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' ${file};
+          sed -i 's/val = "adb"/val = "mtp,adb"/' ${file};
+          sed -i 's/val = val + ",adb"/val = val + ",mtp,adb"/' ${file};
           sed -i 's/"persist.sys.usb.config", "none"/"persist.sys.usb.config", "mtp,adb"/' ${file};
         fi;
       done;;
