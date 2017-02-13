@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr},j1,nowipe/outcl,dev/local/priv/wipeout]';
+  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr},j1,nowipe/outcl,bringup/dev/local/priv/wipeout]';
   if [ -z "${1}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
@@ -69,6 +69,11 @@ function romautorelease()
     echo " Usage: ${function_usage}";
     echo '';
     return;
+  fi;
+
+  # Bring-Up build
+  if [[ "${rom_params}" =~ 'bringup' ]]; then
+    bootimagedebuggable "${rom_device}" true;
   fi;
 
   # Development build
@@ -148,9 +153,14 @@ function romautorelease()
     brunch "${rom_target}" | tee ${rom_logs_output};
   fi;
 
+  # Bring-Up build
+  if [[ "${rom_params}" =~ 'bringup' ]]; then
+    bootimagedebuggable "${rom_device}" false;
+  fi;
+
   # Upload the result and notify
   pushbrom "${rom_target}" "${rom_tag}";
-  if [[ ! "${rom_params}" =~ 'local' ]]; then
+  if [[ ! "${rom_params}" =~ 'local' ]] && [[ ! "${rom_params}" =~ 'bringup' ]]; then
     if [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
       gnome-terminal -x bash -c "\
         source $(getbash)/android_bash.rc;\
