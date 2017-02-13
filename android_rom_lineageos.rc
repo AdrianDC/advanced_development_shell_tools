@@ -84,6 +84,7 @@ function lineage8996patcher()
     device/sony/common
     external/libselinux
     frameworks/av
+    hardware/qcom/audio-caf/msm8996
     system/core
     ' "${1}";
 }
