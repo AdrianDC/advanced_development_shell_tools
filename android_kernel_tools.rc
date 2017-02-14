@@ -479,43 +479,83 @@ function bootimagedebuggable()
     return;
   fi;
 
-  # Enumerate related files
-  local files_list="./build/core/main.mk \
-                    ./build/tools/post_process_props.py \
-                    ./vendor/cm/config/common.mk \
-                    ./out/target/product/${1}/root/default.prop \
-                    ./out/target/product/${1}/recovery/root/default.prop \
-                    ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
-                    ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop";
+  # Variables and access repo root
+  local cwd=$(pwd);
+  local file_path;
+  croot;
 
-  # Apply requested changes
-  case "${2}" in
+  # Apply unsecure changes
+  if [ "${2}" = 'true' ]; then
 
-    false)
-      for file in ${files_list}; do
-        if [ -f ${file} ]; then
-          echo "Bootimage: Making debug secure in ${file}";
-          sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file};
-          sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/' ${file};
-          sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' ${file};
-          sed -i 's/val = "mtp,adb"/val = "adb"/' ${file};
-          sed -i 's/val = val + ",mtp,adb"/val = val + ",adb"/' ${file};
-          sed -i 's/"persist.sys.usb.config", "mtp,adb"/"persist.sys.usb.config", "none"/' ${file};
-        fi;
-      done;;
+    # Apply changes build/core/main.mk
+    file_path=./build/core/main.mk;
+    echo "Bootimage: Apply debug unsecure in ${file_path}";
+    sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/' ${file_path};
+    sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file_path};
 
-    *)
-      for file in ${files_list}; do
-        if [ -f ${file} ]; then
-          echo "Bootimage: Making debug unsecure in ${file}";
-          sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file};
-          sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/' ${file};
-          sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' ${file};
-          sed -i 's/val = "adb"/val = "mtp,adb"/' ${file};
-          sed -i 's/val = val + ",adb"/val = val + ",mtp,adb"/' ${file};
-          sed -i 's/"persist.sys.usb.config", "none"/"persist.sys.usb.config", "mtp,adb"/' ${file};
-        fi;
-      done;;
+    # Apply changes build/tools/post_process_props.py
+    file_path=./build/tools/post_process_props.py;
+    echo "Bootimage: Apply debug unsecure in ${file_path}";
+    sed -i 's/val = "adb"/val = "mtp,adb"/' ${file_path};
+    sed -i 's/val = val + ",adb"/val = val + ",mtp,adb"/' ${file_path};
+    sed -i 's/"persist.sys.usb.config", "none"/"persist.sys.usb.config", "mtp,adb"/' ${file_path};
 
-  esac;
+    # Apply changes vendor/cm/config/common.mk
+    file_path=./vendor/cm/config/common.mk;
+    echo "Bootimage: Apply debug unsecure in ${file_path}";
+    sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file_path};
+
+    # Apply changes out/target/product/${1}/*/default.prop
+    for file_path in \
+        ./out/target/product/${1}/root/default.prop \
+        ./out/target/product/${1}/recovery/root/default.prop \
+        ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
+        ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop; do
+      if [ -f "${file_path}" ]; then
+        echo "Bootimage: Apply debug unsecure in ${file_path}";
+        sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file_path};
+        sed -i 's/ro.secure=1/ro.secure=0/' ${file_path};
+        sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' ${file_path};
+      fi;
+    done;
+
+  # Restore secure changes
+  else
+
+    # Restore changes build/core/main.mk
+    file_path=./build/core/main.mk;
+    echo "Bootimage: Restoring debug secure in ${file_path}";
+    sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/' ${file_path};
+    sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file_path};
+
+    # Restore changes build/tools/post_process_props.py
+    file_path=./build/tools/post_process_props.py;
+    echo "Bootimage: Restoring debug secure in ${file_path}";
+    sed -i 's/val = "mtp,adb"/val = "adb"/' ${file_path};
+    sed -i 's/val = val + ",mtp,adb"/val = val + ",adb"/' ${file_path};
+    sed -i 's/"persist.sys.usb.config", "mtp,adb"/"persist.sys.usb.config", "none"/' ${file_path};
+
+    # Restore changes vendor/cm/config/common.mk
+    file_path=./vendor/cm/config/common.mk;
+    echo "Bootimage: Restoring debug secure in ${file_path}";
+    sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file_path};
+
+    # Restore changes out/target/product/${1}/*/default.prop
+    for file_path in \
+        ./out/target/product/${1}/root/default.prop \
+        ./out/target/product/${1}/recovery/root/default.prop \
+        ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
+        ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop; do
+      if [ -f "${file_path}" ]; then
+        echo "Bootimage: Restoring debug secure in ${file_path}";
+        sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file_path};
+        sed -i 's/ro.secure=0/ro.secure=1/' ${file_path};
+        sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' ${file_path};
+      fi;
+    done;
+
+  fi;
+
+  # Restore path
+  cd ${cwd}/;
 }
