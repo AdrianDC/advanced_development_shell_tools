@@ -53,7 +53,10 @@ function repotwrp()
   # Make releases
   echo '  [ Making release files ]';
   echo '';
-  local TWRPVersion=$(grep TW_VERSION_STR bootable/recovery/variables.h | sed 's/.*\"\(.*\)\".*/\1/' | cut -c 1-5);
+  local TWRPVersion=$(grep '#define TW_MAIN_VERSION_STR' bootable/recovery/variables.h | sed 's/.*\"\(.*\)\".*/\1/' | cut -c 1-5);
+  if [ -z "${TWRPVersion}" ]; then
+    TWRPVersion=$(grep 'TW_VERSION_STR' bootable/recovery/variables.h | sed 's/.*\"\(.*\)\".*/\1/' | cut -c 1-5);
+  fi;
   local TWRPImg=./out/target/product/${PhoneName}/recovery.img;
   local DateTag=$(date +'%Y%m%d');
   local OutBootImg="twrp-${TWRPVersion}-${DateTag}-boot-${PhoneName}.img";
