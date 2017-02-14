@@ -11,7 +11,7 @@ function androiddevicestarget()
   local request=${1};
   local platform='';
   local partition='';
-  local target_devices="dora kagura suzu huashan hayabusa mint tsubasa";
+  local target_devices="dora kagura kuo suzu huashan hayabusa mint tsubasa";
 
   # Autodetect
   if [ -z "${device}" ]; then
@@ -38,7 +38,7 @@ function androiddevicestarget()
 
   # Platform
   case "${device}" in
-    dora|kagura|suzu)
+    dora|kagura|kugo|suzu)
       platform='/dev/block/bootdevice/by-name';;
     huashan|hayabusa|mint|tsubasa|*)
       platform='/dev/block/platform/msm_sdcc.1/by-name';;
