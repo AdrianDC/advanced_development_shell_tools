@@ -7,8 +7,8 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr},nowipe/outclean/outwipe,bringup/dev/local/priv]';
-  if [ -z "${1}" ]; then
+  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv]';
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
     echo '';
@@ -25,14 +25,15 @@ function romautorelease()
 
   # ROM variables
   local rom_device="${1}";
-  local rom_params="${2}";
+  local rom_name="${2}";
+  local rom_params="${3}";
   local rom_phone="${rom_device^}";
   local rom_target=$(codenametotarget "${rom_device}");
   local rom_tag;
   local rom_upload;
 
   # AOSP 7.1
-  if [[ "${rom_params}" =~ 'aosp' ]]; then
+  if [[ "${rom_name}" == 'aosp' ]]; then
     rom_tag='AOSP71';
     rom_upload="${rom_phone}/AOSP-7.1";
 
@@ -42,23 +43,23 @@ function romautorelease()
     fi;
 
   # LineageOS 14.1
-  elif [[ "${rom_params}" =~ 'lineage' ]]; then
+  elif [[ "${rom_name}" == 'lineage' ]]; then
     rom_tag='LINEAGE141';
     rom_target="${rom_device}";
     rom_upload="${rom_phone}/LineageOS-14.x";
 
   # AOSP-OMS 7.x
-  elif [[ "${rom_params}" =~ 'oms' ]]; then
+  elif [[ "${rom_name}" == 'oms' ]]; then
     rom_tag='OMS71';
     rom_upload="${rom_phone}/AOSP-OMS-7.x";
 
   # LegacyXperia 14.1
-  elif [[ "${rom_params}" =~ 'lx' ]]; then
+  elif [[ "${rom_name}" == 'lx' ]]; then
     rom_tag='LX141';
     rom_upload="LegacyXperia/${rom_device}/LineageOS-14.x";
 
   # ResurrectionRemix Nougat
-  elif [[ "${rom_params}" =~ 'rr' ]]; then
+  elif [[ "${rom_name}" == 'rr' ]]; then
     rom_tag='RR71';
     rom_upload="${rom_phone}/ResurrectionRemix-N";
 
@@ -311,7 +312,7 @@ function lxautorelease()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} lx,outclean;
+    romautorelease ${device} lx outclean;
 
   done;
 }
@@ -341,7 +342,7 @@ function rrautorelease()
     fi;
 
     # ROM build and release
-    romautorelease ${device} rr,outclean;
+    romautorelease ${device} rr outclean;
 
   done;
 }
