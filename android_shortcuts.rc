@@ -171,6 +171,8 @@ function cddesk()       { cd "$(xdg-user-dir DESKTOP)"; }
 function cddev()        { cd $(getand)/Development/${1}; }
 function cddevaosp()    { cd $(getand)/Development/aosp_*${1}; }
 function cddevlineage() { cd $(getand)/Development/lineage_*${1}; }
+function cddevmrom()    { cd $(getand)/Development/multirom_development_sony; }
+function cddevtwrp()    { cd $(getand)/Development/twrp_development_sony; }
 function cdref()        { cd $(getand)/References/${1}; }
 function cdrefapk()     { cd $(getand)/References/apk; }
 function impaospcaf()   { rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}; }
