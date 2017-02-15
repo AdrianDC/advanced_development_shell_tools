@@ -1,0 +1,17 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === LineageOS 8996 Patcher ===
+function lineage8996patcher()
+{
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'lineage_development_sony8996' 'lineageos_sony8996' '
+    device/sony/common
+    external/libselinux
+    frameworks/av
+    hardware/qcom/audio-caf/msm8996
+    system/core
+    ' "${1}";
+}
