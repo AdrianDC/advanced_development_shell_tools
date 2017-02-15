@@ -113,6 +113,26 @@ function reporefupdate()
     fi;
   done;
 
+  # Detect and update MultiROM references
+  cddevmrom;
+  if ! git diff-index --quiet HEAD --; then
+    echo '';
+    echo " Updating MultiROM ${project} references...";
+    git add -Ap;
+    git commit --amend;
+    gitpu origin local_manifests;
+  fi;
+
+  # Detect and update TWRP references
+  cddevtwrp;
+  if ! git diff-index --quiet HEAD --; then
+    echo '';
+    echo " Updating TWRP ${project} references...";
+    git add -Ap;
+    git commit --amend;
+    gitpu origin local_manifests;
+  fi;
+
   # Path restore
   cd ${current_dir};
 }
@@ -144,6 +164,24 @@ function reporefsync()
     git reset FETCH_HEAD;
     git stash -u;
   done;
+
+  # Fetch and update MultiROM references
+  cddevmrom;
+  echo '';
+  echo " Syncing MultiROM ${project} references...";
+  git fetch origin local_manifests;
+  git diff FETCH_HEAD;
+  git reset FETCH_HEAD;
+  git stash -u;
+
+  # Fetch and update TWRP references
+  cddevtwrp;
+  echo '';
+  echo " Syncing TWRP ${project} references...";
+  git fetch origin local_manifests;
+  git diff FETCH_HEAD;
+  git reset FETCH_HEAD;
+  git stash -u;
 
   # Path restore
   cd ${current_dir};
