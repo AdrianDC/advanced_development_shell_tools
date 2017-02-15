@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr},nowipe/outcl,bringup/dev/local/priv/wipeout]';
+  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr},nowipe/outclean/outwipe,bringup/dev/local/priv]';
   if [ -z "${1}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
@@ -90,7 +90,7 @@ function romautorelease()
     echo ' Cleaning skipped...';
 
   # Delete the product outputs
-  elif [[ "${rom_params}" =~ 'outcl' ]]; then
+  elif [[ "${rom_params}" =~ 'outclean' ]]; then
     rm -rfv './out/target/product';
 
   # Delete the devices relevant results
@@ -173,11 +173,11 @@ function romautorelease()
   fi;
 
   # Wipe product output if requested
-  if [[ "${rom_params}" =~ 'wipeout' ]]; then
+  if [[ "${rom_params}" =~ 'outwipe' ]]; then
     outdevcl "${rom_device}";
 
   # Delete the product outputs
-  elif [[ "${rom_params}" =~ 'outcl' ]]; then
+  elif [[ "${rom_params}" =~ 'outclean' ]]; then
     rm -rfv './out/target/product';
   fi;
 
@@ -311,7 +311,7 @@ function lxautorelease()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} lx,outcl;
+    romautorelease ${device} lx,outclean;
 
   done;
 }
@@ -341,7 +341,7 @@ function rrautorelease()
     fi;
 
     # ROM build and release
-    romautorelease ${device} rr,outcl;
+    romautorelease ${device} rr,outclean;
 
   done;
 }
