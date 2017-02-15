@@ -141,6 +141,8 @@ function gitraos()
     gitremoteset origin https://github.com/sonyxperiadev/kernel-copyleft.git;
   elif [[ "$(pwd)/" =~ 'kernel/sony/msm/' ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/kernel.git;
+  elif [[ "$(pwd)/" =~ 'manifests' ]]; then
+    gitremoteset origin https://github.com/sonyxperiadev/local_manifests.git;
   elif [[ "$(pwd)/" =~ 'vendor/qcom/prebuilt/' ]]; then
     gitremoteset origin https://github.com/SuperBenevolent/aosp-vendor-qcom-prebuilt;
   elif [[ "$(pwd)/" =~ 'vendor/sony/' ]]; then
