@@ -66,6 +66,7 @@ function gitbranchpusher()
   command="git push -f backup HEAD:refs/heads/${project_branch}";
   echo " ${command}";
   printf '  > Proceed with project push [y/N] ? ';
+  notify-send "gitbranchpusher: Push ${project_dir} ?";
   if [ -z "${param_send}" ]; then
     read -t 20 key;
   else
@@ -437,6 +438,7 @@ function androidprojectrebaser()
           push_command="git push -f ${git_username} HEAD:refs/heads/${push_branch}";
           echo '';
           printf "  > ${push_command} [y/N] ? ";
+          notify-send "androidprojectrebaser: Push ${path} ?";
           read -t 20 key;
 
           # Push the tree
