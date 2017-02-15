@@ -33,27 +33,30 @@ function gitcpup()
     return;
   fi;
 
-  # Inputs
-  for tmpurl in ${@}; do
+  # GitHub patch
+  if [[ "${tmpurl}" =~ 'github.com' ]] && [[ ! "${tmpurl}" =~ '.patch' ]]; then
+    tmpurl="${tmpurl}.patch";
+  fi;
 
-    # GitHub patch
-    if [[ "${tmpurl}" =~ 'github.com' ]] && [[ ! "${tmpurl}" =~ '.patch' ]]; then
-      tmpurl="${tmpurl}.patch";
-    fi;
+  # Download patch
+  rm -rf .git/rebase-apply;
+  curl "${tmpurl}" > ${tmpfile} 2> /dev/null;
 
-    # Cherry-pick
-    rm -rf .git/rebase-apply;
-    curl "${tmpurl}" > ${tmpfile} 2> /dev/null;
-    git am -3 ${tmpfile};
-    if [ ${?} -ne 0 ]; then
-      echo '';
-      echo " Failed on ${tmpurl}";
-      echo '';
-      return;
-    fi;
-    git log --max-count=1 --pretty=oneline;
+  # Files renaming
+  if [ ! -z "${2}" ] && [ ! -z "${3}" ]; then
+    sed -i "s/${2}/${3}/g" "${tmpfile}";
+  fi;
+
+  # Cherry-pick
+  git am -3 ${tmpfile};
+  if [ ${?} -ne 0 ]; then
     echo '';
-  done;
+    echo " Failed on ${tmpurl}";
+    echo '';
+    return;
+  fi;
+  git log --max-count=1 --pretty=oneline;
+  echo '';
 
   # End of process
   rm -f ${tmpfile};
