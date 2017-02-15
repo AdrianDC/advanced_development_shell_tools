@@ -120,7 +120,7 @@ function bashea()
   bashup;
 }
 
-# === Bashs Functions Editor ===
+# === Bashs Functions Editor (gedit) ===
 function bashe()
 {
   # Variables
@@ -142,6 +142,31 @@ function bashe()
   # Open listed files
   if [ ! -z "${files}" ]; then
     gedit ${files};
+  fi;
+}
+
+# === Bashs Functions Editor (kate) ===
+function bashek()
+{
+  # Variables
+  local files='';
+
+  # Study all script files
+  for bash_source in ${bash_android_sources}; do
+    for word in ${@}; do
+      grep -aiq "${word}" "${bash_source}";
+
+      # List found files
+      if [ ${?} -eq 0 ]; then
+        files="${files} ${bash_source}";
+        continue;
+      fi;
+    done;
+  done;
+
+  # Open listed files
+  if [ ! -z "${files}" ]; then
+    kate ${files};
   fi;
 }
 
