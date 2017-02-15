@@ -152,7 +152,7 @@ function adbpf()
         filetarget=$(printf "${filepathtest}" | sed "s/.*proprietary\(.*\)/\/system\1/g");
         filepathtest=${filetarget};
       fi;
-      if [[ "${filepathtest}" =~ 'vendor' ]]; then
+      if [[ "${filepathtest}" =~ 'vendor/' ]]; then
         filetarget=$(printf "${filepathtest}" | sed "s/.*vendor\(.*\)/\/system\/vendor\1/g");
         filepathtest=${filetarget};
       fi;
