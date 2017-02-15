@@ -35,7 +35,7 @@ function romautorelease()
   # AOSP 7.1
   if [[ "${rom_name}" == 'aosp' ]]; then
     rom_tag='AOSP71';
-    rom_upload="${rom_phone}/AOSP-7.1";
+    rom_upload="${rom_phone}/AOSP-7.x";
 
     # Handle Sony AOSP kernel build
     if [ ! "${rom_device}" = "${rom_target}" ]; then
