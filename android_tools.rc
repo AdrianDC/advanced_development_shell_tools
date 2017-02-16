@@ -193,3 +193,19 @@ function haste()
   rm ${tmp};
 }
 
+# === Overlay Compare ===
+function overlaycompare()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo " Usage : overlaycompare <overlay_file_path>";
+    return;
+  fi;
+
+  # Variables
+  overlay_path="${1}";
+  source_path="../../../${overlay_path/overlay\//}";
+
+  # Launch meld on both paths
+  meld "${overlay_path}" "${source_path}";
+}
