@@ -3,6 +3,11 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_remotes.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_projects.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_lineageos_sony8996.rc)
+
 # === LineageOS 8996 Patcher ===
 function lineage8996patcher()
 {
