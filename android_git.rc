@@ -25,10 +25,11 @@ function gitcpup()
 {
   # Variables
   local tmpfile=$(mktemp);
+  local tmpurl="${1}";
   echo '';
 
   # Finish previous one
-  if [ -z "${1}" ]; then
+  if [ -z "${tmpurl}" ]; then
     git am --continue;
     return;
   fi;
