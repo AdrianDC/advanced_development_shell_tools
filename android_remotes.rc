@@ -115,7 +115,9 @@ function gitremoteverify()
 }
 
 # === Git Remotes Helpers ===
-function gitraa()   { local git_username=$(githubusername); gitremoteadaptset ${git_username} ${git_username} ''; }
+function gitraa()   { local git_username=$(githubusername 2>/dev/null);
+                      git_username=${git_username:-AdrianDC};
+                      gitremoteadaptset ${git_username} ${git_username} ''; }
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
 function gitraoo()  { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
