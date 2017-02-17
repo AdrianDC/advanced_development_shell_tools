@@ -84,6 +84,12 @@ function gitbranchpusher()
   echo '';
 }
 
+# === Git Branch Pusher Shortcut ===
+function gitbp()
+{
+  gitbranchpusher y;
+}
+
 # === Git Fetch Backup Branch ===
 function gitfbranch()
 {
