@@ -449,9 +449,9 @@ function androidprojectrebaser()
 
           # Push the tree
           echo '';
-          if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
+          if [[ "${key}" == 'y' ]] || [[ "${key}" == 'Y' ]]; then
             ${push_command};
-          else
+          elif [[ ! "${key}" == 'n' ]] && [[ ! "${key}" == 'N' ]]; then
             echo '  < Upload ignored after timeout... Consider uploading later';
             echo '';
           fi;
