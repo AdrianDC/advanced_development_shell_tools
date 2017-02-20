@@ -37,6 +37,9 @@ function lineagelxpatcher()
 
   # LegacyXperia patches
   ./vendor/extra/updates.sh;
+
+  # Enable SU inclusion
+  export WITH_SU=true;
 }
 
 # === LegacyXperia Repopick ===
