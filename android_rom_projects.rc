@@ -326,7 +326,7 @@ function androidprojectrebaser()
   # Variables
   local git_revs_count;
   local git_revs_count_local;
-  local git_username=$(githubusername);
+  local git_username=$(githubusername 2>/dev/null);
   local path;
   local path_branch;
   local path_name;
@@ -338,6 +338,9 @@ function androidprojectrebaser()
   local push_branch;
   local upstream_branch;
   local upstream_project;
+
+  # Username fallback
+  git_username=${git_username:-AdrianDC};
 
   # Projects loader
   for project in ${project_paths}; do
