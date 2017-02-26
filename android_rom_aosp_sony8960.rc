@@ -45,5 +45,6 @@ function aosp8960patcher()
     packages/providers/MediaProvider
     system/core
     system/sepolicy
+    system/vold
     ' "${1}";
 }

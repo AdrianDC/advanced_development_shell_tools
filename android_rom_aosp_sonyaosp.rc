@@ -17,6 +17,7 @@ function aospsonypatcher()
     external/toybox
     packages/apps/Music
     system/core
+    system/vold
     ' "${1}";
 }
 
