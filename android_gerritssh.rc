@@ -284,24 +284,28 @@ function gerritssh()
         ;;
     esac;
 
-    # Read remote current HEAD
-    git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2>/dev/null;
-    local remotecurrenthead=$(git rev-parse FETCH_HEAD);
+    # Study rebasing if needed
+    if [[ ! "${cmd_rebase}" == 'n' ]]; then
 
-    # Commit Rebase
-    if [[ ! "${remotecurrenthead}" == "${patchparent}" ]]; then
-      printf "      \e[1;31m> Rebase on HEAD  \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
-      if [ -z "${cmd_rebase}" ]; then
-        read key;
-      else
-        echo "${cmd_rebase}";
-        key=${cmd_rebase};
-      fi;
-      if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-        ${gerritssh} review --rebase --project ${GerritReview}/${projectname} ${i},${patchset};
-        patchset=$(${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" \
-                 | egrep '^\    number' \
-                 | cut -d' ' -f6-);
+      # Read remote current HEAD
+      git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2>/dev/null;
+      local remotecurrenthead=$(git rev-parse FETCH_HEAD);
+
+      # Commit Rebase
+      if [[ ! "${remotecurrenthead}" == "${patchparent}" ]]; then
+        printf "      \e[1;31m> Rebase on HEAD  \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+        if [ -z "${cmd_rebase}" ]; then
+          read key;
+        else
+          echo "${cmd_rebase}";
+          key=${cmd_rebase};
+        fi;
+        if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
+          ${gerritssh} review --rebase --project ${GerritReview}/${projectname} ${i},${patchset};
+          patchset=$(${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" \
+                   | egrep '^\    number' \
+                   | cut -d' ' -f6-);
+        fi;
       fi;
     fi;
 
