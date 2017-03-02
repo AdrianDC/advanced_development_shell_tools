@@ -259,6 +259,7 @@ alias gitch='git checkout';
 alias gitcp='git cherry-pick';
 alias gitcpc='git reset; git cherry-pick --continue';
 function gitcpf() { git fetch ${1} ${2}; git cherry-pick FETCH_HEAD; }
+function gitfcp() { git fetch ${1}; git cherry-pick FETCH_HEAD~${2:-0}; }
 function gitcpr() { git show ${1} --no-color | sed "s/${2}/${3}/g" | patch; }
 
 # === Git Commits Helpers ===
