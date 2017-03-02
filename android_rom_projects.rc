@@ -174,6 +174,13 @@ function androidprojectpatcher()
   export GitFullName="Full Name";
   export GitUserName="Username";
 
+  # Automated key shortcut
+  local key_automated='';
+  if [[ "${project_specific}" == 'y' ]] || [[ "${project_specific}" == 'n' ]]; then
+    key_automated="${project_specific}";
+    project_specific='';
+  fi;
+
   # Create  ~/.bash_android.github.rc with the exports to override the credentials
   if [ -f ~/.bash_android.github.rc ]; then
     source ~/.bash_android.github.rc;
@@ -240,7 +247,11 @@ function androidprojectpatcher()
       if [ ${git_revs_count_local} -ne 0 ]; then
         echo '';
         printf '  > Recreate onto newest changes [Y/n] ? ';
-        read -t 20 key;
+        if [ -z "${project_specific}" ]; then
+          read -t 20 key;
+        else
+          key="${project_specific}";
+        fi;
 
         # Rebase the tree
         if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
@@ -312,6 +323,13 @@ function androidprojectrebaser()
   local project_branch="${2}";
   local project_paths="${3}";
   local project_specific="${4}";
+
+  # Automated key shortcut
+  local key_automated='';
+  if [[ "${project_specific}" == 'y' ]] || [[ "${project_specific}" == 'n' ]]; then
+    key_automated="${project_specific}";
+    project_specific='';
+  fi;
 
   # Repo root
   if [ -z "$(type -t croot)" ]; then
@@ -437,7 +455,11 @@ function androidprojectrebaser()
       if [ ${git_revs_count_remote} -ne 0 ]; then
         echo '';
         printf '  > Rebase onto newest changes [Y/n] ? ';
-        read -t 20 key;
+        if [ -z "${project_specific}" ]; then
+          read -t 20 key;
+        else
+          key="${project_specific}";
+        fi;
 
         # Rebase the tree
         if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
@@ -448,7 +470,11 @@ function androidprojectrebaser()
           echo '';
           printf "  > ${push_command} [y/N] ? ";
           notify-send "androidprojectrebaser: Push ${path} ?";
-          read -t 20 key;
+          if [ -z "${project_specific}" ]; then
+            read -t 20 key;
+          else
+            key="${project_specific}";
+          fi;
 
           # Push the tree
           echo '';
