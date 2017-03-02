@@ -156,7 +156,7 @@ function romautorelease()
   fi;
 
   # Upload the result and notify
-  pushbrom "${rom_target}" "${rom_tag}";
+  pushbrom "${rom_device}" "${rom_tag}";
   if [[ ! "${rom_params}" =~ 'local' ]] && [[ ! "${rom_params}" =~ 'bringup' ]]; then
     if [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
       gnome-terminal -x bash -c "\
