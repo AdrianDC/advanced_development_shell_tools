@@ -123,7 +123,6 @@ function gitraoo()  { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
 function gitraoms() { gitremoteadaptset 'oms' 'AOSP-RRO' 'android_'; }
 function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin' ''; }
-function gitrax()   { gitremoteadaptset 'xperia' 'XperiaMultiROM' ''; }
 function gitral()   { gitremoteset lineage "${1}"; }
 
 # === Git Remotes LineageOS Helper ===
@@ -133,6 +132,16 @@ function gitrao()
     gitremoteadaptset 'origin' 'TheMuppets' '' 'true';
   else
     gitremoteadaptset 'origin' 'LineageOS' '' 'true';
+  fi;
+}
+
+# === Git Remotes XperiaMultiROM Helper ===
+function gitrax()
+{
+  if [[ "$(pwd)/" =~ 'system/extras/multirom' ]]; then
+    gitremoteset 'xperia' https://github.com/XperiaMultiROM/multirom.git;
+  else
+    gitremoteadaptset 'xperia' 'XperiaMultiROM' '';
   fi;
 }
 
