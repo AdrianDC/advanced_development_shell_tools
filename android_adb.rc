@@ -179,7 +179,9 @@ function adbst()
   fi;
 
   # Detect strace requirement
-  if [ $(adb shell 'ls -q /system/bin/strace 1> /dev/null 2>&1; echo ${?}') -ne 0 ]; then
+  local strace_exists=$(adb shell 'test -e /system/bin/strace; printf ${?}');
+  if [ ${strace_exists} -ne 0 ]; then
+    adb shell mkdir -p /system/bin/;
     if [ ! -z "$(adb shell cat /proc/cpuinfo | grep '64')" ]; then
       adb push "${bash_files_strace_64}" /system/bin/strace;
     else
