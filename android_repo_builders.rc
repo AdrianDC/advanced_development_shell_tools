@@ -250,6 +250,7 @@ function repomrom()
   # Make releases
   echo '  [ Making release files ]';
   echo '';
+  local TWRPImg=./out/target/product/${PhoneName}/recovery.img;
   local DateTag=$(date +'%Y%m%d');
   local TargetDir="$(xdg-user-dir DESKTOP)";
   local BuildDir=./out/target/product/${PhoneName};
@@ -374,7 +375,7 @@ function repomrom()
     echo '';
     adb root;
     timeout 5 adb 'wait-for-device';
-    adb push "${BuildDir}/recovery.img" /tmp/twrp.img;
+    adb push "${TWRPImg}" /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
       adb shell /system/bin/dd if=/tmp/twrp.img of=${FOTAPartition};
     else
