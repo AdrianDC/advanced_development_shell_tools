@@ -158,67 +158,6 @@ function adbreadevents()
    | awk -Wposix '{ if ($7) printf(" Key %4d - State %4d\n", "0x" $7, "0x" $8) }';
 }
 
-# === ADB Strace Helper ===
-function adbst()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo " Usage: adbst process_name [bool_get_root] [parameters]";
-    echo '';
-    return;
-  fi;
-
-  # Get adb root access
-  if [ -z "${2}" ]; then
-    timeout 5 adb 'wait-for-device';
-    timeout 5 adb root;
-    timeout 5 adb 'wait-for-device';
-    timeout 5 adb remount;
-    timeout 5 adb 'wait-for-device';
-  fi;
-
-  # Detect strace requirement
-  local strace_exists=$(adb shell 'test -e /system/bin/strace; printf ${?}');
-  if [ ${strace_exists} -ne 0 ]; then
-    adb shell mkdir -p /system/bin/;
-    if [ ! -z "$(adb shell cat /proc/cpuinfo | grep '64')" ]; then
-      adb push "${bash_files_strace_64}" /system/bin/strace;
-    else
-      adb push "${bash_files_strace_32}" /system/bin/strace;
-    fi;
-    adb shell chmod 777 /system/bin/strace;
-    echo '';
-  fi;
-
-  # Get process identifier
-  local pid=$(adb shell ps -A | grep "${1}" | tail -n 1 | awk '{ print $2 }');
-  if [ ! -z "${pid}" ]; then
-    adb shell ps -A | grep "${1}";
-  else
-    pid=$(adb shell ps | grep "${1}" | tail -n 1 | awk '{ print $2 }');
-    adb shell ps | grep "${1}";
-  fi;
-  echo '';
-
-  # Abort if no process found
-  if [ -z "${pid}" ]; then
-    echo " Error: *${1}* process could not be found...";
-    echo '';
-    return;
-  fi;
-
-  # Strace the process
-  adb shell /system/bin/strace ${3} -s 4096 -p ${pid};
-}
-
-# === ADB Strace Followed Helper ===
-function adbstf()
-{
-  # Use ADB Strace helper
-  adbst "${1}" "${2}" '-f';
-}
-
 function adbkp()
 {
   adb 'wait-for-device'; adb root; adb 'wait-for-device';
