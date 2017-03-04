@@ -40,6 +40,7 @@ alias gitpa6='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername
 alias gitpaa6='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) android-6.0';
 alias gitpala='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) LA.UM.5.5_rb1.10';
 alias gitpal='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests'
+alias gitpaman='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests'
 alias gitpam='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) multirom';
 alias gitpama='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master';
 alias gitpamm='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) marshmallow';
