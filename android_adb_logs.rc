@@ -66,6 +66,21 @@ function adbcl()
       | tee "${filename}.cut.log";
 }
 
+# === ADB Strace Cleaner ===
+function adbstcl()
+{
+  # Clean input file
+  filename=${1:-adb.log};
+  cat "${filename}" \
+      | grep -v chatty \
+      | sed -E "s/[0-9]{8}/00000000/g" \
+      | sed -E "s/\[[0-9]*\]/[...]/g" \
+      | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
+      | sed -E "s/0x[0-9a-f]{6,8}/0x......./g" \
+      | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
+      | tee "${filename}.cut.log";
+}
+
 # === ADB Loggers ===
 alias adblr='adbl radio';
 alias adblb='while [ 1 ]; do cls; printf "" >adb.log; adb logcat -v audit2allow *:V | tee -a adb.log;
