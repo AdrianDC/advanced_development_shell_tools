@@ -164,7 +164,7 @@ function adbst()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo " Usage: adbst process_name [bool_get_root]";
+    echo " Usage: adbst process_name [bool_get_root] [parameters]";
     echo '';
     return;
   fi;
@@ -186,6 +186,7 @@ function adbst()
       adb push "${bash_files_strace_32}" /system/bin/strace;
     fi;
     adb shell chmod 777 /system/bin/strace;
+    echo '';
   fi;
 
   # Get process identifier
@@ -196,68 +197,24 @@ function adbst()
     pid=$(adb shell ps | grep "${1}" | tail -n 1 | awk '{ print $2 }');
     adb shell ps | grep "${1}";
   fi;
+  echo '';
 
   # Abort if no process found
   if [ -z "${pid}" ]; then
-    echo '';
     echo " Error: *${1}* process could not be found...";
     echo '';
     return;
   fi;
 
   # Strace the process
-  adb shell /system/bin/strace -s 4096 -p ${pid};
+  adb shell /system/bin/strace ${3} -s 4096 -p ${pid};
 }
 
 # === ADB Strace Followed Helper ===
 function adbstf()
 {
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo " Usage: adbstf process_name [bool_get_root]";
-    echo '';
-    return;
-  fi;
-
-  # Get adb root access
-  if [ -z "${2}" ]; then
-    timeout 5 adb 'wait-for-device';
-    timeout 5 adb root;
-    timeout 5 adb 'wait-for-device';
-    timeout 5 adb remount;
-    timeout 5 adb 'wait-for-device';
-  fi;
-
-  # Detect strace requirement
-  if [ $(adb shell 'ls -q /system/bin/strace 1> /dev/null 2>&1; echo ${?}') -ne 0 ]; then
-    if [ ! -z "$(adb shell cat /proc/cpuinfo | grep '64')" ]; then
-      adb push "${bash_files_strace_64}" /system/bin/strace;
-    else
-      adb push "${bash_files_strace_32}" /system/bin/strace;
-    fi;
-    adb shell chmod 777 /system/bin/strace;
-  fi;
-
-  # Get process identifier
-  local pid=$(adb shell ps -A | grep "${1}" | tail -n 1 | awk '{ print $2 }');
-  if [ ! -z "${pid}" ]; then
-    adb shell ps -A | grep "${1}";
-  else
-    pid=$(adb shell ps | grep "${1}" | tail -n 1 | awk '{ print $2 }');
-    adb shell ps | grep "${1}";
-  fi;
-
-  # Abort if no process found
-  if [ -z "${pid}" ]; then
-    echo '';
-    echo " Error: *${1}* process could not be found...";
-    echo '';
-    return;
-  fi;
-
-  # Strace the process
-  adb shell /system/bin/strace -f -s 4096 -p ${pid};
+  # Use ADB Strace helper
+  adbst "${1}" "${2}" '-f';
 }
 
 function adbkp()
