@@ -2,6 +2,7 @@
 TimeStart=$(date +%s);
 
 # BasketBuild Upload Credentials
+export UploadFTP="basketbuild.com";
 export UploadServer='s.basketbuild.com/webupload';
 export UploadUserName='Username.s';
 export UploadPassword='';
@@ -40,28 +41,47 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
   echo "   File '$(basename ${SendFile})' uploading...";
   echo '';
 
-  # Login to BasketBuild
-  curl -L -# --dump-header .headers \
-          -F "ftp_user=${UploadUserName}" \
-          -F "ftp_pass=${UploadPassword}" \
-          -F "openFolder=~${UploadFolder}" \
-          -F "ip_check=1" \
-          -F "login=1" \
-          -F "login_save=1" \
-          -F "submit=Login" \
-          "https://${UploadServer}/" > /dev/null;
+  # Upload to BasketBuild through FTP
+  ncftpput -R -v -t 10 \
+           -u "${UploadUserName}" \
+           -p "${UploadPassword}" \
+           ${UploadFTP} \
+           ${UploadFolder} \
+           ${SendFile};
 
-  # Upload to BasketBuild
-  curl -X POST -L -# --progress-bar -b .headers \
-          -H "Cache-Control: no-cache" \
-          -H "X-Filename: ${SendFileName}" \
-          -H "X-Requested-With: XMLHttpRequest" \
-          -H "X-File-Size: ${SendFileSize}" \
-          -H "X-File-Type: ${SendFileType}" \
-          -H "Content-Type: multipart/form-data" \
-          --data-binary @"${SendFile}" \
-          -o .uploadoutputs \
-          "https://${UploadServer}/?ftpAction=upload&filePath=";
+  # Detect failed FTP upload
+  if [ ${?} -ne 0 ]; then
+
+    # Fallback to WebUI upload
+    notify-send "Failed uploading through FTP...";
+    echo '';
+    echo '   Failed uploading through FTP. Falling back to WebUI upload...';
+    echo '';
+
+    # Login to BasketBuild
+    curl -L -# --dump-header .headers \
+            -F "ftp_user=${UploadUserName}" \
+            -F "ftp_pass=${UploadPassword}" \
+            -F "openFolder=~${UploadFolder}" \
+            -F "ip_check=1" \
+            -F "login=1" \
+            -F "login_save=1" \
+            -F "submit=Login" \
+            "https://${UploadServer}/" > /dev/null;
+
+    # Upload to BasketBuild through WebUI
+    curl -X POST -L -# --progress-bar -b .headers \
+            -H "Cache-Control: no-cache" \
+            -H "X-Filename: ${SendFileName}" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -H "X-File-Size: ${SendFileSize}" \
+            -H "X-File-Type: ${SendFileType}" \
+            -H "Content-Type: multipart/form-data" \
+            --data-binary @"${SendFile}" \
+            -o .uploadoutputs \
+            "https://${UploadServer}/?ftpAction=upload&filePath=";
+
+  fi;
 
   # Upload done
   echo '';
