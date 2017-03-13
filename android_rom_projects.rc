@@ -246,11 +246,14 @@ function androidprojectpatcher()
       # Handle unupdated projects
       if [ ${git_revs_count_local} -ne 0 ]; then
         echo '';
-        printf '  > Recreate onto newest changes [Y/n] ? ';
-        if [ -z "${project_specific}" ]; then
+        printf '  > Recreate onto newest changes [Y/a/n] ? ';
+        if [ -z "${key_automated}" ]; then
           read -t 20 key;
+          if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
+            key_automated='y';
+          fi;
         else
-          key="${project_specific}";
+          key="${key_automated}";
         fi;
 
         # Rebase the tree
@@ -283,7 +286,7 @@ function androidprojectpatcher()
           done;
 
           # Automatic push
-          gitbranchpusher;
+          gitbranchpusher "${key_automated}";
 
         # Project is ready, break the loop
         else
@@ -454,11 +457,14 @@ function androidprojectrebaser()
       # Handle unupdated projects
       if [ ${git_revs_count_remote} -ne 0 ]; then
         echo '';
-        printf '  > Rebase onto newest changes [Y/n] ? ';
-        if [ -z "${project_specific}" ]; then
+        printf '  > Rebase onto newest changes [Y/a/n] ? ';
+        if [ -z "${key_automated}" ]; then
           read -t 20 key;
+          if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
+            key_automated='y';
+          fi;
         else
-          key="${project_specific}";
+          key="${key_automated}";
         fi;
 
         # Rebase the tree
@@ -468,12 +474,15 @@ function androidprojectrebaser()
           git rebase FETCH_HEAD;
           push_command="git push -f ${git_username} HEAD:refs/heads/${push_branch}";
           echo '';
-          printf "  > ${push_command} [y/N] ? ";
+          printf "  > ${push_command} [y/a/N] ? ";
           notify-send "androidprojectrebaser: Push ${path} ?";
-          if [ -z "${project_specific}" ]; then
+          if [ -z "${key_automated}" ]; then
             read -t 20 key;
+            if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
+              key_automated='y';
+            fi;
           else
-            key="${project_specific}";
+            key="${key_automated}";
           fi;
 
           # Push the tree
