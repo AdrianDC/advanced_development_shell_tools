@@ -2,11 +2,8 @@
 TimeStart=$(date +%s);
 
 # BasketBuild Upload Credentials
-export UploadFTP="basketbuild.com";
-export UploadServer='s.basketbuild.com/webupload';
 export UploadUserName='Username.s';
 export UploadPassword='';
-export UploadFolder='Path/To/Folder';
 
 # Create  ~/.bash_android.basketbuild.**name**.rc with the exports to override the credentials
 RemoteVariant="${3}";
@@ -45,7 +42,7 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
   ncftpput -R -v -t 10 \
            -u "${UploadUserName}" \
            -p "${UploadPassword}" \
-           ${UploadFTP} \
+           'basketbuild.com' \
            ${UploadFolder} \
            ${SendFile};
 
@@ -67,7 +64,7 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
             -F "login=1" \
             -F "login_save=1" \
             -F "submit=Login" \
-            "https://${UploadServer}/" > /dev/null;
+            'https://s.basketbuild.com/webupload/' > /dev/null;
 
     # Upload to BasketBuild through WebUI
     curl -X POST -L -# --progress-bar -b .headers \
@@ -79,7 +76,7 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
             -H "Content-Type: multipart/form-data" \
             --data-binary @"${SendFile}" \
             -o .uploadoutputs \
-            "https://${UploadServer}/?ftpAction=upload&filePath=";
+            'https://s.basketbuild.com/webupload/?ftpAction=upload&filePath=';
 
   fi;
 
