@@ -297,7 +297,7 @@ function gitcidupstream()
   fi;
 
   # Fetch commit-msg file
-  scp -p -P 29418 ${GerritUsername}@review.lineageos.org:hooks/commit-msg .git/hooks/;
+  curl -Lo .git/hooks/commit-msg http://review.lineageos.org/tools/hooks/commit-msg;
   cp -fv '.git/hooks/commit-msg' "${bash_android_dir}/android_tools/commit-msg";
   chmod u+x ./.git/hooks/commit-msg;
 
