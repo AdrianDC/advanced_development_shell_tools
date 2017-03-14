@@ -26,7 +26,7 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
   # File variables
   SendFileName=$(basename "${SendFile}");
   SendFileExt=${SendFileName##*.};
-  SendFileSize=$(stat -c "%s" "${SendFile}");
+  SendFileSize=$(stat -c '%s' "${SendFile}");
   SendFileType='';
 
   # Uploading a zip
@@ -39,7 +39,9 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
   echo '';
 
   # Upload to BasketBuild through FTP
-  ncftpput -R -v -t 10 \
+  ncftpput -R \
+           -v \
+           -t 10 \
            -u "${UploadUserName}" \
            -p "${UploadPassword}" \
            'basketbuild.com' \
@@ -50,33 +52,38 @@ if [ ! -z "${SendFile}" ] && [ -f "${SendFile}" ] && [ ! -z "${UploadPassword}" 
   if [ ${?} -ne 0 ]; then
 
     # Fallback to WebUI upload
-    notify-send "Failed uploading through FTP...";
+    notify-send 'Failed uploading through FTP...';
     echo '';
     echo '   Failed uploading through FTP. Falling back to WebUI upload...';
     echo '';
 
     # Login to BasketBuild
-    curl -L -# --dump-header .headers \
-            -F "ftp_user=${UploadUserName}" \
-            -F "ftp_pass=${UploadPassword}" \
-            -F "openFolder=~${UploadFolder}" \
-            -F "ip_check=1" \
-            -F "login=1" \
-            -F "login_save=1" \
-            -F "submit=Login" \
-            'https://s.basketbuild.com/webupload/' > /dev/null;
+    curl -L \
+         -# \
+         --dump-header .headers \
+         -F "ftp_user=${UploadUserName}" \
+         -F "ftp_pass=${UploadPassword}" \
+         -F "openFolder=~${UploadFolder}" \
+         -F 'ip_check=1' \
+         -F 'login=1' \
+         -F 'login_save=1' \
+         -F 'submit=Login' \
+         'https://s.basketbuild.com/webupload/' > /dev/null;
 
     # Upload to BasketBuild through WebUI
-    curl -X POST -L -# --progress-bar -b .headers \
-            -H "Cache-Control: no-cache" \
-            -H "X-Filename: ${SendFileName}" \
-            -H "X-Requested-With: XMLHttpRequest" \
-            -H "X-File-Size: ${SendFileSize}" \
-            -H "X-File-Type: ${SendFileType}" \
-            -H "Content-Type: multipart/form-data" \
-            --data-binary @"${SendFile}" \
-            -o .uploadoutputs \
-            'https://s.basketbuild.com/webupload/?ftpAction=upload&filePath=';
+    curl -X POST \
+         -L \
+         -# --progress-bar \
+         -b .headers \
+         -H 'Cache-Control: no-cache' \
+         -H "X-Filename: ${SendFileName}" \
+         -H 'X-Requested-With: XMLHttpRequest' \
+         -H "X-File-Size: ${SendFileSize}" \
+         -H "X-File-Type: ${SendFileType}" \
+         -H 'Content-Type: multipart/form-data' \
+         --data-binary @"${SendFile}" \
+         -o .uploadoutputs \
+         'https://s.basketbuild.com/webupload/?ftpAction=upload&filePath=';
 
   fi;
 
