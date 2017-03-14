@@ -130,9 +130,9 @@ function reposyrmf()
   local project_path;
   for project_paths in ${@}; do
     project_path=${project_paths%/};
-    rm -rfv ${project_path};
-    rm -rfv .repo/projects/${project_path}.git;
-    rm -rfv .repo/project-objects/${project_path}.git;
+    sudo rm -rfv ${project_path};
+    sudo rm -rfv .repo/projects/${project_path}.git;
+    sudo rm -rfv .repo/project-objects/${project_path}.git;
     reposy ${project_path};
     echo '';
   done;
