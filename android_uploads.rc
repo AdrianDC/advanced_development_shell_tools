@@ -66,18 +66,6 @@ function fastupl()
   echo '';
 }
 
-# === TWRP File Uploader ===
-function twrpbupl()
-{
-  # Variables
-  local device="${1}";
-  local name="${device^}";
-
-  # File uploads to TWRP
-  fileupl twrp-3.0.*-r*-boot-${device}.img "${name}/TWRP-Recovery";
-  fileupl twrp-3.0.*-r*-fota-${device}.zip "${name}/TWRP-Recovery";
-}
-
 # === Make and upload ===
 function mmmupl()
 {

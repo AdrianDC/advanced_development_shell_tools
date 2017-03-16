@@ -137,7 +137,7 @@ function gitcleantags()
   local branch_keep=${1};
 
   # Delete tags
-	git tag | grep -v ${branch_keep} | xargs git tag -d;
+  git tag | grep -v ${branch_keep} | xargs git tag -d;
 }
 
 # === Git One Branch Keeper ===

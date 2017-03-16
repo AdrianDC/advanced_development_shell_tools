@@ -147,20 +147,6 @@ function repoprune()
   echo '';
 }
 
-# === Repo Heads Cleaner ===
-function repoheadscleaner()
-{
-  echo '';
-  repo forall -c 'echo " Project ${REPO_PROJECT} : ${REPO_REMOTE}/${REPO_RREV##*/}";
-                  git show-ref 2>&1 >/dev/null | \
-                    while read line; do
-                     refs_path=$(echo ${line} | sed "s/.*\(refs.*\) does.*/\1/");
-                     echo "  Deleting ${refs_path}...";
-                     rm .git/${refs_path} .git/logs/${refs_path};
-                   done;';
-  echo '';
-}
-
 # === Repo AOSP Syncer ===
 function reposyaosp()
 {
@@ -247,6 +233,3 @@ function repogetbranch()
   # Output result
   echo "${branch}";
 }
-
-# === Repo CCache Cleaner ===
-alias repocleancache='if [ ! -z "${CCACHE_DIR}" ]; then rm -rfv "${CCACHE_DIR}/"*; fi';

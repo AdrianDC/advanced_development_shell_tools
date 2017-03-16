@@ -99,16 +99,6 @@ function tmtab()
   done;
 }
 
-# === Terminal New Tabs Automates ===
-function tms8960()
-{
-  basedir=${ANDROID_DEV_DRIVE}/LineageOS;
-  pathdirs="device/sony/huashan device/sony/mint device/sony/hayabusa device/sony/tsubasa device/sony/blue-common kernel/sony/msm8960t kernel/sony/msm8x60";
-  for pathdir in ${pathdirs}; do
-    newtab "cd ${basedir}/${pathdir}; cls;" "$(basename ${pathdir})";
-  done;
-}
-
 # === Terminal New Tab Device ===
 function td()
 {
@@ -116,15 +106,6 @@ function td()
   newtab "cdd ${1}; cls;" "${1}";
 }
 
-# === Terminal New Tabs Automates ===
-function tmsfusion3()
-{
-  basedir=${ANDROID_DEV_DRIVE}/LineageOS;
-  pathdirs="device/sony/fusion3-common device/sony/yuga device/sony/dogo device/sony/odin device/sony/pollux kernel/sony/apq8064";
-  for pathdir in ${pathdirs}; do
-    newtab "cd ${basedir}/${pathdir}; cls;" '';
-  done;
-}
 
 # === Diff Binaries ===
 function diffbin()
@@ -137,12 +118,6 @@ function diffbin()
   else
     diff -sy <(xxd "${1}") <(xxd "${2}") | less | colordiff | head -n ${3};
   fi;
-}
-
-# === Get Grub Customizer ===
-function getgrubcustomizer()
-{
-  sudo add-apt-repository ppa:danielrichter2007/grub-customizer && sudo apt-get update && sudo apt-get install grub-customizer;
 }
 
 # === Network Speed ===
@@ -260,13 +235,6 @@ function gohibernate()
   sudo swapon -a;
   sudo swapon -s;
   sudo pm-hibernate;
-}
-
-# === FileZilla Fix ===
-function filezillafix()
-{
-  sed -i 's/\(Last local directory">\).*\(<\)/\1\2/' ~/.config/filezilla/filezilla.xml;
-  filezilla;
 }
 
 # === USB MTP Mounts ===
