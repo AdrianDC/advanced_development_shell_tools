@@ -212,6 +212,9 @@ function repomrom()
   if [[ ! "${BuildParams}" =~ 'nosync' ]]; then
     repo sync --current-branch --detach --force-broken --force-sync --no-clone-bundle --no-tags;
 
+    # lz4: Remove the compilation timestamps
+    repopick 22192;
+
     # MutiROM submodules
     cd ./system/extras/multirom/;
     git submodule update --init;
