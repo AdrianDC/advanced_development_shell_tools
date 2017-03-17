@@ -55,3 +55,4 @@ alias gitpp='gitremoteverify project false && gitpu project';
 alias gitppm='gitremoteverify project false && gitpu project master';
 alias gitpx='gitremoteverify xperia gitrax && gitpu xperia';
 alias gitpxm='gitremoteverify xperia gitrax && gitpu xperia master';
+alias gitpmd='gitremoteverify xperia gitramd && gitpu mromdev';

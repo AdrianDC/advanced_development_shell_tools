@@ -145,6 +145,16 @@ function gitrax()
   fi;
 }
 
+# === Git Remotes MultiROM-Dev Helper ===
+function gitramd()
+{
+  if [[ "$(pwd)/" =~ 'system/extras/multirom' ]]; then
+    gitremoteset 'mromdev' https://github.com/multirom-dev/multirom.git;
+  else
+    gitremoteadaptset 'mromdev' 'multirom-dev' '';
+  fi;
+}
+
 # === Git Remotes sonyxperiadev Helper ===
 function gitraos()
 {
