@@ -197,3 +197,7 @@ function cdspker()     { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*
 function cdblueker()   { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8x60/g'); }
 function cdvendsony()  { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/vendor\/sony/g'); }
 function meldblue()    { meld ./${1} ../blue-common/${1}; }
+
+# === MultiROM Shortcuts ===
+function cdmromboot()  { croot; cd ./system/extras/libbootimg/; }
+function cdmromcore()  { croot; cd ./system/extras/multirom/; }
