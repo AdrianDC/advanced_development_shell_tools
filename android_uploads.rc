@@ -62,7 +62,7 @@ function fastupl()
   # FTP direct download link
   echo -e "  \e[1;32mDirect download :\e[0m";
   echo '   source ~/.bash_android.basketbuild.main.rc;';
-  echo "   wget ftp://\${UploadUserName}:\${UploadPassword}@basketbuild.com/.private/$(basename ${1})";
+  echo "   wget http://basketbuild.com/uploads/devs/\${UploadUserName%%.s}/.private/$(basename ${1})";
   echo '';
 }
 
