@@ -3,7 +3,31 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === File Uploader ===
+# === File Uploader BasketBuild ===
+function fileuplbasketbuild()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fileuplbasketbuild <file_path> <target_folder>';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local path="${1}";
+  local target="${2}";
+
+  # File full path
+  if [ -f "${path}" ]; then
+    path=$(readlink -f "${path}");
+  fi;
+
+  # Upload file to target
+  $(getbash)/android_upload_basketbuild.sh "${path}" "${target}";
+}
+
+# === File Uploader Mega.nz ===
 function fileupl()
 {
   # Usage
@@ -24,7 +48,10 @@ function fileupl()
   fi;
 
   # Upload file to target
-  $(getbash)/android_upload_basketbuild.sh "${path}" "${target}";
+  echo '';
+  megarm "/Root/Android/${target}/$(basename ${path})" 2>/dev/null;
+  megaput --path "/Root/Android/${target}" "${path}";
+  echo '';
 }
 
 # === Dev File Uploader ===
@@ -57,7 +84,7 @@ function privupl()
 function fastupl()
 {
   # File upload to .private
-  fileupl "${1}" '.private';
+  fileuplbasketbuild "${1}" '.private';
 
   # FTP direct download link
   echo -e "  \e[1;32mDirect download :\e[0m";
