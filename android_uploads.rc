@@ -41,16 +41,27 @@ function fileupl()
   # Variables
   local path="${1}";
   local target="${2}";
+  local time_start=$(date +%s);
+  local time_span;
 
   # File full path
   if [ -f "${path}" ]; then
     path=$(readlink -f "${path}");
   fi;
 
-  # Upload file to target
+  # Upload header informations
   echo '';
+  echo -e " \e[1;33m[ Uploading to the server - Path '${target}' ]\e[0m";
+  echo '';
+
+  # Upload file to target
   megarm "/Root/Android/${target}/$(basename ${path})" 2>/dev/null;
   megaput --path "/Root/Android/${target}" "${path}";
+
+  # Show upload time
+  echo '';
+  time_span=$(($(date +%s)-${time_start}));
+  echo -e " \e[1;37m[ Upload done in ${time_span} secs ]\e[0m";
   echo '';
 }
 

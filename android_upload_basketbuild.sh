@@ -106,5 +106,5 @@ fi;
 # Upload timing
 TimeDiff=$(($(date +%s)-${TimeStart}));
 echo '';
-echo -e " \e[1;37m[ Done in ${TimeDiff} secs ]\e[0m";
+echo -e " \e[1;37m[ Upload done in ${TimeDiff} secs ]\e[0m";
 echo '';
