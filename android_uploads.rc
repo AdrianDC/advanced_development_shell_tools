@@ -49,6 +49,11 @@ function fileupl()
     path=$(readlink -f "${path}");
   fi;
 
+  # Detect main target inclusion
+  if [[ ! "${target}" =~ '/Root/Android/' ]]; then
+    target="/Root/Android/${target}";
+  fi;
+
   # Upload header informations
   echo '';
   echo -e " \e[1;33m[ Uploading to the server - Path '${target}' ]\e[0m";
@@ -56,7 +61,7 @@ function fileupl()
 
   # Upload file to target
   megarm "/Root/Android/${target}/$(basename ${path})" 2>/dev/null;
-  megaput --path "/Root/Android/${target}" "${path}";
+  megaput --path "${target}" "${path}";
 
   # Show upload time
   echo '';
