@@ -84,6 +84,8 @@ bash_android_sources="\
   ${bash_android_dir}/android_tools.rc \
   \
   ${bash_android_dir}/android_uploads.rc \
+  \
+  ${bash_android_dir}/megatools_sync.rc \
 ";
 
 # === Bash Importations ===

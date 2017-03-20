@@ -1,0 +1,188 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Megatools Sync ===
+function megasync()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: megasync <local_folder> <remote_folder> [--download]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local local_folder="${1}";
+  local remote_folder="${2}";
+  local option_download="${3}";
+  local tmp_local_ls=$(mktemp);
+  local tmp_remote_ls=$(mktemp);
+  local flag_delete;
+  local line;
+  local line_tmp;
+  local file_type;
+  local file_size;
+  local file_path;
+  local file_local;
+
+  # Retrieve remote informations
+  megals -lR "${remote_folder}" > ${tmp_remote_ls};
+
+  # Upload mode
+  if [ ! "${option_download}" = '--download' ]; then
+
+    # Parse all remote files
+    while [ -s "${tmp_remote_ls}" ]; do
+
+      # Extract first line
+      line=($(sed '1!d' ${tmp_remote_ls}));
+      sed -i '1d' "${tmp_remote_ls}";
+
+      # Ignore empty lines
+      if [ -z "${line}" ]; then
+        continue;
+      fi;
+
+      # Parse line content
+      file_type="${line[2]}";
+      file_size="${line[3]}";
+      file_path="${line[@]:6}";
+      file_local="${file_path#${remote_folder}}";
+      file_local="${file_local#/}";
+      flag_delete='';
+
+      # Ignore irrelevant paths
+      if [ "${file_path}" = "${remote_folder}" ]; then
+        continue;
+      fi;
+
+      # Verify folder exists
+      if [ "${file_type}" = '1' ] && [ "${file_size}" = '-' ]; then
+        if [ ! -d "${file_local}" ]; then
+          echo '';
+          printf "  \e[1;31mRemote folder '${file_local}' is missing:\e[0m";
+          flag_delete='true';
+        fi;
+
+      # Verify files sizes do not mismatch
+      elif [ -f "${file_local}" ]; then
+        if [ ${file_size/-/0} -ne $(stat -c "%s" "${file_local}") ]; then
+          echo '';
+          printf "  \e[1;31mRemote file '${file_local}' is different:\e[0m";
+          flag_delete='true';
+        fi;
+
+      # Remote file no longer exist locally
+      else
+        echo '';
+        printf "  \e[1;31mRemote file '${file_local}' locally removed:\e[0m";
+        flag_delete='true';
+      fi;
+
+      # Delete remote file
+      if [ ! -z "${flag_delete}" ]; then
+        printf " Delete remote [y/N] ? ";
+        read -t 20 key;
+        if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
+          megarm "${file_path}";
+          echo -e "   \e[1;32m> Removed ${file_path}\e[0m";
+        fi;
+      fi;
+
+    done;
+
+    # Upload local files to remote
+    echo '';
+    echo -e " \e[1;33mStarting synchronisation between '${local_folder}' and '${remote_folder}'\e[0m";
+    megacopy --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
+      | grep -v 'ERROR: File already exists at';
+
+  # Download mode
+  else
+
+    # Parse all local files
+    find "${local_folder}" -printf '%s\t%P\n' > ${tmp_local_ls};
+    while [ -s "${tmp_local_ls}" ]; do
+
+      # Extract first line
+      line=($(sed '1!d' ${tmp_local_ls}));
+      sed -i '1d' "${tmp_local_ls}";
+
+      # Ignore empty lines
+      if [ -z "${line}" ]; then
+        continue;
+      fi;
+
+      # Parse line content
+      file_size="${line[0]}";
+      file_path="${line[@]:1}";
+      file_local="${file_path#${local_folder}}";
+      file_local="${file_local#/}";
+      flag_delete='';
+
+      # Ignore irrelevant paths
+      if [ "${file_path}" = '' ] || [ ! -e "${file_path}" ]; then
+        continue;
+      fi;
+
+      # Extract remote information
+      file_type='0';
+      if [ -d "${file_path}" ]; then
+        file_type='1';
+      fi;
+      line_tmp=($(awk "\$3 == ${file_type}" "${tmp_remote_ls}" | grep "${remote_folder}/${file_path}"));
+
+      # Verify folder exists
+      if [ -d "${file_path}" ]; then
+        if [ -z "${line_tmp}" ]; then
+          echo '';
+          printf "  \e[1;31mRemote folder '${file_local}' is missing:\e[0m";
+          flag_delete='true';
+        fi;
+
+      # Verify files sizes do not mismatch/-/0
+      elif [ ! -z "${line_tmp}" ]; then
+        if [ ${file_size} -ne ${line_tmp[3]} ]; then
+          echo '';
+          printf "  \e[1;31mLocal file '${file_local}' is different:\e[0m";
+          flag_delete='true';
+        fi;
+
+      # Local file no longer exist remotely
+      else
+        echo '';
+        printf "  \e[1;31mLocal file '${file_local}' remotely removed:\e[0m";
+        flag_delete='true';
+      fi;
+
+      # Delete local file
+      if [ ! -z "${flag_delete}" ]; then
+        printf " Delete local [y/N] ? ";
+        read -t 20 key;
+        if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
+          rm -r "${file_path}";
+          echo -e "   \e[1;32m> Removed ${file_path}\e[0m";
+        fi;
+      fi;
+
+    done;
+
+    # Download remote files to local
+    echo '';
+    echo -e " \e[1;33mStarting synchronisation between '${remote_folder}' and '${local_folder}'\e[0m";
+    megacopy --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
+      | grep -v 'ERROR: File already exists at';
+
+  fi;
+
+  # End message
+  echo -e " \e[1;32mmegasync: '${local_folder}' and '${remote_folder}' are now synced\e[0m";
+  echo '';
+
+  # Cleanup temp files
+  rm ${tmp_local_ls};
+  rm ${tmp_remote_ls};
+}
