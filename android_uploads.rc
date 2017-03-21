@@ -60,7 +60,7 @@ function fileupl()
   echo '';
 
   # Upload file to target
-  megarm "/Root/Android/${target}/$(basename ${path})" 2>/dev/null;
+  megarm "${target}/$(basename ${path})" 2>/dev/null;
   megaput --path "${target}" "${path}";
 
   # Show upload time
