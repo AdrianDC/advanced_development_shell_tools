@@ -249,3 +249,9 @@ function cleanram()
 {
   "${bash_android_dir}/run_cleanram.sh";
 }
+
+# === Network Manager Restart ===
+function networkrestart()
+{
+  sudo service network-manager restart;
+}
