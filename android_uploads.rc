@@ -250,3 +250,10 @@ function pushbrom()
   # Restore ROM path
   cd "${cwd}";
 }
+
+# === AndroidFiles Syncer ===
+function androidfilessync()
+{
+  # Use megasync inside AndroidFiles folder
+  megasync . '/Root/Android' "${1}";
+}
