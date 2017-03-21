@@ -128,9 +128,9 @@ alias gitprgaicp='gitpraicp; gitpgaicp';
 alias gitprghaicp='gitprhaicp; gitpghaicp';
 
 # === Gerrit LegacyXperia ===
-alias gitpr7='gerritreview ssh://$(gerritusername)@review.msm7x30.org:29418 LegacyXperia for';
+alias gitpr7='gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia for';
 alias gitpr7h='gerritreview http://review.msm7x30.org LegacyXperia for';
-alias gitpr7d='gerritreview ssh://$(gerritusername)@review.msm7x30.org:29418 LegacyXperia drafts';
+alias gitpr7d='gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia drafts';
 alias gitpr7dh='gerritreview http://review.msm7x30.org LegacyXperia drafts';
 
 # === Gerrit Omni ===
