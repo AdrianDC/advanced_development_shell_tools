@@ -7,11 +7,12 @@
 function megasync()
 {
   # Usage
-  if [ -z "${1}" ] || [ -z "${2}" ]; then
+  if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: megasync <local_folder> <remote_folder> [--copy/--download]';
-    echo '    Upload without parameters (individual) or with --copy (megacopy)';
-    echo '    Download with the --download parameter';
+    echo ' Usage: megasync <local_folder> <remote_folder> <--upload/--download> [--copy]';
+    echo '';
+    echo '  > Upload with --upload (individual), optional --copy (megacopy)';
+    echo '  > Download with --download (individual), optional --copy (megacopy)';
     echo '';
     return;
   fi;
@@ -19,7 +20,8 @@ function megasync()
   # Variables
   local local_folder="${1}";
   local remote_folder="${2%/}";
-  local option_download="${3}";
+  local option_direction="${3}";
+  local option_megacopy="${4}";
   local tmp_local_ls=$(mktemp);
   local tmp_remote_ls=$(mktemp);
   local flag_delete;
@@ -29,15 +31,22 @@ function megasync()
   local file_size;
   local file_path;
   local file_local;
+  local file_escaped;
   local time_start;
   local time_span;
+
+  # =======================================================
+  # Introduction message
+  echo '';
+  echo -e " \e[1;37mmegasync: Syncing '${local_folder}' and '${remote_folder}'...\e[0m";
 
   # Retrieve files informations
   find "${local_folder}" -mindepth 1 -printf '%s\t%P#\n' > "${tmp_local_ls}";
   megals -lR "${remote_folder}" > "${tmp_remote_ls}";
 
+  # =======================================================
   # Upload mode
-  if [ ! "${option_download}" = '--download' ]; then
+  if [ ! "${option_direction}" = '--download' ]; then
 
     # Parse all remote files
     while [ -s "${tmp_remote_ls}" ]; do
@@ -57,6 +66,10 @@ function megasync()
       file_path="${line[@]:6}";
       file_local="${file_path#${remote_folder}}";
       file_local="${file_local#/}";
+      file_escaped="${file_local//\\/\\\\}";
+      file_escaped="${file_escaped//\|/\\\|}";
+      file_escaped="${file_escaped//\[/\\\[}";
+      file_escaped="${file_escaped//\]/\\\]}";
       flag_delete='';
 
       # Ignore irrelevant paths
@@ -67,31 +80,28 @@ function megasync()
       # Verify folder exists
       if [ "${file_type}" = '1' ] && [ "${file_size}" = '-' ]; then
         if [ ! -d "${file_local}" ]; then
-          echo '';
-          printf "  \e[1;31mRemote folder '${file_local}' is missing:\e[0m";
+          printf " \e[1;31mmegasync: Remote folder '${file_local}/' is missing:\e[0m";
           flag_delete='true';
 
         # Exclude folder from needed uploads
         else
-          sed -i "\|${file_local}#|d" "${tmp_local_ls}";
+          sed -i "\|\t${file_escaped}#|d" "${tmp_local_ls}";
         fi;
 
       # Verify files sizes do not mismatch
       elif [ -f "${file_local}" ]; then
         if [ ${file_size/-/0} -ne $(stat -c "%s" "${file_local}") ]; then
-          echo '';
-          printf "  \e[1;31mRemote file '${file_local}' is different:\e[0m";
+          printf " \e[1;31mmegasync: Remote file '${file_local}' is different:\e[0m";
           flag_delete='true';
 
         # Exclude file from needed uploads
         else
-          sed -i "\|${file_local}#|d" "${tmp_local_ls}";
+          sed -i "\|\t${file_escaped}#|d" "${tmp_local_ls}";
         fi;
 
       # Remote file no longer exist locally
       else
-        echo '';
-        printf "  \e[1;31mRemote file '${file_local}' locally removed:\e[0m";
+        printf " \e[1;31mmegasync: Remote file '${file_local}' locally removed:\e[0m";
         flag_delete='true';
       fi;
 
@@ -99,23 +109,26 @@ function megasync()
       if [ ! -z "${flag_delete}" ]; then
         printf " Delete remote [y/N] ? ";
         read -t 20 key;
+        if [ ${?} -ne 0 ]; then
+          echo '';
+        fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
           megarm "${file_path}";
-          echo -e "   \e[1;32m> Removed ${file_path}\e[0m";
+          echo -e " \e[1;32mmegasync: Removed remote '${file_path}'\e[0m";
 
           # Remove folder elements
           if [ "${file_type}" = '1' ]; then
-            sed -i "\|${file_path}|d" "${tmp_remote_ls}";
+            sed -i "\|${file_escaped}|d" "${tmp_remote_ls}";
           fi;
         fi;
       fi;
 
     done;
 
+    # ===========================================
     # Upload with megacopy to remote
-    if [ "${option_download}" = '--copy' ]; then
-      echo '';
-      echo -e " \e[1;33mStarting synchronisation between '${local_folder}' and '${remote_folder}'\e[0m";
+    if [ "${option_megacopy}" = '--copy' ]; then
+      echo -e " \e[1;33mmegasync: megacopy starting...\e[0m";
       megacopy --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
         | grep -v 'ERROR: File already exists at';
 
@@ -131,37 +144,31 @@ function megasync()
         file_local="${line[@]:1}";
         file_local="${file_local#/}";
         file_local="${file_local%#}";
-        file_path=$(dirname "${file_local}");
-        if [ "${file_path}" = '.' ]; then
-          file_path=${remote_folder};
-        else
-          file_path=${remote_folder}/${file_path};
-        fi;
+        file_path="${remote_folder}/${file_local}";
         time_start=$(date +%s);
 
-        # Upload header informations
-        echo '';
-        echo -e " \e[1;33m[ Uploading to the server - Path '${file_path}' ]\e[0m";
-        echo '';
+        # Create remote folder
+        if [ -d "${file_local}" ]; then
+          megamkdir "${file_path}";
+          echo -e " \e[1;33mmegasync: Created remote folder '${file_path}/'\e[0m";
 
         # Upload file to target
-        if [ -f "${file_local}" ]; then
+        else
+          file_path=$(dirname "${file_path}");
+          echo -e " \e[1;33mmegasync: Uploading to the server - Path '${file_path}'\e[0m";
+          megamkdir "${file_path}" 2>&1 \
+            | grep -v 'Directory already exists:';
           megaput --path "${file_path}" "${file_local}";
 
-        # Create folder on target
-        else
-          megamkdir "${file_path}/${file_local}";
+          # Show upload time
+          time_span=$(($(date +%s)-${time_start}));
+          echo -e " \e[1;37mmegasync: Upload done in ${time_span} secs\e[0m";
+
         fi;
-
-        # Show upload time
-        echo '';
-        time_span=$(($(date +%s)-${time_start}));
-        echo -e " \e[1;37m[ Upload done in ${time_span} secs ]\e[0m";
-        echo '';
       done;
-
     fi;
 
+  # =======================================================
   # Download mode
   else
 
@@ -183,6 +190,10 @@ function megasync()
       file_path="${file_path%#}";
       file_local="${file_path#${local_folder}}";
       file_local="${file_local#/}";
+      file_escaped="${file_path//\\/\\\\}";
+      file_escaped="${file_escaped//\|/\\\|}";
+      file_escaped="${file_escaped//\[/\\\[}";
+      file_escaped="${file_escaped//\]/\\\]}";
       flag_delete='';
 
       # Ignore irrelevant paths
@@ -195,28 +206,34 @@ function megasync()
       if [ -d "${file_path}" ]; then
         file_type='1';
       fi;
-      line_tmp=($(awk "\$3 == ${file_type}" "${tmp_remote_ls}" | grep "${remote_folder}/${file_path}"));
+      line_tmp=$(awk "\$3 == ${file_type}" "${tmp_remote_ls}" 2>&1 | grep "${remote_folder}/${file_escaped//\\\|/\|}$");
+      line_tmp=(${line_tmp});
 
       # Verify folder exists
       if [ -d "${file_path}" ]; then
-        if [ -z "${line_tmp}" ]; then
-          echo '';
-          printf "  \e[1;31mRemote folder '${file_local}' is missing:\e[0m";
+        if [ -z "${line_tmp[2]}" ]; then
+          printf " \e[1;31mmegasync: Remote folder '${file_local}/' is missing:\e[0m";
           flag_delete='true';
+
+        # Exclude folder from needed downloads
+        else
+          sed -i "\|${remote_folder}/${file_escaped}$|d" "${tmp_remote_ls}";
         fi;
 
-      # Verify files sizes do not mismatch/-/0
+      # Verify files sizes do not mismatch
       elif [ ! -z "${line_tmp}" ]; then
-        if [ ${file_size} -ne ${line_tmp[3]} ]; then
-          echo '';
-          printf "  \e[1;31mLocal file '${file_local}' is different:\e[0m";
+        if [ "${line_tmp[3]}" = '-' ] || [ ${file_size} -ne ${line_tmp[3]} ]; then
+          printf " \e[1;31mmegasync: Local file '${file_local}' is different:\e[0m";
           flag_delete='true';
+
+        # Exclude file from needed downloads
+        else
+          sed -i "\|${remote_folder}/${file_escaped}$|d" "${tmp_remote_ls}";
         fi;
 
       # Local file no longer exist remotely
       else
-        echo '';
-        printf "  \e[1;31mLocal file '${file_local}' remotely removed:\e[0m";
+        printf " \e[1;31mmegasync: Local file '${file_local}' remotely removed:\e[0m";
         flag_delete='true';
       fi;
 
@@ -224,24 +241,77 @@ function megasync()
       if [ ! -z "${flag_delete}" ]; then
         printf " Delete local [y/N] ? ";
         read -t 20 key;
+        if [ ${?} -ne 0 ]; then
+          echo '';
+        fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
           rm -r "${file_path}";
-          echo -e "   \e[1;32m> Removed ${file_path}\e[0m";
+          echo -e " \e[1;32mmegasync: Removed local '${file_path}'\e[0m";
         fi;
       fi;
 
     done;
 
-    # Download remote files to local
-    echo '';
-    echo -e " \e[1;33mStarting synchronisation between '${remote_folder}' and '${local_folder}'\e[0m";
-    megacopy --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
-      | grep -v 'ERROR: File already exists at';
+    # ===========================================
+    # Download with megacopy to local
+    if [ "${option_megacopy}" = '--copy' ]; then
+      echo -e " \e[1;33mmegasync: megacopy starting...\e[0m";
+      megacopy --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
+        | grep -v 'ERROR: File already exists at';
 
+    # Download with megaget to local
+    else
+
+      # Check all files listed for upload
+      while [ -s "${tmp_remote_ls}" ]; do
+        line=($(sed '1!d' "${tmp_remote_ls}"));
+        sed -i '1d' "${tmp_remote_ls}";
+
+        # Parse file informations
+        file_type="${line[2]}";
+        file_path="${line[@]:6}";
+        file_local="${file_path#${remote_folder}}";
+        file_local="${file_local#/}";
+        file_escaped="${file_local//\|/\\\|}";
+        file_escaped="${file_escaped//\[/\\\[}";
+        file_escaped="${file_escaped//\]/\\\]}";
+        time_start=$(date +%s);
+
+        # Ignore irrelevant paths
+        if [ -z "${file_local}" ]; then
+          continue;
+        fi;
+
+        # Create local folder
+        if [ "${file_type}" = '1' ]; then
+          if [ ! -d "${file_local}" ]; then
+            mkdir -p "${file_local}";
+            echo -e " \e[1;33mmegasync: Created local folder '${file_local}/'\e[0m";
+          fi;
+
+        # Download file
+        else
+
+          # Download header informations
+          file_local=$(dirname "${file_local}");
+          echo -e " \e[1;33mmegasync: Downloading from the server - Path '${file_local}/'\e[0m";
+
+          # Download file to local
+          mkdir -p "${file_local}";
+          megaget --path "${file_local}" "${file_path}";
+
+          # Show download time
+          time_span=$(($(date +%s)-${time_start}));
+          echo -e " \e[1;37mmegasync: Download done in ${time_span} secs\e[0m";
+
+        fi;
+      done;
+    fi;
   fi;
 
+  # =======================================================
   # End message
-  echo -e " \e[1;32mmegasync: '${local_folder}' and '${remote_folder}' are now synced\e[0m";
+  echo -e " \e[1;32mmegasync: Synced '${local_folder}' and '${remote_folder}'\e[0m";
   echo '';
 
   # Cleanup temp files
