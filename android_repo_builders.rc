@@ -38,7 +38,7 @@ function repotwrp()
   # Handle boot types
   MultiROMBootableTWRP='true';
   case "${PhoneName}" in
-    dora)
+    dora|kagura)
         MultiROMBootableTWRP='';;
   esac;
 
@@ -202,7 +202,7 @@ function repomrom()
   local MultiROMRecoveryInjector='';
   local MultiROMUninstaller='';
   case "${PhoneName}" in
-    dora)
+    dora|kagura)
         MultiROMBootableTWRP='';
         MultiROMRecoveryInjector='true';
         MultiROMUninstaller='true';;
