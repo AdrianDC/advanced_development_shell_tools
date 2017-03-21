@@ -254,6 +254,19 @@ function pushbrom()
 # === AndroidFiles Syncer ===
 function androidfilessync()
 {
+  # Check ANDROID_FILES_PATH is defined
+  if [ -z "${ANDROID_FILES_PATH}" ]; then
+    echo '';
+    echo ' You need to edit your ~/.bashrc to add :';
+    echo '  # AndroidFiles';
+    echo '  export ANDROID_FILES_PATH=/media/.../AndroidFiles;';
+    echo '';
+    return;
+  fi;
+
   # Use megasync inside AndroidFiles folder
+  local cwd=$(pwd);
+  cd "${ANDROID_FILES_PATH}";
   megasync . '/Root/Android' "${1}";
+  cd "${cwd}";
 }
