@@ -61,6 +61,12 @@ function lineagelxpatcher()
   git cherry-pick FETCH_HEAD;
   croot;
 
+  # Dialer: Move InCallUI components to the persistent process
+  cd ./packages/apps/Dialer/;
+  git fetch https://github.com/AdrianDC/lineage_development_sony8960 dialer_process;
+  git cherry-pick FETCH_HEAD;
+  croot;
+
   # Enable SU inclusion
   export WITH_SU=true;
 
