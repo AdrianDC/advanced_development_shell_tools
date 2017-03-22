@@ -41,13 +41,22 @@ function lineagelxpatcher()
   croot;
 
   # Retrieve work in progress holder
-  ./vendor/extra/repopick.py -b LX_1563;
+  ./vendor/extra/repopick.py -b LX_1563 LX_1586;
 
   # LegacyXperia patches
   ./vendor/extra/updates.sh;
 
+  # mtdutils: Fix mounting partitions by-name
+  cd ./bootable/recovery-twrp/;
+  git fetch https://gerrit.omnirom.org/android_bootable_recovery refs/changes/55/21655/6;
+  git cherry-pick FETCH_HEAD;
+  croot;
+
   # Enable SU inclusion
   export WITH_SU=true;
+
+  # Enable TWRP inclusion
+  export WITH_TWRP=true;
 }
 
 # === LegacyXperia Repopick ===
