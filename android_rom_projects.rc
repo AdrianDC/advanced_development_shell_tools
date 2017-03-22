@@ -275,10 +275,10 @@ function androidprojectpatcher()
             commits_result=${?};
 
             # Failed update
-            if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ]; then
+            if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ] || ! git diff-index --quiet HEAD --; then
               echo '';
               echo '  < Automatic update failed...';
-              echo '     Tried to add following commits: '${commits_list};
+              echo '     Tried to add following commits: '${sha1} ${commits_list#*${sha1}};
               echo '     Stopping, push with : gitbranchpusher;';
               echo '';
               return;
