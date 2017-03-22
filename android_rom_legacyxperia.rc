@@ -46,6 +46,9 @@ function lineagelxpatcher()
   # LegacyXperia patches
   ./vendor/extra/updates.sh;
 
+  # Add Paris timezone to picker
+  ./vendor/extra/repopick.py LAOS_166530 LAOS_166532;
+
   # mtdutils: Fix mounting partitions by-name
   cd ./bootable/recovery-twrp/;
   git fetch https://gerrit.omnirom.org/android_bootable_recovery refs/changes/55/21655/6;
