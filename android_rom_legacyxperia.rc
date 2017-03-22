@@ -52,6 +52,12 @@ function lineagelxpatcher()
   git cherry-pick FETCH_HEAD;
   croot;
 
+  # msm7x30-common: Configure ART and use DEXPREOPT
+  cd ./device/semc/msm7x30-common/;
+  git fetch https://github.com/AdrianDC/lineage_development_sony8960 msm7x30-common;
+  git cherry-pick FETCH_HEAD;
+  croot;
+
   # Enable SU inclusion
   export WITH_SU=true;
 
