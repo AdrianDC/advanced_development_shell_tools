@@ -5,6 +5,7 @@
 
 # === Build paths ===
 export bash_android_bbootimg=${bash_android_dir}/android_tools/bbootimg;
+export bash_android_bbootimg_host=${bash_android_dir}/android_tools/bbootimg_host;
 
 # === Fast Bootimage Builder ===
 function fboota()
@@ -215,6 +216,21 @@ function fbooti()
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell /bbootimg -i ${partitiontarget};
+}
+
+# === Host Kernel Informations ===
+function bootinfo()
+{
+  # Usage
+  if [ ! -f "${1}" ]; then
+    echo '';
+    echo ' usage: bootinfo <boot_img_file>';
+    echo '';
+    return;
+  fi;
+
+  # Run bbootimg on the kernel input
+  "${bash_android_bbootimg_host}" -i "${1}";
 }
 
 # === FOTA Informations ===
