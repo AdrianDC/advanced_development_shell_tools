@@ -25,6 +25,14 @@ function lineagelxpatcher()
     cd '../../';
   fi;
 
+  # Update .repo/local_manifest contents
+  cd ./.repo/local_manifests/;
+  git fetch origin cm-14.1;
+  git fetch http://review.msm7x30.org/LegacyXperia/local_manifests refs/changes/52/1552/5;
+  git reset FETCH_HEAD;
+  git stash -u;
+  croot;
+
   # Reset local_manifest contents
   cd ./vendor/extra/;
   git fetch msm7x30 cm-14.1;
