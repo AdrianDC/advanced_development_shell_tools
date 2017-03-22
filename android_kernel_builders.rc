@@ -62,8 +62,11 @@ function makekernel()
 
   fi;
 
-  # CCache usage
+  # Variables
   local ccache_prefix='';
+  local time_diff;
+
+  # CCache usage
   if [ "$(type -t ccache 2> /dev/null)" = 'file' ]; then
     cache_prefix='ccache ';
     export CC='ccache gcc';
@@ -75,7 +78,14 @@ function makekernel()
   fi;
 
   # Kernel build
+  time_diff=$(date +%s);
   ${cache_prefix}make -j$(grep -c ^processor /proc/cpuinfo);
+
+  # Show compilation time
+  time_diff=$(($(date +%s)-${time_diff}));
+  echo '';
+  echo -e " \e[1;37m[ Done compiling in ${time_diff} secs ]\e[0m";
+  echo '';
 }
 
 # === Sony Copyleft Kernel Builder ===
