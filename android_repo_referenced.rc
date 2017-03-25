@@ -90,7 +90,7 @@ function reporefupdate()
   local current_dir=$(pwd);
 
   # Detect and update AOSP references
-  for project in sony8960 sonyaosp; do
+  for project in sony8960 sonyaosp aospcaf; do
     cddevaosp ${project};
     if ! git diff-index --quiet HEAD --; then
       echo '';
@@ -144,7 +144,7 @@ function reporefsync()
   local current_dir=$(pwd);
 
   # Fetch and update AOSP references
-  for project in sony8960 sonyaosp; do
+  for project in sony8960 sonyaosp aospcaf; do
     cddevaosp ${project};
     echo '';
     echo " Syncing AOSP ${project} references...";
