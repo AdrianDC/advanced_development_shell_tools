@@ -50,7 +50,6 @@ alias gitpat='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername
 alias gitpaicp='gitremoteverify aicp gitrai && gitpu aicp mm6.0';
 alias gitpb='gitremoteverify backup gitrab && gitpu backup';
 alias gitpold='gitremoteverify old false && gitpu old';
-alias gitpoms='gitremoteverify oms gitraoms && gitpu oms nougat';
 alias gitpp='gitremoteverify project false && gitpu project';
 alias gitppm='gitremoteverify project false && gitpu project master';
 alias gitpx='gitremoteverify xperia gitrax && gitpu xperia';

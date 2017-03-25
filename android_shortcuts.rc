@@ -150,14 +150,14 @@ function torompaths()
 # === ROMs Shortcuts ===
 function toaosp()       { torompaths 'AOSP' "${1}"; };
 function tolineage()    { torompaths 'LineageOS' "${1}"; };
-function toaospoms()    { torompaths 'AOSP-OMS' "${1}"; };
+function toaospcaf()    { torompaths 'AOSP-CAF' "${1}"; };
 function tomultirom()   { torompaths 'MultiROM' "${1}"; };
 function torr()         { torompaths 'ResurrectionRemix' "${1}"; };
 function totwrp()       { torompaths 'TWRP' "${1}"; };
 function cdaosp()       { cd $(toaosp ${1}); }
 function cdl()          { cd $(tolineage ${1}); }
 function cdlineage()    { cd $(tolineage ${1}); }
-function cdaospoms()    { cd $(toaospoms); }
+function cdaospcaf()    { cd $(toaospcaf); }
 function cdmultirom()   { cd $(tomultirom); }
 function cdrr()         { cd $(torr ${1}); }
 function cdtwrp()       { cd $(totwrp); }
@@ -177,12 +177,10 @@ function cdref()        { cd $(getand)/References/${1}; }
 function cdrefapk()     { cd $(getand)/References/apk; }
 function cdandfiles()   { cd "${ANDROID_FILES_PATH}/"; }
 function impaospcaf()   { rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}; }
-function impaospoms()   { rsync -arv --delete --delete-after $(toaospoms ${1}) ./${1}; }
 function implineage()   { rsync -arv --delete --delete-after $(tolineage ${1}) ./${1}; }
 function meldaosp()     { meld ./${1} $(toaosp ${1}); }
 function meldaospsony() { meld ./${1} $(toaosp sony ${1}); }
 function meldaospcaf()  { meld ./${1} $(toaospcaf ${1}); }
-function meldaospoms()  { meld ./${1} $(toaospoms ${1}); }
 function meldlineage()  { meld ./${1} $(tolineage ${1}); }
 function meldmrom()     { meld ./${1} $(tomultirom ${1}); }
 function meldtwrp()     { meld ./${1} $(totwrp ${1}); }

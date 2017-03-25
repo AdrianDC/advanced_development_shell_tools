@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/lineage/lx/oms/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv]';
+  local function_usage='romautorelease devicename {aosp/lineage/lx/caf/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv]';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
@@ -48,10 +48,10 @@ function romautorelease()
     rom_target="${rom_device}";
     rom_upload="${rom_phone}/LineageOS-14.x";
 
-  # AOSP-OMS 7.x
-  elif [[ "${rom_name}" == 'oms' ]]; then
-    rom_tag='OMS71';
-    rom_upload="${rom_phone}/AOSP-OMS-7.x";
+  # AOSP-CAF 7.x
+  elif [[ "${rom_name}" == 'caf' ]]; then
+    rom_tag='CAF71';
+    rom_upload="${rom_phone}/AOSP-CAF-7.x";
 
   # LegacyXperia 14.1
   elif [[ "${rom_name}" == 'lx' ]]; then
@@ -120,12 +120,6 @@ function romautorelease()
     source ./build/envsetup.sh;
     lunch aosp_${rom_target}-userdebug;
     make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
-
-  # Build Android AOSP-OMS
-  elif [[ "${rom_tag}" =~ 'OMS' ]]; then
-    source ./build/envsetup.sh;
-    lunch aosp_${rom_target}-userdebug;
-    make -j${build_cpu_count} bacon | tee ${rom_logs_output};
 
   # Build Android ResurrectionRemix
   elif [[ "${rom_tag}" =~ 'RR' ]]; then
@@ -369,12 +363,12 @@ function twrpautorelease()
   done;
 }
 
-# === ROM OMS 8x60 Releaser ===
-function omsautorelease()
+# === ROM CAF 8x60 Releaser ===
+function cafautorelease()
 {
   # AndroidDev
   cdand;
-  cdaospoms;
+  cdaospcaf;
 
   # Repository sync
   if [ -z "${1}" ]; then
@@ -388,7 +382,7 @@ function omsautorelease()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} oms;
+    romautorelease ${device} caf;
 
   done;
 }

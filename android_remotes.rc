@@ -121,7 +121,6 @@ function gitraa()   { local git_username=$(githubusername 2>/dev/null);
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
 function gitraoo()  { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
-function gitraoms() { gitremoteadaptset 'oms' 'AOSP-RRO' 'android_'; }
 function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin' ''; }
 function gitral()   { gitremoteset lineage "${1}"; }
 
