@@ -13,6 +13,11 @@ function lineagesodppatcher()
 {
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'lineage_development_sonyaosp' 'lineageos_sony' '
+    device/sony/common-aosp
+    device/sony/dora
+    device/sony/kagura
+    device/sony/sepolicy
+    device/sony/tone-common
     hardware/qcom/audio/default
     hardware/qcom/display
     packages/apps/FMRadio
@@ -25,26 +30,8 @@ function lineagesodprebaser()
 {
   # Use the androidprojectrebaser helper
   androidprojectrebaser 'sonyxperiadev' 'cm-14.1' '
-    device/sony/common-aosp::device-sony-common::master
-    device/sony/dora::device-sony-dora::master
-    device/sony/honami::device-sony-honami::master
-    device/sony/ivy::device-sony-ivy::master
-    device/sony/kagura::device-sony-kagura::master
-    device/sony/kugo::device-sony-kugo::master
-    device/sony/loire-common::device-sony-loire::master
-    device/sony/rhine-common::device-sony-rhine::master
-    device/sony/satsuki::device-sony-satsuki::master
-    device/sony/sepolicy::device-sony-sepolicy::master
-    device/sony/shinano-common::device-sony-shinano::master
-    device/sony/sirius::device-sony-sirius::master
-    device/sony/suzu::device-sony-suzu::master
-    device/sony/tone-common::device-sony-tone::master
-    device/sony/z3::device-sony-leo::master
-    device/sony/z3c::device-sony-aries::master
     hardware/sony/camera::camera::aosp/LA.UM.5.5.r1
-    hardware/sony/camera_3.10::camera::aosp/LA.BR.1.3.3_rb2.14
     hardware/sony/dataservices::vendor-qcom-opensource-dataservices::master
     kernel/sony/msm::kernel::aosp/LA.UM.5.5.r1
-    kernel/sony/msm8974::kernel::aosp/LA.BR.1.3.3_rb2.14
     ' "${1}";
 }
