@@ -92,7 +92,7 @@ function reporefupdate()
   # Detect and update AOSP references
   for project in sony8960 sonyaosp aospcaf; do
     cddevaosp ${project};
-    if ! git diff-index --quiet HEAD --; then
+    if [ ${?} -eq 0 ] && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating AOSP ${project} references...";
       git add -Ap;
@@ -104,7 +104,7 @@ function reporefupdate()
   # Detect and update LineageOS references
   for project in sony8960 sony8996 sonyaosp; do
     cddevlineage ${project};
-    if ! git diff-index --quiet HEAD --; then
+    if [ ${?} -eq 0 ] && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
       git add -Ap;
@@ -115,7 +115,7 @@ function reporefupdate()
 
   # Detect and update MultiROM references
   cddevmrom;
-  if ! git diff-index --quiet HEAD --; then
+  if [ ${?} -eq 0 ] && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating MultiROM ${project} references...";
     git add -Ap;
@@ -125,7 +125,7 @@ function reporefupdate()
 
   # Detect and update TWRP references
   cddevtwrp;
-  if ! git diff-index --quiet HEAD --; then
+  if [ ${?} -eq 0 ] && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating TWRP ${project} references...";
     git add -Ap;
@@ -146,42 +146,50 @@ function reporefsync()
   # Fetch and update AOSP references
   for project in sony8960 sonyaosp aospcaf; do
     cddevaosp ${project};
-    echo '';
-    echo " Syncing AOSP ${project} references...";
-    git fetch origin local_manifests;
-    git diff FETCH_HEAD;
-    git reset FETCH_HEAD;
-    git stash -u;
+    if [ ${?} -eq 0 ]; then
+      echo '';
+      echo " Syncing AOSP ${project} references...";
+      git fetch origin local_manifests;
+      git diff FETCH_HEAD;
+      git reset FETCH_HEAD;
+      git stash -u;
+    fi;
   done;
 
   # Fetch and update LineageOS references
   for project in sony8960 sony8996 sonyaosp; do
     cddevlineage ${project};
-    echo '';
-    echo " Syncing LineageOS ${project} references...";
-    git fetch origin local_manifests;
-    git diff FETCH_HEAD;
-    git reset FETCH_HEAD;
-    git stash -u;
+    if [ ${?} -eq 0 ]; then
+      echo '';
+      echo " Syncing LineageOS ${project} references...";
+      git fetch origin local_manifests;
+      git diff FETCH_HEAD;
+      git reset FETCH_HEAD;
+      git stash -u;
+    fi;
   done;
 
   # Fetch and update MultiROM references
   cddevmrom;
-  echo '';
-  echo " Syncing MultiROM ${project} references...";
-  git fetch origin local_manifests;
-  git diff FETCH_HEAD;
-  git reset FETCH_HEAD;
-  git stash -u;
+  if [ ${?} -eq 0 ]; then
+    echo '';
+    echo " Syncing MultiROM ${project} references...";
+    git fetch origin local_manifests;
+    git diff FETCH_HEAD;
+    git reset FETCH_HEAD;
+    git stash -u;
+  fi;
 
   # Fetch and update TWRP references
   cddevtwrp;
-  echo '';
-  echo " Syncing TWRP ${project} references...";
-  git fetch origin local_manifests;
-  git diff FETCH_HEAD;
-  git reset FETCH_HEAD;
-  git stash -u;
+  if [ ${?} -eq 0 ]; then
+    echo '';
+    echo " Syncing TWRP ${project} references...";
+    git fetch origin local_manifests;
+    git diff FETCH_HEAD;
+    git reset FETCH_HEAD;
+    git stash -u;
+  fi;
 
   # Path restore
   cd ${current_dir};
