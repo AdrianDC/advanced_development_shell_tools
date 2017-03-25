@@ -184,7 +184,7 @@ function meldaospcaf()  { meld ./${1} $(toaospcaf ${1}); }
 function meldlineage()  { meld ./${1} $(tolineage ${1}); }
 function meldmrom()     { meld ./${1} $(tomultirom ${1}); }
 function meldtwrp()     { meld ./${1} $(totwrp ${1}); }
-function nout()         { nemo $(toout ${1}); }
+function nout()         { xdg-open $(toout ${1}); }
 
 # === Syncer Shortcuts ===
 function aospsyncall() { reporeferencedaosp "reposy"; }

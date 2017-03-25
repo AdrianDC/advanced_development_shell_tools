@@ -33,7 +33,7 @@ function boottools()
   if [ -z "${2}" ]; then
 
     # Edit
-    nemo "${out_folder}";
+    xdg-open "${out_folder}";
     echo '';
     printf ' Press Enter to continue [ENTER] ';
     read key;
@@ -134,7 +134,7 @@ function bootelf()
   if [ -z "${2}" ]; then
 
     # Edit
-    nemo "${out_folder}";
+    xdg-open "${out_folder}";
     echo '';
     printf ' Press Enter to continue [ENTER] ';
     read key;

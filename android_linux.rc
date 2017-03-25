@@ -46,7 +46,7 @@ function cpioext()
   cp "${file}" "${outdir}/";
   cd "${outdir}";
   cpio -i -F "${name}";
-  nemo "${outdir}/";
+  xdg-open "${outdir}/";
   cd "${cwd}";
 }
 
