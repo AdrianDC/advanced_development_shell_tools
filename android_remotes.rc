@@ -184,6 +184,8 @@ function gitrab()
     gitra8960aosp;
   elif pwd | grep AOSP | grep -q -e '-sony\|-dora'; then
     gitrasonyaosp;
+  elif pwd | grep AOSP | grep -q -e '-CAF'; then
+    gitraaospcaf;
   elif pwd | grep LineageOS | grep -q -e '-sony\|-z3'; then
     gitrasonylineage;
   elif pwd | grep LineageOS | grep -q -e '-dora'; then
@@ -221,6 +223,12 @@ function gitra8960aosp()
 function gitrasonyaosp()
 {
   gitremoteset backup https://github.com/AdrianDC/aosp_development_sonyaosp.git;
+}
+
+# === Git Remotes AOSP-CAF Project ===
+function gitraaospcaf()
+{
+  gitremoteset backup https://github.com/AdrianDC/aosp_development_aospcaf.git;
 }
 
 # === Git Remotes LineageOS (Sony) Project ===

@@ -73,6 +73,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_rom_aicp.rc \
   ${bash_android_dir}/android_rom_aosp_sony8960.rc \
   ${bash_android_dir}/android_rom_aosp_sonyaosp.rc \
+  ${bash_android_dir}/android_rom_aospcaf.rc \
   ${bash_android_dir}/android_rom_legacyxperia.rc \
   ${bash_android_dir}/android_rom_lineageos.rc \
   ${bash_android_dir}/android_rom_lineageos_sony8996.rc \

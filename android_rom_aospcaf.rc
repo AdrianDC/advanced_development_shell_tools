@@ -1,0 +1,18 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_remotes.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_projects.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_aosp_aospcaf.rc)
+
+# === AOSP-CAF Patcher ===
+function aospcafpatcher()
+{
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'aosp_development_aospcaf' 'aosp_aospcaf' '
+    device/sony/huashan
+    ' "${1}";
+}
