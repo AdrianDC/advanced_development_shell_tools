@@ -180,7 +180,7 @@ function bashsync()
   cd "${bash_android_dir}/";
   git fetch origin;
   git reset origin/$(git rev-parse --abbrev-ref HEAD);
-  git stash;
+  git stash -u;
   git submodule init;
   git submodule update;
   cd "${currentdir}/";
