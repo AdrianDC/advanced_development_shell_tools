@@ -270,3 +270,10 @@ function androidfilessync()
   megasync . '/Root/Android' "${1}";
   cd "${cwd}";
 }
+
+# === AndroidFiles Folder ===
+function androidfilesopen()
+{
+  # Open AndroidFiles folder
+  xdg-open "${ANDROID_FILES_PATH}/";
+}
