@@ -9,7 +9,7 @@ function megasync()
   # Usage
   if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: megasync <local_folder> <remote_folder> <--upload/--download> [--copy]';
+    echo ' Usage: megasync <local_folder> <remote_folder> <--upload/--download> [--copy,-y/-n]';
     echo '';
     echo '  > Upload with --upload (individual), optional --copy (megacopy)';
     echo '  > Download with --download (individual), optional --copy (megacopy)';
@@ -21,10 +21,12 @@ function megasync()
   local local_folder="${1}";
   local remote_folder="${2%/}";
   local option_direction="${3}";
-  local option_megacopy="${4}";
+  local option_params="${4}";
   local tmp_local_ls=$(mktemp);
   local tmp_remote_ls=$(mktemp);
   local flag_delete;
+  local key;
+  local key_override;
   local line;
   local line_tmp;
   local file_type;
@@ -34,6 +36,18 @@ function megasync()
   local file_escaped;
   local time_start;
   local time_span;
+
+  # =======================================================
+  # Parameters input
+  if [[ "${option_params}" =~ '-y' ]]; then
+    key_override='true';
+    key='y';
+  elif [[ "${option_params}" =~ '-n' ]]; then
+    key_override='true';
+    key='n';
+  else
+    key_override='';
+  fi;
 
   # =======================================================
   # Introduction message
@@ -108,7 +122,11 @@ function megasync()
       # Delete remote file
       if [ ! -z "${flag_delete}" ]; then
         printf " Delete remote [y/N] ? ";
-        read -t 20 key;
+        if [ -z "${key_override}" ]; then
+          read -t 20 key;
+        else
+          echo '';
+        fi;
         if [ ${?} -ne 0 ]; then
           echo '';
         fi;
@@ -127,7 +145,7 @@ function megasync()
 
     # ===========================================
     # Upload with megacopy to remote
-    if [ "${option_megacopy}" = '--copy' ]; then
+    if [[ "${option_params}" =~ '--copy' ]]; then
       echo -e " \e[1;33mmegasync: megacopy starting...\e[0m";
       megacopy --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
         | grep -v 'ERROR: File already exists at';
@@ -240,7 +258,11 @@ function megasync()
       # Delete local file
       if [ ! -z "${flag_delete}" ]; then
         printf " Delete local [y/N] ? ";
-        read -t 20 key;
+        if [ -z "${key_override}" ]; then
+          read -t 20 key;
+        else
+          echo '';
+        fi;
         if [ ${?} -ne 0 ]; then
           echo '';
         fi;
@@ -254,7 +276,7 @@ function megasync()
 
     # ===========================================
     # Download with megacopy to local
-    if [ "${option_megacopy}" = '--copy' ]; then
+    if [[ "${option_params}" =~ '--copy' ]]; then
       echo -e " \e[1;33mmegasync: megacopy starting...\e[0m";
       megacopy --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
         | grep -v 'ERROR: File already exists at';

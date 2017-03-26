@@ -267,7 +267,7 @@ function androidfilessync()
   # Use megasync inside AndroidFiles folder
   local cwd=$(pwd);
   cd "${ANDROID_FILES_PATH}";
-  megasync . '/Root/Android' "${1}";
+  megasync . '/Root/Android' "${1}" "${2}";
   cd "${cwd}";
 }
 
