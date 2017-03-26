@@ -143,6 +143,13 @@ function torompaths()
     target=$(echo ${target} | cut -f1 -d\ );
   fi;
 
+  # Mismatching ROM path
+  if [ -z "${target}" ] || [ ! -d ${target} ]; then
+    cdand;
+    target=$(pwd | sed "s/\(${android_dev_dir}\)\(\/[^/]*\(.*\)\|\)$/\1\/${1}\3/g");
+    target=$(echo ${target} | cut -f1 -d\ );
+  fi;
+
   # Return target
   echo ${target}/;
 }
