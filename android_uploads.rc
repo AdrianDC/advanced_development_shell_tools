@@ -251,6 +251,38 @@ function pushbrom()
   cd "${cwd}";
 }
 
+# === AndroidFiles Adder ===
+function androidfilesadd()
+{
+  # Check ANDROID_FILES_PATH is defined
+  if [ -z "${ANDROID_FILES_PATH}" ]; then
+    echo '';
+    echo ' You need to edit your ~/.bashrc to add :';
+    echo '  # AndroidFiles';
+    echo '  export ANDROID_FILES_PATH=/media/.../AndroidFiles;';
+    echo '';
+    return;
+  fi;
+
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: androidfilesadd <file_path> <target_folder>';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local path="${1}";
+  local target="${2}";
+
+  # Add new file to AndroidFiles
+  echo '';
+  printf ' \e[1;33mandroidfilesadd:\e[0m ';
+  mkdir -p "${ANDROID_FILES_PATH}/${target}";
+  cp -fv "${path}" "${ANDROID_FILES_PATH}/${target}";
+}
+
 # === AndroidFiles Syncer ===
 function androidfilessync()
 {
