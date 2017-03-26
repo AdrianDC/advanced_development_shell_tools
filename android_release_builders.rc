@@ -151,7 +151,7 @@ function romautorelease()
 
   # Upload the result and notify
   pushbrom "${rom_device}" "${rom_tag}";
-  if [[ ! "${rom_params}" =~ 'local' ]] && [[ ! "${rom_params}" =~ 'bringup' ]]; then
+  if [[ ! "${rom_params}" =~ 'local' ]]; then
     if [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
       gnome-terminal -x bash -c "\
         source $(getbash)/android_bash.rc;\
