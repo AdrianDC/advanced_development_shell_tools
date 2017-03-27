@@ -44,6 +44,7 @@ alias gitpaman='gitremoteverify $(githubusername) gitraa && gitpu $(githubuserna
 alias gitpam='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) multirom';
 alias gitpama='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master';
 alias gitpamm='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) marshmallow';
+alias gitpanmr='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) n-mr1'
 alias gitpalineage='gitremoteverify lineage gitrao && gitpu lineage cm-14.1';
 alias gitpan='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) nougat';
 alias gitpat='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) twrp';
