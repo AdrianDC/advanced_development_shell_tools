@@ -38,10 +38,31 @@ function adbro()
 # === ADB Sideload Helper ===
 function adbside()
 {
-  adb shell twrp sideload;
-  while ! adb devices | grep -q 'sideload'; do
-    sleep 1;
+  # Reboot to recovery if needed
+  if ! timeout 2 sh -c "adb devices | grep -q 'recovery'"; then
+    adb reboot recovery;
+  fi;
+
+  # Wait for an adb recovery
+  while true; do
+    if timeout .5 sh -c "adb devices | grep -q 'recovery\|sideload'"; then
+      break;
+    fi;
+    sleep .5;
   done;
+
+  # Wait for an adb recovery
+  while true; do
+    if timeout .5 sh -c "adb devices | grep -q 'sideload'"; then
+      break;
+    fi;
+
+    # Start twrp sideload
+    adb shell twrp sideload;
+    sleep .5;
+  done;
+
+  # Sideload the file
   adb sideload ${1};
 }
 
