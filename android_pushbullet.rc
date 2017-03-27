@@ -16,6 +16,14 @@ function pushb()
     source ~/.bash_android.pushbullet.rc;
   fi;
 
+  # Ignore missing credentials
+  if [ "${PushBulletToken}" = 'token' ]; then
+    echo '';
+    echo ' pushb: Open android_pushbullet.rc to see how to set your logins';
+    echo '';
+    return;
+  fi;
+
   # PushBullet notification message
   if [ ! -z "${1}" ]; then
     PushBulletComment="${1}";
