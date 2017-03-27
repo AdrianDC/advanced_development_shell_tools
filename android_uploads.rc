@@ -3,30 +3,6 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === File Uploader BasketBuild ===
-function fileuplbasketbuild()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: fileuplbasketbuild <file_path> <target_folder>';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  local path="${1}";
-  local target="${2}";
-
-  # File full path
-  if [ -f "${path}" ]; then
-    path=$(readlink -f "${path}");
-  fi;
-
-  # Upload file to target
-  $(getbash)/android_upload_basketbuild.sh "${path}" "${target}";
-}
-
 # === File Uploader Mega.nz ===
 function fileupl()
 {
