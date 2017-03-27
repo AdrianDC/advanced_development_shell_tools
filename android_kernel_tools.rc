@@ -13,7 +13,7 @@ function fboota()
   # Usage
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] || [ -z "${TARGET_PRODUCT}" ]; then
     echo '';
-    echo ' Usage: fboota [unsecure,sep,full,init,inject,recovery,zip]';
+    echo ' Usage: fboota [unsecure,sep,full,init,inject,recovery,fastupl,zip]';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -125,6 +125,10 @@ function fboota()
   # Zip the bootimage
   elif [[ "${params}" =~ 'zip' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
     bootzip ${device} "${bootimg}";
+
+  # Upload the bootimage
+  elif [[ "${params}" =~ 'fastupl' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
+    fastupl "${bootimg}";
 
   # Flash the bootimage to the device
   elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
