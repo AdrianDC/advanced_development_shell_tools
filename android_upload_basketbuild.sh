@@ -13,6 +13,14 @@ elif [ -f ~/.bash_android.basketbuild.main.rc ]; then
   source ~/.bash_android.basketbuild.main.rc;
 fi;
 
+# Ignore missing credentials
+if [ "${UploadUserName}" = 'Username.s' ]; then
+  echo '';
+  echo ' Error: Open android_upload_basketbuilds.rc to see how to set your logins';
+  echo '';
+  return;
+fi;
+
 # Variables
 SendFile="${1}";
 UploadFolder="${2:-Development}";
