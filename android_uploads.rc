@@ -50,6 +50,7 @@ function fileupl()
   # Upload file to target
   echo '';
   megarm "${target}/$(basename ${path})" 2>/dev/null;
+  megamkdir "${target}" 2>/dev/null;
   megaput --path "${target}" "${path}";
 
   # Show upload time
