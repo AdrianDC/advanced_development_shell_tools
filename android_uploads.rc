@@ -94,9 +94,9 @@ function fastupl()
 
   # FTP direct download link
   local filename=$(basename "${1}");
+  local cmd="rm -rf /tmp/*.megatools.cache; megaget --path ./ '/Root/Private/${filename}'; megarm '/Root/Private/${filename}';";
   echo -e '  \e[1;32mDirect download :\e[0m';
-  echo "   megaget --path ./ '/Root/Private/${filename}'";
-  echo "   megarm '/Root/Private/${filename}'";
+  echo "   ${cmd}";
   echo '';
 }
 
