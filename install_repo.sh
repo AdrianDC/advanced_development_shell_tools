@@ -7,6 +7,13 @@ echo '';
 echo ' [ Installing the repo components ]';
 echo '';
 
+# Verify apt based Linux
+if ! type apt >/dev/null 2>&1; then
+  echo 'install_repo.sh is meant to be used with apt';
+  echo '';
+  return;
+fi;
+
 # Update Java JDK (argument to ignore the purge)
 if [ -z "${1}" ]; then
   sudo apt-get -f purge --yes openjdk-\* icedtea-\* icedtea6-\*;
