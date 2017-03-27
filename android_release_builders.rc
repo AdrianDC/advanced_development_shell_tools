@@ -15,12 +15,22 @@ function romautorelease()
     return;
   fi;
 
-  # Internal variables
-  local cwd=$(pwd);
+  # Error with ANDROID_DEV_DRIVE missing
+  if [ -z "${ANDROID_DEV_DRIVE}" ]; then
+    echo '';
+    echo " Error: ANDROID_DEV_DRIVE is missing.";
+    echo '  Please read the README.md from this project...';
+    echo '';
+    return;
+  fi;
+
+  # Logs path handling
   local rom_logs="${ANDROID_DEV_DRIVE}/Logs";
   local rom_logs_output;
+  mkdir -p "${rom_logs}";
 
   # Access ROM root
+  local cwd=$(pwd);
   croot;
 
   # ROM variables
