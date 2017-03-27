@@ -58,7 +58,7 @@ function fileupl()
   fi;
 
   # Detect main target inclusion
-  if [[ ! "${target}" =~ '/Root/Android/' ]]; then
+  if [[ ! "${target}" =~ '/Root/' ]]; then
     target="/Root/Android/${target}";
   fi;
 
@@ -67,7 +67,7 @@ function fileupl()
   echo -e " \e[1;33m[ Uploading to the server - Path '${target}' ]\e[0m";
 
   # Use AndroidFiles to save the file
-  if [ ! -z "${ANDROID_FILES_PATH}" ]; then
+  if [ ! -z "${ANDROID_FILES_PATH}" ] && [[ "${path}" =~ 'Root/Android' ]]; then
     androidfilesadd "${path}" "${target#/Root/Android/}";
   fi;
 
