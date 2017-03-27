@@ -47,6 +47,9 @@ function fileupl()
     androidfilesadd "${path}" "${target#/Root/Android/}";
   fi;
 
+  # Remove local megatools cache
+  rm -rf /tmp/*.megatools.cache;
+
   # Upload file to target
   echo '';
   megarm "${target}/$(basename ${path})" 2>/dev/null;
