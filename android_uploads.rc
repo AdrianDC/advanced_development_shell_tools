@@ -95,10 +95,15 @@ function fastupl()
   # File upload to Private
   fileupl "${1}" '/Root/Private';
 
-  # FTP direct download link
+  # File download command
   local filename=$(basename "${1}");
   local cmd="rm -rf /tmp/*.megatools.cache; megaget --path ./ '/Root/Private/${filename}'; megarm '/Root/Private/${filename}';";
-  echo -e '  \e[1;32mDirect download :\e[0m';
+  if [ ! -z "${2}" ]; then
+    cmd="${cmd} adbside '${filename}';";
+  fi;
+
+  # Command outputs
+  echo -e '  \e[1;32mDirect download:\e[0m';
   echo "${cmd}" | xclip -selection c;
   echo "   ${cmd}";
   echo '';
@@ -117,7 +122,7 @@ function mmmupl()
 
   # Build and upload to Private
   mmmzip "${1}";
-  fastupl "${PackageResult}";
+  fastupl "${PackageResult}" true;
 }
 
 # === Bootimage File Uploader ===
