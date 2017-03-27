@@ -111,9 +111,9 @@ function mmmupl()
     return;
   fi;
 
-  # Build and upload to Development
+  # Build and upload to Private
   mmmzip "${1}";
-  devupl "${PackageResult}";
+  fastupl "${PackageResult}";
 }
 
 # === Bootimage File Uploader ===
