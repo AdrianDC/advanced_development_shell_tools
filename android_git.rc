@@ -39,6 +39,20 @@ function gitcpup()
     tmpurl="${tmpurl}.patch";
   fi;
 
+  # CodeAurora patch
+  if [[ "${tmpurl}" =~ 'codeaurora.org' ]]; then
+    if [[ ! "${tmpurl}" =~ 'patch/' ]]; then
+      tmpurl="${tmpurl/commit\/?*id=/patch\/?id=}";
+    fi;
+    if [[ ! "${tmpurl}" =~ 'patch/' ]]; then
+      echo '';
+      echo -e ' \e[1;33mgitcpup: Link incomplete, add "..." around the url\e[0m';
+      echo " Failed on ${tmpurl}";
+      echo '';
+      return;
+    fi;
+  fi;
+
   # Download patch
   rm -rf .git/rebase-apply;
   curl "${tmpurl}" > ${tmpfile} 2> /dev/null;
