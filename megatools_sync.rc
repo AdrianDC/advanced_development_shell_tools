@@ -17,6 +17,14 @@ function megasync()
     return;
   fi;
 
+  # Ignore missing credentials
+  if [ ! -f ~/.megarc ]; then
+    echo '';
+    echo ' megatools: ~/.megarc is missing, please read megatools documentation';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local local_folder="${1}";
   local remote_folder="${2%/}";
