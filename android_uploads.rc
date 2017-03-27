@@ -38,6 +38,14 @@ function fileupl()
     return;
   fi;
 
+  # Ignore missing credentials
+  if [ ! -f ~/.megarc ]; then
+    echo '';
+    echo ' megatools: ~/.megarc is missing, please read megatools documentation';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local path="${1}";
   local target="${2}";
