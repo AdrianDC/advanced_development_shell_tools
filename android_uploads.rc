@@ -115,13 +115,17 @@ function mmmupl()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: mmmupl packageorpath';
+    echo ' Usage: mmmupl <packageorpath> [bool_partial_build]';
     echo '';
     return;
   fi;
 
-  # Build and upload to Private
+  # Build and package zip
+  export MMMZIP_BUILD_PARTIAL=${2:-true};
   mmmzip "${1}";
+  export MMMZIP_BUILD_PARTIAL=;
+
+  # Upload to Private
   fastupl "${PackageResult}" true;
 }
 

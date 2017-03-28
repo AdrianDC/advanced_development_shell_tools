@@ -71,6 +71,12 @@ function mmmzip()
     croot;
   fi;
 
+  # Handle build mode
+  local BuildMode='-B';
+  if [ "${MMMZIP_BUILD_PARTIAL}" = 'true' ]; then
+    BuildMode='';
+  fi;
+
   # Disable Ninja
   export USE_NINJA=false;
 
@@ -82,7 +88,7 @@ function mmmzip()
 
   # Make the modules
   if [ -d "$(readlink -f "${path}")" ] || ! $(mms -v >/dev/null 2>&1); then
-    mmm -B ${BuildParams} | tee ${LogFile};
+    mmm ${BuildMode} ${BuildParams} | tee ${LogFile};
   else
     mka ${BuildParams} | tee ${LogFile};
   fi;
