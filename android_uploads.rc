@@ -99,7 +99,7 @@ function fastupl()
   local filename=$(basename "${1}");
   local cmd="rm -rf /tmp/*.megatools.cache; rm -f '${filename}'; megaget --path ./ '/Root/Private/${filename}'; if [ -f '${filename}' ]; then megarm '/Root/Private/${filename}'; fi;";
   if [ ! -z "${2}" ]; then
-    cmd="${cmd} adbside '${filename}';";
+    cmd="${cmd} adbside '${filename}' true;";
   fi;
 
   # Command outputs

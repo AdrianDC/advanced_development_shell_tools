@@ -66,7 +66,21 @@ function adbside()
   done;
 
   # Sideload the file
-  adb sideload ${1};
+  adb sideload "${1}";
+
+  # Wait for an adb recovery if 2 parameters
+  if [ ! -z "${2}" ]; then
+    while true; do
+      if timeout .5 sh -c "adb devices | grep -q 'recovery'" 2>/dev/null; then
+        break;
+      fi;
+      sleep .5;
+    done;
+
+    # Reboot to Android
+    echo -e '\e[1;33madbside: Rebooting to Android\e[0m';
+    adb shell reboot;
+  fi;
 }
 
 # === ADB Access Shortcuts ===
