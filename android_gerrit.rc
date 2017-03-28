@@ -99,6 +99,13 @@ function gerritusername()
     source ~/.bash_android.gerrit.rc;
   fi;
 
+  # Warn about missing credentials
+  if [ "${GerritUsername}" = 'Username' ]; then
+    echo '' 1>&2;
+    echo -e ' \e[1;31mError: Open android_gerrit.rc (in gerritusername) to see how to set your logins\e[0m' 1>&2;
+    echo '' 1>&2;
+  fi;
+
   # Return username
   echo "${GerritUsername}";
 }
