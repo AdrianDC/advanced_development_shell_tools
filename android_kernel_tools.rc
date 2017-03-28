@@ -35,7 +35,8 @@ function fboota()
   echo '';
   echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016 ]\e[0m';
   echo '';
-  if [[ ! "${params}" =~ 'noflash' ]] && [[ ! "${params}" =~ 'zip' ]]; then
+  if [[ ! "${params}" =~ 'noflash' ]] && [[ ! "${params}" =~ 'fastupl' ]] && \
+      [[ ! "${params}" =~ 'zip' ]]; then
     sudo printf '';
   fi;
 
