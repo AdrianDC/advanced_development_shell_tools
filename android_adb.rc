@@ -39,25 +39,28 @@ function adbro()
 function adbside()
 {
   # Reboot to recovery if needed
-  if ! timeout 2 sh -c "adb devices | grep -q 'recovery'"; then
+  if ! timeout 2 sh -c "adb devices | grep -q 'recovery\|sideload'" 2>/dev/null; then
+    echo -e '\e[1;33madbside: Rebooting to recovery\e[0m';
     adb reboot recovery;
   fi;
 
   # Wait for an adb recovery
   while true; do
-    if timeout .5 sh -c "adb devices | grep -q 'recovery\|sideload'"; then
+    if timeout .5 sh -c "adb devices | grep -q 'recovery\|sideload'" 2>/dev/null; then
       break;
     fi;
+    echo -e '\e[1;33madbside: Waiting for recovery or sideload\e[0m';
     sleep .5;
   done;
 
-  # Wait for an adb recovery
+  # Wait for an adb sideload
   while true; do
-    if timeout .5 sh -c "adb devices | grep -q 'sideload'"; then
+    if timeout .5 sh -c "adb devices | grep -q 'sideload'" 2>/dev/null; then
       break;
     fi;
 
     # Start twrp sideload
+    echo -e '\e[1;33madbside: Waiting for sideload\e[0m';
     adb shell twrp sideload;
     sleep .5;
   done;
