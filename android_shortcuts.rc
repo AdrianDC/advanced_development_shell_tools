@@ -182,6 +182,7 @@ function cddevmrom()    { cd $(getand)/Development/multirom_development_sony; }
 function cddevtwrp()    { cd $(getand)/Development/twrp_development_sony; }
 function cdref()        { cd $(getand)/References/${1}; }
 function cdrefapk()     { cd $(getand)/References/apk; }
+function adbapks()      { cdrefapk; adbapkinstall; }
 function cdandfiles()   { cd "${ANDROID_FILES_PATH}/"; }
 function impaospcaf()   { rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}; }
 function implineage()   { rsync -arv --delete --delete-after $(tolineage ${1}) ./${1}; }
