@@ -227,7 +227,11 @@ function gitrasonyaosp()
 # === Git Remotes AOSP-CAF Project ===
 function gitraaospcaf()
 {
-  gitremoteset backup https://github.com/AdrianDC/aosp_development_aospcaf.git;
+  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+    gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
+  else
+    gitremoteset backup https://github.com/AdrianDC/aosp_development_aospcaf.git;
+  fi;
 }
 
 # === Git Remotes LineageOS (Sony) Project ===

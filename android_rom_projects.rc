@@ -37,6 +37,8 @@ function gitbranchpusher()
     frameworks\/base)
       if [[ "${repo_dir}" =~ 'LineageOS' ]]; then
         project_branch='lineage_sonyaosp';
+      elif [[ "${repo_dir}" =~ 'AOSP-CAF' ]]; then
+        project_branch='aosp_caf';
       else
         project_branch='aosp_sony8960';
       fi;;
@@ -123,6 +125,8 @@ function gitfbranch()
     frameworks\/base)
       if [[ "${repo_dir}" =~ 'LineageOS' ]]; then
         project_branch='lineage_sonyaosp';
+      elif [[ "${repo_dir}" =~ 'AOSP-CAF' ]]; then
+        project_branch='aosp_caf';
       else
         project_branch='aosp_sony8960';
       fi;;
