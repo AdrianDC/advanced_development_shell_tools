@@ -279,6 +279,6 @@ function adbapkinstall()
   # Install all available apk files
   for file in *.apk; do
     echo "-- ${file} --";
-    adb install ${file};
+    adb install "${file}";
   done;
 }
