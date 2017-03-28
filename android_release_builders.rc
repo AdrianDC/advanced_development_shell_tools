@@ -123,18 +123,21 @@ function romautorelease()
   elif [[ "${rom_tag}" =~ 'AOSP71' ]]; then
     source ./build/envsetup.sh;
     lunch aosp_${rom_target}-userdebug;
+    romkernelmrproper;
     make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
 
   # Build Android AOSP-CAF
   elif [[ "${rom_tag}" =~ 'CAF' ]]; then
     source ./build/envsetup.sh;
     lunch aosp_${rom_target}-userdebug;
+    romkernelmrproper;
     make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
 
   # Build Android ResurrectionRemix
   elif [[ "${rom_tag}" =~ 'RR' ]]; then
     export RR_BUILDTYPE=OFFICIAL;
     repos "${rom_target}";
+    romkernelmrproper;
     brunch "${rom_target}" | tee ${rom_logs_output};
 
   # Build Android Sony AOSP
@@ -146,11 +149,13 @@ function romautorelease()
   # Build Android LegacyXperia
   elif [[ "${rom_tag}" =~ 'LX' ]]; then
     repos "${rom_target}";
+    romkernelmrproper;
     brunch "${rom_target}" | tee ${rom_logs_output};
 
   # Build Android LineageOS
   else
     repos "${rom_target}";
+    romkernelmrproper;
     brunch "${rom_target}" | tee ${rom_logs_output};
   fi;
 
