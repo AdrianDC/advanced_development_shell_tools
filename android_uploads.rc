@@ -232,6 +232,78 @@ function autodevupl()
   fi;
 }
 
+# === File Downloader Mega.nz ===
+function fileget()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fileget <remote_path> [boot_remove_remote]';
+    echo '';
+    return;
+  fi;
+
+  # Ignore missing credentials
+  if [ ! -f ~/.megarc ]; then
+    echo '';
+    echo ' megatools: ~/.megarc is missing, please read megatools documentation';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local path="${1}";
+  local remove_remote="${2}";
+  local file_name=$(basename "${path}");
+  local time_start=$(date +%s);
+  local time_span;
+
+  # Detect main target inclusion
+  if [[ ! "${path}" =~ '/Root/' ]]; then
+    path="/Root/Android/${path}";
+  fi;
+
+  # Upload header informations
+  echo '';
+  echo -e " \e[1;33m[ Download from the server - Path '${path#/Root/Android/}' ]\e[0m";
+
+  # Remove local megatools cache
+  rm -rf /tmp/*.megatools.cache;
+
+  # Save local file
+  if [ -f "${file_name}" ]; then
+    rm -f "${file_name}.tmp";
+    mv "${file_name}" "${file_name}.tmp";
+  fi;
+
+  # Download file from target
+  echo '';
+  megaget --path ./ "${path}";
+
+  # Delete remote file
+  if [ "${remove_remote}" = 'true' ] && [ -f "${file_name}" ]; then
+    megarm "${path}";
+  fi;
+
+  # Clean saved file
+  if [ -f "${file_name}" ]; then
+    rm -f "${file_name}.tmp";
+
+  # Warn about failed download
+  else
+    echo '';
+    echo -e " \e[1;31m[ Download failed ]\e[0m";
+    echo '';
+    return;
+  fi;
+
+  # Show download time
+  echo '';
+  time_span=$(($(date +%s)-${time_start}));
+  echo -e " \e[1;37m[ Download done in ${time_span} secs ]\e[0m";
+  echo '';
+}
+
 # === Pushbullet ROM Status ===
 function pushbrom()
 {
