@@ -12,6 +12,6 @@ package_extract_file("twrp.img", "ANDROID_FOTA_PARTITION");
 ui_print("     Done.");
 ui_print(" ");
 
-set_progress(1.000000);
 ui_print("  Update Completed.");
 ui_print(" ");
+set_progress(1.000000);
