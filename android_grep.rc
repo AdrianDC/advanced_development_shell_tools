@@ -51,3 +51,24 @@ alias gn='grepbn';
 function glc() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h -anr '.\{80,\}' .; }
 function glj() { GREP_COLORS='fn=1;1' grep --include \*.java -anr '.\{100,\}' .; }
 function gle() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h  --include \*.java -anr '.* $' .; }
+
+# === Grep and open ===
+function gso()
+{
+  # Search files
+  local files=;
+  GREP_COLORS='fn=1;1';
+  for file in $(find . -type f -not -path "*.git/*" -not -path "*.repo/*" | sort); do
+    if [ -f "${file}" ]; then
+      found=$(strings $(readlink -f ${file}) | grep -ai "${*}");
+      if [ ! -z "${found}" ]; then
+        files="${files} ${file}";
+      fi;
+    fi;
+  done;
+
+  # Open found files
+  if [ ! -z "${files}" ]; then
+    gedit ${files};
+  fi;
+}
