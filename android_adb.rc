@@ -38,6 +38,10 @@ function adbro()
 # === ADB Sideload Helper ===
 function adbside()
 {
+  # Initiate adb
+  echo '';
+  adb devices;
+
   # Reboot to recovery if needed
   if ! timeout 2 sh -c "adb devices | grep -q 'recovery\|sideload'" 2>/dev/null; then
     echo -e '\e[1;33madbside: Rebooting to recovery\e[0m';
@@ -50,7 +54,7 @@ function adbside()
       break;
     fi;
     echo -e '\e[1;33madbside: Waiting for recovery or sideload\e[0m';
-    sleep .5;
+    sleep 2;
   done;
 
   # Wait for an adb sideload
@@ -62,7 +66,7 @@ function adbside()
     # Start twrp sideload
     echo -e '\e[1;33madbside: Waiting for sideload\e[0m';
     adb shell twrp sideload;
-    sleep .5;
+    sleep 2;
   done;
 
   # Sideload the file
@@ -74,13 +78,14 @@ function adbside()
       if timeout .5 sh -c "adb devices | grep -q 'recovery'" 2>/dev/null; then
         break;
       fi;
-      sleep .5;
+      sleep 1;
     done;
 
     # Reboot to Android
     echo -e '\e[1;33madbside: Rebooting to Android\e[0m';
     adb shell reboot;
   fi;
+  echo '';
 }
 
 # === ADB Access Shortcuts ===
