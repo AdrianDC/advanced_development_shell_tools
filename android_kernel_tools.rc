@@ -129,7 +129,7 @@ function fboota()
 
   # Upload the bootimage
   elif [[ "${params}" =~ 'fastupl' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
-    fastupl "${bootimg}";
+    fastupl "${bootimg}" 'bootimage';
 
   # Flash the bootimage to the device
   elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then

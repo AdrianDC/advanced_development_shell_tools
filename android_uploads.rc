@@ -98,8 +98,12 @@ function fastupl()
   # File download command
   local filename=$(basename "${1}");
   local cmd="fileget '/Root/Private/${filename}';";
-  if [ ! -z "${2}" ]; then
+
+  # Additional install commands
+  if [ "${2}" = 'zip' ]; then
     cmd="${cmd} adbside '${filename}' true;";
+  elif [ "${2}" = 'bootimage' ]; then
+    cmd="${cmd} fboot '${filename}';";
   fi;
 
   # Command outputs
@@ -126,7 +130,7 @@ function mmmupl()
   export MMMZIP_BUILD_PARTIAL=;
 
   # Upload to Private
-  fastupl "${PackageResult}" true;
+  fastupl "${PackageResult}" 'zip';
 }
 
 # === Bootimage File Uploader ===
