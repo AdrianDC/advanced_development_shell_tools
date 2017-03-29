@@ -31,7 +31,7 @@ function meganzreload()
   echo '';
   nohup ${bash_tools_megacmd}/mega-cmd >/dev/null 2>&1 &
   local proc_id=${!};
-  sleep 1;
+  sleep 3;
 
   # Login with .megarc credentials
   local username=$(grep 'Username' ~/.megarc | sed 's/.*= //');
