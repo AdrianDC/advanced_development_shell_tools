@@ -13,6 +13,11 @@ function aospcafpatcher()
 {
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'aosp_development_aospcaf' 'aosp_aospcaf' '
+    device/sony/blue-common
+    device/sony/hayabusa
     device/sony/huashan
+    device/sony/mint
+    device/sony/tsubasa
+    packages/apps/DeskClock
     ' "${1}";
 }
