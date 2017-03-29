@@ -1,0 +1,48 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Mega.nz Reload ===
+function meganzreload()
+{
+  # Usage
+  if [ ! -f ~/.megarc ]; then
+    echo '';
+    echo ' Usage: meganzreload';
+    echo '';
+    echo '  ~/.megarc from megatools has to be configured';
+    echo '';
+    return;
+  fi;
+
+  # Verify megacli installed
+  if ! type megacli >/dev/null 2>&1; then
+    echo 'install_repo.sh is meant to be used with apt';
+    echo '';
+    return;
+  fi;
+
+  # Start mega-cmd server
+  echo '';
+  export LD_LIBRARY_PATH=/usr/local/lib;
+  nohup mega-cmd >/dev/null 2>&1 &
+  local proc_id=${!};
+  sleep 1;
+
+  # Login with .megarc credentials
+  local username=$(grep 'Username' ~/.megarc | sed 's/.*= //');
+  local password=$(grep 'Password' ~/.megarc | sed 's/.*= //');
+  mega-login "${username}" "${password}";
+
+  # Launch mega-reload
+  mega-reload;
+
+  # Stop mega-cmd server
+  kill -9 "${proc_id}";
+  kill "${proc_id}";
+
+  # Restore environment variables
+  export LD_LIBRARY_PATH;
+  echo '';
+}

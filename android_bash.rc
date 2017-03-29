@@ -87,6 +87,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_uploads.rc \
   \
   ${bash_android_dir}/megatools_mirror.rc \
+  ${bash_android_dir}/megatools_reload.rc \
 ";
 
 # === Bash Importations ===
