@@ -213,6 +213,7 @@ function repomrom()
     repo sync --current-branch --detach --force-broken --force-sync --no-clone-bundle --no-tags;
 
     # lz4: Remove the compilation timestamps
+    source ./build/envsetup.sh;
     repopick 22192;
 
     # MutiROM submodules
