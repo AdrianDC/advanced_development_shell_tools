@@ -249,6 +249,7 @@ function aospsodpautorelease()
   if [ -z "${2}" ]; then
     reposy;
   fi;
+  aospsonyrebaser;
   aospsonypatcher;
 
   # Devices to build
