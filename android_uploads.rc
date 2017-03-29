@@ -56,8 +56,10 @@ function fileupl()
   megamkdir "${target}" 2>/dev/null;
   megaput --path "${target}" "${path}";
 
+  # Reload mega.nz account
+  meganzreload;
+
   # Show upload time
-  echo '';
   time_span=$(($(date +%s)-${time_start}));
   echo -e " \e[1;37m[ Upload done in ${time_span} secs ]\e[0m";
   echo '';
@@ -381,6 +383,9 @@ function androidfilessync()
   cd "${ANDROID_FILES_PATH}";
   megamirror . '/Root/Android' "${1}" "${2}";
   cd "${cwd}";
+
+  # Reload mega.nz account
+  meganzreload;
 }
 
 # === AndroidFiles Folder ===
