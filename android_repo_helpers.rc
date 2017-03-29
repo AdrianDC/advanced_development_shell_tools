@@ -147,32 +147,6 @@ function repoprune()
   echo '';
 }
 
-# === Repo AOSP Syncer ===
-function reposyaosp()
-{
-  cwd=$(pwd);
-  croot;
-  cdaosp;
-  reposy;
-  cd "${cwd}";
-  croot;
-  reposy;
-  cd "${cwd}";
-}
-
-# === Repo LineageOS Syncer ===
-function reposylineage()
-{
-  cwd=$(pwd);
-  croot;
-  cdlineage;
-  reposy;
-  cd "${cwd}";
-  croot;
-  reposy;
-  cd "${cwd}";
-}
-
 # === Repo Sync Clean ===
 function reposycl()
 {
