@@ -6,6 +6,6 @@ developing on Android, especially for SONY devices.<br />
 
 
 ### [ Permanent installation for terminals ]
-- sudo gedit ~/.bashrc
+- gedit ~/.bashrc
 - Adapt and add "export ANDROID_DEV_DRIVE=/media/../AndroidDev;"
 - Adapt and add "source ${ANDROID_DEV_DRIVE}/Bash/android_bash.rc;"
