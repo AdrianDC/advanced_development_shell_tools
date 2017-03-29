@@ -46,7 +46,7 @@ function repotwrp()
   source ./build/envsetup.sh;
   croot;
   RootDir=$(pwd);
-  breakfast ${PhoneName};
+  lunch omni_${PhoneName}-userdebug;
   make -j$(grep -c ^processor /proc/cpuinfo) recoveryimage ${RootDir}/out/target/product/${PhoneName}/system/build.prop;
   echo '';
 
@@ -239,7 +239,7 @@ function repomrom()
     RootDir=$(pwd);
 
     # Build
-    breakfast ${PhoneName};
+    lunch omni_${PhoneName}-userdebug;
     if [[ "${BuildParams}" =~ 'kernel' ]]; then
       make -j$(grep -c ^processor /proc/cpuinfo) multirom_kernel_zip;
     else
