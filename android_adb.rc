@@ -163,6 +163,25 @@ function adbedit()
   rm "${name}";
 }
 
+# === ADB Database Opened ===
+function adbdatabase()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo 'usage: adbdatabase </data...sqlite.db>';
+    echo '';
+    return;
+  fi;
+
+  # Pull and open
+  adbro;
+  local path="${1}";
+  local name=$(basename "${path}");
+  adb pull "${path}";
+  sqlite3 "${name}";
+}
+
 # === ADB Inputs Reader ===
 function adbinputs()
 {
