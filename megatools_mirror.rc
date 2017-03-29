@@ -3,13 +3,13 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === Megatools Sync ===
-function megasync()
+# === Megatools Mirror ===
+function megamirror()
 {
   # Usage
   if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: megasync <local_folder> <remote_folder> <--upload/--download> [--copy,-y/-n]';
+    echo ' Usage: megamirror <local_folder> <remote_folder> <--upload/--download> [--copy,-y/-n]';
     echo '';
     echo '  > Upload with --upload (individual), optional --copy (megacopy)';
     echo '  > Download with --download (individual), optional --copy (megacopy)';
@@ -60,7 +60,7 @@ function megasync()
   # =======================================================
   # Introduction message
   echo '';
-  echo -e " \e[1;37mmegasync: Syncing '${local_folder}' and '${remote_folder}'...\e[0m";
+  echo -e " \e[1;37mmegamirror: Syncing '${local_folder}' and '${remote_folder}'...\e[0m";
 
   # Remove local megatools cache
   rm -rf /tmp/*.megatools.cache;
@@ -105,7 +105,7 @@ function megasync()
       # Verify folder exists
       if [ "${file_type}" = '1' ] && [ "${file_size}" = '-' ]; then
         if [ ! -d "${file_local}" ]; then
-          printf " \e[1;31mmegasync: Remote folder '${file_local}/' is missing:\e[0m";
+          printf " \e[1;31mmegamirror: Remote folder '${file_local}/' is missing:\e[0m";
           flag_delete='true';
 
         # Exclude folder from needed uploads
@@ -116,7 +116,7 @@ function megasync()
       # Verify files sizes do not mismatch
       elif [ -f "${file_local}" ]; then
         if [ ${file_size/-/0} -ne $(stat -c "%s" "${file_local}") ]; then
-          printf " \e[1;31mmegasync: Remote file '${file_local}' is different:\e[0m";
+          printf " \e[1;31mmegamirror: Remote file '${file_local}' is different:\e[0m";
           flag_delete='true';
 
         # Exclude file from needed uploads
@@ -126,7 +126,7 @@ function megasync()
 
       # Remote file no longer exist locally
       else
-        printf " \e[1;31mmegasync: Remote file '${file_local}' locally removed:\e[0m";
+        printf " \e[1;31mmegamirror: Remote file '${file_local}' locally removed:\e[0m";
         flag_delete='true';
       fi;
 
@@ -143,7 +143,7 @@ function megasync()
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
           megarm "${file_path}";
-          echo -e " \e[1;32mmegasync: Removed remote '${file_path}'\e[0m";
+          echo -e " \e[1;32mmegamirror: Removed remote '${file_path}'\e[0m";
 
           # Remove folder elements
           if [ "${file_type}" = '1' ]; then
@@ -157,7 +157,7 @@ function megasync()
     # ===========================================
     # Upload with megacopy to remote
     if [[ "${option_params}" =~ '--copy' ]]; then
-      echo -e " \e[1;33mmegasync: megacopy starting...\e[0m";
+      echo -e " \e[1;33mmegamirror: megacopy starting...\e[0m";
       rm -rf /tmp/*.megatools.cache;
       megacopy --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
         | grep -v 'ERROR: File already exists at';
@@ -180,19 +180,19 @@ function megasync()
         # Create remote folder
         if [ -d "${file_local}" ]; then
           megamkdir "${file_path}";
-          echo -e " \e[1;33mmegasync: Created remote folder '${file_path}/'\e[0m";
+          echo -e " \e[1;33mmegamirror: Created remote folder '${file_path}/'\e[0m";
 
         # Upload file to target
         else
           file_path=$(dirname "${file_path}");
-          echo -e " \e[1;33mmegasync: Uploading to the server - Path '${file_path}'\e[0m";
+          echo -e " \e[1;33mmegamirror: Uploading to the server - Path '${file_path}'\e[0m";
           megamkdir "${file_path}" 2>&1 \
             | grep -v 'Directory already exists:';
           megaput --path "${file_path}" "${file_local}";
 
           # Show upload time
           time_span=$(($(date +%s)-${time_start}));
-          echo -e " \e[1;37mmegasync: Upload done in ${time_span} secs\e[0m";
+          echo -e " \e[1;37mmegamirror: Upload done in ${time_span} secs\e[0m";
 
         fi;
       done;
@@ -242,7 +242,7 @@ function megasync()
       # Verify folder exists
       if [ -d "${file_path}" ]; then
         if [ -z "${line_tmp[2]}" ]; then
-          printf " \e[1;31mmegasync: Remote folder '${file_local}/' is missing:\e[0m";
+          printf " \e[1;31mmegamirror: Remote folder '${file_local}/' is missing:\e[0m";
           flag_delete='true';
 
         # Exclude folder from needed downloads
@@ -253,7 +253,7 @@ function megasync()
       # Verify files sizes do not mismatch
       elif [ ! -z "${line_tmp}" ]; then
         if [ "${line_tmp[3]}" = '-' ] || [ ${file_size} -ne ${line_tmp[3]} ]; then
-          printf " \e[1;31mmegasync: Local file '${file_local}' is different:\e[0m";
+          printf " \e[1;31mmegamirror: Local file '${file_local}' is different:\e[0m";
           flag_delete='true';
 
         # Exclude file from needed downloads
@@ -263,7 +263,7 @@ function megasync()
 
       # Local file no longer exist remotely
       else
-        printf " \e[1;31mmegasync: Local file '${file_local}' remotely removed:\e[0m";
+        printf " \e[1;31mmegamirror: Local file '${file_local}' remotely removed:\e[0m";
         flag_delete='true';
       fi;
 
@@ -280,7 +280,7 @@ function megasync()
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
           rm -r "${file_path}";
-          echo -e " \e[1;32mmegasync: Removed local '${file_path}'\e[0m";
+          echo -e " \e[1;32mmegamirror: Removed local '${file_path}'\e[0m";
         fi;
       fi;
 
@@ -289,7 +289,7 @@ function megasync()
     # ===========================================
     # Download with megacopy to local
     if [[ "${option_params}" =~ '--copy' ]]; then
-      echo -e " \e[1;33mmegasync: megacopy starting...\e[0m";
+      echo -e " \e[1;33mmegamirror: megacopy starting...\e[0m";
       rm -rf /tmp/*.megatools.cache;
       megacopy --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
         | grep -v 'ERROR: File already exists at';
@@ -321,7 +321,7 @@ function megasync()
         if [ "${file_type}" = '1' ]; then
           if [ ! -d "${file_local}" ]; then
             mkdir -p "${file_local}";
-            echo -e " \e[1;33mmegasync: Created local folder '${file_local}/'\e[0m";
+            echo -e " \e[1;33mmegamirror: Created local folder '${file_local}/'\e[0m";
           fi;
 
         # Download file
@@ -329,7 +329,7 @@ function megasync()
 
           # Download header informations
           file_local=$(dirname "${file_local}");
-          echo -e " \e[1;33mmegasync: Downloading from the server - Path '${file_local}/'\e[0m";
+          echo -e " \e[1;33mmegamirror: Downloading from the server - Path '${file_local}/'\e[0m";
 
           # Download file to local
           mkdir -p "${file_local}";
@@ -337,7 +337,7 @@ function megasync()
 
           # Show download time
           time_span=$(($(date +%s)-${time_start}));
-          echo -e " \e[1;37mmegasync: Download done in ${time_span} secs\e[0m";
+          echo -e " \e[1;37mmegamirror: Download done in ${time_span} secs\e[0m";
 
         fi;
       done;
@@ -346,7 +346,7 @@ function megasync()
 
   # =======================================================
   # End message
-  echo -e " \e[1;32mmegasync: Synced '${local_folder}' and '${remote_folder}'\e[0m";
+  echo -e " \e[1;32mmegamirror: Synced '${local_folder}' and '${remote_folder}'\e[0m";
   echo '';
 
   # Cleanup temp files

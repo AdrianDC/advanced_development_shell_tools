@@ -376,10 +376,10 @@ function androidfilessync()
     return;
   fi;
 
-  # Use megasync inside AndroidFiles folder
+  # Use megamirror inside AndroidFiles folder
   local cwd=$(pwd);
   cd "${ANDROID_FILES_PATH}";
-  megasync . '/Root/Android' "${1}" "${2}";
+  megamirror . '/Root/Android' "${1}" "${2}";
   cd "${cwd}";
 }
 
