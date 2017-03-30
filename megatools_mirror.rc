@@ -42,6 +42,7 @@ function megamirror()
   local file_path;
   local file_local;
   local file_escaped;
+  local file_local_output;
   local time_start;
   local time_span;
 
@@ -91,8 +92,8 @@ function megamirror()
       file_path="${line[@]:6}";
       file_local="${file_path#${remote_folder}}";
       file_local="${file_local#/}";
-      file_escaped="${file_local//\\/\\\\}";
-      file_escaped="${file_escaped//\|/\\\|}";
+      file_local_output="${file_local//\\/\\\\}";
+      file_escaped="${file_local_output//\|/\\\|}";
       file_escaped="${file_escaped//\[/\\\[}";
       file_escaped="${file_escaped//\]/\\\]}";
       flag_delete='';
@@ -105,7 +106,7 @@ function megamirror()
       # Verify folder exists
       if [ "${file_type}" = '1' ] && [ "${file_size}" = '-' ]; then
         if [ ! -d "${file_local}" ]; then
-          printf " \e[1;31mmegamirror: Remote folder '${file_local}/' is missing:\e[0m";
+          printf " \e[1;31mmegamirror: Remote folder '${file_local_output}/' is missing:\e[0m";
           flag_delete='true';
 
         # Exclude folder from needed uploads
@@ -116,7 +117,7 @@ function megamirror()
       # Verify files sizes do not mismatch
       elif [ -f "${file_local}" ]; then
         if [ ${file_size/-/0} -ne $(stat -c "%s" "${file_local}") ]; then
-          printf " \e[1;31mmegamirror: Remote file '${file_local}' is different:\e[0m";
+          printf " \e[1;31mmegamirror: Remote file '${file_local_output}' is different:\e[0m";
           flag_delete='true';
 
         # Exclude file from needed uploads
@@ -126,7 +127,7 @@ function megamirror()
 
       # Remote file no longer exist locally
       else
-        printf " \e[1;31mmegamirror: Remote file '${file_local}' locally removed:\e[0m";
+        printf " \e[1;31mmegamirror: Remote file '${file_local_output}' locally removed:\e[0m";
         flag_delete='true';
       fi;
 
@@ -220,6 +221,7 @@ function megamirror()
       file_path="${file_path%#}";
       file_local="${file_path#${local_folder}}";
       file_local="${file_local#/}";
+      file_local_output="${file_local//\\/\\\\}";
       file_escaped="${file_path//\\/\\\\}";
       file_escaped="${file_escaped//\|/\\\|}";
       file_escaped="${file_escaped//\[/\\\[}";
@@ -242,7 +244,7 @@ function megamirror()
       # Verify folder exists
       if [ -d "${file_path}" ]; then
         if [ -z "${line_tmp[2]}" ]; then
-          printf " \e[1;31mmegamirror: Remote folder '${file_local}/' is missing:\e[0m";
+          printf " \e[1;31mmegamirror: Remote folder '${file_local_output}/' is missing:\e[0m";
           flag_delete='true';
 
         # Exclude folder from needed downloads
@@ -252,8 +254,8 @@ function megamirror()
 
       # Verify files sizes do not mismatch
       elif [ ! -z "${line_tmp}" ]; then
-        if [ "${line_tmp[3]}" = '-' ] || [ ${file_size} -ne ${line_tmp[3]} ]; then
-          printf " \e[1;31mmegamirror: Local file '${file_local}' is different:\e[0m";
+        if [ ${file_size} -ne ${line_tmp[3]/-/0} ]; then
+          printf " \e[1;31mmegamirror: Local file '${file_local_output}' is different:\e[0m";
           flag_delete='true';
 
         # Exclude file from needed downloads
@@ -263,7 +265,7 @@ function megamirror()
 
       # Local file no longer exist remotely
       else
-        printf " \e[1;31mmegamirror: Local file '${file_local}' remotely removed:\e[0m";
+        printf " \e[1;31mmegamirror: Local file '${file_local_output}' remotely removed:\e[0m";
         flag_delete='true';
       fi;
 
