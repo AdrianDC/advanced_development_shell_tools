@@ -9,7 +9,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaosp android-7.1.1_r{XX} [referenced,clean,wipeout]';
+    echo ' Usage: repoinitaosp android-7.1.2_r{XX} [referenced,clean,wipeout]';
     echo '';
     return;
   fi;
@@ -17,7 +17,7 @@ function repoinitaosp()
   # Variables
   local release="${1}";
   local params="${2}";
-  local branch="android-7.1.1_r${release}";
+  local branch="android-7.1.2_r${release}";
 
   # Wipe the out folder
   if [[ "${params}" =~ 'wipeout' ]]; then
@@ -119,7 +119,7 @@ function repoinitaospall()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaospall android-7.1.1_r{XX} [clean,wipeout]';
+    echo ' Usage: repoinitaospall android-7.1.2_r{XX} [clean,wipeout]';
     echo '';
     return;
   fi;
