@@ -35,6 +35,9 @@ function repoinitaosp()
     rm -rfv .repo/project-objects;
     find * -maxdepth 0 -not -name 'out' -print0 | xargs -0 rm -rfv;
   fi;
+  rm -rfv prebuilts/qemu-kernel;
+  rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
+  rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
 
   # Repo init
   if [[ "${params}" =~ 'referenced' ]]; then
@@ -90,6 +93,9 @@ function repoinitlineage()
     rm -rfv .repo/project-objects;
     find * -maxdepth 0 -not -name 'out' -print0 | xargs -0 rm -rfv;
   fi;
+  rm -rfv prebuilts/qemu-kernel;
+  rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
+  rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
 
   # Repo init
   if [[ "${params}" =~ 'referenced' ]]; then
