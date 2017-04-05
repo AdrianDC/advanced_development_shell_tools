@@ -39,6 +39,8 @@ function gitbranchpusher()
         project_branch='lineage_sonyaosp';
       elif [[ "${repo_dir}" =~ 'AOSP-CAF' ]]; then
         project_branch='aosp_caf';
+      elif [[ "${repo_dir}" =~ 'AOSP-test' ]]; then
+        project_branch='aosp_sony8960_test';
       else
         project_branch='aosp_sony8960';
       fi;;
@@ -127,6 +129,8 @@ function gitfbranch()
         project_branch='lineage_sonyaosp';
       elif [[ "${repo_dir}" =~ 'AOSP-CAF' ]]; then
         project_branch='aosp_caf';
+      elif [[ "${repo_dir}" =~ 'AOSP-test' ]]; then
+        project_branch='aosp_sony8960_test';
       else
         project_branch='aosp_sony8960';
       fi;;

@@ -48,3 +48,44 @@ function aosp8960patcher()
     system/vold
     ' "${1}";
 }
+
+# === AOSP 8960 Test Patcher ===
+function aosp8960testpatcher()
+{
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'aosp_development_sony8960_test' 'aosp_sony8960_test' '
+    bionic
+    bootable/recovery
+    build
+    device/qcom/common
+    device/sony/blue-common
+    device/sony/hayabusa
+    device/sony/huashan
+    device/sony/mint
+    device/sony/tsubasa
+    external/e2fsprogs
+    external/libnfc-nxp
+    external/toybox
+    frameworks/av
+    frameworks/base
+    frameworks/native
+    frameworks/opt/telephony
+    hardware/qcom/audio
+    hardware/qcom/display
+    hardware/qcom/fm
+    hardware/qcom/media
+    hardware/ril
+    packages/apps/CellBroadcastReceiver
+    packages/apps/DeskClock
+    packages/apps/Music
+    packages/apps/Launcher3
+    packages/apps/Nfc
+    packages/apps/Settings
+    packages/inputmethods/LatinIME
+    packages/providers/DownloadProvider
+    packages/providers/MediaProvider
+    system/core
+    system/sepolicy
+    system/vold
+    ' "${1}";
+}

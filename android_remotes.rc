@@ -183,6 +183,8 @@ function gitrab()
     gitra8960aosp;
   elif pwd | grep AOSP | grep -q -e '-sony\|-dora'; then
     gitrasonyaosp;
+  elif pwd | grep AOSP | grep -q -e '-test'; then
+    gitra8960aosptest;
   elif pwd | grep AOSP | grep -q -e '-CAF'; then
     gitraaospcaf;
   elif pwd | grep LineageOS | grep -q -e '-sony\|-z3'; then
@@ -215,6 +217,16 @@ function gitra8960aosp()
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
   else
     gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960.git;
+  fi;
+}
+
+# === Git Remotes AOSP (8960) Test Project ===
+function gitra8960aosptest()
+{
+  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+    gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
+  else
+    gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960_test.git;
   fi;
 }
 
