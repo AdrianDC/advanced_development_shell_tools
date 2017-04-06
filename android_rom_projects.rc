@@ -247,9 +247,9 @@ function androidprojectpatcher()
       # Fetch and compare
       git fetch ${project_github} ${path_branch};
       git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-      git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
-      git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
-      echo " Differences: ${git_revs_count}";
+      git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
+      git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
+      echo " Differences: ${git_revs_count:-Missing history}";
 
       # Handle unupdated projects
       if [ ${git_revs_count_local} -ne 0 ]; then
