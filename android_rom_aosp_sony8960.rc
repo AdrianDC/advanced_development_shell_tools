@@ -57,9 +57,11 @@ function aosp8960testpatcher()
   androidprojectpatcher 'aosp_development_sony8960_test' 'aosp_sony8960_test' '
     bionic
     bootable/recovery
-    build
+    build/make
     device/qcom/common
+    device/qcom/sepolicy
     device/sony/blue-common
+    device/sony/common
     device/sony/hayabusa
     device/sony/huashan
     device/sony/mint
