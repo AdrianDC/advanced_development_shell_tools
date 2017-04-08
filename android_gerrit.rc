@@ -44,13 +44,28 @@ function gerritreview()
     gerrit_remote=$(git remote -v | grep origin$'\t' | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ]; then
+    gerrit_remote=$(git remote -v | grep aosp$'\t' | tail -n 1);
+  fi;
+  if [ -z "${gerrit_remote}" ]; then
     gerrit_remote=$(git remote -v | grep "${gerrit_organisation}.*//" | tail -n 1);
   fi;
 
+  # Project detection for AOSP
+  if [ "${gerrit_organisation}" = 'aosp' ]; then
+    gerrit_project=$(echo "${gerrit_remote}" \
+                   | cut -f 2 \
+                   | cut -d' ' -f 1 \
+                   | cut -f 2 \
+                   | sed 's/.*\(android\.googlesource\.com\/\)//');
+
   # Project detection
-  gerrit_project=$(echo "${gerrit_remote}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
-  if [ ! "${gerrit_organisation}" = '.' ]; then
-    gerrit_project="${gerrit_organisation}/${gerrit_project}";
+  else
+    gerrit_project=$(echo "${gerrit_remote}" \
+                   | cut -f 2 \
+                   | sed 's/.*\/\([^.]*\).* .*/\1/');
+    if [ ! "${gerrit_organisation}" = '.' ]; then
+      gerrit_project="${gerrit_organisation}/${gerrit_project}";
+    fi;
   fi;
 
   # Command creation
@@ -121,10 +136,10 @@ alias gitprg='gitpr; gitpg';
 alias gitprgy='printf "y\ny\n" | gitpr; printf "y\ny" | gitpg';
 
 # === Gerrit AOSP ===
-alias gitpraosp='gerritreview https://android-review.googlesource.com aosp for';
-alias gitpraospma='gerritreview https://android-review.googlesource.com aosp for master';
-alias gitprdaosp='gerritreview https://android-review.googlesource.com aosp drafts';
-alias gitprdaospma='gerritreview https://android-review.googlesource.com aosp drafts master';
+alias gitpraosp='gerritreview https://android.googlesource.com aosp for';
+alias gitpraospma='gerritreview https://android.googlesource.com aosp for master';
+alias gitprdaosp='gerritreview https://android.googlesource.com aosp drafts';
+alias gitprdaospma='gerritreview https://android.googlesource.com aosp drafts master';
 
 # === Gerrit AICP ===
 alias gitpraicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP for n7.1';
