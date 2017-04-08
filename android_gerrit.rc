@@ -68,6 +68,12 @@ function gerritreview()
     fi;
   fi;
 
+  # Check review statistics
+  git fetch ${gerrit_url}/${gerrit_project} refs/heads/${gerrit_branch};
+  echo '';
+  printf ' [Gerrit branch] New changes - missing : ';
+  git rev-list --left-right --count HEAD...FETCH_HEAD;
+
   # Command creation
   local command="git push ${gerrit_url}/${gerrit_project} HEAD:refs/${gerrit_type}/${gerrit_branch}";
 
