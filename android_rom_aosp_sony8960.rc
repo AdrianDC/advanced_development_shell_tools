@@ -50,11 +50,11 @@ function aosp8960patcher()
     ' "${1}";
 }
 
-# === AOSP 8960 Test Patcher ===
-function aosp8960testpatcher()
+# === AOSP 8960 O Patcher ===
+function aosp8960opatcher()
 {
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_test' 'aosp_sony8960_test' '
+  androidprojectpatcher 'aosp_development_sony8960_o' 'aosp_sony8960_test' '
     bionic
     bootable/recovery
     build/make

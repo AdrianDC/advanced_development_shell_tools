@@ -220,13 +220,13 @@ function gitra8960aosp()
   fi;
 }
 
-# === Git Remotes AOSP (8960) Test Project ===
+# === Git Remotes AOSP (8960) O Project ===
 function gitra8960aosptest()
 {
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
   else
-    gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960_test.git;
+    gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960_o.git;
   fi;
 }
 
