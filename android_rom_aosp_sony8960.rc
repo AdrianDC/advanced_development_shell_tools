@@ -8,11 +8,11 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_aosp_sony8960.rc)
 
-# === AOSP 8960 Patcher ===
-function aosp8960patcher()
+# === AOSP 8960 N Patcher ===
+function aosp8960npatcher()
 {
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960' 'aosp_sony8960' '
+  androidprojectpatcher 'aosp_development_sony8960_n' 'aosp_sony8960_n' '
     bionic
     bootable/recovery
     build

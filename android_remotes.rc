@@ -210,13 +210,13 @@ function gitra8996lineage()
   gitremoteset backup https://github.com/AdrianDC/lineage_development_sony8996.git;
 }
 
-# === Git Remotes AOSP (8960) Project ===
+# === Git Remotes AOSP (8960) N Project ===
 function gitra8960aosp()
 {
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
   else
-    gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960.git;
+    gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960_n.git;
   fi;
 }
 
