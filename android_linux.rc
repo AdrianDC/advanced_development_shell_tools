@@ -247,7 +247,18 @@ function mtpmountdisable()
 # === CleanRAM ===
 function cleanram()
 {
+  # Run cleanram script
   "${bash_android_dir}/run_cleanram.sh";
+}
+
+# === CleanRAM with Kills ===
+function cleanramkill()
+{
+  # Kill relevant RAM eating processes
+  killall java;
+
+  # Run cleanram script
+  cleanram;
 }
 
 # === Network Manager Restart ===
