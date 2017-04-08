@@ -9,7 +9,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaosp android-7.1.2_r{XX} [referenced,clean,wipeout]';
+    echo ' Usage: repoinitaosp android-7.1.2_r{XX} [referenced,clean,wipeout,example]';
     echo '';
     return;
   fi;
@@ -18,6 +18,22 @@ function repoinitaosp()
   local release="${1}";
   local params="${2}";
   local branch="android-7.1.2_r${release}";
+  local init_command;
+
+  # Repo init command
+  if [[ "${params}" =~ 'referenced' ]]; then
+    init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch} --reference=$(readlink -f $(getand)/AOSP)";
+  else
+    init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch}";
+  fi;
+
+  # Output example command
+  if [[ "${params}" =~ 'example' ]]; then
+    echo '';
+    echo "${init_command}";
+    echo '';
+    return;
+  fi;
 
   # Wipe the out folder
   if [[ "${params}" =~ 'wipeout' ]]; then
@@ -39,13 +55,8 @@ function repoinitaosp()
   rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
   rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
 
-  # Repo init
-  if [[ "${params}" =~ 'referenced' ]]; then
-    repo init -u http://android.googlesource.com/platform/manifest -b ${branch} \
-              --reference=$(readlink -f $(getand)/AOSP);
-  else
-    repo init -u http://android.googlesource.com/platform/manifest -b ${branch};
-  fi;
+  # Launch init command
+  ${init_command};
 
   # Exit on repo init failure
   if [ ! -d .repo/manifests ]; then
@@ -67,7 +78,7 @@ function repoinitlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineage {13.0/14.1} [referenced,clean,wipeout]';
+    echo ' Usage: repoinitlineage {13.0/14.1} [referenced,clean,wipeout,example]';
     echo '';
     return;
   fi;
@@ -76,6 +87,22 @@ function repoinitlineage()
   local release="${1}";
   local params="${2}";
   local branch="cm-${release}";
+  local init_command;
+
+  # Repo init command
+  if [[ "${params}" =~ 'referenced' ]]; then
+    init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch} --reference=$(readlink -f $(getand)/LineageOS)";
+  else
+    init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch}";
+  fi;
+
+  # Output example command
+  if [[ "${params}" =~ 'example' ]]; then
+    echo '';
+    echo "${init_command}";
+    echo '';
+    return;
+  fi;
 
   # Wipe the out folder
   if [[ "${params}" =~ 'wipeout' ]]; then
@@ -97,13 +124,8 @@ function repoinitlineage()
   rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
   rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
 
-  # Repo init
-  if [[ "${params}" =~ 'referenced' ]]; then
-    repo init -u http://github.com/LineageOS/android.git -b ${branch} \
-              --reference=$(readlink -f $(getand)/LineageOS);
-  else
-    repo init -u http://github.com/LineageOS/android.git -b ${branch};
-  fi;
+  # Launch init command
+  ${init_command};
 
   # Exit on repo init failure
   if [ ! -d .repo/manifests ]; then
