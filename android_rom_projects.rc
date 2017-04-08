@@ -244,8 +244,15 @@ function androidprojectpatcher()
     project_unfinished=1;
     while [ ${project_unfinished} -eq 1 ]; do
 
-      # Fetch and compare
+      # Fetch
       git fetch ${project_github} ${path_branch};
+      if [ ${?} -ne 0 ]; then
+        echo 'Remote project branch not found, ignoring...';
+        project_unfinished=2;
+        continue;
+      fi;
+
+      # Compare
       git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
       git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
       git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
@@ -309,8 +316,10 @@ function androidprojectpatcher()
     done;
 
     # Cleanup
-    git reset --hard FETCH_HEAD;
-    git stash -u;
+    if [ ${project_unfinished} -eq 0 ]; then
+      git reset --hard FETCH_HEAD;
+      git stash -u;
+    fi;
 
   done;
 
