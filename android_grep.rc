@@ -37,7 +37,7 @@ function gck()
 function gca()
 {
   GREP_COLORS='fn=1;1';
-  for file in $(find . -name "*.mk" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
+  for file in $(find . -name "*.mk" -o -name "*.bp" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
     found=$(strings $(readlink -f ${file}) | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
