@@ -76,6 +76,7 @@ function aosp8960testpatcher()
     hardware/qcom/audio
     hardware/qcom/display
     hardware/qcom/fm
+    hardware/qcom/gps
     hardware/qcom/media
     hardware/ril
     packages/apps/Browser
