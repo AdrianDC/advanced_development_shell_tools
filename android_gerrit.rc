@@ -41,7 +41,7 @@ function gerritreview()
     gerrit_remote=$(git remote -v | grep "/${gerrit_organisation}/" | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ]; then
-    gerrit_remote=$(git remote -v | grep origin | tail -n 1);
+    gerrit_remote=$(git remote -v | grep origin$'\t' | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ]; then
     gerrit_remote=$(git remote -v | grep "${gerrit_organisation}.*//" | tail -n 1);
