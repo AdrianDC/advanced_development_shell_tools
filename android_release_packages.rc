@@ -79,6 +79,7 @@ function mmmzip()
 
   # Disable Ninja
   export USE_NINJA=false;
+  export USE_SOONG_UI=false;
 
   # Header
   echo '';
@@ -149,6 +150,7 @@ function mmmzip()
 
   # Restore Ninja
   export USE_NINJA=;
+  export USE_SOONG_UI=;
 
   # End of work
   rm -rf "${TmpDir}";
