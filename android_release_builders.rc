@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='romautorelease devicename {aosp/lineage/lx/caf/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv]';
+  local function_usage='romautorelease devicename {aosp/lineage/lx/caf/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv,j1/j2]';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " Usage: ${function_usage}";
@@ -110,7 +110,13 @@ function romautorelease()
   fi;
 
   # CPU handling
-  build_cpu_count=$(grep -c ^processor /proc/cpuinfo);
+  if [[ "${rom_params}" =~ 'j1' ]]; then
+    build_cpu_count=1;
+  elif [[ "${rom_params}" =~ 'j2' ]]; then
+    build_cpu_count=2;
+  else
+    build_cpu_count=$(grep -c ^processor /proc/cpuinfo);
+  fi;
 
   # Compilation logs
   rom_logs_output="${rom_logs}/Build.${rom_device}.${rom_tag}.log";
