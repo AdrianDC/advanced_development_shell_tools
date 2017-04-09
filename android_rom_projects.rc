@@ -39,10 +39,12 @@ function gitbranchpusher()
         project_branch='lineage_sonyaosp';
       elif [[ "${repo_dir}" =~ 'AOSP-CAF' ]]; then
         project_branch='aosp_caf';
-      elif [[ "${repo_dir}" =~ 'AOSP-test' ]]; then
-        project_branch='aosp_sony8960_test';
+      elif [[ "${repo_dir}" =~ 'AOSP-o' ]]; then
+        project_branch='aosp_sony8960_o';
+      elif [[ "${repo_dir}" =~ 'AOSP-master' ]]; then
+        project_branch='aosp_sony8960_master';
       else
-        project_branch='aosp_sony8960';
+        project_branch='aosp_sony8960_n';
       fi;;
     *)
       project_branch=${project_dir//\//_};;
@@ -129,10 +131,12 @@ function gitfbranch()
         project_branch='lineage_sonyaosp';
       elif [[ "${repo_dir}" =~ 'AOSP-CAF' ]]; then
         project_branch='aosp_caf';
-      elif [[ "${repo_dir}" =~ 'AOSP-test' ]]; then
-        project_branch='aosp_sony8960_test';
+      elif [[ "${repo_dir}" =~ 'AOSP-o' ]]; then
+        project_branch='aosp_sony8960_o';
+      elif [[ "${repo_dir}" =~ 'AOSP-master' ]]; then
+        project_branch='aosp_sony8960_master';
       else
-        project_branch='aosp_sony8960';
+        project_branch='aosp_sony8960_n';
       fi;;
     *)
       project_branch=${project_dir//\//_};;

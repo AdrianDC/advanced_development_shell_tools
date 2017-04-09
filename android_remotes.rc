@@ -180,11 +180,13 @@ alias gitraou='git remote set-url origin';
 function gitrab()
 {
   if pwd | grep AOSP | grep -q -e '-huashan\|-blue\|-hayabusa\|-mint\|-tsubasa'; then
-    gitra8960aosp;
+    gitra8960naosp;
   elif pwd | grep AOSP | grep -q -e '-sony\|-dora'; then
     gitrasonyaosp;
-  elif pwd | grep AOSP | grep -q -e '-test'; then
-    gitra8960aosptest;
+  elif pwd | grep AOSP | grep -q -e '-o'; then
+    gitra8960oaosp;
+  elif pwd | grep AOSP | grep -q -e '-master'; then
+    gitra8960masteraosp;
   elif pwd | grep AOSP | grep -q -e '-CAF'; then
     gitraaospcaf;
   elif pwd | grep LineageOS | grep -q -e '-sony\|-z3'; then
@@ -192,7 +194,7 @@ function gitrab()
   elif pwd | grep LineageOS | grep -q -e '-dora'; then
     gitra8996lineage;
   elif pwd | grep -q AOSP; then
-    gitra8960aosp;
+    gitra8960naosp;
   else
     gitra8960lineage;
   fi;
@@ -211,7 +213,7 @@ function gitra8996lineage()
 }
 
 # === Git Remotes AOSP (8960) N Project ===
-function gitra8960aosp()
+function gitra8960naosp()
 {
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
@@ -221,12 +223,22 @@ function gitra8960aosp()
 }
 
 # === Git Remotes AOSP (8960) O Project ===
-function gitra8960aosptest()
+function gitra8960oaosp()
 {
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
   else
     gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960_o.git;
+  fi;
+}
+
+# === Git Remotes AOSP (8960) Master Project ===
+function gitra8960masteraosp()
+{
+  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+    gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
+  else
+    gitremoteset backup https://github.com/AdrianDC/aosp_development_sony8960_master.git;
   fi;
 }
 
