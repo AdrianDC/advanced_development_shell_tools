@@ -311,27 +311,13 @@ function gitcid()
   git commit --amend;
 }
 
-# === Git Commits Change-ID (Upstream) ===
+# === Git Commits Change-ID Upstream Download ===
 function gitcidupstream()
 {
-  # Gerrit Credentials
-  export GerritUsername='Username';
-  export GerritHTTPUsername='Username';
-  export GerritHTTPPassword='abcdefgh12345678';
-
-  # Create  ~/.bash_android.gerrit.rc with the exports to override the credentials
-  if [ -f ~/.bash_android.gerrit.rc ]; then
-    source ~/.bash_android.gerrit.rc;
-  fi;
-
   # Fetch commit-msg file
   curl -Lo .git/hooks/commit-msg http://review.lineageos.org/tools/hooks/commit-msg;
   cp -fv '.git/hooks/commit-msg' "${bash_android_dir}/android_tools/commit-msg";
   chmod u+x ./.git/hooks/commit-msg;
-
-  # Usage commit message
-  git commit --amend --no-edit;
-  git commit --amend;
 }
 
 # === Git Commit Stable
