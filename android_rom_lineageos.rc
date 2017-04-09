@@ -46,6 +46,12 @@ function lineagewebjekyll()
   # Load all gem elements
   sudo gem install bundler;
 
+  # Installation mode
+  if [ ! -z "${1}" ]; then
+    sudo apt-get install ruby-dev;
+    bundle;
+  fi;
+
   # Open webviewer
   xdg-open "http://127.0.0.1:4001" &
 
