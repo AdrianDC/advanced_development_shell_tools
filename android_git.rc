@@ -354,6 +354,9 @@ function gitcommitstable
   done;
 }
 
+# === Git Fetch Helpers ===
+function gitfurl() { git fetch "${1%/commits/*}" "${1#*/commits/}"; }
+
 # === Git Push Helpers ===
 alias gitpf='git push -f';
 
