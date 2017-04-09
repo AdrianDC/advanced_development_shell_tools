@@ -68,6 +68,7 @@ function aosp8960opatcher()
     device/sony/tsubasa
     external/e2fsprogs
     external/libnfc-nxp
+    external/selinux
     external/toybox
     frameworks/av
     frameworks/base
