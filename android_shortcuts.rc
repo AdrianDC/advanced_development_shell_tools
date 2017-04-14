@@ -76,10 +76,11 @@ function toout()
 
   # Get out target path
   local outtargetpath=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/out\/target\/product/g");
+echo "${outtargetpath}/*${device}*"
 
   # Path detection
-  if [ -d "${outtargetpath}/*${device}*" ]; then
-    echo "${outtargetpath}/*${device}*";
+  if [ -d "${outtargetpath}/"*"${device}"* ]; then
+    echo "${outtargetpath}/"*"${device}"*;
   else
     echo "${outtargetpath}/*";
   fi;
