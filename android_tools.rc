@@ -203,8 +203,8 @@ function overlaycompare()
   fi;
 
   # Variables
-  overlay_path="${1}";
-  source_path="../../../${overlay_path/overlay\//}";
+  local overlay_path="${1}";
+  local source_path="../../../${overlay_path/overlay\//}";
 
   # Launch meld on both paths
   meld "${overlay_path}" "${source_path}";
