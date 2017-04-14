@@ -9,6 +9,7 @@ function gitpu()
   # Variables
   local remote=${1:-github};
   local branch=${2:-$(repogetbranch)};
+  local input=${3};
   local cmd;
 
   # Get remote stats
@@ -19,7 +20,12 @@ function gitpu()
   echo '';
   local cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
   printf "  ${cmd} [Y/n] ? ";
-  read key;
+  if [ -z "${input}" ]; then
+    read key;
+  else
+    key="${input}";
+    echo "${key}";
+  fi;
   echo '';
 
   # Abort push
