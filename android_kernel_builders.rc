@@ -9,6 +9,11 @@
 # === Kernel Builder ===
 function makekernel()
 {
+  # Out path handling
+  if [ ! -d ./out ]; then
+    mkdir ./out;
+  fi;
+
   # Environment
   if [ -z "${DEFCONFIG_NAME}" ] || [ ! -z "${1}" ]; then
 
@@ -61,7 +66,7 @@ function makekernel()
     fi;
 
     # Kernel configuration
-    make ${DEFCONFIG_NAME};
+    make ${DEFCONFIG_NAME} O=./out;
 
   fi;
 
@@ -82,7 +87,7 @@ function makekernel()
 
   # Kernel build
   time_diff=$(date +%s);
-  ${cache_prefix}make -j$(grep -c ^processor /proc/cpuinfo);
+  ${cache_prefix}make -j$(grep -c ^processor /proc/cpuinfo) O=./out;
 
   # Show compilation time
   time_diff=$(($(date +%s)-${time_diff}));
