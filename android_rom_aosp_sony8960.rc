@@ -32,6 +32,7 @@ function aosp8960npatcher()
     hardware/qcom/audio
     hardware/qcom/display
     hardware/qcom/fm
+    hardware/qcom/gps
     hardware/qcom/media
     hardware/ril
     packages/apps/Browser
