@@ -106,17 +106,14 @@ function aosp8960masterpatcher()
     bootable/recovery
     build/make
     device/qcom/common
-    device/qcom/sepolicy
     device/sony/blue-common
     device/sony/common
     device/sony/hayabusa
     device/sony/huashan
     device/sony/mint
     device/sony/tsubasa
-    external/e2fsprogs
     external/libnfc-nxp
     external/selinux
-    external/toybox
     frameworks/av
     frameworks/base
     frameworks/native
@@ -128,17 +125,11 @@ function aosp8960masterpatcher()
     hardware/qcom/media
     hardware/ril
     packages/apps/Browser
-    packages/apps/CellBroadcastReceiver
-    packages/apps/DeskClock
-    packages/apps/Music
-    packages/apps/Launcher3
     packages/apps/Nfc
     packages/apps/Settings
-    packages/inputmethods/LatinIME
     packages/providers/DownloadProvider
     packages/providers/MediaProvider
     system/core
     system/sepolicy
-    system/vold
     ' "${1}";
 }
