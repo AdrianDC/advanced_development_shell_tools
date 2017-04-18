@@ -104,7 +104,7 @@ function makedefconf()
   fi;
 
   # Cleanup
-  #make mrproper;
+  make mrproper;
   #rm -rf scripts/basic;
   #rm -rf scripts/kconfig;
   #rm -rf .config;
