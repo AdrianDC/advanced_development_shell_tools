@@ -114,6 +114,7 @@ function aosp8960masterpatcher()
     device/sony/tsubasa
     external/libnfc-nxp
     external/selinux
+    external/stlport
     frameworks/av
     frameworks/base
     frameworks/native
