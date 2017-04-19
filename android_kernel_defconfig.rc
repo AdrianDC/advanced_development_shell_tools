@@ -49,7 +49,16 @@ function makedefconf()
   # Kernel input
   local DEFCONFIG_PATH=./arch/${ARCH}/configs;
   local DEFCONFIG_INPUT=("${DEFCONFIG_PATH}/"*"${defconfig}"*);
-  if [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
+
+  # Handle looped forced config
+  if [ ! -z "${forceconfig}" ] && [ ${#DEFCONFIG_INPUT[@]} -gt 1 ]; then
+    for defconfig in ${DEFCONFIG_INPUT[*]}; do
+      makedefconf "${defconfig##*/}" "${configmode}" "${diffcommon}" "${forceconfig}";
+    done;
+    return;
+
+  # Handle failed defconfig selection
+  elif [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
     if [ ${#DEFCONFIG_INPUT[@]} -eq 1 ]; then
       DEFCONFIG_INPUT=();
     fi;
