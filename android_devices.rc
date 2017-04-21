@@ -13,6 +13,11 @@ function androiddevicestarget()
   local partition='';
   local target_devices="dora kagura kugo suzu huashan hayabusa mint tsubasa";
 
+  # Ignore unsupported devices
+  if [[ ! "${target_devices}" =~ "${device}" ]]; then
+    device='';
+  fi;
+
   # Autodetect
   if [ -z "${device}" ]; then
     device=${KBUILD_DIFFCONFIG%_*};
