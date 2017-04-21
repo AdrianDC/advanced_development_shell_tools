@@ -35,7 +35,6 @@ function aosp8960npatcher()
     hardware/qcom/gps
     hardware/qcom/media
     hardware/ril
-    packages/apps/Browser
     packages/apps/CellBroadcastReceiver
     packages/apps/DeskClock
     packages/apps/Music
@@ -81,7 +80,6 @@ function aosp8960opatcher()
     hardware/qcom/gps
     hardware/qcom/media
     hardware/ril
-    packages/apps/Browser
     packages/apps/CellBroadcastReceiver
     packages/apps/DeskClock
     packages/apps/Music
@@ -125,7 +123,6 @@ function aosp8960masterpatcher()
     hardware/qcom/gps
     hardware/qcom/media
     hardware/ril
-    packages/apps/Browser
     packages/apps/Nfc
     packages/apps/Settings
     packages/providers/DownloadProvider
