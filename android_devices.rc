@@ -11,7 +11,7 @@ function androiddevicestarget()
   local request=${1};
   local platform='';
   local partition='';
-  local target_devices="dora kagura kuo suzu huashan hayabusa mint tsubasa";
+  local target_devices="dora kagura kugo suzu huashan hayabusa mint tsubasa";
 
   # Autodetect
   if [ -z "${device}" ]; then
