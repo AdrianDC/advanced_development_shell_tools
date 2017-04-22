@@ -203,9 +203,14 @@ function overlaycompare()
   fi;
 
   # Variables
-  local overlay_path="${1}";
-  local source_path="../../../${overlay_path/overlay\//}";
+  local source_path;
 
-  # Launch meld on both paths
-  meld "${overlay_path}" "${source_path}";
+  # Loop through files
+  for overlay_path in $(find ${*} -type f); do
+
+    # Launch meld on both paths
+    source_path=$(echo "../../../${overlay_path}" | sed 's/overlay[^\/]*\///');
+    meld "${overlay_path}" "${source_path}";
+
+  done;
 }
