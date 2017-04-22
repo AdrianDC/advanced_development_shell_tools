@@ -232,7 +232,7 @@ function aosp8960autorelease()
     fi;
 
     # ROM build and release
-    aosp8960patcher;
+    aosp8960npatcher;
     romautorelease ${device} aosp;
 
   done;
