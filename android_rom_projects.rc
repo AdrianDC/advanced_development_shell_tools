@@ -180,6 +180,7 @@ function androidprojectpatcher()
   local project_tag="${2}";
   local project_paths="${3}";
   local project_specific="${4}";
+  local currentdir=${PWD};
 
   # GitHub Credentials
   export GitEMail="user.name@gmail.com";
@@ -328,9 +329,9 @@ function androidprojectpatcher()
   done;
 
   # ==========================================================
-  # repo root
+  # Return to current folder
   echo '';
-  croot;
+  cd "${currentdir}";
 }
 
 # === Android Project Rebaser ===
@@ -347,6 +348,7 @@ function androidprojectrebaser()
   local project_branch="${2}";
   local project_paths="${3}";
   local project_specific="${4}";
+  local currentdir=${PWD};
 
   # Automated key shortcut
   local key_automated='';
@@ -534,7 +536,7 @@ function androidprojectrebaser()
   done;
 
   # ==========================================================
-  # repo root
+  # Return to current folder
   echo '';
-  croot;
+  cd "${currentdir}";
 }
