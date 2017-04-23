@@ -206,6 +206,19 @@ function cdblueker()   { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*
 function cdvendsony()  { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/vendor\/sony/g'); }
 function meldblue()    { meld ./${1} ../blue-common/${1}; }
 
+# === BringUp Shortcuts ===
+function meldril()
+{
+  # Compare device to hardware/ril or hardware/ril-caf with a parameter given
+  if [ ! -z "${1}" ]; then
+    meld include/telephony/ril.h ../../../hardware/ril-caf/include/telephony/ril.h &
+    meld libril ../../../hardware/ril-caf/libril;
+  else
+    meld include/telephony/ril.h ../../../hardware/ril/include/telephony/ril.h &
+    meld libril ../../../hardware/ril/libril;
+  fi;
+}
+
 # === Repository Shortcuts ===
 function cdmromboot()  { croot; cd ./system/extras/libbootimg/; }
 function cdmromcore()  { croot; cd ./system/extras/multirom/; }
