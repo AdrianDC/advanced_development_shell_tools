@@ -22,7 +22,7 @@ function lineagesodppatcher()
     hardware/qcom/display
     packages/apps/FMRadio
     vendor/cm
-    ' "${1}";
+    ' "${*}";
 }
 
 # === LineageOS SODP Rebaser ===
@@ -33,5 +33,5 @@ function lineagesodprebaser()
     hardware/sony/camera::camera::aosp/LA.UM.5.5.r1
     hardware/sony/dataservices::vendor-qcom-opensource-dataservices::master
     kernel/sony/msm::kernel::aosp/LA.UM.5.5.r1
-    ' "${1}";
+    ' "${*}";
 }

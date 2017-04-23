@@ -17,5 +17,5 @@ function lineage8996patcher()
     external/libselinux
     frameworks/av
     system/core
-    ' "${1}";
+    ' "${*}";
 }

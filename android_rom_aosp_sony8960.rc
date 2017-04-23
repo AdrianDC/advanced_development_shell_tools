@@ -47,7 +47,7 @@ function aosp8960npatcher()
     system/core
     system/sepolicy
     system/vold
-    ' "${1}";
+    ' "${*}";
 }
 
 # === AOSP 8960 O Patcher ===
@@ -92,7 +92,7 @@ function aosp8960opatcher()
     system/core
     system/sepolicy
     system/vold
-    ' "${1}";
+    ' "${*}";
 }
 
 # === AOSP 8960 Master Patcher ===
@@ -130,5 +130,5 @@ function aosp8960masterpatcher()
     system/bt
     system/core
     system/sepolicy
-    ' "${1}";
+    ' "${*}";
 }

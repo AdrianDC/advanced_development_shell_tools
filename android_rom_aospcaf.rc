@@ -19,5 +19,5 @@ function aospcafpatcher()
     device/sony/mint
     device/sony/tsubasa
     packages/apps/DeskClock
-    ' "${1}";
+    ' "${*}";
 }
