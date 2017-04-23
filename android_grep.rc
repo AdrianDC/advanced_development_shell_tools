@@ -52,6 +52,17 @@ function glc() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --inc
 function glj() { GREP_COLORS='fn=1;1' grep --include \*.java -anr '.\{100,\}' .; }
 function gle() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h  --include \*.java -anr '.* $' .; }
 
+# === Grep Android Modules ===
+function gcmodules()
+{
+  # Search all build definitions
+  for file in $(find . -name "*.mk" -o -name "*.bp" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
+    strings $(readlink -f ${file}) \
+      | grep -ai "LOCAL_MODULE:=\|LOCAL_MODULE :=" \
+      | sed 's/[ \t]*\(LOCAL_MODULE:=\|LOCAL_MODULE :=\)[ \t]*//g';
+  done;
+}
+
 # === Grep and open ===
 function gso()
 {
