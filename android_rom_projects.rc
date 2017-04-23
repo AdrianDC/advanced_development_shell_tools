@@ -180,6 +180,7 @@ function androidprojectpatcher()
   local project_tag="${2}";
   local project_paths="${3}";
   local project_specific="${4}";
+  local projects_specific='';
   local currentdir=${PWD};
 
   # GitHub Credentials
@@ -187,11 +188,29 @@ function androidprojectpatcher()
   export GitFullName="Full Name";
   export GitUserName="Username";
 
+  # Load Android tools
+  if [ -z "$(type -t croot)" ]; then
+    while [ ! -e './build/envsetup.sh' ]; do
+      cd ../;
+    done;
+    source ./build/envsetup.sh;
+  fi;
+  cd "${currentdir}";
+
   # Automated key shortcut
   local key_automated='';
   if [[ "${project_specific}" == 'y' ]] || [[ "${project_specific}" == 'n' ]]; then
     key_automated="${project_specific}";
     project_specific='';
+  fi;
+
+  # Extract specific projects paths
+  if [ ! -z "${project_specific}" ]; then
+    local android_top=$(gettop);
+    for path in ${project_specific}; do
+      path=$(readlink -f "${path}");
+      projects_specific="${projects_specific} ${path#${android_top}/}";
+    done;
   fi;
 
   # Create  ~/.bash_android.github.rc with the exports to override the credentials
@@ -201,12 +220,6 @@ function androidprojectpatcher()
 
   # ==========================================================
   # Repo root
-  if [ -z "$(type -t croot)" ]; then
-    while [ ! -e './build/envsetup.sh' ]; do
-      cd ../;
-    done;
-    source ./build/envsetup.sh;
-  fi;
   croot;
 
   # ==========================================================
@@ -220,7 +233,7 @@ function androidprojectpatcher()
   local project_unfinished;
 
   # Projects loader
-  for path in ${project_specific:-${project_paths}}; do
+  for path in ${projects_specific:-${project_paths}}; do
 
     # Project selection
     path=${path%/};
