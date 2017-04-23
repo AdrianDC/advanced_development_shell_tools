@@ -105,7 +105,6 @@ function aosp8960masterpatcher()
     build/make
     device/qcom/common
     device/sony/blue-common
-    device/sony/common
     device/sony/hayabusa
     device/sony/huashan
     device/sony/mint
