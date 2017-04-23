@@ -125,7 +125,6 @@ function aosp8960masterpatcher()
     hardware/ril
     packages/apps/Nfc
     packages/apps/Settings
-    packages/providers/DownloadProvider
     packages/providers/MediaProvider
     system/bt
     system/core
