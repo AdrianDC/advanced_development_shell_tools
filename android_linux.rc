@@ -266,3 +266,14 @@ function networkrestart()
 {
   sudo service network-manager restart;
 }
+
+# === Pushbullet Folder Sizes ===
+function pushbsizes()
+{
+  # Notify all input sizes
+  echo '';
+  echo " Studying sizes of inputs: ${*}";
+  echo '';
+  local message=$(du -csh ${*} | tee /dev/stderr | tr '\t' ' ');
+  pushb "${message//$'\n'/\\\n}";
+}
