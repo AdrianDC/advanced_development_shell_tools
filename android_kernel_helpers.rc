@@ -58,6 +58,10 @@ function sonyaospkernelupdate()
     return;
   fi;
 
+  # Delete previous kernel images
+  rm -fv ./device/sony/common-kernel/kernel-dtb-${device_name};
+  rm -fv ./kernel/sony/msm/out/arch/arm64/boot/Image.gz-dtb;
+
   # Access kernel sources
   cd ./kernel/sony/msm/;
 
@@ -66,7 +70,7 @@ function sonyaospkernelupdate()
 
   # Copy prebuilt kernel
   croot;
-  cp -v ./kernel/sony/msm/arch/arm64/boot/Image.gz-dtb ./device/sony/common-kernel/kernel-dtb-${device_name};
+  cp -v ./kernel/sony/msm/out/arch/arm64/boot/Image.gz-dtb ./device/sony/common-kernel/kernel-dtb-${device_name};
 
   # Commit prebuilt kernel
   cd ./device/sony/common-kernel/;
