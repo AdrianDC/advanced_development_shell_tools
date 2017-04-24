@@ -9,7 +9,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaosp android-7.1.2_r{XX} [referenced,clean,wipeout,example]';
+    echo ' Usage: repoinitaosp android-7.1.2_r{XX} [referenced,clean,rmout,example]';
     echo '';
     return;
   fi;
@@ -36,7 +36,7 @@ function repoinitaosp()
   fi;
 
   # Wipe the out folder
-  if [[ "${params}" =~ 'wipeout' ]]; then
+  if [[ "${params}" =~ 'rmout' ]]; then
     rm -rfv out;
   fi;
 
@@ -78,7 +78,7 @@ function repoinitlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineage {13.0/14.1} [referenced,clean,wipeout,example]';
+    echo ' Usage: repoinitlineage {13.0/14.1} [referenced,clean,rmout,example]';
     echo '';
     return;
   fi;
@@ -105,7 +105,7 @@ function repoinitlineage()
   fi;
 
   # Wipe the out folder
-  if [[ "${params}" =~ 'wipeout' ]]; then
+  if [[ "${params}" =~ 'rmout' ]]; then
     rm -rfv out;
   fi;
 
@@ -147,7 +147,7 @@ function repoinitaospall()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaospall android-7.1.2_r{XX} [clean,wipeout]';
+    echo ' Usage: repoinitaospall android-7.1.2_r{XX} [clean,rmout]';
     echo '';
     return;
   fi;
@@ -164,14 +164,11 @@ function repoinitaospall()
   # Walk through devices
   for device in ${bash_android_referenced_aosp}; do
 
-    # Select and verify the path existence
+    # Verify and update device repo
     cdaosp ${device};
     if [ ! "$(pwd)" = "${repocommon}" ]; then
-
-      # Update device repo
       repoinitaosp ${1} referenced,${2};
       reposy;
-
     fi;
 
   done;
@@ -183,7 +180,7 @@ function repoinitlineageall()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineageall {13.0/14.1} [clean,wipeout]';
+    echo ' Usage: repoinitlineageall {13.0/14.1} [clean,rmout]';
     echo '';
     return;
   fi;
@@ -200,14 +197,11 @@ function repoinitlineageall()
   # Walk through devices
   for device in ${bash_android_referenced_lineage}; do
 
-    # Select and verify the path existence
+    # Verify and update device repo
     cdlineage ${device};
     if [ ! "$(pwd)" = "${repocommon}" ]; then
-
-      # Update device repo
       repoinitlineage ${1} referenced,${2};
       reposy;
-
     fi;
 
   done;
@@ -219,7 +213,7 @@ function repoinitrr()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitrr {nougat} [referenced,clean,wipeout]';
+    echo ' Usage: repoinitrr {nougat} [referenced,clean,rmout]';
     echo '';
     return;
   fi;
@@ -230,7 +224,7 @@ function repoinitrr()
   local branch="${release}";
 
   # Wipe the out folder
-  if [[ "${params}" =~ 'wipeout' ]]; then
+  if [[ "${params}" =~ 'rmout' ]]; then
     rm -rfv out;
   fi;
 
