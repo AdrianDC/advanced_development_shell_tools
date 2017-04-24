@@ -49,7 +49,7 @@ function repoinitaosp()
   rm -rfv .repo/repo;
   if [[ "${params}" =~ 'clean' ]]; then
     rm -rfv .repo/project-objects;
-    find * -maxdepth 0 -not -name 'out' -print0 | xargs -0 rm -rfv;
+    rm -rfv *;
   fi;
   rm -rfv prebuilts/qemu-kernel;
   rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
@@ -118,7 +118,7 @@ function repoinitlineage()
   rm -rfv .repo/repo;
   if [[ "${params}" =~ 'clean' ]]; then
     rm -rfv .repo/project-objects;
-    find * -maxdepth 0 -not -name 'out' -print0 | xargs -0 rm -rfv;
+    rm -rfv *;
   fi;
   rm -rfv prebuilts/qemu-kernel;
   rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
@@ -243,7 +243,7 @@ function repoinitrr()
   rm -rfv .repo/repo;
   if [[ "${params}" =~ 'clean' ]]; then
     rm -rfv .repo/project-objects;
-    find * -maxdepth 0 -not -name 'out' -print0 | xargs -0 rm -rfv;
+    rm -rfv *;
   fi;
 
   # Repo init
