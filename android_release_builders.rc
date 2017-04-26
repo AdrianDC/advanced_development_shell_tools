@@ -173,12 +173,12 @@ function romautorelease()
         source $(getbash)/android_bash.rc;\
         devuplrom \"${rom_device}\" \"${rom_upload}\"; \
         if [ ! -z "\${bash_android_uploaded_file}" ]; then \
-          pushb \"${rom_tag} for ${rom_device} uploaded\"; \
+          pushb \"$(hostname): ${rom_tag} for ${rom_device} uploaded\"; \
         fi";
     else
       devuplrom "${rom_device}" "${rom_upload}";
       if [ ! -z "${bash_android_uploaded_file}" ]; then
-        pushb "${rom_tag} for ${rom_device} uploaded";
+        pushb "$(hostname): ${rom_tag} for ${rom_device} uploaded";
       fi;
     fi;
   fi;

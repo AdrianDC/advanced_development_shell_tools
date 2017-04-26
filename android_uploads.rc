@@ -320,13 +320,14 @@ function pushbrom()
   # Variables
   local device="${1}";
   local rom="${2:-ROM}";
+  local host=$(hostname);
 
   # ROM file
   romfile=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mmin -30 | tail -n 1);
   if [ ! -z "${romfile}" ]; then
-     pushb "${rom} for ${device} ready";
+     pushb "${host}: ${rom} for ${device} ready";
   else
-     pushb "${rom} for ${device} failed";
+     pushb "${host}: ${rom} for ${device} failed";
   fi;
 
   # Restore ROM path
