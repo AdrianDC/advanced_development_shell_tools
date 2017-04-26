@@ -17,11 +17,6 @@ function aosp8960npatcher()
     bootable/recovery
     build
     device/qcom/common
-    device/sony/blue-common
-    device/sony/hayabusa
-    device/sony/huashan
-    device/sony/mint
-    device/sony/tsubasa
     external/e2fsprogs
     external/libnfc-nxp
     external/toybox
