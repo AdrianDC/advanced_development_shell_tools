@@ -180,7 +180,8 @@ function gerritssh()
   echo -e '      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)';
   echo -e '                 p (Publish, +1+2 only)';
   echo -e '                 s (+1+2 Submit commit)';
-  echo -e '                 a (+1+2 Submit all)\e[0m';
+  echo -e '                 a (+1+2 Submit all)';
+  echo -e '                 u (Only undraft all)\e[0m';
 
 
   # Commits on Review
@@ -246,7 +247,7 @@ function gerritssh()
     echo -e "  \e[1;34m\e[4;34mChange ${i}/${patchset}\e[0m";
     echo "    \"${patchname}\"";
     echo '';
-    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/s/a/q) ?\e[0m ";
+    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/s/a/u/q) ?\e[0m ";
     if [ -z "${cmd_global}" ]; then
       read key;
     else
@@ -255,7 +256,7 @@ function gerritssh()
     fi;
     if [[ 'qQ' =~ "${key}" ]]; then
       break;
-    elif [[ ! 'yYpPsSaA' =~ "${key}" ]]; then
+    elif [[ ! 'yYpPsSaAuU' =~ "${key}" ]]; then
       continue;
     fi;
 
@@ -279,6 +280,13 @@ function gerritssh()
         cmd_publish=y;
         cmd_review=y;
         cmd_submit=y;
+        ;;
+      u|U)
+        cmd_global=${key};
+        cmd_rebase=n;
+        cmd_publish=y;
+        cmd_review=n;
+        cmd_submit=n;
         ;;
       *)
         ;;
