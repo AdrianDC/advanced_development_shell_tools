@@ -52,14 +52,20 @@ function makekernel()
     # Kernel defconfig
     local DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
 
+    # CCache cross compiler
+    local ccache=;
+    if [ ! -z "${USE_CCACHE}" ] && [ ${USE_CCACHE} -eq 1 ]; then
+      ccache=$(which ccache);
+    fi;
+
     # Architecture environment
     local cross_compiler=;
     if [ "${ARCH}" = 'arm64' ]; then
       cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin);
-      export CROSS_COMPILE=aarch64-linux-android-;
+      export CROSS_COMPILE="${ccache} aarch64-linux-android-";
     else
       cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin);
-      export CROSS_COMPILE=arm-linux-androideabi-;
+      export CROSS_COMPILE="${ccache} arm-linux-androideabi-";
     fi;
     if [[ ! "${PATH}" =~ "${cross_compiler}" ]]; then
       export PATH=${cross_compiler}:${PATH};
@@ -71,23 +77,11 @@ function makekernel()
   fi;
 
   # Variables
-  local ccache_prefix='';
   local time_diff;
-
-  # CCache usage
-  if [ "$(type -t ccache 2> /dev/null)" = 'file' ]; then
-    cache_prefix='ccache ';
-    export CC='ccache gcc';
-    export CXX='ccache g++';
-    if [[ ! "${PATH}" =~ '/usr/lib/ccache' ]]; then
-      export PATH=/usr/lib/ccache:${PATH}
-    fi;
-    echo ' CCache enabled';
-  fi;
 
   # Kernel build
   time_diff=$(date +%s);
-  ${cache_prefix}make -j$(grep -c ^processor /proc/cpuinfo) O=./.build;
+  make -j$(grep -c ^processor /proc/cpuinfo) O=./.build;
 
   # Show compilation time
   time_diff=$(($(date +%s)-${time_diff}));
