@@ -12,17 +12,7 @@
 function lineagesodppatcher()
 {
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'lineage_development_sonyaosp' 'lineageos_sony' '
-    device/sony/common-aosp
-    device/sony/dora
-    device/sony/kagura
-    device/sony/sepolicy
-    device/sony/tone-common
-    hardware/qcom/audio/default
-    hardware/qcom/display
-    packages/apps/FMRadio
-    vendor/cm
-    ' "${*}";
+  androidprojectpatcher 'lineage_development_sonyaosp' 'lineageos_sony' '' "${*}";
 }
 
 # === LineageOS SODP Rebaser ===

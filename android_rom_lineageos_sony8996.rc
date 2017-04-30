@@ -12,10 +12,5 @@
 function lineage8996patcher()
 {
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'lineage_development_sony8996' 'lineageos_sony8996' '
-    device/sony/common
-    external/libselinux
-    frameworks/av
-    system/core
-    ' "${*}";
+  androidprojectpatcher 'lineage_development_sony8996' 'lineageos_sony8996' '' "${*}";
 }

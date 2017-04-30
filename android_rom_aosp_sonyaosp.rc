@@ -12,13 +12,7 @@
 function aospsonypatcher()
 {
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sonyaosp' 'aosp_sonyaosp' '
-    build
-    external/toybox
-    packages/apps/Music
-    system/core
-    system/vold
-    ' "${*}";
+  androidprojectpatcher 'aosp_development_sonyaosp' 'aosp_sonyaosp' '' "${*}";
 }
 
 # === AOSP Sony Rebaser ===

@@ -12,116 +12,19 @@
 function aosp8960npatcher()
 {
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_n' 'aosp_sony8960_n' '
-    bionic
-    bootable/recovery
-    build
-    device/qcom/common
-    external/e2fsprogs
-    external/libnfc-nxp
-    external/toybox
-    frameworks/av
-    frameworks/base
-    frameworks/native
-    frameworks/opt/telephony
-    hardware/qcom/audio
-    hardware/qcom/display
-    hardware/qcom/fm
-    hardware/qcom/gps
-    hardware/qcom/media
-    hardware/ril
-    packages/apps/CellBroadcastReceiver
-    packages/apps/DeskClock
-    packages/apps/Music
-    packages/apps/Launcher3
-    packages/apps/Nfc
-    packages/apps/Settings
-    packages/inputmethods/LatinIME
-    packages/providers/DownloadProvider
-    packages/providers/MediaProvider
-    system/core
-    system/sepolicy
-    system/vold
-    ' "${*}";
+  androidprojectpatcher 'aosp_development_sony8960_n' 'aosp_sony8960_n' '' "${*}";
 }
 
 # === AOSP 8960 O Patcher ===
 function aosp8960opatcher()
 {
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_o' 'aosp_sony8960_o' '
-    bionic
-    bootable/recovery
-    build/make
-    device/qcom/common
-    device/qcom/sepolicy
-    device/sony/blue-common
-    device/sony/common
-    device/sony/hayabusa
-    device/sony/huashan
-    device/sony/mint
-    device/sony/tsubasa
-    external/e2fsprogs
-    external/libnfc-nxp
-    external/selinux
-    external/toybox
-    frameworks/av
-    frameworks/base
-    frameworks/native
-    frameworks/opt/telephony
-    hardware/qcom/audio
-    hardware/qcom/display
-    hardware/qcom/fm
-    hardware/qcom/gps
-    hardware/qcom/media
-    hardware/ril
-    packages/apps/CellBroadcastReceiver
-    packages/apps/DeskClock
-    packages/apps/Music
-    packages/apps/Launcher3
-    packages/apps/Nfc
-    packages/apps/Settings
-    packages/inputmethods/LatinIME
-    packages/providers/DownloadProvider
-    packages/providers/MediaProvider
-    system/core
-    system/sepolicy
-    system/vold
-    ' "${*}";
+  androidprojectpatcher 'aosp_development_sony8960_o' 'aosp_sony8960_o' '' "${*}";
 }
 
 # === AOSP 8960 Master Patcher ===
 function aosp8960masterpatcher()
 {
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_master' 'aosp_sony8960_master' '
-    bionic
-    bootable/recovery
-    build/make
-    device/qcom/common
-    device/sony/blue-common
-    device/sony/hayabusa
-    device/sony/huashan
-    device/sony/mint
-    device/sony/tsubasa
-    external/libnfc-nxp
-    external/selinux
-    external/stlport
-    frameworks/av
-    frameworks/base
-    frameworks/native
-    frameworks/opt/telephony
-    hardware/qcom/audio
-    hardware/qcom/display
-    hardware/qcom/fm
-    hardware/qcom/gps
-    hardware/qcom/media
-    hardware/ril
-    packages/apps/Nfc
-    packages/apps/Settings
-    packages/providers/MediaProvider
-    system/bt
-    system/core
-    system/sepolicy
-    ' "${*}";
+  androidprojectpatcher 'aosp_development_sony8960_master' 'aosp_sony8960_master' '' "${*}";
 }

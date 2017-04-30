@@ -170,8 +170,8 @@ function gitfbranch()
 function androidprojectpatcher()
 {
   # Usage
-  if [ -z "${3}" ]; then
-    echo " Usage: androidprojectpatcher <project_name> <project_tag> '<project_paths> [specific_path]'";
+  if [ -z "${2}" ]; then
+    echo " Usage: androidprojectpatcher <project_name> <project_tag> ['project paths'] [specific_path]";
     return;
   fi;
 
@@ -217,6 +217,11 @@ function androidprojectpatcher()
   if [ -f ~/.bash_android.github.rc ]; then
     source ~/.bash_android.github.rc;
   fi;
+
+  # Automated remote changes detection
+  project_paths=$(git ls-remote --heads "https://github.com/AdrianDC/${project_name}.git" \
+                | sed 's/.*refs\/heads\///' \
+                | sed 's/_/\//g');
 
   # ==========================================================
   # Repo root
