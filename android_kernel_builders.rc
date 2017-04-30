@@ -14,13 +14,21 @@ function makekernel()
     mkdir ./.build;
   fi;
 
+  # Mode: make clean / make mrproper
+  if [ "${1}" = 'clean' ] || [ "${1}" = 'mrproper' ]; then
+
+    # Launch make mode
+    make "${1}" O=./.build;
+    return;
+  fi;
+
   # Environment
   if [ -z "${DEFCONFIG_NAME}" ] || [ ! -z "${1}" ]; then
 
     # Usage
     if [ -z "${1}" ] || ! ls arch/arm*/configs/*${1}*_defconfig 1> /dev/null 2>&1; then
       echo '';
-      echo ' Usage: makekernel [platform_device to init]';
+      echo ' Usage: makekernel [platform_device_to_init / clean / mrproper]';
       echo '';
       return;
     fi;
