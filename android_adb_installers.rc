@@ -131,6 +131,7 @@ function adbpf()
 
   # Variables
   local filepath='';
+  local filepathext='';
   local filepathtest='';
   local filetarget='';
   local filepaths="${@}";
@@ -150,6 +151,7 @@ function adbpf()
       filepath=$(readlink -f "${filepath}");
     fi;
     filepathtest=${filepath};
+    filepathext=${filepathtest##*.};
 
     # Iterate sub-folders
     if [ -d "${filepath}" ]; then
@@ -159,8 +161,9 @@ function adbpf()
 
     # Handle files
     else
+
       # Detect file targets
-      if [[ "${filepathtest}" =~ .mk|.py ]]; then
+      if [ "${filepathext}" = 'mk' ] || [ "${filepathext}" = 'py' ]; then
         continue;
       fi;
       if [[ "${filepathtest}" =~ 'proprietary' ]]; then
