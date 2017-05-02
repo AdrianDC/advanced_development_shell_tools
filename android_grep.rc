@@ -13,7 +13,7 @@ function grepbs()
   GREP_COLORS='fn=1;1';
   for file in $(find . -type f -not -path "*.git/*" -not -path "*.repo/*" | sort); do
     if [ -f "${file}" ]; then
-      found=$(strings $(readlink -f ${file}) | grep -ai "${*}");
+      found=$(strings "$(readlink -f ${file})" | grep -ai "${*}");
       if [ ! -z "${found}" ]; then
         echo -e "\e[1;31m${file} :\e[0m ${found}";
       fi;
