@@ -11,7 +11,7 @@ function androiddevicestarget()
   local request=${1};
   local platform='';
   local partition='';
-  local target_devices="dora kagura kugo suzu huashan hayabusa mint tsubasa";
+  local target_devices="dora kagura kugo suzu huashan hayabusa mint tsubasa shuang";
 
   # Ignore unsupported devices
   if [[ ! "${target_devices}" =~ "${device}" ]]; then
@@ -45,7 +45,7 @@ function androiddevicestarget()
   case "${device}" in
     dora|kagura|kugo|suzu)
       platform='/dev/block/bootdevice/by-name';;
-    huashan|hayabusa|mint|tsubasa|*)
+    huashan|hayabusa|mint|tsubasa|shuang|*)
       platform='/dev/block/platform/msm_sdcc.1/by-name';;
   esac;
 
@@ -62,7 +62,7 @@ function androiddevicestarget()
       case "${device}" in
         huashan|hayabusa|mint|tsubasa)
           partition='Kernel';;
-        dora|f8131|*)
+        dora|f8131|shuang|*)
           partition='boot';;
       esac;;
 
@@ -75,7 +75,7 @@ function androiddevicestarget()
       case "${device}" in
         dora|f8131)
           partition='recovery';;
-        huashan|hayabusa|mint|tsubasa|*)
+        huashan|hayabusa|mint|tsubasa|shuang|*)
           partition='FOTAKernel';;
       esac;;
 
@@ -84,7 +84,7 @@ function androiddevicestarget()
       case "${device}" in
         huashan|hayabusa|mint|tsubasa)
           partition='System';;
-        dora|f8131|*)
+        dora|f8131|shuang|*)
           partition='system';;
       esac;;
 
