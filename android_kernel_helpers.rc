@@ -16,7 +16,7 @@ function makekernelinjector()
   makekernel ${1};
 
   # Package kernel injector
-  kernelinjectorzip ${1} arch/arm/boot/zImage;
+  kernelinjectorzip ${1} .build/arch/arm/boot/zImage;
 }
 
 # === Xperia X Performance Shortcuts ===
