@@ -34,9 +34,11 @@ function gitcpup()
     return;
   fi;
 
-  # GitHub patch
-  if [[ "${tmpurl}" =~ 'github.com' ]] && [[ ! "${tmpurl}" =~ '.patch' ]]; then
-    tmpurl="${tmpurl}.patch";
+  # GitHub/GitLab patch
+  if [[ ! "${tmpurl}" =~ '.patch' ]]; then
+    if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]]; then
+      tmpurl="${tmpurl}.patch";
+    fi;
   fi;
 
   # CodeAurora patch
@@ -108,9 +110,11 @@ function gitcpur()
   local replace="${4}";
   echo '';
 
-  # GitHub patch
-  if [[ "${tmpurl}" =~ 'github.com' ]] && [[ ! "${tmpurl}" =~ '.patch' ]]; then
-    tmpurl="${tmpurl}.patch";
+  # GitHub/GitLab patch
+  if [[ ! "${tmpurl}" =~ '.patch' ]]; then
+    if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]]; then
+      tmpurl="${tmpurl}.patch";
+    fi;
   fi;
 
   # Cherry-pick
