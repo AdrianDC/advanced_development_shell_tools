@@ -73,7 +73,7 @@ function gitcpup()
 
   # Files renaming
   if [ ! -z "${2}" ] && [ ! -z "${3}" ]; then
-    sed -i "s/${2}/${3}/g" "${tmpfile}";
+    sed -i "s#${2}#${3}#g" "${tmpfile}";
   fi;
 
   # Cherry-pick
