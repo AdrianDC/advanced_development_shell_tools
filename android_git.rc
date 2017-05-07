@@ -244,6 +244,14 @@ alias gitloo='git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=s
 # === Git Log Searcher ===
 function gitlos()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitlos <path_or_.> ["search string input"] [search_max_count]';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local input;
   local path;
