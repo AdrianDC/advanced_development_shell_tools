@@ -259,8 +259,16 @@ function adbfotainfos()
 # === Kernel Injector ===
 function fbootk()
 {
+  # Variables
+  local filepath=${1};
+
+  # Adapt path if needed for makekernel
+  if [ ! -f "${filepath}" ] && [ -f ".build/${filepath}" ]; then
+    filepath=".build/${filepath}";
+  fi;
+
   # Usage
-  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
+  if [ -z "${filepath}" ] || [ ! -f "${filepath}" ]; then
     echo '  Usage: fbootk kernelpath [bool_fota]';
     return;
   fi;
@@ -275,7 +283,7 @@ function fbootk()
 
   # Kernel injection
   adbro;
-  adb push "${1}" /tmpkernel;
+  adb push "${filepath}" /tmpkernel;
   adb push "${bash_android_bbootimg}" /bbootimg;
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
