@@ -34,6 +34,9 @@ function gitcpup()
     return;
   fi;
 
+  # Remote additional informations
+  tmpurl=${tmpurl%%#*};
+
   # GitHub/GitLab patch
   if [[ ! "${tmpurl}" =~ '.patch' ]]; then
     if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]]; then
@@ -109,6 +112,9 @@ function gitcpur()
   local search="${3}";
   local replace="${4}";
   echo '';
+
+  # Remote additional informations
+  tmpurl=${tmpurl%%#*};
 
   # GitHub/GitLab patch
   if [[ ! "${tmpurl}" =~ '.patch' ]]; then
