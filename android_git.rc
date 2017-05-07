@@ -240,17 +240,32 @@ function gitdf()
 alias gitlo='git log --pretty=oneline';
 alias gitlod='git log --pretty=oneline --';
 alias gitloo='git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --';
+
+# === Git Log Searcher ===
 function gitlos()
 {
   # Variables
-  local cnt=${2:-30};
+  local input;
+  local path;
+  local cnt;
+
+  # Handle input values
+  if [ -f "${1}" ]; then
+    path=${1};
+    input=${2};
+    cnt=${3:-30};
+  else
+    path='.';
+    input=${1};
+    cnt=${2:-30};
+  fi;
 
   # Search related commits
   echo '';
-  echo -e " \e[1;37mSearching for ${1} in last ${cnt} commits...\e[0m";
+  echo -e " \e[1;37mSearching for ${input} in last ${cnt} commits...\e[0m";
   echo '';
-  for sha1 in $(git log --max-count=${cnt} --format=format:%H -- .); do
-    if [ ! -z "$(git show ${sha1} | grep -i "${1}")" ]; then
+  for sha1 in $(git log --max-count=${cnt} --format=format:%H -- "${path}"); do
+    if [ ! -z "$(git show ${sha1} | grep -i "${input}")" ]; then
       git show --name-only --oneline ${sha1};
       echo '';
     fi;
