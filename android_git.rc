@@ -275,6 +275,7 @@ function gitlos()
   for sha1 in $(git log --max-count=${cnt} --format=format:%H -- "${path}"); do
     if [ ! -z "$(git show ${sha1} | grep -i "${input}")" ]; then
       git show --name-only --oneline ${sha1};
+      git show ${sha1} | grep -i "${input}";
       echo '';
     fi;
   done;
