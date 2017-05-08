@@ -39,7 +39,8 @@ function gitcpup()
 
   # GitHub/GitLab patch
   if [[ ! "${tmpurl}" =~ '.patch' ]]; then
-    if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]]; then
+    if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]] ||
+       [[ "${tmpurl}" =~ 'git.bricked.de' ]]; then
       tmpurl="${tmpurl}.patch";
     fi;
   fi;
@@ -118,7 +119,8 @@ function gitcpur()
 
   # GitHub/GitLab patch
   if [[ ! "${tmpurl}" =~ '.patch' ]]; then
-    if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]]; then
+    if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]] ||
+       [[ "${tmpurl}" =~ 'git.bricked.de' ]]; then
       tmpurl="${tmpurl}.patch";
     fi;
   fi;
