@@ -60,12 +60,38 @@ function makedefconf()
   # Handle failed defconfig selection
   elif [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
     if [ ${#DEFCONFIG_INPUT[@]} -eq 1 ]; then
-      DEFCONFIG_INPUT=();
+      echo '';
+      echo '  Error: makedefconf found no defconfigs';
+      echo '';
+      return;
     fi;
+
+    # Create defconfig selector list
+    local cnt=0;
     echo '';
-    echo '  Error: makedefconf found '${#DEFCONFIG_INPUT[@]}' defconfigs';
+    echo '  Warning: makedefconf found '${#DEFCONFIG_INPUT[@]}' defconfigs';
     echo '';
-    return;
+    for defconfig_path in ${DEFCONFIG_INPUT[@]}; do
+      cnt=$((${cnt} + 1));
+      echo "   ${cnt}: ${defconfig_path}";
+    done;
+    echo '';
+    printf "  Defconfig to use [1 to {cnt}] : ";
+    read key;
+    key=$((${key} - 1));
+    if [ ${key} -ge 0 ] && [ ${key} -lt ${cnt} ]; then
+      DEFCONFIG_INPUT=${DEFCONFIG_INPUT[${key}]};
+    else
+      DEFCONFIG_INPUT='';
+    fi;
+
+    # Validate user choice
+    if [ ! -f "${DEFCONFIG_INPUT}" ]; then
+      echo '';
+      echo '  Error: makedefconf found no defconfigs';
+      echo '';
+      return;
+    fi;
   fi;
 
   # Kernel defconfig
