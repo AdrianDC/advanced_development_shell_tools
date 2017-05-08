@@ -28,7 +28,7 @@ function makekernel()
     # Usage
     if [ -z "${1}" ] || ! ls arch/arm*/configs/*${1}*_defconfig 1> /dev/null 2>&1; then
       echo '';
-      echo ' Usage: makekernel [platform_device_to_init / clean / mrproper]';
+      echo ' Usage: makekernel [platform_device_to_init / clean / mrproper] [make_parameters]';
       echo '';
       return;
     fi;
@@ -86,10 +86,11 @@ function makekernel()
 
   # Variables
   local time_diff;
+  local make_parameters="${@:2}";
 
   # Kernel build
   time_diff=$(date +%s);
-  make -j$(grep -c ^processor /proc/cpuinfo) O=./.build;
+  make -j$(grep -c ^processor /proc/cpuinfo) ${make_parameters} O=./.build;
 
   # Show compilation time
   time_diff=$(($(date +%s)-${time_diff}));
