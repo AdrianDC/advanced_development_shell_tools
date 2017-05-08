@@ -63,5 +63,5 @@ alias gitpx='gitremoteverify xperia gitrax && gitpu xperia';
 alias gitpxm='gitremoteverify xperia gitrax && gitpu xperia master';
 alias gitpmd='gitremoteverify xperia gitramd && gitpu mromdev';
 
-# === Git Push Helpers ===
-function gitpurl() { git push -f "${1%/commits/*}" HEAD:"${1#*/commits/}"; }
+# === Git Push Url Helper ===
+function gitpurl() { gitpu "${1%/commits/*}" "${1#*/commits/}"; }
