@@ -84,7 +84,7 @@ function makekernel()
     fi;
 
     # Kernel defconfig
-    local DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
+    export DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
 
     # CCache cross compiler
     local ccache=;
