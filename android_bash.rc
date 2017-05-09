@@ -180,6 +180,9 @@ function bashpush()
     return;
   fi;
 
+  # Update README.md
+  shtoolsreadme;
+
   # Commit changes to upstream
   local currentdir=${PWD};
   cd "${bash_android_dir}/";
@@ -199,6 +202,9 @@ function bashamend()
     echo '';
     return;
   fi;
+
+  # Update README.md
+  shtoolsreadme;
 
   # Amend changes to upstream
   local currentdir=${PWD};
