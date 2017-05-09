@@ -78,19 +78,6 @@ function devupl()
   fileupl "${filepath}" 'Development';
 }
 
-# === Private File Uploader ===
-function privupl()
-{
-  # Variables
-  local filepath="${1}";
-  if [ -z "${filepath}" ] && [ -f "${PackageResult}" ]; then
-    filepath="${PackageResult}";
-  fi;
-
-  # File upload to .private
-  fileupl "${filepath}" '.private';
-}
-
 # === Fast File Uploader ===
 function fastupl()
 {
@@ -198,44 +185,6 @@ function devuplrom()
 
   # End of process
   cd "${cwd}";
-}
-
-# === Adaptive Device Upload ===
-function autodevupl()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: autodevupl <device> [folder_path [file_path]]';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  local rom_device="${1}";
-  local rom_phone="${rom_device^}";
-  local rom_target="${2}";
-  local rom_files="${3}";
-
-  # Target not final
-  if [[ ! "${rom_target}" =~ "${rom_phone}" ]]; then
-
-    # LineageOS
-    if [[ "${rom_target}" =~ 'lineage' ]]; then
-      rom_target="${rom_phone}/LineageOS-14.1";
-
-    # Development
-    else
-      rom_target='Development';
-    fi;
-  fi;
-
-  # Upload files
-  if [ -z "${rom_files}" ]; then
-    devuplrom "${rom_device}" "${rom_target}";
-  else
-    fileupl "${rom_files}" "${rom_target}";
-  fi;
 }
 
 # === File Downloader Mega.nz ===

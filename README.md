@@ -594,12 +594,10 @@ developing on Android, especially for SONY devices.<br />
 * #### Source: [android_uploads.rc](android_uploads.rc)
   * [fileupl (Function)](android_uploads.rc): *fileupl <file_path> <target_folder>*
   * [devupl (Function)](android_uploads.rc)
-  * [privupl (Function)](android_uploads.rc)
   * [fastupl (Function)](android_uploads.rc)
   * [mmmupl (Function)](android_uploads.rc): *mmmupl <packageorpath> [bool_partial_build]*
   * [devuplboot (Function)](android_uploads.rc)
   * [devuplrom (Function)](android_uploads.rc): *devuplrom <device> [folder_path]*
-  * [autodevupl (Function)](android_uploads.rc): *autodevupl <device> [folder_path [file_path]]*
   * [fileget (Function)](android_uploads.rc): *fileget <remote_path> [boot_remove_remote]*
   * [pushbrom (Function)](android_uploads.rc)
   * [androidfilesadd (Function)](android_uploads.rc): *androidfilesadd <file_path> <target_folder>*
