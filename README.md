@@ -19,58 +19,58 @@ developing on Android, especially for SONY devices.<br />
   * [adbr (Function)](android_adb.rc)
   * [adbro (Function)](android_adb.rc)
   * [adbside (Function)](android_adb.rc)
-  * [adbs (Alias)](android_adb.rc)
-  * [adbroot (Alias)](android_adb.rc)
-  * [adbremount (Alias)](android_adb.rc)
-  * [adbpo (Alias)](android_adb.rc)
-  * [adbre (Alias)](android_adb.rc)
+  * [adbs (Alias)](android_adb.rc): *adb shell*
+  * [adbroot (Alias)](android_adb.rc): *adb kill-server; sudo adb start-server*
+  * [adbremount (Alias)](android_adb.rc): *sudo adb root; sudo adb remount*
+  * [adbpo (Alias)](android_adb.rc): *adb shell reboot -p*
+  * [adbre (Alias)](android_adb.rc): *adb reboot*
   * [adbrh (Function)](android_adb.rc)
-  * [adbrr (Alias)](android_adb.rc)
-  * [adbw (Alias)](android_adb.rc)
-  * [adbrb (Alias)](android_adb.rc)
-  * [adbscr (Alias)](android_adb.rc)
-  * [adbfotarandom (Alias)](android_adb.rc)
-  * [adbfotazero (Alias)](android_adb.rc)
-  * [adbsgdisk (Alias)](android_adb.rc)
-  * [adbinfomem (Alias)](android_adb.rc)
-  * [adbblkp (Alias)](android_adb.rc)
-  * [adbdf (Alias)](android_adb.rc)
-  * [adbrcbin (Alias)](android_adb.rc)
-  * [adbmountcache (Alias)](android_adb.rc)
-  * [adbmountdata (Alias)](android_adb.rc)
-  * [adbmountmicrosd (Alias)](android_adb.rc)
-  * [adbumountcache (Alias)](android_adb.rc)
-  * [adbumountdata (Alias)](android_adb.rc)
-  * [adbumountmicrosd (Alias)](android_adb.rc)
-  * [adbmount (Alias)](android_adb.rc)
-  * [adbumount (Alias)](android_adb.rc)
-  * [adbemergencycalls (Alias)](android_adb.rc)
-  * [adbemergencylist (Alias)](android_adb.rc)
+  * [adbrr (Alias)](android_adb.rc): *adb reboot recovery*
+  * [adbw (Alias)](android_adb.rc): *adb wait-for-device*
+  * [adbrb (Alias)](android_adb.rc): *adb reboot bootloader*
+  * [adbscr (Alias)](android_adb.rc): *mkdir -p ./screenshots; adb shell screencap /sdcard/screenshot.png; adb pull /sdcard/screenshot.png ./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png*
+  * [adbfotarandom (Alias)](android_adb.rc): *adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel*
+  * [adbfotazero (Alias)](android_adb.rc): *adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel*
+  * [adbsgdisk (Alias)](android_adb.rc): *adb shell sgdisk --print /dev/block/mmcblk0*
+  * [adbinfomem (Alias)](android_adb.rc): *adb shell dumpsys meminfo*
+  * [adbblkp (Alias)](android_adb.rc): *adb shell ls -l /dev/block/bootdevice/by-name/*
+  * [adbdf (Alias)](android_adb.rc): *adb shell df -H*
+  * [adbrcbin (Alias)](android_adb.rc): *adb shell restorecon -R /sbin*
+  * [adbmountcache (Alias)](android_adb.rc): *adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache*
+  * [adbmountdata (Alias)](android_adb.rc): *adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data*
+  * [adbmountmicrosd (Alias)](android_adb.rc): *adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext*
+  * [adbumountcache (Alias)](android_adb.rc): *adb shell umount /cache*
+  * [adbumountdata (Alias)](android_adb.rc): *adb shell umount /data*
+  * [adbumountmicrosd (Alias)](android_adb.rc): *adb shell umount /storage/ext*
+  * [adbmount (Alias)](android_adb.rc): *adbmountcache; adbmountdata; adbmountmicrosd*
+  * [adbumount (Alias)](android_adb.rc): *adbumountcache; adbumountdata; adbumountmicrosd*
+  * [adbemergencycalls (Alias)](android_adb.rc): *adb shell setprop ril.ecclist*
+  * [adbemergencylist (Alias)](android_adb.rc): *adb shell getprop ril.ecclist*
   * [adbco (Function)](android_adb.rc): *adbco [ipaddressonlyonce]*
   * [adbedit (Function)](android_adb.rc)
   * [adbdatabase (Function)](android_adb.rc): *adbdatabase </data/.../sqlite.db>*
   * [adbinputs (Function)](android_adb.rc)
   * [adbreadevents (Function)](android_adb.rc): *adbreadevents <event_number>*
   * [adbkp (Function)](android_adb.rc)
-  * [adbservices (Alias)](android_adb.rc)
-  * [adbsl (Alias)](android_adb.rc)
-  * [adbslz (Alias)](android_adb.rc)
-  * [adbsc (Alias)](android_adb.rc)
-  * [adbsg (Alias)](android_adb.rc)
+  * [adbservices (Alias)](android_adb.rc): *adb shell service list*
+  * [adbsl (Alias)](android_adb.rc): *adb shell ls -l*
+  * [adbslz (Alias)](android_adb.rc): *adb shell ls -lZ*
+  * [adbsc (Alias)](android_adb.rc): *adb shell cat*
+  * [adbsg (Alias)](android_adb.rc): *adb shell getprop*
   * [adbsw (Function)](android_adb.rc)
-  * [isdone (Alias)](android_adb.rc)
+  * [isdone (Alias)](android_adb.rc): *notify-send "Process execution finished !"*
   * [adbgitpf (Function)](android_adb.rc)
   * [adbsu (Function)](android_adb.rc)
   * [adbu (Function)](android_adb.rc)
 * #### Source: [android_adb_assets.rc](android_adb_assets.rc)
   * [adbupdate (Function)](android_adb_assets.rc)
   * [sepaud (Function)](android_adb_assets.rc)
-  * [adbintents (Alias)](android_adb_assets.rc)
-  * [adbcamera (Alias)](android_adb_assets.rc)
+  * [adbintents (Alias)](android_adb_assets.rc): *adb shell dumpsys package r > intents.txt*
+  * [adbcamera (Alias)](android_adb_assets.rc): *adb root; adb wait-for-device; adb shell killall zigote; adbl*
   * [adbpk (Function)](android_adb_assets.rc)
   * [adbms (Function)](android_adb_assets.rc)
   * [adblibs (Function)](android_adb_assets.rc)
-  * [ndkstack (Alias)](android_adb_assets.rc)
+  * [ndkstack (Alias)](android_adb_assets.rc): *ndk-stack -sym ${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols -dump*
   * [adbwtch (Function)](android_adb_assets.rc)
   * [adbdu (Function)](android_adb_assets.rc)
   * [adbpropradiolog (Function)](android_adb_assets.rc)
@@ -90,7 +90,7 @@ developing on Android, especially for SONY devices.<br />
   * [adbi (Function)](android_adb_installers.rc)
   * [adbii (Function)](android_adb_installers.rc)
   * [adbpf (Function)](android_adb_installers.rc): *adbpf <file_paths>*
-  * [adbp (Alias)](android_adb_installers.rc)
+  * [adbp (Alias)](android_adb_installers.rc): *adbro; adbpf*
   * [adbpfa (Function)](android_adb_installers.rc)
   * [adbpetc (Function)](android_adb_installers.rc)
   * [adbpmrom (Function)](android_adb_installers.rc)
@@ -101,24 +101,24 @@ developing on Android, especially for SONY devices.<br />
   * [adbl (Function)](android_adb_logs.rc): *adbl [all/crash/events/main/radio/system]*
   * [adbcl (Function)](android_adb_logs.rc)
   * [adbstcl (Function)](android_adb_logs.rc)
-  * [adbld (Alias)](android_adb_logs.rc)
-  * [adblr (Alias)](android_adb_logs.rc)
-  * [adblb (Alias)](android_adb_logs.rc)
-  * [adblc (Alias)](android_adb_logs.rc)
-  * [adbk (Alias)](android_adb_logs.rc)
-  * [adbdm (Alias)](android_adb_logs.rc)
-  * [adbkd (Alias)](android_adb_logs.rc)
-  * [adbkl (Alias)](android_adb_logs.rc)
-  * [adbkld (Alias)](android_adb_logs.rc)
-  * [adbpl (Alias)](android_adb_logs.rc)
-  * [adbpld (Alias)](android_adb_logs.rc)
-  * [adbrl (Alias)](android_adb_logs.rc)
-  * [adbse (Alias)](android_adb_logs.rc)
-  * [adbdumpsensors (Alias)](android_adb_logs.rc)
-  * [adbsel (Alias)](android_adb_logs.rc)
-  * [adblf (Alias)](android_adb_logs.rc)
-  * [adblh (Alias)](android_adb_logs.rc)
-  * [adbtrampoline (Alias)](android_adb_logs.rc)
+  * [adbld (Alias)](android_adb_logs.rc): *cls; adbro; printf "" >adb.data; adb shell cat /data/logcat.txt | tee -a adb.data*
+  * [adblr (Alias)](android_adb_logs.rc): *adbl radio*
+  * [adblb (Alias)](android_adb_logs.rc): *alias adblb='while [ 1 ]; do cls; printf "" >adb.log; adb logcat -v audit2allow *:V | tee -a adb.log;*
+  * [adblc (Alias)](android_adb_logs.rc): *adb logcat -c; adbl*
+  * [adbk (Alias)](android_adb_logs.rc): *adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg*
+  * [adbdm (Alias)](android_adb_logs.rc): *adbro; printf "" >dmesg; adb shell dmesg | tee -a dmesg*
+  * [adbkd (Alias)](android_adb_logs.rc): *printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg*
+  * [adbkl (Alias)](android_adb_logs.rc): *cls; adbro; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg*
+  * [adbkld (Alias)](android_adb_logs.rc): *cls; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg*
+  * [adbpl (Alias)](android_adb_logs.rc): *cls; adbro; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg*
+  * [adbpld (Alias)](android_adb_logs.rc): *cls; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg*
+  * [adbrl (Alias)](android_adb_logs.rc): *cls; printf "" >recovery_log; adb shell cat /tmp/recovery.log | tee -a recovery_log*
+  * [adbse (Alias)](android_adb_logs.rc): *adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg*
+  * [adbdumpsensors (Alias)](android_adb_logs.rc): *adb shell dumpsys sensorservice*
+  * [adbsel (Alias)](android_adb_logs.rc): *adbkl; sepaud kmsg*
+  * [adblf (Alias)](android_adb_logs.rc): *adb logcat -v audit2allow*
+  * [adblh (Alias)](android_adb_logs.rc): *adb logcat -b events -b main -b radio | highlight*
+  * [adbtrampoline (Alias)](android_adb_logs.rc): *adb shell "dmesg | grep -i trampoline"*
   * [adblcln (Function)](android_adb_logs.rc)
   * [adbkcln (Function)](android_adb_logs.rc)
   * [adbbootchart (Function)](android_adb_logs.rc)
@@ -137,57 +137,57 @@ developing on Android, especially for SONY devices.<br />
 * #### Source: [android_fetch.rc](android_fetch.rc)
   * [gitfetchtreset (Function)](android_fetch.rc)
   * [gitfetchcheckout (Function)](android_fetch.rc)
-  * [gitf (Alias)](android_fetch.rc)
-  * [gitfmr (Alias)](android_fetch.rc)
-  * [gitfs (Alias)](android_fetch.rc)
-  * [gitfsu (Alias)](android_fetch.rc)
-  * [gitfsm (Alias)](android_fetch.rc)
-  * [gitfgr (Alias)](android_fetch.rc)
-  * [gitfor (Alias)](android_fetch.rc)
-  * [gitforla (Alias)](android_fetch.rc)
-  * [gitfar (Alias)](android_fetch.rc)
-  * [gitfar6 (Alias)](android_fetch.rc)
-  * [gitfara6 (Alias)](android_fetch.rc)
-  * [gitfarm (Alias)](android_fetch.rc)
-  * [gitfart (Alias)](android_fetch.rc)
-  * [gitfbr (Alias)](android_fetch.rc)
-  * [gitfsr (Alias)](android_fetch.rc)
-  * [gitfgc (Alias)](android_fetch.rc)
+  * [gitf (Alias)](android_fetch.rc): *git fetch*
+  * [gitfmr (Alias)](android_fetch.rc): *git fetch origin; git reset origin/master*
+  * [gitfs (Alias)](android_fetch.rc): *git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash*
+  * [gitfsu (Alias)](android_fetch.rc): *git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash -p*
+  * [gitfsm (Alias)](android_fetch.rc): *git stash -u; git fetch origin cm-14.1; git checkout cm-14.1*
+  * [gitfgr (Alias)](android_fetch.rc): *gitfetchtreset github*
+  * [gitfor (Alias)](android_fetch.rc): *gitfetchtreset origin*
+  * [gitforla (Alias)](android_fetch.rc): *gitfetchtreset origin aosp/LA.UM.5.5_rb1.10*
+  * [gitfar (Alias)](android_fetch.rc): *gitfetchtreset $(githubusername)*
+  * [gitfar6 (Alias)](android_fetch.rc): *gitfetchtreset $(githubusername) aosp-6.0*
+  * [gitfara6 (Alias)](android_fetch.rc): *gitfetchtreset $(githubusername) android-6.0*
+  * [gitfarm (Alias)](android_fetch.rc): *gitfetchtreset $(githubusername) multirom*
+  * [gitfart (Alias)](android_fetch.rc): *gitfetchtreset $(githubusername) twrp*
+  * [gitfbr (Alias)](android_fetch.rc): *gitfetchtreset backup*
+  * [gitfsr (Alias)](android_fetch.rc): *gitfetchtreset source*
+  * [gitfgc (Alias)](android_fetch.rc): *gitfetchcheckout github*
   * [gitfdr (Function)](android_fetch.rc)
   * [gitfkl (Function)](android_fetch.rc)
 * #### Source: [android_gerrit.rc](android_gerrit.rc)
   * [gerritreview (Function)](android_gerrit.rc): *gerritreview <gerrit_ssh_or_http> <project_name_or_.> <drafts/for/heads> [branch]*
   * [gerritusername (Function)](android_gerrit.rc)
-  * [gitpr (Alias)](android_gerrit.rc)
-  * [gitprh (Alias)](android_gerrit.rc)
-  * [gitprd (Alias)](android_gerrit.rc)
-  * [gitprdh (Alias)](android_gerrit.rc)
-  * [gitpg (Alias)](android_gerrit.rc)
-  * [gitpgh (Alias)](android_gerrit.rc)
-  * [gitprg (Alias)](android_gerrit.rc)
-  * [gitprgy (Alias)](android_gerrit.rc)
-  * [gitpraosp (Alias)](android_gerrit.rc)
-  * [gitpraospma (Alias)](android_gerrit.rc)
-  * [gitprdaosp (Alias)](android_gerrit.rc)
-  * [gitprdaospma (Alias)](android_gerrit.rc)
-  * [gitpraicp (Alias)](android_gerrit.rc)
-  * [gitprhaicp (Alias)](android_gerrit.rc)
-  * [gitprdaicp (Alias)](android_gerrit.rc)
-  * [gitprdhaicp (Alias)](android_gerrit.rc)
-  * [gitpgaicp (Alias)](android_gerrit.rc)
-  * [gitpghaicp (Alias)](android_gerrit.rc)
-  * [gitprgaicp (Alias)](android_gerrit.rc)
-  * [gitprghaicp (Alias)](android_gerrit.rc)
-  * [gitpr7 (Alias)](android_gerrit.rc)
-  * [gitpr7h (Alias)](android_gerrit.rc)
-  * [gitpr7d (Alias)](android_gerrit.rc)
-  * [gitpr7dh (Alias)](android_gerrit.rc)
-  * [gitpromni (Alias)](android_gerrit.rc)
-  * [gitprhomni (Alias)](android_gerrit.rc)
-  * [gitprdomni (Alias)](android_gerrit.rc)
-  * [gitprdhomni (Alias)](android_gerrit.rc)
-  * [gitprtwrp (Alias)](android_gerrit.rc)
-  * [gitprdtwrp (Alias)](android_gerrit.rc)
+  * [gitpr (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS for*
+  * [gitprh (Alias)](android_gerrit.rc): *gerritreview http://review.lineageos.org LineageOS for*
+  * [gitprd (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS drafts*
+  * [gitprdh (Alias)](android_gerrit.rc): *gerritreview http://review.lineageos.org LineageOS drafts*
+  * [gitpg (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS heads*
+  * [gitpgh (Alias)](android_gerrit.rc): *gerritreview http://review.lineageos.org LineageOS heads*
+  * [gitprg (Alias)](android_gerrit.rc): *gitpr; gitpg*
+  * [gitprgy (Alias)](android_gerrit.rc): *printf "ynyn" | gitpr; printf "yny" | gitpg*
+  * [gitpraosp (Alias)](android_gerrit.rc): *gerritreview https://android.googlesource.com aosp for*
+  * [gitpraospma (Alias)](android_gerrit.rc): *gerritreview https://android.googlesource.com aosp for master*
+  * [gitprdaosp (Alias)](android_gerrit.rc): *gerritreview https://android.googlesource.com aosp drafts*
+  * [gitprdaospma (Alias)](android_gerrit.rc): *gerritreview https://android.googlesource.com aosp drafts master*
+  * [gitpraicp (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP for n7.1*
+  * [gitprhaicp (Alias)](android_gerrit.rc): *gerritreview http://gerrit.aicp-rom.com AICP for n7.1*
+  * [gitprdaicp (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP drafts n7.1*
+  * [gitprdhaicp (Alias)](android_gerrit.rc): *gerritreview http://gerrit.aicp-rom.com AICP drafts n7.1*
+  * [gitpgaicp (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP heads n7.1*
+  * [gitpghaicp (Alias)](android_gerrit.rc): *gerritreview http://gerrit.aicp-rom.com AICP heads n7.1*
+  * [gitprgaicp (Alias)](android_gerrit.rc): *gitpraicp; gitpgaicp*
+  * [gitprghaicp (Alias)](android_gerrit.rc): *gitprhaicp; gitpghaicp*
+  * [gitpr7 (Alias)](android_gerrit.rc): *gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia for*
+  * [gitpr7h (Alias)](android_gerrit.rc): *gerritreview http://review.msm7x30.org LegacyXperia for*
+  * [gitpr7d (Alias)](android_gerrit.rc): *gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia drafts*
+  * [gitpr7dh (Alias)](android_gerrit.rc): *gerritreview http://review.msm7x30.org LegacyXperia drafts*
+  * [gitpromni (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . for android-7.1*
+  * [gitprhomni (Alias)](android_gerrit.rc): *gerritreview http://gerrit.omnirom.org . for android-7.1*
+  * [gitprdomni (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . drafts android-7.1*
+  * [gitprdhomni (Alias)](android_gerrit.rc): *gerritreview http://gerrit.omnirom.org . drafts android-7.1*
+  * [gitprtwrp (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . for android-6.0*
+  * [gitprdtwrp (Alias)](android_gerrit.rc): *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . drafts android-6.0*
 * #### Source: [android_gerritssh.rc](android_gerritssh.rc)
   * [gerritssh (Function)](android_gerritssh.rc)
 * #### Source: [android_git.rc](android_git.rc)
@@ -195,48 +195,48 @@ developing on Android, especially for SONY devices.<br />
   * [gitfcu (Function)](android_git.rc)
   * [gitcleantags (Function)](android_git.rc)
   * [gitonebranch (Function)](android_git.rc)
-  * [gits (Alias)](android_git.rc)
-  * [gitsp (Alias)](android_git.rc)
-  * [gitsu (Alias)](android_git.rc)
-  * [gitspop (Alias)](android_git.rc)
+  * [gits (Alias)](android_git.rc): *git stash*
+  * [gitsp (Alias)](android_git.rc): *git stash -p*
+  * [gitsu (Alias)](android_git.rc): *git stash -u*
+  * [gitspop (Alias)](android_git.rc): *git stash pop*
   * [gitdi (Function)](android_git.rc)
   * [gitdfs (Function)](android_git.rc): *gitdfs <sha1commit>*
   * [gitdf (Function)](android_git.rc): *gitdf <sha1commit> <filepath>*
-  * [gitlo (Alias)](android_git.rc)
-  * [gitlod (Alias)](android_git.rc)
-  * [gitloo (Alias)](android_git.rc)
+  * [gitlo (Alias)](android_git.rc): *git log --pretty=oneline*
+  * [gitlod (Alias)](android_git.rc): *git log --pretty=oneline --*
+  * [gitloo (Alias)](android_git.rc): *git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --*
   * [gitlos (Function)](android_git.rc): *gitlos <path_or_.> ["search string input"] [search_max_count]*
   * [gitfindsha1 (Function)](android_git.rc): *gitfindsha1 <remote/branch> <"title text to search">*
-  * [gitshow (Alias)](android_git.rc)
-  * [gitshf (Alias)](android_git.rc)
+  * [gitshow (Alias)](android_git.rc): *git show --name-status*
+  * [gitshf (Alias)](android_git.rc): *git show --pretty=full*
   * [gitshl (Function)](android_git.rc)
-  * [gitap (Alias)](android_git.rc)
-  * [gitaa (Alias)](android_git.rc)
-  * [gitan (Alias)](android_git.rc)
+  * [gitap (Alias)](android_git.rc): *git add -p*
+  * [gitaa (Alias)](android_git.rc): *git add . -Av*
+  * [gitan (Alias)](android_git.rc): *git add . -An*
   * [gite (Function)](android_git.rc)
-  * [gitbd (Alias)](android_git.rc)
-  * [gitbv (Alias)](android_git.rc)
-  * [gitch (Alias)](android_git.rc)
-  * [gitcp (Alias)](android_git.rc)
-  * [gitcpc (Alias)](android_git.rc)
+  * [gitbd (Alias)](android_git.rc): *git branch -D*
+  * [gitbv (Alias)](android_git.rc): *git fetch ${gitreviewdefault} $(git rev-parse --abbrev-ref HEAD); git branch -vv*
+  * [gitch (Alias)](android_git.rc): *git checkout*
+  * [gitcp (Alias)](android_git.rc): *git cherry-pick*
+  * [gitcpc (Alias)](android_git.rc): *git reset; git cherry-pick --continue*
   * [gitcpf (Function)](android_git.rc)
   * [gitfcp (Function)](android_git.rc)
   * [gitcpr (Function)](android_git.rc)
-  * [gitc (Alias)](android_git.rc)
-  * [gitcs (Alias)](android_git.rc)
-  * [gitca (Alias)](android_git.rc)
-  * [gitcae (Alias)](android_git.rc)
-  * [gitcauthor (Alias)](android_git.rc)
-  * [gitrevert (Alias)](android_git.rc)
-  * [gitfix (Alias)](android_git.rc)
+  * [gitc (Alias)](android_git.rc): *git commit $(gitgpgparam)*
+  * [gitcs (Alias)](android_git.rc): *git commit $(gitgpgparam) -s*
+  * [gitca (Alias)](android_git.rc): *git commit $(gitgpgparam) --amend*
+  * [gitcae (Alias)](android_git.rc): *git commit $(gitgpgparam) --amend --no-edit*
+  * [gitcauthor (Alias)](android_git.rc): *$(git config --global --get user.name) <$(git config --global --get user.email)>"*
+  * [gitrevert (Alias)](android_git.rc): *git revert $(gitgpgparam) --no-edit*
+  * [gitfix (Alias)](android_git.rc): *rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp*
   * [gitcid (Function)](android_git.rc)
   * [gitcidupstream (Function)](android_git.rc)
   * [gitfurl (Function)](android_git.rc)
-  * [gitpf (Alias)](android_git.rc)
-  * [gitra (Alias)](android_git.rc)
-  * [gitrc (Alias)](android_git.rc)
-  * [gitre (Alias)](android_git.rc)
-  * [gitrs (Alias)](android_git.rc)
+  * [gitpf (Alias)](android_git.rc): *git push -f*
+  * [gitra (Alias)](android_git.rc): *git rebase --abort*
+  * [gitrc (Alias)](android_git.rc): *git rebase --continue*
+  * [gitre (Alias)](android_git.rc): *git rebase --edit-todo*
+  * [gitrs (Alias)](android_git.rc): *git rebase --skip*
   * [gitrf (Function)](android_git.rc)
   * [gitr (Function)](android_git.rc)
   * [gitrall (Function)](android_git.rc)
@@ -244,29 +244,29 @@ developing on Android, especially for SONY devices.<br />
   * [gitredit (Function)](android_git.rc)
   * [gitrb (Function)](android_git.rc)
   * [gitrbo (Function)](android_git.rc)
-  * [gitrv (Alias)](android_git.rc)
-  * [gitrh (Alias)](android_git.rc)
-  * [githd (Alias)](android_git.rc)
-  * [gitcl (Alias)](android_git.rc)
-  * [gitro (Alias)](android_git.rc)
-  * [gitsl (Alias)](android_git.rc)
-  * [gitrl (Alias)](android_git.rc)
-  * [gitri (Alias)](android_git.rc)
-  * [gitrt (Alias)](android_git.rc)
-  * [gitrerere (Alias)](android_git.rc)
-  * [gitdiffpermhide (Alias)](android_git.rc)
-  * [gitdiffpermshow (Alias)](android_git.rc)
-  * [gpglist (Alias)](android_git.rc)
-  * [gpgsilent (Alias)](android_git.rc)
-  * [gpgenable (Alias)](android_git.rc)
-  * [gpgdisable (Alias)](android_git.rc)
-  * [gpgsigning (Alias)](android_git.rc)
-  * [gitshowsg (Alias)](android_git.rc)
-  * [gitpwstore (Alias)](android_git.rc)
-  * [githi (Alias)](android_git.rc)
-  * [gitsh (Alias)](android_git.rc)
+  * [gitrv (Alias)](android_git.rc): *git remote -v*
+  * [gitrh (Alias)](android_git.rc): *git reset FETCH_HEAD --hard*
+  * [githd (Alias)](android_git.rc): *git reset HEAD --hard*
+  * [gitcl (Alias)](android_git.rc): *git reset HEAD --hard; git stash -u; git am --abort*
+  * [gitro (Alias)](android_git.rc): *git reset HEAD^ --hard*
+  * [gitsl (Alias)](android_git.rc): *git reset HEAD^; gitap; gitcae*
+  * [gitrl (Alias)](android_git.rc): *git revert HEAD -n; git commit -m "Revert"; git reset HEAD^; git add -p*
+  * [gitri (Alias)](android_git.rc): *git reset HEAD^*
+  * [gitrt (Alias)](android_git.rc): *git reset --hard*
+  * [gitrerere (Alias)](android_git.rc): *git config --global rerere.enabled*
+  * [gitdiffpermhide (Alias)](android_git.rc): *git config core.filemode false*
+  * [gitdiffpermshow (Alias)](android_git.rc): *git config core.filemode true*
+  * [gpglist (Alias)](android_git.rc): *gpg --list-secret-keys --keyid-format LONG*
+  * [gpgsilent (Alias)](android_git.rc): *echo "no-tty" >> ~/.gnupg/gpg.conf*
+  * [gpgenable (Alias)](android_git.rc): *git config --global commit.gpgsign true*
+  * [gpgdisable (Alias)](android_git.rc): *git config --global commit.gpgsign false*
+  * [gpgsigning (Alias)](android_git.rc): *git config --global user.signingkey*
+  * [gitshowsg (Alias)](android_git.rc): *git config --global alias.logs "log --show-signature"*
+  * [gitpwstore (Alias)](android_git.rc): *git config --global credential.helper store*
+  * [githi (Alias)](android_git.rc): *git update-index --assume-unchanged*
+  * [gitsh (Alias)](android_git.rc): *git update-index --no-assume-unchanged*
   * [gitgpgparam (Function)](android_git.rc)
-  * [gitmt (Alias)](android_git.rc)
+  * [gitmt (Alias)](android_git.rc): *git mergetool*
   * [gitme (Function)](android_git.rc)
   * [gitmte (Function)](android_git.rc)
   * [gitmtr (Function)](android_git.rc): *gitmtr <referenced_path>*
@@ -279,31 +279,31 @@ developing on Android, especially for SONY devices.<br />
   * [gitcpupprima (Function)](android_git_pick.rc)
 * #### Source: [android_git_stats.rc](android_git_stats.rc)
   * [gitstat (Function)](android_git_stats.rc): *gitstat <remote> <branch> [stats_only]*
-  * [gitst (Alias)](android_git_stats.rc)
-  * [gitsto (Alias)](android_git_stats.rc)
-  * [gitsta (Alias)](android_git_stats.rc)
-  * [gitsta6 (Alias)](android_git_stats.rc)
-  * [gitstaa6 (Alias)](android_git_stats.rc)
-  * [gitstam (Alias)](android_git_stats.rc)
-  * [gitstatw (Alias)](android_git_stats.rc)
-  * [gitstg (Alias)](android_git_stats.rc)
-  * [gitsti (Alias)](android_git_stats.rc)
-  * [gitstt (Alias)](android_git_stats.rc)
-  * [gitsts13 (Alias)](android_git_stats.rc)
-  * [gitstaosp (Alias)](android_git_stats.rc)
-  * [gitstsony (Alias)](android_git_stats.rc)
-  * [gitstfa (Alias)](android_git_stats.rc)
-  * [gitstfs13 (Alias)](android_git_stats.rc)
+  * [gitst (Alias)](android_git_stats.rc): *gitremoteverify origin gitrao && gitstat origin cm-14.1*
+  * [gitsto (Alias)](android_git_stats.rc): *gitremoteverify origin gitrao && gitstat origin $(git rev-parse --abbrev-ref HEAD)*
+  * [gitsta (Alias)](android_git_stats.rc): *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) cm-14.1*
+  * [gitsta6 (Alias)](android_git_stats.rc): *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) aosp-6.0*
+  * [gitstaa6 (Alias)](android_git_stats.rc): *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) android-6.0*
+  * [gitstam (Alias)](android_git_stats.rc): *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master*
+  * [gitstatw (Alias)](android_git_stats.rc): *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) twrp*
+  * [gitstg (Alias)](android_git_stats.rc): *gitremoteverify github false && gitstat github*
+  * [gitsti (Alias)](android_git_stats.rc): *gitremoteverify aicp gitrai && gitstat aicp mm6.0*
+  * [gitstt (Alias)](android_git_stats.rc): *gitremoteverify twrp gitrat && gitstat twrp android-6.0*
+  * [gitsts13 (Alias)](android_git_stats.rc): *gitremoteverify origin gitrao && gitstat origin stable/cm-13.0-ZNH5Y*
+  * [gitstaosp (Alias)](android_git_stats.rc): *gitremoteverify aosp false && gitstat aosp master*
+  * [gitstsony (Alias)](android_git_stats.rc): *gitremoteverify origin gitraos && gitstat origin aosp/LA.UM.5.5.r1*
+  * [gitstfa (Alias)](android_git_stats.rc): *gitrao; gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) cm-14.1 true*
+  * [gitstfs13 (Alias)](android_git_stats.rc): *gitrao; gitremoteverify origin gitrao && gitstat origin stable/cm-13.0-ZNH5Y true*
 * #### Source: [android_grep.rc](android_grep.rc)
   * [grepb (Function)](android_grep.rc)
   * [grepbs (Function)](android_grep.rc)
   * [grepbn (Function)](android_grep.rc)
   * [gck (Function)](android_grep.rc)
   * [gca (Function)](android_grep.rc)
-  * [grepi (Alias)](android_grep.rc)
-  * [g (Alias)](android_grep.rc)
-  * [gs (Alias)](android_grep.rc)
-  * [gn (Alias)](android_grep.rc)
+  * [grepi (Alias)](android_grep.rc): *grep -i*
+  * [g (Alias)](android_grep.rc): *grepb*
+  * [gs (Alias)](android_grep.rc): *grepbs*
+  * [gn (Alias)](android_grep.rc): *grepbn*
   * [glc (Function)](android_grep.rc)
   * [glj (Function)](android_grep.rc)
   * [gle (Function)](android_grep.rc)
@@ -321,13 +321,13 @@ developing on Android, especially for SONY devices.<br />
   * [bootelf (Function)](android_kernel_editors.rc): *bootelf <boot.img>*
 * #### Source: [android_kernel_helpers.rc](android_kernel_helpers.rc)
   * [makekernelinjector (Function)](android_kernel_helpers.rc): *makekernelinjector <device_name>*
-  * [doradefconf (Alias)](android_kernel_helpers.rc)
-  * [doracopyleft (Alias)](android_kernel_helpers.rc)
-  * [doraaospdefconf (Alias)](android_kernel_helpers.rc)
-  * [doraaospkernel (Alias)](android_kernel_helpers.rc)
-  * [dorazipkernel (Alias)](android_kernel_helpers.rc)
-  * [sonykernelrebase (Alias)](android_kernel_helpers.rc)
-  * [kaguradefconf (Alias)](android_kernel_helpers.rc)
+  * [doradefconf (Alias)](android_kernel_helpers.rc): *makedefconf msm-perf dora common*
+  * [doracopyleft (Alias)](android_kernel_helpers.rc): *mkcopyleft dora*
+  * [doraaospdefconf (Alias)](android_kernel_helpers.rc): *makedefconf aosp_tone_dora_defconfig*
+  * [doraaospkernel (Alias)](android_kernel_helpers.rc): *makekernel tone_dora*
+  * [dorazipkernel (Alias)](android_kernel_helpers.rc): *kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .*
+  * [sonykernelrebase (Alias)](android_kernel_helpers.rc): *git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa*
+  * [kaguradefconf (Alias)](android_kernel_helpers.rc): *makedefconf msm-perf kagura common*
   * [sonyaospkernelupdate (Function)](android_kernel_helpers.rc): *sonyaospkernelupdate <device_name>*
 * #### Source: [android_kernel_tools.rc](android_kernel_tools.rc)
   * [fboota (Function)](android_kernel_tools.rc): *fboota [unsecure,sep,full,init,inject,recovery,fastupl,zip]*
@@ -352,9 +352,9 @@ developing on Android, especially for SONY devices.<br />
 * #### Source: [android_linux.rc](android_linux.rc)
   * [cls (Function)](android_linux.rc)
   * [toclip (Function)](android_linux.rc)
-  * [findn (Alias)](android_linux.rc)
+  * [findn (Alias)](android_linux.rc): *find -name*
   * [rsynca (Function)](android_linux.rc): *rsynca <path1> <path2>*
-  * [pcinfo (Alias)](android_linux.rc)
+  * [pcinfo (Alias)](android_linux.rc): *inxi -Fxz*
   * [findnewer (Function)](android_linux.rc): *findnewer <20160123>*
   * [cpioext (Function)](android_linux.rc)
   * [videoresize (Function)](android_linux.rc)
@@ -374,28 +374,28 @@ developing on Android, especially for SONY devices.<br />
   * [pushbsizes (Function)](android_linux.rc)
 * #### Source: [android_push.rc](android_push.rc)
   * [gitpu (Function)](android_push.rc)
-  * [gitpa (Alias)](android_push.rc)
-  * [gitpa14 (Alias)](android_push.rc)
-  * [gitpa6 (Alias)](android_push.rc)
-  * [gitpaa6 (Alias)](android_push.rc)
-  * [gitpala (Alias)](android_push.rc)
-  * [gitpal (Alias)](android_push.rc)
-  * [gitpaman (Alias)](android_push.rc)
-  * [gitpam (Alias)](android_push.rc)
-  * [gitpama (Alias)](android_push.rc)
-  * [gitpamm (Alias)](android_push.rc)
-  * [gitpanmr (Alias)](android_push.rc)
-  * [gitpalineage (Alias)](android_push.rc)
-  * [gitpan (Alias)](android_push.rc)
-  * [gitpat (Alias)](android_push.rc)
-  * [gitpaicp (Alias)](android_push.rc)
-  * [gitpb (Alias)](android_push.rc)
-  * [gitpold (Alias)](android_push.rc)
-  * [gitpp (Alias)](android_push.rc)
-  * [gitppm (Alias)](android_push.rc)
-  * [gitpx (Alias)](android_push.rc)
-  * [gitpxm (Alias)](android_push.rc)
-  * [gitpmd (Alias)](android_push.rc)
+  * [gitpa (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)*
+  * [gitpa14 (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1*
+  * [gitpa6 (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) aosp-6.0*
+  * [gitpaa6 (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) android-6.0*
+  * [gitpala (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) LA.UM.5.5_rb1.10*
+  * [gitpal (Alias)](android_push.rc): *alias gitpal='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests'*
+  * [gitpaman (Alias)](android_push.rc): *alias gitpaman='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests'*
+  * [gitpam (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) multirom*
+  * [gitpama (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master*
+  * [gitpamm (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) marshmallow*
+  * [gitpanmr (Alias)](android_push.rc): *alias gitpanmr='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) n-mr1'*
+  * [gitpalineage (Alias)](android_push.rc): *gitremoteverify lineage gitrao && gitpu lineage cm-14.1*
+  * [gitpan (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) nougat*
+  * [gitpat (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) twrp*
+  * [gitpaicp (Alias)](android_push.rc): *gitremoteverify aicp gitrai && gitpu aicp mm6.0*
+  * [gitpb (Alias)](android_push.rc): *gitremoteverify backup gitrab && gitpu backup*
+  * [gitpold (Alias)](android_push.rc): *gitremoteverify old false && gitpu old*
+  * [gitpp (Alias)](android_push.rc): *gitremoteverify project false && gitpu project*
+  * [gitppm (Alias)](android_push.rc): *gitremoteverify project false && gitpu project master*
+  * [gitpx (Alias)](android_push.rc): *gitremoteverify xperia gitrax && gitpu xperia*
+  * [gitpxm (Alias)](android_push.rc): *gitremoteverify xperia gitrax && gitpu xperia master*
+  * [gitpmd (Alias)](android_push.rc): *gitremoteverify xperia gitramd && gitpu mromdev*
   * [gitpurl (Function)](android_push.rc)
 * #### Source: [android_pushbullet.rc](android_pushbullet.rc)
   * [pushb (Function)](android_pushbullet.rc)
@@ -437,8 +437,8 @@ developing on Android, especially for SONY devices.<br />
   * [gitrax (Function)](android_remotes.rc)
   * [gitramd (Function)](android_remotes.rc)
   * [gitraos (Function)](android_remotes.rc)
-  * [gitraau (Alias)](android_remotes.rc)
-  * [gitraou (Alias)](android_remotes.rc)
+  * [gitraau (Alias)](android_remotes.rc): *git remote set-url $(githubusername)*
+  * [gitraou (Alias)](android_remotes.rc): *git remote set-url origin*
   * [gitrab (Function)](android_remotes.rc)
   * [gitra8960lineage (Function)](android_remotes.rc)
   * [gitra8996lineage (Function)](android_remotes.rc)
@@ -461,7 +461,7 @@ developing on Android, especially for SONY devices.<br />
   * [repoheadscleaner (Function)](android_repo_cleaners.rc)
   * [reposyrm (Function)](android_repo_cleaners.rc): *reposyrm <project/relative/path>*
   * [reposyrmf (Function)](android_repo_cleaners.rc): *reposyrmf <project/relative/path>*
-  * [repocleancache (Alias)](android_repo_cleaners.rc)
+  * [repocleancache (Alias)](android_repo_cleaners.rc): *if [ ! -z "${CCACHE_DIR}" ]; then rm -rfv "${CCACHE_DIR}/"*; fi*
 * #### Source: [android_repo_compare.rc](android_repo_compare.rc)
   * [repocomparestable (Function)](android_repo_compare.rc)
   * [repocompareupstream (Function)](android_repo_compare.rc)
@@ -472,7 +472,7 @@ developing on Android, especially for SONY devices.<br />
   * [repos (Function)](android_repo_helpers.rc)
   * [reposaosp (Function)](android_repo_helpers.rc)
   * [reporoomserv (Function)](android_repo_helpers.rc)
-  * [reposi (Alias)](android_repo_helpers.rc)
+  * [reposi (Alias)](android_repo_helpers.rc): *repo sync .*
   * [reposy (Function)](android_repo_helpers.rc)
   * [reposysafe (Function)](android_repo_helpers.rc)
   * [reposybranch (Function)](android_repo_helpers.rc)

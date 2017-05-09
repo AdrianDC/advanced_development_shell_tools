@@ -285,13 +285,23 @@ function shtoolsreadme()
       line_type=${line_type//*function*/Function};
 
       # Parse function usage
-      line_usage=$(grep -a "Usage: ${line_function} " "${file}" \
-                 | sed "s/.*Usage: \(.*\)\(\"\|'\);/\1/" \
-                 | grep -v '\$');
-      if [ ! -z "${line_usage}" ]; then
+      if [ "${line_type}" = 'Function' ]; then
+        line_usage=$(grep -a "Usage: ${line_function} " "${file}" \
+                   | sed "s/.*Usage: \(.*\)\(\"\|'\);/\1/" \
+                   | grep -v '\$');
+        if [ ! -z "${line_usage}" ]; then
+          line_usage=$(echo ${line_usage} | sed -e 's/\//\\\//g' -e 's/\&/\\\&/g' -e "s/'/\\\'/g" -e 's/"/\\"/g');
+          line_usage=": *${line_usage}*";
+        fi;
+
+      # Parse alias content
+      elif [ "${line_type}" = 'Alias' ]; then
+        line_usage=$(echo "${line}" | sed "s/.*=\(\"\|'\)\(.*\)\(\"\|'\);/\2/g");
         line_usage=$(echo ${line_usage} | sed -e 's/\//\\\//g' -e 's/\&/\\\&/g' -e "s/'/\\\'/g" -e 's/"/\\"/g');
         line_usage=": *${line_usage}*";
       fi;
+
+      # Append function details
       readme_functions+="  * [${line_function} (${line_type})](${path})${line_usage}\n";
 
     done < <(grep -ai "alias.*=\|function.*)" "${file}");
