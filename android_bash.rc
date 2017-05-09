@@ -108,22 +108,6 @@ export bash_updater_install_system=${bash_android_dir}/android_files/updater_scr
 export bash_updater_kernel_injector=${bash_android_dir}/android_files/updater_script_kernel_injector;
 export bash_updater_multirom_secondary=${bash_android_dir}/android_files/updater_script_multirom_secondary;
 
-# === Bashs Helper ===
-function bashhelp()
-{
-  for bash_source in ${bash_android_sources};
-  do
-    grep -ai "alias.*=\|function.*)" "${bash_source}" | grep -i "${1}";
-  done;
-}
-
-# === Bashs ROMs Editor ===
-function bashea()
-{
-  gedit ${bash_android_dir}/android_rom_*.rc;
-  bashup;
-}
-
 # === Bashs Functions Editor (gedit) ===
 function bashe()
 {
@@ -146,31 +130,6 @@ function bashe()
   # Open listed files
   if [ ! -z "${files}" ]; then
     gedit ${files};
-  fi;
-}
-
-# === Bashs Functions Editor (kate) ===
-function bashek()
-{
-  # Variables
-  local files='';
-
-  # Study all script files
-  for bash_source in ${bash_android_sources}; do
-    for word in ${@}; do
-      grep -aiq "${word}" "${bash_source}";
-
-      # List found files
-      if [ ${?} -eq 0 ]; then
-        files="${files} ${bash_source}";
-        continue;
-      fi;
-    done;
-  done;
-
-  # Open listed files
-  if [ ! -z "${files}" ]; then
-    kate ${files};
   fi;
 }
 
@@ -208,21 +167,6 @@ function bashamend()
   git add . -Ap;
   git commit -s --amend;
   git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
-  cd "${currentdir}/";
-  bashup;
-}
-
-# === Bashs Merger ===
-function bashmerge()
-{
-  local currentdir=${PWD};
-  cd "${bash_android_dir}/";
-  git fetch origin;
-  git reset origin/$(git rev-parse --abbrev-ref HEAD);
-  git add -Ap;
-  git commit --amend --no-edit;
-  git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
-  git stash;
   cd "${currentdir}/";
   bashup;
 }
