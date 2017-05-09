@@ -170,7 +170,7 @@ function adbdatabase()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo 'usage: adbdatabase </data...sqlite.db>';
+    echo 'Usage: adbdatabase </data/.../sqlite.db>';
     echo '';
     return;
   fi;
@@ -200,7 +200,7 @@ function adbreadevents()
 {
   if [ -z "${1}" ]; then
     echo '';
-    echo 'usage: adbreadevents eventNUM';
+    echo 'Usage: adbreadevents <event_number>';
     echo '';
     return;
   fi;

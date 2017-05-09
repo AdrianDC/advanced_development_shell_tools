@@ -11,14 +11,14 @@ function repochangelog()
 
   # Repo detection
   if [ -z "${ANDROID_BUILD_TOP}" ] || [ -z "${OUT}" ]; then
-    echo ' '${txtbld}'repochangelog can only be used in a build ready environment'${txtrst};
+    echo ' repochangelog can only be used in a build ready environment';
     echo '';
     return;
   fi;
 
-  # Usage help
+  # Usage
   if [ "${1}" == 'help' ]; then
-    echo ' '${txtbld}'Usage: repochangelog days_count [project1_path,project2_path,...]'${txtrst};
+    echo ' Usage: repochangelog <days_count> [project1_path,project2_path,...]';
     echo '';
     return;
   fi;

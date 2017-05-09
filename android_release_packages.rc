@@ -11,7 +11,7 @@ function signzip()
   local zip_output="${2}";
   if [ ! -f "${zip_input}" ]; then
     echo '';
-    echo ' usage: signzip <unsigned_input_zip_or_zip_to_sign> [signed_output_zip]';
+    echo ' Usage: signzip <unsigned_input_zip_or_zip_to_sign> [signed_output_zip]';
     echo '';
     return;
   fi;

@@ -9,7 +9,7 @@ function adbst()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo " Usage: adbst process_name [bool_get_root] [parameters]";
+    echo " Usage: adbst <process_name> [bool_get_root] [parameters]";
     echo '';
     return;
   fi;

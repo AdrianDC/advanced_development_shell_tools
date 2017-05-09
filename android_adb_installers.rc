@@ -124,7 +124,7 @@ function adbpf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbpf file_paths';
+    echo ' Usage: adbpf <file_paths>';
     echo '';
     return;
   fi;

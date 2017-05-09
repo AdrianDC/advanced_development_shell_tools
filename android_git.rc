@@ -47,7 +47,7 @@ function gitcleantags()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo " Usage: gittagsclean branch_to_keep";
+    echo " Usage: gittagsclean <branch_to_keep>";
     return;
   fi;
 
@@ -94,7 +94,7 @@ function gitdfs()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitdfs sha1commit';
+    echo ' Usage: gitdfs <sha1commit>';
     echo '';
     return;
   fi;
@@ -107,7 +107,7 @@ function gitdf()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitdf sha1commit filepath';
+    echo ' Usage: gitdf <sha1commit> <filepath>';
     echo '';
     return;
   fi;
@@ -167,7 +167,7 @@ function gitfindsha1()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitfindsha1 <remote/branch> "title text to search"';
+    echo ' Usage: gitfindsha1 <remote/branch> <"title text to search">';
     echo '';
     return;
   fi;
@@ -243,7 +243,7 @@ function gitcommitstable
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitcommitstable "commit_range" "to_insert (default '${to_insert_default}')"';
+    echo ' Usage: gitcommitstable <"commit_range"> <"to_insert (default RM-290)">';
     echo '';
     return;
   fi;

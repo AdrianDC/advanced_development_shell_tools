@@ -9,7 +9,7 @@ function gitcpu()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitcpu githuburltocommit [branch]';
+    echo ' Usage: gitcpu <githuburltocommit> [branch]';
     echo '';
     return;
   fi;
@@ -75,8 +75,8 @@ function gitcpo()
   # Usage
   echo '';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
-    echo -e '  \e[1;37mGit Origin Cherry-Pick.';
-    echo -e '    Usage :\e[0m gitcpo branch amount_of_commits';
+    echo -e '  \e[1;37mGit Origin Cherry-Pick.\e[0m';
+    echo -e '    Usage: gitcpo <branch> <amount_of_commits>';
     echo '';
     return;
   fi;
@@ -172,7 +172,7 @@ function gitcpur()
 {
   # Usage
   if [ -z "${4}" ]; then
-    echo " Usage: gitcpur githuburltoproject branch search_text replace_text";
+    echo " Usage: gitcpur <githuburltoproject> <branch> <search_text> <replace_text>";
     return;
   fi;
 

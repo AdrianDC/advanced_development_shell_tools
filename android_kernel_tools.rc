@@ -233,7 +233,7 @@ function bootinfo()
   # Usage
   if [ ! -f "${1}" ]; then
     echo '';
-    echo ' usage: bootinfo <boot_img_file>';
+    echo ' Usage: bootinfo <boot_img_file>';
     echo '';
     return;
   fi;
@@ -269,7 +269,7 @@ function fbootk()
 
   # Usage
   if [ -z "${filepath}" ] || [ ! -f "${filepath}" ]; then
-    echo '  Usage: fbootk kernelpath [bool_fota]';
+    echo '  Usage: fbootk <kernelpath> [bool_fota]';
     return;
   fi;
 
@@ -373,7 +373,7 @@ function kernelinjectorzip()
   # Usage
   if [ -z "${2}" ] || [ ! -f "${2}" ]; then
     echo '';
-    echo ' usage: kernelinjectorzip device kernel_file_path [kernel_sources_for_modules]';
+    echo ' Usage: kernelinjectorzip <device> <kernel_file_path> [kernel_sources_for_modules]';
     echo '';
     return;
   fi;
@@ -436,7 +436,7 @@ function bootzip()
   # Usage
   if [ -z "${2}" ] || [ ! -f "${2}" ]; then
     echo '';
-    echo ' usage: bootzip device boot_img_path';
+    echo ' Usage: bootzip <device> <boot_img_path>';
     echo '';
     return;
   fi;
@@ -602,7 +602,8 @@ function romkernelmrproper()
   local kernel_path=$(get_build_var TARGET_KERNEL_SOURCE 2>/dev/null);
   if [ -z "${kernel_path}" ]; then
     echo '';
-    echo ' romkernelmrproper: Device variables must be initiated first...';
+    echo ' Usage: romkernelmrproper';
+    echo ' Informations: Device variables must be initiated first...';
     echo '';
     return;
   fi;

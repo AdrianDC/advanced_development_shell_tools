@@ -157,7 +157,7 @@ function devuplrom()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: devuplrom device [folder_path]';
+    echo ' Usage: devuplrom <device> [folder_path]';
     echo '';
     return;
   fi;
@@ -206,7 +206,7 @@ function autodevupl()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: autodevupl device [folder_path [file_path]]';
+    echo ' Usage: autodevupl <device> [folder_path [file_path]]';
     echo '';
     return;
   fi;

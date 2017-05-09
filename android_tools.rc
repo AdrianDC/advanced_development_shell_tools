@@ -6,8 +6,9 @@
 # === Binary Editor ===
 function binaryeditor()
 {
+  # Usage
   if [ -z "${1}" ]; then
-    echo " Usage : binaryeditor patternsearch [binariespath] [replacement]";
+    echo " Usage : binaryeditor <patternsearch> [binariespath] [replacement]";
     return;
   fi;
 
@@ -103,11 +104,13 @@ function binaryeditor()
 # === Libraries Hunter ===
 function librarieshunter()
 {
+  # Usage
   if [ -z "${1}" ]; then
-    echo " Usage : librarieshunter binariespath";
+    echo " Usage : librarieshunter <binariespath>";
     return;
   fi;
 
+  # Variables
   local FILES="${1}";
   local FILE_NAME='';
   local FILE_REFERENCED='';

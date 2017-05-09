@@ -39,7 +39,7 @@ function adbrecoveryinstall()
 {
   if [ -z "${1}" ] || [ ! -f "${1}" ]; then
     echo '';
-    echo ' Usage: adbrecoveryinstall file_path';
+    echo ' Usage: adbrecoveryinstall <file_path>';
     echo '';
     return;
   fi;

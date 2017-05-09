@@ -9,7 +9,7 @@ function repoprojectscleaner()
   # Usage
   if [ ! -d '.repo' ]; then
     echo '';
-    echo ' Usage: Run inside an Android repo root';
+    echo ' Usage: repoprojectscleaner (Run inside an Android repo root)';
     echo '';
     return;
   fi;
@@ -63,7 +63,7 @@ function repotagscleaner()
   # Usage
   if [ ! -d '.repo' ]; then
     echo '';
-    echo ' Usage: Run inside an Android repo root';
+    echo ' Usage: repotagscleaner (Run inside an Android repo root)';
     echo '';
     return;
   fi;
@@ -113,7 +113,7 @@ function reposyrm()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reposyrm project/relative/path';
+    echo ' Usage: reposyrm <project/relative/path>';
     echo '';
     return;
   fi;
@@ -135,7 +135,7 @@ function reposyrmf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reposyrmf project/relative/path';
+    echo ' Usage: reposyrmf <project/relative/path>';
     echo '';
     return;
   fi;

@@ -6,10 +6,10 @@
 # === ROM Output Cleaner ===
 function outdevcl()
 {
-  # Function usage
+  # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: outdevcl devicename';
+    echo ' Usage: outdevcl <devicename>';
     echo '';
     return;
   fi;

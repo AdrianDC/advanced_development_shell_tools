@@ -12,7 +12,7 @@ function boottools()
 {
   # Usage
   if [ -z "${1}" ] || [ ! -f "${1}" ]; then
-    echo '  Usage: boottools boot.img';
+    echo '  Usage: boottools <boot.img>';
     return;
   fi;
 
@@ -62,7 +62,7 @@ function bootelf()
 {
   # Usage
   if [ -z "${1}" ] || [ ! -f "${1}" ]; then
-    echo '  Usage: bootelf boot.img';
+    echo '  Usage: bootelf <boot.img>';
     return;
   fi;
 

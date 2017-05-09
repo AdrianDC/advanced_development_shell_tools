@@ -19,7 +19,13 @@ alias findn='find -name';
 # === Folders Syncer ===
 function rsynca()
 {
-  if [ -z "${2}" ]; then echo ' Usage: rsynca path1 path2'; return; fi;
+  # Usage
+  if [ -z "${2}" ]; then
+    echo ' Usage: rsynca <path1> <path2>';
+    return;
+  fi;
+
+  # Sync execution
   rsync -av --delete "${1}" "${2}";
 }
 alias pcinfo='inxi -Fxz';
@@ -27,10 +33,13 @@ alias pcinfo='inxi -Fxz';
 # === Newer Files Finder ===
 function findnewer()
 {
+  # Usage
   if [ -z "${1}" ]; then
-    echo " Usage: findnewer 20160123";
+    echo " Usage: findnewer <20160123>";
     return;
   fi;
+
+  # Search for newer files
   touch -t ${1}0000.01 /tmp/filetimeref;
   find . -type f -newer /tmp/filetimeref -print;
   rm -f /tmp/filetimeref;
@@ -189,7 +198,7 @@ function fileschemesorter()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: fileschemesorter file_to_sort file_reference';
+    echo ' Usage: fileschemesorter <file_to_sort> <file_reference>';
     echo '';
     return;
   fi;

@@ -87,7 +87,7 @@ function lxrepopick()
     return;
   fi;
 
-  # If LegacyXperia script is absent
+  # Usage
   if [ -z "${1}" ] || [ ! -z "${2}" ]; then
     echo '';
     echo ' Usage: lxrepopick <commit_id>';

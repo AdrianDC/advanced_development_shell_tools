@@ -165,7 +165,7 @@ function kernelconfigupdater()
   fi;
 
   # Configuration variables
-  local config_string=(${1})
+  local config_string=(${@})
   local config_name='';
   local config_output='';
 
