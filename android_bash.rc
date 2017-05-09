@@ -300,7 +300,7 @@ function shtoolsreadme()
 
       # Parse function usage
       if [ "${line_type}" = 'Function' ]; then
-        line_usage=$(grep -a "Usage: ${line_function} " "${file}" \
+        line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${file}" \
                    | sed "s/.*Usage: \(.*\)\(\"\|'\);/\1/" \
                    | grep -v '\$');
         if [ ! -z "${line_usage}" ]; then

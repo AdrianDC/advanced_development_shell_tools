@@ -358,7 +358,7 @@ developing on Android, especially for SONY devices.<br />
   * [bootzip (Function)](android_kernel_tools.rc): *bootzip <device> <boot_img_path>*
   * [makesep (Function)](android_kernel_tools.rc)
   * [bootimagedebuggable (Function)](android_kernel_tools.rc): *bootimagedebuggable <device_product> <true/false>*
-  * [romkernelmrproper (Function)](android_kernel_tools.rc)
+  * [romkernelmrproper (Function)](android_kernel_tools.rc): *romkernelmrproper*
 * #### Source: [android_linux.rc](android_linux.rc)
   * [cls (Function)](android_linux.rc)
   * [toclip (Function)](android_linux.rc)
@@ -608,5 +608,5 @@ developing on Android, especially for SONY devices.<br />
 * #### Source: [megatools_mirror.rc](megatools_mirror.rc)
   * [megamirror (Function)](megatools_mirror.rc): *megamirror <local_folder> <remote_folder> <--upload/--download> [--copy,-y/-n]*
 * #### Source: [megatools_reload.rc](megatools_reload.rc)
-  * [meganzreload (Function)](megatools_reload.rc)
+  * [meganzreload (Function)](megatools_reload.rc): *meganzreload*
 <!-- Functions End -->
