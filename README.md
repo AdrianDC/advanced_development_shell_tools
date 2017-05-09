@@ -15,6 +15,16 @@ developing on Android, especially for SONY devices.<br />
 ### [ Referenced list of functions ]
 
 <!-- Functions Start -->
+* #### Source: [android_bash.rc](android_bash.rc)
+  * [bashup (Function)](android_bash.rc): *bashup (Reloads android_shell_tools scripts)*
+  * [bashe (Function)](android_bash.rc): *bashe <words> <to> <search> (Direct access to related sources)*
+  * [bashsync (Function)](android_bash.rc): *bashsync (Download new android_shell_tools changes)*
+  * [bashpush (Function)](android_bash.rc): *bashpush (Commit new changes to android_shell_tools)*
+  * [bashamend (Function)](android_bash.rc): *bashamend (Amend new changes to android_shell_tools)*
+  * [bashdiff (Function)](android_bash.rc): *bashdiff (Compare with upstream android_shell_tools)*
+  * [bashlog (Function)](android_bash.rc): *bashlog (Displays android_shell_tools history)*
+  * [bashreset (Function)](android_bash.rc): *bashreset (Reset project to remote HEAD)*
+  * [shtoolsreadme (Function)](android_bash.rc): *shtoolsreadme (Refresh README.md functions helpers)*
 * #### Source: [android_adb.rc](android_adb.rc)
   * [adbr (Function)](android_adb.rc)
   * [adbro (Function)](android_adb.rc)

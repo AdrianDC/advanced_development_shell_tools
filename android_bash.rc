@@ -3,19 +3,27 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === Bashs Folder ===
+# === Android Shell Tools Folder ===
 bash_android_dir=$(dirname ${BASH_SOURCE[0]});
 
-# === Bashs Update ===
+# === Android Shell Tools Update ===
 function bashup()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: bashup (Reloads android_shell_tools scripts)';
+    echo '';
+    return;
+  fi;
+
+  # Reload sources
   source "${bash_android_dir}/android_bash.rc";
   echo '';
   echo -e ' \e[1;33mandroid_shell_tools by AdrianDC: \e[0;33mFunctions loaded properly\e[0m';
   echo '';
 }
 
-# === Bashs Sources ===
+# === Android Shell Tools Sources ===
 bash_android_sources="\
   \
   ${bash_android_dir}/android_adb.rc \
@@ -90,13 +98,13 @@ bash_android_sources="\
   ${bash_android_dir}/megatools_reload.rc \
 ";
 
-# === Bash Importations ===
+# === Android Shell Tools Importations ===
 for bash_source in ${bash_android_sources};
 do
   source ${bash_source};
 done;
 
-# === Build Prebuilt Files ===
+# === Android Shell Tools Prebuilt Files ===
 export bash_files_strace_32=${bash_android_dir}/android_files/strace_arm32;
 export bash_files_strace_64=${bash_android_dir}/android_files/strace_arm64;
 export bash_flashable_android_base=${bash_android_dir}/android_files/flashable_android_base.zip;
@@ -108,9 +116,16 @@ export bash_updater_install_system=${bash_android_dir}/android_files/updater_scr
 export bash_updater_kernel_injector=${bash_android_dir}/android_files/updater_script_kernel_injector;
 export bash_updater_multirom_secondary=${bash_android_dir}/android_files/updater_script_multirom_secondary;
 
-# === Bashs Functions Editor (gedit) ===
+# === Android Shell Tools Functions Editor ===
 function bashe()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: bashe <words> <to> <search> (Direct access to related sources)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local files='';
 
@@ -133,9 +148,17 @@ function bashe()
   fi;
 }
 
-# === Bashs Syncer ===
+# === Android Shell Tools Syncer ===
 function bashsync()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: bashsync (Download new android_shell_tools changes)';
+    echo '';
+    return;
+  fi;
+
+  # Download upstream changes
   local currentdir=${PWD};
   cd "${bash_android_dir}/";
   git fetch origin;
@@ -147,9 +170,17 @@ function bashsync()
   bashup;
 }
 
-# === Bashs Pusher ===
+# === Android Shell Tools Pusher ===
 function bashpush()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: bashpush (Commit new changes to android_shell_tools)';
+    echo '';
+    return;
+  fi;
+
+  # Commit changes to upstream
   local currentdir=${PWD};
   cd "${bash_android_dir}/";
   git add . -Ap;
@@ -159,9 +190,17 @@ function bashpush()
   bashup;
 }
 
-# === Bashs Amend ===
+# === Android Shell Tools Amend ===
 function bashamend()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: bashamend (Amend new changes to android_shell_tools)';
+    echo '';
+    return;
+  fi;
+
+  # Amend changes to upstream
   local currentdir=${PWD};
   cd "${bash_android_dir}/";
   git add . -Ap;
@@ -171,9 +210,17 @@ function bashamend()
   bashup;
 }
 
-# === Bashs Differ ===
+# === Android Shell Tools Differ ===
 function bashdiff()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: bashdiff (Compare with upstream android_shell_tools)';
+    echo '';
+    return;
+  fi;
+
+  # Compare with upstream
   local currentdir=${PWD};
   cd "${bash_android_dir}/";
   git fetch origin;
@@ -182,18 +229,34 @@ function bashdiff()
   cd "${currentdir}/";
 }
 
-# === Bashs Log ===
+# === Android Shell Tools Log ===
 function bashlog()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: bashlog (Displays android_shell_tools history)';
+    echo '';
+    return;
+  fi;
+
+  # Display project history
   local currentdir=${PWD};
   cd "${bash_android_dir}/";
   git log --pretty=oneline -n 10;
   cd "${currentdir}/";
 }
 
-# === Bashs Reset ===
+# === Android Shell Tools Reset ===
 function bashreset()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: bashreset (Reset project to remote HEAD)';
+    echo '';
+    return;
+  fi;
+
+  # Reset project to remote HEAD
   cd "${bash_android_dir}/";
   git fetch origin;
   git reset origin/$(git rev-parse --abbrev-ref HEAD);
@@ -203,6 +266,13 @@ function bashreset()
 # === Android Shell Tools README.md Updater ===
 function shtoolsreadme()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: shtoolsreadme (Refresh README.md functions helpers)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local delimiter_start='<!-- Functions Start -->';
   local delimiter_end='<!-- Functions End -->';
@@ -214,7 +284,7 @@ function shtoolsreadme()
   local readme_functions='';
 
   # Read all sources
-  for file in ${bash_android_sources}; do
+  for file in "${bash_android_dir}/android_bash.rc" ${bash_android_sources}; do
 
     # Handle source contents
     path=${file//\//\\\/};
@@ -248,7 +318,7 @@ function shtoolsreadme()
       # Append function details
       readme_functions+="  * [${line_function} (${line_type})](${path})${line_usage}\n";
 
-    done < <(grep -ai "alias.*=\|function.*)" "${file}");
+    done < <(grep -a "^alias.*=\|^function .*()" "${file}");
   done;
 
   # Inject README.md changes
