@@ -303,15 +303,29 @@ function shtoolsreadme()
       line_type=${line};
       line_type=${line_type//*alias*/Alias};
       line_type=${line_type//*function*/Function};
+      line_usage='';
 
-      # Parse function usage
+      # Parse function content
       if [ "${line_type}" = 'Function' ]; then
-        line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${file}" \
-                   | sed "s/.*Usage: \(.*\)\(\"\|'\);/\1/" \
-                   | grep -v '\$');
-        if [ ! -z "${line_usage}" ]; then
+
+        # Parse single line function
+        if [[ "${line}" == *"${line_function}()"*"{"*"}" ]]; then
+          line_usage=${line#*{ };
+          line_usage=${line_usage% \}*};
+          line_usage=${line_usage%;};
+          line_usage=$(echo ${line_usage} | sed -e 's/\$/\\$/g');
           line_usage=$(echo ${line_usage} | sed -e 's/\//\\\//g' -e 's/\&/\\\&/g' -e "s/'/\\\'/g" -e 's/"/\\"/g');
           line_usage=": *${line_usage}*";
+
+        # Parse function usage
+        else
+          line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${file}" \
+                     | sed "s/.*Usage: \(.*\)\(\"\|'\);/\1/" \
+                     | grep -v '\$');
+          if [ ! -z "${line_usage}" ]; then
+            line_usage=$(echo ${line_usage} | sed -e 's/\//\\\//g' -e 's/\&/\\\&/g' -e "s/'/\\\'/g" -e 's/"/\\"/g');
+            line_usage=": *${line_usage}*";
+          fi;
         fi;
 
       # Parse alias content

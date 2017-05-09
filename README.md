@@ -34,7 +34,7 @@ developing on Android, especially for SONY devices.<br />
   * [adbremount (Alias)](android_adb.rc): *sudo adb root; sudo adb remount*
   * [adbpo (Alias)](android_adb.rc): *adb shell reboot -p*
   * [adbre (Alias)](android_adb.rc): *adb reboot*
-  * [adbrh (Function)](android_adb.rc)
+  * [adbrh (Function)](android_adb.rc): *adb ${1} shell setprop ctl.restart zygote*
   * [adbrr (Alias)](android_adb.rc): *adb reboot recovery*
   * [adbw (Alias)](android_adb.rc): *adb wait-for-device*
   * [adbrb (Alias)](android_adb.rc): *adb reboot bootloader*
@@ -67,7 +67,7 @@ developing on Android, especially for SONY devices.<br />
   * [adbslz (Alias)](android_adb.rc): *adb shell ls -lZ*
   * [adbsc (Alias)](android_adb.rc): *adb shell cat*
   * [adbsg (Alias)](android_adb.rc): *adb shell getprop*
-  * [adbsw (Function)](android_adb.rc)
+  * [adbsw (Function)](android_adb.rc): *adbro; adb shell "echo ${1} > ${2}"*
   * [isdone (Alias)](android_adb.rc): *notify-send "Process execution finished !"*
   * [adbgitpf (Function)](android_adb.rc)
   * [adbsu (Function)](android_adb.rc)
@@ -79,9 +79,9 @@ developing on Android, especially for SONY devices.<br />
   * [adbcamera (Alias)](android_adb_assets.rc): *adb root; adb wait-for-device; adb shell killall zigote; adbl*
   * [adbpk (Function)](android_adb_assets.rc)
   * [adbms (Function)](android_adb_assets.rc)
-  * [adblibs (Function)](android_adb_assets.rc)
+  * [adblibs (Function)](android_adb_assets.rc): *adb shell grep -air "${1}" ${2:-/system/lib/}*
   * [ndkstack (Alias)](android_adb_assets.rc): *ndk-stack -sym ${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols -dump*
-  * [adbwtch (Function)](android_adb_assets.rc)
+  * [adbwtch (Function)](android_adb_assets.rc): *adbr; while [ 1 ]; do adb shell cat "${1}"; done*
   * [adbdu (Function)](android_adb_assets.rc)
   * [adbpropradiolog (Function)](android_adb_assets.rc)
   * [adbrstock (Function)](android_adb_assets.rc)
@@ -97,8 +97,8 @@ developing on Android, especially for SONY devices.<br />
   * [adbpushfile (Function)](android_adb_installers.rc)
   * [adbif (Function)](android_adb_installers.rc)
   * [adbil (Function)](android_adb_installers.rc)
-  * [adbi (Function)](android_adb_installers.rc)
-  * [adbii (Function)](android_adb_installers.rc)
+  * [adbi (Function)](android_adb_installers.rc): *adbro; adbif ${@}*
+  * [adbii (Function)](android_adb_installers.rc): *adbif ${@}*
   * [adbpf (Function)](android_adb_installers.rc): *adbpf <file_paths>*
   * [adbp (Alias)](android_adb_installers.rc): *adbro; adbpf*
   * [adbpfa (Function)](android_adb_installers.rc)
@@ -129,8 +129,8 @@ developing on Android, especially for SONY devices.<br />
   * [adblf (Alias)](android_adb_logs.rc): *adb logcat -v audit2allow*
   * [adblh (Alias)](android_adb_logs.rc): *adb logcat -b events -b main -b radio | highlight*
   * [adbtrampoline (Alias)](android_adb_logs.rc): *adb shell "dmesg | grep -i trampoline"*
-  * [adblcln (Function)](android_adb_logs.rc)
-  * [adbkcln (Function)](android_adb_logs.rc)
+  * [adblcln (Function)](android_adb_logs.rc): *cat ${1} | cut -c 32- | tee ${1}.clean*
+  * [adbkcln (Function)](android_adb_logs.rc): *cat ${1} | cut -c 15- | tee ${1}.clean*
   * [adbbootchart (Function)](android_adb_logs.rc)
 * #### Source: [android_changelog.rc](android_changelog.rc)
   * [repochangelog (Function)](android_changelog.rc): *repochangelog <days_count> [project1_path,project2_path,...]*
@@ -163,8 +163,8 @@ developing on Android, especially for SONY devices.<br />
   * [gitfbr (Alias)](android_fetch.rc): *gitfetchtreset backup*
   * [gitfsr (Alias)](android_fetch.rc): *gitfetchtreset source*
   * [gitfgc (Alias)](android_fetch.rc): *gitfetchcheckout github*
-  * [gitfdr (Function)](android_fetch.rc)
-  * [gitfkl (Function)](android_fetch.rc)
+  * [gitfdr (Function)](android_fetch.rc): *git fetch "${1}"; git reset --hard FETCH_HEAD*
+  * [gitfkl (Function)](android_fetch.rc): *git fetch git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git linux-3.4.y*
 * #### Source: [android_gerrit.rc](android_gerrit.rc)
   * [gerritreview (Function)](android_gerrit.rc): *gerritreview <gerrit_ssh_or_http> <project_name_or_.> <drafts/for/heads> [branch]*
   * [gerritusername (Function)](android_gerrit.rc)
@@ -219,19 +219,19 @@ developing on Android, especially for SONY devices.<br />
   * [gitfindsha1 (Function)](android_git.rc): *gitfindsha1 <remote/branch> <"title text to search">*
   * [gitshow (Alias)](android_git.rc): *git show --name-status*
   * [gitshf (Alias)](android_git.rc): *git show --pretty=full*
-  * [gitshl (Function)](android_git.rc)
+  * [gitshl (Function)](android_git.rc): *git show --oneline --name-only ${1} | tail -n +2 | cut -c $((1+${2:-0}))-*
   * [gitap (Alias)](android_git.rc): *git add -p*
   * [gitaa (Alias)](android_git.rc): *git add . -Av*
   * [gitan (Alias)](android_git.rc): *git add . -An*
-  * [gite (Function)](android_git.rc)
+  * [gite (Function)](android_git.rc): *gedit ${1}; printf ' Done ? [Enter] '; read; git add ${1}*
   * [gitbd (Alias)](android_git.rc): *git branch -D*
   * [gitbv (Alias)](android_git.rc): *git fetch ${gitreviewdefault} $(git rev-parse --abbrev-ref HEAD); git branch -vv*
   * [gitch (Alias)](android_git.rc): *git checkout*
   * [gitcp (Alias)](android_git.rc): *git cherry-pick*
   * [gitcpc (Alias)](android_git.rc): *git reset; git cherry-pick --continue*
-  * [gitcpf (Function)](android_git.rc)
-  * [gitfcp (Function)](android_git.rc)
-  * [gitcpr (Function)](android_git.rc)
+  * [gitcpf (Function)](android_git.rc): *git fetch ${1} ${2}; git cherry-pick FETCH_HEAD*
+  * [gitfcp (Function)](android_git.rc): *git fetch ${1}; git cherry-pick FETCH_HEAD~${2:-0}*
+  * [gitcpr (Function)](android_git.rc): *git show ${1} --no-color | sed "s/${2}/${3}/g" | patch*
   * [gitc (Alias)](android_git.rc): *git commit $(gitgpgparam)*
   * [gitcs (Alias)](android_git.rc): *git commit $(gitgpgparam) -s*
   * [gitca (Alias)](android_git.rc): *git commit $(gitgpgparam) --amend*
@@ -241,19 +241,19 @@ developing on Android, especially for SONY devices.<br />
   * [gitfix (Alias)](android_git.rc): *rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp*
   * [gitcid (Function)](android_git.rc)
   * [gitcidupstream (Function)](android_git.rc)
-  * [gitfurl (Function)](android_git.rc)
+  * [gitfurl (Function)](android_git.rc): *git fetch "${1%/commits/*}" "${1#*/commits/}"*
   * [gitpf (Alias)](android_git.rc): *git push -f*
   * [gitra (Alias)](android_git.rc): *git rebase --abort*
   * [gitrc (Alias)](android_git.rc): *git rebase --continue*
   * [gitre (Alias)](android_git.rc): *git rebase --edit-todo*
   * [gitrs (Alias)](android_git.rc): *git rebase --skip*
-  * [gitrf (Function)](android_git.rc)
-  * [gitr (Function)](android_git.rc)
-  * [gitrall (Function)](android_git.rc)
-  * [gitrfedit (Function)](android_git.rc)
-  * [gitredit (Function)](android_git.rc)
-  * [gitrb (Function)](android_git.rc)
-  * [gitrbo (Function)](android_git.rc)
+  * [gitrf (Function)](android_git.rc): *git rebase ${1}^ -i*
+  * [gitr (Function)](android_git.rc): *git rebase HEAD~${1:-5} -i*
+  * [gitrall (Function)](android_git.rc): *git rebase -i HEAD~$(($(git rev-list --count HEAD) - 1))*
+  * [gitrfedit (Function)](android_git.rc): *GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase ${1} -i*
+  * [gitredit (Function)](android_git.rc): *GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase HEAD~${1:-5} -i*
+  * [gitrb (Function)](android_git.rc): *branch=${1:-$(repogetbranch)}; git fetch github ${branch}; git rebase github/${branch}*
+  * [gitrbo (Function)](android_git.rc): *branch=${1:-$(repogetbranch)}; git fetch origin ${branch}; git rebase origin/${branch}*
   * [gitrv (Alias)](android_git.rc): *git remote -v*
   * [gitrh (Alias)](android_git.rc): *git reset FETCH_HEAD --hard*
   * [githd (Alias)](android_git.rc): *git reset HEAD --hard*
@@ -286,7 +286,7 @@ developing on Android, especially for SONY devices.<br />
   * [gitcpo (Function)](android_git_pick.rc): *gitcpo <branch> <amount_of_commits>*
   * [gitcpup (Function)](android_git_pick.rc)
   * [gitcpur (Function)](android_git_pick.rc): *gitcpur <githuburltoproject> <branch> <search_text> <replace_text>*
-  * [gitcpupprima (Function)](android_git_pick.rc)
+  * [gitcpupprima (Function)](android_git_pick.rc): *gitcpup "${1}" CORE drivers/staging/prima/CORE*
 * #### Source: [android_git_stats.rc](android_git_stats.rc)
   * [gitstat (Function)](android_git_stats.rc): *gitstat <remote> <branch> [stats_only]*
   * [gitst (Alias)](android_git_stats.rc): *gitremoteverify origin gitrao && gitstat origin cm-14.1*
@@ -314,9 +314,9 @@ developing on Android, especially for SONY devices.<br />
   * [g (Alias)](android_grep.rc): *grepb*
   * [gs (Alias)](android_grep.rc): *grepbs*
   * [gn (Alias)](android_grep.rc): *grepbn*
-  * [glc (Function)](android_grep.rc)
-  * [glj (Function)](android_grep.rc)
-  * [gle (Function)](android_grep.rc)
+  * [glc (Function)](android_grep.rc): *GREP_COLORS='fn=1;1' grep --include *.c --include *.cpp --include *.h -anr '.{80,}' .*
+  * [glj (Function)](android_grep.rc): *GREP_COLORS='fn=1;1' grep --include *.java -anr '.{100,}' .*
+  * [gle (Function)](android_grep.rc): *GREP_COLORS='fn=1;1' grep --include *.c --include *.cpp --include *.h --include *.java -anr '.* $' .*
   * [gcmodules (Function)](android_grep.rc)
   * [gso (Function)](android_grep.rc)
 * #### Source: [android_kernel_builders.rc](android_kernel_builders.rc)
@@ -361,7 +361,7 @@ developing on Android, especially for SONY devices.<br />
   * [romkernelmrproper (Function)](android_kernel_tools.rc): *romkernelmrproper*
 * #### Source: [android_linux.rc](android_linux.rc)
   * [cls (Function)](android_linux.rc)
-  * [toclip (Function)](android_linux.rc)
+  * [toclip (Function)](android_linux.rc): *xclip -selection c*
   * [findn (Alias)](android_linux.rc): *find -name*
   * [rsynca (Function)](android_linux.rc): *rsynca <path1> <path2>*
   * [pcinfo (Alias)](android_linux.rc): *inxi -Fxz*
@@ -406,7 +406,7 @@ developing on Android, especially for SONY devices.<br />
   * [gitpx (Alias)](android_push.rc): *gitremoteverify xperia gitrax && gitpu xperia*
   * [gitpxm (Alias)](android_push.rc): *gitremoteverify xperia gitrax && gitpu xperia master*
   * [gitpmd (Alias)](android_push.rc): *gitremoteverify xperia gitramd && gitpu mromdev*
-  * [gitpurl (Function)](android_push.rc)
+  * [gitpurl (Function)](android_push.rc): *gitpu "${1%/commits/*}" "${1#*/commits/}"*
 * #### Source: [android_pushbullet.rc](android_pushbullet.rc)
   * [pushb (Function)](android_pushbullet.rc)
 * #### Source: [android_release_builders.rc](android_release_builders.rc)
@@ -438,11 +438,11 @@ developing on Android, especially for SONY devices.<br />
   * [gitremoteadaptset (Function)](android_remotes.rc): *gitremoteadaptset <remote_name> <remote_github> [prefix_removal] [bool_prefix_android] [bool_underscore_to_dash]*
   * [gitremoteverify (Function)](android_remotes.rc): *gitremoteverify <remote_name> "command_to_run_if_missing"*
   * [gitraa (Function)](android_remotes.rc)
-  * [gitrai (Function)](android_remotes.rc)
-  * [gitraoo (Function)](android_remotes.rc)
-  * [gitraot (Function)](android_remotes.rc)
-  * [gitrat (Function)](android_remotes.rc)
-  * [gitral (Function)](android_remotes.rc)
+  * [gitrai (Function)](android_remotes.rc): *gitremoteadaptset 'aicp' 'AICP' 'android_'*
+  * [gitraoo (Function)](android_remotes.rc): *gitremoteadaptset 'origin' "${1}" ''*
+  * [gitraot (Function)](android_remotes.rc): *gitremoteadaptset 'origin' 'TheMuppets' ''*
+  * [gitrat (Function)](android_remotes.rc): *gitremoteadaptset 'twrp' 'TeamWin' ''*
+  * [gitral (Function)](android_remotes.rc): *gitremoteset lineage "${1}"*
   * [gitrao (Function)](android_remotes.rc)
   * [gitrax (Function)](android_remotes.rc)
   * [gitramd (Function)](android_remotes.rc)
@@ -539,53 +539,53 @@ developing on Android, especially for SONY devices.<br />
   * [cdout (Function)](android_shortcuts.rc)
   * [getand (Function)](android_shortcuts.rc)
   * [torompaths (Function)](android_shortcuts.rc)
-  * [toaosp (Function)](android_shortcuts.rc)
-  * [tolineage (Function)](android_shortcuts.rc)
-  * [toaospcaf (Function)](android_shortcuts.rc)
-  * [tomultirom (Function)](android_shortcuts.rc)
-  * [torr (Function)](android_shortcuts.rc)
-  * [totwrp (Function)](android_shortcuts.rc)
-  * [cdaosp (Function)](android_shortcuts.rc)
-  * [cdl (Function)](android_shortcuts.rc)
-  * [cdlineage (Function)](android_shortcuts.rc)
-  * [cdaospcaf (Function)](android_shortcuts.rc)
-  * [cdmultirom (Function)](android_shortcuts.rc)
-  * [cdrr (Function)](android_shortcuts.rc)
-  * [cdtwrp (Function)](android_shortcuts.rc)
-  * [cdand (Function)](android_shortcuts.rc)
-  * [cda (Function)](android_shortcuts.rc)
-  * [getbash (Function)](android_shortcuts.rc)
-  * [cdbash (Function)](android_shortcuts.rc)
-  * [cddesk (Function)](android_shortcuts.rc)
-  * [cddev (Function)](android_shortcuts.rc)
-  * [cddevaosp (Function)](android_shortcuts.rc)
-  * [cddevlineage (Function)](android_shortcuts.rc)
-  * [cddevmrom (Function)](android_shortcuts.rc)
-  * [cddevtwrp (Function)](android_shortcuts.rc)
-  * [cdref (Function)](android_shortcuts.rc)
-  * [cdrefapk (Function)](android_shortcuts.rc)
-  * [adbapks (Function)](android_shortcuts.rc)
-  * [cdandfiles (Function)](android_shortcuts.rc)
-  * [impaospcaf (Function)](android_shortcuts.rc)
-  * [implineage (Function)](android_shortcuts.rc)
-  * [meldaosp (Function)](android_shortcuts.rc)
-  * [meldaospsony (Function)](android_shortcuts.rc)
-  * [meldaospcaf (Function)](android_shortcuts.rc)
-  * [meldlineage (Function)](android_shortcuts.rc)
-  * [meldmrom (Function)](android_shortcuts.rc)
-  * [meldtwrp (Function)](android_shortcuts.rc)
-  * [nout (Function)](android_shortcuts.rc)
-  * [aospsyncall (Function)](android_shortcuts.rc)
-  * [lineagesyncall (Function)](android_shortcuts.rc)
-  * [cdspdev (Function)](android_shortcuts.rc)
-  * [cdspker (Function)](android_shortcuts.rc)
-  * [cdblueker (Function)](android_shortcuts.rc)
-  * [cdvendsony (Function)](android_shortcuts.rc)
-  * [meldblue (Function)](android_shortcuts.rc)
+  * [toaosp (Function)](android_shortcuts.rc): *torompaths 'AOSP' "${1}"*
+  * [tolineage (Function)](android_shortcuts.rc): *torompaths 'LineageOS' "${1}"*
+  * [toaospcaf (Function)](android_shortcuts.rc): *torompaths 'AOSP-CAF' "${1}"*
+  * [tomultirom (Function)](android_shortcuts.rc): *torompaths 'MultiROM' "${1}"*
+  * [torr (Function)](android_shortcuts.rc): *torompaths 'ResurrectionRemix' "${1}"*
+  * [totwrp (Function)](android_shortcuts.rc): *torompaths 'TWRP' "${1}"*
+  * [cdaosp (Function)](android_shortcuts.rc): *cd $(toaosp ${1})*
+  * [cdl (Function)](android_shortcuts.rc): *cd $(tolineage ${1})*
+  * [cdlineage (Function)](android_shortcuts.rc): *cd $(tolineage ${1})*
+  * [cdaospcaf (Function)](android_shortcuts.rc): *cd $(toaospcaf)*
+  * [cdmultirom (Function)](android_shortcuts.rc): *cd $(tomultirom)*
+  * [cdrr (Function)](android_shortcuts.rc): *cd $(torr ${1})*
+  * [cdtwrp (Function)](android_shortcuts.rc): *cd $(totwrp)*
+  * [cdand (Function)](android_shortcuts.rc): *cd $(getand)*
+  * [cda (Function)](android_shortcuts.rc): *cdlineage huashan*
+  * [getbash (Function)](android_shortcuts.rc): *echo ${bash_android_dir}*
+  * [cdbash (Function)](android_shortcuts.rc): *cd $(getbash)*
+  * [cddesk (Function)](android_shortcuts.rc): *cd "$(xdg-user-dir DESKTOP)"*
+  * [cddev (Function)](android_shortcuts.rc): *cd $(getand)/Development/${1}*
+  * [cddevaosp (Function)](android_shortcuts.rc): *cd $(getand)/Development/aosp_*${1}*
+  * [cddevlineage (Function)](android_shortcuts.rc): *cd $(getand)/Development/lineage_*${1}*
+  * [cddevmrom (Function)](android_shortcuts.rc): *cd $(getand)/Development/multirom_development_sony*
+  * [cddevtwrp (Function)](android_shortcuts.rc): *cd $(getand)/Development/twrp_development_sony*
+  * [cdref (Function)](android_shortcuts.rc): *cd $(getand)/References/${1}*
+  * [cdrefapk (Function)](android_shortcuts.rc): *cd $(getand)/References/apk*
+  * [adbapks (Function)](android_shortcuts.rc): *cdrefapk; adbapkinstall*
+  * [cdandfiles (Function)](android_shortcuts.rc): *cd "${ANDROID_FILES_PATH}/"*
+  * [impaospcaf (Function)](android_shortcuts.rc): *rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}*
+  * [implineage (Function)](android_shortcuts.rc): *rsync -arv --delete --delete-after $(tolineage ${1}) ./${1}*
+  * [meldaosp (Function)](android_shortcuts.rc): *meld ./${1} $(toaosp ${1})*
+  * [meldaospsony (Function)](android_shortcuts.rc): *meld ./${1} $(toaosp sony ${1})*
+  * [meldaospcaf (Function)](android_shortcuts.rc): *meld ./${1} $(toaospcaf ${1})*
+  * [meldlineage (Function)](android_shortcuts.rc): *meld ./${1} $(tolineage ${1})*
+  * [meldmrom (Function)](android_shortcuts.rc): *meld ./${1} $(tomultirom ${1})*
+  * [meldtwrp (Function)](android_shortcuts.rc): *meld ./${1} $(totwrp ${1})*
+  * [nout (Function)](android_shortcuts.rc): *xdg-open $(toout ${1})*
+  * [aospsyncall (Function)](android_shortcuts.rc): *reporeferencedaosp "reposy"*
+  * [lineagesyncall (Function)](android_shortcuts.rc): *reporeferencedlineage "reposy"*
+  * [cdspdev (Function)](android_shortcuts.rc): *cd $(echo "$(pwd)" | sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/device/sony/huashan/g')*
+  * [cdspker (Function)](android_shortcuts.rc): *cd $(echo "$(pwd)" | sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8960t/g')*
+  * [cdblueker (Function)](android_shortcuts.rc): *cd $(echo "$(pwd)" | sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8x60/g')*
+  * [cdvendsony (Function)](android_shortcuts.rc): *cd $(echo "$(pwd)" | sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/vendor/sony/g')*
+  * [meldblue (Function)](android_shortcuts.rc): *meld ./${1} ../blue-common/${1}*
   * [meldril (Function)](android_shortcuts.rc)
-  * [cdmromboot (Function)](android_shortcuts.rc)
-  * [cdmromcore (Function)](android_shortcuts.rc)
-  * [cdrecovery (Function)](android_shortcuts.rc)
+  * [cdmromboot (Function)](android_shortcuts.rc): *croot; cd ./system/extras/libbootimg/*
+  * [cdmromcore (Function)](android_shortcuts.rc): *croot; cd ./system/extras/multirom/*
+  * [cdrecovery (Function)](android_shortcuts.rc): *croot; cd ./bootable/recovery/*
 * #### Source: [android_tools.rc](android_tools.rc)
   * [binaryeditor (Function)](android_tools.rc)
   * [librarieshunter (Function)](android_tools.rc)
