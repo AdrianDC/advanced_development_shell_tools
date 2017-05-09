@@ -156,7 +156,7 @@ function repotwrp()
   local UploadFolder="${PhoneName^}/TWRP-Recovery";
   echo '';
   echo '';
-  echo "  [ Publish to BasketBuilt '${UploadFolder}' ]";
+  echo "  [ Publish online to '${UploadFolder}' ]";
   echo '';
   printf "  Upload (Y/n) ? ";
   local key;
@@ -392,7 +392,7 @@ function repomrom()
   local UploadFolder="${PhoneName^}/MultiROM-Android";
   echo '';
   echo '';
-  echo '  [ Publish to BasketBuilt '${UploadFolder}' ]';
+  echo '  [ Publish online to '${UploadFolder}' ]';
   echo '';
   printf '  Upload (Y/n) ? ';
   local key;
