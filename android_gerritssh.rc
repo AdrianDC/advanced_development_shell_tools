@@ -29,6 +29,12 @@ function gerritssh()
   local projectbranchprimary='cm-14.1';
   local projectbranchsecondary='cm-13.0';
 
+  # Support reverse input only
+  if [ -z "${projectbranch//[0-9]/}" ]; then
+    projectreversemerge=${projectbranch};
+    projectbranch='cm-14.1';
+  fi;
+
   # Splash Text
   echo '';
   echo -e "    \e[1;37mShell Gerrit Reviewer by Adrian DC - Connecting to ${projectbranch}\e[0m";
