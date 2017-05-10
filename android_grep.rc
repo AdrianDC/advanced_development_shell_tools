@@ -6,10 +6,19 @@
 # === Grep Helpers ===
 function grepb()
 {
+  # Usage: grepb [inputs] (Grep through sources)
+
+  # Grep through files
   GREP_COLORS='fn=1;1' grep -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
 }
+alias g='grepb';
+
+# === Grep Binaries Helpers ===
 function grepbs()
 {
+  # Usage: grepbs [inputs] (Grep through sources and binaries)
+
+  # Grep through files
   GREP_COLORS='fn=1;1';
   for file in $(find . -type f -not -path "*.git/*" -not -path "*.repo/*" | sort); do
     if [ -f "${file}" ]; then
@@ -20,8 +29,14 @@ function grepbs()
     fi;
   done;
 }
+alias gs='grepbs';
+
+# === Grep Kernel Configurations ===
 function gck()
 {
+  # Usage: gck [inputs] (Grep through kernel configurations)
+
+  # Grep through files
   GREP_COLORS='fn=1;1';
   for file in $(find . -name "Kconfig" -o -name "Makefile" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
     found=$(strings $(readlink -f ${file}) | grep -ai "${*}");
@@ -30,8 +45,13 @@ function gck()
     fi;
   done;
 }
+
+# === Grep Android Makefiles ===
 function gca()
 {
+  # Usage: gca [inputs] (Grep through Android makefiles)
+
+  # Grep through files
   GREP_COLORS='fn=1;1';
   for file in $(find . -name "*.mk" -o -name "*.bp" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
     found=$(strings $(readlink -f ${file}) | grep -ai "${*}");
@@ -40,16 +60,18 @@ function gca()
     fi;
   done;
 }
+
+# === Grep Search Helpers ===
 alias grepi='grep -i';
-alias g='grepb';
-alias gs='grepbs';
 function glc() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h -anr '.\{80,\}' .; }
 function glj() { GREP_COLORS='fn=1;1' grep --include \*.java -anr '.\{100,\}' .; }
-function gle() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h  --include \*.java -anr '.* $' .; }
+function gle() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h --include \*.java -anr '.* $' .; }
 
 # === Grep Android Modules ===
 function gcmodules()
 {
+  # Usage: gcmodules (List all LOCAL_MODULE elements)
+
   # Search all build definitions
   for file in $(find . -name "*.mk" -o -name "*.bp" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
     strings $(readlink -f ${file}) \

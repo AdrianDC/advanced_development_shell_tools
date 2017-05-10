@@ -11,6 +11,8 @@
 # === AOSP Sony Patcher ===
 function aospsonypatcher()
 {
+  # Usage: aospsonypatcher [specific_paths] (AOSP SONY SODP Patcher)
+
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'aosp_development_sonyaosp' 'aosp_sonyaosp' '' "${*}";
 }
@@ -18,6 +20,8 @@ function aospsonypatcher()
 # === AOSP Sony Rebaser ===
 function aospsonyrebaser()
 {
+  # Usage: aospsonyrebaser [specific_paths] (AOSP SONY SODP Rebaser)
+
   # Use the androidprojectrebaser helper
   androidprojectrebaser 'sodp' '' '
     device/sony/common::::master

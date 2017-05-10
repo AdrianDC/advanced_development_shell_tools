@@ -114,10 +114,18 @@ function gitremoteverify()
   return ${?};
 }
 
+# === Git Remote Owner ===
+function gitraa()
+{
+  # Usage: gitraa (Add GitHub Username remote)
+
+  # Add GitHub Username remote
+  local git_username=$(githubusername 2>/dev/null);
+  git_username=${git_username:-AdrianDC};
+  gitremoteadaptset "${git_username}" "${git_username}" '';
+}
+
 # === Git Remotes Helpers ===
-function gitraa()   { local git_username=$(githubusername 2>/dev/null);
-                      git_username=${git_username:-AdrianDC};
-                      gitremoteadaptset "${git_username}" "${git_username}" ''; }
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
 function gitraoo()  { gitremoteadaptset 'origin' "${1}" ''; }
 function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
@@ -127,6 +135,9 @@ function gitral()   { gitremoteset lineage "${1}"; }
 # === Git Remotes LineageOS Helper ===
 function gitrao()
 {
+  # Usage: gitrao (Add LineageOS origin remote)
+
+  # Add LineageOS origin remote
   if [[ "$(pwd)/" =~ "vendor/sony/" ]]; then
     gitremoteadaptset 'origin' 'TheMuppets' '' 'true';
   else
@@ -137,6 +148,9 @@ function gitrao()
 # === Git Remotes XperiaMultiROM Helper ===
 function gitrax()
 {
+  # Usage: gitrax (Add XperiaMultiROM xperia remote)
+
+  # Add XperiaMultiROM xperia remote
   if [[ "$(pwd)/" =~ 'system/extras/multirom' ]]; then
     gitremoteset 'xperia' https://github.com/XperiaMultiROM/multirom.git;
   else
@@ -147,6 +161,9 @@ function gitrax()
 # === Git Remotes MultiROM-Dev Helper ===
 function gitramd()
 {
+  # Usage: gitramd (Add MultiROM-Dev mromdev remote)
+
+  # Add MultiROM-Dev mromdev remote
   if [[ "$(pwd)/" =~ 'system/extras/multirom' ]]; then
     gitremoteset 'mromdev' https://github.com/multirom-dev/multirom.git;
   else
@@ -157,6 +174,9 @@ function gitramd()
 # === Git Remotes sonyxperiadev Helper ===
 function gitraos()
 {
+  # Usage: gitraos (Add sonyxperiadev origin remote)
+
+  # Add sonyxperiadev origin remote
   if [[ "$(pwd)/" =~ 'copyleft' ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/kernel-copyleft.git;
   elif [[ "$(pwd)/" =~ 'kernel/sony/msm/' ]]; then
@@ -179,6 +199,9 @@ alias gitraou='git remote set-url origin';
 # === Git Remotes Backup Helper ===
 function gitrab()
 {
+  # Usage: gitrab (Add backup remote)
+
+  # Add backup remote
   if pwd | grep AOSP | grep -q -e '-huashan\|-blue\|-hayabusa\|-mint\|-tsubasa'; then
     gitra8960naosp;
   elif pwd | grep AOSP | grep -q -e '-sony\|-dora'; then
@@ -203,18 +226,27 @@ function gitrab()
 # === Git Remotes LineageOS (8960) Project ===
 function gitra8960lineage()
 {
+  # Usage: gitra8960lineage (Add LineageOS 8960 development remote)
+
+  # Add LineageOS 8960 development remote
   gitremoteset backup https://github.com/AdrianDC/lineage_development_sony8960.git;
 }
 
 # === Git Remotes LineageOS (8996) Project ===
 function gitra8996lineage()
 {
+  # Usage: gitra8996lineage (Add LineageOS 8996 development remote)
+
+  # Add LineageOS 8996 development remote
   gitremoteset backup https://github.com/AdrianDC/lineage_development_sony8996.git;
 }
 
 # === Git Remotes AOSP (8960) N Project ===
 function gitra8960naosp()
 {
+  # Usage: gitra8960naosp (Add AOSP 8960 Nougat development remote)
+
+  # Add AOSP 8960 Nougat development remote
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
   else
@@ -225,6 +257,9 @@ function gitra8960naosp()
 # === Git Remotes AOSP (8960) O Project ===
 function gitra8960oaosp()
 {
+  # Usage: gitra8960oaosp (Add AOSP 8960 O development remote)
+
+  # Add AOSP 8960 Marshmallow development remote
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
   else
@@ -235,6 +270,9 @@ function gitra8960oaosp()
 # === Git Remotes AOSP (8960) Master Project ===
 function gitra8960masteraosp()
 {
+  # Usage: gitra8960masteraosp (Add AOSP 8960 Master development remote)
+
+  # Add AOSP 8960 Master development remote
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
   else
@@ -245,12 +283,18 @@ function gitra8960masteraosp()
 # === Git Remotes AOSP (Sony) Project ===
 function gitrasonyaosp()
 {
+  # Usage: gitrasonyaosp (Add AOSP Sony development remote)
+
+  # Add AOSP Sony development remote
   gitremoteset backup https://github.com/AdrianDC/aosp_development_sonyaosp.git;
 }
 
 # === Git Remotes AOSP-CAF Project ===
 function gitraaospcaf()
 {
+  # Usage: gitraaospcaf (Add AOSP-CAF development remote)
+
+  # Add AOSP-CAF development remote
   if [[ "$(pwd)" =~ "frameworks/base" ]]; then
     gitremoteset backup https://github.com/AdrianDC/platform_frameworks_base.git;
   else
@@ -261,17 +305,26 @@ function gitraaospcaf()
 # === Git Remotes LineageOS (Sony) Project ===
 function gitrasonylineage()
 {
+  # Usage: gitrasonylineage (Add LineageOS development remote)
+
+  # Add LineageOS development remote
   gitremoteset backup https://github.com/AdrianDC/lineage_development_sonyaosp.git;
 }
 
 # === Git Remotes MultiROM (Sony) Project ===
 function gitramultirom()
 {
+  # Usage: gitramultirom (Add MultiROM development remote)
+
+  # Add MultiROM development remote
   gitremoteset backup https://github.com/AdrianDC/multirom_development_sony.git;
 }
 
 # === Git Remotes TWRP (Sony) Project ===
 function gitratwrp()
 {
+  # Usage: gitratwrp (Add TWRP development remote)
+
+  # Add TWRP development remote
   gitremoteset backup https://github.com/AdrianDC/twrp_development_sony.git;
 }

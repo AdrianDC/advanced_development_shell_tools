@@ -8,7 +8,9 @@ function gitstat()
 {
   # Usage
   if [ -z "${2}" ]; then
-    echo " Usage: gitstat <remote> <branch> [stats_only]";
+    echo '';
+    echo ' Usage: gitstat <remote> <branch> [stats_only]';
+    echo '';
     return;
   fi;
 

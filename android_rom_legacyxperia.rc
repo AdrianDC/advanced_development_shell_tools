@@ -10,6 +10,8 @@
 # === LineageOS Commits Patcher for LegacyXperia ===
 function lineagelxpatcher()
 {
+  # Usage: lineagelxpatcher [local_manifests_branch]
+
   # Build environment
   while [ ! -e './build/envsetup.sh' ]; do
     cd ../;
@@ -78,6 +80,14 @@ function lineagelxpatcher()
 # === LegacyXperia Repopick ===
 function lxrepopick()
 {
+  # Usage
+  if [ -z "${1}" ] || [ ! -z "${2}" ]; then
+    echo '';
+    echo ' Usage: lxrepopick <commit_id>';
+    echo '';
+    return;
+  fi;
+
   # Build environment
   while [ ! -e './build/envsetup.sh' ]; do
     cd ../;
@@ -91,14 +101,6 @@ function lxrepopick()
     return;
   fi;
 
-  # Usage
-  if [ -z "${1}" ] || [ ! -z "${2}" ]; then
-    echo '';
-    echo ' Usage: lxrepopick <commit_id>';
-    echo '';
-    return;
-  fi;
-
   # Execute repopick command
   vendor/extra/repopick.py -b LX_${1};
 }
@@ -106,6 +108,14 @@ function lxrepopick()
 # === LegacyXperia Kernel Defconfig ===
 function lxdefconfig()
 {
+  # Usage
+  if [ -z "${1}" ] || [ ! -z "${2}" ]; then
+    echo '';
+    echo ' Usage: lxdefconfig (Edit all lx defconfigs)';
+    echo '';
+    return;
+  fi;
+
   # Find all defconfigs
   local defconfigs=$(ls arch/arm/configs/lx_*);
 

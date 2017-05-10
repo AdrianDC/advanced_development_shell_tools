@@ -11,6 +11,8 @@
 # === LineageOS SODP Patcher ===
 function lineagesodppatcher()
 {
+  # Usage: lineagesodppatcher [specific_paths] (LineageOS SONY SODP Patcher)
+
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'lineage_development_sonyaosp' 'lineageos_sony' '' "${*}";
 }
@@ -18,6 +20,8 @@ function lineagesodppatcher()
 # === LineageOS SODP Rebaser ===
 function lineagesodprebaser()
 {
+  # Usage: lineagesodprebaser [specific_paths] (LineageOS SONY SODP Rebaser)
+
   # Use the androidprojectrebaser helper
   androidprojectrebaser 'sonyxperiadev' 'cm-14.1' '
     hardware/sony/camera::camera::aosp/LA.UM.5.5.r1

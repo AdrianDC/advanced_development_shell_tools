@@ -6,6 +6,9 @@
 # === Clear Screen ===
 function cls()
 {
+  # Usage: cls (Clean terminal screen)
+
+  # Clean terminal screen
   echo -e \\033c;
   clear;
 }
@@ -21,7 +24,9 @@ function rsynca()
 {
   # Usage
   if [ -z "${2}" ]; then
+    echo '';
     echo ' Usage: rsynca <path1> <path2>';
+    echo '';
     return;
   fi;
 
@@ -35,7 +40,9 @@ function findnewer()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo " Usage: findnewer <20160123>";
+    echo '';
+    echo ' Usage: findnewer <20160123>';
+    echo '';
     return;
   fi;
 
@@ -48,10 +55,19 @@ function findnewer()
 # === CPIO Extractor ===
 function cpioext()
 {
-  cwd=$(pwd);
-  file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
-  name=$(basename "${file}");
-  outdir=$(mktemp -d);
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: cpioext <cpio_file_to_extract>';
+    echo '';
+    return;
+  fi;
+
+  # Extract cpio file
+  local cwd=$(pwd);
+  local file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
+  local name=$(basename "${file}");
+  local outdir=$(mktemp -d);
   cp "${file}" "${outdir}/";
   cd "${outdir}";
   cpio -i -F "${name}";
@@ -62,7 +78,16 @@ function cpioext()
 # === Video Resizer ===
 function videoresize()
 {
-  command="mencoder ${1} -vf scale=480 -vf rotate=2 -ovc lavc -oac pcm -lavcopts vcodec=mpeg4:autoaspect -o ${1}.small.mp4";
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: videoresize <video_file>';
+    echo '';
+    return;
+  fi;
+
+  # Show and run command
+  local command="mencoder ${1} -vf scale=480 -vf rotate=2 -ovc lavc -oac pcm -lavcopts vcodec=mpeg4:autoaspect -o ${1}.small.mp4";
   echo '';
   echo "${command}";
   echo '';
@@ -73,6 +98,9 @@ function videoresize()
 # === Automount Disabler ===
 function disableautomount()
 {
+  # Usage: disableautomount (Linux USB automount disabler)
+
+  # Linux USB automount disabler
   gsettings set org.cinnamon.desktop.media-handling automount-open false
   gsettings set org.cinnamon.desktop.media-handling automount false
   gsettings set org.gnome.desktop.media-handling automount-open false;
@@ -82,6 +110,14 @@ function disableautomount()
 # === Diff Binaries ===
 function diffbin()
 {
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: diffbin <binary_left> <binary_right> [first_n_lines]';
+    echo '';
+    return;
+  fi;
+
   # Full view
   if [ -z "${3}" ]; then
     diff -sy <(xxd "${1}") <(xxd "${2}") | less | colordiff;
@@ -95,6 +131,15 @@ function diffbin()
 # === Network Speed ===
 function netspeed()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: netspeed (Display network speeds)';
+    echo '';
+    return;
+  fi;
+
+  # Display network speeds
   echo '';
   dev_eth=$(grep -c eth0 /proc/net/dev);
   dev_wlan=$(grep -c wlan0 /proc/net/dev);
@@ -138,6 +183,14 @@ function netspeed()
 # === Build Locker ===
 function buildlock()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: buildlock <command...> (Mutex-locked command execution)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local file_lock=~/.tmp_runlock.tag;
 
@@ -204,6 +257,15 @@ function fileschemesorter()
 # === USB MTP Mounts ===
 function mtpmountdisable()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: mtpmountdisable (Disable MTP automount)';
+    echo '';
+    return;
+  fi;
+
+  # Disable MTP automount
   gsettings set org.cinnamon.desktop.media-handling automount-open false;
   gsettings set org.cinnamon.desktop.media-handling automount false;
 }
@@ -211,6 +273,8 @@ function mtpmountdisable()
 # === CleanRAM ===
 function cleanram()
 {
+  # Usage: cleanram (RAM caches cleanup)
+
   # Run cleanram script
   "${bash_android_dir}/run_cleanram.sh";
 }
@@ -218,6 +282,8 @@ function cleanram()
 # === CleanRAM with Kills ===
 function cleanramkill()
 {
+  # Usage: cleanramkill (Complete RAM cleanup including "java")
+
   # Kill relevant RAM eating processes
   killall java;
 
@@ -228,12 +294,29 @@ function cleanramkill()
 # === Network Manager Restart ===
 function networkrestart()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: networkrestart (Restart network manager)';
+    echo '';
+    return;
+  fi;
+
+  # Restart network manager
   sudo service network-manager restart;
 }
 
 # === Pushbullet Folder Sizes ===
 function pushbsizes()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: pushbsizes <paths> (Path sizes in PushBullet notification)';
+    echo '';
+    return;
+  fi;
+
   # Notify all input sizes
   echo '';
   echo " Studying sizes of inputs: ${*}";

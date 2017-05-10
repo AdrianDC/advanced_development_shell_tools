@@ -8,7 +8,9 @@ function binaryeditor()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo " Usage : binaryeditor <patternsearch> [binariespath] [replacement]";
+    echo '';
+    echo ' Usage: binaryeditor <patternsearch> [binariespath] [replacement]';
+    echo '';
     return;
   fi;
 
@@ -106,7 +108,9 @@ function librarieshunter()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo " Usage : librarieshunter <binariespath>";
+    echo '';
+    echo ' Usage: librarieshunter <binariespath>';
+    echo '';
     return;
   fi;
 
@@ -179,13 +183,7 @@ function librarieshunter()
 # === Hastebin ===
 function haste()
 {
-  # Usage
-  if [ "${1}" = '-h' ]; then
-    echo '';
-    echo ' Usage: haste <file> or | haste (Share hastebin logs)';
-    echo '';
-    return;
-  fi;
+  # Usage: haste <file> or | haste (Share hastebin logs)
 
   # Based upon https://github.com/seejohnrun/haste-client
 
@@ -216,7 +214,9 @@ function overlaycompare()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo " Usage : overlaycompare <overlay_file_path>";
+    echo '';
+    echo ' Usage: overlaycompare <overlay_file_path>';
+    echo '';
     return;
   fi;
 

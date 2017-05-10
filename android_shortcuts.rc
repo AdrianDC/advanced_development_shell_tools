@@ -6,6 +6,8 @@
 # === Device Shortcuts ===
 function cdd()
 {
+  # Usage: cdd [device_name] (Access device sources)
+
   # Shortcut
   local content="${1}";
   if [ -z "${content}" ]; then
@@ -37,6 +39,9 @@ function cdd()
 # === Repo Shortcuts ===
 function cdman()
 {
+  # Usage: cdman (Access manifests path)
+
+  # Access manifests path
   cd $(echo "$(pwd)" \
      | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/manifests/g");
 }
@@ -44,6 +49,8 @@ function cdman()
 # === Repo Out Access ===
 function toout()
 {
+  # Usage: toout [device_name] (Get device build output path)
+
   # Variables
   local device="${1:-huashan}";
 
@@ -59,12 +66,17 @@ function toout()
 }
 function cdout()
 {
+  # Usage: cdout [device_name] (Access device build output path)
+
+  # Access out path
   cd $(toout ${1});
 }
 
 # === Find Android Dev Drive ===
 function getand()
 {
+  # Usage: getand (Get AndroidDev drive)
+
   # Variables
   local android_dev_dir=${PWD};
 
@@ -84,6 +96,14 @@ function getand()
 # === Repo ROM Shortcut ===
 function torompaths()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: torompaths <rom_name> [device] (Get ROM device variant path)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local android_dev_dir=$(getand);
   local target='';
@@ -181,6 +201,8 @@ function meldblue()    { meld ./${1} ../blue-common/${1}; }
 # === BringUp Shortcuts ===
 function meldril()
 {
+  # Usage: meldril [bool_caf] (Compare device to hardware/{ril|ril-caf})
+
   # Compare device to hardware/ril or hardware/ril-caf with a parameter given
   if [ ! -z "${1}" ]; then
     meld include/telephony/ril.h ../../../hardware/ril-caf/include/telephony/ril.h &

@@ -12,10 +12,8 @@ function meganzreload()
   # Usage
   if [ ! -f ~/.megarc ] || [ ! -z "${1}" ]; then
     echo '';
-    echo ' Usage: meganzreload';
-    echo '';
+    echo ' Usage: meganzreload (Reload MEGA.nz account and keys)';
     echo '  ~/.megarc from megatools has to be configured';
-    echo '';
     echo '  Dependencies: sudo apt-get install libc-ares-dev libcrypto++-dev libfreeimage-dev';
     echo '';
     return;

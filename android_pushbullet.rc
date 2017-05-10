@@ -6,6 +6,8 @@
 # === Notifications ===
 function pushb()
 {
+  # Usage: pushb [message] (PushBullet notification helper)
+
   # PushBullet API Credentials
   export PushBulletToken='token';
   export PushBulletUser='user';

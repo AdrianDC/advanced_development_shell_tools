@@ -41,6 +41,14 @@ function gitcpu()
 # === Git Merger ===
 function gitmerges()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitmerges <commit_sha1> [count] (Attempt to merge commit history)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   cnt=${2:-30};
 
@@ -76,7 +84,7 @@ function gitcpo()
   echo '';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo -e '  \e[1;37mGit Origin Cherry-Pick.\e[0m';
-    echo -e '    Usage: gitcpo <branch> <amount_of_commits>';
+    echo '    Usage: gitcpo <branch> <amount_of_commits>';
     echo '';
     return;
   fi;
@@ -93,6 +101,14 @@ function gitcpo()
 # === GitHub Url Cherry-pick ===
 function gitcpup()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitcpup <url> (Git URL patch applier)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local tmpfile=$(mktemp);
   local tmpurl="${1}";
@@ -172,7 +188,9 @@ function gitcpur()
 {
   # Usage
   if [ -z "${4}" ]; then
-    echo " Usage: gitcpur <githuburltoproject> <branch> <search_text> <replace_text>";
+    echo '';
+    echo ' Usage: gitcpur <githuburltoproject> <branch> <search_text> <replace_text>';
+    echo '';
     return;
   fi;
 

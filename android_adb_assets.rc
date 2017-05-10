@@ -6,6 +6,8 @@
 # === ADB Binaries Updater ===
 function adbupdate()
 {
+  # Usage: adbupdate (adb binary update from upstream)
+
   # Check adb version
   adb version;
 
@@ -27,6 +29,15 @@ function adbupdate()
 # === Sepolicies Extractor ===
 function sepaud()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: sepaud <logs_file> (Logs sepolicy analyzer)';
+    echo '';
+    return;
+  fi;
+
+  # Logs sepolicy analyzer
   cat ${1} | grep -a avc.*denied;
   cat ${1} | grep -a 'does not have a SELinux domain defined';
   cat ${1} | grep -a avc.*denied | audit2allow -p sepolicy;
@@ -42,7 +53,10 @@ alias adblkl='adb root; adb wait-for-device; adb shell killall zigote; adbl';
 # === ADB Crash Debuggers ===
 function adbpk()
 {
-  pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
+  # Usage: adbpk (Android mediaserver debug logger)
+
+  # Android mediaserver debug logger
+  local pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
   adb root; adb 'wait-for-device';
   adb logcat -c;
   adb shell kill ${pid};
@@ -51,6 +65,9 @@ function adbpk()
 }
 function adbms()
 {
+  # Usage: adbms (Android mediaserver debug stracer)
+
+  # Android mediaserver debug stracer
   pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
   adb root; adb 'wait-for-device';
   adb logcat -c;
@@ -65,7 +82,10 @@ function adbwtch() { adbr; while [ 1 ]; do adb shell cat "${1}"; done; }
 
 function adbdu()
 {
-  tmp=$(mktemp);
+  # Usage: adbdu (Android /data/ sizes study)
+
+  # Android /data/ sizes study
+  local tmp=$(mktemp);
   adbro;
   adbsu 'du /data/ | sort -hr' > ${tmp};
   gedit ${tmp};
@@ -74,6 +94,14 @@ function adbdu()
 # === ADB Property Radio Logs ===
 function adbpropradiolog()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbpropradiolog <value> (Radio debug property overrider)';
+    echo '';
+    return;
+  fi;
+
   # Variable
   local cmd;
   local property='persist.radio.adb_log_on';
@@ -100,6 +128,9 @@ function adbpropradiolog()
 # === ADB Root Stock ===
 function adbrstock()
 {
+  # Usage: adbrstock (Stock ROM adb root access)
+
+  # Stock ROM adb root access
   adb shell su -c 'setprop ro.secure 0; setprop ro.debuggable 1; setprop persist.service.adb.enable 1';
   adb shell getprop ro.secure;
 }
@@ -107,6 +138,9 @@ function adbrstock()
 # === ADB Alsa Reader ===
 function adbalsa()
 {
+  # Usage: adbalsa (Audio cards advanced study)
+
+  # Audio cards advanced study
   printf '' | tee alsalog;
   adb shell "cat /proc/asound/card0/id" | tee -a alsalog;
   for line in $(adb shell find /proc/asound/card0 -name info); do

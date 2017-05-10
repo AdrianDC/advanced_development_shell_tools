@@ -6,6 +6,9 @@
 # === ADB Bootimage Dumper ===
 function adbbootdump()
 {
+  # Usage: adbbootdump (Dump bootimage from device)
+
+  # Dump bootimage from device
   local kernel=$(androiddevicestarget boot);
   local cmdaddr=$(adb shell od -j 152 -N 4 -tx4 -An ${kernel} \
                 | cut -c 2-9);
@@ -26,6 +29,15 @@ function adbbootdump()
 # === ADB Bootimage Resizer ===
 function adbbootcut()
 {
+  # Usage
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: adbbootcut <file_path> (Trim bootimage dump)';
+    echo '';
+    return;
+  fi;
+
+  # Trim bootimage dump
   local cmdaddr=$(od -j 152 -N 4 -tx4 -An ${1} \
                 | cut -c 2-9);
   local cmdsize=$(od -j 164 -N 4 -tx4 -An ${1} \
@@ -37,13 +49,15 @@ function adbbootcut()
 # === ADB TWRP Installer ===
 function adbrecoveryinstall()
 {
+  # Usage
   if [ -z "${1}" ] || [ ! -f "${1}" ]; then
     echo '';
-    echo ' Usage: adbrecoveryinstall <file_path>';
+    echo ' Usage: adbrecoveryinstall <file_path> (Inject and reboot recovery)';
     echo '';
     return;
   fi;
 
+  # Inject and reboot recovery
   local filename=$(basename ${1});
   adbro;
   adb shell mkdir -p /sdcard/;

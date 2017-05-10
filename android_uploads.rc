@@ -73,6 +73,14 @@ function fileupl()
 # === Fast File Uploader ===
 function fastupl()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fastupl <device_name> [none/zip/bootimage] (Make zip and upload)';
+    echo '';
+    return;
+  fi;
+
   # File upload to Private
   fileupl "${1}" '/Root/Private';
 
@@ -100,7 +108,7 @@ function mmmupl()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: mmmupl <packageorpath> [bool_partial_build]';
+    echo ' Usage: mmmupl <package_or_path> [bool_partial_build] (Make zip and upload)';
     echo '';
     return;
   fi;
@@ -117,6 +125,14 @@ function mmmupl()
 # === Bootimage File Uploader ===
 function devuplboot()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: devuplboot <device> (Upload ROM bootimage)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local cwd=$(pwd);
   local device="${1}";
@@ -124,7 +140,7 @@ function devuplboot()
 
   # Rename and upload
   mv "./out/target/product/${device}/boot.img" "./out/target/product/${device}/boot-${device}.img";
-  devupl "./out/target/product/${device}/boot-${device}.img";
+  fileupl "./out/target/product/${device}/boot-${device}.img";
 
   # Restore path
   cd "${cwd}/";
@@ -136,7 +152,7 @@ function devuplrom()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: devuplrom <device> [folder_path]';
+    echo ' Usage: devuplrom <device> [folder_path] (Upload ROM build)';
     echo '';
     return;
   fi;
@@ -179,13 +195,45 @@ function devuplrom()
   cd "${cwd}";
 }
 
+# === Pushbullet ROM Status ===
+function pushbrom()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: pushbrom <device_name> [rom_name] (Notify build success)';
+    echo '';
+    return;
+  fi;
+
+  # Access ROM root
+  local cwd=$(pwd);
+  croot;
+
+  # Variables
+  local device="${1}";
+  local rom="${2:-ROM}";
+  local host=$(hostname);
+
+  # ROM file
+  romfile=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mmin -30 | tail -n 1);
+  if [ ! -z "${romfile}" ]; then
+     pushb "${host}: ${rom} for ${device} ready";
+  else
+     pushb "${host}: ${rom} for ${device} failed";
+  fi;
+
+  # Restore ROM path
+  cd "${cwd}";
+}
+
 # === File Downloader Mega.nz ===
 function fileget()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: fileget <remote_path> [boot_remove_remote]';
+    echo ' Usage: fileget <remote_path> [boot_remove_remote] (Download from MEGA.nz)';
     echo '';
     return;
   fi;
@@ -251,47 +299,23 @@ function fileget()
   echo '';
 }
 
-# === Pushbullet ROM Status ===
-function pushbrom()
-{
-  # Access ROM root
-  local cwd=$(pwd);
-  croot;
-
-  # Variables
-  local device="${1}";
-  local rom="${2:-ROM}";
-  local host=$(hostname);
-
-  # ROM file
-  romfile=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mmin -30 | tail -n 1);
-  if [ ! -z "${romfile}" ]; then
-     pushb "${host}: ${rom} for ${device} ready";
-  else
-     pushb "${host}: ${rom} for ${device} failed";
-  fi;
-
-  # Restore ROM path
-  cd "${cwd}";
-}
-
 # === AndroidFiles Adder ===
 function androidfilesadd()
 {
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: androidfilesadd <file_path> <target_folder> (Add file to AndroidFiles)';
+    echo '';
+    return;
+  fi;
+
   # Check ANDROID_FILES_PATH is defined
   if [ -z "${ANDROID_FILES_PATH}" ]; then
     echo '';
     echo ' You need to edit your ~/.bashrc to add :';
     echo '  # AndroidFiles';
     echo '  export ANDROID_FILES_PATH=/media/.../AndroidFiles;';
-    echo '';
-    return;
-  fi;
-
-  # Usage
-  if [ -z "${2}" ]; then
-    echo '';
-    echo ' Usage: androidfilesadd <file_path> <target_folder>';
     echo '';
     return;
   fi;
@@ -310,6 +334,14 @@ function androidfilesadd()
 # === AndroidFiles Syncer ===
 function androidfilessync()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: androidfilessync <--upload/--download> (Sync AndroidFiles folder)';
+    echo '';
+    return;
+  fi;
+
   # Check ANDROID_FILES_PATH is defined
   if [ -z "${ANDROID_FILES_PATH}" ]; then
     echo '';
@@ -333,6 +365,8 @@ function androidfilessync()
 # === AndroidFiles Folder ===
 function androidfilesopen()
 {
+  # Usage: androidfilesopen (Open AndroidFiles folder)
+
   # Open AndroidFiles folder
   xdg-open "${ANDROID_FILES_PATH}/";
 }

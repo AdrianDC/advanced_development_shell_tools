@@ -53,6 +53,15 @@ function outdevcl()
 # === Ninja Disabler ===
 function noninja()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: noninja <command...> (Run command without ninja)';
+    echo '';
+    return;
+  fi;
+
+  # Run command without ninja
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
   ${@};
@@ -63,6 +72,15 @@ function noninja()
 # === Build Without Ninja ===
 function mmo()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: mmo <command...> (Build module without ninja)';
+    echo '';
+    return;
+  fi;
+
+  # Build module without ninja
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
   mmm ${@};
@@ -73,6 +91,15 @@ function mmo()
 # === Build & Install Without Ninja ===
 function mmi()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: mmi <command...> (Build & install module without ninja)';
+    echo '';
+    return;
+  fi;
+
+  # Build & install module without ninja
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
   adbi mmm ${@};
@@ -83,6 +110,15 @@ function mmi()
 # === Build & Listen Without Ninja ===
 function mmil()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: mmil <command...> (Build & list module without ninja)';
+    echo '';
+    return;
+  fi;
+
+  # Build & list module without ninja
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
   adbil mmm ${@};
@@ -93,6 +129,15 @@ function mmil()
 # === CCache Disabler ===
 function noccache()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: noccache <command...> (Run command without CCache)';
+    echo '';
+    return;
+  fi;
+
+  # Run command without CCache
   local use_ccache=${USE_CCACHE};
   export USE_CCACHE=0;
   ${@};

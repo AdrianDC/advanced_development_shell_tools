@@ -86,6 +86,8 @@ function reporeferencedlineage()
 # === Repo References Updater ===
 function reporefupdate()
 {
+  # Usage: reporefupdate (Upload new projects manifests)
+
   # Path backup
   local current_dir=$(pwd);
 
@@ -144,6 +146,8 @@ function reporefupdate()
 # === Repo References Syncer ===
 function reporefsync()
 {
+  # Usage: reporefsync (Download new projects manifests)
+
   # Path backup
   local current_dir=$(pwd);
 

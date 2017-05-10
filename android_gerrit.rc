@@ -110,6 +110,8 @@ function gerritreview()
 # === Gerrit Username ===
 function gerritusername()
 {
+  # Usage: gerritusername (Gerrit username getter)
+
   # Gerrit Credentials
   export GerritUsername='Username';
   export GerritHTTPUsername='Username';

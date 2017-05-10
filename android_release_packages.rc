@@ -7,16 +7,16 @@
 function signzip()
 {
   # Usage
-  local zip_input="${1}";
-  local zip_output="${2}";
-  if [ ! -f "${zip_input}" ]; then
+  if [ ! -f "${1}" ]; then
     echo '';
-    echo ' Usage: signzip <unsigned_input_zip_or_zip_to_sign> [signed_output_zip]';
+    echo ' Usage: signzip <zip_to_sign> [signed_output_zip] (Sign flashable zip)';
     echo '';
     return;
   fi;
 
   # Variables
+  local zip_input="${1}";
+  local zip_output="${2}";
   local pwd_folder=$(pwd);
   local tmp_folder=$(mktemp -d);
 
@@ -58,6 +58,15 @@ function signzip()
 # === Module Zip Maker ===
 function mmmzip()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: mmmzip <paths_or_modules> (Build module to flashable zip)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
   local CurDir=$(pwd);
   local TmpDir=$(mktemp -d);
   local BuildParams="${@:-.}";
@@ -160,6 +169,14 @@ function mmmzip()
 # === System Zip Maker ===
 function systozip()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: systozip <files> (System files to flashable zip)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local CurDir=$(pwd);
   local TmpDir=$(mktemp -d);
@@ -236,6 +253,14 @@ function systozip()
 # === Output Zip Maker ===
 function packzip()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: packzip <files> (Files to flashable zip)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local CurDir=$(pwd);
   local TmpDir=$(mktemp -d);
@@ -319,6 +344,14 @@ function packzip()
 # === Git Zip Maker ===
 function gitzip()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitzip <commit_sha1> (Git commit files to flashable zip)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local file_path;
   local files_list='';

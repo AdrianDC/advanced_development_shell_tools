@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='Usage: romautorelease <devicename> {aosp/lineage/lx/caf/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv,j1/j2]';
+  local function_usage='Usage: romautorelease <devicename> {aosp/lineage/lx/caf/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv,j1/j2] (Advanced automated ROM builder)';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " ${function_usage}";
@@ -199,6 +199,8 @@ function romautorelease()
 # === AOSP 8960 Automatic Releaser ===
 function aosp8960autorelease()
 {
+  # Usage: aosp8960autorelease [devices] [bool_nosync] (Automated AOSP 8960 releaser)
+
   # AndroidDev
   cdand;
 
@@ -236,6 +238,8 @@ function aosp8960autorelease()
 # === AOSP SODP Automatic Releaser ===
 function aospsodpautorelease()
 {
+  # Usage: aospsodpautorelease [devices] [bool_nosync] (Automated AOSP SODP releaser)
+
   # AndroidDev
   cdand;
 
@@ -268,6 +272,8 @@ function aospsodpautorelease()
 # === LineageOS Automatic Releaser ===
 function lineageautorelease()
 {
+  # Usage: lineageautorelease [devices] [bool_nosync] (Automated LineageOS 8960 releaser)
+
   # AndroidDev
   cdand;
 
@@ -301,6 +307,8 @@ function lineageautorelease()
 # === LegacyXperia Automatic Releaser ===
 function lxautorelease()
 {
+  # Usage: lxautorelease [devices] [bool_unpatched] (Automated RR 8960 releaser)
+
   # AndroidDev
   cdand;
 
@@ -331,6 +339,8 @@ function lxautorelease()
 # === ResurrectionRemix Automatic Releaser ===
 function rrautorelease()
 {
+  # Usage: rrautorelease [devices] [bool_nosync] (Automated RR 8960 releaser)
+
   # AndroidDev
   cdand;
 
@@ -361,6 +371,9 @@ function rrautorelease()
 # === MultiROM Automatic Releaser ===
 function mromautorelease()
 {
+  # Usage: mromautorelease [devices] (Automated MultiROM releaser)
+
+  # Automated MultiROM releaser
   cdand;
   cdmultirom;
   repomrom 'huashan';
@@ -372,6 +385,9 @@ function mromautorelease()
 # === TWRP Automatic Releaser ===
 function twrpautorelease()
 {
+  # Usage: twrpautorelease [devices] (Automated TWRP releaser)
+
+  # Automated TWRP releaser
   cdand;
   cdtwrp;
   repotwrp 'huashan';
@@ -383,6 +399,8 @@ function twrpautorelease()
 # === ROM CAF 8x60 Releaser ===
 function cafautorelease()
 {
+  # Usage: cafautorelease [devices] (Automated AOSP-CAF 8960 releaser)
+
   # AndroidDev
   cdand;
   cdaospcaf;

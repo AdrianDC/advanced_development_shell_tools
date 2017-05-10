@@ -6,6 +6,9 @@
 # === Git Fetch Reset Assets ===
 function gitfetchtreset()
 {
+  # Usage: gitfetchtreset [remote] [branch]
+
+  # Fetch and reset hard
   git fetch ${1:-$(githubusername)} ${2:-$(repogetbranch)};
   git reset FETCH_HEAD --hard;
 }

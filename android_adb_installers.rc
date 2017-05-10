@@ -9,7 +9,7 @@ function adbpushfile()
   # Usage
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
-    echo ' usage: adbpushfile <file_path> <file_target>';
+    echo ' Usage: adbpushfile <file_path> <file_target> (Push files through adb)';
     echo '';
     return;
   fi;
@@ -47,6 +47,14 @@ function adbpushfile()
 # === ADB System File Listener / Installer ===
 function adbif()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbif <command...> (Modules build listener and installed)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local repo_top=$(gettop 2> /dev/null);
   local tmp_file=$(mktemp);
@@ -84,6 +92,14 @@ function adbif()
 # === ADB System File Listener / Lister ===
 function adbil()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbil <command...> (Modules build listener and lister)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local tmp_file=$(mktemp);
 
@@ -204,6 +220,14 @@ alias adbp='adbro; adbpf';
 # === MultiROM File Pusher ===
 function adbpmrom()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbpmrom <file> (MultiROM file pusher)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local filepath="${1}";
   local filetarget;
@@ -222,12 +246,23 @@ function adbpmrom()
 # === MultiROM Encryption File Pusher ===
 function adbpmromenc()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbpmromenc <file> (MultiROM encryption file pusher)';
+    echo '';
+    return;
+  fi;
+
+  # MultiROM encryption file pusher
   adbpmrom "${1}" enc;
 }
 
 # === ADB apk Installers ===
 function adbapkinstall()
 {
+  # Usage: adbapkinstall (Install all available apk files)
+
   # Install all available apk files
   for file in *.apk; do
     echo "-- ${file} --";

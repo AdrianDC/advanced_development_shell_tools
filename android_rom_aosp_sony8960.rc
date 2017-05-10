@@ -11,6 +11,8 @@
 # === AOSP 8960 N Patcher ===
 function aosp8960npatcher()
 {
+  # Usage: aosp8960npatcher [specific_paths] (AOSP 8960 Nougat Patcher)
+
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'aosp_development_sony8960_n' 'aosp_sony8960_n' '' "${*}";
 }
@@ -18,6 +20,8 @@ function aosp8960npatcher()
 # === AOSP 8960 O Patcher ===
 function aosp8960opatcher()
 {
+  # Usage: aosp8960opatcher [specific_paths] (AOSP 8960 O Patcher)
+
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'aosp_development_sony8960_o' 'aosp_sony8960_o' '' "${*}";
 }
@@ -25,6 +29,8 @@ function aosp8960opatcher()
 # === AOSP 8960 Master Patcher ===
 function aosp8960masterpatcher()
 {
+  # Usage: aosp8960masterpatcher [specific_paths] (AOSP 8960 Master Patcher)
+
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'aosp_development_sony8960_master' 'aosp_sony8960_master' '' "${*}";
 }

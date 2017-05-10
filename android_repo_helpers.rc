@@ -6,6 +6,8 @@
 # === Android gettop ===
 function gettop()
 {
+  # Usage: gettop (Get repo root path)
+
   # Variables
   local TOPFILE=build/core/envsetup.mk;
   local CURDIR=${PWD};
@@ -27,6 +29,8 @@ function gettop()
 # === Android croot ===
 function croot()
 {
+  # Usage: croot (Access repo root path)
+
   # Variables
   local TOP=$(gettop);
 
@@ -41,6 +45,8 @@ function croot()
 # === Repo Environment Starter for LineageOS ===
 function repos()
 {
+  # Usage: repos [device_name] (Prepare LineageOS device environment)
+
   # Variables
   local currentdir=${PWD};
   local device=${1:-huashan};
@@ -62,6 +68,9 @@ function repos()
 # === Repo Environment Starter for AOSP ===
 function reposaosp()
 {
+  # Usage: reposaosp [device_name] (Prepare AOSP device environment)
+
+  # Prepare AOSP device environment
   local currentdir=${PWD};
   croot;
   if [ -f ./build/envsetup.sh ]; then
@@ -78,6 +87,9 @@ function reposaosp()
 # === Roomservice Manifest ===
 function reporoomserv()
 {
+  # Usage: reporoomserv (Manifest and local_manifests editor)
+
+  # Manifest and local_manifests editor
   local cwd=$(pwd);
   croot;
   mkdir -p .repo/local_manifests/;
@@ -88,6 +100,9 @@ function reporoomserv()
 # === Repo Sync Efficiently ===
 function reposy()
 {
+  # Usage: reposy (Optimized relevant repo sync)
+
+  # Optimized relevant repo sync
   repo sync -j$(grep -c ^processor /proc/cpuinfo) \
             --current-branch \
             --detach \
@@ -103,6 +118,9 @@ function reposy()
 # === Repo Branch Sync with Safeguard ===
 function reposysafe()
 {
+  # Usage: reposysafe (Safeguarded repo projects sync)
+
+  # Safeguarded repo projects sync
   echo '';
   repo forall -j$(grep -c ^processor /proc/cpuinfo) -c '
         false;
@@ -119,6 +137,9 @@ function reposysafe()
 # === Repo Branch Sync ===
 function reposybranch()
 {
+  # Usage: reposybranch (Individual repo projects sync)
+
+  # Individual repo projects sync
   echo '';
   repo forall -c 'echo '';
                   echo " Project ${REPO_PROJECT} : ${REPO_REMOTE}/${REPO_RREV##*/}";
@@ -130,6 +151,9 @@ function reposybranch()
 # === Repo Prune ===
 function repoprune()
 {
+  # Usage: repoprune (Apply repo-wide prune cleanup)
+
+  # Apply repo-wide prune cleanup
   echo '';
   local tmpfile=$(mktemp);
   repo forall -c "echo '';
@@ -147,6 +171,9 @@ function repoprune()
 # === Repo Sync Clean ===
 function reposycl()
 {
+  # Usage: reposycl (Cleaned optimized relevant repo sync)
+
+  # Cleaned optimized relevant repo sync
   repo forall -c 'echo "Cleaning project ${REPO_PROJECT}"; \
                   git rebase --abort >/dev/null 2>&1; \
                   git stash -u >/dev/null 2>&1; \
@@ -157,6 +184,8 @@ function reposycl()
 # === Repo CCache Status/Setter ===
 function repocache()
 {
+  # Usage: repocache [cache_maximum_size] (CCache watcher and configuration)
+
   # Variables & repo root
   local currentdir=$(pwd);
   croot;
@@ -176,6 +205,8 @@ function repocache()
 # === Repo Branch ===
 function repogetbranch()
 {
+  # Usage: repogetbranch (Get repo main branch)
+
   # Variables
   local branch='';
   local infos=$(repo info . 2>&1);

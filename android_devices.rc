@@ -6,6 +6,8 @@
 # === Android Device Targets ===
 function androiddevicestarget()
 {
+  # Usage: androiddevicestarget [boot/system/...] (Devices targets mapper)
+
   # Variables
   local device=${TARGET_PRODUCT#*_};
   local request=${1};
@@ -100,6 +102,14 @@ function androiddevicestarget()
 # === Phone Codename to Target ===
 function codenametotarget()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: codenametotarget <codename> (Codename to build target)';
+    echo '';
+    return;
+  fi;
+
   # Filter devices from input
   case "${1}" in
     dora)

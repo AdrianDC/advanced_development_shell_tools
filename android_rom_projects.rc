@@ -6,6 +6,8 @@
 # === Git Branch Pusher ===
 function gitbranchpusher()
 {
+  # Usage: gitbranchpusher [y] (Push to project specific branch)
+
   # Variables
   local project_branch;
   local project_dir=${PWD};
@@ -95,7 +97,9 @@ function androidprojectpatcher()
 {
   # Usage
   if [ -z "${2}" ]; then
-    echo " Usage: androidprojectpatcher <project_name> <project_tag> ['project paths'] [specific_path]";
+    echo '';
+    echo ' Usage: androidprojectpatcher <project_name> <project_tag> ["project paths"] [specific_path]';
+    echo '';
     return;
   fi;
 
@@ -281,7 +285,9 @@ function androidprojectrebaser()
 {
   # Usage
   if [ -z "${3}" ]; then
-    echo " Usage: androidprojectrebaser <upstream_repository_if_not_origin> <project_branch> '<project_paths::name::branch>' [specific_path]";
+    echo '';
+    echo ' Usage: androidprojectrebaser <upstream_repository_if_not_origin> <project_branch> <"project_paths::name::branch"> [specific_path]';
+    echo '';
     return;
   fi;
 

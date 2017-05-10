@@ -96,6 +96,15 @@ function repotagscleaner()
 # === Repo Heads Cleaner ===
 function repoheadscleaner()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: repoheadscleaner (Cleanup repo projects refs/ contents)';
+    echo '';
+    return;
+  fi;
+
+  # Cleanup repo projects refs/ contents
   echo '';
   repo forall -c 'echo " Project ${REPO_PROJECT} : ${REPO_REMOTE}/${REPO_RREV##*/}";
                   git show-ref 2>&1 >/dev/null | \

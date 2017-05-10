@@ -11,6 +11,8 @@
 # === LineageOS Commits Patcher ===
 function lineagepatcher()
 {
+  # Usage: lineagepatcher [specific_paths] (LineageOS WiP Patcher)
+
   # Build environment
   while [ ! -e './build/envsetup.sh' ]; do
     cd ../;
@@ -27,6 +29,8 @@ function lineagepatcher()
 # === LineageOS Rebaser ===
 function lineagerebaser()
 {
+  # Usage: lineagerebaser [specific_paths] (LineageOS Devices Rebaser)
+
   # Use the androidprojectrebaser helper
   androidprojectrebaser 'origin' 'cm-14.1' '
     device/sony/huashan::::
@@ -43,6 +47,8 @@ function lineagerebaser()
 # === LineageOS Web Jekyll ===
 function lineagewebjekyll()
 {
+  # Usage: lineagewebjekyll [bool_install] (Jekyll web helper)
+
   # Load all gem elements
   sudo gem install bundler;
 

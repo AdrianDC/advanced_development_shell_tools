@@ -185,12 +185,7 @@ function fboota()
 # === Kernel Flasher ===
 function fboot()
 {
-  # Usage
-  if [ "${1}" == 'help' ]; then
-    echo ' Usage: fboot <bootimage>';
-    echo '';
-    return;
-  fi;
+  # Usage: fboot <bootimage>
 
   # Bootloader, flash bootimage and reboot
   sudo adb reboot bootloader;
@@ -206,12 +201,7 @@ function fboot()
 # === System Flasher ===
 function fboots()
 {
-  # Usage
-  if [ "${1}" == 'help' ]; then
-    echo ' Usage: fboots <system_img>';
-    echo '';
-    return;
-  fi;
+  # Usage: fboots <system_img>
 
   # Bootloader and flash system
   sudo adb reboot bootloader;
@@ -226,12 +216,17 @@ function fboots()
 # === Fastboot Reboot ===
 function fbootr()
 {
+  # Usage: fbootr (Fastboot reboot)
+
+  # Fastboot reboot
   sudo fastboot reboot;
 }
 
 # === Kernel Informations ===
 function fbooti()
 {
+  # Usage: fbooti (Kernel bbootimg analyzer)
+
   # Variables
   local partitiontarget=$(androiddevicestarget boot);
 
@@ -261,6 +256,8 @@ function bootinfo()
 # === FOTA Informations ===
 function adbfotainfos()
 {
+  # Usage: adbfotainfos (FOTA bbootimg analyzer)
+
   # Variables
   local partitiontarget=$(androiddevicestarget fota);
 
@@ -285,7 +282,9 @@ function fbootk()
 
   # Usage
   if [ -z "${filepath}" ] || [ ! -f "${filepath}" ]; then
+    echo '';
     echo '  Usage: fbootk <kernelpath> [bool_fota]';
+    echo '';
     return;
   fi;
 
@@ -313,6 +312,15 @@ function fbootk()
 # === Recovery Flasher ===
 function frecovery()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: frecovery <image> (Flash recovery with fastboot)';
+    echo '';
+    return;
+  fi;
+
+  # Flash recovery with fastboot
   sudo adb reboot bootloader;
   if [ ! -z "${1}" ]; then
     sudo fastboot flash recovery "${1}";
@@ -325,6 +333,14 @@ function frecovery()
 # === ADB Bootimage Pusher ===
 function adbbootpush()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbbootpush <image> (Inject bootimage to partition)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local boot=$(androiddevicestarget boot);
 
@@ -338,6 +354,14 @@ function adbbootpush()
 # === ADB FOTA Pusher ===
 function adbfotapush()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbfotapush <image> (Inject FOTA to partition)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local fota=$(androiddevicestarget fota);
 
@@ -352,6 +376,14 @@ function adbfotapush()
 # === ADB Recovery Pusher ===
 function adbrecoverypush()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbrecoverypush <image> (Inject recovery to partition)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local recovery=$(androiddevicestarget recovery);
 
@@ -478,6 +510,8 @@ function bootzip()
 # === Make Sepolicy ===
 function makesep()
 {
+  # Usage: makesep (Compile sepolicies clean)
+
   # Access repo root
   local cwd=$(pwd);
   croot;

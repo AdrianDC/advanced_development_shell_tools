@@ -6,6 +6,8 @@
 # === Device AICP Syncer ===
 function gitcpaicp()
 {
+  # Usage: gitcpaicp (Automated upstream to AICP device merger)
+
   # Variables
   local branch_origin='cm-14.1';
   local branch_target='n7.1';

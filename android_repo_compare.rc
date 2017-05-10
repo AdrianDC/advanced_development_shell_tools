@@ -6,18 +6,12 @@
 # === Repo Compare Stable ===
 function repocomparestable()
 {
+  # Usage: repocomparestable [stable_ZNH5Y] [github_account_LineageOS] [full_diff]
+
   # Default variables
   local default_github_account='LineageOS';
   local default_to_insert='ZNH5Y';
   local default_see_translations=;
-
-  # Usage
-  if [[ "${1}" =~ 'help' ]]; then
-    echo '';
-    echo ' Usage: repocomparestable [stable_tag ('${default_to_insert}')] [github_account ('${default_github_account}')] [full_diff]';
-    echo '';
-    return;
-  fi;
 
   # Variables
   local stable_tag=${1:-${default_to_insert}};
@@ -77,6 +71,8 @@ function repocomparestable()
 # === Repo Compare Upstream ===
 function repocompareupstream()
 {
+  # Usage: repocompareupstream [github_account_LineageOS] [full_diff]';
+
   # Default variables
   local default_github_account='LineageOS';
   local default_filtered_projects='chromium-webview';
@@ -88,15 +84,6 @@ function repocompareupstream()
                         | grep android- \
                         | head -n 1 \
                         | sed 's/.*"\(refs.*\)".*/\1/');
-
-  # Usage
-  if [[ "${1}" =~ 'help' ]]; then
-    echo '';
-    echo ' Usage: repocompareupstream [github_account ('${default_github_account}')] [full_diff]';
-    echo ' Information: Need to be started from the repo root';
-    echo '';
-    return;
-  fi;
 
   # Variables
   local github_account=${1:-${default_github_account}};
@@ -144,6 +131,15 @@ function repocompareupstream()
 # === Repo Compare Tags ===
 function repocomparetags()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: repocomparetags <tag_to_compare_to_android_branch> [ignore_account_LineageOS] [full_diff]';
+    echo ' Information: Need to be started from the repo root';
+    echo '';
+    return;
+  fi;
+
   # Default variables
   local default_ignore_account='LineageOS';
   local default_filtered_projects='chromium-webview';
@@ -155,15 +151,6 @@ function repocomparetags()
                         | grep android- \
                         | head -n 1 \
                         | sed 's/.*"\(refs.*\)".*/\1/');
-
-  # Usage
-  if [ -z "${1}" ] || [[ "${1}" =~ 'help' ]]; then
-    echo '';
-    echo ' Usage: repocomparetags <tag_to_compare_to_"'${upstream_branch}'"> [ignore_account ('${default_ignore_account}')] [full_diff]';
-    echo ' Information: Need to be started from the repo root';
-    echo '';
-    return;
-  fi;
 
   # Variables
   local upstream_to_compare=${1};

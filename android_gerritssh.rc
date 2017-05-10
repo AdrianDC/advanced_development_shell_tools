@@ -9,6 +9,8 @@
 # === Gerrit SSH ===
 function gerritssh()
 {
+  # Usage: gerritssh [branch] [change_id_reverser]
+
   # Gerrit Credentials
   export GerritReview='LineageOS';
   export GerritRemote='review.lineageos.org';

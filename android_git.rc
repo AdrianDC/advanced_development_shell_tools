@@ -6,6 +6,8 @@
 # === GitHub Username ===
 function githubusername()
 {
+  # Usage: githubusername (GitHub username getter)
+
   # GitHub Credentials
   export GitEMail="user.name@gmail.com";
   export GitFullName="Full Name";
@@ -23,13 +25,21 @@ function githubusername()
 # === GitHub Url Fetch-Reset ===
 function gitfcu()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitfcu <url> [branch] (Git fetch url and reset)';
+    echo '';
+    return;
+  fi;
+
   # Variables
   link="${1}";
 
   if [ ! -z "${2}" ]; then
     branch="${2}";
   else
-    branch="cm-14.1";
+    branch='cm-14.1';
   fi;
 
   if [ -z "${link}" ]; then
@@ -47,7 +57,9 @@ function gitcleantags()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo " Usage: gittagsclean <branch_to_keep>";
+    echo '';
+    echo ' Usage: gitcleantags <branch_to_keep>';
+    echo '';
     return;
   fi;
 
@@ -61,6 +73,14 @@ function gitcleantags()
 # === Git One Branch Keeper ===
 function gitonebranch()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitonebranch (Git remove non-default remote branches)';
+    echo '';
+    return;
+  fi;
+
   # Fetch remotes
   local username=$(githubusername);
   git fetch ${username};
@@ -85,6 +105,8 @@ alias gitspop='git stash pop';
 # === Git Diff Helpers ===
 function gitdi()
 {
+  # Usage: gitdi (Show git differences status)
+
   # Show unmerged diffs
   git diff --name-status;
   git ls-files --others --exclude-standard | awk '{print "U       " $0}';
@@ -216,6 +238,8 @@ alias gitfix='rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp';
 # === Git Commits Change-ID ===
 function gitcid()
 {
+  # Usage: gitcid (Apply commit-msg hook to commit)
+
   # Copy commit-msg
   cp -fv "${bash_android_dir}/android_tools/commit-msg" '.git/hooks/commit-msg';
   chmod u+x ./.git/hooks/commit-msg;
@@ -228,6 +252,8 @@ function gitcid()
 # === Git Commits Change-ID Upstream Download ===
 function gitcidupstream()
 {
+  # Usage: gitcidupstream (Load commit-msg hook from upstream)
+
   # Fetch commit-msg file
   curl -Lo .git/hooks/commit-msg http://review.lineageos.org/tools/hooks/commit-msg;
   cp -fv '.git/hooks/commit-msg' "${bash_android_dir}/android_tools/commit-msg";
@@ -319,6 +345,9 @@ alias gitsh='git update-index --no-assume-unchanged';
 # === Git GPG Parameter ===
 function gitgpgparam()
 {
+  # Usage: gitgpgparam (Returns the GPG signature flag if enabled)
+
+  # Returns the GPG signature flag if enabled
   if [ "$(git config --global --get commit.gpgsign)" = 'true' ]; then
     echo '-S';
   fi;
@@ -330,6 +359,8 @@ alias gitmt='git mergetool';
 # === Git MergeTool Conflicts Editor ===
 function gitmte()
 {
+  # Usage: gitmte (Merge tool with manual conflicts resolution)
+
   # Files differences
   git diff --name-only | uniq;
   echo '';

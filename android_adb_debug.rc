@@ -9,7 +9,7 @@ function adbst()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo " Usage: adbst <process_name> [bool_get_root] [parameters]";
+    echo ' Usage: adbst <process_name> [bool_get_root] [parameters] (strace)';
     echo '';
     return;
   fi;
@@ -60,6 +60,14 @@ function adbst()
 # === ADB Strace Followed Helper ===
 function adbstf()
 {
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbstf <process_name> [bool_get_root] (Followed strace)';
+    echo '';
+    return;
+  fi;
+
   # Use ADB Strace helper
   adbst "${1}" "${2}" '-f';
 }

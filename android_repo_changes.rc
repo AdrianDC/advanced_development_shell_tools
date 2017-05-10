@@ -6,6 +6,8 @@
 # === Repo Changes Logger ===
 function repochanges()
 {
+  # Usage: repochanges ["ignored_projects"] (Detect all repo projects differences)
+
   # Variables
   local ignored_projects='external/';
   if [ ! -z "${1}" ]; then
