@@ -179,19 +179,34 @@ function librarieshunter()
 # === Hastebin ===
 function haste()
 {
+  # Usage
+  if [ "${1}" = '-h' ]; then
+    echo '';
+    echo ' Usage: haste <file> or | haste (Share hastebin logs)';
+    echo '';
+    return;
+  fi;
+
   # Based upon https://github.com/seejohnrun/haste-client
-  # Usage : command | haste or haste file
-  tmp=$(mktemp);
+
+  # Get output
+  local tmp=$(mktemp);
   if [ ! -z "${1}" ] && [ -f "${1}" ]; then
     cat "${1}" | tee ${tmp};
   else
     cat | tee ${tmp};
   fi;
   echo '';
-  url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" --connect-timeout 5 http://hastebin.com/documents \
+
+  # Upload to hastebin
+  local url=$(timeout 10 curl -X POST -s -d @"${tmp}" https://hastebin.com/documents \
       | awk -F '"' '{ print "http://hastebin.com/"$4; }');
-  echo "${url}";
+  echo " haste: ${url}";
+
+  # Open url and delete temp file
   xdg-open "${url}" &
+  echo '' &
+  sleep 1;
   echo '';
   rm ${tmp};
 }
