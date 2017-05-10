@@ -341,8 +341,8 @@ developing on Android, especially for SONY devices.<br />
   * [sonyaospkernelupdate (Function)](android_kernel_helpers.rc): *sonyaospkernelupdate <device_name>*
 * #### Source: [android_kernel_tools.rc](android_kernel_tools.rc)
   * [fboota (Function)](android_kernel_tools.rc): *fboota [unsecure,sep,full,init,inject,recovery,fastupl,zip]*
-  * [fboot (Function)](android_kernel_tools.rc)
-  * [fboots (Function)](android_kernel_tools.rc)
+  * [fboot (Function)](android_kernel_tools.rc): *fboot <bootimage>*
+  * [fboots (Function)](android_kernel_tools.rc): *fboots <system_img>*
   * [fbootr (Function)](android_kernel_tools.rc)
   * [fbooti (Function)](android_kernel_tools.rc)
   * [bootinfo (Function)](android_kernel_tools.rc): *bootinfo <boot_img_file>*
@@ -383,7 +383,7 @@ developing on Android, especially for SONY devices.<br />
   * [networkrestart (Function)](android_linux.rc)
   * [pushbsizes (Function)](android_linux.rc)
 * #### Source: [android_push.rc](android_push.rc)
-  * [gitpu (Function)](android_push.rc)
+  * [gitpu (Function)](android_push.rc): *gitpu [remote] [branch] [input]*
   * [gitpa (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)*
   * [gitpa14 (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1*
   * [gitpa6 (Alias)](android_push.rc): *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) aosp-6.0*

@@ -185,6 +185,14 @@ function fboota()
 # === Kernel Flasher ===
 function fboot()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: fboot <bootimage>';
+    echo '';
+    return;
+  fi;
+
+  # Bootloader, flash bootimage and reboot
   sudo adb reboot bootloader;
   if [ ! -z "${1}" ]; then
     local file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
@@ -198,6 +206,14 @@ function fboot()
 # === System Flasher ===
 function fboots()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: fboots <system_img>';
+    echo '';
+    return;
+  fi;
+
+  # Bootloader and flash system
   sudo adb reboot bootloader;
   if [ ! -z "${1}" ]; then
     local file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');

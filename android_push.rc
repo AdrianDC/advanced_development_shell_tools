@@ -6,6 +6,13 @@
 # === Git Push User ===
 function gitpu()
 {
+  # Usage
+  if [ "${1}" == 'help' ]; then
+    echo ' Usage: gitpu [remote] [branch] [input]';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local remote=${1:-github};
   local branch=${2:-$(repogetbranch)};
