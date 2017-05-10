@@ -85,9 +85,6 @@ function reporoomserv()
   cd "${cwd}";
 }
 
-# === Repo Sync Project ===
-alias reposi='repo sync .';
-
 # === Repo Sync Efficiently ===
 function reposy()
 {

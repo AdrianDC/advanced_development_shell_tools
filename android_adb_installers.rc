@@ -201,25 +201,6 @@ function adbpf()
 # === ADB Pushes ===
 alias adbp='adbro; adbpf';
 
-# === ADB Resursive File Pusher ===
-function adbpfa()
-{
-  adbro;
-  for file in ${@}; do
-    adbpf "$(readlink -f ${file})";
-  done;
-}
-
-# === system/etc File Pusher ===
-function adbpetc()
-{
-  # Variables
-  local filetarget="/system/etc/${1}";
-
-  # Push file
-  adbpushfile "${1}" "${filetarget}";
-}
-
 # === MultiROM File Pusher ===
 function adbpmrom()
 {
@@ -242,53 +223,6 @@ function adbpmrom()
 function adbpmromenc()
 {
   adbpmrom "${1}" enc;
-}
-
-# === Android Copy Files Pusher ===
-function adbicopymk()
-{
-  # Usage
-  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
-    echo '';
-    echo ' usage: adbicopymk <mk_file_path> [output_device]';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  local file=${1};
-  local output_device="${2%/}";
-  local repo_top=$(gettop 2> /dev/null);
-  local files_list;
-  local filepath;
-  local filetarget;
-
-  # File parsing
-  files_list=$(cat "${file}" | grep ':' | grep -v '#');
-
-  # Copy files to build output
-  if [ ! -z "${output_device}" ]; then
-    printf '\n\e[1;33m # Build output installation:\n\e[0m';
-  fi;
-
-  # File push
-  echo '';
-  for item in ${files_list}; do
-    filepath=${repo_top}/${item%:*};
-    filetarget=/${item/*:};
-
-    # Push validated file to adb or to build output
-    if [ -f "${filepath}" ] && [ ! -z "${filetarget}" ]; then
-      if [ -z "${output_device}" ]; then
-        adbpushfile "${filepath}" "${filetarget}";
-      else
-        filetarget="${output_device}${filetarget}";
-        mkdir -p "${filetarget%/*}";
-        cp -fv "${filepath}" "${filetarget}";
-      fi;
-    fi;
-  done;
-  echo '';
 }
 
 # === ADB apk Installers ===

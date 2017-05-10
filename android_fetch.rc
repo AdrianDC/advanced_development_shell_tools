@@ -10,31 +10,12 @@ function gitfetchtreset()
   git reset FETCH_HEAD --hard;
 }
 
-# === Git Fetch Checkout Assets ===
-function gitfetchcheckout()
-{
-  remote=${1:-$(githubusername)};
-  branch=${2:-$(repogetbranch)};
-  git fetch ${remote} ${branch};
-  git checkout ${remote}/${branch};
-}
-
 # === Git Fetch Shortcuts ===
 alias gitf='git fetch';
 alias gitfmr='git fetch origin; git reset origin/master';
 alias gitfs='git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash';
 alias gitfsu='git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash -p';
-alias gitfsm='git stash -u; git fetch origin cm-14.1; git checkout cm-14.1';
 alias gitfgr='gitfetchtreset github';
 alias gitfor='gitfetchtreset origin';
 alias gitforla='gitfetchtreset origin aosp/LA.UM.5.5_rb1.10';
 alias gitfar='gitfetchtreset $(githubusername)';
-alias gitfar6='gitfetchtreset $(githubusername) aosp-6.0';
-alias gitfara6='gitfetchtreset $(githubusername) android-6.0';
-alias gitfarm='gitfetchtreset $(githubusername) multirom';
-alias gitfart='gitfetchtreset $(githubusername) twrp';
-alias gitfbr='gitfetchtreset backup';
-alias gitfsr='gitfetchtreset source';
-alias gitfgc='gitfetchcheckout github';
-function gitfdr() { git fetch "${1}"; git reset --hard FETCH_HEAD; }
-function gitfkl() { git fetch git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git linux-3.4.y; }

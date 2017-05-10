@@ -327,27 +327,6 @@ function gitgpgparam()
 # === Git MergeTool Shortcut ===
 alias gitmt='git mergetool';
 
-# === Git MergeTool File Editor ===
-function gitme()
-{
-  # Read next unmerged file
-  local path=$(timeout 1 git mergetool 2>/dev/null \
-             | head -n 2 \
-             | tail -1);
-
-  # If unmerged file found
-  if [ -f "${path}" ]; then
-    gedit "${path}";
-    echo '';
-    printf "${path} ? [Enter] ";
-    read;
-    echo '';
-    git add "${path}";
-  else
-    echo " '${path}' not found...";
-  fi;
-}
-
 # === Git MergeTool Conflicts Editor ===
 function gitmte()
 {

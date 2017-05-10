@@ -3,33 +3,6 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === Repo Get Device ===
-function repogetdevice()
-{
-  # Variables
-  local cwd=$(pwd);
-  local product=${TARGET_PRODUCT#*_};
-
-  # Repo root
-  croot;
-
-  # Check device
-  if ! ls ./device/*/${product} 1> /dev/null 2>&1; then
-
-    # Analyse devices
-    for device_path in $(find ./device/ -name cm.mk -or -name vendorsetup.sh); do
-      if grep -q ${TARGET_PRODUCT} ${device_path}; then
-        product=$(basename $(dirname ${device_path}));
-      fi;
-    done;
-
-  fi;
-
-  # Result
-  echo ${product};
-  cd ${cwd};
-}
-
 # === Device Shortcuts ===
 function cdd()
 {
@@ -76,7 +49,6 @@ function toout()
 
   # Get out target path
   local outtargetpath=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/out\/target\/product/g");
-echo "${outtargetpath}/*${device}*"
 
   # Path detection
   if [ -d "${outtargetpath}/"*"${device}"* ]; then

@@ -7,9 +7,9 @@
 function fileupl()
 {
   # Usage
-  if [ -z "${1}" ] || [ -z "${2}" ]; then
+  if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: fileupl <file_path> <target_folder>';
+    echo ' Usage: fileupl <file_path> [target_folder]';
     echo '';
     return;
   fi;
@@ -24,9 +24,14 @@ function fileupl()
 
   # Variables
   local path="${1}";
-  local target="${2}";
+  local target="${2:-Development}";
   local time_start=$(date +%s);
   local time_span;
+
+  # Load path from PackageResult
+  if [ -z "${path}" ] && [ -f "${PackageResult}" ]; then
+    path="${PackageResult}";
+  fi;
 
   # File full path
   if [ -f "${path}" ]; then
@@ -63,19 +68,6 @@ function fileupl()
   time_span=$(($(date +%s)-${time_start}));
   echo -e " \e[1;37m[ Upload done in ${time_span} secs ]\e[0m";
   echo '';
-}
-
-# === Dev File Uploader ===
-function devupl()
-{
-  # Variables
-  local filepath="${1}";
-  if [ -z "${filepath}" ] && [ -f "${PackageResult}" ]; then
-    filepath="${PackageResult}";
-  fi;
-
-  # File upload to Development
-  fileupl "${filepath}" 'Development';
 }
 
 # === Fast File Uploader ===

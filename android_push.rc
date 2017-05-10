@@ -49,26 +49,17 @@ function gitpu()
 # === Git Push Helpers ===
 alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';
 alias gitpa14='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1';
-alias gitpa6='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) aosp-6.0';
-alias gitpaa6='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) android-6.0';
 alias gitpala='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) LA.UM.5.5_rb1.10';
 alias gitpal='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests'
 alias gitpaman='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests'
 alias gitpam='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) multirom';
 alias gitpama='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master';
-alias gitpamm='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) marshmallow';
 alias gitpanmr='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) n-mr1'
-alias gitpalineage='gitremoteverify lineage gitrao && gitpu lineage cm-14.1';
 alias gitpan='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) nougat';
 alias gitpat='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) twrp';
-alias gitpaicp='gitremoteverify aicp gitrai && gitpu aicp mm6.0';
 alias gitpb='gitremoteverify backup gitrab && gitpu backup';
-alias gitpold='gitremoteverify old false && gitpu old';
 alias gitpp='gitremoteverify project false && gitpu project';
 alias gitppm='gitremoteverify project false && gitpu project master';
-alias gitpx='gitremoteverify xperia gitrax && gitpu xperia';
-alias gitpxm='gitremoteverify xperia gitrax && gitpu xperia master';
-alias gitpmd='gitremoteverify xperia gitramd && gitpu mromdev';
 
 # === Git Push Url Helper ===
 function gitpurl() { gitpu "${1%/commits/*}" "${1#*/commits/}"; }

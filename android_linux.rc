@@ -79,43 +79,6 @@ function disableautomount()
   gsettings set org.gnome.desktop.media-handling automount false;
 }
 
-# === Terminal New Tab ===
-function newtab()
-{
-  if [ -z "${WID}" ]; then
-    WID=$(xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)"| awk '{print $5}');
-  fi;
-  xdotool windowfocus ${WID};
-  xdotool key ctrl+shift+t ${WID};
-  if [ ! -z "${1}" ]; then
-    if [ ! -z "${2}" ]; then
-      xdotool type --clearmodifiers "echo -e '\033]2;'${2}'\007';${1}";
-    else
-      xdotool type --clearmodifiers "${1}";
-    fi;
-    xdotool key Return;
-  fi;
-  wmctrl -i -a ${WID};
-}
-
-# === Terminal New Tabs Inputs ===
-function tmtab()
-{
-  # Open input paths in tabs
-  basedir=$(pwd);
-  for pathdir in ${@}; do
-    newtab "cd ${basedir}/${pathdir}; cls;" "$(basename ${pathdir})";
-  done;
-}
-
-# === Terminal New Tab Device ===
-function td()
-{
-  basedir=${ANDROID_DEV_DRIVE}/LineageOS;
-  newtab "cdd ${1}; cls;" "${1}";
-}
-
-
 # === Diff Binaries ===
 function diffbin()
 {
@@ -236,14 +199,6 @@ function fileschemesorter()
   # Cleanup
   rm -f ${file_temp_2};
   rm -f ${file_temp_3};
-}
-
-# === Linux Hibernation ===
-function gohibernate()
-{
-  sudo swapon -a;
-  sudo swapon -s;
-  sudo pm-hibernate;
 }
 
 # === USB MTP Mounts ===

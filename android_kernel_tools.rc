@@ -310,26 +310,6 @@ function fbootk()
   fi;
 }
 
-# === Kernel Modules Pusher ===
-function fbootmodules()
-{
-  # Modules Pusher
-  for module_file in $(find ${KernelSources} -name *.ko); do
-    adb push ${module_file} /system/lib/modules/;
-  done;
-}
-
-# === Kernel Flasher ===
-function fbooto()
-{
-  sudo adb reboot bootloader;
-  if [ ! -z "${1}" ]; then
-    sudo fastboot flash boot "${1}";
-  else
-    sudo fastboot flash boot boot.img;
-  fi;
-}
-
 # === Recovery Flasher ===
 function frecovery()
 {
@@ -606,31 +586,6 @@ function bootimagedebuggable()
     done;
 
   fi;
-
-  # Restore path
-  cd ${cwd}/;
-}
-
-# === ROM Kernel mrproper ===
-function romkernelmrproper()
-{
-  # Usage
-  local kernel_path=$(get_build_var TARGET_KERNEL_SOURCE 2>/dev/null);
-  if [ -z "${kernel_path}" ]; then
-    echo '';
-    echo ' Usage: romkernelmrproper';
-    echo ' Informations: Device variables must be initiated first...';
-    echo '';
-    return;
-  fi;
-
-  # Variables and access repo root
-  local cwd=$(pwd);
-  croot;
-
-  # Access kernel and mrproper
-  cd "${kernel_path}";
-  make mrproper;
 
   # Restore path
   cd ${cwd}/;
