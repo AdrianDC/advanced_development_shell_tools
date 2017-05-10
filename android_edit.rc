@@ -81,3 +81,24 @@ function editinsertbelow()
   # Insert below
   sed -i "s/\(^.*${match_line}.*\)/\1\n${to_insert}/g" ${files};
 }
+
+# === Edit Replace Multiline ===
+function editreplacemultiline()
+{
+  # Usage
+  if [ -z "${4}" ]; then
+    echo '';
+    echo ' Usage: editreplacemultiline <"match_first"> <"match_last"> <"replace"> <"files">';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local match_first=${1};
+  local match_last=${2};
+  local replace=${3};
+  local files=${@:4};
+
+  # Replace section from first to last
+  sed -i "/${match_first}/{:a; N; /${match_last}/!ba; s/${match_first}.*${match_last}/${replace}/; };" ${files};
+}
