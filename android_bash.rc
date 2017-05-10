@@ -333,6 +333,11 @@ function shtoolsreadme()
         line_usage=": *${line_usage}*";
       fi;
 
+      # Warning about missing usages
+      if [ -z "${line_usage}" ]; then
+        echo " ${path}: ${line_type} '${line_function}' has no usage";
+      fi;
+
       # Append function details
       readme_functions+="  * [${line_function} (${line_type})](${path})${line_usage}\n";
 
