@@ -237,6 +237,7 @@ function shtoolsreadme()
   local delimiter_end='<!-- Functions End -->';
   local line;
   local line_function;
+  local line_standalone;
   local line_type;
   local line_usage;
   local path;
@@ -245,10 +246,28 @@ function shtoolsreadme()
   # Read all sources
   for file in "${bash_android_dir}/android_bash.rc" ${bash_android_sources}; do
 
-    # Handle source contents
+    # Handle file path
     path=${file//\//\\\/};
     path=${path##*/};
-    readme_functions+="* #### Source: [${path}](${path})\n";
+
+    # Detect standalone ready scripts
+    line_standalone=$(grep -a '^# source <(curl -Ls' "${file}");
+
+    # Create source section
+    readme_functions+="* #### Source: [${path}](${path})${line_standalone:+  - Ready for standalone import}\n";
+
+    # Inject standalone import script
+    if [ ! -z "${line_standalone}" ]; then
+      line_standalone=${line_standalone//# source <\(curl -Ls/};
+      line_standalone=${line_standalone//)/};
+      readme_functions+="    \`\`\`Shell\n";
+      for url in ${line_standalone}; do
+        readme_functions+="    source \<\(curl -Ls ${url//\//\\\/}\)\n";
+      done;
+      readme_functions+="    \`\`\`\n";
+    fi;
+
+    # Handle source contents
     while read line; do
 
       # Parse source functions
