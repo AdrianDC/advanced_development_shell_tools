@@ -23,14 +23,14 @@
 
 <!-- Functions Start -->
 ### [ Documentation from [android_development_shell_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) ]
-  * [**bashup** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashup **(Reloads android_development_shell_tools scripts)***
-  * [**bashe** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashe &lt;words&gt; &lt;to&gt; &lt;search&gt; **(Direct access to related sources)***
-  * [**bashsync** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashsync **(Download new android_development_shell_tools changes)***
-  * [**bashpush** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashpush **(Commit new changes to android_development_shell_tools)***
-  * [**bashamend** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashamend **(Amend new changes to android_development_shell_tools)***
-  * [**bashdiff** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashdiff **(Compare with upstream android_development_shell_tools)***
-  * [**bashlog** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashlog **(Display android_development_shell_tools history)***
-  * [**bashreset** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashreset **(Reset project to remote HEAD)***
+  * [**shtoolsup** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolsup **(Reloads android_development_shell_tools scripts)***
+  * [**shtoolse** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolse &lt;words&gt; &lt;to&gt; &lt;search&gt; **(Direct access to related sources)***
+  * [**shtoolssync** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolssync **(Download new android_development_shell_tools changes)***
+  * [**shtoolspush** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolspush **(Commit new changes to android_development_shell_tools)***
+  * [**shtoolsamend** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolsamend **(Amend new changes to android_development_shell_tools)***
+  * [**shtoolsdiff** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolsdiff **(Compare with upstream android_development_shell_tools)***
+  * [**shtoolslog** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolslog **(Display android_development_shell_tools history)***
+  * [**shtoolsreset** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolsreset **(Reset project to remote HEAD)***
   * [**shtoolsdev** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolsdev [bool_master] **(Switch android_development_shell_tools branches)***
   * [**shtoolsreadme** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolsreadme **(Refresh README.md functions usages)***
 
@@ -660,8 +660,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdtwrp** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(totwrp)*
   * [**cdand** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(getand)*
   * [**cda** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cdlineage huashan*
-  * [**getbash** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *echo ${android_development_shell_tools_dir}*
-  * [**cdbash** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(getbash)*
+  * [**getshtools** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *echo ${android_development_shell_tools_dir}*
+  * [**cdshtools** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(getshtools)*
   * [**cddesk** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd "$(xdg-user-dir DESKTOP)"*
   * [**cddev** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(getand)/Development/${1}*
   * [**cddevaosp** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(getand)/Development/aosp_*${1}*
