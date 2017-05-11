@@ -16,23 +16,23 @@
  * Adapt and add the following lines:
    ```Shell
    export ANDROID_DEV_DRIVE=/media/../AndroidDev;
-   source "${ANDROID_DEV_DRIVE}/Bash/android_bash.rc";
+   source "/.../android_development_shell_tools.rc";
    ```
 
 <br />
 
 <!-- Functions Start -->
-### [ Documentation from [android_bash.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc) ]
-  * [**bashup** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashup **(Reloads android_development_shell_tools scripts)***
-  * [**bashe** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashe &lt;words&gt; &lt;to&gt; &lt;search&gt; **(Direct access to related sources)***
-  * [**bashsync** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashsync **(Download new android_development_shell_tools changes)***
-  * [**bashpush** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashpush **(Commit new changes to android_development_shell_tools)***
-  * [**bashamend** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashamend **(Amend new changes to android_development_shell_tools)***
-  * [**bashdiff** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashdiff **(Compare with upstream android_development_shell_tools)***
-  * [**bashlog** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashlog **(Display android_development_shell_tools history)***
-  * [**bashreset** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashreset **(Reset project to remote HEAD)***
-  * [**shtoolsdev** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *shtoolsdev [bool_master] **(Switch android_development_shell_tools branches)***
-  * [**shtoolsreadme** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *shtoolsreadme **(Refresh README.md functions usages)***
+### [ Documentation from [android_development_shell_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) ]
+  * [**bashup** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashup **(Reloads android_development_shell_tools scripts)***
+  * [**bashe** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashe &lt;words&gt; &lt;to&gt; &lt;search&gt; **(Direct access to related sources)***
+  * [**bashsync** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashsync **(Download new android_development_shell_tools changes)***
+  * [**bashpush** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashpush **(Commit new changes to android_development_shell_tools)***
+  * [**bashamend** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashamend **(Amend new changes to android_development_shell_tools)***
+  * [**bashdiff** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashdiff **(Compare with upstream android_development_shell_tools)***
+  * [**bashlog** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashlog **(Display android_development_shell_tools history)***
+  * [**bashreset** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *bashreset **(Reset project to remote HEAD)***
+  * [**shtoolsdev** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolsdev [bool_master] **(Switch android_development_shell_tools branches)***
+  * [**shtoolsreadme** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc): *shtoolsreadme **(Refresh README.md functions usages)***
 
 ---
 ### [ Documentation from [android_adb.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) ]
@@ -722,5 +722,5 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**meganzreload** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc): *meganzreload **(Reload MEGA.nz account and keys)***
 
 ---
-* #### Automatically generated by [shtoolsreadme](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc) for [android_development_shell_tools](http://github.com/AdrianDC/android_development_shell_tools)
+* #### Automatically generated by [shtoolsreadme](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) for [android_development_shell_tools](http://github.com/AdrianDC/android_development_shell_tools)
 <!-- Functions End -->

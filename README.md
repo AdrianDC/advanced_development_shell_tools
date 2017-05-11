@@ -20,5 +20,5 @@
  * Adapt and add the following lines:
    ```Shell
    export ANDROID_DEV_DRIVE=/media/../AndroidDev;
-   source "${ANDROID_DEV_DRIVE}/Bash/android_bash.rc";
+   source "/.../android_development_shell_tools.rc";
    ```
