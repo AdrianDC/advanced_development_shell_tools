@@ -299,6 +299,11 @@ function shtoolsreadme()
           line_usage=${line_usage%$'"'};
           line_usage=${line_usage//\(/**\\\(};
           line_usage=${line_usage//\)/\\\)**};
+
+          # Warning about missing description
+          if [[ ! "${line_usage}" == *"("*")"* ]]; then
+            echo " ${path}: ${line_type} '${line_function}' has no description";
+          fi;
         fi;
 
       # Parse alias content
