@@ -317,6 +317,7 @@ function shtoolsreadme()
         line_usage=${line_usage//\</&lt;};
         line_usage=${line_usage//\>/&gt;};
         line_usage=${line_usage//\//\\\/};
+        line_usage=${line_usage//\|/\\\\\|};
         line_usage=${line_usage//\&/\\\&};
         line_usage=${line_usage//$"'"/\\$"'"};
         line_usage=${line_usage//$'"'/\\$'"'};
