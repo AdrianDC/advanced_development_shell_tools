@@ -95,8 +95,8 @@ function repotwrp()
   cd "${TargetDir}/";
   mkdir -p ./META-INF/com/google/android/;
   mkdir -p ./scripts/;
-  cp "${bash_flashable_android_base}" "${TargetDir}/${OutFOTAZip}.unsigned.zip";
-  cp "${bash_updater_flash_fota}" ./META-INF/com/google/android/updater-script;
+  cp "${android_development_shell_tools_flashable_android_base}" "${TargetDir}/${OutFOTAZip}.unsigned.zip";
+  cp "${android_development_shell_tools_updater_flash_fota}" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${TargetDir}/${OutFOTAZip}.unsigned.zip" ./META-INF/com/google/android/updater-script;
   zip -j -g "${TargetDir}/${OutFOTAZip}.unsigned.zip" "${TargetDir}/${OutTWRP}";
@@ -104,8 +104,8 @@ function repotwrp()
   # Generate secondary zip, updater-script and recovery files
   mkdir -p ./META-INF/com/google/android/;
   mkdir -p ./scripts/;
-  cp "${bash_flashable_android_base}" "${TargetDir}/${OutMultiROMZip}.unsigned.zip";
-  cp "${bash_updater_multirom_secondary}" ./META-INF/com/google/android/updater-script;
+  cp "${android_development_shell_tools_flashable_android_base}" "${TargetDir}/${OutMultiROMZip}.unsigned.zip";
+  cp "${android_development_shell_tools_updater_multirom_secondary}" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${TargetDir}/${OutMultiROMZip}.unsigned.zip" ./META-INF/com/google/android/updater-script;
@@ -320,8 +320,8 @@ function repomrom()
     # Generate recovery zip, updater-script and recovery files
     cd "${TargetDir}/${PublishDir}";
     mkdir -p ./META-INF/com/google/android/;
-    cp "${bash_flashable_android_base}" "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip";
-    cp "${bash_updater_flash_fota}" ./META-INF/com/google/android/updater-script;
+    cp "${android_development_shell_tools_flashable_android_base}" "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip";
+    cp "${android_development_shell_tools_updater_flash_fota}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip" ./META-INF/com/google/android/updater-script;
     zip -j -g "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip" "${TargetDir}/twrp.img";
@@ -329,8 +329,8 @@ function repomrom()
 
     # Generate secondary zip, updater-script and recovery files
     mkdir -p ./META-INF/com/google/android/;
-    cp "${bash_flashable_android_base}" "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip";
-    cp "${bash_updater_multirom_secondary}" ./META-INF/com/google/android/updater-script;
+    cp "${android_development_shell_tools_flashable_android_base}" "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip";
+    cp "${android_development_shell_tools_updater_multirom_secondary}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" ./META-INF/com/google/android/updater-script;

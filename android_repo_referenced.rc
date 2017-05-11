@@ -4,8 +4,8 @@
 # ======================================
 
 # === Repo References Variables ===
-export bash_android_referenced_aosp='huashan blue sony';
-export bash_android_referenced_lineage='huashan mint hayabusa tsubasa sony dora z3 lx fusion3';
+export android_development_shell_tools_referenced_aosp='huashan blue sony';
+export android_development_shell_tools_referenced_lineage='huashan mint hayabusa tsubasa sony dora z3 lx fusion3';
 
 # === Repo Referenced AOSP Devices ===
 function reporeferencedaosp()
@@ -21,7 +21,7 @@ function reporeferencedaosp()
   # Variables
   local repocommon;
   local command_to_run=${1};
-  local referenced_devices=${2:-${bash_android_referenced_aosp}};
+  local referenced_devices=${2:-${android_development_shell_tools_referenced_aosp}};
 
   # Execute on common repo
   cdaosp;
@@ -59,7 +59,7 @@ function reporeferencedlineage()
   # Variables
   local repocommon;
   local command_to_run=${1};
-  local referenced_devices=${2:-${bash_android_referenced_lineage}};
+  local referenced_devices=${2:-${android_development_shell_tools_referenced_lineage}};
 
   # Execute on common repo
   cdlineage;

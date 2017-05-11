@@ -174,7 +174,7 @@ function repoinitaospall()
   reposy;
 
   # Walk through devices
-  for device in ${bash_android_referenced_aosp}; do
+  for device in ${android_development_shell_tools_referenced_aosp}; do
 
     # Verify and update device repo
     cdaosp ${device};
@@ -207,7 +207,7 @@ function repoinitlineageall()
   reposy;
 
   # Walk through devices
-  for device in ${bash_android_referenced_lineage}; do
+  for device in ${android_development_shell_tools_referenced_lineage}; do
 
     # Verify and update device repo
     cdlineage ${device};

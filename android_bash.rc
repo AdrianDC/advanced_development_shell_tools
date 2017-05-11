@@ -4,7 +4,7 @@
 # ======================================
 
 # === Android Shell Tools Folder ===
-bash_android_dir=$(dirname ${BASH_SOURCE[0]});
+android_development_shell_tools_dir=$(dirname ${BASH_SOURCE[0]});
 
 # === Android Shell Tools Update ===
 function bashup()
@@ -12,103 +12,103 @@ function bashup()
   # Usage: bashup (Reloads android_development_shell_tools scripts)
 
   # Reload sources
-  source "${bash_android_dir}/android_bash.rc";
+  source "${android_development_shell_tools_dir}/android_bash.rc";
   echo '';
   echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[0;33mFunctions loaded properly\e[0m';
   echo '';
 }
 
 # === Android Shell Tools Sources ===
-bash_android_sources="\
+android_development_shell_tools_sources="\
   \
-  ${bash_android_dir}/android_adb.rc \
-  ${bash_android_dir}/android_adb_assets.rc \
-  ${bash_android_dir}/android_adb_debug.rc \
-  ${bash_android_dir}/android_adb_flash.rc \
-  ${bash_android_dir}/android_adb_installers.rc \
-  ${bash_android_dir}/android_adb_logs.rc \
-  ${bash_android_dir}/android_adb_tools.rc \
+  ${android_development_shell_tools_dir}/android_adb.rc \
+  ${android_development_shell_tools_dir}/android_adb_assets.rc \
+  ${android_development_shell_tools_dir}/android_adb_debug.rc \
+  ${android_development_shell_tools_dir}/android_adb_flash.rc \
+  ${android_development_shell_tools_dir}/android_adb_installers.rc \
+  ${android_development_shell_tools_dir}/android_adb_logs.rc \
+  ${android_development_shell_tools_dir}/android_adb_tools.rc \
   \
-  ${bash_android_dir}/android_changelog.rc \
+  ${android_development_shell_tools_dir}/android_changelog.rc \
   \
-  ${bash_android_dir}/android_devices.rc \
+  ${android_development_shell_tools_dir}/android_devices.rc \
   \
-  ${bash_android_dir}/android_edit.rc \
+  ${android_development_shell_tools_dir}/android_edit.rc \
   \
-  ${bash_android_dir}/android_fetch.rc \
+  ${android_development_shell_tools_dir}/android_fetch.rc \
   \
-  ${bash_android_dir}/android_gerrit.rc \
-  ${bash_android_dir}/android_gerritssh.rc \
+  ${android_development_shell_tools_dir}/android_gerrit.rc \
+  ${android_development_shell_tools_dir}/android_gerritssh.rc \
   \
-  ${bash_android_dir}/android_git.rc \
-  ${bash_android_dir}/android_git_pick.rc \
-  ${bash_android_dir}/android_git_stats.rc \
+  ${android_development_shell_tools_dir}/android_git.rc \
+  ${android_development_shell_tools_dir}/android_git_pick.rc \
+  ${android_development_shell_tools_dir}/android_git_stats.rc \
   \
-  ${bash_android_dir}/android_grep.rc \
+  ${android_development_shell_tools_dir}/android_grep.rc \
   \
-  ${bash_android_dir}/android_kernel_builders.rc \
-  ${bash_android_dir}/android_kernel_defconfig.rc \
-  ${bash_android_dir}/android_kernel_editors.rc \
-  ${bash_android_dir}/android_kernel_helpers.rc \
-  ${bash_android_dir}/android_kernel_tools.rc \
+  ${android_development_shell_tools_dir}/android_kernel_builders.rc \
+  ${android_development_shell_tools_dir}/android_kernel_defconfig.rc \
+  ${android_development_shell_tools_dir}/android_kernel_editors.rc \
+  ${android_development_shell_tools_dir}/android_kernel_helpers.rc \
+  ${android_development_shell_tools_dir}/android_kernel_tools.rc \
   \
-  ${bash_android_dir}/android_linux.rc \
+  ${android_development_shell_tools_dir}/android_linux.rc \
   \
-  ${bash_android_dir}/android_push.rc \
+  ${android_development_shell_tools_dir}/android_push.rc \
   \
-  ${bash_android_dir}/android_pushbullet.rc \
+  ${android_development_shell_tools_dir}/android_pushbullet.rc \
   \
-  ${bash_android_dir}/android_release_builders.rc \
-  ${bash_android_dir}/android_release_helpers.rc \
-  ${bash_android_dir}/android_release_packages.rc \
+  ${android_development_shell_tools_dir}/android_release_builders.rc \
+  ${android_development_shell_tools_dir}/android_release_helpers.rc \
+  ${android_development_shell_tools_dir}/android_release_packages.rc \
   \
-  ${bash_android_dir}/android_remotes.rc \
+  ${android_development_shell_tools_dir}/android_remotes.rc \
   \
-  ${bash_android_dir}/android_repo_builders.rc \
-  ${bash_android_dir}/android_repo_changes.rc \
-  ${bash_android_dir}/android_repo_cleaners.rc \
-  ${bash_android_dir}/android_repo_compare.rc \
-  ${bash_android_dir}/android_repo_helpers.rc \
-  ${bash_android_dir}/android_repo_init.rc \
-  ${bash_android_dir}/android_repo_referenced.rc \
+  ${android_development_shell_tools_dir}/android_repo_builders.rc \
+  ${android_development_shell_tools_dir}/android_repo_changes.rc \
+  ${android_development_shell_tools_dir}/android_repo_cleaners.rc \
+  ${android_development_shell_tools_dir}/android_repo_compare.rc \
+  ${android_development_shell_tools_dir}/android_repo_helpers.rc \
+  ${android_development_shell_tools_dir}/android_repo_init.rc \
+  ${android_development_shell_tools_dir}/android_repo_referenced.rc \
   \
-  ${bash_android_dir}/android_rom_aicp.rc \
-  ${bash_android_dir}/android_rom_aosp_sony8960.rc \
-  ${bash_android_dir}/android_rom_aosp_sonyaosp.rc \
-  ${bash_android_dir}/android_rom_aospcaf.rc \
-  ${bash_android_dir}/android_rom_legacyxperia.rc \
-  ${bash_android_dir}/android_rom_lineageos.rc \
-  ${bash_android_dir}/android_rom_lineageos_sony8996.rc \
-  ${bash_android_dir}/android_rom_lineageos_sonysodp.rc \
-  ${bash_android_dir}/android_rom_projects.rc \
+  ${android_development_shell_tools_dir}/android_rom_aicp.rc \
+  ${android_development_shell_tools_dir}/android_rom_aosp_sony8960.rc \
+  ${android_development_shell_tools_dir}/android_rom_aosp_sonyaosp.rc \
+  ${android_development_shell_tools_dir}/android_rom_aospcaf.rc \
+  ${android_development_shell_tools_dir}/android_rom_legacyxperia.rc \
+  ${android_development_shell_tools_dir}/android_rom_lineageos.rc \
+  ${android_development_shell_tools_dir}/android_rom_lineageos_sony8996.rc \
+  ${android_development_shell_tools_dir}/android_rom_lineageos_sonysodp.rc \
+  ${android_development_shell_tools_dir}/android_rom_projects.rc \
   \
-  ${bash_android_dir}/android_shortcuts.rc \
+  ${android_development_shell_tools_dir}/android_shortcuts.rc \
   \
-  ${bash_android_dir}/android_tools.rc \
+  ${android_development_shell_tools_dir}/android_tools.rc \
   \
-  ${bash_android_dir}/android_uploads.rc \
+  ${android_development_shell_tools_dir}/android_uploads.rc \
   \
-  ${bash_android_dir}/megatools_mirror.rc \
-  ${bash_android_dir}/megatools_reload.rc \
+  ${android_development_shell_tools_dir}/megatools_mirror.rc \
+  ${android_development_shell_tools_dir}/megatools_reload.rc \
 ";
 
 # === Android Shell Tools Importations ===
-for bash_source in ${bash_android_sources};
+for file_source in ${android_development_shell_tools_sources};
 do
-  source ${bash_source};
+  source ${file_source};
 done;
 
 # === Android Shell Tools Prebuilt Files ===
-export bash_files_strace_32=${bash_android_dir}/android_files/strace_arm32;
-export bash_files_strace_64=${bash_android_dir}/android_files/strace_arm64;
-export bash_flashable_android_base=${bash_android_dir}/android_files/flashable_android_base.zip;
-export bash_scripts_kernel_injector=${bash_android_dir}/android_files/scripts_kernel_injector;
-export bash_sign_apk_dir=${bash_android_dir}/android_signapk;
-export bash_updater_flash_boot=${bash_android_dir}/android_files/updater_script_flash_boot;
-export bash_updater_flash_fota=${bash_android_dir}/android_files/updater_script_flash_fota;
-export bash_updater_install_system=${bash_android_dir}/android_files/updater_script_install_system;
-export bash_updater_kernel_injector=${bash_android_dir}/android_files/updater_script_kernel_injector;
-export bash_updater_multirom_secondary=${bash_android_dir}/android_files/updater_script_multirom_secondary;
+export android_development_shell_tools_files_strace_32=${android_development_shell_tools_dir}/android_files/strace_arm32;
+export android_development_shell_tools_files_strace_64=${android_development_shell_tools_dir}/android_files/strace_arm64;
+export android_development_shell_tools_flashable_android_base=${android_development_shell_tools_dir}/android_files/flashable_android_base.zip;
+export android_development_shell_tools_scripts_kernel_injector=${android_development_shell_tools_dir}/android_files/scripts_kernel_injector;
+export android_development_shell_tools_signapk_dir=${android_development_shell_tools_dir}/android_signapk;
+export android_development_shell_tools_updater_flash_boot=${android_development_shell_tools_dir}/android_files/updater_script_flash_boot;
+export android_development_shell_tools_updater_flash_fota=${android_development_shell_tools_dir}/android_files/updater_script_flash_fota;
+export android_development_shell_tools_updater_install_system=${android_development_shell_tools_dir}/android_files/updater_script_install_system;
+export android_development_shell_tools_updater_kernel_injector=${android_development_shell_tools_dir}/android_files/updater_script_kernel_injector;
+export android_development_shell_tools_updater_multirom_secondary=${android_development_shell_tools_dir}/android_files/updater_script_multirom_secondary;
 
 # === Android Shell Tools Functions Editor ===
 function bashe()
@@ -119,13 +119,13 @@ function bashe()
   local files='';
 
   # Study all script files
-  for bash_source in ${bash_android_sources}; do
+  for file_source in ${android_development_shell_tools_sources}; do
     for word in ${@}; do
-      grep -aiq "${word}" "${bash_source}";
+      grep -aiq "${word}" "${file_source}";
 
       # List found files
       if [ ${?} -eq 0 ]; then
-        files="${files} ${bash_source}";
+        files="${files} ${file_source}";
         continue;
       fi;
     done;
@@ -144,7 +144,7 @@ function bashsync()
 
   # Download upstream changes
   local currentdir=${PWD};
-  cd "${bash_android_dir}/";
+  cd "${android_development_shell_tools_dir}/";
   git fetch origin;
   git reset origin/$(git rev-parse --abbrev-ref HEAD);
   git stash -u;
@@ -164,7 +164,7 @@ function bashpush()
 
   # Commit changes to upstream
   local currentdir=${PWD};
-  cd "${bash_android_dir}/";
+  cd "${android_development_shell_tools_dir}/";
   git add . -Ap;
   git commit -s;
   git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
@@ -182,7 +182,7 @@ function bashamend()
 
   # Amend changes to upstream
   local currentdir=${PWD};
-  cd "${bash_android_dir}/";
+  cd "${android_development_shell_tools_dir}/";
   git add . -Ap;
   git commit -s --amend;
   git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
@@ -197,7 +197,7 @@ function bashdiff()
 
   # Compare with upstream
   local currentdir=${PWD};
-  cd "${bash_android_dir}/";
+  cd "${android_development_shell_tools_dir}/";
   git fetch origin;
   git diff HEAD origin/$(git rev-parse --abbrev-ref HEAD);
   git diff HEAD;
@@ -211,7 +211,7 @@ function bashlog()
 
   # Display project history
   local currentdir=${PWD};
-  cd "${bash_android_dir}/";
+  cd "${android_development_shell_tools_dir}/";
   git log --pretty=oneline -n 10;
   cd "${currentdir}/";
 }
@@ -222,7 +222,7 @@ function bashreset()
   # Usage: bashreset (Reset project to remote HEAD)
 
   # Reset project to remote HEAD
-  cd "${bash_android_dir}/";
+  cd "${android_development_shell_tools_dir}/";
   git fetch origin;
   git reset origin/$(git rev-parse --abbrev-ref HEAD);
   git diff --stat HEAD;
@@ -247,7 +247,7 @@ function shtoolsreadme()
   local readme_functions='';
 
   # Read all sources
-  for file in "${bash_android_dir}/android_bash.rc" ${bash_android_sources}; do
+  for file in "${android_development_shell_tools_dir}/android_bash.rc" ${android_development_shell_tools_sources}; do
 
     # Handle file path
     path=${file//\//\\\/};
@@ -351,5 +351,5 @@ function shtoolsreadme()
   readme_functions+="* #### Automatically generated by [shtoolsreadme](${github_project_url}\/${github_file_path}\/android_bash.rc) for [android_development_shell_tools](${github_project_url})\n";
 
   # Inject README.md changes
-  sed -i "/${delimiter_start}/{p; :a; N; /${delimiter_end}/!ba; s/.*\n/${readme_functions}/; };" "${bash_android_dir}/docs/README.md";
+  sed -i "/${delimiter_start}/{p; :a; N; /${delimiter_end}/!ba; s/.*\n/${readme_functions}/; };" "${android_development_shell_tools_dir}/docs/README.md";
 }

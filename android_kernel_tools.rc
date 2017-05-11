@@ -4,8 +4,8 @@
 # ======================================
 
 # === Build paths ===
-export bash_android_bbootimg=${bash_android_dir}/android_tools/bbootimg;
-export bash_android_bbootimg_host=${bash_android_dir}/android_tools/bbootimg_host;
+export android_development_shell_tools_bbootimg=${android_development_shell_tools_dir}/android_tools/bbootimg;
+export android_development_shell_tools_bbootimg_host=${android_development_shell_tools_dir}/android_tools/bbootimg_host;
 
 # === Fast Bootimage Builder ===
 function fboota()
@@ -232,7 +232,7 @@ function fbooti()
 
   # Kernel informations
   adbro;
-  adb push "${bash_android_bbootimg}" /bbootimg;
+  adb push "${android_development_shell_tools_bbootimg}" /bbootimg;
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell /bbootimg -i ${partitiontarget};
@@ -250,7 +250,7 @@ function bootinfo()
   fi;
 
   # Run bbootimg on the kernel input
-  "${bash_android_bbootimg_host}" -i "${1}";
+  "${android_development_shell_tools_bbootimg_host}" -i "${1}";
 }
 
 # === FOTA Informations ===
@@ -263,7 +263,7 @@ function adbfotainfos()
 
   # FOTA informations
   adbro;
-  adb push "${bash_android_bbootimg}" /bbootimg;
+  adb push "${android_development_shell_tools_bbootimg}" /bbootimg;
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell /bbootimg -i ${partitiontarget};
@@ -299,7 +299,7 @@ function fbootk()
   # Kernel injection
   adbro;
   adb push "${filepath}" /tmpkernel;
-  adb push "${bash_android_bbootimg}" /bbootimg;
+  adb push "${android_development_shell_tools_bbootimg}" /bbootimg;
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
   adb shell /bbootimg -i ${partitiontarget};
@@ -424,9 +424,9 @@ function kernelinjectorzip()
   cd "${TmpDir}/";
   mkdir -p ./META-INF/com/google/android/;
   mkdir -p ./scripts/;
-  cp "${bash_flashable_android_base}" "${TargetFile}.unsigned.zip";
-  cp "${bash_updater_kernel_injector}" ./META-INF/com/google/android/updater-script;
-  cp -rfv "${bash_scripts_kernel_injector}/"* ./scripts/;
+  cp "${android_development_shell_tools_flashable_android_base}" "${TargetFile}.unsigned.zip";
+  cp "${android_development_shell_tools_updater_kernel_injector}" ./META-INF/com/google/android/updater-script;
+  cp -rfv "${android_development_shell_tools_scripts_kernel_injector}/"* ./scripts/;
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./scripts/kernel_inject.sh;
   zip -g "${TargetFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
@@ -483,8 +483,8 @@ function bootzip()
   # Generate zip and updater-script files
   cd "${TmpDir}/";
   mkdir -p ./META-INF/com/google/android/;
-  cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
-  cp "${bash_updater_flash_boot}" ./META-INF/com/google/android/updater-script;
+  cp "${android_development_shell_tools_flashable_android_base}" "${OutFile}.unsigned.zip";
+  cp "${android_development_shell_tools_updater_flash_boot}" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
 

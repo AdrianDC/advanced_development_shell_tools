@@ -4,8 +4,8 @@
 # ======================================
 
 # === Build paths ===
-export bash_android_mkboot=${bash_android_dir}/android_mkboot;
-export bash_android_mkelf=${bash_android_dir}/android_files/mkelf.py;
+export android_development_shell_tools_mkboot=${android_development_shell_tools_dir}/android_mkboot;
+export android_development_shell_tools_mkelf=${android_development_shell_tools_dir}/android_files/mkelf.py;
 
 # === Boot Tools ===
 function boottools()
@@ -29,7 +29,7 @@ function boottools()
 
   # Unpack
   rm -rf "${out_folder}";
-  ${bash_android_mkboot}/mkboot "${boot_file}" "${out_folder}";
+  ${android_development_shell_tools_mkboot}/mkboot "${boot_file}" "${out_folder}";
 
   # Edition mode
   if [ -z "${2}" ]; then
@@ -47,7 +47,7 @@ function boottools()
     fi;
     rm -f "${boot_file}.tmp";
     mv "${boot_file}" "${boot_file}.tmp";
-    ${bash_android_mkboot}/mkboot "${out_folder}" "${boot_file}";
+    ${android_development_shell_tools_mkboot}/mkboot "${out_folder}" "${boot_file}";
     if [ -f "${boot_file}.tmp" ]; then
       rm -f "${boot_file}.tmp";
     fi;
@@ -195,7 +195,7 @@ function bootelf()
     echo '';
     echo ' [ Compiling the boot.img ]';
     echo '';
-    cp "${bash_android_mkelf}" ./mkelf.py;
+    cp "${android_development_shell_tools_mkelf}" ./mkelf.py;
     python ./mkelf.py -o boot-new.elf kernel@0x80208000 ramdisk.img@0x81900000,ramdisk RPM.bin@0x00020000,rpm cmdline.txt@0x00000000,cmdline;
 
     # Replace input bootimage

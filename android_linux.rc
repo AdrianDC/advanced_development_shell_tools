@@ -276,7 +276,7 @@ function cleanram()
   # Usage: cleanram (RAM caches cleanup)
 
   # Run cleanram script
-  "${bash_android_dir}/run_cleanram.sh";
+  "${android_development_shell_tools_dir}/run_cleanram.sh";
 }
 
 # === CleanRAM with Kills ===

@@ -28,9 +28,9 @@ function adbst()
   if [ ${strace_exists} -ne 0 ]; then
     adb shell mkdir -p /system/bin/;
     if [ ! -z "$(adb shell cat /proc/cpuinfo | grep '64')" ]; then
-      adb push "${bash_files_strace_64}" /system/bin/strace;
+      adb push "${android_development_shell_tools_files_strace_64}" /system/bin/strace;
     else
-      adb push "${bash_files_strace_32}" /system/bin/strace;
+      adb push "${android_development_shell_tools_files_strace_32}" /system/bin/strace;
     fi;
     adb shell chmod 777 /system/bin/strace;
     echo '';

@@ -165,7 +165,7 @@ function cdtwrp()       { cd $(totwrp); }
 # === Private Shortcuts ===
 function cdand()        { cd $(getand); }
 function cda()          { cdlineage huashan; }
-function getbash()      { echo ${bash_android_dir}; }
+function getbash()      { echo ${android_development_shell_tools_dir}; }
 function cdbash()       { cd $(getbash); }
 function cddesk()       { cd "$(xdg-user-dir DESKTOP)"; }
 function cddev()        { cd $(getand)/Development/${1}; }

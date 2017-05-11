@@ -43,9 +43,9 @@ function signzip()
   rm -f "${zip_output}";
 
   # Sign ZIP
-  java -jar "${bash_sign_apk_dir}/signapk-cm121.jar" \
-      -w "${bash_sign_apk_dir}/testkey.x509.pem" \
-      "${bash_sign_apk_dir}/testkey.pk8" \
+  java -jar "${android_development_shell_tools_signapk_dir}/signapk-cm121.jar" \
+      -w "${android_development_shell_tools_signapk_dir}/testkey.x509.pem" \
+      "${android_development_shell_tools_signapk_dir}/testkey.pk8" \
       "${zip_input}" \
       "${zip_output}";
 
@@ -137,8 +137,8 @@ function mmmzip()
 
     # Generate zip, updater-script and include files
     mkdir -p ./META-INF/com/google/android/;
-    cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
-    cp "${bash_updater_install_system}" ./META-INF/com/google/android/updater-script;
+    cp "${android_development_shell_tools_flashable_android_base}" "${OutFile}.unsigned.zip";
+    cp "${android_development_shell_tools_updater_install_system}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
@@ -225,8 +225,8 @@ function systozip()
 
     # Generate zip, updater-script and include files
     mkdir -p ./META-INF/com/google/android/;
-    cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
-    cp "${bash_updater_install_system}" ./META-INF/com/google/android/updater-script;
+    cp "${android_development_shell_tools_flashable_android_base}" "${OutFile}.unsigned.zip";
+    cp "${android_development_shell_tools_updater_install_system}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
@@ -315,8 +315,8 @@ function packzip()
   # Generate zip, updater-script and include files
   cd "${TmpDir}/";
   mkdir -p ./META-INF/com/google/android/;
-  cp "${bash_flashable_android_base}" "${OutFile}.unsigned.zip";
-  cp "${bash_updater_install_system}" ./META-INF/com/google/android/updater-script;
+  cp "${android_development_shell_tools_flashable_android_base}" "${OutFile}.unsigned.zip";
+  cp "${android_development_shell_tools_updater_install_system}" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
   rm -rf ./META-INF;

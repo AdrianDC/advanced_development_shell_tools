@@ -659,7 +659,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdtwrp** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(totwrp)*
   * [**cdand** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(getand)*
   * [**cda** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cdlineage huashan*
-  * [**getbash** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *echo ${bash_android_dir}*
+  * [**getbash** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *echo ${android_development_shell_tools_dir}*
   * [**cdbash** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(getbash)*
   * [**cddesk** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd "$(xdg-user-dir DESKTOP)"*
   * [**cddev** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc): *cd $(getand)/Development/${1}*

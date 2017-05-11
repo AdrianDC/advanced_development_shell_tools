@@ -241,7 +241,7 @@ function gitcid()
   # Usage: gitcid (Apply commit-msg hook to commit)
 
   # Copy commit-msg
-  cp -fv "${bash_android_dir}/android_tools/commit-msg" '.git/hooks/commit-msg';
+  cp -fv "${android_development_shell_tools_dir}/android_tools/commit-msg" '.git/hooks/commit-msg';
   chmod u+x ./.git/hooks/commit-msg;
 
   # Update commit with Change-ID
@@ -256,7 +256,7 @@ function gitcidupstream()
 
   # Fetch commit-msg file
   curl -Lo .git/hooks/commit-msg http://review.lineageos.org/tools/hooks/commit-msg;
-  cp -fv '.git/hooks/commit-msg' "${bash_android_dir}/android_tools/commit-msg";
+  cp -fv '.git/hooks/commit-msg' "${android_development_shell_tools_dir}/android_tools/commit-msg";
   chmod u+x ./.git/hooks/commit-msg;
 }
 
