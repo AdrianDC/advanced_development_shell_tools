@@ -27,6 +27,7 @@ bash_android_sources="\
   ${bash_android_dir}/android_adb_flash.rc \
   ${bash_android_dir}/android_adb_installers.rc \
   ${bash_android_dir}/android_adb_logs.rc \
+  ${bash_android_dir}/android_adb_tools.rc \
   \
   ${bash_android_dir}/android_changelog.rc \
   \
