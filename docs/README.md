@@ -31,6 +31,7 @@
   * [**bashdiff** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashdiff **(Compare with upstream android_development_shell_tools)***
   * [**bashlog** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashlog **(Display android_development_shell_tools history)***
   * [**bashreset** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *bashreset **(Reset project to remote HEAD)***
+  * [**shtoolsdev** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *shtoolsdev [bool_master] **(Switch android_development_shell_tools branches)***
   * [**shtoolsreadme** (Function)](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_bash.rc): *shtoolsreadme **(Refresh README.md functions usages)***
 
 ---

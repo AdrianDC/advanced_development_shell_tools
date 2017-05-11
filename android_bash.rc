@@ -4,6 +4,7 @@
 # ======================================
 
 # === Android Shell Tools Folder ===
+android_development_shell_tools_branch='master';
 android_development_shell_tools_dir=$(dirname ${BASH_SOURCE[0]});
 
 # === Android Shell Tools Update ===
@@ -146,7 +147,7 @@ function bashsync()
   local currentdir=${PWD};
   cd "${android_development_shell_tools_dir}/";
   git fetch origin;
-  git reset origin/$(git rev-parse --abbrev-ref HEAD);
+  git reset origin/${android_development_shell_tools_branch};
   git stash -u;
   git submodule init;
   git submodule update;
@@ -167,7 +168,7 @@ function bashpush()
   cd "${android_development_shell_tools_dir}/";
   git add . -Ap;
   git commit -s;
-  git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
+  git push -f origin HEAD:${android_development_shell_tools_branch};
   cd "${currentdir}/";
   bashup;
 }
@@ -185,7 +186,7 @@ function bashamend()
   cd "${android_development_shell_tools_dir}/";
   git add . -Ap;
   git commit -s --amend;
-  git push -f origin HEAD:$(git rev-parse --abbrev-ref HEAD);
+  git push -f origin HEAD:${android_development_shell_tools_branch};
   cd "${currentdir}/";
   bashup;
 }
@@ -199,7 +200,7 @@ function bashdiff()
   local currentdir=${PWD};
   cd "${android_development_shell_tools_dir}/";
   git fetch origin;
-  git diff HEAD origin/$(git rev-parse --abbrev-ref HEAD);
+  git diff HEAD origin/${android_development_shell_tools_branch};
   git diff HEAD;
   cd "${currentdir}/";
 }
@@ -224,8 +225,24 @@ function bashreset()
   # Reset project to remote HEAD
   cd "${android_development_shell_tools_dir}/";
   git fetch origin;
-  git reset origin/$(git rev-parse --abbrev-ref HEAD);
+  git reset origin/${android_development_shell_tools_branch};
   git diff --stat HEAD;
+}
+
+# === Android Shell Tools Reset ===
+function shtoolsdev()
+{
+  # Usage: shtoolsdev [bool_master] (Switch android_development_shell_tools branches)
+
+  # Switch android_development_shell_tools branches
+  if [ -z "${1}" ]; then
+    android_development_shell_tools_branch='staging';
+  else
+    android_development_shell_tools_branch='master';
+  fi;
+  echo '';
+  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched to '${android_development_shell_tools_branch}' branch\e[0m";
+  echo '';
 }
 
 # === Android Shell Tools README.md Updater ===
