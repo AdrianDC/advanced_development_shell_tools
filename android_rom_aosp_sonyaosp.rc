@@ -4,9 +4,9 @@
 # ======================================
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_remotes.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_projects.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_aosp_sonyaosp.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aosp_sonyaosp.rc)
 
 # === AOSP Sony Patcher ===
 function aospsonypatcher()

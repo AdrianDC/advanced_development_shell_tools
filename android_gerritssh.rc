@@ -4,7 +4,7 @@
 # ======================================
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_gerritssh.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_gerritssh.rc)
 
 # === Gerrit SSH ===
 function gerritssh()

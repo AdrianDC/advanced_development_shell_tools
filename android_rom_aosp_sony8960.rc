@@ -4,9 +4,9 @@
 # ======================================
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_remotes.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_projects.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_shell_tools/raw/master/android_rom_aosp_sony8960.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aosp_sony8960.rc)
 
 # === AOSP 8960 N Patcher ===
 function aosp8960npatcher()
