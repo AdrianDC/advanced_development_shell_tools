@@ -41,53 +41,6 @@
   * [**shtoolsreadme** *<b>[Refresh README.md functions usages]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) : *shtoolsreadme*
 
 ---
-### [ Documentation from [android_adb.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) ]
-  * [**adbr** *<b>[adb root and remount rw system]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbr*
-  * [**adbro** *<b>[Verified adb root and remount rw system]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbro*
-  * [**adbside** *<b>[adb sideload helper]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbside &lt;file_zip&gt; [bool_wait_recovery]*
-  * [**adbs** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell*
-  * [**adbroot** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb kill-server; sudo adb start-server; sudo adb root; sudo adb wait-for-device; sudo adb remount*
-  * [**adbpo** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell reboot -p*
-  * [**adbre** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb reboot*
-  * [**adbrh** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb ${1} shell setprop ctl.restart zygote*
-  * [**adbrr** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb reboot recovery*
-  * [**adbw** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb wait-for-device*
-  * [**adbrb** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb reboot bootloader*
-  * [**adbscr** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *mkdir -p ./screenshots; adb shell screencap /sdcard/screenshot.png; adb pull /sdcard/screenshot.png ./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png*
-  * [**adbfotarandom** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel*
-  * [**adbfotazero** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel*
-  * [**adbsgdisk** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell sgdisk --print /dev/block/mmcblk0*
-  * [**adbinfomem** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell dumpsys meminfo*
-  * [**adbblkp** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell ls -l /dev/block/bootdevice/by-name/*
-  * [**adbdf** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell df -H*
-  * [**adbrcbin** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell restorecon -R /sbin*
-  * [**adbmountcache** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache*
-  * [**adbmountdata** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data*
-  * [**adbmountmicrosd** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext*
-  * [**adbumountcache** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell umount /cache*
-  * [**adbumountdata** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell umount /data*
-  * [**adbumountmicrosd** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell umount /storage/ext*
-  * [**adbmount** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbmountcache; adbmountdata; adbmountmicrosd*
-  * [**adbumount** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbumountcache; adbumountdata; adbumountmicrosd*
-  * [**adbemergencycalls** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell setprop ril.ecclist*
-  * [**adbemergencylist** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell getprop ril.ecclist*
-  * [**adbco** *<b>[Helper for adb network access]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbco [ipaddress_once]*
-  * [**adbedit** *<b>[Edit adb file, default on /system/build.prop]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbedit [file_path]*
-  * [**adbdatabase** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbdatabase &lt;/data/.../sqlite.db&gt;*
-  * [**adbinputs** *<b>[Dump all input devices]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbinputs*
-  * [**adbreadevents** *<b>[Read input events]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbreadevents &lt;event_number&gt;*
-  * [**adbkp** *<b>[Kill process by name]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbkp &lt;process_name&gt;*
-  * [**adbservices** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell service list*
-  * [**adbsl** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell ls -l*
-  * [**adbslz** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell ls -lZ*
-  * [**adbsc** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell cat*
-  * [**adbsg** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell getprop*
-  * [**adbsw** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbro; adb shell "echo ${1} &gt; ${2}"*
-  * [**isdone** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *notify-send "Process execution finished !*
-  * [**adbgitpf** *<b>[Push files through adb from commit]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbgitpf &lt;commit_sha1&gt;*
-  * [**adbu** *<b>[Force optimization of a package]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbu &lt;package_name&gt;*
-
----
 ### [ Documentation from [android_adb_assets.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) ]
   * [**adbupdate** *<b>[adb binary update from upstream]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adbupdate*
   * [**sepaud** *<b>[Logs sepolicy analyzer]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *sepaud &lt;logs_file&gt;*
@@ -158,6 +111,53 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adblcln** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cat ${1} \| cut -c 32- \| tee ${1}.clean*
   * [**adbkcln** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cat ${1} \| cut -c 15- \| tee ${1}.clean*
   * [**adbbootchart** *<b>[Bootchart debug helper]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbbootchart*
+
+---
+### [ Documentation from [android_adb.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) ]
+  * [**adbr** *<b>[adb root and remount rw system]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbr*
+  * [**adbro** *<b>[Verified adb root and remount rw system]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbro*
+  * [**adbside** *<b>[adb sideload helper]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbside &lt;file_zip&gt; [bool_wait_recovery]*
+  * [**adbs** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell*
+  * [**adbroot** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb kill-server; sudo adb start-server; sudo adb root; sudo adb wait-for-device; sudo adb remount*
+  * [**adbpo** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell reboot -p*
+  * [**adbre** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb reboot*
+  * [**adbrh** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb ${1} shell setprop ctl.restart zygote*
+  * [**adbrr** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb reboot recovery*
+  * [**adbw** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb wait-for-device*
+  * [**adbrb** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb reboot bootloader*
+  * [**adbscr** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *mkdir -p ./screenshots; adb shell screencap /sdcard/screenshot.png; adb pull /sdcard/screenshot.png ./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png*
+  * [**adbfotarandom** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel*
+  * [**adbfotazero** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel*
+  * [**adbsgdisk** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell sgdisk --print /dev/block/mmcblk0*
+  * [**adbinfomem** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell dumpsys meminfo*
+  * [**adbblkp** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell ls -l /dev/block/bootdevice/by-name/*
+  * [**adbdf** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell df -H*
+  * [**adbrcbin** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell restorecon -R /sbin*
+  * [**adbmountcache** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache*
+  * [**adbmountdata** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data*
+  * [**adbmountmicrosd** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext*
+  * [**adbumountcache** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell umount /cache*
+  * [**adbumountdata** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell umount /data*
+  * [**adbumountmicrosd** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell umount /storage/ext*
+  * [**adbmount** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbmountcache; adbmountdata; adbmountmicrosd*
+  * [**adbumount** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbumountcache; adbumountdata; adbumountmicrosd*
+  * [**adbemergencycalls** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell setprop ril.ecclist*
+  * [**adbemergencylist** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell getprop ril.ecclist*
+  * [**adbco** *<b>[Helper for adb network access]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbco [ipaddress_once]*
+  * [**adbedit** *<b>[Edit adb file, default on /system/build.prop]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbedit [file_path]*
+  * [**adbdatabase** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbdatabase &lt;/data/.../sqlite.db&gt;*
+  * [**adbinputs** *<b>[Dump all input devices]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbinputs*
+  * [**adbreadevents** *<b>[Read input events]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbreadevents &lt;event_number&gt;*
+  * [**adbkp** *<b>[Kill process by name]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbkp &lt;process_name&gt;*
+  * [**adbservices** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell service list*
+  * [**adbsl** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell ls -l*
+  * [**adbslz** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell ls -lZ*
+  * [**adbsc** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell cat*
+  * [**adbsg** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adb shell getprop*
+  * [**adbsw** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbro; adb shell "echo ${1} &gt; ${2}"*
+  * [**isdone** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *notify-send "Process execution finished !*
+  * [**adbgitpf** *<b>[Push files through adb from commit]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbgitpf &lt;commit_sha1&gt;*
+  * [**adbu** *<b>[Force optimization of a package]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb.rc) : *adbu &lt;package_name&gt;*
 
 ---
 ### [ Documentation from [android_adb_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) ]
@@ -239,6 +239,15 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gerritssh** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerritssh.rc) : *gerritssh [branch] [change_id_reverser]*
 
 ---
+### [ Documentation from [android_git_pick.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) ]
+  * [**gitcpu** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpu &lt;githuburltocommit&gt; [branch]*
+  * [**gitmerges** *<b>[Attempt to merge commit history]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitmerges &lt;commit_sha1&gt; [count]*
+  * [**gitcpo** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpo &lt;branch&gt; &lt;amount_of_commits&gt;*
+  * [**gitcpup** *<b>[Git URL patch applier]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup &lt;url&gt;*
+  * [**gitcpur** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpur &lt;githuburltoproject&gt; &lt;branch&gt; &lt;search_text&gt; &lt;replace_text&gt;*
+  * [**gitcpupprima** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup "${1}" CORE drivers/staging/prima/CORE*
+
+---
 ### [ Documentation from [android_git.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) ]
   * [**githubusername** *<b>[GitHub username getter]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *githubusername*
   * [**gitfcu** *<b>[Git fetch url and reset]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *gitfcu &lt;url&gt; [branch]*
@@ -318,15 +327,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitmt** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *git mergetool*
   * [**gitmte** *<b>[Merge tool with manual conflicts resolution]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *gitmte*
   * [**gitmtr** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *gitmtr &lt;referenced_path&gt;*
-
----
-### [ Documentation from [android_git_pick.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) ]
-  * [**gitcpu** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpu &lt;githuburltocommit&gt; [branch]*
-  * [**gitmerges** *<b>[Attempt to merge commit history]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitmerges &lt;commit_sha1&gt; [count]*
-  * [**gitcpo** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpo &lt;branch&gt; &lt;amount_of_commits&gt;*
-  * [**gitcpup** *<b>[Git URL patch applier]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup &lt;url&gt;*
-  * [**gitcpur** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpur &lt;githuburltoproject&gt; &lt;branch&gt; &lt;search_text&gt; &lt;replace_text&gt;*
-  * [**gitcpupprima** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup "${1}" CORE drivers/staging/prima/CORE*
 
 ---
 ### [ Documentation from [android_git_stats.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) ]
@@ -429,6 +429,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**pushbsizes** *<b>[Path sizes in PushBullet notification]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *pushbsizes &lt;paths&gt;*
 
 ---
+### [ Documentation from [android_pushbullet.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_pushbullet.rc) ]
+  * [**pushb** *<b>[PushBullet notification helper]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_pushbullet.rc) : *pushb [message]*
+
+---
 ### [ Documentation from [android_push.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_push.rc) ]
   * [**gitpu** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_push.rc) : *gitpu [remote] [branch] [input]*
   * [**gitpa** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_push.rc) : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)*
@@ -445,10 +449,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitpp** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_push.rc) : *gitremoteverify project false && gitpu project*
   * [**gitppm** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_push.rc) : *gitremoteverify project false && gitpu project master*
   * [**gitpurl** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_push.rc) : *gitpu "${1%/commits/*}" "${1#*/commits/}"*
-
----
-### [ Documentation from [android_pushbullet.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_pushbullet.rc) ]
-  * [**pushb** *<b>[PushBullet notification helper]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_pushbullet.rc) : *pushb [message]*
 
 ---
 ### [ Documentation from [android_release_builders.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) ]
@@ -568,6 +568,15 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitcpaicp** *<b>[Automated upstream to AICP device merger]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aicp.rc) : *gitcpaicp*
 
 ---
+### [ Documentation from [android_rom_aospcaf.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc)  - Standalone Import Ready ]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aosp_aospcaf.rc)
+  ```
+  * [**aospcafpatcher** *<b>[AOSP-CAF Patcher]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc) : *aospcafpatcher [specific_paths]*
+
+---
 ### [ Documentation from [android_rom_aosp_sony8960.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sony8960.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
@@ -587,15 +596,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * [**aospsonypatcher** *<b>[AOSP SONY SODP Patcher]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sonyaosp.rc) : *aospsonypatcher [specific_paths]*
   * [**aospsonyrebaser** *<b>[AOSP SONY SODP Rebaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sonyaosp.rc) : *aospsonyrebaser [specific_paths]*
-
----
-### [ Documentation from [android_rom_aospcaf.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc)  - Standalone Import Ready ]
-  ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aosp_aospcaf.rc)
-  ```
-  * [**aospcafpatcher** *<b>[AOSP-CAF Patcher]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc) : *aospcafpatcher [specific_paths]*
 
 ---
 ### [ Documentation from [android_rom_legacyxperia.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_legacyxperia.rc)  - Standalone Import Ready ]
