@@ -1,0 +1,15 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Template addon function ===
+function _templateaddonfunction()
+{
+  # Usage: _templateaddonfunction <required> [optional] (Base template for addons)
+
+  # Code
+  echo '';
+  echo ' android_development_shell_tools: This function is only a template';
+  echo '';
+}
