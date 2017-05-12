@@ -4,7 +4,7 @@
 # ======================================
 
 # === Android Shell Tools Folder ===
-android_development_shell_tools_branch='master';
+android_development_shell_tools_branch=${android_development_shell_tools_branch:-master};
 android_development_shell_tools_dir=$(dirname ${BASH_SOURCE[0]});
 
 # === Android Shell Tools Update ===
@@ -235,13 +235,14 @@ function shtoolsdev()
   # Usage: shtoolsdev [bool_master] (Switch android_development_shell_tools branches)
 
   # Switch android_development_shell_tools branches
+  local branch=${android_development_shell_tools_branch};
   if [ -z "${1}" ]; then
     android_development_shell_tools_branch='staging';
   else
     android_development_shell_tools_branch='master';
   fi;
   echo '';
-  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched to '${android_development_shell_tools_branch}' branch\e[0m";
+  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${android_development_shell_tools_branch}' branch\e[0m";
   echo '';
 }
 
