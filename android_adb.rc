@@ -102,8 +102,7 @@ function adbside()
 
 # === ADB Access Shortcuts ===
 alias adbs='adb shell';
-alias adbroot='adb kill-server; sudo adb start-server';
-alias adbremount='sudo adb root; sudo adb remount';
+alias adbroot='adb kill-server; sudo adb start-server; sudo adb root; sudo adb wait-for-device; sudo adb remount';
 alias adbpo='adb shell reboot -p';
 alias adbre='adb reboot';
 function adbrh() { adb ${1} shell setprop ctl.restart zygote; }
