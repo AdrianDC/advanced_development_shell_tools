@@ -9,6 +9,10 @@
    <br />
    or to serve as a reference for commands and functions an Android developer needs
 
+ * To keep a local sync of 'android_development_shell_tools' updated with upstream changes,
+   <br />
+   simply run the *`shtoolssync`* command and the updates will be downloaded
+
  * Scripts flagged "Standalone Import Ready" and starting with *`source <(curl -Ls...`*
    <br />
    are able to be directly sourced through the provided commands in any terminal
