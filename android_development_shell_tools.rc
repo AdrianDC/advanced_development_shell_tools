@@ -258,6 +258,7 @@ function shtoolsreadme()
   local line;
   local line_function;
   local line_standalone;
+  local line_summary;
   local line_type;
   local line_usage;
   local path;
@@ -299,6 +300,7 @@ function shtoolsreadme()
       line_type=${line};
       line_type=${line_type//*alias*/Alias};
       line_type=${line_type//*function*/Function};
+      line_summary="\(${line_type}\)";
       line_usage='';
 
       # Parse function content
@@ -317,11 +319,14 @@ function shtoolsreadme()
           line_usage=${line_usage%;};
           line_usage=${line_usage%$"'"};
           line_usage=${line_usage%$'"'};
-          line_usage=${line_usage//\(/**\\\(};
-          line_usage=${line_usage//\)/\\\)**};
+
+          # Mark function summary field
+          if [[ "${line_usage}" == *"("*")"* ]]; then
+            line_usage=${line_usage/ \(/-SUMMARY-};
+            line_usage=${line_usage/\)*/-SUMMARY-};
 
           # Warning about missing description
-          if [[ ! "${line_usage}" == *"("*")"* ]]; then
+          else
             echo " ${path}: ${line_type} '${line_function}' has no description";
           fi;
         fi;
@@ -347,7 +352,20 @@ function shtoolsreadme()
         line_usage=${line_usage//$"'"/\\$"'"};
         line_usage=${line_usage//$'"'/\\$'"'};
         line_usage=${line_usage//\$/\\\$};
-        line_usage=": *${line_usage}*";
+        line_usage=${line_usage% };
+
+        # Parse summary out
+        if [[ "${line_usage}" == *"-SUMMARY-"*"-SUMMARY-"* ]]; then
+          line_summary=${line_usage#*-SUMMARY-};
+          line_summary=${line_summary%-SUMMARY-*};
+          line_usage=${line_usage/-SUMMARY-*-SUMMARY-/};
+
+          # Apply summary styling
+          line_summary="<b>\[${line_summary}\]<\/b>";
+        fi;
+
+        # Apply usage styling
+        line_usage=" : *${line_usage}*";
 
       # Warning about missing usages
       else
@@ -355,7 +373,7 @@ function shtoolsreadme()
       fi;
 
       # Append function details
-      readme_functions+="  * [**${line_function}** (${line_type})](${github_project_url}\/${github_file_path}\/${path})${line_usage}\n";
+      readme_functions+="  * [**${line_function}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path})${line_usage}\n";
 
     done < <(grep -a "^alias.*=\|^function .*()" "${file}");
 
