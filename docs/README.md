@@ -4,10 +4,16 @@
  * The 'android_development_shell_tools' is a project meant to provide
    <br />
    multiple advanced functions and shortcuts to ease Android development
-   <br />
+
  * The sources written and shared here are either meant to be used as they are,
    <br />
    or to serve as a reference for commands and functions an Android developer needs
+
+ * Scripts flagged "Standalone Import Ready" and starting with *`source <(curl -Ls...`*
+   <br />
+   are able to be directly sourced through the provided commands in any terminal
+   <br />
+   without the need of this project being synced locally or loaded in a root context
 
 <br />
 
@@ -103,7 +109,7 @@
   * [**adbstf** *<b>[Followed strace]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc) : *adbstf &lt;process_name&gt; [bool_get_root]*
 
 ---
-### [ Documentation from [android_adb_flash.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_flash.rc)  - Ready for standalone import ]
+### [ Documentation from [android_adb_flash.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_flash.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
@@ -188,7 +194,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitfar** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_fetch.rc) : *gitfetchtreset $(githubusername)*
 
 ---
-### [ Documentation from [android_gerrit.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerrit.rc)  - Ready for standalone import ]
+### [ Documentation from [android_gerrit.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerrit.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_gerrit.rc)
   ```
@@ -226,7 +232,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitprdtwrp** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerrit.rc) : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . drafts android-6.0*
 
 ---
-### [ Documentation from [android_gerritssh.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerritssh.rc)  - Ready for standalone import ]
+### [ Documentation from [android_gerritssh.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerritssh.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_gerritssh.rc)
   ```
@@ -349,7 +355,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gcmodules** *<b>[List all LOCAL_MODULE elements]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gcmodules*
 
 ---
-### [ Documentation from [android_kernel_builders.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)  - Ready for standalone import ]
+### [ Documentation from [android_kernel_builders.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_builders.rc)
   ```
@@ -357,7 +363,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**mkcopyleft** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *mkcopyleft [device_name_to_init] [msm*-perf_to_use]*
 
 ---
-### [ Documentation from [android_kernel_defconfig.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_defconfig.rc)  - Ready for standalone import ]
+### [ Documentation from [android_kernel_defconfig.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_defconfig.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_defconfig.rc)
   ```
@@ -562,7 +568,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitcpaicp** *<b>[Automated upstream to AICP device merger]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aicp.rc) : *gitcpaicp*
 
 ---
-### [ Documentation from [android_rom_aosp_sony8960.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sony8960.rc)  - Ready for standalone import ]
+### [ Documentation from [android_rom_aosp_sony8960.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sony8960.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
@@ -573,7 +579,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**aosp8960masterpatcher** *<b>[AOSP 8960 Master Patcher]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sony8960.rc) : *aosp8960masterpatcher [specific_paths]*
 
 ---
-### [ Documentation from [android_rom_aosp_sonyaosp.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sonyaosp.rc)  - Ready for standalone import ]
+### [ Documentation from [android_rom_aosp_sonyaosp.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sonyaosp.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
@@ -583,7 +589,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**aospsonyrebaser** *<b>[AOSP SONY SODP Rebaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aosp_sonyaosp.rc) : *aospsonyrebaser [specific_paths]*
 
 ---
-### [ Documentation from [android_rom_aospcaf.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc)  - Ready for standalone import ]
+### [ Documentation from [android_rom_aospcaf.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
@@ -592,7 +598,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**aospcafpatcher** *<b>[AOSP-CAF Patcher]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc) : *aospcafpatcher [specific_paths]*
 
 ---
-### [ Documentation from [android_rom_legacyxperia.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_legacyxperia.rc)  - Ready for standalone import ]
+### [ Documentation from [android_rom_legacyxperia.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_legacyxperia.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_defconfig.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_legacyxperia.rc)
@@ -602,7 +608,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lxdefconfig** *<b>[Edit all lx defconfigs]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_legacyxperia.rc) : *lxdefconfig*
 
 ---
-### [ Documentation from [android_rom_lineageos.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc)  - Ready for standalone import ]
+### [ Documentation from [android_rom_lineageos.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
@@ -613,7 +619,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lineagewebjekyll** *<b>[Jekyll web helper]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc) : *lineagewebjekyll [bool_install]*
 
 ---
-### [ Documentation from [android_rom_lineageos_sony8996.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos_sony8996.rc)  - Ready for standalone import ]
+### [ Documentation from [android_rom_lineageos_sony8996.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos_sony8996.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
@@ -622,7 +628,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lineage8996patcher** *<b>[LineageOS Sony 8996 Patcher]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos_sony8996.rc) : *lineage8996patcher [specific_paths]*
 
 ---
-### [ Documentation from [android_rom_lineageos_sonysodp.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos_sonysodp.rc)  - Ready for standalone import ]
+### [ Documentation from [android_rom_lineageos_sonysodp.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos_sonysodp.rc)  - Standalone Import Ready ]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)

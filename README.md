@@ -4,10 +4,16 @@
  * The 'android_development_shell_tools' is a project meant to provide
    <br />
    multiple advanced functions and shortcuts to ease Android development
-   <br />
+
  * The sources written and shared here are either meant to be used as they are,
    <br />
    or to serve as a reference for commands and functions an Android developer needs
+
+ * Scripts flagged "Standalone Import Ready" and starting with *`source <(curl -Ls...`*
+   <br />
+   are able to be directly sourced through the provided commands in any terminal
+   <br />
+   without the need of this project being synced locally or loaded in a root context
 
 
 ### [ Automated functions documentation ]
