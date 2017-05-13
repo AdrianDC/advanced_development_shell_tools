@@ -173,8 +173,6 @@ function cdtwrp()       { cd $(totwrp); }
 
 # === Private Shortcuts ===
 function cdand()        { cd $(getand); }
-function getshtools()   { echo ${android_development_shell_tools_dir}; }
-function cdshtools()    { cd $(getshtools); }
 function cddesk()       { cd "$(xdg-user-dir DESKTOP)"; }
 function cddev()        { cd $(getand)/Development/${1}; }
 function cddevaosp()    { cd $(getand)/Development/aosp_*${1}; }
