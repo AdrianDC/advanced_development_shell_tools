@@ -24,7 +24,26 @@ footer {
 }
 
 @media print, screen and (max-width: 960px) {
+  header {
+    width:auto;
+    padding-right:0px;
+  }
   section {
     margin-left:0px;
+  }
+  footer {
+    width:auto;
+  }
+}
+
+@media print, screen and (max-width: 720px) {
+  body {
+    padding: 25px;
+  }
+}
+
+@media print, screen and (max-width: 480px) {
+  body {
+    padding: 6px;
   }
 }
