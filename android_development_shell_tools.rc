@@ -290,7 +290,7 @@ function shtoolsreadme()
     fi;
 
     # Create source section
-    readme_functions+="### \[ Documentation from [${path}](${github_project_url}\/${github_file_path}\/${path})${line_standalone:+  - Standalone Import Ready} \]\n";
+    readme_functions+="### \[\&nbsp;Documentation: [${path}](${github_project_url}\/${github_file_path}\/${path})${line_standalone:+  - Standalone Import Ready}\&nbsp;\]\n";
 
     # Inject standalone import script
     if [ ! -z "${line_standalone}" ]; then
