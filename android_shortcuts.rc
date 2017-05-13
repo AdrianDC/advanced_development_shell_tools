@@ -20,7 +20,7 @@ function cdd()
   # Path generation
   local path=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/*\/*${content}*/g");
   for path_item in ${path}; do
-    if [ -d "${path_item}" ] && [[ ! "${path_item}" =~ 'generic' ]]; then
+    if [ -d "${path_item}" ] && [[ ! "${path_item}" =~ 'generic' ]] && [[ ! "${path_item}" =~ '/qcom/' ]]; then
       path="${path_item}";
       break;
     fi;
