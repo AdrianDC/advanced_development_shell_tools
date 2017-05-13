@@ -13,7 +13,7 @@ function fboota()
   # Usage
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] || [ -z "${TARGET_PRODUCT}" ]; then
     echo '';
-    echo ' Usage: fboota [unsecure,sep,full,init,inject,recovery,fastupl,zip]';
+    echo ' Usage: fboota [fastupl,flash,full,init,inject,recovery,sep,unsecure,zip]';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -26,18 +26,20 @@ function fboota()
   local params=${1};
   local tmpfile=$(mktemp);
   local imagename='boot';
+  local jobs=$(grep -c ^processor /proc/cpuinfo);
 
   # Build environment
   croot;
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
 
-  # Header & root holder
+  # Header
   echo '';
-  echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016 ]\e[0m';
+  echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016-2017 ]\e[0m';
   echo '';
-  if [[ ! "${params}" =~ 'noflash' ]] && [[ ! "${params}" =~ 'fastupl' ]] && \
-      [[ ! "${params}" =~ 'zip' ]]; then
+
+  # Root holder for fastboot flash
+  if [[ "${params}" =~ 'flash' ]]; then
     sudo printf '';
   fi;
 
@@ -65,9 +67,9 @@ function fboota()
   # Sepolicies builder
   if [[ "${params}" =~ 'sep' ]]; then
     if [ -d ./system/sepolicy ]; then
-      mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./system/sepolicy/;
+      mmm -B -j${jobs} ./system/sepolicy/;
     else
-      mmm -B -j$(grep -c ^processor /proc/cpuinfo) ./external/sepolicy/;
+      mmm -B -j${jobs} ./external/sepolicy/;
     fi;
   fi;
 
@@ -93,7 +95,7 @@ function fboota()
     if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
       mms bootimage | tee ${tmpfile};
     else
-      make -j$(grep -c ^processor /proc/cpuinfo) bootimage | tee ${tmpfile};
+      make -j{jobs} bootimage | tee ${tmpfile};
     fi;
 
   # Recoveryimage builder
@@ -103,7 +105,7 @@ function fboota()
     if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
       mms recoveryimage | tee ${tmpfile};
     else
-      make -j$(grep -c ^processor /proc/cpuinfo) recoveryimage | tee ${tmpfile};
+      make -j{jobs} recoveryimage | tee ${tmpfile};
     fi;
 
   fi;
@@ -135,7 +137,7 @@ function fboota()
     fastupl "${bootimg}" 'bootimage';
 
   # Flash the bootimage to the device
-  elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
+  elif [[ "${params}" =~ 'flash' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
 
     # Detect modules
     local modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
