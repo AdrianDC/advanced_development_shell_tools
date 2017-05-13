@@ -48,6 +48,7 @@
   * [**shtoolssync** *<b>\[Download new android_development_shell_tools changes\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolspush** *<b>\[Commit new changes to android_development_shell_tools\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsamend** *<b>\[Amend new changes to android_development_shell_tools\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
+  * [**shtools** *<b>\[Entrypoint menu to android_development_shell_tools\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsdiff** *<b>\[Compare with upstream android_development_shell_tools\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolslog** *<b>\[Display android_development_shell_tools history\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsreset** *<b>\[Reset project to remote HEAD\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
