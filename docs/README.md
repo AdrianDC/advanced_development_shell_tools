@@ -410,14 +410,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_kernel_helpers.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc)&nbsp;]
   * [**makekernelinjector** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makekernelinjector &lt;device_name&gt;*
-  * [**doradefconf** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makedefconf msm-perf dora common*
-  * [**doracopyleft** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *mkcopyleft dora*
-  * [**doraaospdefconf** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makedefconf aosp_tone_dora_defconfig*
-  * [**doraaospkernel** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makekernel tone_dora*
-  * [**dorazipkernel** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .*
-  * [**sonykernelrebase** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa*
-  * [**kaguradefconf** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makedefconf msm-perf kagura common*
-  * [**sonyaospkernelupdate** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *sonyaospkernelupdate &lt;device_name&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_kernel_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc)  - Standalone Import Ready&nbsp;]
@@ -758,6 +750,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * [**aospsonysodppatcher** *<b>\[AOSP SONY SODP Patcher\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc) : *aospsonysodppatcher [specific_paths]*
   * [**aospsonysodprebaser** *<b>\[AOSP SONY SODP Rebaser\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc) : *aospsonysodprebaser [specific_paths]*
+  * [**sonyaospkernelupdate** *<b>\[Automated Sony SODP kernel updater for AOSP\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc) : *sonyaospkernelupdate &lt;device_name&gt;*
 
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_lineageos_sony8996.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sony8996.rc)  - Standalone Import Ready&nbsp;]
@@ -777,6 +770,13 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * [**lineagesonysodppatcher** *<b>\[LineageOS SONY SODP Patcher\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc) : *lineagesonysodppatcher [specific_paths]*
   * [**lineagesonysodprebaser** *<b>\[LineageOS SONY SODP Rebaser\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc) : *lineagesonysodprebaser [specific_paths]*
+
+---
+### [&nbsp;Documentation: [extensions/sony_msm8996/android_shortcuts.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc)&nbsp;]
+  * [**sonysodpkernelrebase** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa*
+  * [**doradefconf** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *makedefconf msm-perf dora common*
+  * [**dorazipkernel** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .*
+  * [**kaguradefconf** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *makedefconf msm-perf kagura common*
 
 ---
 ### [&nbsp;Documentation: [extensions/template/android_template.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/template/android_template.rc)&nbsp;]

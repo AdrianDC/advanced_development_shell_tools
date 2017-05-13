@@ -35,3 +35,52 @@ function aospsonysodprebaser()
     vendor/sony::::master
     ' "${*}";
 }
+
+# === Sony AOSP Kernel Updater ===
+function sonyaospkernelupdate()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: sonyaospkernelupdate <device_name> (Automated Sony SODP kernel updater for AOSP)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local device_name="${1}";
+
+  # Build environment
+  while [ ! -e './build/envsetup.sh' ]; do
+    cd ../;
+  done;
+  source ./build/envsetup.sh;
+
+  # Abort if common-kernel missing
+  if [ ! -d "./device/sony/common-kernel" ]; then
+    echo '';
+    echo ' Error: common-kernel not found, prebuilt kernel not needed';
+    echo '';
+    return;
+  fi;
+
+  # Delete previous kernel images
+  rm -fv ./device/sony/common-kernel/kernel-dtb-${device_name};
+  rm -fv ./kernel/sony/msm/out/arch/arm64/boot/Image.gz-dtb;
+
+  # Access kernel sources
+  cd ./kernel/sony/msm/;
+
+  # Compile kernel
+  makekernel "${device_name}";
+
+  # Copy prebuilt kernel
+  croot;
+  cp -v ./kernel/sony/msm/out/arch/arm64/boot/Image.gz-dtb ./device/sony/common-kernel/kernel-dtb-${device_name};
+
+  # Commit prebuilt kernel
+  cd ./device/sony/common-kernel/;
+  git add -v kernel-dtb-${device_name};
+  git commit --no-edit -m "sony: ${device_name}: Update prebuilt kernel";
+  croot;
+}

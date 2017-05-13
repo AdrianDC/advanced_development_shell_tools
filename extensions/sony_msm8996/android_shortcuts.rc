@@ -1,0 +1,14 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Xperia SODP Kernel Shortcuts ===
+alias sonysodpkernelrebase='git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa';
+
+# === Xperia X Performance Kernel Shortcuts ===
+alias doradefconf='makedefconf msm-perf dora common';
+alias dorazipkernel='kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .';
+
+# === Xperia XZ Kernel Shortcuts ===
+alias kaguradefconf='makedefconf msm-perf kagura common';
