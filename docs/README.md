@@ -416,7 +416,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**sonyaospkernelupdate** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *sonyaospkernelupdate &lt;device_name&gt;*
 
 ---
-### [ Documentation from [android_kernel_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) ]
+### [ Documentation from [android_kernel_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc)  - Standalone Import Ready ]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_tools.rc)
+  ```
   * [**fboota** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *fboota [fastupl,flash,full,init,inject,recovery,sep,unsecure,zip]*
   * [**fboot** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *fboot &lt;bootimage&gt;*
   * [**fboots** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *fboots &lt;system_img&gt;*
