@@ -26,6 +26,9 @@ android_development_shell_tools_sources=(
   $(find ${android_development_shell_tools_dir} -maxdepth 1 -type f -name '*.rc' -not -path "${android_development_shell_tools_entrypoint}" | sort)
   $(find ${android_development_shell_tools_extensions} -maxdepth 2 -type f -name '*.rc' | sort)
 );
+android_development_shell_tools_scripts=(
+  $(find ${android_development_shell_tools_dir} -maxdepth 1 -type f -name '*.sh' | sort)
+);
 
 # === Android Shell Tools Importations ===
 for file_source in ${android_development_shell_tools_sources[@]}; do
@@ -216,7 +219,7 @@ function shtoolsreadme()
   shtoolsup;
 
   # Read all sources
-  for file in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[@]}; do
+  for file in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[@]} ${android_development_shell_tools_scripts[@]}; do
 
     # Handle file path
     path=${file##${android_development_shell_tools_dir}/};
@@ -224,6 +227,11 @@ function shtoolsreadme()
 
     # Detect standalone ready scripts
     line_standalone=$(grep -a '^# source <(curl -Ls' "${file}");
+
+    # Detect .sh executable scripts
+    if [ "${path: -3}" = '.sh' ]; then
+      line_standalone=${github_project_url//\\\//\/}/${path};
+    fi;
 
     # Create source section
     readme_functions+="### \[ Documentation from [${path}](${github_project_url}\/${github_file_path}\/${path})${line_standalone:+  - Standalone Import Ready} \]\n";
@@ -237,6 +245,44 @@ function shtoolsreadme()
         readme_functions+="source \<\(curl -Ls ${url//\//\\\/}\)\n";
       done;
       readme_functions+="  \`\`\`\n";
+    fi;
+
+    # Handle shell scripts content
+    if [ "${path: -3}" = '.sh' ]; then
+
+      # Parse shell script usage
+      line_function=${path#*\/};
+      line_function=${line_function%.sh};
+      line_usage=$(grep -a "Usage: ${line_function}" "${file}");
+
+      # Warning about missing usages
+      if [ -z "${line_usage}" ]; then
+        echo '';
+        echo " ${path}: ERROR: '${line_function}.sh' has no usage";
+        echo '';
+       return;
+      fi;
+
+      # Parse usage and summary details
+      line_summary=${line_usage#*\(};
+      line_summary=${line_summary%\)*};
+      line_usage=${line_usage/ \(*\)/};
+
+      # Apply summary styling
+      line_summary="<b>\\\[${line_summary}\\\]<\\/b>";
+
+      # Apply usage styling
+      line_usage=" : *${line_usage}*";
+
+      # Append function details
+      readme_functions+="  * [**\\\.\/${line_function}\\\.sh** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path//./\\\.})${line_usage}\n";
+
+      # Sections separation
+      readme_functions+="\n---\n";
+
+      # Continue with the next file
+      continue;
+
     fi;
 
     # Handle source contents
@@ -312,7 +358,7 @@ function shtoolsreadme()
           line_usage=${line_usage/-SUMMARY-*-SUMMARY-/};
 
           # Apply summary styling
-          line_summary="<b>\[${line_summary}\]<\/b>";
+          line_summary="<b>\\\[${line_summary}\\\]<\/b>";
         fi;
 
         # Apply usage styling

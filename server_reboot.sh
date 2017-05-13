@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Usage: server_reboot.sh (Server crontab script to reboot when not building)
+
 # Handle username
 if [ ! -z "${1}" ]; then
   echo 'Loading .bashrc';

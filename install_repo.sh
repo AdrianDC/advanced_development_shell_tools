@@ -1,6 +1,8 @@
 #!/bin/bash
 TimeStart=$(date +%s);
 
+# Usage: install_repo.sh (Automated install of Android repo requirements)
+
 # Introduction
 echo '';
 echo '';
