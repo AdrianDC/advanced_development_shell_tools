@@ -317,7 +317,10 @@ function shtoolsreadme()
 
       # Warning about missing usages
       else
-        echo " ${path}: ${line_type} '${line_function}' has no usage";
+        echo '';
+        echo " ${path}: ERROR: ${line_type} '${line_function}' has no usage";
+        echo '';
+        return;
       fi;
 
       # Append function details
