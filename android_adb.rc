@@ -169,13 +169,7 @@ function adbco()
 # === ADB File Editor ===
 function adbedit()
 {
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: adbedit [file_path] (Edit adb file, default on /system/build.prop)';
-    echo '';
-    return;
-  fi;
+  # Usage: adbedit [file_path] (Edit adb file, default on /system/build.prop)
 
   # Edit adb file, default on /system/build.prop
   adbro;
