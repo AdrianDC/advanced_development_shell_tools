@@ -45,11 +45,17 @@ function croot()
 # === Repo Environment Starter for LineageOS ===
 function repos()
 {
-  # Usage: repos [device_name] (Prepare LineageOS device environment)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: repos <device_name> (Prepare LineageOS device environment)';
+    echo '';
+    return;
+  fi;
 
   # Variables
   local currentdir=${PWD};
-  local device=${1:-huashan};
+  local device=${1};
 
   # Repo root, sources and breakfast
   croot;
@@ -68,13 +74,19 @@ function repos()
 # === Repo Environment Starter for AOSP ===
 function reposaosp()
 {
-  # Usage: reposaosp [device_name] (Prepare AOSP device environment)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: reposaosp <device_name> (Prepare AOSP device environment)';
+    echo '';
+    return;
+  fi;
 
   # Prepare AOSP device environment
   local currentdir=${PWD};
   croot;
   if [ -f ./build/envsetup.sh ]; then
-    local device=${1:-huashan};
+    local device=${1};
     local target=$(codenametotarget "${device}");
     source ./build/envsetup.sh; croot;
     lunch aosp_${target}-userdebug;

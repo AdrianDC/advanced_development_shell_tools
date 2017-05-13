@@ -6,15 +6,18 @@
 # === Device Shortcuts ===
 function cdd()
 {
-  # Usage: cdd [device_name] (Access device sources)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: cdd <device_name> (Access device sources)';
+    echo '';
+    return;
+  fi;
 
   # Shortcut
   local content="${1}";
   if [ -z "${content}" ]; then
     content=$(repogetdevice);
-  fi;
-  if [ -z "${content}" ]; then
-    content='huashan';
   fi;
 
   # Path generation
@@ -49,10 +52,16 @@ function cdman()
 # === Repo Out Access ===
 function toout()
 {
-  # Usage: toout [device_name] (Get device build output path)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: toout <device_name> (Get device build output path)';
+    echo '';
+    return;
+  fi;
 
   # Variables
-  local device="${1:-huashan}";
+  local device="${1}";
 
   # Get out target path
   local outtargetpath=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/out\/target\/product/g");
@@ -164,7 +173,6 @@ function cdtwrp()       { cd $(totwrp); }
 
 # === Private Shortcuts ===
 function cdand()        { cd $(getand); }
-function cda()          { cdlineage huashan; }
 function getshtools()   { echo ${android_development_shell_tools_dir}; }
 function cdshtools()    { cd $(getshtools); }
 function cddesk()       { cd "$(xdg-user-dir DESKTOP)"; }

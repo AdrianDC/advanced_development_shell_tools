@@ -543,8 +543,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [ Documentation from [android_repo_helpers.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) ]
   * [**gettop** *<b>[Get repo root path]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *gettop*
   * [**croot** *<b>[Access repo root path]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *croot*
-  * [**repos** *<b>[Prepare LineageOS device environment]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *repos [device_name]*
-  * [**reposaosp** *<b>[Prepare AOSP device environment]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *reposaosp [device_name]*
+  * [**repos** *<b>[Prepare LineageOS device environment]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *repos &lt;device_name&gt;*
+  * [**reposaosp** *<b>[Prepare AOSP device environment]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *reposaosp &lt;device_name&gt;*
   * [**reporoomserv** *<b>[Manifest and local_manifests editor]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *reporoomserv*
   * [**reposy** *<b>[Optimized relevant repo sync]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *reposy*
   * [**reposysafe** *<b>[Safeguarded repo projects sync]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *reposysafe*
@@ -650,9 +650,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [ Documentation from [android_shortcuts.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) ]
-  * [**cdd** *<b>[Access device sources]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cdd [device_name]*
+  * [**cdd** *<b>[Access device sources]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cdd &lt;device_name&gt;*
   * [**cdman** *<b>[Access manifests path]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cdman*
-  * [**toout** *<b>[Get device build output path]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *toout [device_name]*
+  * [**toout** *<b>[Get device build output path]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *toout &lt;device_name&gt;*
   * [**cdout** *<b>[Access device build output path]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cdout [device_name]*
   * [**getand** *<b>[Get AndroidDev drive]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *getand*
   * [**torompaths** *<b>[Get ROM device variant path]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *torompaths &lt;rom_name&gt; [device]*
@@ -670,7 +670,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdrr** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd $(torr ${1})*
   * [**cdtwrp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd $(totwrp)*
   * [**cdand** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd $(getand)*
-  * [**cda** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cdlineage huashan*
   * [**getshtools** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *echo ${android_development_shell_tools_dir}*
   * [**cdshtools** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd $(getshtools)*
   * [**cddesk** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(xdg-user-dir DESKTOP)"*
