@@ -50,6 +50,24 @@ export android_development_shell_tools_updater_install_system=${android_developm
 export android_development_shell_tools_updater_kernel_injector=${android_development_shell_tools_dir}/android_files/updater_script_kernel_injector;
 export android_development_shell_tools_updater_multirom_secondary=${android_development_shell_tools_dir}/android_files/updater_script_multirom_secondary;
 
+# === Android Shell Tools Path Getter ===
+function shtoolsget()
+{
+  # Usage: shtoolsget (Get android_development_shell_tools path)
+
+  # Get android_development_shell_tools path
+  echo ${android_development_shell_tools_dir};
+}
+
+# === Android Shell Tools Path Access ===
+function shtoolscd()
+{
+  # Usage: shtoolscd (Access android_development_shell_tools path)
+
+  # Access android_development_shell_tools path
+  cd $(shtoolsget);
+}
+
 # === Android Shell Tools Functions Editor ===
 function shtoolse()
 {
