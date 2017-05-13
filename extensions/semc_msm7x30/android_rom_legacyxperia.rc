@@ -5,12 +5,12 @@
 
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_defconfig.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_legacyxperia.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/semc_msm7x30/android_rom_legacyxperia.rc)
 
 # === LineageOS Commits Patcher for LegacyXperia ===
 function lineagelxpatcher()
 {
-  # Usage: lineagelxpatcher [local_manifests_branch]
+  # Usage: lineagelxpatcher [local_manifests_branch] (LineageOS LegacyXperia Patcher)
 
   # Build environment
   while [ ! -e './build/envsetup.sh' ]; do
@@ -57,7 +57,7 @@ function lxrepopick()
   # Usage
   if [ -z "${1}" ] || [ ! -z "${2}" ]; then
     echo '';
-    echo ' Usage: lxrepopick <commit_id>';
+    echo ' Usage: lxrepopick <commit_id> (LineageOS LegacyXperia repopick tool)';
     echo '';
     return;
   fi;

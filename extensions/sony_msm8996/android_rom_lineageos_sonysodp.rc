@@ -6,21 +6,21 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_lineageos_sonysodp.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc)
 
-# === LineageOS SODP Patcher ===
-function lineagesodppatcher()
+# === LineageOS Sony SODP Patcher ===
+function lineagesonysodppatcher()
 {
-  # Usage: lineagesodppatcher [specific_paths] (LineageOS SONY SODP Patcher)
+  # Usage: lineagesonysodppatcher [specific_paths] (LineageOS SONY SODP Patcher)
 
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'lineage_development_sonyaosp' 'lineageos_sony' '' "${*}";
 }
 
-# === LineageOS SODP Rebaser ===
-function lineagesodprebaser()
+# === LineageOS Sony SODP Rebaser ===
+function lineagesonysodprebaser()
 {
-  # Usage: lineagesodprebaser [specific_paths] (LineageOS SONY SODP Rebaser)
+  # Usage: lineagesonysodprebaser [specific_paths] (LineageOS SONY SODP Rebaser)
 
   # Use the androidprojectrebaser helper
   androidprojectrebaser 'sonyxperiadev' 'cm-14.1' '

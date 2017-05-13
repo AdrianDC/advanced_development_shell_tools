@@ -6,21 +6,21 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aosp_sonyaosp.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)
 
-# === AOSP Sony Patcher ===
-function aospsonypatcher()
+# === AOSP Sony SODP Patcher ===
+function aospsonysodppatcher()
 {
-  # Usage: aospsonypatcher [specific_paths] (AOSP SONY SODP Patcher)
+  # Usage: aospsonysodppatcher [specific_paths] (AOSP SONY SODP Patcher)
 
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'aosp_development_sonyaosp' 'aosp_sonyaosp' '' "${*}";
 }
 
-# === AOSP Sony Rebaser ===
-function aospsonyrebaser()
+# === AOSP Sony SODP Rebaser ===
+function aospsonysodprebaser()
 {
-  # Usage: aospsonyrebaser [specific_paths] (AOSP SONY SODP Rebaser)
+  # Usage: aospsonysodprebaser [specific_paths] (AOSP SONY SODP Rebaser)
 
   # Use the androidprojectrebaser helper
   androidprojectrebaser 'sodp' '' '

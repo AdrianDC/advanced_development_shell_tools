@@ -1,4 +1,10 @@
 *
 !.gitignore
+!semc_msm7x30
+!semc_msm7x30/*
+!sony_msm8960
+!sony_msm8960/*
+!sony_msm8996
+!sony_msm8996/*
 !template
 !template/*
