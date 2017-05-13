@@ -3,27 +3,23 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === ADB Binaries Updater ===
-function adbupdate()
+# === ADB Database Opened ===
+function adbdatabase()
 {
-  # Usage: adbupdate (adb binary update from upstream)
-
-  # Check adb version
-  adb version;
-
-  # Detect built ROM's adb
-  if [ -f ./out/host/linux-x86/bin/adb ]; then
-    sudo rm -f /usr/bin/adb;
-    sudo cp ./out/host/linux-x86/bin/adb /usr/bin/adb;
-  else
-    sudo rm -f /usr/bin/adb;
-    wget -O - https://skia.googlesource.com/skia/+archive/cd048d18e0b81338c1a04b9749a00444597df394/platform_tools/android/bin/linux.tar.gz | tar -zxvf - adb;
-    sudo mv adb /usr/bin/adb;
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbdatabase </data/.../sqlite.db>';
+    echo '';
+    return;
   fi;
 
-  # Update permissions and check adb version
-  sudo chmod +x /usr/bin/adb;
-  adb version;
+  # Pull and open
+  adbro;
+  local path="${1}";
+  local name=$(basename "${path}");
+  adb pull "${path}";
+  sqlite3 "${name}";
 }
 
 # === Sepolicies Extractor ===
@@ -49,6 +45,24 @@ alias adbcamera='adb shell pm enable com.android.camera2/com.android.camera.Came
                  adb shell pm enable com.google.android.GoogleCamera/com.android.camera.CameraLauncher; \
                  adb shell "am start -a android.media.action.IMAGE_CAPTURE"';
 alias adblkl='adb root; adb wait-for-device; adb shell killall zigote; adbl';
+
+# === ADB Kill Process ===
+function adbkp()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbkp <process_name> (Kill process by name)';
+    echo '';
+    return;
+  fi;
+
+  # Kill process by name
+  adb 'wait-for-device'; adb root; adb 'wait-for-device';
+  adb shell ps | grep ${1};
+  pid=$(adb shell ps | grep ${1} | awk '{ print $2 }');
+  adb shell kill ${pid};
+}
 
 # === ADB Crash Debuggers ===
 function adbpk()
@@ -123,16 +137,6 @@ function adbpropradiolog()
   printf " ${cmd} > ";
   ${cmd};
   echo '';
-}
-
-# === ADB Root Stock ===
-function adbrstock()
-{
-  # Usage: adbrstock (Stock ROM adb root access)
-
-  # Stock ROM adb root access
-  adb shell su -c 'setprop ro.secure 0; setprop ro.debuggable 1; setprop persist.service.adb.enable 1';
-  adb shell getprop ro.secure;
 }
 
 # === ADB Alsa Reader ===

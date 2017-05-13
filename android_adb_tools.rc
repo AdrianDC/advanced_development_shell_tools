@@ -3,6 +3,69 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
+
+# === ADB Screenshot ===
+function adbscr()
+{
+  # Usage: adbscr (Take a screenshot from connected device)
+
+  # Take a screenshot from connected device
+  mkdir -p ./screenshots;
+  adb shell screencap /sdcard/screenshot.png;
+  adb pull /sdcard/screenshot.png ./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png;
+}
+
+# === ADB Root Mounter ===
+function adbr()
+{
+  # Usage: adbr (adb root and remount rw system)
+
+  # Get root access and rw system
+  timeout 5 adb ${1} 'wait-for-device';
+  timeout 5 adb ${1} root; sleep 2;
+  timeout 5 adb ${1} 'wait-for-device';
+  timeout 5 adb ${1} remount; sleep 1;
+  timeout 5 adb ${1} 'wait-for-device';
+}
+
+# === ADB Root Checked Mounter ===
+function adbro()
+{
+  # Usage: adbro (Verified adb root and remount rw system)
+
+  # Get root access
+  local rootaccess=$(adb shell whoami);
+  if [ "${rootaccess:0:4}" != 'root' ] && [ "${rootaccess:16:5}" != 'uid 0' ]; then
+    timeout 5 adb ${1} 'wait-for-device';
+    timeout 5 adb ${1} root; sleep 2;
+    timeout 5 adb ${1} 'wait-for-device';
+  fi;
+
+  # Get rw system
+  local systemmount=$(adb shell mount | grep system);
+  local systemacess=$(echo "${systemmount}" | grep rw);
+  if [ ! -z "${systemmount}" ] && [ -z "${systemacess}" ]; then
+    timeout 5 adb ${1} 'wait-for-device';
+    timeout 5 adb ${1} remount; sleep 1;
+    timeout 5 adb ${1} 'wait-for-device';
+  fi;
+}
+
+# === ADB Root Access ===
+alias adbroot='adb kill-server; sudo adb start-server; sudo adb root; sudo adb wait-for-device; sudo adb remount';
+
+# === ADB Root Stock ===
+function adbrstock()
+{
+  # Usage: adbrstock (Stock ROM adb root access)
+
+  # Stock ROM adb root access
+  adb shell su -c 'setprop ro.secure 0; setprop ro.debuggable 1; setprop persist.service.adb.enable 1';
+  adb shell getprop ro.secure;
+}
+
 # === ADB Shell Root ===
 function adbsu()
 {
@@ -21,4 +84,89 @@ function adbsu()
   else
     adb shell su -c "${@}";
   fi;
+}
+
+# === ADB IP Connector ===
+function adbco()
+{
+  # Relaunch handling
+  echo '';
+  if [ ! -z "${1}" ]; then
+    export ADB_IP_ADDRESS="${1}";
+  fi;
+
+  # Usage
+  if [ -z "${ADB_IP_ADDRESS}" ]; then
+    echo '';
+    echo ' Usage: adbco [ipaddress_once] (Helper for adb network access)';
+    echo '';
+    return;
+  fi;
+
+  # Connect and acquire adb root access
+  export ADB_IP_PORT='5555';
+  echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
+  timeout 5 adb connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
+  echo -e '\e[1;36mConnected...\e[0m';
+  timeout 5 adb 'wait-for-device';
+  echo -e '\e[1;36mGetting root access...\e[0m';
+  timeout 5 adb root;
+  sleep 2;
+  echo -e '\e[1;36mReconnecting...\e[0m';
+  timeout 5 adb connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
+  echo -e '\e[1;36mConnected...\e[0m';
+  timeout 5 adb 'wait-for-device';
+  echo -e '\e[1;36mMounting as root...\e[0m';
+  timeout 5 adb remount;
+  sleep 1;
+  timeout 5 adb 'wait-for-device';
+  echo -e '\e[1;36mReady...\e[0m';
+  echo '';
+}
+
+# === ADB File Editor ===
+function adbedit()
+{
+  # Usage: adbedit [file_path] (Edit adb file, default on /system/build.prop)
+
+  # Edit adb file, default on /system/build.prop
+  adbro;
+  local path="${1:-/system/build.prop}";
+  local name=$(basename "${path}");
+  adb pull "${path}";
+  gedit "${name}";
+  printf ' Ok ? [ENTER] ';
+  read key;
+  adb push "${name}" "${path}";
+  rm "${name}";
+}
+
+# === ADB Inputs Reader ===
+function adbinputs()
+{
+  # Usage: adbinputs (Dump all input devices)
+
+  #grep . /sys/class/input/event*/device/name
+  #adbs hexdump -C /dev/input/event7
+  command='cat /proc/bus/input/devices';
+  echo '';
+  echo "adb shell ${command}";
+  echo '';
+  adb shell "${command}";
+}
+
+# === ADB Events Reader ===
+function adbreadevents()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbreadevents <event_number> (Read input events)';
+    echo '';
+    return;
+  fi;
+
+  # Read input events
+  adb shell od -x /dev/input/${1} \
+   | awk -Wposix '{ if ($7) printf(" Key %4d - State %4d\n", "0x" $7, "0x" $8) }';
 }
