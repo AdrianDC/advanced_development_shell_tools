@@ -167,18 +167,27 @@ function shtoolsreset()
   git diff --stat HEAD;
 }
 
-# === Android Shell Tools Reset ===
-function shtoolsdev()
+# === Android Shell Tools Master ===
+function shtoolsmaster()
 {
-  # Usage: shtoolsdev [bool_master] (Switch android_development_shell_tools branches)
+  # Usage: shtoolsmaster (Switch android_development_shell_tools to master branch)
 
-  # Switch android_development_shell_tools branches
+  # Switch android_development_shell_tools to master branch
   local branch=${android_development_shell_tools_branch};
-  if [ -z "${1}" ]; then
-    android_development_shell_tools_branch='staging';
-  else
-    android_development_shell_tools_branch='master';
-  fi;
+  android_development_shell_tools_branch=master;
+  echo '';
+  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${android_development_shell_tools_branch}' branch\e[0m";
+  echo '';
+}
+
+# === Android Shell Tools Staging ===
+function shtoolsstaging()
+{
+  # Usage: shtoolsstaging (Switch android_development_shell_tools to staging branch)
+
+  # Switch android_development_shell_tools to staging branch
+  local branch=${android_development_shell_tools_branch};
+  android_development_shell_tools_branch=staging;
   echo '';
   echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${android_development_shell_tools_branch}' branch\e[0m";
   echo '';
