@@ -316,7 +316,13 @@ function shtoolsreadme()
         fi;
 
         # Apply usage styling
-        line_usage=" : *${line_usage}*";
+        if [ ! "${line_usage}" = "${line_function}" ]; then
+          line_usage=" : *${line_usage}*";
+
+        # Ignore function usage
+        else
+          line_usage='';
+        fi;
 
       # Warning about missing usages
       else
