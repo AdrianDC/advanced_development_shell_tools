@@ -1,4 +1,9 @@
 #!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# Usage: server_reboot.sh (Server crontab script to reboot when not building)
 
 # Handle username
 if [ ! -z "${1}" ]; then
