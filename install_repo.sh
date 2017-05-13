@@ -1,4 +1,11 @@
 #!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2016
+# ======================================
+
+# Usage: install_repo.sh (Automated install of Android repo requirements)
+
+# Variables
 TimeStart=$(date +%s);
 
 # Introduction

@@ -3,6 +3,8 @@
 #   Developed by Adrian DC - 2015-2016
 # ======================================
 
+# Usage: run_cleanram.sh (RAM caches cleanup)
+
 free;
 sudo echo '';
 
