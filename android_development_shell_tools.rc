@@ -312,7 +312,7 @@ function shtoolsreadme()
           line_usage=${line_usage/-SUMMARY-*-SUMMARY-/};
 
           # Apply summary styling
-          line_summary="<b>\[${line_summary}\]<\/b>";
+          line_summary="<b>\\\[${line_summary}\\\]<\/b>";
         fi;
 
         # Apply usage styling
