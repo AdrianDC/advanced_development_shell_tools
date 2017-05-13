@@ -11,9 +11,11 @@ export android_development_shell_tools_bbootimg_host=${android_development_shell
 function fboota()
 {
   # Usage
-  if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] || [ -z "${TARGET_PRODUCT}" ]; then
+  if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] ||
+     [ -z "${TARGET_PRODUCT}" ] ||
+     [[ "${1}" =~ 'help' ]] ; then
     echo '';
-    echo ' Usage: fboota [unsecure,sep,full,init,inject,recovery,fastupl,zip]';
+    echo ' Usage: fboota [fastupl,flash,full,init,inject,recovery,sep,unsecure,zip]';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -25,19 +27,19 @@ function fboota()
   local device_common='';
   local params=${1};
   local tmpfile=$(mktemp);
-  local imagename='boot';
 
   # Build environment
   croot;
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
 
-  # Header & root holder
+  # Header
   echo '';
-  echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016 ]\e[0m';
+  echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016-2017 ]\e[0m';
   echo '';
-  if [[ ! "${params}" =~ 'noflash' ]] && [[ ! "${params}" =~ 'fastupl' ]] && \
-      [[ ! "${params}" =~ 'zip' ]]; then
+
+  # Root holder for fastboot flash
+  if [[ "${params}" =~ 'flash' ]]; then
     sudo printf '';
   fi;
 
@@ -82,33 +84,27 @@ function fboota()
   device_common=$(cat ./device/*/${device}/device.mk \
                 | grep 'inherit-product' \
                 | grep 'device' \
+                | grep -v 'gps' \
                 | sed 's/.*\(device.*\)\/[^\/]*)/\1/');
   if [ ! -z "${device_common}" ]; then
     mmm ./${device_common}/rootdir/;
   fi;
 
   # Bootimage builder
-  if [[ ! "${params}" =~ 'recovery' ]]; then
+  if [[ "${params}" =~ 'recovery' ]]; then
 
-    if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
-      mms bootimage | tee ${tmpfile};
-    else
-      make -j$(grep -c ^processor /proc/cpuinfo) bootimage | tee ${tmpfile};
-    fi;
-
-  # Recoveryimage builder
+    # Recoveryimage builder
+    local imagename='recovery';
   else
 
-    imagename='recovery';
-    if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
-      mms recoveryimage | tee ${tmpfile};
-    else
-      make -j$(grep -c ^processor /proc/cpuinfo) recoveryimage | tee ${tmpfile};
-    fi;
-
+    # Bootimage builder
+    local imagename='boot';
+  fi
+  if [[ ! "${params}" =~ 'full' ]] && $(mms -v >/dev/null 2>&1); then
+    mms ${imagename}image | tee ${tmpfile};
+  else
+    make -j$(grep -c ^processor /proc/cpuinfo) ${imagename}image | tee ${tmpfile};
   fi;
-  export USE_NINJA=;
-  export USE_SOONG_UI=;
 
   # Unsecure adb changes
   if [[ "${params}" =~ 'unsecure' ]]; then
@@ -135,7 +131,7 @@ function fboota()
     fastupl "${bootimg}" 'bootimage';
 
   # Flash the bootimage to the device
-  elif [[ ! "${params}" =~ 'noflash' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
+  elif [[ "${params}" =~ 'flash' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
 
     # Detect modules
     local modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
