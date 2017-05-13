@@ -1,0 +1,22 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === LineageOS Rebaser ===
+function lineagesony8960rebaser()
+{
+  # Usage: lineagesony8960rebaser [specific_paths] (LineageOS Devices Rebaser)
+
+  # Use the androidprojectrebaser helper
+  androidprojectrebaser 'origin' 'cm-14.1' '
+    device/sony/huashan::::
+    device/sony/blue-common::::
+    device/sony/hayabusa::::
+    device/sony/mint::::
+    device/sony/tsubasa::::
+    kernel/sony/msm8960t::::
+    kernel/sony/msm8x60::::
+    vendor/sony::::
+    ' "${1}";
+}

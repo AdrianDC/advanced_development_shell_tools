@@ -466,14 +466,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [ Documentation from [android_release_builders.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) ]
   * [**romautorelease** *<b>[Advanced automated ROM builder]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romautorelease &lt;devicename&gt; &lt;aosp/lineage/lx/caf/rr&gt; [nowipe,bringup,local,j1/j2,outclean]*
-  * [**aosp8960autorelease** *<b>[Automated AOSP 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *aosp8960autorelease [devices] [bool_nosync]*
-  * [**aospsodpautorelease** *<b>[Automated AOSP SODP releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *aospsodpautorelease [devices] [bool_nosync]*
-  * [**lineageautorelease** *<b>[Automated LineageOS 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *lineageautorelease [devices] [bool_nosync]*
-  * [**lxautorelease** *<b>[Automated RR 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *lxautorelease [devices] [bool_unpatched]*
-  * [**rrautorelease** *<b>[Automated RR 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *rrautorelease [devices] [bool_nosync]*
-  * [**mromautorelease** *<b>[Automated MultiROM releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *mromautorelease [devices]*
-  * [**twrpautorelease** *<b>[Automated TWRP releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *twrpautorelease [devices]*
-  * [**cafautorelease** *<b>[Automated AOSP-CAF 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *cafautorelease [devices]*
   * [**romlogs** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romlogs &lt;device&gt; &lt;rom&gt; [logs_count_(default_200-SUMMARY-*
 
 ---
@@ -629,7 +621,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_lineageos.rc)
   ```
   * [**lineagepatcher** *<b>[LineageOS WiP Patcher]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc) : *lineagepatcher [specific_paths]*
-  * [**lineagerebaser** *<b>[LineageOS Devices Rebaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc) : *lineagerebaser [specific_paths]*
   * [**lineagewebjekyll** *<b>[Jekyll web helper]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc) : *lineagewebjekyll [bool_install]*
 
 ---
@@ -703,11 +694,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**nout** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *xdg-open $(toout ${1})*
   * [**aospsyncall** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *reporeferencedaosp "reposy"*
   * [**lineagesyncall** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *reporeferencedlineage "reposy"*
-  * [**cdspdev** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd $(echo "$(pwd)" \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/device/sony/huashan/g')*
-  * [**cdspker** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd $(echo "$(pwd)" \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8960t/g')*
-  * [**cdblueker** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd $(echo "$(pwd)" \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8x60/g')*
-  * [**cdvendsony** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd $(echo "$(pwd)" \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/vendor/sony/g')*
-  * [**meldblue** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} ../blue-common/${1}*
   * [**meldril** *<b>[Compare device to hardware/{ril\|ril-caf}]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meldril [bool_caf]*
   * [**cdmromboot** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/extras/libbootimg/*
   * [**cdmromcore** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/extras/multirom/*
@@ -740,6 +726,35 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [ Documentation from [megatools_reload.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc) ]
   * [**meganzreload** *<b>[Reload MEGA.nz account and keys]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc) : *meganzreload*
+
+---
+### [ Documentation from [extensions/semc_7x30_adriandc/android_autorelease.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_7x30_adriandc/android_autorelease.rc) ]
+  * [**autoreleaselegacyxperia** *<b>[Automated RR 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_7x30_adriandc/android_autorelease.rc) : *autoreleaselegacyxperia [devices] [bool_unpatched]*
+
+---
+### [ Documentation from [extensions/sony_8960_adriandc/android_autorelease.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_autorelease.rc) ]
+  * [**autoreleaseaospsony8960** *<b>[Automated AOSP Sony 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_autorelease.rc) : *autoreleaseaospsony8960 [devices] [bool_nosync]*
+  * [**autoreleaselineagesony8960** *<b>[Automated LineageOS Sony 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_autorelease.rc) : *autoreleaselineagesony8960 [devices] [bool_nosync]*
+  * [**autoreleaserrsony8960** *<b>[Automated RR Sony 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_autorelease.rc) : *autoreleaserrsony8960 [devices] [bool_nosync]*
+  * [**autoreleasemromsony8960** *<b>[Automated MultiROM Sony 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_autorelease.rc) : *autoreleasemromsony8960 [devices]*
+  * [**autoreleasetwrpsony8960** *<b>[Automated TWRP Sony 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_autorelease.rc) : *autoreleasetwrpsony8960 [devices]*
+  * [**autoreleasecafsony8960** *<b>[Automated AOSP-CAF Sony 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_autorelease.rc) : *autoreleasecafsony8960 [devices]*
+
+---
+### [ Documentation from [extensions/sony_8960_adriandc/android_lineageos.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_lineageos.rc) ]
+  * [**lineagesony8960rebaser** *<b>[LineageOS Devices Rebaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_lineageos.rc) : *lineagesony8960rebaser [specific_paths]*
+
+---
+### [ Documentation from [extensions/sony_8960_adriandc/android_shortcuts.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_shortcuts.rc) ]
+  * [**cdspdev** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_shortcuts.rc) : *cd $(echo "$(pwd)" \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/device/sony/huashan/g')*
+  * [**cdspker** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_shortcuts.rc) : *cd $(echo "$(pwd)" \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8960t/g')*
+  * [**cdblueker** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_shortcuts.rc) : *cd $(echo "$(pwd)" \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8x60/g')*
+  * [**cdvendsony** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_shortcuts.rc) : *cd $(echo "$(pwd)" \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/vendor/sony/g')*
+  * [**meldblue** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8960_adriandc/android_shortcuts.rc) : *meld ./${1} ../blue-common/${1}*
+
+---
+### [ Documentation from [extensions/sony_8996_adriandc/android_autorelease.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8996_adriandc/android_autorelease.rc) ]
+  * [**autoreleaseaospsodp8996** *<b>[Automated AOSP Sony SODP 8996 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_8996_adriandc/android_autorelease.rc) : *autoreleaseaospsodp8996 [devices] [bool_nosync]*
 
 ---
 ### [ Documentation from [extensions/template/android_template.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/template/android_template.rc) ]

@@ -1,4 +1,10 @@
 *
 !.gitignore
+!semc_7x30_adriandc
+!semc_7x30_adriandc/*
+!sony_8960_adriandc
+!sony_8960_adriandc/*
+!sony_8996_adriandc
+!sony_8996_adriandc/*
 !template
 !template/*

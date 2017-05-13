@@ -1,0 +1,11 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Device Shortcuts ===
+function cdspdev()     { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/sony\/huashan/g'); }
+function cdspker()     { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8960t/g'); }
+function cdblueker()   { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8x60/g'); }
+function cdvendsony()  { cd $(echo "$(pwd)" | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/vendor\/sony/g'); }
+function meldblue()    { meld ./${1} ../blue-common/${1}; }
