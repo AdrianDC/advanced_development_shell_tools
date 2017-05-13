@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='Usage: romautorelease <devicename> {aosp/lineage/lx/caf/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv,j1/j2] (Advanced automated ROM builder)';
+  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr> [nowipe,bringup,local,j1/j2,outclean] (Advanced automated ROM builder)';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " ${function_usage}";
@@ -87,15 +87,6 @@ function romautorelease()
     bootimagedebuggable "${rom_device}" true;
   fi;
 
-  # Development build
-  if [[ "${rom_params}" =~ 'dev' ]]; then
-    rom_upload='Development';
-
-  # Private build
-  elif [[ "${rom_params}" =~ 'priv' ]]; then
-    rom_upload='.private';
-  fi;
-
   # Ignore the build
   if [[ "${rom_params}" =~ 'nobuild' ]]; then
     echo ' Cleaning skipped...';
@@ -165,8 +156,10 @@ function romautorelease()
     bootimagedebuggable "${rom_device}" false;
   fi;
 
-  # Upload the result and notify
+  # Notify build result
   pushbrom "${rom_device}" "${rom_tag}";
+
+  # Upload ROM when not local and notify upload
   if [[ ! "${rom_params}" =~ 'local' ]]; then
     if [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
       gnome-terminal -x bash -c "\
@@ -183,12 +176,8 @@ function romautorelease()
     fi;
   fi;
 
-  # Wipe product output if requested
-  if [[ "${rom_params}" =~ 'outwipe' ]]; then
-    outdevcl "${rom_device}";
-
   # Delete the product outputs
-  elif [[ "${rom_params}" =~ 'outclean' ]]; then
+  if [[ "${rom_params}" =~ 'outclean' ]]; then
     rm -rfv './out/target/product';
   fi;
 

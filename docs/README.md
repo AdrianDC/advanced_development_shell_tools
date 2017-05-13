@@ -464,7 +464,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [ Documentation from [android_release_builders.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) ]
-  * [**romautorelease** *<b>[Advanced automated ROM builder]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romautorelease &lt;devicename&gt; {aosp/lineage/lx/caf/rr} [nowipe/outclean/outwipe,bringup/dev/local/priv,j1/j2]*
+  * [**romautorelease** *<b>[Advanced automated ROM builder]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romautorelease &lt;devicename&gt; &lt;aosp/lineage/lx/caf/rr&gt; [nowipe,bringup,local,j1/j2,outclean]*
   * [**aosp8960autorelease** *<b>[Automated AOSP 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *aosp8960autorelease [devices] [bool_nosync]*
   * [**aospsodpautorelease** *<b>[Automated AOSP SODP releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *aospsodpautorelease [devices] [bool_nosync]*
   * [**lineageautorelease** *<b>[Automated LineageOS 8960 releaser]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *lineageautorelease [devices] [bool_nosync]*
