@@ -212,6 +212,9 @@ function shtoolsreadme()
   local path;
   local readme_functions='';
 
+  # Refresh files list
+  shtoolsup;
+
   # Read all sources
   for file in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[@]}; do
 
