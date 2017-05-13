@@ -7,7 +7,7 @@
 android_development_shell_tools_branch=${android_development_shell_tools_branch:-master};
 android_development_shell_tools_entrypoint=${BASH_SOURCE[0]};
 android_development_shell_tools_dir=$(dirname ${android_development_shell_tools_entrypoint});
-android_development_shell_tools_addons=${android_development_shell_tools_dir}/addons;
+android_development_shell_tools_extensions=${android_development_shell_tools_dir}/extensions;
 
 # === Android Shell Tools Update ===
 function shtoolsup()
@@ -24,7 +24,7 @@ function shtoolsup()
 # === Android Shell Tools Sources ===
 android_development_shell_tools_sources=(
   $(find ${android_development_shell_tools_dir} -maxdepth 1 -type f -name '*.rc' -not -path "${android_development_shell_tools_entrypoint}" | sort)
-  $(find ${android_development_shell_tools_addons} -maxdepth 1 -type f -name '*.rc' -not -path "${android_development_shell_tools_entrypoint}" | sort)
+  $(find ${android_development_shell_tools_extensions} -maxdepth 2 -type f -name '*.rc' | sort)
 );
 
 # === Android Shell Tools Importations ===

@@ -19,13 +19,13 @@
    <br />
    without the need of this project being synced locally or loaded in a root context
 
- * The "addons/" folder can hold self-coded scripts based on the scripts from
+ * The "extensions/" folder can hold self-coded scripts folders based on the scripts from
    <br />
    'android_development_shell_tools' and be included along the regular ones.
    <br />
-   These scripts will not be lost with 'shtoolssync' and will stay in "addons/".
+   These scripts will not be lost with 'shtoolssync' and will stay in "extensions/".
    <br />
-   *(Keeping a copy or symlinking addons scripts is recommended for safety)*
+   *(Keeping a copy or symlinking extensions scripts is recommended for safety)*
 
 
 ### [ Automated functions documentation ]
