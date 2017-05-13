@@ -33,10 +33,8 @@ android_development_shell_tools_scripts=(
 # === Android Shell Tools Importations ===
 for file_source in ${android_development_shell_tools_sources[@]}; do
 
-  # Import all android_development_shell_tools scripts except entrypoint
-  if [ ! "${file_source}" = "${android_development_shell_tools_entrypoint}" ]; then
-    source ${file_source};
-  fi;
+  # Import all android_development_shell_tools scripts
+  source ${file_source};
 
 done;
 
