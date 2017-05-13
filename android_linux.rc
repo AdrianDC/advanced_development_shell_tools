@@ -324,3 +324,6 @@ function pushbsizes()
   local message=$(du -csh ${*} | tee /dev/stderr | tr '\t' ' ');
   pushb "${message//$'\n'/\\\n}";
 }
+
+# === Done Notification Sender ===
+alias isdone='notify-send "Process execution finished !"';

@@ -3,6 +3,9 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_installers.rc)
+
 # === ADB File Pusher ===
 function adbpushfile()
 {
@@ -216,6 +219,121 @@ function adbpf()
 
 # === ADB Pushes ===
 alias adbp='adbro; adbpf';
+
+# === ADB Sideload Helper ===
+function adbside()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbside <file_zip> [bool_wait_recovery] (adb sideload helper)';
+    echo '';
+    return;
+  fi;
+
+  # Initiate adb
+  echo '';
+  adb devices;
+
+  # Reboot to recovery if needed
+  if ! timeout 2 sh -c "adb devices | grep -q 'recovery\|sideload'" 2>/dev/null; then
+    echo -e '\e[1;33madbside: Rebooting to recovery\e[0m';
+    adb reboot recovery;
+  fi;
+
+  # Wait for an adb recovery
+  while true; do
+    if timeout .5 sh -c "adb devices | grep -q 'recovery\|sideload'" 2>/dev/null; then
+      break;
+    fi;
+    echo -e '\e[1;33madbside: Waiting for recovery or sideload\e[0m';
+    sleep 2;
+  done;
+
+  # Wait for an adb sideload
+  while true; do
+    if timeout .5 sh -c "adb devices | grep -q 'sideload'" 2>/dev/null; then
+      break;
+    fi;
+
+    # Start twrp sideload
+    echo -e '\e[1;33madbside: Waiting for sideload\e[0m';
+    adb shell twrp sideload;
+    sleep 2;
+  done;
+
+  # Sideload the file
+  adb sideload "${1}";
+
+  # Wait for an adb recovery if 2 parameters
+  if [ ! -z "${2}" ]; then
+    while true; do
+      if timeout .5 sh -c "adb devices | grep -q 'recovery'" 2>/dev/null; then
+        break;
+      fi;
+      sleep 1;
+    done;
+
+    # Reboot to Android
+    echo -e '\e[1;33madbside: Rebooting to Android\e[0m';
+    adb shell reboot;
+  fi;
+  echo '';
+}
+
+# === ADB Force Optimization ===
+function adbu()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbu <package_name> (Force optimization of a package)';
+    echo '';
+    return;
+  fi;
+
+  # Introduction
+  echo '';
+  echo " [ Launching '${1}' ]";
+  echo '';
+
+  # Optimize
+  echo '    Optimizing...';
+  sudo adb ${2} shell pm force-dex-opt ${1};
+
+  # Force close
+  echo '    Killing...';
+  sudo adb ${2} shell pkill ${1};
+  local pid=$(sudo adb shell ps | grep ${1} | awk '{ print $2 }');
+  sudo adb shell kill ${pid} >/dev/null;
+  echo '';
+}
+
+# === ADB Git Commit Pusher ===
+function adbgitpf()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbgitpf <commit_sha1> (Push files through adb from commit)';
+    echo '';
+    return;
+  fi;
+
+  # Push files through adb from commit
+  adbro;
+  local tmpfile=$(mktemp);
+  git diff-tree --no-commit-id --name-status -r ${1} >"${tmpfile}";
+  while read line; do
+    local status=$(echo "${line}" | awk '{ print $1 }');
+    local file_path=$(echo "${line}" | awk '{ print $2 }');
+    if [[ "${status}" =~ "D" || "${file_path}" =~ ".mk" ]]; then
+      continue;
+    fi;
+    adbpf "${file_path}";
+  done <${tmpfile};
+  rm -f ${tmpfile};
+}
 
 # === MultiROM File Pusher ===
 function adbpmrom()

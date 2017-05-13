@@ -1,0 +1,30 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_updater.rc)
+
+# === ADB Binaries Updater ===
+function adbupdate()
+{
+  # Usage: adbupdate (adb binary update from upstream)
+
+  # Check adb version
+  adb version;
+
+  # Detect built ROM's adb
+  if [ -f ./out/host/linux-x86/bin/adb ]; then
+    sudo rm -f /usr/bin/adb;
+    sudo cp ./out/host/linux-x86/bin/adb /usr/bin/adb;
+  else
+    sudo rm -f /usr/bin/adb;
+    wget -O - https://skia.googlesource.com/skia/+archive/cd048d18e0b81338c1a04b9749a00444597df394/platform_tools/android/bin/linux.tar.gz | tar -zxvf - adb;
+    sudo mv adb /usr/bin/adb;
+  fi;
+
+  # Update permissions and check adb version
+  sudo chmod +x /usr/bin/adb;
+  adb version;
+}

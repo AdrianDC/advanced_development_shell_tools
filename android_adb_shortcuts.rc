@@ -1,0 +1,52 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_shortcuts.rc)
+
+# === ADB Regular Shortcuts ===
+alias adbs='adb shell';
+alias adbdf='adb shell df -H';
+alias adbpo='adb shell reboot -p';
+alias adbrb='adb reboot bootloader';
+alias adbre='adb reboot';
+function adbrh() { adb ${1} shell setprop ctl.restart zygote; }
+alias adbrr='adb reboot recovery';
+alias adbsl='adb shell ls -l';
+alias adbslz='adb shell ls -lZ';
+alias adbsc='adb shell cat';
+alias adbsg='adb shell getprop';
+alias adbw='adb wait-for-device';
+
+# === ADB File Writer ===
+function adbsw()
+{
+  # Usage: adbsw <"data"> <path> (Write a string to path through adb)
+
+  # Write a string to path through adb
+  adbro;
+  adb shell "echo ${1} > ${2}";
+}
+
+# === ADB Partitions Shortcuts ===
+alias adbblkp='adb shell ls -l /dev/block/bootdevice/by-name/';
+alias adbfotarandom='adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel';
+alias adbfotazero='adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel';
+alias adbmountcache='adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache';
+alias adbmountdata='adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data';
+alias adbmountmicrosd='adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext';
+alias adbsgdisk='adb shell sgdisk --print /dev/block/mmcblk0';
+alias adbumountcache='adb shell umount /cache';
+alias adbumountdata='adb shell umount /data';
+alias adbumountmicrosd='adb shell umount /storage/ext';
+alias adbmount='adbmountcache; adbmountdata; adbmountmicrosd';
+alias adbumount='adbumountcache; adbumountdata; adbumountmicrosd';
+
+# === ADB Advanced Shortcuts ===
+alias adbinfomem='adb shell dumpsys meminfo';
+alias adbrcbin='adb shell restorecon -R /sbin';
+alias adbemergencycalls='adb shell setprop ril.ecclist';
+alias adbemergencylist='adb shell getprop ril.ecclist';
+alias adbservices='adb shell service list';
