@@ -3,7 +3,7 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === Sign Package ===
+# === Sign Zip Package ===
 function signzip()
 {
   # Usage
@@ -53,6 +53,21 @@ function signzip()
   if [ -f "${zip_input}" ]; then
     rm -f "${zip_input}";
   fi;
+}
+
+# === Sign Apk Package ===
+function signapk()
+{
+  # Usage
+  if [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: signapk <apk_to_sign> [signed_output_apk] (Sign apk files)';
+    echo '';
+    return;
+  fi;
+
+  # Reuse signzip for the same purpose
+  signzip "${1}" "${2}";
 }
 
 # === Module Zip Maker ===

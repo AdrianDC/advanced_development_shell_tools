@@ -487,6 +487,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [ Documentation from [android_release_packages.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) ]
   * [**signzip** *<b>[Sign flashable zip]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *signzip &lt;zip_to_sign&gt; [signed_output_zip]*
+  * [**signapk** *<b>[Sign apk files]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *signapk &lt;apk_to_sign&gt; [signed_output_apk]*
   * [**mmmzip** *<b>[Build module to flashable zip]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *mmmzip &lt;paths_or_modules&gt;*
   * [**systozip** *<b>[System files to flashable zip]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *systozip &lt;files&gt;*
   * [**packzip** *<b>[Files to flashable zip]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *packzip &lt;files&gt;*
