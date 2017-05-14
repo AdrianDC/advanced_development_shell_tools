@@ -210,6 +210,7 @@ function gitshl() { git show --oneline --name-only ${1} | tail -n +2 | cut -c $(
 alias gitap='git add -p';
 alias gitaa='git add . -Av';
 alias gitan='git add . -An';
+alias gitanp='git config core.fileMode false; git add -p; git config --unset core.fileMode';
 function gite() { gedit ${1}; printf ' Done ? [Enter] '; read; git add ${1}; }
 
 # === Git Branch Helpers ===
