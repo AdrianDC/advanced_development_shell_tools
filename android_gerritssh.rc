@@ -12,15 +12,48 @@ function gerritssh()
   # Usage: gerritssh [branch] [change_id_reverser]
 
   # Gerrit Credentials
-  export GerritReview='LineageOS';
-  export GerritRemote='review.lineageos.org';
-  export GerritUsername='Username';
-  export GerritHTTPUsername='Username';
-  export GerritHTTPPassword='abcdefgh12345678';
+  if [ -z "${GerritUsername}" ]; then
+    export GerritReview='LineageOS';
+    export GerritRemote='review.lineageos.org';
+    export GerritUsername='Username';
+    export GerritHTTPUsername='Username';
+    export GerritHTTPPassword='abcdefgh12345678';
+  fi;
 
   # Create  ~/.bash_android.gerrit.rc with the exports to override the credentials
   if [ -f ~/.bash_android.gerrit.rc ]; then
     source ~/.bash_android.gerrit.rc;
+  fi;
+
+  # Manual user login if credentials missing
+  if [ "${GerritUsername}" = 'Username' ]; then
+
+    # Header data
+    echo '';
+    echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2017\e[0m';
+    echo '';
+    echo -e '      \e[1;33mError: No configuration in ~/.bash_android.gerrit.rc found';
+    echo -e '             Read android_gerritssh.rc script for more details\e[0m';
+    echo '';
+    echo -e '      \e[1;32mInfo: Gerrit SSH credentials will be used to login and review';
+    echo -e '             HTTP credentials will only be used for the "Publish" feature\e[0m';
+    echo '';
+
+    # Credentials acquisition
+    local input;
+    echo -e "      \e[1;37mServer:\e[0m ${GerritRemote}";
+    printf '      \e[1;37mUsername:\e[0m ';
+    read input;
+    export GerritUsername="${input}";
+    export GerritHTTPUsername="${input}";
+    printf '      \e[1;37mPassword (HTTP):\e[0m ';
+    read input;
+    export GerritHTTPPassword="${input}";
+
+    # Credentials ready
+    echo '';
+    echo -e '      \e[1;33mWarning: Credentials remembered only for this session\e[0m';
+    sleep 3;
   fi;
 
   # Configurations
@@ -182,6 +215,7 @@ function gerritssh()
   # Project Connected
   echo -e \\033c;
   clear;
+  echo '';
   echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${GerritReview}/${projectname} - ${projectbranch}\e[0m";
   echo '';
   echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2017\e[0m';
