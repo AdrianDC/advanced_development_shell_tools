@@ -91,14 +91,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_adb_installers.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_installers.rc)
   ```
   * [**adbpushfile** *<b>\[Push files through adb\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbpushfile &lt;file_path&gt; &lt;file_target&gt;*
   * [**adbif** *<b>\[Modules build listener and installed\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbif &lt;command...&gt;*
   * [**adbil** *<b>\[Modules build listener and lister\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbil &lt;command...&gt;*
-  * [**adbi** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbro; adbif ${@}*
-  * [**adbii** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbif ${@}*
-  * [**adbpf** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbpf &lt;file_paths&gt;*
+  * [**adbi** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbro; adbif*
+  * [**adbpf** *<b>\[Recursive adb files pusher\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbpf &lt;file_paths&gt;*
   * [**adbp** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbro; adbpf*
   * [**adbside** *<b>\[adb sideload helper\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbside &lt;file_zip&gt; [bool_wait_recovery]*
   * [**adbu** *<b>\[Force optimization of a package\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbu &lt;package_name&gt;*

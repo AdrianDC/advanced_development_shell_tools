@@ -4,6 +4,7 @@
 # ======================================
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_installers.rc)
 
 # === ADB File Pusher ===
@@ -134,8 +135,7 @@ function adbil()
 }
 
 # === ADB File Installer Helpers ===
-function adbi()  { adbro; adbif ${@}; }
-function adbii() { adbif ${@}; }
+alias adbi='adbro; adbif';
 
 # === ADB Filer Pusher ===
 function adbpf()
@@ -143,7 +143,7 @@ function adbpf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbpf <file_paths>';
+    echo ' Usage: adbpf <file_paths> (Recursive adb files pusher)';
     echo '';
     return;
   fi;
