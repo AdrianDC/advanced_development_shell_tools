@@ -308,6 +308,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitch** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *git checkout*
   * [**gitcp** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *git cherry-pick*
   * [**gitcpc** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *git reset; git cherry-pick --continue*
+  * [**gitcpa** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *for sha1 in ${@}; do echo ''; echo ${sha1}; git cherry-pick ${sha1}; done*
   * [**gitcpf** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *git fetch ${1} ${2}; git cherry-pick FETCH_HEAD*
   * [**gitfcp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *git fetch ${1}; git cherry-pick FETCH_HEAD~${2:-0}*
   * [**gitcpr** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git.rc) : *git show ${1} --no-color \| sed "s/${2}/${3}/g" \| patch*
