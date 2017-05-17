@@ -650,12 +650,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdandfiles** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "${ANDROID_FILES_PATH}/"*
   * [**impaospcaf** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}*
   * [**implineage** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *rsync -arv --delete --delete-after $(tolineage ${1}) ./${1}*
-  * [**meldaosp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(toaosp ${1})*
-  * [**meldaospsony** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(toaosp sony ${1})*
-  * [**meldaospcaf** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(toaospcaf ${1})*
-  * [**meldlineage** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(tolineage ${1})*
-  * [**meldmrom** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(tomultirom ${1})*
-  * [**meldtwrp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(totwrp ${1})*
+  * [**meldaosp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(toaosp ${2})/${1}*
+  * [**meldaospsony** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(toaosp sony)/${1}*
+  * [**meldaospcaf** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(toaospcaf)/${1}*
+  * [**meldlineage** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(tolineage ${2})/${1}*
+  * [**meldmrom** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(tomultirom)/${1}*
+  * [**meldtwrp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld ./${1} $(totwrp)/${1}*
   * [**nout** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *xdg-open $(toout ${1})*
   * [**aospsyncall** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *reporeferencedaosp "reposy"*
   * [**lineagesyncall** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *reporeferencedlineage "reposy"*

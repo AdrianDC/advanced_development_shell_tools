@@ -185,12 +185,12 @@ function adbapks()      { cdrefapk; adbapkinstall; }
 function cdandfiles()   { cd "${ANDROID_FILES_PATH}/"; }
 function impaospcaf()   { rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}; }
 function implineage()   { rsync -arv --delete --delete-after $(tolineage ${1}) ./${1}; }
-function meldaosp()     { meld ./${1} $(toaosp ${1}); }
-function meldaospsony() { meld ./${1} $(toaosp sony ${1}); }
-function meldaospcaf()  { meld ./${1} $(toaospcaf ${1}); }
-function meldlineage()  { meld ./${1} $(tolineage ${1}); }
-function meldmrom()     { meld ./${1} $(tomultirom ${1}); }
-function meldtwrp()     { meld ./${1} $(totwrp ${1}); }
+function meldaosp()     { meld ./${1} $(toaosp ${2})/${1}; }
+function meldaospsony() { meld ./${1} $(toaosp sony)/${1}; }
+function meldaospcaf()  { meld ./${1} $(toaospcaf)/${1}; }
+function meldlineage()  { meld ./${1} $(tolineage ${2})/${1}; }
+function meldmrom()     { meld ./${1} $(tomultirom)/${1}; }
+function meldtwrp()     { meld ./${1} $(totwrp)/${1}; }
 function nout()         { xdg-open $(toout ${1}); }
 
 # === Syncer Shortcuts ===
