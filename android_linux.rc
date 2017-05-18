@@ -131,13 +131,7 @@ function diffbin()
 # === Network Speed ===
 function netspeed()
 {
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: netspeed (Display network speeds)';
-    echo '';
-    return;
-  fi;
+  # Usage: netspeed (Display network speeds)
 
   # Display network speeds
   echo '';
@@ -294,13 +288,7 @@ function cleanramkill()
 # === Network Manager Restart ===
 function networkrestart()
 {
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: networkrestart (Restart network manager)';
-    echo '';
-    return;
-  fi;
+  # Usage: networkrestart (Restart network manager)
 
   # Restart network manager
   sudo service network-manager restart;
