@@ -29,6 +29,7 @@ function makekernel()
     if [ -z "${1}" ] || ! ls arch/arm*/configs/*${1}*_defconfig 1> /dev/null 2>&1; then
       echo '';
       echo ' Usage: makekernel [platform_device_to_init / clean / mrproper] [make_parameters]';
+      echo '   Details: The kernel need to be under a Android Tree, to auto-select the toolchain'
       echo '';
       return;
     fi;
@@ -94,13 +95,56 @@ function makekernel()
 
     # Architecture environment
     local cross_compiler=;
+    local dir_cross_compiler='../../../prebuilts/gcc/linux-x86';
+    echo '';
     if [ "${ARCH}" = 'arm64' ]; then
-      cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin);
+      cross_compiler=$(readlink -f ${dir_cross_compiler}/aarch64/aarch64-linux-android-4.9/bin);
+      if [ ! -z "${cross_compiler}" ]; then
+        echo '  Using Android 4.9 toolchain';
+      else
+        cross_compiler=$(readlink -f ${dir_cross_compiler}/aarch64/aarch64-linux-android-4.8/bin);
+        if [ ! -z "${cross_compiler}" ]; then
+          echo '  Falling back to Android 4.8 toolchain';
+        fi
+      fi
       export CROSS_COMPILE="${ccache} aarch64-linux-android-";
     else
-      cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin);
-      export CROSS_COMPILE="${ccache} arm-linux-androideabi-";
+      cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.9/bin);
+      if [ ! -z "${cross_compiler}" ]; then
+        echo '  Using Android 4.9 toolchain';
+      else
+        cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.8/bin);
+        if [ ! -z "${cross_compiler}" ]; then
+          echo '  Falling back to Android 4.8 toolchain';
+        else
+          cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-eabi-4.8/bin);
+          if [ ! -z "${cross_compiler}" ]; then
+            echo '  Falling back to GCC 4.8 toolchain';
+          else
+            cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.7/bin);
+            if [ ! -z "${cross_compiler}" ]; then
+              echo '  Falling back to Android 4.7 toolchain';
+            else
+              cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-eabi-4.7/bin);
+              if [ ! -z "${cross_compiler}" ]; then
+                echo '  Falling back to GCC 4.7 toolchain';
+              fi
+            fi
+          fi
+        fi
+      fi
+      if [ -z "${cross_compiler}" ]; then
+        echo '  No cross_compiler variable found!';
+        echo '';
+        return;
+      fi
+      if [[ ${cross_compiler} =~ 'arm-linux-androideabi-' ]]; then
+        export CROSS_COMPILE="${ccache} arm-linux-androideabi-";
+      else
+        export CROSS_COMPILE="${ccache} arm-eabi-";
+      fi
     fi;
+    echo '';
     if [[ ! "${PATH}" =~ "${cross_compiler}" ]]; then
       export PATH=${cross_compiler}:${PATH};
     fi;
