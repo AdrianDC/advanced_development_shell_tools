@@ -105,6 +105,7 @@ alias adbsel='adbkl; sepaud kmsg';
 alias adblf='adb logcat -v audit2allow';
 alias adblh='adb logcat -b events -b main -b radio | highlight';
 alias adbtrampoline='adb shell "dmesg | grep -i trampoline"';
+function adbdcln() { cat ${1} | cut -d']' -f 2- | tee ${1}.clean; }
 function adblcln() { cat ${1} | cut -c 32- | tee ${1}.clean; }
 function adbkcln() { cat ${1} | cut -c 15- | tee ${1}.clean; }
 
