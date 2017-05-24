@@ -98,9 +98,10 @@ function reporefupdate()
       echo '';
       echo " Updating AOSP ${project} references...";
       git add -Ap;
-      git add -Av;
-      git commit --amend;
-      gitpu origin local_manifests y;
+      if ! git diff --cached --quiet; then
+        git commit --amend;
+        gitpu origin local_manifests y;
+      fi;
     fi;
   done;
 
@@ -111,9 +112,10 @@ function reporefupdate()
       echo '';
       echo " Updating LineageOS ${project} references...";
       git add -Ap;
-      git add -Av;
-      git commit --amend;
-      gitpu origin local_manifests y;
+      if ! git diff --cached --quiet; then
+        git commit --amend;
+        gitpu origin local_manifests y;
+      fi;
     fi;
   done;
 
@@ -123,9 +125,10 @@ function reporefupdate()
     echo '';
     echo " Updating MultiROM ${project} references...";
     git add -Ap;
-    git add -Av;
-    git commit --amend;
-    gitpu origin local_manifests y;
+    if ! git diff --cached --quiet; then
+      git commit --amend;
+      gitpu origin local_manifests y;
+    fi;
   fi;
 
   # Detect and update TWRP references
@@ -134,9 +137,10 @@ function reporefupdate()
     echo '';
     echo " Updating TWRP ${project} references...";
     git add -Ap;
-    git add -Av;
-    git commit --amend;
-    gitpu origin local_manifests y;
+    if ! git diff --cached --quiet; then
+      git commit --amend;
+      gitpu origin local_manifests y;
+    fi;
   fi;
 
   # Path restore
