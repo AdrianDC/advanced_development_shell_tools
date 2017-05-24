@@ -187,9 +187,9 @@ function gitcpup()
 function gitcpur()
 {
   # Usage
-  if [ -z "${4}" ]; then
+  if [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: gitcpur <githuburltoproject> <branch> <search_text> <replace_text>';
+    echo ' Usage: gitcpur <url> <search_text> <replace_text> (Git URL retargeted patch applier)';
     echo '';
     return;
   fi;
@@ -197,9 +197,8 @@ function gitcpur()
   # Variables
   local tmpfile=$(mktemp);
   local tmpurl="${1}";
-  local branch="${2}";
-  local search="${3}";
-  local replace="${4}";
+  local search="${2//\//\\\/}";
+  local replace="${3//\//\\\/}";
   echo '';
 
   # Remote additional informations
@@ -215,7 +214,7 @@ function gitcpur()
 
   # Cherry-pick
   rm -rf .git/rebase-apply;
-  curl "${tmpurl}" > ${tmpfile} | sed "s/${search}/${replace}/g" 2> /dev/null;
+  curl "${tmpurl}" | sed "s/${search}/${replace}/g" > ${tmpfile} 2> /dev/null;
   git am -3 ${tmpfile};
   if [ ${?} -ne 0 ]; then
     echo '';
