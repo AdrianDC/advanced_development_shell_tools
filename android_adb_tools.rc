@@ -56,6 +56,25 @@ function adbro()
 # === ADB Root Access ===
 alias adbroot='adb kill-server; sudo adb start-server; sudo adb root; sudo adb wait-for-device; sudo adb remount';
 
+# === ADB Sudo Switcher ===
+function adbsudo()
+{
+  # Usage: adbsudo (ADB sudo toggle helper)
+
+  # Enable adb sudo
+  alias adb &> /dev/null;
+  if [ ${?} -ne 0 ]; then
+    alias adb='sudo adb';
+
+  # Disable adb sudo
+  else
+    unalias adb;
+  fi;
+
+  # Kill adb server
+  adb kill-server;
+}
+
 # === ADB Root Stock ===
 function adbrstock()
 {
