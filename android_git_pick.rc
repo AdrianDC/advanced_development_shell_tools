@@ -101,13 +101,7 @@ function gitcpo()
 # === GitHub Url Cherry-pick ===
 function gitcpup()
 {
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: gitcpup <url> (Git URL patch applier)';
-    echo '';
-    return;
-  fi;
+  # Usage: gitcpup [url] (Git URL patch applier)';
 
   # Variables
   local tmpfile=$(mktemp);

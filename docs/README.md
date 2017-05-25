@@ -276,7 +276,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitcpu** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpu &lt;githuburltocommit&gt; [branch]*
   * [**gitmerges** *<b>\[Attempt to merge commit history\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitmerges &lt;commit_sha1&gt; [count]*
   * [**gitcpo** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpo &lt;branch&gt; &lt;amount_of_commits&gt;*
-  * [**gitcpup** *<b>\[Git URL patch applier\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup &lt;url&gt;*
+  * [**gitcpup** *<b>\[Git URL patch applier\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup [url]*
   * [**gitcpur** *<b>\[Git URL retargeted patch applier\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpur &lt;url&gt; &lt;search_text&gt; &lt;replace_text&gt;*
   * [**gitcpupprima** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup "${1}" CORE drivers/staging/prima/CORE*
 
