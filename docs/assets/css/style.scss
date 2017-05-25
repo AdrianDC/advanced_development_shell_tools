@@ -47,3 +47,7 @@ footer {
     padding: 6px;
   }
 }
+
+.anchor-item:hover > a:last-child {
+  visibility: visible !important;
+}
