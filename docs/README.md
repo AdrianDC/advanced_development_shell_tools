@@ -376,7 +376,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitstfa** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitrao; gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) cm-14.1 true*
 
 ---
-### [&nbsp;Documentation: [android_grep.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)&nbsp;]
+### [&nbsp;Documentation: [android_grep.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)  - Standalone Import Ready&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
+  ```
   * [**grepb** *<b>\[Grep through sources\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepb [inputs]*
   * [**g** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepb*
   * [**grepbs** *<b>\[Grep through sources and binaries\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepbs [inputs]*
