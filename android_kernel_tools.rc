@@ -151,7 +151,8 @@ function fboota()
     echo '';
     echo -e ' \e[1;37m[ Waiting for adb root... ]\e[0m';
     echo '';
-    timeout 10 adb 'wait-for-device';
+    local adb=$(adbcmd);
+    timeout 10 ${adb} 'wait-for-device';
 
     # Handle kernel modules
     if [ ! -z "${modules}" ]; then
@@ -159,7 +160,7 @@ function fboota()
       echo -e ' \e[1;37m[ Kernel modules... ]\e[0m';
       echo '';
       adb remount;
-      timeout 10 adb 'wait-for-device';
+      timeout 10 ${adb} 'wait-for-device';
       adb shell rm -rf '/system/lib/modules/';
       for module in ${modules[*]}; do
         module_file=$(basename "${module}");
@@ -172,7 +173,7 @@ function fboota()
     echo -e " \e[1;37m[ Bootloader ${bootimg}... ]\e[0m";
     export PackageResult="${bootimg}";
     echo '';
-    sudo adb reboot bootloader;
+    adb reboot bootloader;
     timeout 20 sudo fastboot flash boot "${bootimg}";
     timeout 5 sudo fastboot reboot;
     echo '';

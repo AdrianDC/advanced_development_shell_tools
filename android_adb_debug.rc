@@ -16,11 +16,12 @@ function adbst()
 
   # Get adb root access
   if [ -z "${2}" ]; then
-    timeout 5 adb 'wait-for-device';
-    timeout 5 adb root;
-    timeout 5 adb 'wait-for-device';
-    timeout 5 adb remount;
-    timeout 5 adb 'wait-for-device';
+    local adb=$(adbcmd);
+    timeout 5 ${adb} 'wait-for-device';
+    timeout 5 ${adb} root;
+    timeout 5 ${adb} 'wait-for-device';
+    timeout 5 ${adb} remount;
+    timeout 5 ${adb} 'wait-for-device';
   fi;
 
   # Detect strace requirement

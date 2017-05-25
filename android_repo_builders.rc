@@ -138,7 +138,7 @@ function repotwrp()
   if [[ "${key}" == 'y' || "${key}" == 'Y' ]] && [ -f "${TWRPImg}" ]; then
     echo '';
     adb root;
-    timeout 5 adb 'wait-for-device';
+    timeout 5 $(adbcmd) 'wait-for-device';
     adb push ${TWRPImg} /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
       adb shell /system/bin/dd if=/tmp/twrp.img of=${FOTAPartition};
@@ -374,7 +374,7 @@ function repomrom()
   if [[ "${key}" == 'y' || "${key}" == 'Y' ]] && [ -f "${TWRPImg}" ]; then
     echo '';
     adb root;
-    timeout 5 adb 'wait-for-device';
+    timeout 5 $(adbcmd) 'wait-for-device';
     adb push "${TWRPImg}" /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
       adb shell /system/bin/dd if=/tmp/twrp.img of=${FOTAPartition};

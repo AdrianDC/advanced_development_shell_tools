@@ -181,6 +181,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbro** *<b>\[Verified adb root and remount rw system\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbroot** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adb kill-server; sudo adb start-server; sudo adb root; sudo adb wait-for-device; sudo adb remount*
   * [**adbsudo** *<b>\[ADB sudo toggle helper\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
+  * [**adbcmd** *<b>\[Return adb command based on alias\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbrstock** *<b>\[Stock ROM adb root access\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbsu** *<b>\[Run on root adb shell\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbsu &lt;command...&gt;*
   * [**adbco** *<b>\[Helper for adb network access\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbco [ipaddress_once]*

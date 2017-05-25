@@ -23,11 +23,12 @@ function adbr()
   # Usage: adbr (adb root and remount rw system)
 
   # Get root access and rw system
-  timeout 5 adb ${1} 'wait-for-device';
-  timeout 5 adb ${1} root; sleep 2;
-  timeout 5 adb ${1} 'wait-for-device';
-  timeout 5 adb ${1} remount; sleep 1;
-  timeout 5 adb ${1} 'wait-for-device';
+  local adb=$(adbcmd);
+  timeout 5 ${adb} ${1} 'wait-for-device';
+  timeout 5 ${adb} ${1} root; sleep 2;
+  timeout 5 ${adb} ${1} 'wait-for-device';
+  timeout 5 ${adb} ${1} remount; sleep 1;
+  timeout 5 ${adb} ${1} 'wait-for-device';
 }
 
 # === ADB Root Checked Mounter ===
@@ -36,20 +37,21 @@ function adbro()
   # Usage: adbro (Verified adb root and remount rw system)
 
   # Get root access
-  local rootaccess=$(adb shell whoami);
+  local adb=$(adbcmd);
+  local rootaccess=$(${adb} shell whoami);
   if [ "${rootaccess:0:4}" != 'root' ] && [ "${rootaccess:16:5}" != 'uid 0' ]; then
-    timeout 5 adb ${1} 'wait-for-device';
-    timeout 5 adb ${1} root; sleep 2;
-    timeout 5 adb ${1} 'wait-for-device';
+    timeout 5 ${adb} ${1} 'wait-for-device';
+    timeout 5 ${adb} ${1} root; sleep 2;
+    timeout 5 ${adb} ${1} 'wait-for-device';
   fi;
 
   # Get rw system
-  local systemmount=$(adb shell mount | grep system);
+  local systemmount=$(${adb} shell mount | grep system);
   local systemacess=$(echo "${systemmount}" | grep rw);
   if [ ! -z "${systemmount}" ] && [ -z "${systemacess}" ]; then
-    timeout 5 adb ${1} 'wait-for-device';
-    timeout 5 adb ${1} remount; sleep 1;
-    timeout 5 adb ${1} 'wait-for-device';
+    timeout 5 ${adb} ${1} 'wait-for-device';
+    timeout 5 ${adb} ${1} remount; sleep 1;
+    timeout 5 ${adb} ${1} 'wait-for-device';
   fi;
 }
 
@@ -73,6 +75,22 @@ function adbsudo()
 
   # Kill adb server
   adb kill-server;
+}
+
+# === ADB Command ===
+function adbcmd()
+{
+  # Usage: adbcmd (Return adb command based on alias)
+
+  # Use regular adb
+  alias adb &> /dev/null;
+  if [ ${?} -ne 0 ]; then
+    echo 'adb';
+
+  # Use aliased adb
+  else
+    alias adb | sed "s/^alias adb='\(.*\)'$/\1/";
+  fi;
 }
 
 # === ADB Root Stock ===
@@ -123,22 +141,23 @@ function adbco()
   fi;
 
   # Connect and acquire adb root access
+  local adb=$(adbcmd);
   export ADB_IP_PORT='5555';
   echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
-  timeout 5 adb connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
+  timeout 5 ${adb} connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
   echo -e '\e[1;36mConnected...\e[0m';
-  timeout 5 adb 'wait-for-device';
+  timeout 5 ${adb} 'wait-for-device';
   echo -e '\e[1;36mGetting root access...\e[0m';
-  timeout 5 adb root;
+  timeout 5 ${adb} root;
   sleep 2;
   echo -e '\e[1;36mReconnecting...\e[0m';
-  timeout 5 adb connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
+  timeout 5 ${adb} connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
   echo -e '\e[1;36mConnected...\e[0m';
-  timeout 5 adb 'wait-for-device';
+  timeout 5 ${adb} 'wait-for-device';
   echo -e '\e[1;36mMounting as root...\e[0m';
-  timeout 5 adb remount;
+  timeout 5 ${adb} remount;
   sleep 1;
-  timeout 5 adb 'wait-for-device';
+  timeout 5 ${adb} 'wait-for-device';
   echo -e '\e[1;36mReady...\e[0m';
   echo '';
 }
