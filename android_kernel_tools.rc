@@ -418,7 +418,7 @@ function kernelinjectorzip()
   local KernelFile=$(readlink -f "${2}");
   local KernelSources=$(readlink -f "${3}");
   local OutFile='kernel-injector-'${PhoneName}'-'$(date +'%Y%m%d')'.zip';
-  local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
+  local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/${OutFile}";
   local TmpDir=$(mktemp -d);
 
   # Partitions
@@ -480,7 +480,7 @@ function bootzip()
   local PhoneName="${1}";
   local BootFile=$(readlink -f "${2}");
   local OutFile='boot-'${PhoneName}'-'$(date +'%Y%m%d')'.zip';
-  local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
+  local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/${OutFile}";
   local TmpDir=$(mktemp -d);
 
   # Partitions

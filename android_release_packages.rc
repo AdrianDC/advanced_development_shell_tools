@@ -89,7 +89,7 @@ function mmmzip()
   local LogFile="${TmpDir}/mmm_logs.txt";
   local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${BuildPathFirst}))'-'$(date +'%Y%m%d-%H%M')'.zip';
   local path=$(readlink -f "${BuildPathFirst}");
-  local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
+  local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
   mkdir -p $(dirname ${TargetFile});
   if [ ! -d "${path}" ]; then
     croot;
@@ -200,7 +200,7 @@ function systozip()
   local LogFile="${TmpDir}/mmm_logs.txt";
   local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${BuildPathFirst}))'-'$(date +'%Y%m%d-%H%M')'.zip';
   local path=$(readlink -f "${BuildPathFirst}");
-  local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
+  local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
   mkdir -p $(dirname ${TargetFile});
 
   # Header
@@ -281,7 +281,7 @@ function packzip()
   local TmpDir=$(mktemp -d);
   local BuildParams="${@}";
   local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${1}))'-'$(date +'%Y%m%d-%H%M')'.zip';
-  local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
+  local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
   mkdir -p $(dirname ${TargetFile});
 
   # Header
