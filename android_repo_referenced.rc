@@ -229,3 +229,82 @@ function reporefsync()
   # Path restore
   cd ${current_dir};
 }
+
+# === Repo Referenced Linker ===
+function reporeflinker()
+{
+  # Usage: reporeflinker (Helper to symlink local_manifests to Developments)
+
+  # Variables
+  local cnt;
+  local key;
+  local options;
+  local path;
+  local target;
+
+  # Development path
+  local dev_path=$(getand)/Development;
+
+  # Access local_manifests
+  cdlocman;
+
+  # Handle local_manifests files to link
+  for file in roomservice.xml untracked.xml; do
+
+    # Delete remaining symlinks
+    rm -f ./${file};
+
+    # Create projects selector list
+    cnt=0;
+    options=('None');
+    project='';
+    echo '';
+    echo -e " \e[1;37m[ Select a project for '${file}' ]\e[0m";
+    echo '';
+    echo "   ${cnt}: ${options[${cnt}]}";
+    for project in ${dev_path}/*; do
+      cnt=$((${cnt} + 1));
+      options[${cnt}]=${project##*/};
+      echo "   ${cnt}: ${options[${cnt}]}";
+    done;
+    echo '';
+    printf " \e[1;33mProject to use [0 to ${cnt}] :\e[0m ";
+    read key;
+    echo '';
+    if [ ${key} -gt 0 ] && [ ${key} -le ${cnt} ]; then
+      project=${options[${key}]};
+    else
+      project='';
+    fi;
+
+    # If project provided
+    if [ ! -z "${project}" ]; then
+
+      # Create targets selector list
+      cnt=0;
+      options=('None');
+      echo '';
+      echo -e " \e[1;37m[ Select manifest target for '${file}' ]\e[0m";
+      echo '';
+      echo "   ${cnt}: ${options[${cnt}]}";
+      for target in ${dev_path}/${project}/*.xml; do
+        cnt=$((${cnt} + 1));
+        options[${cnt}]=${target##*/};
+        echo "   ${cnt}: ${options[${cnt}]}";
+      done;
+      echo '';
+      printf " \e[1;33mmanifest target to use [0 to ${cnt}] :\e[0m ";
+      read key;
+      echo '';
+      if [ ${key} -gt 0 ] && [ ${key} -le ${cnt} ]; then
+        target=${options[${key}]};
+
+        # Generate symlink to file
+        printf ' ';
+        ln -fsv ${dev_path}/${project}/${target} ./${file};
+        echo '';
+
+      fi;
+    fi;
+  done;
+}
