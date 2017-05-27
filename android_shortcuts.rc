@@ -179,6 +179,7 @@ function cddevaosp()    { cd $(getand)/Development/aosp_*${1} 2> /dev/null; }
 function cddevlineage() { cd $(getand)/Development/lineage_*${1} 2> /dev/null; }
 function cddevmrom()    { cd $(getand)/Development/multirom_development_sony 2> /dev/null; }
 function cddevtwrp()    { cd $(getand)/Development/twrp_development_sony 2> /dev/null; }
+function cdprojects()   { cd $(getand)/Projects/${1}; }
 function cdref()        { cd $(getand)/References/${1}; }
 function cdrefapk()     { cd $(getand)/References/apk; }
 function adbapks()      { cdrefapk; adbapkinstall; }
