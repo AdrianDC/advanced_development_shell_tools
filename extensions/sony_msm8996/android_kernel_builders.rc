@@ -4,55 +4,59 @@
 # ======================================
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_builders.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_kernel_builders.rc)
 
 # === Sony Copyleft Kernel Builder ===
-function mkcopyleft()
+function makekernelcopyleft()
 {
+  # Out path handling
+  if [ ! -d ./.build ]; then
+    mkdir ./.build;
+  fi;
+
+  # Mode: make clean / make mrproper
+  if [ "${1}" = 'clean' ] || [ "${1}" = 'mrproper' ]; then
+
+    # Launch make mode
+    make "${1}" O=./.build;
+    return;
+  fi;
+
   # Environment
   if [ -z "${KBUILD_DIFFCONFIG}" ] || [ ! -z "${1}" ]; then
 
     # Usage
     if [ -z "${1}" ] || ! ls arch/arm*/configs/diffconfig/${1}_diffconfig 1> /dev/null 2>&1; then
       echo '';
-      echo ' Usage: mkcopyleft [device_name_to_init]';
+      echo ' Usage: makekernelcopyleft [platform_device_to_init / clean / mrproper] [make_parameters]';
+      echo '   Details: The kernel needs to be under an Android build tree to select toolchains'
       echo '';
       return;
     fi;
 
-    # Out path handling
-    if [ ! -d ./.build ]; then
-      mkdir ./.build;
-    fi;
+    # Kernel defconfig
+    export KBUILD_DIFFCONFIG="${1}_diffconfig";
+    kerneldefconfig 'msm-perf';
 
-    # Environment
-    export ARCH=arm64;
-    export CROSS_COMPILE=aarch64-linux-android-;
-    export KBUILD_DIFFCONFIG=${1}_diffconfig;
+    # Kernel toolchains selection
+    kerneltoolchains;
 
     # Kernel configuration
-    make msm-perf_defconfig O=./.build;
-
+    make ${DEFCONFIG_NAME} O=./.build;
   fi;
 
-  # Environment
-  local cross_compiler=$(readlink -f ../../../prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin);
-  if [[ ! "${PATH}" =~ "${cross_compiler}" ]]; then
-    export PATH=${cross_compiler}:${PATH};
-  fi;
-
-  # CCache usage
-  local ccache_prefix='';
-  if [ "$(type -t ccache 2> /dev/null)" = 'file' ]; then
-    cache_prefix='ccache ';
-    export CC='ccache gcc';
-    export CXX='ccache g++';
-    if [[ ! "${PATH}" =~ '/usr/lib/ccache' ]]; then
-      export PATH=/usr/lib/ccache:${PATH}
-    fi;
-    echo ' CCache enabled';
-  fi;
+  # Variables
+  local time_diff;
+  local make_parameters="${@:2}";
 
   # Kernel build
-  ${cache_prefix} make -j$(grep -c ^processor /proc/cpuinfo) O=./.build;
+  time_diff=$(date +%s);
+  make -j$(grep -c ^processor /proc/cpuinfo) ${make_parameters} O=./.build;
+
+  # Show compilation time
+  time_diff=$(($(date +%s)-${time_diff}));
+  echo '';
+  echo -e " \e[1;37m[ Done compiling in ${time_diff} secs ]\e[0m";
+  echo '';
 }
