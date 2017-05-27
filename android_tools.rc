@@ -227,7 +227,9 @@ function overlaycompare()
   for overlay_path in $(find ${*} -type f); do
 
     # Launch meld on both paths
-    source_path=$(echo "../../../${overlay_path}" | sed 's/overlay[^\/]*\///');
+    source_path=$(echo "../../../${overlay_path}" \
+                | sed 's/radio\/overlay/overlay/' \
+                | sed 's/overlay[^\/]*\///');
     meld "${overlay_path}" "${source_path}";
 
   done;
