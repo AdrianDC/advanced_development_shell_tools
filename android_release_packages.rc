@@ -87,7 +87,7 @@ function mmmzip()
   local BuildParams="${@:-.}";
   local BuildPathFirst="${1:-.}";
   local LogFile="${TmpDir}/mmm_logs.txt";
-  local OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f ${BuildPathFirst}))-${TARGET_PRODUCT}.zip";
+  local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${BuildPathFirst}))'-'$(date +'%Y%m%d-%H%M')'.zip';
   local path=$(readlink -f "${BuildPathFirst}");
   local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
   mkdir -p $(dirname ${TargetFile});
@@ -198,7 +198,7 @@ function systozip()
   local BuildParams="${1:-.}";
   local BuildPathFirst="${1:-.}";
   local LogFile="${TmpDir}/mmm_logs.txt";
-  local OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f ${BuildPathFirst}))-${TARGET_PRODUCT}.zip";
+  local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${BuildPathFirst}))'-'$(date +'%Y%m%d-%H%M')'.zip';
   local path=$(readlink -f "${BuildPathFirst}");
   local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
   mkdir -p $(dirname ${TargetFile});
@@ -280,7 +280,7 @@ function packzip()
   local CurDir=$(pwd);
   local TmpDir=$(mktemp -d);
   local BuildParams="${@}";
-  local OutFile="pack-"$(date +'%Y%m%d-%H%M')"-$(basename $(readlink -f ${1}))-${TARGET_PRODUCT}.zip";
+  local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${1}))'-'$(date +'%Y%m%d-%H%M')'.zip';
   local TargetFile="$(xdg-user-dir DESKTOP)/Builds/${OutFile}";
   mkdir -p $(dirname ${TargetFile});
 

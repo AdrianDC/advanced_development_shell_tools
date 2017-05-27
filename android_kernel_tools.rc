@@ -417,7 +417,7 @@ function kernelinjectorzip()
   local PhoneName="${1}";
   local KernelFile=$(readlink -f "${2}");
   local KernelSources=$(readlink -f "${3}");
-  local OutFile="kernel-injector-"$(date +'%Y%m%d')"-${PhoneName}.zip";
+  local OutFile='kernel-injector-'${PhoneName}'-'$(date +'%Y%m%d')'.zip';
   local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
   local TmpDir=$(mktemp -d);
 
@@ -479,7 +479,7 @@ function bootzip()
   local CurDir=$(pwd);
   local PhoneName="${1}";
   local BootFile=$(readlink -f "${2}");
-  local OutFile="boot-"$(date +'%Y%m%d')"-${PhoneName}.zip";
+  local OutFile='boot-'${PhoneName}'-'$(date +'%Y%m%d')'.zip';
   local TargetFile="$(xdg-user-dir DESKTOP)/${OutFile}";
   local TmpDir=$(mktemp -d);
 
