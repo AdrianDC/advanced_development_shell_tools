@@ -211,7 +211,7 @@ alias gitap='git add -p';
 alias gitaa='git add . -Av';
 alias gitan='git add . -An';
 alias gitanp='git config core.fileMode false; git add -p; git config --unset core.fileMode';
-function gite() { gedit ${1}; printf ' Done ? [Enter] '; read; git add ${1}; }
+function gite() { xdg-open ${1}; printf ' Done ? [Enter] '; read; git add ${1}; }
 
 # === Git Branch Helpers ===
 alias gitbd='git branch -D';
@@ -370,7 +370,7 @@ function gitmte()
   # Edit all unmerged files
   for file in $(git diff --name-only | uniq); do
     printf " - ${file} : ";
-    gedit ${file};
+    xdg-open ${file};
     printf ' Done ? [Enter / Ctrl+C] ';
     read;
     git add ${file};

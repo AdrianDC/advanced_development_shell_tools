@@ -102,7 +102,7 @@ function adbdu()
   local tmp=$(mktemp);
   adbro;
   adbsu 'du /data/ | sort -hr' > ${tmp};
-  gedit ${tmp};
+  xdg-open ${tmp};
 }
 
 # === ADB Property Radio Logs ===

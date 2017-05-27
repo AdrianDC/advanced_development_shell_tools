@@ -172,7 +172,7 @@ function adbedit()
   local path="${1:-/system/build.prop}";
   local name=$(basename "${path}");
   adb pull "${path}";
-  gedit "${name}";
+  xdg-open "${name}";
   printf ' Ok ? [ENTER] ';
   read key;
   adb push "${name}" "${path}";
