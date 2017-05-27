@@ -268,7 +268,7 @@ function repoinitrr()
 
   # Exit on repo init failure
   if [ ! -d .repo/manifests ]; then
-    echo "repoinitaosp failed for ${branch}";
+    echo "repoinitrr failed for ${branch}";
     return;
   fi;
 
