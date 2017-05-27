@@ -398,7 +398,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_builders.rc)
   ```
   * [**makekernel** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *makekernel [platform_device_to_init / clean / mrproper] [make_parameters]*
-  * [**mkcopyleft** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *mkcopyleft [device_name_to_init] [msm*-perf_to_use]*
 
 ---
 ### [&nbsp;Documentation: [android_kernel_defconfig.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_defconfig.rc)  - Standalone Import Ready&nbsp;]
@@ -749,6 +748,13 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8996/android_autorelease.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_autorelease.rc)&nbsp;]
   * [**autoreleaseaospsodp8996** *<b>\[Automated AOSP Sony SODP 8996 releaser\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_autorelease.rc) : *autoreleaseaospsodp8996 [devices] [bool_nosync]*
+
+---
+### [&nbsp;Documentation: [extensions/sony_msm8996/android_kernel_builders.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_kernel_builders.rc)  - Standalone Import Ready&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_kernel_builders.rc)
+  ```
+  * [**mkcopyleft** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_kernel_builders.rc) : *mkcopyleft [device_name_to_init] [msm*-perf_to_use]*
 
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_aosp_sonysodp.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)  - Standalone Import Ready&nbsp;]
