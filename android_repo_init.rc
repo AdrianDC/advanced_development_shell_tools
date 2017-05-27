@@ -278,3 +278,55 @@ function repoinitrr()
   echo "repoinitrr done for ${branch}";
   cd ../../;
 }
+
+# === Repo Init TWRP ===
+function repoinittwrp()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: repoinittwrp <twrp-{X.X}> [referenced,clean]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local release="${1}";
+  local params="${2}";
+  local branch="twrp-${release}";
+
+  # Wipe the out folder
+  rm -rfv out;
+
+  # Clean repo manifest
+  rm -rfv .repo/manifests;
+  rm -rfv .repo/manifests.git;
+  rm -rfv .repo/manifest.xml;
+  rm -rfv .repo/project.list;
+  rm -rfv .repo/projects;
+  rm -rfv .repo/repo;
+  if [[ "${params}" =~ 'clean' ]]; then
+    rm -rfv .repo/project-objects;
+    rm -rfv *;
+  fi;
+
+  # Repo init
+  if [[ "${params}" =~ 'referenced' ]]; then
+    repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b ${branch} \
+              --reference=$(readlink -f $(getand)/TWRP);
+  else
+    repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b ${branch};
+  fi;
+
+  # Exit on repo init failure
+  if [ ! -d .repo/manifests ]; then
+    echo "repoinittwrp failed for ${branch}";
+    return;
+  fi;
+
+  # Unneeded branches cleanup
+  cd .repo/manifests/;
+  git tag | grep -v "${branch}" | xargs git tag -d;
+  echo "repoinittwrp done for ${branch}";
+  cd ../../;
+}
