@@ -5,7 +5,7 @@
 
 # === Repo References Variables ===
 export android_development_shell_tools_referenced_aosp='huashan blue sony';
-export android_development_shell_tools_referenced_lineage='huashan mint hayabusa tsubasa sony dora z3 lx fusion3';
+export android_development_shell_tools_referenced_lineage='huashan blue sony dora z3 lx fusion3';
 
 # === Repo Referenced AOSP Devices ===
 function reporeferencedaosp()
