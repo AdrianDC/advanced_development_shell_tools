@@ -219,17 +219,17 @@ function gitrab()
   elif pwd | grep -q AOSP; then
     gitra8960naosp;
   else
-    gitra8960lineage;
+    gitradevmanifests;
   fi;
 }
 
-# === Git Remotes LineageOS (8960) Project ===
-function gitra8960lineage()
+# === Git Remotes Common Manifests Project ===
+function gitradevmanifests()
 {
-  # Usage: gitra8960lineage (Add LineageOS 8960 development remote)
+  # Usage: gitradevmanifests (Add common development manifests remote)
 
-  # Add LineageOS 8960 development remote
-  gitremoteset backup https://github.com/AdrianDC/lineage_development_sony8960.git;
+  # Add common development manfests remote
+  gitremoteset backup https://github.com/AdrianDC/android_development_manifests.git;
 }
 
 # === Git Remotes LineageOS (8996) Project ===
