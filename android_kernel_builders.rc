@@ -138,6 +138,7 @@ function kerneltoolchains()
   # Architecture environment
   local cross_compiler=;
   local dir_cross_compiler='../../../prebuilts/gcc/linux-x86';
+  echo '';
 
   # CCache environment
   local ccache=;
