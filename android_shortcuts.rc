@@ -45,16 +45,20 @@ function cdman()
   # Usage: cdman (Access manifests path)
 
   # Access manifests path
-  cd $(echo "$(pwd)" \
-     | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/manifests/g");
+  local path=$(echo "$(pwd)" \
+             | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/manifests/g");
+  mkdir -p ${path}/;
+  cd ${path}/;
 }
 function cdlocman()
 {
   # Usage: cdlocman (Access local manifests path)
 
   # Access local manifests path
-  cd $(echo "$(pwd)" \
-     | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/local_manifests/g");
+  local path=$(echo "$(pwd)" \
+             | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/local_manifests/g");
+  mkdir -p ${path}/;
+  cd ${path}/;
 }
 
 # === Repo Out Access ===
