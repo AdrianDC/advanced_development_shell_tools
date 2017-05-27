@@ -754,7 +754,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_kernel_builders.rc)
   ```
-  * [**mkcopyleft** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_kernel_builders.rc) : *mkcopyleft [device_name_to_init] [msm*-perf_to_use]*
+  * [**mkcopyleft** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_kernel_builders.rc) : *mkcopyleft [device_name_to_init]*
 
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_aosp_sonysodp.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)  - Standalone Import Ready&nbsp;]

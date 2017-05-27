@@ -15,7 +15,7 @@ function mkcopyleft()
     # Usage
     if [ -z "${1}" ] || ! ls arch/arm*/configs/diffconfig/${1}_diffconfig 1> /dev/null 2>&1; then
       echo '';
-      echo ' Usage: mkcopyleft [device_name_to_init] [msm*-perf_to_use]';
+      echo ' Usage: mkcopyleft [device_name_to_init]';
       echo '';
       return;
     fi;
@@ -31,7 +31,7 @@ function mkcopyleft()
     export KBUILD_DIFFCONFIG=${1}_diffconfig;
 
     # Kernel configuration
-    make ${2:-msm-perf}_defconfig O=./.build;
+    make msm-perf_defconfig O=./.build;
 
   fi;
 
