@@ -34,61 +34,11 @@ function makekernel()
       return;
     fi;
 
-    # Detect arm / arm64
-    export ARCH=arm;
-    local DEFCONFIG_CHECKS;
-    for arch_check in arm arm64; do
-      DEFCONFIG_CHECKS=("./arch/${arch_check}/configs/"*"${1}"*);
-      if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS}" ]; then
-        export ARCH=${arch_check};
-        break;
-      fi;
-    done;
-
-    # Defconfig detection
-    local DEFCONFIG_PATH=./arch/${ARCH}/configs;
-    local DEFCONFIG_INPUT=("${DEFCONFIG_PATH}/"*"${1}"*);
-    if [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
-      if [ ${#DEFCONFIG_INPUT[@]} -eq 1 ]; then
-        echo '';
-        echo '  Error: makedefconf found no defconfigs';
-        echo '';
-        return;
-      fi;
-
-      # Create defconfig selector list
-      local cnt=0;
-      echo '';
-      echo '  Warning: makedefconf found '${#DEFCONFIG_INPUT[@]}' defconfigs';
-      echo '';
-      for defconfig_path in ${DEFCONFIG_INPUT[@]}; do
-        cnt=$((${cnt} + 1));
-        echo "   ${cnt}: ${defconfig_path}";
-      done;
-      echo '';
-      printf "  Defconfig to use [1 to ${cnt}] : ";
-      read key;
-      key=$((${key} - 1));
-      if [ ${key} -ge 0 ] && [ ${key} -lt ${cnt} ]; then
-        DEFCONFIG_INPUT=${DEFCONFIG_INPUT[${key}]};
-      else
-        DEFCONFIG_INPUT='';
-      fi;
-
-      # Validate user choice
-      if [ ! -f "${DEFCONFIG_INPUT}" ]; then
-        echo '';
-        echo '  Error: makedefconf found no defconfigs';
-        echo '';
-        return;
-      fi;
-    fi;
+    # Kernel defconfig
+    kerneldefconfig "${1}";
 
     # Kernel toolchains selection
     kerneltoolchains;
-
-    # Kernel defconfig
-    export DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
 
     # Kernel configuration
     make ${DEFCONFIG_NAME} O=./.build;
@@ -107,6 +57,71 @@ function makekernel()
   echo '';
   echo -e " \e[1;37m[ Done compiling in ${time_diff} secs ]\e[0m";
   echo '';
+}
+
+# === Kernel Defconfig Selection ===
+function kerneldefconfig()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: kerneldefconfig [platform_device] (Select defconfig easily)';
+    echo '';
+    return;
+  fi;
+
+  # Detect arm / arm64
+  export ARCH=arm;
+  local DEFCONFIG_CHECKS;
+  for arch_check in arm arm64; do
+    DEFCONFIG_CHECKS=("./arch/${arch_check}/configs/"*"${1}"*);
+    if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS}" ]; then
+      export ARCH=${arch_check};
+      break;
+    fi;
+  done;
+
+  # Defconfig detection
+  local DEFCONFIG_PATH=./arch/${ARCH}/configs;
+  local DEFCONFIG_INPUT=("${DEFCONFIG_PATH}/"*"${1}"*);
+  if [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
+    if [ ${#DEFCONFIG_INPUT[@]} -eq 1 ]; then
+      echo '';
+      echo '  Error: makedefconf found no defconfigs';
+      echo '';
+      return;
+    fi;
+
+    # Create defconfig selector list
+    local cnt=0;
+    echo '';
+    echo '  Warning: makedefconf found '${#DEFCONFIG_INPUT[@]}' defconfigs';
+    echo '';
+    for defconfig_path in ${DEFCONFIG_INPUT[@]}; do
+      cnt=$((${cnt} + 1));
+      echo "   ${cnt}: ${defconfig_path}";
+    done;
+    echo '';
+    printf "  Defconfig to use [1 to ${cnt}] : ";
+    read key;
+    key=$((${key} - 1));
+    if [ ${key} -ge 0 ] && [ ${key} -lt ${cnt} ]; then
+      DEFCONFIG_INPUT=${DEFCONFIG_INPUT[${key}]};
+    else
+      DEFCONFIG_INPUT='';
+    fi;
+
+    # Validate user choice
+    if [ ! -f "${DEFCONFIG_INPUT}" ]; then
+      echo '';
+      echo '  Error: makedefconf found no defconfigs';
+      echo '';
+      return;
+    fi;
+  fi;
+
+  # Kernel defconfig
+  export DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
 }
 
 # === Kernel Toolchains Selection ===

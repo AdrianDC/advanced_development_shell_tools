@@ -398,6 +398,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_builders.rc)
   ```
   * [**makekernel** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *makekernel [platform_device_to_init / clean / mrproper] [make_parameters]*
+  * [**kerneldefconfig** *<b>\[Select defconfig easily\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *kerneldefconfig [platform_device]*
   * [**kerneltoolchains** *<b>\[Select toolchains based on ARCH in Android build tree\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)
 
 ---
