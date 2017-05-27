@@ -675,7 +675,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdrecovery** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./bootable/recovery/*
 
 ---
-### [&nbsp;Documentation: [android_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc)&nbsp;]
+### [&nbsp;Documentation: [android_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc)  - Standalone Import Ready&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
+  ```
   * [**binaryeditor** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *binaryeditor &lt;patternsearch&gt; [binariespath] [replacement]*
   * [**librarieshunter** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *librarieshunter &lt;binariespath&gt;*
   * [**haste** *<b>\[Share hastebin logs\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *haste &lt;file&gt; or \| haste*
