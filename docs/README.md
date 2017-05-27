@@ -582,11 +582,11 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_repo_init.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc)&nbsp;]
-  * [**repoinitaosp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitaosp &lt;android-7.1.2_r{XX}&gt; [referenced,clean,rmout,noprepare,example]*
-  * [**repoinitlineage** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitlineage &lt;13.0/14.1&gt; [referenced,clean,rmout,noprepare,example]*
-  * [**repoinitaospall** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitaospall &lt;android-7.1.2_r{XX}&gt; [clean,rmout]*
-  * [**repoinitlineageall** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitlineageall &lt;13.0/14.1&gt; [clean,rmout]*
-  * [**repoinitrr** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitrr &lt;nougat&gt; [referenced,clean,rmout,noprepare]*
+  * [**repoinitaosp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitaosp &lt;android-7.1.2_r{XX}&gt; [referenced,clean,noprepare,example]*
+  * [**repoinitlineage** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitlineage &lt;13.0/14.1&gt; [referenced,clean,noprepare,example]*
+  * [**repoinitaospall** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitaospall &lt;android-7.1.2_r{XX}&gt; [clean]*
+  * [**repoinitlineageall** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitlineageall &lt;13.0/14.1&gt; [clean]*
+  * [**repoinitrr** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitrr &lt;nougat&gt; [referenced,clean,noprepare]*
   * [**repoinittwrp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinittwrp &lt;twrp-{X.X}&gt; [referenced,clean]*
 
 ---
