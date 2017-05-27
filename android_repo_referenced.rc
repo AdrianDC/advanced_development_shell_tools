@@ -94,7 +94,7 @@ function reporefupdate()
   # Detect and update AOSP references
   for project in sony8960_n sony8960_o sony8960_master sonyaosp aospcaf; do
     cddevaosp ${project};
-    if [ ${?} -eq 0 ] && ! git diff-index --quiet HEAD --; then
+    if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating AOSP ${project} references...";
       git add -Ap;
@@ -108,7 +108,7 @@ function reporefupdate()
   # Detect and update LineageOS references
   for project in sony8960 sony8996 sonyaosp; do
     cddevlineage ${project};
-    if [ ${?} -eq 0 ] && ! git diff-index --quiet HEAD --; then
+    if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
       git add -Ap;
@@ -119,11 +119,23 @@ function reporefupdate()
     fi;
   done;
 
+  # Detect and update common manifests references
+  cddev 'android_development_manifests';
+  if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
+    echo '';
+    echo " Updating common manifests references...";
+    git add -Ap;
+    if ! git diff --cached --quiet; then
+      git commit --amend;
+      gitpu origin local_manifests y;
+    fi;
+  fi;
+
   # Detect and update MultiROM references
   cddevmrom;
-  if [ ${?} -eq 0 ] && ! git diff-index --quiet HEAD --; then
+  if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
     echo '';
-    echo " Updating MultiROM ${project} references...";
+    echo " Updating MultiROM references...";
     git add -Ap;
     if ! git diff --cached --quiet; then
       git commit --amend;
@@ -133,9 +145,9 @@ function reporefupdate()
 
   # Detect and update TWRP references
   cddevtwrp;
-  if [ ${?} -eq 0 ] && ! git diff-index --quiet HEAD --; then
+  if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
     echo '';
-    echo " Updating TWRP ${project} references...";
+    echo " Updating TWRP references...";
     git add -Ap;
     if ! git diff --cached --quiet; then
       git commit --amend;
@@ -181,11 +193,22 @@ function reporefsync()
     fi;
   done;
 
+  # Fetch and update common manifests references
+  cddev 'android_development_manifests';
+  if [ ${?} -eq 0 ]; then
+    echo '';
+    echo " Syncing common manifests references...";
+    git fetch origin local_manifests;
+    git diff FETCH_HEAD;
+    git reset FETCH_HEAD;
+    git stash -u;
+  fi;
+
   # Fetch and update MultiROM references
   cddevmrom;
   if [ ${?} -eq 0 ]; then
     echo '';
-    echo " Syncing MultiROM ${project} references...";
+    echo " Syncing MultiROM references...";
     git fetch origin local_manifests;
     git diff FETCH_HEAD;
     git reset FETCH_HEAD;
@@ -196,7 +219,7 @@ function reporefsync()
   cddevtwrp;
   if [ ${?} -eq 0 ]; then
     echo '';
-    echo " Syncing TWRP ${project} references...";
+    echo " Syncing TWRP references...";
     git fetch origin local_manifests;
     git diff FETCH_HEAD;
     git reset FETCH_HEAD;
