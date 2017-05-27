@@ -9,7 +9,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaosp <android-7.1.2_r{XX}> [referenced,clean,noprepare,example]';
+    echo ' Usage: repoinitaosp <android-7.1.2_r{XX}> [referenced,clean,shallow,noprepare,example]';
     echo '';
     return;
   fi;
@@ -19,12 +19,18 @@ function repoinitaosp()
   local params="${2}";
   local branch="android-7.1.2_r${release}";
   local init_command;
+  local depth=;
+
+  # Repo shallow
+  if [[ "${params}" =~ 'shallow' ]]; then
+    depth='--depth 1';
+  fi;
 
   # Repo init command
   if [[ "${params}" =~ 'referenced' ]]; then
-    init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch} --reference=$(readlink -f $(getand)/AOSP)";
+    init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch} ${depth} --reference=$(readlink -f $(getand)/AOSP)";
   else
-    init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch}";
+    init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch} ${depth}";
   fi;
 
   # Output example command
@@ -79,7 +85,7 @@ function repoinitlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,noprepare,example]';
+    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,shallow,noprepare,example]';
     echo '';
     return;
   fi;
@@ -89,12 +95,18 @@ function repoinitlineage()
   local params="${2}";
   local branch="cm-${release}";
   local init_command;
+  local depth=;
+
+  # Repo shallow
+  if [[ "${params}" =~ 'shallow' ]]; then
+    depth='--depth 1';
+  fi;
 
   # Repo init command
   if [[ "${params}" =~ 'referenced' ]]; then
-    init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch} --reference=$(readlink -f $(getand)/LineageOS)";
+    init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch} ${depth} --reference=$(readlink -f $(getand)/LineageOS)";
   else
-    init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch}";
+    init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch} ${depth}";
   fi;
 
   # Output example command
@@ -215,7 +227,7 @@ function repoinitrr()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitrr <nougat> [referenced,clean,noprepare]';
+    echo ' Usage: repoinitrr <nougat> [referenced,clean,shallow,noprepare]';
     echo '';
     return;
   fi;
@@ -224,6 +236,12 @@ function repoinitrr()
   local release="${1}";
   local params="${2}";
   local branch="${release}";
+  local depth=;
+
+  # Repo shallow
+  if [[ "${params}" =~ 'shallow' ]]; then
+    depth='--depth 1';
+  fi;
 
   # Prepare synced objects for migrations
   if [[ ! "${params}" =~ 'noprepare' ]] && [[ ! "${params}" =~ 'clean' ]]; then
@@ -245,10 +263,14 @@ function repoinitrr()
 
   # Repo init
   if [[ "${params}" =~ 'referenced' ]]; then
-    repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch} \
+    repo init -u http://github.com/ResurrectionRemix/platform_manifest.git \
+              -b ${branch} \
+              ${depth} \
               --reference=$(readlink -f $(getand)/LineageOS);
   else
-    repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch};
+    repo init -u http://github.com/ResurrectionRemix/platform_manifest.git \
+              -b ${branch} \
+              ${depth};
   fi;
 
   # Exit on repo init failure
@@ -270,7 +292,7 @@ function repoinittwrp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinittwrp <twrp-{X.X}> [referenced,clean]';
+    echo ' Usage: repoinittwrp <twrp-{X.X}> [referenced,clean,shallow]';
     echo '';
     return;
   fi;
@@ -279,6 +301,12 @@ function repoinittwrp()
   local release="${1}";
   local params="${2}";
   local branch="twrp-${release}";
+  local depth=;
+
+  # Repo shallow
+  if [[ "${params}" =~ 'shallow' ]]; then
+    depth='--depth 1';
+  fi;
 
   # Wipe the out folder
   rm -rfv out;
@@ -297,10 +325,14 @@ function repoinittwrp()
 
   # Repo init
   if [[ "${params}" =~ 'referenced' ]]; then
-    repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b ${branch} \
+    repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git \
+              -b ${branch} \
+              ${depth} \
               --reference=$(readlink -f $(getand)/TWRP);
   else
-    repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b ${branch};
+    repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git \
+              -b ${branch} \
+              ${depth};
   fi;
 
   # Exit on repo init failure
