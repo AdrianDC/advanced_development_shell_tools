@@ -458,6 +458,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**disableautomount** *<b>\[Linux USB automount disabler\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**diffbin** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *diffbin &lt;binary_left&gt; &lt;binary_right&gt; [first_n_lines]*
   * [**netspeed** *<b>\[Display network speeds\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
+  * [**netspeedtest** *<b>\[Run SpeedTest client\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**buildlock** *<b>\[Mutex-locked command execution\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *buildlock &lt;command...&gt;*
   * [**fileschemesorter** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *fileschemesorter &lt;file_to_sort&gt; &lt;file_reference&gt;*
   * [**mtpmountdisable** *<b>\[Disable MTP automount\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)

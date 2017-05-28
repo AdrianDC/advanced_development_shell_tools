@@ -192,6 +192,15 @@ function netspeed()
   done;
 }
 
+# === Net Speed Test ===
+function netspeedtest()
+{
+  # Usage: netspeedtest (Run SpeedTest client)
+
+  # Run SpeedTest client
+  curl -s  https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -;
+}
+
 # === Build Locker ===
 function buildlock()
 {
