@@ -368,5 +368,5 @@ function androidfilesopen()
   # Usage: androidfilesopen (Open AndroidFiles folder)
 
   # Open AndroidFiles folder
-  xdg-open "${ANDROID_FILES_PATH}/";
+  diropen "${ANDROID_FILES_PATH}/";
 }

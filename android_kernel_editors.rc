@@ -35,7 +35,7 @@ function boottools()
   if [ -z "${2}" ]; then
 
     # Edit
-    xdg-open "${out_folder}";
+    diropen "${out_folder}";
     echo '';
     printf ' Press Enter to continue [ENTER] ';
     read key;
@@ -138,7 +138,7 @@ function bootelf()
   if [ -z "${2}" ]; then
 
     # Edit
-    xdg-open "${out_folder}";
+    diropen "${out_folder}";
     echo '';
     printf ' Press Enter to continue [ENTER] ';
     read key;

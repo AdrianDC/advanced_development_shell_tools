@@ -141,7 +141,7 @@ function cpioext()
   cp "${file}" "${outdir}/";
   cd "${outdir}";
   cpio -i -F "${name}";
-  xdg-open "${outdir}/";
+  diropen "${outdir}/";
   cd "${cwd}";
 }
 
