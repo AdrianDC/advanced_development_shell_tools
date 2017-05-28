@@ -35,4 +35,9 @@ function autoreleaseaospsodp8996()
     romautorelease ${device} aosp "${2}";
 
   done;
+
+  # With outclean, delete out folder once done
+  if [[ "${2}" =~ 'outclean' ]]; then
+    rm -rfv out;
+  fi;
 }

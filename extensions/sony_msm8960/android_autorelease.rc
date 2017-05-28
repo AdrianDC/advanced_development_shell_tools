@@ -40,6 +40,11 @@ function autoreleaseaospsony8960()
     romautorelease ${device} aosp "${2}";
 
   done;
+
+  # With outclean, delete out folder once done
+  if [[ "${2}" =~ 'outclean' ]]; then
+    rm -rfv out;
+  fi;
 }
 
 # === LineageOS Automatic Releaser ===
@@ -75,6 +80,11 @@ function autoreleaselineagesony8960()
     romautorelease ${device} lineage "${2}";
 
   done;
+
+  # With outclean, delete out folder once done
+  if [[ "${2}" =~ 'outclean' ]]; then
+    rm -rfv out;
+  fi;
 }
 
 # === ResurrectionRemix Sony 8960 Automatic Releaser ===
@@ -107,6 +117,11 @@ function autoreleaserrsony8960()
     romautorelease ${device} rr outclean "${2}";
 
   done;
+
+  # With outclean, delete out folder once done
+  if [[ "${2}" =~ 'outclean' ]]; then
+    rm -rfv out;
+  fi;
 }
 
 # === MultiROM Sony 8960 Automatic Releaser ===
@@ -161,4 +176,9 @@ function autoreleasecafsony8960()
     romautorelease ${device} caf "${2}";
 
   done;
+
+  # With outclean, delete out folder once done
+  if [[ "${2}" =~ 'outclean' ]]; then
+    rm -rfv out;
+  fi;
 }
