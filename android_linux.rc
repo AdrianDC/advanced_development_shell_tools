@@ -253,6 +253,15 @@ function netspeedtest()
   curl -s  https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -;
 }
 
+# === Trim Trees ===
+function trimtrees()
+{
+  # Usage: trimtrees <paths> (Hardlink duplicated files with trimtrees from cpansearch.perl.org)
+
+  # Hardlink duplicated files with trimtrees from cpansearch.perl.org
+  perl <(curl -Ls http://cpansearch.perl.org/src/ANDK/Perl-Repository-APC-2.002/eg/trimtrees.pl) ${@};
+}
+
 # === Build Locker ===
 function buildlock()
 {
