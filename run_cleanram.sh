@@ -5,9 +5,11 @@
 
 # Usage: run_cleanram.sh (RAM caches cleanup)
 
+# Show available RAM
 free;
 sudo echo '';
 
+# RAM cleanup commands
 commands=$(echo \
 'sync
 swapoff -a
@@ -17,6 +19,7 @@ echo 3 > /proc/sys/vm/drop_caches
 swapon -a' \
 | sed 's/^ *//g');
 
+# Execute RAM cleanup commands
 OLDIFS="${IFS}";
 IFS=$'\n';
 for command in ${commands}; do
@@ -25,5 +28,6 @@ for command in ${commands}; do
 done;
 IFS="${OLDIFS}";
 
-echo "";
+# Show available RAM
+echo '';
 free;
