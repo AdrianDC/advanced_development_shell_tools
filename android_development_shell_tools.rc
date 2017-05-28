@@ -264,6 +264,7 @@ function shtoolsreadme()
   local delimiter_end='<!-- Functions End -->';
   local github_project_url='http:\/\/github.com\/AdrianDC\/android_development_shell_tools';
   local github_file_path='blob\/master';
+  local github_raw_path='raw\/master';
   local line;
   local line_function;
   local line_standalone;
@@ -288,7 +289,7 @@ function shtoolsreadme()
 
     # Detect .sh executable scripts
     if [ "${path: -3}" = '.sh' ]; then
-      line_standalone=${github_project_url//\\\//\/}/${path};
+      line_standalone=${github_project_url//\\\//\/}/${github_raw_path//\\\//\/}/${path};
     fi;
 
     # Create source section

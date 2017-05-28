@@ -818,28 +818,28 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [install_repo.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/install_repo.sh)  - Standalone Import Ready&nbsp;]
   ```Shell
-source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/install_repo.sh)
+source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/raw/master/install_repo.sh)
   ```
   * [**\./install_repo.sh** *<b>\[Automated install of Android repo requirements\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/install_repo.sh)
 
 ---
 ### [&nbsp;Documentation: [run_cleanrambuild.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanrambuild.sh)  - Standalone Import Ready&nbsp;]
   ```Shell
-source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/run_cleanrambuild.sh)
+source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/raw/master/run_cleanrambuild.sh)
   ```
   * [**\./run_cleanrambuild.sh** *<b>\[Build RAM processes cleanup\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanrambuild.sh)
 
 ---
 ### [&nbsp;Documentation: [run_cleanram.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanram.sh)  - Standalone Import Ready&nbsp;]
   ```Shell
-source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/run_cleanram.sh)
+source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/raw/master/run_cleanram.sh)
   ```
   * [**\./run_cleanram.sh** *<b>\[RAM caches cleanup\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanram.sh)
 
 ---
 ### [&nbsp;Documentation: [server_reboot.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/server_reboot.sh)  - Standalone Import Ready&nbsp;]
   ```Shell
-source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/server_reboot.sh)
+source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/raw/master/server_reboot.sh)
   ```
   * [**\./server_reboot.sh** *<b>\[Server crontab script to reboot when not building\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/server_reboot.sh)
 
