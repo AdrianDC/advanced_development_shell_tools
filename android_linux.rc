@@ -63,6 +63,26 @@ function fileedit()
   done;
 }
 
+# === Director Opener ===
+function diropen()
+{
+  # Usage
+  if [ ! -d "${1}" ]; then
+    echo '';
+    echo ' Usage: diropen <path> (Directory opener for most environments)';
+    echo '';
+    return;
+  fi;
+
+  # Computer environement
+  xdg-open "${1}" 2> /dev/null;
+
+  # Server environment
+  if [ ${?} -ne 0 ]; then
+    cd "${1}";
+  fi;
+}
+
 # === Clipboard ===
 function toclip() { xclip -selection c; }
 
