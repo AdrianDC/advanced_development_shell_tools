@@ -259,3 +259,23 @@ function repogetbranch()
   # Output result
   echo "${branch}";
 }
+
+# === Repo List Exclude Search ===
+function repolistexclude()
+{
+  # Usage: repolistexclude [word_to_search] (Get repo list fields to exclude with search)
+
+  # List all fields
+  echo '';
+  if [ -z "${1}" ]; then
+    repo list | sed 's/\(.*\) : \(.*\)/\2 [\1]/g' \
+              | sort;
+
+  # Get repo list fields to exclude with search
+  else
+    repo list | grep "${1}" \
+              | sed 's/.* : \(.*\)/  <remove-project name="\1" \/>/g' \
+              | sort;
+  fi;
+  echo '';
+}
