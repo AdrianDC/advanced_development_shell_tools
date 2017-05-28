@@ -465,6 +465,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**networkrestart** *<b>\[Restart network manager\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**pushbsizes** *<b>\[Path sizes in PushBullet notification\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *pushbsizes &lt;paths&gt;*
   * [**isdone** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *notify-send "Process execution finished !*
+  * [**topmem** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *top -o %MEM*
 
 ---
 ### [&nbsp;Documentation: [android_pushbullet.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_pushbullet.rc)&nbsp;]
