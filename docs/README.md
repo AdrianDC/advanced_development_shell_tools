@@ -466,6 +466,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**fileschemesorter** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *fileschemesorter &lt;file_to_sort&gt; &lt;file_reference&gt;*
   * [**mtpmountdisable** *<b>\[Disable MTP automount\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**cleanram** *<b>\[RAM caches cleanup\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
+  * [**cleanrambuild** *<b>\[RAM caches cleanup\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**cleanramkill** *<b>\[Complete RAM cleanup including "java"\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**networkrestart** *<b>\[Restart network manager\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**pushbsizes** *<b>\[Path sizes in PushBullet notification\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *pushbsizes &lt;paths&gt;*
@@ -820,6 +821,13 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/install_repo.sh)
   ```
   * [**\./install_repo.sh** *<b>\[Automated install of Android repo requirements\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/install_repo.sh)
+
+---
+### [&nbsp;Documentation: [run_cleanrambuild.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanrambuild.sh)  - Standalone Import Ready&nbsp;]
+  ```Shell
+source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/run_cleanrambuild.sh)
+  ```
+  * [**\./run_cleanrambuild.sh** *<b>\[Build RAM processes cleanup\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanrambuild.sh)
 
 ---
 ### [&nbsp;Documentation: [run_cleanram.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanram.sh)  - Standalone Import Ready&nbsp;]
