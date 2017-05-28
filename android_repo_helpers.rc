@@ -101,11 +101,23 @@ function reporoomserv()
 {
   # Usage: reporoomserv (Manifest and local_manifests editor)
 
-  # Manifest and local_manifests editor
+  # Path handling
   local cwd=$(pwd);
   croot;
+
+  # Folder creation
   mkdir -p .repo/local_manifests/;
-  xdg-open .repo/local_manifests/roomservice.xml .repo/manifest.xml;
+
+  # Files to open
+  local files=.repo/local_manifests/roomservice.xml .repo/manifest.xml;
+  if [ -f .repo/local_manifests/untracked.xml ]; then
+    files=${files} .repo/local_manifests/untracked.xml;
+  fi;
+
+  # Manifest and local_manifests editor
+  fileedit ${files};
+
+  # Restore path
   cd "${cwd}";
 }
 

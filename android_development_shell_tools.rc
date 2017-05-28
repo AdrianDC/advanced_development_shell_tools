@@ -91,7 +91,7 @@ function shtoolse()
 
   # Open listed files
   if [ ! -z "${files}" ]; then
-    xdg-open ${files};
+    fileedit ${files};
   fi;
 }
 
