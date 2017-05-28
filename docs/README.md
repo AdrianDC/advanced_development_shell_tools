@@ -446,6 +446,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_linux.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)&nbsp;]
   * [**bashup** *<b>\[Reload ~/.bashrc\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
+  * [**bashe** *<b>\[Edit ~/.bashrc\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**cls** *<b>\[Clean terminal screen\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**toclip** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *xclip -selection c*
   * [**findn** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *find -name*

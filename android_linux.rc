@@ -3,13 +3,22 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === Bash Update ===
+# === .bashrc Update ===
 function bashup()
 {
   # Usage: bashup (Reload ~/.bashrc)
 
   # Reload ~/.bashrc
   source ~/.bashrc;
+}
+
+# === .bashrc Edit ===
+function bashe()
+{
+  # Usage: bashe (Edit ~/.bashrc)
+
+  # Edit ~/.bashrc
+  nano ~/.bashrc;
 }
 
 # === Clear Screen ===
