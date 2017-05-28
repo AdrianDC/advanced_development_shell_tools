@@ -96,8 +96,10 @@ function autoreleaserrsony8960()
   cdand;
 
   # Repository sync
-  if [ -z "${1}" ]; then
+  if [[ ! "${2}" =~ 'nosync' ]]; then
     cdlineage;
+    reposy;
+    cdrr;
     reposy;
   fi;
 
@@ -106,12 +108,6 @@ function autoreleaserrsony8960()
 
   # Walk through devices
   for device in ${devices}; do
-
-    # Device sync
-    cdrr ${device};
-    if [[ ! "${2}" =~ 'nosync' ]]; then
-      reposy;
-    fi;
 
     # ROM build and release
     romautorelease ${device} rr outclean "${2}";
