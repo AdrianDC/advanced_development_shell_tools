@@ -6,7 +6,7 @@
 # === AOSP 8960 Automatic Releaser ===
 function autoreleaseaospsony8960()
 {
-  # Usage: autoreleaseaospsony8960 [devices] [bool_nosync] (Automated AOSP Sony 8960 releaser)
+  # Usage: autoreleaseaospsony8960 [devices] [nosync,outclean] (Automated AOSP Sony 8960 releaser)
 
   # AndroidDev
   cdand;
@@ -31,13 +31,13 @@ function autoreleaseaospsony8960()
     fi;
 
     # Device sync
-    if [ -z "${2}" ]; then
+    if [[ ! "${2}" =~ 'nosync' ]]; then
       reposy;
     fi;
 
     # ROM build and release
     aospsony8960npatcher;
-    romautorelease ${device} aosp;
+    romautorelease ${device} aosp "${2}";
 
   done;
 }
@@ -45,7 +45,7 @@ function autoreleaseaospsony8960()
 # === LineageOS Automatic Releaser ===
 function autoreleaselineagesony8960()
 {
-  # Usage: autoreleaselineagesony8960 [devices] [bool_nosync] (Automated LineageOS Sony 8960 releaser)
+  # Usage: autoreleaselineagesony8960 [devices] [nosync,outclean] (Automated LineageOS Sony 8960 releaser)
 
   # AndroidDev
   cdand;
@@ -64,7 +64,7 @@ function autoreleaselineagesony8960()
 
     # Device sync
     cdlineage ${device};
-    if [ -z "${2}" ]; then
+    if [[ ! "${2}" =~ 'nosync' ]]; then
       reposy;
     fi;
 
@@ -72,7 +72,7 @@ function autoreleaselineagesony8960()
     lineagepatcher;
 
     # ROM build and release
-    romautorelease ${device} lineage;
+    romautorelease ${device} lineage "${2}";
 
   done;
 }
@@ -80,7 +80,7 @@ function autoreleaselineagesony8960()
 # === ResurrectionRemix Sony 8960 Automatic Releaser ===
 function autoreleaserrsony8960()
 {
-  # Usage: autoreleaserrsony8960 [devices] [bool_nosync] (Automated RR Sony 8960 releaser)
+  # Usage: autoreleaserrsony8960 [devices] [nosync,outclean] (Automated RR Sony 8960 releaser)
 
   # AndroidDev
   cdand;
@@ -99,12 +99,12 @@ function autoreleaserrsony8960()
 
     # Device sync
     cdrr ${device};
-    if [ -z "${2}" ]; then
+    if [[ ! "${2}" =~ 'nosync' ]]; then
       reposy;
     fi;
 
     # ROM build and release
-    romautorelease ${device} rr outclean;
+    romautorelease ${device} rr outclean "${2}";
 
   done;
 }
@@ -140,14 +140,14 @@ function autoreleasetwrpsony8960()
 # === ROM CAF Sony 8960 Releaser ===
 function autoreleasecafsony8960()
 {
-  # Usage: autoreleasecafsony8960 [devices] (Automated AOSP-CAF Sony 8960 releaser)
+  # Usage: autoreleasecafsony8960 [devices] [nosync,outclean] (Automated AOSP-CAF Sony 8960 releaser)
 
   # AndroidDev
   cdand;
   cdaospcaf;
 
   # Repository sync
-  if [ -z "${1}" ]; then
+  if [[ ! "${2}" =~ 'nosync' ]]; then
     reposycl;
   fi;
 
@@ -158,7 +158,7 @@ function autoreleasecafsony8960()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} caf;
+    romautorelease ${device} caf "${2}";
 
   done;
 }

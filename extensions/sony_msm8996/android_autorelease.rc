@@ -6,7 +6,7 @@
 # === AOSP Sony SODP Automatic Releaser ===
 function autoreleaseaospsodp8996()
 {
-  # Usage: autoreleaseaospsodp8996 [devices] [bool_nosync] (Automated AOSP Sony SODP 8996 releaser)
+  # Usage: autoreleaseaospsodp8996 [devices] [nosync,outclean] (Automated AOSP Sony SODP 8996 releaser)
 
   # AndroidDev
   cdand;
@@ -19,7 +19,7 @@ function autoreleaseaospsodp8996()
 
   # Project selection, sync and patch
   cdaosp sony;
-  if [ -z "${2}" ]; then
+  if [[ ! "${2}" =~ 'nosync' ]]; then
     reposy;
   fi;
   aospsonysodprebaser;
@@ -32,7 +32,7 @@ function autoreleaseaospsodp8996()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} aosp;
+    romautorelease ${device} aosp "${2}";
 
   done;
 }
