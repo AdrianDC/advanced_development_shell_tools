@@ -37,7 +37,9 @@ function androiddevicestarget()
   fi;
   if [ -z "${device}" ]; then
     >&2 echo '';
-    >&2 printf " Device target [${target_devices}] : ";
+    >&2 echo ' export TARGET_PRODUCT=device_name is empty';
+    >&2 echo '';
+    >&2 printf " > Device target [${target_devices}] : ";
     read device;
     >&2 echo '';
     export ANDROID_DEVICE_TARGET=${device};
