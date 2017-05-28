@@ -31,6 +31,38 @@ function cls()
   clear;
 }
 
+# === File Editor ===
+function fileedit()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fileedit <paths> (Files editor for most environments)';
+    echo '';
+    return;
+  fi;
+
+  # Files editor for most environments
+  for file in ${@}; do
+
+    # Filter only files
+    if [ ! -f "${file}" ]; then
+      continue;
+    fi;
+
+    # Computer environement
+    xdg-open "${file}" 2> /dev/null;
+
+    # Server environment
+    if [ ${?} -ne 0 ]; then
+      if [ ! -z "$(type -t nano 2> /dev/null)" ]; then
+        nano "${file}";
+      fi;
+    fi;
+
+  done;
+}
+
 # === Clipboard ===
 function toclip() { xclip -selection c; }
 
