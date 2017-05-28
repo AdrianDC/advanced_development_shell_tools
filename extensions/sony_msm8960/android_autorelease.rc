@@ -102,7 +102,7 @@ function autoreleaserrsony8960()
   fi;
 
   # Devices to build
-  local devices=${1:-huashan mint hayabusa tsubasa nicki taoshan};
+  local devices=${1:-huashan mint hayabusa tsubasa nicki};
 
   # Walk through devices
   for device in ${devices}; do
