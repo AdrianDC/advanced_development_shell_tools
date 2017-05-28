@@ -123,6 +123,7 @@ function shtoolspush()
   # Commit changes to upstream
   local currentdir=${PWD};
   cd "${android_development_shell_tools_dir}/";
+  git add -N *;
   git add . -Ap;
   git commit -s;
   git push -f origin HEAD:${android_development_shell_tools_branch};
@@ -141,6 +142,7 @@ function shtoolsamend()
   # Amend changes to upstream
   local currentdir=${PWD};
   cd "${android_development_shell_tools_dir}/";
+  git add -N *;
   git add . -Ap;
   git commit -s --amend;
   git push -f origin HEAD:${android_development_shell_tools_branch};
