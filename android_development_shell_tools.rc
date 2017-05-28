@@ -78,7 +78,7 @@ function shtoolse()
 
   # Study all script files
   for file_source in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[@]}; do
-    for word in ${@}; do
+    for word in "${@}"; do
       grep -aiq "${word}" "${file_source}";
 
       # List found files
