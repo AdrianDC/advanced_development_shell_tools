@@ -499,7 +499,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_release_builders.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc)&nbsp;]
-  * [**romautorelease** *<b>\[Advanced automated ROM builder\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romautorelease &lt;devicename&gt; &lt;aosp/lineage/lx/caf/rr&gt; [nowipe,bringup,local,j1/j2]*
+  * [**romautorelease** *<b>\[Advanced automated ROM builder\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romautorelease &lt;devicename&gt; &lt;aosp/lineage/lx/caf/rr&gt; [nowipe,bringup,j1/j2]*
   * [**autorelease** *<b>\[Helper menu access to autorelease* functions\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc)
 
 ---
@@ -520,6 +520,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**romautorelease-clean-enable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN='true'*
   * [**romautorelease-clean-disable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN=*
   * [**romautorelease-clean-active** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN}" ]*
+  * [**romautorelease-local-enable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL='true'*
+  * [**romautorelease-local-disable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL=*
+  * [**romautorelease-local-active** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL}" ]*
   * [**romautorelease-nosync-enable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC='true'*
   * [**romautorelease-nosync-disable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC=*
   * [**romautorelease-nosync-active** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC}" ]*

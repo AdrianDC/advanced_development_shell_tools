@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr> [nowipe,bringup,local,j1/j2] (Advanced automated ROM builder)';
+  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr> [nowipe,bringup,j1/j2] (Advanced automated ROM builder)';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " ${function_usage}";
@@ -161,8 +161,8 @@ function romautorelease()
   # Notify build result
   pushbrom "${rom_device}" "${rom_tag}";
 
-  # Upload ROM when not local and notify upload
-  if [[ ! "${rom_params}" =~ 'local' ]]; then
+  # Upload ROM when not working locally
+  if ! romautorelease-local-active; then
 
     # Upload in multitasking when possible and allowed
     if ! romautorelease-clean-active && \
