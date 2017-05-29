@@ -1,0 +1,38 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === ROM Logs Viewer ===
+function romlogs()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: romlogs <device> <rom> [logs_count_(default_200)]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local rom_device="${1}";
+  local rom_name="${2}";
+  local logs_count="${3:-200}";
+  local logs_files;
+  local logs_file;
+
+  # Logs detection
+  logs_files=$(find "${ANDROID_DEV_DRIVE}/Logs" -maxdepth 1 -iname "Build.*${rom_device}*.*${rom_name}*.log");
+  logs_file=$(echo "${logs_files}" | head -n 1);
+
+  # Logs view
+  echo '';
+  if [ ! -z "${logs_files}" ]; then
+    cat "${logs_file}" | tail -n ${logs_count};
+    echo '';
+    echo "${logs_files}";
+  else
+    echo " No logs for ${rom_device} / ${rom_name} found...";
+  fi;
+  echo '';
+}
