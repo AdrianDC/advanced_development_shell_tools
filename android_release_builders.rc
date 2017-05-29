@@ -6,8 +6,8 @@
 # === ROM Automatic Releaser ===
 function romautorelease()
 {
-  # Function usage
-  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr> [nowipe,bringup,j1/j2] (Advanced automated ROM builder)';
+  # Usage
+  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr> [nowipe,j1/j2] (Advanced automated ROM builder)';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " ${function_usage}";
@@ -18,7 +18,7 @@ function romautorelease()
   # Error with ANDROID_DEV_DRIVE missing
   if [ -z "${ANDROID_DEV_DRIVE}" ]; then
     echo '';
-    echo " Error: ANDROID_DEV_DRIVE is missing.";
+    echo ' Error: ANDROID_DEV_DRIVE is missing.';
     echo '  Please read the README.md from this project...';
     echo '';
     return;
@@ -82,8 +82,8 @@ function romautorelease()
     return;
   fi;
 
-  # Bring-Up build
-  if [[ "${rom_params}" =~ 'bringup' ]]; then
+  # When option enabled, use debuggable bootimages
+  if romautorelease-clean-active; then
     bootimagedebuggable "${rom_device}" true;
     export WITH_SU=true;
   fi;
@@ -152,8 +152,8 @@ function romautorelease()
     brunch "${rom_target}" | tee ${rom_logs_output};
   fi;
 
-  # Bring-Up build
-  if [[ "${rom_params}" =~ 'bringup' ]]; then
+  # When option enabled, use debuggable bootimages
+  if romautorelease-clean-active; then
     bootimagedebuggable "${rom_device}" false;
     export WITH_SU=;
   fi;
