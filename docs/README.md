@@ -517,6 +517,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**romautorelease-clean-enable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN='true'*
   * [**romautorelease-clean-disable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN=*
   * [**romautorelease-clean-active** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN}" ]*
+  * [**romautorelease-nosync-enable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC='true'*
+  * [**romautorelease-nosync-disable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC=*
+  * [**romautorelease-nosync-active** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC}" ]*
 
 ---
 ### [&nbsp;Documentation: [android_release_packages.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc)&nbsp;]

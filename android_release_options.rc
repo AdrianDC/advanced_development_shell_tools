@@ -7,3 +7,8 @@
 function romautorelease-clean-enable()  { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN='true'; }
 function romautorelease-clean-disable() { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN=; }
 function romautorelease-clean-active()  { [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN}" ]; }
+
+# === ROM Automatic Releaser - Option nosync ===
+function romautorelease-nosync-enable()  { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC='true'; }
+function romautorelease-nosync-disable() { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC=; }
+function romautorelease-nosync-active()  { [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC}" ]; }
