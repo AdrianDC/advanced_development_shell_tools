@@ -9,7 +9,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaosp <android-7.1.2_r{XX}> [referenced,clean,shallow,noprepare,example] (repo init for AOSP)';
+    echo ' Usage: repoinitaosp <android-7.1.2_r{XX}> [referenced,clean,shallow,example] (repo init for AOSP)';
     echo '';
     return;
   fi;
@@ -42,7 +42,7 @@ function repoinitaosp()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'noprepare' ]] && [[ ! "${params}" =~ 'clean' ]]; then
+  if [[ ! "${params}" =~ 'clean' ]]; then
     ${init_command};
     reposy;
   fi;
@@ -85,7 +85,7 @@ function repoinitlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,shallow,noprepare,example] (repo init for LineageOS)';
+    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,shallow,example] (repo init for LineageOS)';
     echo '';
     return;
   fi;
@@ -118,7 +118,7 @@ function repoinitlineage()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'noprepare' ]] && [[ ! "${params}" =~ 'clean' ]]; then
+  if [[ ! "${params}" =~ 'clean' ]]; then
     ${init_command};
     reposy;
   fi;
@@ -227,7 +227,7 @@ function repoinitrr()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitrr <nougat> [referenced,clean,shallow,noprepare] (repo init for ResurrectionRemix)';
+    echo ' Usage: repoinitrr <nougat> [referenced,clean,shallow] (repo init for ResurrectionRemix)';
     echo '';
     return;
   fi;
@@ -244,8 +244,7 @@ function repoinitrr()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'noprepare' ]] && [[ ! "${params}" =~ 'clean' ]]; then
-    ${init_command};
+  if [[ ! "${params}" =~ 'clean' ]]; then
     reposy;
   fi;
 
