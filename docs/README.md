@@ -513,6 +513,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**noccache** *<b>\[Run command without CCache\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *noccache &lt;command...&gt;*
 
 ---
+### [&nbsp;Documentation: [android_release_options.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)&nbsp;]
+  * [**romautorelease-clean-enable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN='true'*
+  * [**romautorelease-clean-disable** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN=*
+  * [**romautorelease-clean-active** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN}" ]*
+
+---
 ### [&nbsp;Documentation: [android_release_packages.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc)&nbsp;]
   * [**signzip** *<b>\[Sign flashable zip\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *signzip &lt;zip_to_sign&gt; [signed_output_zip]*
   * [**signapk** *<b>\[Sign apk files\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *signapk &lt;apk_to_sign&gt; [signed_output_apk]*

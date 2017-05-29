@@ -1,0 +1,9 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === ROM Automatic Releaser - Option clean ===
+function romautorelease-clean-enable()  { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN='true'; }
+function romautorelease-clean-disable() { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN=; }
+function romautorelease-clean-active()  { [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN}" ]; }
