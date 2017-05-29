@@ -6,10 +6,10 @@
 # === Git Push Helpers ===
 alias gitpf='git push -f';
 
-# === Git Push User ===
+# === Git Push Validated Remote ===
 function gitpu()
 {
-  # Usage: gitpu [remote] [branch] [input]
+  # Usage: gitpu [remote] [branch] [input] (Git push to validated remote)
 
   # Variables
   local remote=${1:-github};

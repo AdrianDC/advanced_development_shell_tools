@@ -8,7 +8,7 @@ function makekernelinjector()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo ' Usage: makekernelinjector <device_name>';
+    echo ' Usage: makekernelinjector <device_name> (Helper to makekernel with injector zip)';
     return;
   fi;
 

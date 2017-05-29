@@ -9,7 +9,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaosp <android-7.1.2_r{XX}> [referenced,clean,shallow,noprepare,example]';
+    echo ' Usage: repoinitaosp <android-7.1.2_r{XX}> [referenced,clean,shallow,noprepare,example] (repo init for AOSP)';
     echo '';
     return;
   fi;
@@ -85,7 +85,7 @@ function repoinitlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,shallow,noprepare,example]';
+    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,shallow,noprepare,example] (repo init for LineageOS)';
     echo '';
     return;
   fi;
@@ -161,7 +161,7 @@ function repoinitaospall()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaospall <android-7.1.2_r{XX}> [clean]';
+    echo ' Usage: repoinitaospall <android-7.1.2_r{XX}> [clean] (repo init for referenced AOSP)';
     echo '';
     return;
   fi;
@@ -194,7 +194,7 @@ function repoinitlineageall()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineageall <13.0/14.1> [clean]';
+    echo ' Usage: repoinitlineageall <13.0/14.1> [clean] (repo init for referenced LineageOS)';
     echo '';
     return;
   fi;
@@ -227,7 +227,7 @@ function repoinitrr()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitrr <nougat> [referenced,clean,shallow,noprepare]';
+    echo ' Usage: repoinitrr <nougat> [referenced,clean,shallow,noprepare] (repo init for ResurrectionRemix)';
     echo '';
     return;
   fi;
@@ -292,7 +292,7 @@ function repoinittwrp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinittwrp <twrp-{X.X}> [referenced,clean,shallow]';
+    echo ' Usage: repoinittwrp <twrp-{X.X}> [referenced,clean,shallow] (repo init for TWRP)';
     echo '';
     return;
   fi;

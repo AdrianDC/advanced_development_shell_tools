@@ -15,7 +15,7 @@ function gitcleantags()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitcleantags <branch_to_keep>';
+    echo ' Usage: gitcleantags <branch_to_keep> (Cleanup unrequired git tags)';
     echo '';
     return;
   fi;

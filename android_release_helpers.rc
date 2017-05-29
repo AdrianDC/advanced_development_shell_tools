@@ -9,7 +9,7 @@ function outdevcl()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: outdevcl <devicename>';
+    echo ' Usage: outdevcl <devicename> (Advanced ROM output cleaner for rebuilds)';
     echo '';
     return;
   fi;

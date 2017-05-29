@@ -9,7 +9,7 @@ function megamirror()
   # Usage
   if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: megamirror <local_folder> <remote_folder> <--upload/--download> [--copy,-y/-n]';
+    echo ' Usage: megamirror <local_folder> <remote_folder> <--upload/--download> [--copy,-y/-n] (MEGA mirror syncer)';
     echo '';
     echo '  > Upload with --upload (individual), optional --copy (megacopy)';
     echo '  > Download with --download (individual), optional --copy (megacopy)';

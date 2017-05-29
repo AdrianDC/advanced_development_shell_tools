@@ -95,7 +95,7 @@ function rsynca()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: rsynca <path1> <path2>';
+    echo ' Usage: rsynca <path1> <path2> (Mirror a path to another)';
     echo '';
     return;
   fi;
@@ -111,7 +111,7 @@ function findnewer()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: findnewer <20160123>';
+    echo ' Usage: findnewer <20160123> (Search files newer than a date)';
     echo '';
     return;
   fi;
@@ -128,7 +128,7 @@ function cpioext()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: cpioext <cpio_file_to_extract>';
+    echo ' Usage: cpioext <cpio_file_to_extract> (Extract cpio file)';
     echo '';
     return;
   fi;
@@ -151,7 +151,7 @@ function videoresize()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: videoresize <video_file>';
+    echo ' Usage: videoresize <video_file> (Resize video dimensions)';
     echo '';
     return;
   fi;
@@ -183,7 +183,7 @@ function diffbin()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: diffbin <binary_left> <binary_right> [first_n_lines]';
+    echo ' Usage: diffbin <binary_left> <binary_right> [first_n_lines] (Compare binary files)';
     echo '';
     return;
   fi;
@@ -327,7 +327,7 @@ function fileschemesorter()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: fileschemesorter <file_to_sort> <file_reference>';
+    echo ' Usage: fileschemesorter <file_to_sort> <file_reference> (Sort file against scheme file)';
     echo '';
     return;
   fi;

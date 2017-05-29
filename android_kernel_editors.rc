@@ -13,7 +13,7 @@ function boottools()
   # Usage
   if [ -z "${1}" ] || [ ! -f "${1}" ]; then
     echo '';
-    echo '  Usage: boottools <boot.img>';
+    echo '  Usage: boottools <boot.img> (Android bootimage editor)';
     echo '';
     return;
   fi;
@@ -65,7 +65,7 @@ function bootelf()
   # Usage
   if [ -z "${1}" ] || [ ! -f "${1}" ]; then
     echo '';
-    echo '  Usage: bootelf <boot.img>';
+    echo '  Usage: bootelf <boot.img> (Sony ELF 8960 bootimage editor)';
     echo '';
     return;
   fi;

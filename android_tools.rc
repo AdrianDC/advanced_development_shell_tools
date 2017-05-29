@@ -12,7 +12,7 @@ function binaryeditor()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: binaryeditor <patternsearch> [binariespath] [replacement]';
+    echo ' Usage: binaryeditor <patternsearch> [binariespath] [replacement] (Binary files parser and editor)';
     echo '';
     return;
   fi;
@@ -112,7 +112,7 @@ function librarieshunter()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: librarieshunter <binariespath>';
+    echo ' Usage: librarieshunter <binariespath> (Libraries linkage analyzer)';
     echo '';
     return;
   fi;
@@ -218,7 +218,7 @@ function overlaycompare()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: overlaycompare <overlay_file_path>';
+    echo ' Usage: overlaycompare <overlay_file_path> (Compare device overlays against sources)';
     echo '';
     return;
   fi;

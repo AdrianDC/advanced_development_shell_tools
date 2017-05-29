@@ -9,7 +9,7 @@ function editreplacematch()
   # Usage
   if [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: editreplacematch <"match_line"> <"to_write"> <"files">';
+    echo ' Usage: editreplacematch <"match_line"> <"to_write"> <"files"> (Edit by replacing matches)';
     echo '';
     return;
   fi;
@@ -29,7 +29,7 @@ function editremovematch()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: editremovematch <"match_line"> <"files">';
+    echo ' Usage: editremovematch <"match_line"> <"files"> (Edit by removing matches)';
     echo '';
     return;
   fi;
@@ -48,7 +48,7 @@ function editinsertabove()
   # Usage
   if [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: editinsertabove <"match_line"> <"to_insert"> <"files">';
+    echo ' Usage: editinsertabove <"match_line"> <"to_insert"> <"files"> (Edit by inserting above)';
     echo '';
     return;
   fi;
@@ -68,7 +68,7 @@ function editinsertbelow()
   # Usage
   if [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: editinsertbelow <"match_line"> <"to_insert"> <"files">';
+    echo ' Usage: editinsertbelow <"match_line"> <"to_insert"> <"files"> (Edit by inserting below)';
     echo '';
     return;
   fi;
@@ -88,7 +88,7 @@ function editreplacemultiline()
   # Usage
   if [ -z "${4}" ]; then
     echo '';
-    echo ' Usage: editreplacemultiline <"match_first"> <"match_last"> <"replace"> <"files">';
+    echo ' Usage: editreplacemultiline <"match_first"> <"match_last"> <"replace"> <"files"> (Edit by replacing multiple lines)';
     echo '';
     return;
   fi;

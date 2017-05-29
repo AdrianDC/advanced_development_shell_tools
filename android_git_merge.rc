@@ -31,7 +31,7 @@ function gitmtr()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitmtr <referenced_path>';
+    echo ' Usage: gitmtr <referenced_path> (Merge tool with reference project sources)';
     echo '';
     return;
   fi;

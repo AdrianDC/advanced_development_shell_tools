@@ -28,7 +28,7 @@ function makekernel()
     # Usage
     if [ -z "${1}" ] || ! ls arch/arm*/configs/*${1}*_defconfig 1> /dev/null 2>&1; then
       echo '';
-      echo ' Usage: makekernel [platform_device_to_init / clean / mrproper] [make_parameters]';
+      echo ' Usage: makekernel [platform_device_to_init / clean / mrproper] [make_parameters] (Kernel inline compiler)';
       echo '   Details: The kernel needs to be under an Android build tree to select toolchains'
       echo '';
       return;

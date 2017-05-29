@@ -9,7 +9,7 @@ function fileupl()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: fileupl <file_path> [target_folder]';
+    echo ' Usage: fileupl <file_path> [target_folder] (File to release server uploader)';
     echo '';
     return;
   fi;

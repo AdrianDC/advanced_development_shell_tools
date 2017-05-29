@@ -122,7 +122,7 @@ function reposyrm()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reposyrm <project/relative/path>';
+    echo ' Usage: reposyrm <project/relative/path> (Project repo sync with removal)';
     echo '';
     return;
   fi;
@@ -144,7 +144,7 @@ function reposyrmf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reposyrmf <project/relative/path>';
+    echo ' Usage: reposyrmf <project/relative/path> (Project repo sync with forced removal)';
     echo '';
     return;
   fi;

@@ -13,7 +13,7 @@ function reporeferencedaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reporeferencedaosp <"command_to_run"> <"device1 device2 ...">';
+    echo ' Usage: reporeferencedaosp <"command_to_run"> <"device1 device2 ..."> (AOSP referenced repo commands launcher)';
     echo '';
     return;
   fi;
@@ -51,7 +51,7 @@ function reporeferencedlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reporeferencedlineage <"command_to_run"> <"device1 device2 ...">';
+    echo ' Usage: reporeferencedlineage <"command_to_run"> <"device1 device2 ..."> (LineageOS referenced repo commands launcher)';
     echo '';
     return;
   fi;

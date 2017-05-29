@@ -9,7 +9,7 @@
 # === Gerrit SSH ===
 function gerritssh()
 {
-  # Usage: gerritssh [branch] [change_id_reverser]
+  # Usage: gerritssh [branch] [change_id_reverser] (Advanced Gerrit SSH interface)
 
   # Gerrit Credentials
   if [ -z "${GerritUsername}" ]; then

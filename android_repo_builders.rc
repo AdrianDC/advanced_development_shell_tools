@@ -9,7 +9,7 @@ function repotwrp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repotwrp {device} [nosync,nowipe,outcl,fota,local +fotareboot]';
+    echo ' Usage: repotwrp {device} [nosync,nowipe,outcl,fota,local +fotareboot] (Advanced builder for TWRP)';
     echo '';
     return;
   fi;
@@ -185,7 +185,7 @@ function repomrom()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repomrom {device} [nosync,nowipe,outcl,fota,local +fotareboot]';
+    echo ' Usage: repomrom {device} [nosync,nowipe,outcl,fota,local +fotareboot] (Advanced builder for MultiROM)';
     echo '';
     return;
   fi;

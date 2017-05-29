@@ -9,7 +9,7 @@ function gitcpu()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitcpu <githuburltocommit> [branch]';
+    echo ' Usage: gitcpu <githuburltocommit> [branch] (Git URL commit cherry-picker)';
     echo '';
     return;
   fi;
@@ -84,7 +84,7 @@ function gitcpo()
   echo '';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo -e '  \e[1;37mGit Origin Cherry-Pick.\e[0m';
-    echo '    Usage: gitcpo <branch> <amount_of_commits>';
+    echo '    Usage: gitcpo <branch> <amount_of_commits> (GitHub origin cherry-picker)';
     echo '';
     return;
   fi;

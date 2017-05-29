@@ -18,7 +18,7 @@ function fboota()
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] ||
       [ -z "${TARGET_PRODUCT}" ] || [ "${1}" = '-h' ] ; then
     echo '';
-    echo ' Usage: fboota [fastupl,flash,full,init,inject,recovery,sep,unsecure,zip]';
+    echo ' Usage: fboota [fastupl,flash,full,init,inject,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -191,7 +191,7 @@ function fboota()
 # === Kernel Flasher ===
 function fboot()
 {
-  # Usage: fboot <bootimage>
+  # Usage: fboot <bootimage> (fastboot bootimage flashed)
 
   # Bootloader, flash bootimage and reboot
   sudo adb reboot bootloader;
@@ -207,7 +207,7 @@ function fboot()
 # === System Flasher ===
 function fboots()
 {
-  # Usage: fboots <system_img>
+  # Usage: fboots <system_img> (fastboot systemimage flashed)
 
   # Bootloader and flash system
   sudo adb reboot bootloader;
@@ -250,7 +250,7 @@ function bootinfo()
   # Usage
   if [ ! -f "${1}" ]; then
     echo '';
-    echo ' Usage: bootinfo <boot_img_file>';
+    echo ' Usage: bootinfo <boot_img_file> (Bootimage structure and information parser)';
     echo '';
     return;
   fi;
@@ -289,7 +289,7 @@ function fbootk()
   # Usage
   if [ -z "${filepath}" ] || [ ! -f "${filepath}" ]; then
     echo '';
-    echo '  Usage: fbootk <kernelpath> [bool_fota]';
+    echo '  Usage: fbootk <kernelpath> [bool_fota] (Kernel image to boot partition injector)';
     echo '';
     return;
   fi;
@@ -407,7 +407,7 @@ function kernelinjectorzip()
   # Usage
   if [ -z "${2}" ] || [ ! -f "${2}" ]; then
     echo '';
-    echo ' Usage: kernelinjectorzip <device> <kernel_file_path> [kernel_sources_for_modules]';
+    echo ' Usage: kernelinjectorzip <device> <kernel_file_path> [kernel_sources_for_modules] (Kernel to injector zip packager)';
     echo '';
     return;
   fi;
@@ -470,7 +470,7 @@ function bootzip()
   # Usage
   if [ -z "${2}" ] || [ ! -f "${2}" ]; then
     echo '';
-    echo ' Usage: bootzip <device> <boot_img_path>';
+    echo ' Usage: bootzip <device> <boot_img_path> (Bootimage to zip packager)';
     echo '';
     return;
   fi;
@@ -545,7 +545,7 @@ function bootimagedebuggable()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: bootimagedebuggable <device_product> <true/false>';
+    echo ' Usage: bootimagedebuggable <device_product> <true/false> (Bootimage build unsecured patcher)';
     echo '';
     return;
   fi;

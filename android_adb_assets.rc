@@ -9,7 +9,7 @@ function adbdatabase()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbdatabase </data/.../sqlite.db>';
+    echo ' Usage: adbdatabase </data/.../sqlite.db> (Android sqlite3 database opener)';
     echo '';
     return;
   fi;

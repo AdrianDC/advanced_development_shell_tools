@@ -6,7 +6,7 @@
 # === Repo Compare Stable ===
 function repocomparestable()
 {
-  # Usage: repocomparestable [stable_ZNH5Y] [github_account_LineageOS] [full_diff]
+  # Usage: repocomparestable [stable_ZNH5Y] [github_account_LineageOS] [full_diff] (Helper to compare with stable branch)
 
   # Default variables
   local default_github_account='LineageOS';
@@ -71,7 +71,7 @@ function repocomparestable()
 # === Repo Compare Upstream ===
 function repocompareupstream()
 {
-  # Usage: repocompareupstream [github_account_LineageOS] [full_diff]';
+  # Usage: repocompareupstream [github_account_LineageOS] [full_diff] (Helper to compare with upstream branch)';
 
   # Default variables
   local default_github_account='LineageOS';
@@ -134,7 +134,7 @@ function repocomparetags()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repocomparetags <tag_to_compare_to_android_branch> [ignore_account_LineageOS] [full_diff]';
+    echo ' Usage: repocomparetags <tag_to_compare_to_android_branch> [ignore_account_LineageOS] [full_diff] (Helper to compare with tags)';
     echo ' Information: Need to be started from the repo root';
     echo '';
     return;

@@ -29,7 +29,7 @@ function makekernelcopyleft()
     # Usage
     if [ -z "${1}" ] || ! ls arch/arm*/configs/diffconfig/${1}_diffconfig 1> /dev/null 2>&1; then
       echo '';
-      echo ' Usage: makekernelcopyleft [platform_device_to_init / clean / mrproper] [make_parameters]';
+      echo ' Usage: makekernelcopyleft [platform_device_to_init / clean / mrproper] [make_parameters] (Kernel inline compiler for Sony Copyleft)';
       echo '   Details: The kernel needs to be under an Android build tree to select toolchains'
       echo '';
       return;

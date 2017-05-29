@@ -12,7 +12,7 @@ function makedefconf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo '  Usage: makedefconf <device_name> [bool_full_config] [diff_config] [force_config=value]';
+    echo '  Usage: makedefconf <device_name> [bool_full_config] [diff_config] [force_config=value] (Advanced defconfig helper)';
     echo '';
     return;
   fi;
@@ -151,7 +151,7 @@ function kernelconfigupdater()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo '  Usage: kernelconfigupdater <CONFIG_NAME=VALUE_or_# CONFIG_NAME is not set>';
+    echo '  Usage: kernelconfigupdater <CONFIG_NAME=VALUE_or_# CONFIG_NAME is not set> (Kernel config updater)';
     echo '';
     return;
   fi;
@@ -195,7 +195,7 @@ function makedefconfset()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo '  Usage: makedefconfset <device_name> [force_config=value]';
+    echo '  Usage: makedefconfset <device_name> [force_config=value] (Kernel defconfig configuration setter)';
     echo '';
     return;
   fi;

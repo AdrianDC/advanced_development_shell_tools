@@ -12,7 +12,7 @@ function gitremoteset()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitremoteset <remote_name> <remote_url>';
+    echo ' Usage: gitremoteset <remote_name> <remote_url> (Git remote setter)';
     echo '';
     return;
   fi;
@@ -35,7 +35,7 @@ function gitremoteadaptset()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitremoteadaptset <remote_name> <remote_github> [prefix_removal] [bool_prefix_android] [bool_underscore_to_dash]';
+    echo ' Usage: gitremoteadaptset <remote_name> <remote_github> [prefix_removal] [bool_prefix_android] [bool_underscore_to_dash] (Git remote adapter)';
     echo '';
     return;
   fi;
@@ -102,7 +102,7 @@ function gitremoteverify()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitremoteverify <remote_name> "command_to_run_if_missing"';
+    echo ' Usage: gitremoteverify <remote_name> "command_to_run_if_missing" (Git remote verifier)';
     echo '';
     return 1;
   fi;

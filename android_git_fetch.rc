@@ -6,7 +6,7 @@
 # === Git Fetch Reset Assets ===
 function gitfetchtreset()
 {
-  # Usage: gitfetchtreset [remote] [branch]
+  # Usage: gitfetchtreset [remote] [branch] (Git fetch and reset hard)
 
   # Fetch and reset hard
   git fetch ${1:-$(githubusername)} ${2:-$(repogetbranch)};

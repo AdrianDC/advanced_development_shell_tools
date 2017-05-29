@@ -17,7 +17,7 @@ function adbl()
     system) adb_buffer='-b system';;
     help)
       echo '';
-      echo ' Usage: adbl [all/crash/events/main/radio/system]';
+      echo ' Usage: adbl [all/crash/events/main/radio/system] (adb Logcat helper)';
       echo '';
       return;;
   esac;

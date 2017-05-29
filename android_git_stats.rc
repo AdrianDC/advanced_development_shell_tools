@@ -9,7 +9,7 @@ function gitstat()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: gitstat <remote> <branch> [stats_only]';
+    echo ' Usage: gitstat <remote> <branch> [stats_only] (Git history with remote comparator)';
     echo '';
     return;
   fi;

@@ -98,7 +98,7 @@ function androidprojectpatcher()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: androidprojectpatcher <project_name> <project_tag> ["project paths"] [specific_path]';
+    echo ' Usage: androidprojectpatcher <project_name> <project_tag> ["project paths"] [specific_path] (Android project patcher)';
     echo '';
     return;
   fi;
@@ -286,7 +286,7 @@ function androidprojectrebaser()
   # Usage
   if [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: androidprojectrebaser <upstream_repository_if_not_origin> <project_branch> <"project_paths::name::branch"> [specific_path]';
+    echo ' Usage: androidprojectrebaser <upstream_repository_if_not_origin> <project_branch> <"project_paths::name::branch"> [specific_path] (Android project rebaser)';
     echo '';
     return;
   fi;
