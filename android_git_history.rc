@@ -1,0 +1,107 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Git Log Helpers ===
+alias gitlo='git log --pretty=oneline';
+alias gitlod='git log --pretty=oneline --';
+alias gitloo='git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --';
+
+# === Git Log Searcher ===
+function gitlos()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitlos <path_or_.> ["search string input"] [search_max_count]';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local input;
+  local path;
+  local cnt;
+
+  # Handle input values
+  if [ -f "${1}" ] || [ -d "${1}" ]; then
+    path=${1};
+    input=${2};
+    cnt=${3:-30};
+  else
+    path='.';
+    input=${1};
+    cnt=${2:-30};
+  fi;
+
+  # Search related commits
+  echo '';
+  echo -e " \e[1;37mSearching for ${input} in last ${cnt} commits...\e[0m";
+  echo '';
+  for sha1 in $(git log --max-count=${cnt} --format=format:%H -- "${path}"); do
+    if [ ! -z "$(git show ${sha1} | grep -i "${input}")" ]; then
+      git show --name-only --oneline ${sha1};
+      git show ${sha1} | grep -i "${input}";
+      echo '';
+    fi;
+  done;
+}
+
+# === Git Diff Status ===
+function gitdi()
+{
+  # Usage: gitdi (Show git differences status)
+
+  # Show unmerged diffs
+  git diff --name-status;
+  git ls-files --others --exclude-standard | awk '{print "U       " $0}';
+}
+
+# === Git Diff Status SHA1 ===
+function gitdfs()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitdfs <sha1commit>';
+    echo '';
+    return;
+  fi;
+
+  # Diff commits
+  git diff-tree --no-commit-id --name-status -r ${1};
+}
+
+# === Git Diff SHA1 On Path ===
+function gitdf()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitdf <sha1commit> <filepath>';
+    echo '';
+    return;
+  fi;
+
+  # Diff commits with paths
+  git diff ${1}^:${2} ${1}:${2};
+}
+
+# === Git Commit Finder ===
+function gitfindsha1()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitfindsha1 <remote/branch> <"title text to search">';
+    echo '';
+    return;
+  fi;
+
+  # Search
+  git log --pretty=oneline ${1} \
+    | grep "${2}" \
+    | head -n 1 \
+    | cut -f 1 -d ' ';
+}

@@ -1,0 +1,48 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === GitHub Username ===
+function githubusername()
+{
+  # Usage: githubusername (GitHub username getter)
+
+  # GitHub Credentials
+  export GitEMail="user.name@gmail.com";
+  export GitFullName="Full Name";
+  export GitUserName="Username";
+
+  # Create  ~/.bash_android.github.rc with the exports to override the credentials
+  if [ -f ~/.bash_android.github.rc ]; then
+    source ~/.bash_android.github.rc;
+  fi;
+
+  # Return username
+  echo "${GitUserName}";
+}
+
+# === Git Config Helpers ===
+alias gitrerere='git config --global rerere.enabled';
+alias gitdiffpermhide='git config core.filemode false';
+alias gitdiffpermshow='git config core.filemode true';
+alias gpglist='gpg --list-secret-keys --keyid-format LONG';
+alias gpgsilent='echo "no-tty" >> ~/.gnupg/gpg.conf';
+alias gpgenable='git config --global commit.gpgsign true';
+alias gpgdisable='git config --global commit.gpgsign false';
+alias gpgsigning='git config --global user.signingkey';
+alias gitshowsg='git config --global alias.logs "log --show-signature"';
+alias gitpwstore='git config --global credential.helper store';
+alias githi='git update-index --assume-unchanged';
+alias gitsh='git update-index --no-assume-unchanged';
+
+# === Git GPG Parameter ===
+function gitgpgparam()
+{
+  # Usage: gitgpgparam (Returns the GPG signature flag if enabled)
+
+  # Returns the GPG signature flag if enabled
+  if [ "$(git config --global --get commit.gpgsign)" = 'true' ]; then
+    echo '-S';
+  fi;
+}

@@ -3,6 +3,9 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
+# === Git Push Helpers ===
+alias gitpf='git push -f';
+
 # === Git Push User ===
 function gitpu()
 {
@@ -41,6 +44,9 @@ function gitpu()
   echo '';
 }
 
+# === Git Push Url Helper ===
+function gitpurl() { gitpu "${1%/commits/*}" "${1#*/commits/}"; }
+
 # === Git Push Helpers ===
 alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';
 alias gitpa14='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1';
@@ -55,6 +61,3 @@ alias gitpat='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername
 alias gitpb='gitremoteverify backup gitrab && gitpu backup';
 alias gitpp='gitremoteverify project false && gitpu project';
 alias gitppm='gitremoteverify project false && gitpu project master';
-
-# === Git Push Url Helper ===
-function gitpurl() { gitpu "${1%/commits/*}" "${1#*/commits/}"; }

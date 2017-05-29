@@ -13,6 +13,39 @@ function gitfetchtreset()
   git reset FETCH_HEAD --hard;
 }
 
+# === GitHub Url Fetch-Reset ===
+function gitfcu()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitfcu <url> [branch] (Git fetch url and reset)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  link="${1}";
+
+  if [ ! -z "${2}" ]; then
+    branch="${2}";
+  else
+    branch='cm-14.1';
+  fi;
+
+  if [ -z "${link}" ]; then
+    echo " Error: Not a GitHub url '${link}'";
+    return;
+  fi;
+
+  git fetch ${link} ${branch};
+  echo '';
+  git reset --hard FETCH_HEAD;
+}
+
+# === Git Fetch Helpers ===
+function gitfurl() { git fetch "${1%/commits/*}" "${1#*/commits/}"; }
+
 # === Git Fetch Shortcuts ===
 alias gitf='git fetch';
 alias gitfmr='git fetch origin; git reset origin/master';

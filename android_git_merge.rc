@@ -1,0 +1,51 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Git MergeTool Shortcut ===
+alias gitmt='git mergetool';
+
+# === Git MergeTool Conflicts Editor ===
+function gitmte()
+{
+  # Usage: gitmte (Merge tool with manual conflicts resolution)
+
+  # Files differences
+  git diff --name-only | uniq;
+  echo '';
+
+  # Edit all unmerged files
+  for file in $(git diff --name-only | uniq); do
+    printf " - ${file} : ";
+    fileedit ${file};
+    printf ' Done ? [Enter / Ctrl+C] ';
+    read;
+    git add ${file};
+  done;
+}
+
+# === Git MergeTool Referenced ===
+function gitmtr()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitmtr <referenced_path>';
+    echo '';
+    return;
+  fi;
+
+  # Files differences
+  git diff --name-only | uniq;
+  echo '';
+
+  # Edit all unmerged files with reference
+  for file in $(git diff --name-only | uniq); do
+    printf " - ${file} : ";
+    meld ${file} "${1}/${file}";
+    printf ' Done ? [Enter / Ctrl+C] ';
+    read;
+    git add ${file};
+  done;
+}

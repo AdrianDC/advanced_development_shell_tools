@@ -3,6 +3,9 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
+# === Git Remote List ===
+alias gitrv='git remote -v';
+
 # === Git Remote Setter ===
 function gitremoteset()
 {
