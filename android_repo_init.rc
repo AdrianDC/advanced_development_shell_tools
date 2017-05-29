@@ -42,7 +42,7 @@ function repoinitaosp()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'clean' ]]; then
+  if [[ ! "${params}" =~ 'clean' ]] && [[ ! "${params}" =~ 'shallow' ]]; then
     ${init_command};
     reposy;
   fi;
@@ -54,8 +54,10 @@ function repoinitaosp()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" =~ 'clean' ]]; then
+  if [[ "${params}" =~ 'clean' ]] || [[ "${params}" =~ 'shallow' ]]; then
     rm -rfv .repo/project-objects;
+  fi;
+  if [[ "${params}" =~ 'clean' ]]; then
     rm -rfv *;
   fi;
   rm -rfv prebuilts/qemu-kernel;
@@ -118,7 +120,7 @@ function repoinitlineage()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'clean' ]]; then
+  if [[ ! "${params}" =~ 'clean' ]] && [[ ! "${params}" =~ 'shallow' ]]; then
     ${init_command};
     reposy;
   fi;
@@ -130,8 +132,10 @@ function repoinitlineage()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" =~ 'clean' ]]; then
+  if [[ "${params}" =~ 'clean' ]] || [[ "${params}" =~ 'shallow' ]]; then
     rm -rfv .repo/project-objects;
+  fi;
+  if [[ "${params}" =~ 'clean' ]]; then
     rm -rfv *;
   fi;
   rm -rfv prebuilts/qemu-kernel;
@@ -244,7 +248,7 @@ function repoinitrr()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'clean' ]]; then
+  if [[ ! "${params}" =~ 'clean' ]] && [[ ! "${params}" =~ 'shallow' ]]; then
     reposy;
   fi;
 
@@ -255,8 +259,10 @@ function repoinitrr()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" =~ 'clean' ]]; then
+  if [[ "${params}" =~ 'clean' ]] || [[ "${params}" =~ 'shallow' ]]; then
     rm -rfv .repo/project-objects;
+  fi;
+  if [[ "${params}" =~ 'clean' ]]; then
     rm -rfv *;
   fi;
 
@@ -317,8 +323,10 @@ function repoinittwrp()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" =~ 'clean' ]]; then
+  if [[ "${params}" =~ 'clean' ]] || [[ "${params}" =~ 'shallow' ]]; then
     rm -rfv .repo/project-objects;
+  fi;
+  if [[ "${params}" =~ 'clean' ]]; then
     rm -rfv *;
   fi;
 
