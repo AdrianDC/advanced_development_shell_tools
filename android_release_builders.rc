@@ -163,13 +163,18 @@ function romautorelease()
 
   # Upload ROM when not local and notify upload
   if [[ ! "${rom_params}" =~ 'local' ]]; then
-    if [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
+
+    # Upload in multitasking without 'outclean'
+    if [[ ! "${rom_params}" =~ 'outclean' ]] && \
+       [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
       gnome-terminal -x bash -c "\
         source $(shtoolsget)/android_development_shell_tools.rc;\
         devuplrom \"${rom_device}\" \"${rom_upload}\"; \
         if [ ! -z "\${android_development_shell_tools_uploaded_file}" ]; then \
           pushb \"$(hostname): ${rom_tag} for ${rom_device} uploaded\"; \
         fi";
+
+    # Upload inline
     else
       devuplrom "${rom_device}" "${rom_upload}";
       if [ ! -z "${android_development_shell_tools_uploaded_file}" ]; then
