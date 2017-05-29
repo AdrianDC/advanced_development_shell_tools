@@ -73,13 +73,7 @@ function gitcleantags()
 # === Git One Branch Keeper ===
 function gitonebranch()
 {
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: gitonebranch (Git remove non-default remote branches)';
-    echo '';
-    return;
-  fi;
+  # Usage: gitonebranch (Git remove non-default remote branches)
 
   # Fetch remotes
   local username=$(githubusername);
