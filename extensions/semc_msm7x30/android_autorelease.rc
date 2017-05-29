@@ -26,11 +26,14 @@ function autoreleaselegacyxperia()
     lineagelxpatcher;
   fi;
 
+  # Force clean option
+  romautorelease-clean-enable;
+
   # Walk through devices
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} lx outclean;
+    romautorelease ${device} lx;
 
   done;
 }

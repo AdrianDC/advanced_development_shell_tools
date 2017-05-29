@@ -7,7 +7,7 @@
 function romautorelease()
 {
   # Function usage
-  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr> [nowipe,bringup,local,j1/j2,outclean] (Advanced automated ROM builder)';
+  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr> [nowipe,bringup,local,j1/j2] (Advanced automated ROM builder)';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " ${function_usage}";
@@ -92,8 +92,8 @@ function romautorelease()
   if [[ "${rom_params}" =~ 'nobuild' ]]; then
     echo ' Cleaning skipped...';
 
-  # Delete the product outputs
-  elif [[ "${rom_params}" =~ 'outclean' ]]; then
+  # When option enabled, clean device out folder
+  elif romautorelease-clean-active; then
     rm -rfv './out/target/product';
 
   # Delete the devices relevant results
@@ -164,8 +164,8 @@ function romautorelease()
   # Upload ROM when not local and notify upload
   if [[ ! "${rom_params}" =~ 'local' ]]; then
 
-    # Upload in multitasking without 'outclean'
-    if [[ ! "${rom_params}" =~ 'outclean' ]] && \
+    # Upload in multitasking when possible and allowed
+    if ! romautorelease-clean-active && \
        [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
       gnome-terminal -x bash -c "\
         source $(shtoolsget)/android_development_shell_tools.rc;\
@@ -183,8 +183,8 @@ function romautorelease()
     fi;
   fi;
 
-  # Delete the product outputs
-  if [[ "${rom_params}" =~ 'outclean' ]]; then
+  # When option enabled, clean out folder
+  if romautorelease-clean-active; then
     rm -rfv './out/target/product';
   fi;
 

@@ -6,7 +6,7 @@
 # === AOSP Sony SODP Automatic Releaser ===
 function autoreleaseaospsodp8996()
 {
-  # Usage: autoreleaseaospsodp8996 [devices] [nosync,outclean] (Automated AOSP Sony SODP 8996 releaser)
+  # Usage: autoreleaseaospsodp8996 [devices] [nosync] (Automated AOSP Sony SODP 8996 releaser)
 
   # AndroidDev
   cdand;
@@ -36,8 +36,8 @@ function autoreleaseaospsodp8996()
 
   done;
 
-  # With outclean, delete out folder once done
-  if [[ "${2}" =~ 'outclean' ]]; then
+  # When option enabled, clean out folder
+  if romautorelease-clean-active; then
     rm -rfv out;
   fi;
 }
