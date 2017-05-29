@@ -1,0 +1,32 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === MultiROM Sony 8960 Automatic Releaser ===
+function autoreleasemultiromsony8960()
+{
+  # Usage: autoreleasemultiromsony8960 [devices] (Automated MultiROM Sony 8960 releaser)
+
+  # Automated MultiROM releaser
+  cdand;
+  cdmultirom;
+  repomrom 'huashan';
+  for device in mint hayabusa tsubasa; do
+    repomrom "${device}" 'nosync';
+  done;
+}
+
+# === TWRP Sony 8960 Automatic Releaser ===
+function autoreleasetwrpsony8960()
+{
+  # Usage: autoreleasetwrpsony8960 [devices] (Automated TWRP Sony 8960 releaser)
+
+  # Automated TWRP releaser
+  cdand;
+  cdtwrp;
+  repotwrp 'huashan';
+  for device in mint hayabusa tsubasa; do
+    repotwrp "${device}" 'nosync';
+  done;
+}

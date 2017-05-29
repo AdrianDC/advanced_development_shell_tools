@@ -122,35 +122,7 @@ function autoreleaserrsony8960()
   fi;
 }
 
-# === MultiROM Sony 8960 Automatic Releaser ===
-function autoreleasemultiromsony8960()
-{
-  # Usage: autoreleasemultiromsony8960 [devices] (Automated MultiROM Sony 8960 releaser)
-
-  # Automated MultiROM releaser
-  cdand;
-  cdmultirom;
-  repomrom 'huashan';
-  for device in mint hayabusa tsubasa; do
-    repomrom "${device}" 'nosync';
-  done;
-}
-
-# === TWRP Sony 8960 Automatic Releaser ===
-function autoreleasetwrpsony8960()
-{
-  # Usage: autoreleasetwrpsony8960 [devices] (Automated TWRP Sony 8960 releaser)
-
-  # Automated TWRP releaser
-  cdand;
-  cdtwrp;
-  repotwrp 'huashan';
-  for device in mint hayabusa tsubasa; do
-    repotwrp "${device}" 'nosync';
-  done;
-}
-
-# === ROM CAF Sony 8960 Releaser ===
+# === ROM AOSP-CAF Sony 8960 Releaser ===
 function autoreleasecafsony8960()
 {
   # Usage: autoreleasecafsony8960 [devices] (Automated AOSP-CAF Sony 8960 releaser)
