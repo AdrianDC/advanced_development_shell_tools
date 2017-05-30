@@ -40,3 +40,11 @@
    export ANDROID_DEV_DRIVE=/media/../AndroidDev;
    source "/.../android_development_shell_tools.rc";
    ```
+
+
+### [ How to contribute to the project ]
+
+ * Perform the scripts modifications, fixes or additions
+ * Update README.md documentation with `shtoolsreadme`
+ * Commit the changes with git (refer to older commits for style)
+ * Push your changes and create a pull-request once ready
