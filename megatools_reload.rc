@@ -22,22 +22,22 @@ function meganzreload()
   # Prepare environment variables
   local env_ld_library_path=${LD_LIBRARY_PATH};
   local env_path=${PATH};
-  export LD_LIBRARY_PATH=${android_development_shell_tools_tools_megacmd};
-  export PATH=${android_development_shell_tools_tools_megacmd}:${PATH};
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${android_development_shell_tools_tools_megacmd};
+  export PATH=${PATH}:${android_development_shell_tools_tools_megacmd};
 
   # Start mega-cmd server
   echo '';
-  nohup ${android_development_shell_tools_tools_megacmd}/mega-cmd >/dev/null 2>&1 &
+  nohup mega-cmd >/dev/null 2>&1 &
   local proc_id=${!};
   sleep 3;
 
   # Login with .megarc credentials
   local username=$(grep 'Username' ~/.megarc | sed 's/.*= //');
   local password=$(grep 'Password' ~/.megarc | sed 's/.*= //');
-  ${android_development_shell_tools_tools_megacmd}/mega-login "${username}" "${password}";
+  mega-login "${username}" "${password}";
 
   # Launch mega-reload
-  ${android_development_shell_tools_tools_megacmd}/mega-reload;
+  mega-reload;
 
   # Stop mega-cmd server
   kill -9 "${proc_id}";
