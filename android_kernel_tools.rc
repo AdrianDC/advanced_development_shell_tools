@@ -18,7 +18,7 @@ function fboota()
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] ||
       [ -z "${TARGET_PRODUCT}" ] || [ "${1}" = '-h' ] ; then
     echo '';
-    echo ' Usage: fboota [fastupl,flash,full,init,inject,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
+    echo ' Usage: fboota [fastupl,flash,full,init,inject,push,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -133,7 +133,13 @@ function fboota()
 
   # Zip the bootimage
   elif [[ "${params}" =~ 'zip' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
-    bootzip ${device} "${bootimg}";
+
+    # Push zip to device
+    if [[ "${params}" =~ 'push' ]]; then
+      bootzip ${device} "${bootimg}" 'true';
+    else
+      bootzip ${device} "${bootimg}";
+    fi;
 
   # Upload the bootimage
   elif [[ "${params}" =~ 'fastupl' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
@@ -149,7 +155,7 @@ function fboota()
     # Waiting to get adb
     echo '';
     echo '';
-    echo -e ' \e[1;37m[ Waiting for adb root... ]\e[0m';
+    echo -e '  \e[1;37m[ fboota: Waiting for adb root... ]\e[0m';
     echo '';
     local adb=$(adbcmd);
     timeout 10 ${adb} 'wait-for-device';
@@ -157,7 +163,7 @@ function fboota()
     # Handle kernel modules
     if [ ! -z "${modules}" ]; then
       echo '';
-      echo -e ' \e[1;37m[ Kernel modules... ]\e[0m';
+      echo -e '  \e[1;37m[ fboota: Kernel modules... ]\e[0m';
       echo '';
       adb remount;
       timeout 10 ${adb} 'wait-for-device';
@@ -170,7 +176,7 @@ function fboota()
 
     # Flash new bootimage
     echo '';
-    echo -e " \e[1;37m[ Bootloader ${bootimg}... ]\e[0m";
+    echo -e "  \e[1;37m[ fboota: Bootloader ${bootimg}... ]\e[0m";
     export PackageResult="${bootimg}";
     echo '';
     adb reboot bootloader;
@@ -460,7 +466,7 @@ function kernelinjectorzip()
 
   # Result
   echo '';
-  echo -e " \e[1;37mPackage File:\e[0m ${TargetFile}";
+  echo -e "  kernelinjectorzip: \e[1;37mPackage File:\e[0m ${TargetFile}";
   echo '';
 }
 
@@ -470,7 +476,7 @@ function bootzip()
   # Usage
   if [ -z "${2}" ] || [ ! -f "${2}" ]; then
     echo '';
-    echo ' Usage: bootzip <device> <boot_img_path> (Bootimage to zip packager)';
+    echo ' Usage: bootzip <device> <boot_img_path> [push_to_device] (Bootimage to zip packager)';
     echo '';
     return;
   fi;
@@ -479,6 +485,7 @@ function bootzip()
   local CurDir=$(pwd);
   local PhoneName="${1}";
   local BootFile=$(readlink -f "${2}");
+  local PushToDevice="${3}";
   local OutFile='boot-'${PhoneName}'-'$(date +'%Y%m%d')'.zip';
   local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/${OutFile}";
   local TmpDir=$(mktemp -d);
@@ -502,9 +509,34 @@ function bootzip()
   signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
   cp "${TmpDir}/${OutFile}" "${TargetFile}";
 
+  # Push zip to the device
+  if [[ ! -z "${PushToDevice}" ]]; then
+    echo '';
+    echo '  bootzip: Pushing zip to device!';
+
+    # Waiting to get adb
+    local adb=$(adbcmd);
+    timeout 10 ${adb} 'wait-for-device';
+
+    # Remount system
+    printf '  bootzip: ';
+    adb remount;
+
+    # Push to common '/sdcard/' path
+    timeout 10 ${adb} 'wait-for-device';
+    adb push "${TargetFile}" '/sdcard/';
+
+    # Check if zip file is on device via readlink
+    if [[ "$(adb shell readlink -f /sdcard/${OutFile})" =~ 'readlink' ]]; then
+
+      # Copy it again to '/data/media/0'
+      adb push "${TargetFile}" '/data/media/0/';
+    fi;
+  fi;
+
   # End of work
   echo '';
-  echo -e " \e[1;36mPackage File:\e[0m ${TargetFile}";
+  echo -e "  \e[1;36mbootzip: Package File:\e[0m ${TargetFile}";
   export PackageResult="${TargetFile}";
   echo '';
 
@@ -560,20 +592,20 @@ function bootimagedebuggable()
 
     # Apply changes build/core/main.mk
     file_path=./build/core/main.mk;
-    echo "Bootimage: Apply debug unsecure in ${file_path}";
+    echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
     sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/' ${file_path};
     sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file_path};
 
     # Apply changes build/tools/post_process_props.py
     file_path=./build/tools/post_process_props.py;
-    echo "Bootimage: Apply debug unsecure in ${file_path}";
+    echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
     sed -i 's/val = "adb"/val = "mtp,adb"/' ${file_path};
     sed -i 's/val = val + ",adb"/val = val + ",mtp,adb"/' ${file_path};
     sed -i 's/"persist.sys.usb.config", "none"/"persist.sys.usb.config", "mtp,adb"/' ${file_path};
 
     # Apply changes vendor/cm/config/common.mk
     file_path=./vendor/cm/config/common.mk;
-    echo "Bootimage: Apply debug unsecure in ${file_path}";
+    echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
     sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file_path};
 
     # Apply changes out/target/product/${1}/*/default.prop
@@ -583,7 +615,7 @@ function bootimagedebuggable()
         ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
         ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop; do
       if [ -f "${file_path}" ]; then
-        echo "Bootimage: Apply debug unsecure in ${file_path}";
+        echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
         sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' ${file_path};
         sed -i 's/ro.secure=1/ro.secure=0/' ${file_path};
         sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' ${file_path};
@@ -595,20 +627,20 @@ function bootimagedebuggable()
 
     # Restore changes build/core/main.mk
     file_path=./build/core/main.mk;
-    echo "Bootimage: Restoring debug secure in ${file_path}";
+    echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
     sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/' ${file_path};
     sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file_path};
 
     # Restore changes build/tools/post_process_props.py
     file_path=./build/tools/post_process_props.py;
-    echo "Bootimage: Restoring debug secure in ${file_path}";
+    echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
     sed -i 's/val = "mtp,adb"/val = "adb"/' ${file_path};
     sed -i 's/val = val + ",mtp,adb"/val = val + ",adb"/' ${file_path};
     sed -i 's/"persist.sys.usb.config", "mtp,adb"/"persist.sys.usb.config", "none"/' ${file_path};
 
     # Restore changes vendor/cm/config/common.mk
     file_path=./vendor/cm/config/common.mk;
-    echo "Bootimage: Restoring debug secure in ${file_path}";
+    echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
     sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file_path};
 
     # Restore changes out/target/product/${1}/*/default.prop
@@ -618,7 +650,7 @@ function bootimagedebuggable()
         ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
         ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop; do
       if [ -f "${file_path}" ]; then
-        echo "Bootimage: Restoring debug secure in ${file_path}";
+        echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
         sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' ${file_path};
         sed -i 's/ro.secure=0/ro.secure=1/' ${file_path};
         sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' ${file_path};
