@@ -470,7 +470,7 @@ function bootzip()
   # Usage
   if [ -z "${2}" ] || [ ! -f "${2}" ]; then
     echo '';
-    echo ' Usage: bootzip <device> <boot_img_path> (Bootimage to zip packager)';
+    echo ' Usage: bootzip <device> <boot_img_path> [bool_push_to_device] (Bootimage to zip packager)';
     echo '';
     return;
   fi;
@@ -479,6 +479,7 @@ function bootzip()
   local CurDir=$(pwd);
   local PhoneName="${1}";
   local BootFile=$(readlink -f "${2}");
+  local PushToDevice="${3}";
   local OutFile='boot-'${PhoneName}'-'$(date +'%Y%m%d')'.zip';
   local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/${OutFile}";
   local TmpDir=$(mktemp -d);
@@ -501,6 +502,29 @@ function bootzip()
   # Zip signature
   signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
   cp "${TmpDir}/${OutFile}" "${TargetFile}";
+
+  # Push zip to the device
+  if [ "${PushToDevice}" = 'true' ]; then
+    echo '';
+    echo '  bootzip: Pushing zip to device';
+
+    # Waiting for adb device
+    local adb=$(adbcmd);
+    timeout 10 ${adb} 'wait-for-device';
+
+    # Remount system
+    printf '  bootzip: ';
+    adb remount;
+
+    # Push to common '/sdcard/' path
+    timeout 10 ${adb} 'wait-for-device';
+    adb push "${TargetFile}" '/sdcard/';
+
+    # If push failed, push to common '/data/media/0/' path
+    if [ -z "$(adb shell 'ls ${OutFile} 2> /dev/null')" ]; then
+      adb push "${TargetFile}" '/data/media/0/';
+    fi;
+  fi;
 
   # End of work
   echo '';
