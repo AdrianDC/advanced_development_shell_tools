@@ -862,18 +862,18 @@ source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/raw
   * [**\./install_repo.sh** *<b>\[Automated install of Android repo requirements\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/install_repo.sh)
 
 ---
-### [&nbsp;Documentation: [run_cleanrambuild.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanrambuild.sh)  - Standalone Import Ready&nbsp;]
-  ```Shell
-source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/raw/master/run_cleanrambuild.sh)
-  ```
-  * [**\./run_cleanrambuild.sh** *<b>\[Build RAM processes cleanup\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanrambuild.sh)
-
----
 ### [&nbsp;Documentation: [run_cleanram.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanram.sh)  - Standalone Import Ready&nbsp;]
   ```Shell
 source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/raw/master/run_cleanram.sh)
   ```
   * [**\./run_cleanram.sh** *<b>\[RAM caches cleanup\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanram.sh)
+
+---
+### [&nbsp;Documentation: [run_cleanrambuild.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanrambuild.sh)  - Standalone Import Ready&nbsp;]
+  ```Shell
+source <(curl -Ls http://github.com/AdrianDC/android_development_shell_tools/raw/master/run_cleanrambuild.sh)
+  ```
+  * [**\./run_cleanrambuild.sh** *<b>\[Build RAM processes cleanup\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/run_cleanrambuild.sh)
 
 ---
 ### [&nbsp;Documentation: [server_reboot.sh](http://github.com/AdrianDC/android_development_shell_tools/blob/master/server_reboot.sh)  - Standalone Import Ready&nbsp;]

@@ -25,15 +25,15 @@ function shtoolsup()
 android_development_shell_tools_sources=(
   $(ls -1 ${android_development_shell_tools_dir}'/'*'.rc' \
   | grep -v "${android_development_shell_tools_entrypoint}" \
-  | sort \
+  | LC_ALL=C sort \
   | tr '\n' ' ')
   $(ls -1 ${android_development_shell_tools_extensions}'/'*'/'*'.rc' 2> /dev/null \
-  | sort \
+  | LC_ALL=C sort \
   | tr '\n' ' ')
 );
 android_development_shell_tools_scripts=(
   $(ls -1 ${android_development_shell_tools_dir}'/'*'.sh' \
-  | sort \
+  | LC_ALL=C sort \
   | tr '\n' ' ')
 );
 
@@ -281,6 +281,10 @@ function shtoolsreadme()
   local path;
   local readme_functions='';
 
+  # Unify locale for sorting
+  local lc_all=${LC_ALL};
+  LC_ALL=C;
+
   # Refresh files list
   shtoolsup;
 
@@ -467,6 +471,9 @@ function shtoolsreadme()
 
   # Inject README.md changes
   sed -i "/${delimiter_start}/{p; :a; N; /${delimiter_end}/!ba; s/.*\n/${readme_functions}/; };" "${android_development_shell_tools_dir}/docs/README.md";
+
+  # Restore locale
+  LC_ALL=${lc_all};
 
   # Parsed header
   echo -e '\r\033[K  README.md successfully rebuilt';
