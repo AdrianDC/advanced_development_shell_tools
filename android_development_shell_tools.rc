@@ -3,9 +3,18 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
+# === Shell Entrypoint Handling ===
+android_development_shell_tools_entrypoint=${BASH_SOURCE[0]};
+android_development_shell_tools_entrypoint=${android_development_shell_tools_entrypoint:-${(%):-%N}};
+if [ -z "${android_development_shell_tools_entrypoint}" ]; then
+  echo '';
+  echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[0;33mExecution path could not be found\e[0m';
+  echo '';
+  return;
+fi;
+
 # === Android Shell Tools Folder ===
 android_development_shell_tools_branch=${android_development_shell_tools_branch:-master};
-android_development_shell_tools_entrypoint=${BASH_SOURCE[0]};
 android_development_shell_tools_dir=$(dirname ${android_development_shell_tools_entrypoint});
 android_development_shell_tools_extensions=${android_development_shell_tools_dir}/extensions;
 
