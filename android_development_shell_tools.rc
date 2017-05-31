@@ -284,11 +284,20 @@ function shtoolsreadme()
   # Refresh files list
   shtoolsup;
 
+  # Header
+  echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README.md documentation\e[0m';
+  echo -n '  ...';
+
   # Read all sources
   for file in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[@]} ${android_development_shell_tools_scripts[@]}; do
 
     # Handle file path
     path=${file##${android_development_shell_tools_dir}/};
+
+    # Parsing header
+    echo -en "\r\033[K  Parsing ${path}";
+
+    # Escape path
     path=${path//\//\\\/};
 
     # Detect standalone ready scripts
@@ -458,4 +467,8 @@ function shtoolsreadme()
 
   # Inject README.md changes
   sed -i "/${delimiter_start}/{p; :a; N; /${delimiter_end}/!ba; s/.*\n/${readme_functions}/; };" "${android_development_shell_tools_dir}/docs/README.md";
+
+  # Parsed header
+  echo -e '\r\033[K  README.md successfully rebuilt';
+  echo '';
 }
