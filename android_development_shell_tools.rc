@@ -391,7 +391,7 @@ function shtoolsreadme()
 
         # Parse single line function
         if [[ "${line}" == *"${line_function}()"*"{"*"}" ]]; then
-          line_usage=${line#*{ };
+          line_usage=${line#*\{ };
           line_usage=${line_usage% \}*};
           line_usage=${line_usage%;};
           line_usage=${line_usage// 2>*\/dev\/null/};
