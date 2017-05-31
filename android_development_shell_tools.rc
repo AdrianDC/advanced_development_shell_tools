@@ -23,18 +23,25 @@ function shtoolsup()
 
 # === Android Shell Tools Sources ===
 android_development_shell_tools_sources=(
-  $(find ${android_development_shell_tools_dir} -maxdepth 1 -type f -name '*.rc' -not -path "${android_development_shell_tools_entrypoint}" | sort)
-  $(find ${android_development_shell_tools_extensions} -maxdepth 2 -type f -name '*.rc' | sort)
+  $(ls -1 ${android_development_shell_tools_dir}'/'*'.rc' \
+  | grep -v "${android_development_shell_tools_entrypoint}" \
+  | sort \
+  | tr '\n' ' ')
+  $(ls -1 ${android_development_shell_tools_extensions}'/'*'/'*'.rc' 2> /dev/null \
+  | sort \
+  | tr '\n' ' ')
 );
 android_development_shell_tools_scripts=(
-  $(find ${android_development_shell_tools_dir} -maxdepth 1 -type f -name '*.sh' | sort)
+  $(ls -1 ${android_development_shell_tools_dir}'/'*'.sh' \
+  | sort \
+  | tr '\n' ' ')
 );
 
 # === Android Shell Tools Importations ===
 for file_source in ${android_development_shell_tools_sources[@]}; do
 
   # Import all android_development_shell_tools scripts
-  source ${file_source};
+  source "${file_source}";
 
 done;
 
@@ -65,7 +72,7 @@ function shtoolscd()
   # Usage: shtoolscd (Access android_development_shell_tools path)
 
   # Access android_development_shell_tools path
-  cd $(shtoolsget);
+  cd "$(shtoolsget)";
 }
 
 # === Android Shell Tools Functions Editor ===
