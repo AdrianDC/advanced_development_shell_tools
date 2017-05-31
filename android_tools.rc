@@ -26,6 +26,12 @@ function binaryeditor()
   PATTERN=${PATTERN//\*/.\*};
   PATTERN=${PATTERN//./.};
 
+  # Handle Sysinternals strings variant
+  local strings_param='';
+  if [ ! -z "$(strings -accepteula 2> /dev/null | grep 'sysinternals')" ]; then
+    strings_param='-accepteula -nobanner';
+  fi;
+
   # Headers
   echo '';
   if [ ! -z "${REPLACEMENT}" ]; then
@@ -46,7 +52,9 @@ function binaryeditor()
 
     # Replacement mode
     if [ ! -z "${REPLACEMENT}" ]; then
-      STRINGS=$(strings ${FILE} | grep "${PATTERN}" | sort -u -r);
+      STRINGS=$(strings ${strings_param} ${FILE} \
+              | grep "${PATTERN}" \
+              | sort -u -r);
 
       # Information found
       if [ ! -z "${STRINGS}" ]; then
@@ -88,7 +96,9 @@ function binaryeditor()
 
       # Information not found
       else
-        STRINGS=$(strings ${FILE} | grep ${REPLACEMENT} | sort -u -r);
+        STRINGS=$(strings ${strings_param} ${FILE} \
+                | grep ${REPLACEMENT} \
+                | sort -u -r);
         if [ ! -z "${STRINGS}" ]; then
           echo -e "   \e[1;37m${FILE}:\e[0m ${REPLACEMENT} \e[1;33mFound.\e[0m";
         fi;
@@ -96,7 +106,10 @@ function binaryeditor()
 
     # Search mode
     else
-      STRINGS=$(strings ${FILE} | grep "${PATTERN}" | sort -u -r | tr '\n' ',');
+      STRINGS=$(strings ${strings_param} ${FILE} \
+              | grep "${PATTERN}" \
+              | sort -u -r \
+              | tr '\n' ',');
       if [ ! -z "${STRINGS}" ]; then
         echo -e "   \e[1;37m${FILE}:\e[1;33m ${STRINGS}\e[0m";
       fi;
@@ -128,6 +141,12 @@ function librarieshunter()
   local DIR_COMMON_NAMES='';
   local DIR_VENDOR_NAMES='';
 
+  # Handle Sysinternals strings variant
+  local strings_param='';
+  if [ ! -z "$(strings -accepteula 2> /dev/null | grep 'sysinternals')" ]; then
+    strings_param='-accepteula -nobanner';
+  fi;
+
   # Scan the libraries
   echo '';
   echo -e " \e[1;31m=== Searching missing libraries in ${FILES} ===\e[0m";
@@ -138,7 +157,10 @@ function librarieshunter()
     if [ -d ${FILE} ]; then continue; fi;
 
     # Internal references
-    STRINGS=$(strings ${FILE} | grep "\\.so" | sort -u -r | tr '\n' ',');
+    STRINGS=$(strings ${strings_param} ${FILE} \
+            | grep "\\.so" \
+            | sort -u -r \
+            | tr '\n' ',');
     if [ ! -z "${STRINGS}" ]; then
       STRINGS=${STRINGS//,/ };
       echo -e "   \e[1;37m${FILE}:\e[0m";
@@ -169,7 +191,10 @@ function librarieshunter()
       do
         FILE_SUB=$(readlink -f "${FILE_SUB}");
         if [ -d "${FILE_SUB}" ] || [ "${FILE}" = "${FILE_SUB}" ]; then continue; fi;
-        STRINGS_SUB=$(strings ${FILE_SUB} | grep "${FILE_NAME}" | sort -u -r | tr '\n' ',');
+        STRINGS_SUB=$(strings ${strings_param} ${FILE_SUB} \
+                    | grep "${FILE_NAME}" \
+                    | sort -u -r \
+                    | tr '\n' ',');
         if [ ! -z "${STRINGS_SUB}" ]; then
           FILE_REFERENCED='true';
           break;
