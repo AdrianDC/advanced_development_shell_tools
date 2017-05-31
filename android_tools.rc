@@ -117,6 +117,21 @@ function binaryeditor()
   echo '';
 }
 
+# === Binary Search ===
+function binarysearch()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: binarysearch <patternsearch> [binariespath] (Binary files parser and searcher)';
+    echo '';
+    return;
+  fi;
+
+  # Run binaryeditor in search mode
+  binaryeditor "${1}" "${2}" '';
+}
+
 # === Libraries Hunter ===
 function librarieshunter()
 {
