@@ -454,6 +454,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**glj** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *GREP_COLORS='fn=1;1' grep --include *.java -anr '.{100,}' .*
   * [**gle** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *GREP_COLORS='fn=1;1' grep --include *.c --include *.cpp --include *.h --include *.java -anr '.* $' .*
   * [**gcmodules** *<b>\[List all LOCAL_MODULE elements\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)
+  * [**stringsparams** *<b>\[Get the strings command parameters for variants\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)
 
 ---
 ### [&nbsp;Documentation: [android_kernel_builders.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)  - Standalone Import Ready&nbsp;]
@@ -730,6 +731,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
   ```
   * [**binaryeditor** *<b>\[Binary files parser and editor\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *binaryeditor &lt;patternsearch&gt; [binariespath] [replacement]*

@@ -4,6 +4,7 @@
 # ======================================
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
 
 # === Binary Editor ===
@@ -26,11 +27,8 @@ function binaryeditor()
   PATTERN=${PATTERN//\*/.\*};
   PATTERN=${PATTERN//./.};
 
-  # Handle Sysinternals strings variant
-  local strings_param='';
-  if [ ! -z "$(strings -accepteula 2> /dev/null | grep 'sysinternals')" ]; then
-    strings_param='-accepteula -nobanner';
-  fi;
+  # Handle strings variants
+  local strings_param=$(stringsparams);
 
   # Headers
   echo '';
@@ -141,11 +139,8 @@ function librarieshunter()
   local DIR_COMMON_NAMES='';
   local DIR_VENDOR_NAMES='';
 
-  # Handle Sysinternals strings variant
-  local strings_param='';
-  if [ ! -z "$(strings -accepteula 2> /dev/null | grep 'sysinternals')" ]; then
-    strings_param='-accepteula -nobanner';
-  fi;
+  # Handle strings variants
+  local strings_param=$(stringsparams);
 
   # Scan the libraries
   echo '';
