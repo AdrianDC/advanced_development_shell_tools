@@ -60,6 +60,11 @@ function fileedit()
       fi;
     fi;
 
+    # Unknown environment
+    if [ ${?} -ne 0 ]; then
+      echo " Found in ${file}";
+    fi;
+
   done;
 }
 
