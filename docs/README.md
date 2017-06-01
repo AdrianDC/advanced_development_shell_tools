@@ -749,9 +749,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**devuplrom** *<b>\[Upload ROM build\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *devuplrom &lt;device&gt; [folder_path]*
   * [**pushbrom** *<b>\[Notify build success\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *pushbrom &lt;device_name&gt; [rom_name]*
   * [**fileget** *<b>\[Download from MEGA.nz\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *fileget &lt;remote_path&gt; [boot_remove_remote]*
-  * [**androidfilesadd** *<b>\[Add file to AndroidFiles\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *androidfilesadd &lt;file_path&gt; &lt;target_folder&gt;*
-  * [**androidfilessync** *<b>\[Sync AndroidFiles folder\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *androidfilessync &lt;--upload/--download&gt;*
-  * [**androidfilesopen** *<b>\[Open AndroidFiles folder\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc)
+
+---
+### [&nbsp;Documentation: [android_uploads_local.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)&nbsp;]
+  * [**androidfilesadd** *<b>\[Add file to AndroidFiles\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilesadd &lt;file_path&gt; &lt;target_folder&gt;*
+  * [**androidfilessync** *<b>\[Sync AndroidFiles folder\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync &lt;--upload/--download&gt;*
+  * [**androidfilesopen** *<b>\[Open AndroidFiles folder\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)
 
 ---
 ### [&nbsp;Documentation: [megatools_mirror.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_mirror.rc)&nbsp;]
