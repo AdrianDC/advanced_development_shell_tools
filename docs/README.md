@@ -747,6 +747,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**fileget** *<b>\[Download from MEGA.nz\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *fileget &lt;remote_path&gt; [boot_remove_remote]*
 
 ---
+### [&nbsp;Documentation: [android_uploads_ftp.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc)&nbsp;]
+  * [**uploadftp** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc) : *uploadftp &lt;file_path&gt; [target_folder] [uploadftp_variant-SUMMARY-*
+
+---
 ### [&nbsp;Documentation: [android_uploads_helpers.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc)&nbsp;]
   * [**mmmupl** *<b>\[Make zip and upload\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *mmmupl &lt;package_or_path&gt; [bool_partial_build]*
   * [**devuplboot** *<b>\[Upload ROM bootimage\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *devuplboot &lt;device&gt;*

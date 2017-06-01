@@ -1,0 +1,98 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === File Uploader FTP ===
+function uploadftp()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: uploadftp <file_path> [target_folder] [uploadftp_variant) (File to FTP server uploader)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local send_file="${1}";
+  local upload_folder="${2:-Development}";
+  local variant="${3}";
+  local send_file_ext;
+  local send_file_name;
+  local time_start=$(date +%s);
+  local time_span;
+
+  # FTP Upload Credentials
+  export FTPUploadUserUrl='ftp.domain.universe';
+  export FTPUploadUserName='Username';
+  export FTPUploadPassword='';
+  export FTPUploadPath='';
+
+  # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
+  if [ ! -z "${variant}" ] && [ -f ~/.bash_android.uploadftp.${variant}.rc ]; then
+    source ~/.bash_android.uploadftp.${variant}.rc;
+  elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
+    source ~/.bash_android.uploadftp.main.rc;
+  fi;
+
+  # Ignore missing credentials
+  if [ "${FTPUploadUserUrl}" = 'ftp.domain.universe' ]; then
+    >&2 echo '';
+    >&2 echo ' uploadftp: Open android_uploads_ftp.rc to see how to set your logins';
+    >&2 echo '';
+    return;
+  fi;
+
+  # Upload header
+  echo '';
+  echo -e " \e[1;33m[ Uploading to the server - User '${FTPUploadUserName}' - Path '${upload_folder}' ]\e[0m";
+  echo '';
+
+  # Upload file to target
+  if [ ! -z "${send_file}" ] && [ -f "${send_file}" ]; then
+
+    # File variables
+    send_file_name=$(basename "${send_file}");
+    send_file_ext=${send_file_ext##*.};
+
+    # Path prepend
+    if [ ! -z "${FTPUploadPath}" ] && [ ! -z "${upload_folder}" ]; then
+      upload_folder="${FTPUploadPath}/${upload_folder}";
+    fi;
+
+    # Notify the file name
+    echo "   File '${send_file_name}' uploading...";
+    echo '';
+
+    # Upload through FTP
+    ncftpput -R \
+             -v \
+             -t 10 \
+             -u "${FTPUploadUserName}" \
+             -p "${FTPUploadPassword}" \
+             "${FTPUploadUserUrl}" \
+             ${upload_folder} \
+             ${send_file};
+
+    # Detect failed FTP upload
+    if [ ${?} -ne 0 ]; then
+
+      # Fallback to WebUI upload
+      notify-send 'Failed uploading through FTP...' 2> /dev/null;
+      echo '';
+      echo '   Failed uploading through FTP.';
+
+    fi;
+
+  # File missing
+  else
+    echo "  File '${send_file}' not found...";
+  fi;
+
+  # Show upload time
+  time_span=$(($(date +%s)-${time_start}));
+  echo '';
+  echo -e " \e[1;37m[ Upload done in ${time_span} secs ]\e[0m";
+  echo '';
+}
