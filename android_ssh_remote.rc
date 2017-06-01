@@ -3,7 +3,7 @@
 #   Developed by Adrian DC - 2015-2017
 # ======================================
 
-# === SSH Remote Configuration === 
+# === SSH Remote Configuration ===
 function sshremote()
 {
   # Usage: sshremote (Get the configured SSH target)
@@ -17,13 +17,13 @@ function sshremote()
     source ~/.bash_android.sshremote.rc;
   fi;
 
-  # Ignore missing credentials 
-  if [ "${SSHRemoteUrl}" = 'ssh.domain.universe' ]; then 
-    >&2 echo ''; 
-    >&2 echo ' sshremote: Open android_ssh_remote.rc to see how to set your logins'; 
-    >&2 echo ''; 
-    return; 
-  fi; 
+  # Ignore missing credentials
+  if [ "${SSHRemoteUrl}" = 'ssh.domain.universe' ]; then
+    >&2 echo '';
+    >&2 echo ' sshremote: Open android_ssh_remote.rc to see how to set your logins';
+    >&2 echo '';
+    return;
+  fi;
 
   # Return SSH target
   echo "${SSHRemoteUser}@${SSHRemoteUrl}";
