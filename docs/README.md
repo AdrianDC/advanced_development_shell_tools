@@ -744,11 +744,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_uploads.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc)&nbsp;]
   * [**fileupl** *<b>\[File to release server uploader\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *fileupl &lt;file_path&gt; [target_folder]*
   * [**fastupl** *<b>\[Make zip and upload\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *fastupl &lt;device_name&gt; [none/zip/bootimage]*
-  * [**mmmupl** *<b>\[Make zip and upload\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *mmmupl &lt;package_or_path&gt; [bool_partial_build]*
-  * [**devuplboot** *<b>\[Upload ROM bootimage\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *devuplboot &lt;device&gt;*
-  * [**devuplrom** *<b>\[Upload ROM build\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *devuplrom &lt;device&gt; [folder_path]*
-  * [**pushbrom** *<b>\[Notify build success\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *pushbrom &lt;device_name&gt; [rom_name]*
   * [**fileget** *<b>\[Download from MEGA.nz\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *fileget &lt;remote_path&gt; [boot_remove_remote]*
+
+---
+### [&nbsp;Documentation: [android_uploads_helpers.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc)&nbsp;]
+  * [**mmmupl** *<b>\[Make zip and upload\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *mmmupl &lt;package_or_path&gt; [bool_partial_build]*
+  * [**devuplboot** *<b>\[Upload ROM bootimage\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *devuplboot &lt;device&gt;*
+  * [**devuplrom** *<b>\[Upload ROM build\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *devuplrom &lt;device&gt; [folder_path]*
+  * [**pushbrom** *<b>\[Notify build success\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *pushbrom &lt;device_name&gt; [rom_name]*
 
 ---
 ### [&nbsp;Documentation: [android_uploads_local.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)&nbsp;]
