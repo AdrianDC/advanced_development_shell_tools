@@ -194,6 +194,7 @@ function cddevtwrp()    { cd $(getand)/Development/twrp_development_sony 2> /dev
 function cdprojects()   { cd $(getand)/Projects/${1}; }
 function cdref()        { cd $(getand)/References/${1}; }
 function cdrefapk()     { cd $(getand)/References/apk; }
+function cdserv()       { cd $(getand)/Server; }
 function adbapks()      { cdrefapk; adbapkinstall; }
 function cdandfiles()   { cd "${ANDROID_FILES_PATH}/"; }
 function impaospcaf()   { rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}; }
