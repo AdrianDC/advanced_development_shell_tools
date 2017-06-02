@@ -80,12 +80,12 @@ function bootelf()
   if [ -z "${out_folder}" ]; then
     out_folder=$(mktemp -d);
   else
+    rm -rf "${out_folder}";
     mkdir -p "${out_folder}";
     out_folder=$(readlink -f "${out_folder}");
   fi;
 
   # Unpack
-  rm -rf "${out_folder}/*";
   cp ${boot_file} ${out_folder}/boot.elf;
   cd ${out_folder}/;
   7z e ./boot.elf;
