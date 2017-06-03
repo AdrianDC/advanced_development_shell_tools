@@ -491,7 +491,7 @@ function bootzip()
   local TmpDir=$(mktemp -d);
 
   # Partitions
-  local BootPartition=$(androiddevicestarget boot);
+  local BootPartition=$(androiddevicestarget boot ${PhoneName});
 
   # Generate zip and updater-script files
   cd "${TmpDir}/";
