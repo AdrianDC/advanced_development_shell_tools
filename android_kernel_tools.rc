@@ -525,11 +525,6 @@ function bootzip()
     # Push to common '/sdcard/' path
     timeout 10 ${adb} 'wait-for-device';
     adb push "${TargetFile}" '/sdcard/';
-
-    # If push failed, push to common '/data/media/0/' path
-    if [ -z "$(adb shell 'ls ${OutFile} 2> /dev/null')" ]; then
-      adb push "${TargetFile}" '/data/media/0/';
-    fi;
   fi;
 
   # End of work
