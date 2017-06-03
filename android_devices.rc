@@ -6,11 +6,11 @@
 # === Android Device Targets ===
 function androiddevicestarget()
 {
-  # Usage: androiddevicestarget [boot/system/...] (Devices targets mapper)
+  # Usage: androiddevicestarget [boot/system/...] [device] (Devices targets mapper)
 
   # Variables
-  local device=${TARGET_PRODUCT#*_};
   local request=${1};
+  local device=${2};
   local platform='';
   local partition='';
   local target_devices="dora kagura kugo suzu huashan hayabusa mint tsubasa shuang";
@@ -21,6 +21,9 @@ function androiddevicestarget()
   fi;
 
   # Autodetect
+  if [ -z "${device}" ]; then
+    device=${TARGET_PRODUCT#*_};
+  fi;
   if [ -z "${device}" ]; then
     device=${KBUILD_DIFFCONFIG%_*};
   fi;

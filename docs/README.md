@@ -203,7 +203,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_devices.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc)&nbsp;]
-  * [**androiddevicestarget** *<b>\[Devices targets mapper\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc) : *androiddevicestarget [boot/system/...]*
+  * [**androiddevicestarget** *<b>\[Devices targets mapper\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc) : *androiddevicestarget [boot/system/...] [device]*
   * [**codenametotarget** *<b>\[Codename to build target\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc) : *codenametotarget &lt;codename&gt;*
   * [**repogetdevice** *<b>\[Detect device name from repo environment\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc)
 
