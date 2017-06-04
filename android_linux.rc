@@ -68,6 +68,9 @@ function fileedit()
   done;
 }
 
+# === File Editor Shortcut ===
+alias fe='fileedit';
+
 # === Director Opener ===
 function diropen()
 {

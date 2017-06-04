@@ -513,6 +513,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**bashe** *<b>\[Edit ~/.bashrc\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**cls** *<b>\[Clean terminal screen\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**fileedit** *<b>\[Files editor for most environments\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *fileedit &lt;paths&gt;*
+  * [**fe** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *fileedit*
   * [**diropen** *<b>\[Directory opener for most environments\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *diropen &lt;path&gt;*
   * [**toclip** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *xclip -selection c*
   * [**findn** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *find -name*
