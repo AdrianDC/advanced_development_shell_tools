@@ -24,8 +24,10 @@ function adbbootdump()
     local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
     adbsu "dd if=${kernel} of=/sdcard/boot.img skip=0 bs=${bootsize} count=1";
     adb pull /sdcard/boot.img;
+    adbsu 'rm -f /sdcard/boot.img';
   else
     adbsu "dd if=${kernel} of=/sdcard/boot.dump";
+    adbsu 'rm -f /sdcard/boot.dump';
     adb pull /sdcard/boot.dump;
     adbbootcut boot.dump;
   fi;

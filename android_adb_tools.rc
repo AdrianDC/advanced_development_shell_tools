@@ -16,6 +16,7 @@ function adbscr()
   mkdir -p ./screenshots;
   adb shell screencap /sdcard/screenshot.png;
   adb pull /sdcard/screenshot.png ./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png;
+  adb shell rm -f /sdcard/screenshot.png;
 }
 
 # === ADB Root Mounter ===
