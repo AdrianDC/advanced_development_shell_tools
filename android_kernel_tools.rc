@@ -482,32 +482,44 @@ function bootzip()
   fi;
 
   # Variables
-  local CurDir=$(pwd);
   local PhoneName="${1}";
   local BootFile=$(readlink -f "${2}");
   local PushToDevice="${3}";
-  local OutFile='boot-'${PhoneName}'-'$(date +'%Y%m%d')'.zip';
+  local OutFile='boot-'${PhoneName}'-'$(date +'%Y%m%d');
   local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/${OutFile}";
   local TmpDir=$(mktemp -d);
 
   # Partitions
   local BootPartition=$(androiddevicestarget boot ${PhoneName});
 
-  # Generate zip and updater-script files
-  cd "${TmpDir}/";
-  mkdir -p ./META-INF/com/google/android/;
-  cp "${android_development_shell_tools_flashable_android_base}" "${OutFile}.unsigned.zip";
-  cp "${android_development_shell_tools_updater_flash_boot}" ./META-INF/com/google/android/updater-script;
-  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
-  zip -g "${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
-
-  # Pack bootimage file
+  # Copy 'boot.img' and base zip
   cp "${BootFile}" "${TmpDir}/boot.img";
-  zip -g "${OutFile}.unsigned.zip" 'boot.img';
+  cp "${android_development_shell_tools_flashable_android_base}" "${TmpDir}/${OutFile}.unsigned.zip";
+
+  # Write device specific changes
+  mkdir -p "${TmpDir}/META-INF/com/google/android/";
+  cp "${android_development_shell_tools_updater_flash_boot}" "${TmpDir}/META-INF/com/google/android/updater-script";
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" "${TmpDir}/META-INF/com/google/android/updater-script";
+
+  # Update 'updater-script' and 'boot.img'
+  zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/META-INF/com/google/android/updater-script";
+  zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/boot.img";
+
+  # Copy zip unsigned file to desktop
+  cp "${TmpDir}/${OutFile}.unsigned.zip" "${TargetFile}.unsigned.zip";
 
   # Zip signature
-  signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
-  cp "${TmpDir}/${OutFile}" "${TargetFile}";
+  signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TargetFile}.zip";
+
+  # Check if zip is signed
+  if [ -e "${TargetFile}.zip" ]; then
+    TargetFile="${TargetFile}.zip";
+  else
+    echo '';
+    echo ' bootzip: The zip signing failed, using zip unsigned';
+    echo '';
+    TargetFile="${TargetFile}.unsigned.zip";
+  fi;
 
   # Push zip to the device
   if [ "${PushToDevice}" = 'true' ]; then
@@ -535,7 +547,6 @@ function bootzip()
 
   # End of process
   rm -rf "${TmpDir}";
-  cd "${CurDir}";
 }
 
 # === Make Sepolicy ===
