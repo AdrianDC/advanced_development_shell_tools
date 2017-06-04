@@ -19,6 +19,8 @@ function signzip()
   local zip_output="${2}";
   local pwd_folder=$(pwd);
   local tmp_folder=$(mktemp -d);
+  local check_java=$(java -version 2>&1 | grep 'version.*1\.' | cut -d"\"" -f 2 | cut -d'.' -f 2);
+  local check_javac=$(javac -version 2>&1 | grep '1\.' | cut -d' ' -f 2 | cut -d'.' -f 2);
 
   # Direct ZIP signature
   if [ -z "${zip_output}" ]; then
@@ -41,6 +43,16 @@ function signzip()
 
   # Remove output file
   rm -f "${zip_output}";
+
+  # Check Java installed version
+  if [ -z "${check_java}" ] || [ -z "${check_javac}" ] ||
+     [ ${check_java} -lt 7 ] || [ ${check_javac} -lt 7 ]; then
+    echo '';
+    echo "  signzip: Current java version: '1.${check_java}' - javac: '1.${check_javac}'";
+    echo '           Please install java[c] 1.7[1.7] or newer to use this command';
+    echo '';
+    return;
+  fi;
 
   # Sign ZIP
   java -jar "${android_development_shell_tools_signapk_dir}/signapk-cm121.jar" \
