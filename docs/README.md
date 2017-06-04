@@ -109,7 +109,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_adb_logs.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc)&nbsp;]
-  * [**adbl** *<b>\[adb Logcat helper\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbl [all/crash/events/main/radio/system]*
+  * [**adbl** *<b>\[adb Logcat helper\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbl [all/crash/events/main/radio/system] [file_output] [bool_clean]*
   * [**adbcl** *<b>\[Logcat output cleaner\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbcl [file_adb.log]*
   * [**adbstcl** *<b>\[strace output cleaner\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbstcl [file_adb.log]*
   * [**adbld** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; adbro; printf "" &gt;adb.data; adb shell cat /data/logcat.txt \| tee -a adb.data*

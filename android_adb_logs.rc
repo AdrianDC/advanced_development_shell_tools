@@ -9,15 +9,15 @@ function adbl()
   # Buffer selection
   local adb_buffer='';
   case "${1}" in
-    all)    adb_buffer='-b all';;
+    all|'')    adb_buffer='-b all';;
     crash)  adb_buffer='-b crash';;
     events) adb_buffer='-b events';;
     main)   adb_buffer='-b main';;
     radio)  adb_buffer='-b radio';;
     system) adb_buffer='-b system';;
-    help)
+    help|*)
       echo '';
-      echo ' Usage: adbl [all/crash/events/main/radio/system] (adb Logcat helper)';
+      echo ' Usage: adbl [all/crash/events/main/radio/system] [file_output] [bool_clean] (adb Logcat helper)';
       echo '';
       return;;
   esac;
