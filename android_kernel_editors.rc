@@ -86,8 +86,8 @@ function bootelf()
   fi;
 
   # Unpack
-  cp ${boot_file} ${out_folder}/boot.elf;
-  cd ${out_folder}/;
+  cp "${boot_file}" "${out_folder}/boot.elf";
+  cd "${out_folder}/";
   7z e ./boot.elf;
   rm ./boot.elf;
 
@@ -153,7 +153,7 @@ function bootelf()
     echo '';
     echo ' [ Compiling the ramdisk cpios ]';
     echo '';
-    cd ${out_folder}/ramdisk/sbin/;
+    cd "${out_folder}/ramdisk/sbin/";
     if [ -d ./ramdiskcpio ]; then
       cd ./ramdiskcpio/;
       rm -f ../ramdisk.cpio;
@@ -173,7 +173,7 @@ function bootelf()
     echo '';
     echo ' [ Compiling the ramdisk image ]';
     echo '';
-    cd ${out_folder}/ramdisk/;
+    cd "${out_folder}/ramdisk/";
     rm -f ../ramdisk.cpio;
     find . | cpio -o -R 0:0 -H newc -O ../ramdisk.cpio;
     rm -f ../ramdisk.cpio.gz;
@@ -182,7 +182,7 @@ function bootelf()
     mv ../ramdisk.cpio.gz ../ramdisk.img;
 
     # boot.img contents missing
-    cd ${out_folder}/;
+    cd "${out_folder}/";
     if [ ! -f ./kernel ] || [ ! -f ./ramdisk.img ] || [ ! -f ./RPM.bin ] || [ ! -f ./cmdline.txt ]; then
       echo '';
       echo ' [ A file is missing for the boot.img compilation ]';
