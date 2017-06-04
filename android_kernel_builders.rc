@@ -21,6 +21,7 @@ function makekernel()
     make "${1}" O=./.build;
     return;
   fi;
+  echo '*' > ./out/.gitignore
 
   # Environment
   if [ -z "${DEFCONFIG_NAME}" ] || [ ! -z "${1}" ]; then
