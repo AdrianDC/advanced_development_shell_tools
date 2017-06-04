@@ -16,9 +16,9 @@ function adbbootdump()
   # Dump bootimage from device
   local kernel=$(androiddevicestarget boot);
   local cmdaddr=$(adb shell od -j 152 -N 4 -tx4 -An ${kernel} \
-                | cut -c 2-9);
+                | tr -d ' ' | cut -c 2-9);
   local cmdsize=$(adb shell od -j 164 -N 4 -tx4 -An ${kernel} \
-                | cut -c 2-9);
+                | tr -d ' ' | cut -c 2-9);
   if [ ! -z "${cmdaddr}" ] && [ $(echo "${cmdaddr}" | wc -l) -eq 1 ] && \
      [ ! -z "${cmdsize}" ] && [ $(echo "${cmdsize}" | wc -l) -eq 1 ]; then
     local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
