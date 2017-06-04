@@ -419,11 +419,10 @@ function kernelinjectorzip()
   fi;
 
   # Variables
-  local CurDir=$(pwd);
   local PhoneName="${1}";
   local KernelFile=$(readlink -f "${2}");
   local KernelSources=$(readlink -f "${3}");
-  local OutFile='kernel-injector-'${PhoneName}'-'$(date +'%Y%m%d')'.zip';
+  local OutFile='kernel-injector-'${PhoneName}'-'$(date +'%Y%m%d');
   local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/${OutFile}";
   local TmpDir=$(mktemp -d);
 
@@ -432,36 +431,51 @@ function kernelinjectorzip()
   local SystemPartition=$(androiddevicestarget system);
 
   # Generate zip and updater-script files
-  cd "${TmpDir}/";
-  mkdir -p ./META-INF/com/google/android/;
-  mkdir -p ./scripts/;
-  cp "${android_development_shell_tools_flashable_android_base}" "${TargetFile}.unsigned.zip";
-  cp "${android_development_shell_tools_updater_kernel_injector}" ./META-INF/com/google/android/updater-script;
-  cp -rfv "${android_development_shell_tools_scripts_kernel_injector}/"* ./scripts/;
-  sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
-  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" ./scripts/kernel_inject.sh;
-  zip -g "${TargetFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
-  zip -g "${TargetFile}.unsigned.zip" ./scripts/*;
+  mkdir -p "${TmpDir}/META-INF/com/google/android/";
+  mkdir -p "${TmpDir}/scripts/";
 
-  # Pack kernel file
-  cp "${KernelFile}" ./scripts/kernel;
-  zip -g "${TargetFile}.unsigned.zip" ./scripts/kernel;
+  # Copy base zip and 'kernel'
+  cp "${android_development_shell_tools_flashable_android_base}" "${TmpDir}/${TargetFile}.unsigned.zip";
+  cp "${TmpDir}/${KernelFile}" "${TmpDir}/scripts/kernel";
 
-  # Modules
+  # Write device specific changes
+  cp "${android_development_shell_tools_updater_kernel_injector}" "${TmpDir}/META-INF/com/google/android/updater-script";
+  sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" "${TmpDir}/META-INF/com/google/android/updater-script";
+  cp -rfv "${android_development_shell_tools_scripts_kernel_injector}/"* "${TmpDir}/scripts/";
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" "${TmpDir}/scripts/kernel_inject.sh";
+
+  # Update 'updater-script', 'scripts' and 'kernel'
+  zip -g "${TmpDir}/${TargetFile}.unsigned.zip" "${TmpDir}/META-INF/com/google/android/updater-script";
+  zip -g "${TmpDir}/${TargetFile}.unsigned.zip" "${TmpDir}/scripts/"*;
+  zip -g "${TmpDir}/${TargetFile}.unsigned.zip" "${TmpDir}/scripts/kernel";
+
+  # Find and pack modules
   if [ ! -z "${KernelSources}" ]; then
-    mkdir -p ./system/lib/modules/;
+    mkdir -p "${TmpDir}/system/lib/modules/";
     for module_file in $(find ${KernelSources} -name *.ko); do
-      cp ${module_file} ./system/lib/modules/;
+      cp "${module_file}" "${TmpDir}/system/lib/modules/";
     done;
-    zip -g "${TargetFile}.unsigned.zip" './system/lib/modules/'*;
+    zip -g "${TmpDir}/${TargetFile}.unsigned.zip" "${TmpDir}/system/lib/modules/"*;
   fi;
 
+  # Copy zip unsigned file to desktop
+  cp "${TmpDir}/${OutFile}.unsigned.zip" "${TargetFile}.unsigned.zip";
+
   # Zip signature
-  signzip "${TargetFile}.unsigned.zip" "${TargetFile}";
+  signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TargetFile}.zip";
+
+  # Check if zip is signed
+  if [ -e "${TargetFile}.zip" ]; then
+    TargetFile="${TargetFile}.zip";
+  else
+    echo '';
+    echo ' bootzip: The zip signing failed, using zip unsigned';
+    echo '';
+    TargetFile="${TargetFile}.unsigned.zip";
+  fi;
 
   # End of work
   rm -rf "${TmpDir}";
-  cd "${CurDir}";
 
   # Result
   echo '';
@@ -539,13 +553,13 @@ function bootzip()
   fi;
 
   # End of work
+  rm -rf "${TmpDir}";
+
+  # Result
   echo '';
   echo -e "  \e[1;36mbootzip: Package File:\e[0m ${TargetFile}";
   export PackageResult="${TargetFile}";
   echo '';
-
-  # End of process
-  rm -rf "${TmpDir}";
 }
 
 # === Make Sepolicy ===
