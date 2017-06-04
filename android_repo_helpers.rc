@@ -109,9 +109,9 @@ function reporoomserv()
   mkdir -p .repo/local_manifests/;
 
   # Files to open
-  local files=.repo/local_manifests/roomservice.xml .repo/manifest.xml;
+  local files='.repo/local_manifests/roomservice.xml .repo/manifest.xml';
   if [ -f .repo/local_manifests/untracked.xml ]; then
-    files=${files} .repo/local_manifests/untracked.xml;
+    files="${files} .repo/local_manifests/untracked.xml";
   fi;
 
   # Manifest and local_manifests editor
