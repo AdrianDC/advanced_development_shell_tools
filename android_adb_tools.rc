@@ -76,6 +76,9 @@ function adbsudo()
 
   # Kill adb server
   adb kill-server;
+
+  # Reload scripts
+  shtoolsup &> /dev/null;
 }
 
 # === ADB Command ===
