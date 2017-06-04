@@ -428,8 +428,7 @@ function kernelinjectorzip()
   local TmpDir=$(mktemp -d);
 
   # Partitions
-  export ANDROID_DEVICE_TARGET="${PhoneName}";
-  local BootPartition=$(androiddevicestarget boot);
+  local BootPartition=$(androiddevicestarget boot ${PhoneName});
   local SystemPartition=$(androiddevicestarget system);
 
   # Generate zip and updater-script files
