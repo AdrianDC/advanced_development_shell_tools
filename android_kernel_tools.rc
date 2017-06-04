@@ -518,10 +518,6 @@ function bootzip()
     local adb=$(adbcmd);
     timeout 10 ${adb} 'wait-for-device';
 
-    # Remount system
-    printf '  bootzip: ';
-    adb remount;
-
     # Push to common '/sdcard/' path
     timeout 10 ${adb} 'wait-for-device';
     adb push "${TargetFile}" '/sdcard/';
