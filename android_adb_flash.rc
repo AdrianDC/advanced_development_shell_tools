@@ -27,8 +27,8 @@ function adbbootdump()
     adbsu 'rm -f /sdcard/boot.img';
   else
     adbsu "dd if=${kernel} of=/sdcard/boot.dump";
-    adbsu 'rm -f /sdcard/boot.dump';
     adb pull /sdcard/boot.dump;
+    adbsu 'rm -f /sdcard/boot.dump';
     adbbootcut boot.dump;
   fi;
 }
