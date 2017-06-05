@@ -172,6 +172,13 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbservices** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell service list*
 
 ---
+### [&nbsp;Documentation: [android_adb_syncer.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_syncer.rc)  - Standalone Import Ready&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_syncer.rc)
+  ```
+  * [**adbpushsync** *<b>\[Folders adb push syncer\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_syncer.rc) : *adbpushsync &lt;local_path&gt; &lt;target_path&gt;*
+
+---
 ### [&nbsp;Documentation: [android_adb_tools.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_linux.rc)
