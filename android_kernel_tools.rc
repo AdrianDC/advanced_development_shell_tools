@@ -496,6 +496,7 @@ function bootzip()
   fi;
 
   # Variables
+  local CurDir=$(pwd);
   local PhoneName="${1}";
   local BootFile=$(readlink -f "${2}");
   local PushToDevice="${3}";
@@ -511,22 +512,24 @@ function bootzip()
   cp "${android_development_shell_tools_flashable_android_base}" "${TmpDir}/${OutFile}.unsigned.zip";
 
   # Write device specific changes
-  mkdir -p "${TmpDir}/META-INF/com/google/android/";
-  cp "${android_development_shell_tools_updater_flash_boot}" "${TmpDir}/META-INF/com/google/android/updater-script";
-  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" "${TmpDir}/META-INF/com/google/android/updater-script";
+  cd "${TmpDir}/";
+  mkdir -p './META-INF/com/google/android/';
+  cp "${android_development_shell_tools_updater_flash_boot}" './META-INF/com/google/android/updater-script';
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" './META-INF/com/google/android/updater-script';
 
   # Update 'updater-script' and 'boot.img'
-  zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/META-INF/com/google/android/updater-script";
-  zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/boot.img";
+  zip -g "./${OutFile}.unsigned.zip" './META-INF/com/google/android/updater-script';
+  zip -g "./${OutFile}.unsigned.zip" './boot.img';
 
   # Copy zip unsigned file to desktop
-  cp "${TmpDir}/${OutFile}.unsigned.zip" "${TargetFile}.unsigned.zip";
+  cp "./${OutFile}.unsigned.zip" "${TargetFile}.unsigned.zip";
 
   # Zip signature
-  signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TargetFile}.zip";
+  signzip "./${OutFile}.unsigned.zip" "${TargetFile}.zip";
 
   # Check if zip got signed
   if [ -f "${TargetFile}.zip" ]; then
+    rm "${TargetFile}.unsigned.zip";
     OutFile="${OutFile}.zip";
     TargetFile="${TargetFile}.zip";
 
@@ -562,6 +565,7 @@ function bootzip()
 
   # End of work
   rm -rf "${TmpDir}";
+  cd "${CurDir}";
 
   # Result
   echo '';
