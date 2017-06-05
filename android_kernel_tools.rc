@@ -419,6 +419,7 @@ function kernelinjectorzip()
   fi;
 
   # Variables
+  local CurDir=$(pwd);
   local PhoneName="${1}";
   local KernelFile=$(readlink -f "${2}");
   local KernelSources=$(readlink -f "${3}");
@@ -439,33 +440,35 @@ function kernelinjectorzip()
   cp "${KernelFile}" "${TmpDir}/scripts/kernel";
 
   # Write device specific changes
-  cp "${android_development_shell_tools_updater_kernel_injector}" "${TmpDir}/META-INF/com/google/android/updater-script";
-  sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" "${TmpDir}/META-INF/com/google/android/updater-script";
-  cp -rfv "${android_development_shell_tools_scripts_kernel_injector}/"* "${TmpDir}/scripts/";
-  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" "${TmpDir}/scripts/kernel_inject.sh";
+  cd "${TmpDir}/";
+  cp "${android_development_shell_tools_updater_kernel_injector}" './META-INF/com/google/android/updater-script';
+  sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" './META-INF/com/google/android/updater-script';
+  cp -rfv "${android_development_shell_tools_scripts_kernel_injector}/"* './scripts/';
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" './scripts/kernel_inject.sh';
 
   # Update 'updater-script', 'scripts' and 'kernel'
-  zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/META-INF/com/google/android/updater-script";
-  zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/scripts/"*;
-  zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/scripts/kernel";
+  zip -g "./${OutFile}.unsigned.zip" './META-INF/com/google/android/updater-script';
+  zip -g "./${OutFile}.unsigned.zip" './scripts/'*;
+  zip -g "./${OutFile}.unsigned.zip" './scripts/kernel';
 
   # Find and pack modules
   if [ ! -z "${KernelSources}" ]; then
-    mkdir -p "${TmpDir}/system/lib/modules/";
+    mkdir -p "./system/lib/modules/";
     for module_file in $(find ${KernelSources} -name *.ko); do
-      cp "${module_file}" "${TmpDir}/system/lib/modules/";
+      cp "${module_file}" "./system/lib/modules/";
     done;
-    zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/system/lib/modules/"*;
+    zip -g "./${OutFile}.unsigned.zip" "./system/lib/modules/"*;
   fi;
 
   # Copy zip unsigned file to desktop
-  cp "${TmpDir}/${OutFile}.unsigned.zip" "${TargetFile}.unsigned.zip";
+  cp "./${OutFile}.unsigned.zip" "${TargetFile}.unsigned.zip";
 
   # Zip signature
-  signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TargetFile}.zip";
+  signzip "./${OutFile}.unsigned.zip" "${TargetFile}.zip";
 
   # Check if zip got signed
   if [ -f "${TargetFile}.zip" ]; then
+    rm "${TargetFile}.unsigned.zip";
     TargetFile="${TargetFile}.zip";
 
   # Fallback to unsigned zip
@@ -477,6 +480,7 @@ function kernelinjectorzip()
 
   # End of work
   rm -rf "${TmpDir}";
+  cd "${CurDir}";
 
   # Result
   echo '';
