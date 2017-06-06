@@ -239,7 +239,7 @@ function reporeflinker()
   local cnt;
   local key;
   local options;
-  local path;
+  local project;
   local target;
 
   # Development path
