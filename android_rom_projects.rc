@@ -149,6 +149,7 @@ function androidprojectpatcher()
   # Automated remote changes detection
   project_paths=$(git ls-remote --heads "https://github.com/AdrianDC/${project_name}.git" \
                 | sed 's/.*refs\/heads\///' \
+                | grep -v 'local_manifests' \
                 | sed 's/_/\//g');
 
   # ==========================================================
