@@ -456,7 +456,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gs** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepbs*
   * [**gck** *<b>\[Grep through kernel configurations\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gck [inputs]*
   * [**gca** *<b>\[Grep through Android makefiles\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gca [inputs]*
-  * [**grepi** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grep -i*
+  * [**grepi** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grep -ai*
   * [**glc** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *GREP_COLORS='fn=1;1' grep --include *.c --include *.cpp --include *.h -anr '.{80,}' .*
   * [**glj** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *GREP_COLORS='fn=1;1' grep --include *.java -anr '.{100,}' .*
   * [**gle** *(Function)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *GREP_COLORS='fn=1;1' grep --include *.c --include *.cpp --include *.h --include *.java -anr '.* $' .*

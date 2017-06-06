@@ -68,7 +68,7 @@ function gca()
 }
 
 # === Grep Search Helpers ===
-alias grepi='grep -i';
+alias grepi='grep -ai';
 function glc() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h -anr '.\{80,\}' .; }
 function glj() { GREP_COLORS='fn=1;1' grep --include \*.java -anr '.\{100,\}' .; }
 function gle() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h --include \*.java -anr '.* $' .; }
