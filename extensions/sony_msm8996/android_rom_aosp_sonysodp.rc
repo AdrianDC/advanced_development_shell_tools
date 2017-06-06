@@ -30,8 +30,6 @@ function aospsonysodprebaser()
     device/sony/dora::::master
     device/sony/tone::::master
     kernel/sony/msm::::aosp/LA.UM.5.5.r1
-    vendor/qcom/prebuilt::::master
-    vendor/sony::::master
     ' "${*}";
 }
 
