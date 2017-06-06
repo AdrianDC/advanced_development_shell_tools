@@ -26,7 +26,6 @@ function aospsonysodprebaser()
   androidprojectrebaser 'sodp' '' '
     device/sony/common::::master
     device/sony/common-init::::master
-    device/sony/common-headers::::aosp/LA.UM.5.5.r1
     device/sony/common-kernel::::aosp/LA.UM.5.5.r1
     device/sony/dora::::master
     device/sony/tone::::master
