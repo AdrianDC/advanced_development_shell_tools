@@ -251,6 +251,11 @@ function reporeflinker()
   # Handle local_manifests files to link
   for file in roomservice.xml untracked.xml; do
 
+    # Ignore actual files and not symlinks
+    if [ -f "${file}" ]; then
+      continue;
+    fi;
+
     # Delete remaining symlinks
     rm -f ./${file};
 
