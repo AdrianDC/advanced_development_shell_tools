@@ -83,7 +83,7 @@ function romautorelease()
   fi;
 
   # When option enabled, use debuggable bootimages
-  if romautorelease-clean-active; then
+  if romautorelease-debug-active; then
     bootimagedebuggable "${rom_device}" true;
     export WITH_SU=true;
   fi;
@@ -153,7 +153,7 @@ function romautorelease()
   fi;
 
   # When option enabled, use debuggable bootimages
-  if romautorelease-clean-active; then
+  if romautorelease-debug-active; then
     bootimagedebuggable "${rom_device}" false;
     export WITH_SU=;
   fi;
