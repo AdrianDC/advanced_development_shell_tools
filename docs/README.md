@@ -880,6 +880,11 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**kaguradefconf** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *makedefconf msm-perf kagura common*
 
 ---
+### [&nbsp;Documentation: [extensions/sony_msm8996/android_tools_release.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_tools_release.rc)&nbsp;]
+  * [**autoreleasemultiromsony8996** *<b>\[Automated MultiROM Sony 8996 releaser\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_tools_release.rc) : *autoreleasemultiromsony8996 [devices]*
+  * [**autoreleasetwrpsony8996** *<b>\[Automated TWRP Sony 8996 releaser\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_tools_release.rc) : *autoreleasetwrpsony8996 [devices]*
+
+---
 ### [&nbsp;Documentation: [extensions/template/android_template.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/template/android_template.rc)&nbsp;]
   * [**_templateaddonfunction** *<b>\[Base template for addons\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/template/android_template.rc) : *_templateaddonfunction &lt;required&gt; [optional]*
 

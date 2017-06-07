@@ -1,0 +1,32 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === MultiROM Sony 8996 Automatic Releaser ===
+function autoreleasemultiromsony8996()
+{
+  # Usage: autoreleasemultiromsony8996 [devices] (Automated MultiROM Sony 8996 releaser)
+
+  # Automated MultiROM releaser
+  cdand;
+  cdmultirom;
+  repomrom 'dora';
+  for device in kagura; do
+    repomrom "${device}" 'nosync';
+  done;
+}
+
+# === TWRP Sony 8996 Automatic Releaser ===
+function autoreleasetwrpsony8996()
+{
+  # Usage: autoreleasetwrpsony8996 [devices] (Automated TWRP Sony 8996 releaser)
+
+  # Automated TWRP releaser
+  cdand;
+  cdtwrp;
+  repotwrp 'dora';
+  for device in kagura; do
+    repotwrp "${device}" 'nosync';
+  done;
+}
