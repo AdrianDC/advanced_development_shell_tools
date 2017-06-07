@@ -850,7 +850,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)
   ```
   * [**aospsonysodppatcher** *<b>\[AOSP SONY SODP Patcher\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc) : *aospsonysodppatcher [specific_paths]*
-  * [**aospsonysodprebaser** *<b>\[AOSP SONY SODP Rebaser\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc) : *aospsonysodprebaser [specific_paths]*
+  * [**aospsonysodprebaser** *<b>\[AOSP SONY SODP Rebaser\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc) : *aospsonysodprebaser &lt;master/n-mr1&gt; [specific_paths]*
   * [**sonyaospkernelupdate** *<b>\[Automated Sony SODP kernel updater for AOSP\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc) : *sonyaospkernelupdate &lt;device_name&gt;*
 
 ---

@@ -20,17 +20,34 @@ function aospsonysodppatcher()
 # === AOSP Sony SODP Rebaser ===
 function aospsonysodprebaser()
 {
-  # Usage: aospsonysodprebaser [specific_paths] (AOSP SONY SODP Rebaser)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: aospsonysodprebaser <master/n-mr1> [specific_paths] (AOSP SONY SODP Rebaser)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local branch=${1};
+  local kernel='';
+
+  # Kernel selection
+  if [ "${branch}" = 'master' ]; then
+    kernel='aosp/LA.UM.5.7.r1';
+  else
+    kernel='aosp/LA.UM.5.5.r1';
+  fi;
 
   # Use the androidprojectrebaser helper
-  androidprojectrebaser 'sodp' '' '
-    device/sony/common::::master
-    device/sony/common-init::::master
-    device/sony/common-kernel::::aosp/LA.UM.5.5.r1
-    device/sony/dora::::master
-    device/sony/tone::::master
-    kernel/sony/msm::::aosp/LA.UM.5.5.r1
-    ' "${*}";
+  androidprojectrebaser 'sodp' '' "
+    device/sony/common::::${branch}
+    device/sony/common-init::::${branch}
+    device/sony/common-kernel::::${kernel}
+    device/sony/dora::::${branch}
+    device/sony/tone::::${branch}
+    kernel/sony/msm::::${kernel}
+    " "${*:2}";
 }
 
 # === Sony AOSP Kernel Updater ===
