@@ -97,7 +97,7 @@ function fastupl()
 
   # Command outputs
   echo -e '  \e[1;32mDirect download:\e[0m';
-  echo "${cmd}" | xclip -selection c;
+  echo "${cmd}" | xclip -selection c 2> /dev/null;
   echo "   ${cmd}";
   echo '';
 }
