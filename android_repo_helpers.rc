@@ -290,6 +290,7 @@ function reposwitcher()
   local folder;
   local key;
   local options;
+  local path=$(pwd);
 
   # Access Android root
   croot;
@@ -330,6 +331,7 @@ function reposwitcher()
 
     # Generate symlink to folder
     printf ' ';
+    rm -f .repo/local_manifests;
     ln -fsv ${folder} .repo/local_manifests;
     echo '';
 
@@ -337,4 +339,7 @@ function reposwitcher()
   else
     rm -f .repo/local_manifests;
   fi;
+
+  # Return to current path
+  cd "${path}";
 }
