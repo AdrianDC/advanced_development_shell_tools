@@ -60,3 +60,25 @@ function makekernelcopyleft()
   echo -e " \e[1;37m[ Done compiling in ${time_diff} secs ]\e[0m";
   echo '';
 }
+
+# === Sony Copyleft Kernel Merger ===
+function kernelcopyleftmerger()
+{
+  # Usage: kernelcopyleftmerger (Sony Copyleft kernel archive merge helper)
+
+  # Stash all lost .gitignore files
+  echo '';
+  echo ' kernelcopyleftmerger: Stashing all lost .gitignore files';
+  git checkout HEAD $(git diff --name-only | grep -ai .gitignore);
+
+  # List all real file differences
+  echo '';
+  echo ' kernelcopyleftmerger: Listing all relevant changes';
+  git -c core.fileMode=false diff --name-only;
+
+  # Add all new changes
+  echo '';
+  echo ' kernelcopyleftmerger: Adding all relevant changes';
+  git -c core.fileMode=false add -Av;
+  echo '';
+}

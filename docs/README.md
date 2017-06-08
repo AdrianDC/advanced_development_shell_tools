@@ -841,6 +841,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_kernel_builders.rc)
   ```
   * [**makekernelcopyleft** *<b>\[Kernel inline compiler for Sony Copyleft\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_kernel_builders.rc) : *makekernelcopyleft [platform_device_to_init / clean / mrproper] [make_parameters]*
+  * [**kernelcopyleftmerger** *<b>\[Sony Copyleft kernel archive merge helper\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_kernel_builders.rc)
 
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_aosp_sonysodp.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)  - Standalone Import Ready&nbsp;]
