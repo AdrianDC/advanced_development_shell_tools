@@ -183,8 +183,8 @@ function romautorelease()
     fi;
   fi;
 
-  # When option enabled, clean out folder
-  if romautorelease-clean-active; then
+  # When option enabled and not local, clean out folder
+  if romautorelease-clean-active && ! romautorelease-local-active; then
     rm -rfv './out/target/product';
   fi;
 
