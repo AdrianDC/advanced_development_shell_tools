@@ -244,15 +244,19 @@ function reporeflinker()
 
   # Development path
   local dev_path=$(getand)/Development;
+  local path=$(pwd);
 
   # Access local_manifests
+  croot;
   cdlocman;
+  echo '';
 
   # Handle local_manifests files to link
   for file in roomservice.xml untracked.xml; do
 
     # Ignore actual files and not symlinks
-    if [ -f "${file}" ]; then
+    if [ -f "${file}" ] && [ ! -L "${file}" ]; then
+      echo " reporeflinker: '${file}' already exists, ignoring.";
       continue;
     fi;
 
@@ -312,4 +316,8 @@ function reporeflinker()
       fi;
     fi;
   done;
+
+  # Return to current path
+  cd "${path}";
+  echo '';
 }
