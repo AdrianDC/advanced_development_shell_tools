@@ -43,7 +43,10 @@ function autoreleaseaospsony8960()
 
   # When option enabled, clean out folder
   if romautorelease-clean-active; then
-    rm -rfv out;
+    echo '';
+    echo ' romautorelease: Cleaning out folder...';
+    rm -rfv out &> /dev/null;
+    echo '';
   fi;
 }
 
@@ -85,7 +88,10 @@ function autoreleaselineagesony8960()
 
   # When option enabled, clean out folder
   if romautorelease-clean-active; then
-    rm -rfv out;
+    echo '';
+    echo ' romautorelease: Cleaning out folder...';
+    rm -rfv out &> /dev/null;
+    echo '';
   fi;
 }
 
@@ -118,7 +124,10 @@ function autoreleaserrsony8960()
 
   # When option enabled, clean out folder
   if romautorelease-clean-active; then
-    rm -rfv out;
+    echo '';
+    echo ' romautorelease: Cleaning out folder...';
+    rm -rfv out &> /dev/null;
+    echo '';
   fi;
 }
 
@@ -151,6 +160,9 @@ function autoreleasecafsony8960()
 
   # When option enabled, clean out folder
   if romautorelease-clean-active; then
-    rm -rfv out;
+    echo '';
+    echo ' romautorelease: Cleaning out folder...';
+    rm -rfv out &> /dev/null;
+    echo '';
   fi;
 }

@@ -94,7 +94,10 @@ function romautorelease()
 
   # When option enabled, clean device out folder
   elif romautorelease-clean-active; then
-    rm -rfv './out/target/product';
+    echo '';
+    echo ' romautorelease: Cleaning out product folder...';
+    rm -rfv out/target/product &> /dev/null;
+    echo '';
 
   # Delete the devices relevant results
   elif [[ ! "${rom_params}" =~ 'nowipe' ]]; then
@@ -185,7 +188,10 @@ function romautorelease()
 
   # When option enabled and not local, clean out folder
   if romautorelease-clean-active && ! romautorelease-local-active; then
-    rm -rfv './out/target/product';
+    echo '';
+    echo ' romautorelease: Cleaning out product folder...';
+    rm -rfv out/target/product &> /dev/null;
+    echo '';
   fi;
 
   # Restore original path

@@ -42,6 +42,9 @@ function autoreleaseaospsodp8996()
 
   # When option enabled, clean out folder
   if romautorelease-clean-active; then
-    rm -rfv out;
+    echo '';
+    echo ' romautorelease: Cleaning out folder...';
+    rm -rfv out &> /dev/null;
+    echo '';
   fi;
 }
