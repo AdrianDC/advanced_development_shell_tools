@@ -56,22 +56,22 @@ function gitbranchpusher()
   echo " Repository path: ${repo_dir}";
   echo '';
 
-  # Update backup remote
+  # Update project remote
   if [[ "${repo_dir}" =~ 'MultiROM' ]]; then
-    gitramultirom;
+    gitrapmultirom;
   elif [[ "${repo_dir}" =~ 'TWRP' ]]; then
-    gitratwrp;
+    gitraptwrp;
   else
-    gitrab;
+    gitrap;
   fi;
 
-  # Fetch upstream backup
-  git fetch backup ${project_branch};
+  # Fetch upstream project
+  git fetch project ${project_branch};
   git rev-list --left-right --count FETCH_HEAD...HEAD;
   echo '';
 
   # Confirmation
-  command="git push -f backup HEAD:refs/heads/${project_branch}";
+  command="git push -f project HEAD:refs/heads/${project_branch}";
   echo " ${command}";
   printf '  > Proceed with project push [y/N] ? ';
   notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
@@ -82,7 +82,7 @@ function gitbranchpusher()
     echo "${key}";
   fi;
 
-  # Upload to backup
+  # Upload to project
   echo '';
   if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
     ${command};

@@ -1,0 +1,141 @@
+#!/bin/bash
+# ======================================
+#   Developed by Adrian DC - 2015-2017
+# ======================================
+
+# === Git Remotes Projects ===
+function gitrap()
+{
+  # Usage: gitrap (Development projects selector)
+
+  # Variables
+  local cnt=0;
+  local key;
+  local line_function;
+  local line_usage;
+  local list_functions=('');
+
+  # Display shtools* menu
+  echo '';
+  for line_function in $(typeset -F | grep gitrap | cut -d' ' -f 3 | grep -v '^gitrap$'); do
+
+    # Parse usage
+    line_usage=$(grep -a "Usage: ${line_function} " "${android_development_shell_tools_dir}/android_repo_projects.rc");
+    if [ -z "${line_usage}" ]; then
+      continue;
+    fi;
+    line_usage=${line_usage#*\(};
+    line_usage=${line_usage%\)*};
+    list_functions+=(${line_function});
+
+    # Item choice
+    cnt=$((cnt + 1));
+    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
+
+  done;
+  echo '';
+
+  # Request user input
+  printf " > Project to select [1-${cnt}] : ";
+  read key;
+
+  # Execute requested function
+  ${list_functions[${key}]};
+}
+
+# === Git Remotes LineageOS (8996) Project ===
+function gitrap8996lineage()
+{
+  # Usage: gitrap8996lineage (LineageOS 8996 development project remote)
+
+  # Add LineageOS 8996 development remote
+  gitremoteset project https://github.com/AdrianDC/lineage_development_sony8996.git;
+}
+
+# === Git Remotes AOSP (8960) N Project ===
+function gitrap8960naosp()
+{
+  # Usage: gitrap8960naosp (AOSP 8960 Nougat development project remote)
+
+  # Add AOSP 8960 Nougat development remote
+  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+    gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
+  else
+    gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_n.git;
+  fi;
+}
+
+# === Git Remotes AOSP (8960) O Project ===
+function gitrap8960oaosp()
+{
+  # Usage: gitrap8960oaosp (AOSP 8960 O development project remote)
+
+  # Add AOSP 8960 Marshmallow development remote
+  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+    gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
+  else
+    gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_o.git;
+  fi;
+}
+
+# === Git Remotes AOSP (8960) Master Project ===
+function gitrap8960masteraosp()
+{
+  # Usage: gitrap8960masteraosp (AOSP 8960 Master development project remote)
+
+  # Add AOSP 8960 Master development remote
+  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+    gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
+  else
+    gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_master.git;
+  fi;
+}
+
+# === Git Remotes AOSP (Sony) Project ===
+function gitrapsonyaosp()
+{
+  # Usage: gitrapsonyaosp (AOSP Sony development project remote)
+
+  # Add AOSP Sony development remote
+  gitremoteset project https://github.com/AdrianDC/aosp_development_sonyaosp.git;
+}
+
+# === Git Remotes AOSP-CAF Project ===
+function gitrapaospcaf()
+{
+  # Usage: gitrapaospcaf (AOSP-CAF development project remote)
+
+  # Add AOSP-CAF development remote
+  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+    gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
+  else
+    gitremoteset project https://github.com/AdrianDC/aosp_development_aospcaf.git;
+  fi;
+}
+
+# === Git Remotes LineageOS (Sony) Project ===
+function gitrapsonylineage()
+{
+  # Usage: gitrapsonylineage (LineageOS development project remote)
+
+  # Add LineageOS development remote
+  gitremoteset project https://github.com/AdrianDC/lineage_development_sonysodp.git;
+}
+
+# === Git Remotes MultiROM (Sony) Project ===
+function gitrapmultirom()
+{
+  # Usage: gitrapmultirom (MultiROM development project remote)
+
+  # Add MultiROM development remote
+  gitremoteset project https://github.com/AdrianDC/multirom_development_sony.git;
+}
+
+# === Git Remotes TWRP (Sony) Project ===
+function gitraptwrp()
+{
+  # Usage: gitraptwrp (TWRP development project remote)
+
+  # Add TWRP development remote
+  gitremoteset project https://github.com/AdrianDC/twrp_development_sony.git;
+}
