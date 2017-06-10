@@ -50,6 +50,9 @@ function fileedit()
       continue;
     fi;
 
+    # Resolve symlink paths
+    file=$(readlink -f "${file}");
+
     # Computer environement
     xdg-open "${file}" 2> /dev/null;
 
