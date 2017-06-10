@@ -222,15 +222,6 @@ function gitrab()
   fi;
 }
 
-# === Git Remotes Common Manifests Project ===
-function gitradevmanifests()
-{
-  # Usage: gitradevmanifests (Add common development manifests remote)
-
-  # Add common development manfests remote
-  gitremoteset backup https://github.com/AdrianDC/android_development_manifests.git;
-}
-
 # === Git Remotes LineageOS (8996) Project ===
 function gitra8996lineage()
 {

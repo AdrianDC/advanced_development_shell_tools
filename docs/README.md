@@ -422,7 +422,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitraau** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *git remote set-url $(githubusername)*
   * [**gitraou** *(Alias)*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *git remote set-url origin*
   * [**gitrab** *<b>\[Add backup remote\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)
-  * [**gitradevmanifests** *<b>\[Add common development manifests remote\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)
   * [**gitra8996lineage** *<b>\[Add LineageOS 8996 development remote\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)
   * [**gitra8960naosp** *<b>\[Add AOSP 8960 Nougat development remote\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)
   * [**gitra8960oaosp** *<b>\[Add AOSP 8960 O development remote\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)
