@@ -106,7 +106,7 @@ function reporefupdate()
   done;
 
   # Detect and update LineageOS references
-  for project in sony8960 sony8996 sonyaosp; do
+  for project in sony8960 sony8996 sonysodp; do
     cddevlineage ${project};
     if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
       echo '';
@@ -181,7 +181,7 @@ function reporefsync()
   done;
 
   # Fetch and update LineageOS references
-  for project in sony8960 sony8996 sonyaosp; do
+  for project in sony8960 sony8996 sonysodp; do
     cddevlineage ${project};
     if [ ${?} -eq 0 ]; then
       echo '';
