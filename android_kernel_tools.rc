@@ -234,22 +234,6 @@ function fbootr()
   sudo fastboot reboot;
 }
 
-# === Kernel Informations ===
-function fbooti()
-{
-  # Usage: fbooti (Kernel bbootimg analyzer)
-
-  # Variables
-  local partitiontarget=$(androiddevicestarget boot);
-
-  # Kernel informations
-  adbro;
-  adb push "${android_development_shell_tools_bbootimg}" /bbootimg;
-  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell /bbootimg -i ${partitiontarget};
-}
-
 # === Host Kernel Informations ===
 function bootinfo()
 {
@@ -263,6 +247,22 @@ function bootinfo()
 
   # Run bbootimg on the kernel input
   "${android_development_shell_tools_bbootimg_host}" -i "${1}";
+}
+
+# === Kernel Informations ===
+function adbbootinfo()
+{
+  # Usage: adbbootinfo (Kernel bbootimg analyzer)
+
+  # Variables
+  local partitiontarget=$(androiddevicestarget boot);
+
+  # Kernel informations
+  adbro;
+  adb push "${android_development_shell_tools_bbootimg}" /bbootimg;
+  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
+  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
+  adb shell /bbootimg -i ${partitiontarget};
 }
 
 # === FOTA Informations ===
