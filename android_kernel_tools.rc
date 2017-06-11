@@ -259,10 +259,9 @@ function adbbootinfo()
 
   # Kernel informations
   adbro;
-  adb push "${android_development_shell_tools_bbootimg}" /bbootimg;
-  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell /bbootimg -i ${partitiontarget};
+  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
+  adb shell 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
+  adb shell /tmp/bbootimg -i ${partitiontarget};
 }
 
 # === FOTA Informations ===
@@ -275,10 +274,9 @@ function adbfotainfos()
 
   # FOTA informations
   adbro;
-  adb push "${android_development_shell_tools_bbootimg}" /bbootimg;
-  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell /bbootimg -i ${partitiontarget};
+  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
+  adb shell 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
+  adb shell /tmp/bbootimg -i ${partitiontarget};
 }
 
 # === Kernel Injector ===
