@@ -56,12 +56,10 @@ function gitbranchpusher()
   echo " Repository path: ${repo_dir}";
   echo '';
 
-  # Update project remote
-  if [[ "${repo_dir}" =~ 'MultiROM' ]]; then
-    gitrapmultirom;
-  elif [[ "${repo_dir}" =~ 'TWRP' ]]; then
-    gitraptwrp;
-  else
+  # Check remote existence
+  git ls-remote --exit-code 'project' >/dev/null 2>&1;
+  if [ ${?} -ne 0 ]; then
+    echo -e " \e[1;33mInformation:\e[0m Remote 'project' not found. Launching 'gitrap'...";
     gitrap;
   fi;
 
