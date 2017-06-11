@@ -130,6 +130,9 @@ function mmmzip()
     mka ${BuildParams} | tee ${LogFile};
   fi;
 
+  # Return to repo root
+  croot;
+
   # Files handling
   local Installs=$(grep "target/product/.*/system" ${LogFile} | sort | uniq);
   local FilesList='';
@@ -147,7 +150,7 @@ function mmmzip()
         mkdir -p "${TmpDir}/${FileDir}";
       fi;
 
-    # Target copy
+      # Target copy
       if [ -f "${FilePath}" ]; then
         cp "${FilePath}" "${TmpDir}/${FileTarget}";
         FilesList="${FilesList} ./${FileTarget}";
