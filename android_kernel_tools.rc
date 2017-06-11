@@ -308,12 +308,11 @@ function fbootk()
 
   # Kernel injection
   adbro;
-  adb push "${filepath}" /tmpkernel;
-  adb push "${android_development_shell_tools_bbootimg}" /bbootimg;
-  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell 'chmod +x /bbootimg; chmod 755 /bbootimg';
-  adb shell /bbootimg -i ${partitiontarget};
-  adb shell /bbootimg -u ${partitiontarget} -k /tmpkernel;
+  adb push "${filepath}" /tmp/tmpkernel;
+  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
+  adb shell 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
+  adb shell /tmp/bbootimg -i ${partitiontarget};
+  adb shell /tmp/bbootimg -u ${partitiontarget} -k /tmp/tmpkernel;
   if [ ! -z "${2}" ]; then
     adb reboot recovery;
   fi;
