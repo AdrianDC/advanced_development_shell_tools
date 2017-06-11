@@ -36,11 +36,16 @@ function gitrap()
   echo '';
 
   # Request user input
-  printf " > Project to select [1-${cnt}] : ";
-  read key;
+  key=0;
+  while [ -z "${key}" ] || [ ! -z "${key//[0-9]/}" ] || [ ${key} -le 0 ] || [ ${key} -gt ${cnt} ]; do
+    printf " > Project to select [1-${cnt}] : ";
+    read key;
+  done;
 
   # Execute requested function
+  echo '';
   ${list_functions[${key}]};
+  echo '';
 }
 
 # === Git Remotes LineageOS (Sony 8996) Project ===
