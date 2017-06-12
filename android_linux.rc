@@ -47,6 +47,7 @@ function fileedit()
 
     # Filter only files
     if [ ! -f "${file}" ]; then
+      echo " fileedit: '${file}' not found";
       continue;
     fi;
 
