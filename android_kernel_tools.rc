@@ -285,9 +285,17 @@ function fbootk()
   # Variables
   local filepath=${1};
 
-  # Adapt path if needed for makekernel
-  if [ ! -f "${filepath}" ] && [ -f ".build/${filepath}" ]; then
-    filepath=".build/${filepath}";
+  # Detect zImage file
+  if [ -z "${filepath}" ]; then
+    if [ -f '.build/arch/arm64/boot/zImage' ]; then
+      filepath=.build/arch/arm64/boot/zImage;
+    elif [ -f '.build/arch/arm/boot/zImage' ]; then
+      filepath=.build/arch/arm/boot/zImage;
+    elif [ -f 'arch/arm64/boot/zImage' ]; then
+      filepath=arch/arm64/boot/zImage;
+    elif [ -f 'arch/arm/boot/zImage' ]; then
+      filepath=arch/arm/boot/zImage;
+    fi;
   fi;
 
   # Usage
@@ -306,16 +314,21 @@ function fbootk()
     partitiontarget=$(androiddevicestarget boot);
   fi;
 
-  # Kernel injection
+  # Files to device push
   adbro;
   adb push "${filepath}" /tmp/tmpkernel;
   adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
   adb shell 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
+
+  # Kernel injection
   adb shell /tmp/bbootimg -i ${partitiontarget};
   adb shell /tmp/bbootimg -u ${partitiontarget} -k /tmp/tmpkernel;
+
+  # Reboot to recovery if requested
   if [ ! -z "${2}" ]; then
     adb reboot recovery;
   fi;
+  echo '';
 }
 
 # === Recovery Flasher ===
