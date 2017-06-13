@@ -197,16 +197,21 @@ function fboota()
 # === Kernel Flasher ===
 function fboot()
 {
-  # Usage: fboot <bootimage> (fastboot bootimage flashed)
+  # Variables
+  local bootimage=${1:-boot.img};
+  bootimage=${bootimage#file:/};
+
+  # Usage
+  if [ ! -f "${bootimage}" ]; then
+    echo '';
+    echo ' Usage: fboot <bootimage> (fastboot bootimage flashed)';
+    echo '';
+    return;
+  fi;
 
   # Bootloader, flash bootimage and reboot
   sudo adb reboot bootloader;
-  if [ ! -z "${1}" ]; then
-    local file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
-    sudo fastboot flash boot "${file}";
-  else
-    sudo fastboot flash boot boot.img;
-  fi;
+  sudo fastboot flash boot "${bootimage}";
   sudo fastboot reboot;
 }
 
