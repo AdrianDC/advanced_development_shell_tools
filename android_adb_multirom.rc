@@ -107,7 +107,14 @@ function adbmrominjector()
   fi;
 
   # Variables
-  local partitiontarget=$(adbmromselect)/boot.img;
+  local partitiontarget=$(androiddevicestarget boot);
+  local romtarget=$(adbmromselect)/boot.img;
+
+  # Load ROM bootimage to partition
+  echo " Injecting '${romtarget}' to '${partitiontarget}'";
+  echo '';
+  adbsu "dd if=${partitiontarget} of=/sdcard/boot.dump";
+  adbsu "dd if='${romtarget}' of=${partitiontarget}";
 
   # Files to device push
   adbro;
@@ -118,6 +125,14 @@ function adbmrominjector()
   # Kernel injection
   adb shell /tmp/bbootimg -i "${partitiontarget}";
   adb shell /tmp/bbootimg -u "${partitiontarget}" -k /tmp/tmpkernel;
+
+  # Restore ROM bootimage to partition
+  echo '';
+  echo " Restoring '${partitiontarget}' to '${romtarget}'";
+  echo '';
+  adbsu "dd if=${partitiontarget} of='${romtarget}'";
+  adbsu "dd if=/sdcard/boot.dump of=${partitiontarget}";
+  adbsu 'rm -f /sdcard/boot.dump';
 
   # Reboot to recovery if requested
   if [ ! -z "${2}" ]; then
