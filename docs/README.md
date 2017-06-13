@@ -136,6 +136,11 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbbootchart** *<b>\[Bootchart debug helper\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc)
 
 ---
+### [&nbsp;Documentation: [android_adb_multirom.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)&nbsp;]
+  * [**adbmromlist** *<b>\[List available MultiROM installations\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)
+  * [**adbmromselect** *<b>\[Select MultiROM installation for path\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)
+
+---
 ### [&nbsp;Documentation: [android_adb_shortcuts.rc](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_shortcuts.rc)
