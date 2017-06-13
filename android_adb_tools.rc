@@ -122,7 +122,7 @@ function adbsu()
   # Run on root adb shell
   if [ -z $(adb shell type su | grep 'no found') ]; then
     adbro;
-    adb shell ${@};
+    adb shell "${@}";
   else
     adb shell su -c "${@}";
   fi;
