@@ -80,8 +80,16 @@ function gerritreview()
   # Command confirmation
   echo '';
   echo " ${command}";
-  printf '  > Proceed with review upload (y/N) ? ';
+  printf '  > Proceed with review upload (y/N/t) ? ';
   read key;
+
+  # Set a topic
+  if [ "${key}" = 't' ] || [ "${key}" = 'T' ]; then
+    printf '  > Topic to set on gerrit : ';
+    read key;
+    command="${command}/${key}";
+    key='y';
+  fi;
 
   # Abort if denied
   if [ ! "${key}" = 'y' ] && [ ! "${key}" = 'Y' ]; then
