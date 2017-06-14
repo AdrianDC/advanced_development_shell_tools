@@ -270,9 +270,9 @@ function adbbootinfo()
 }
 
 # === FOTA Informations ===
-function adbfotainfos()
+function adbfotainfo()
 {
-  # Usage: adbfotainfos (FOTA bbootimg analyzer)
+  # Usage: adbfotainfo (FOTA bbootimg analyzer)
 
   # Variables
   local partitiontarget=$(androiddevicestarget fota);
