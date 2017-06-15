@@ -296,7 +296,7 @@ function shtoolsforum()
   sed -i 's#\*\([^*]*\)\*#[I]\1[/I]#g' "${readme_forum}";
   sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}";
   sed -i 's#```#[/CODE]#g' "${readme_forum}";
-  sed -i 's#`\(.*\)`#[I]\1[/I]#g' "${readme_forum}";
+  sed -i 's#`\(.*\)`#[I]"\1"[/I]#g' "${readme_forum}";
   sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B][U]\1[/U][/B][/SIZE]#g' "${readme_forum}";
   sed -i 's#^<!-- \(\|/\)Center -->$#[\1CENTER]#g' "${readme_forum}";
   sed -i 's#^<!-- \(\|/\)Indent -->$#[\1INDENT]#g' "${readme_forum}";
