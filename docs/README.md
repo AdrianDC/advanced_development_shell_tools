@@ -54,6 +54,7 @@
   * [**shtoolsreset** *<b>\[Reset project to remote HEAD\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsmaster** *<b>\[Switch android_development_shell_tools to master branch\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsstaging** *<b>\[Switch android_development_shell_tools to staging branch\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
+  * [**shtoolsforum** *<b>\[Refresh README.forum project presentation\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsreadme** *<b>\[Refresh README.md functions usages\]</b>*](http://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
 
 ---

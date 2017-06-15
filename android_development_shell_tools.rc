@@ -270,6 +270,45 @@ function shtoolsstaging()
   echo '';
 }
 
+# === Android Shell Tools README.forum Updater ===
+function shtoolsforum()
+{
+  # Usage: shtoolsforum (Refresh README.forum project presentation)
+
+  # Variables
+  local readme_forum=${android_development_shell_tools_dir}/README.forum;
+  local readme_md=${android_development_shell_tools_dir}/README.md;
+
+  # Header
+  echo '';
+  echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README.forum documentation\e[0m';
+  echo '';
+
+  # Prepare README.forum
+  rm -f "${readme_forum}";
+  cp -v "${readme_md}" "${readme_forum}";
+
+  # Convert from markdown to bbcode
+  sed -i 's#!\[.*\](\(.*\))#[IMG]\1[/IMG]#g' "${readme_forum}";
+  sed -i 's#\[\([^]]*\)\](\([^)]*\))#[URL=\2]\1[/URL]#g' "${readme_forum}";
+  sed -i '/^[ ]*<br \/>$/d' "${readme_forum}";
+  sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}";
+  sed -i 's#\*\([^*]*\)\*#[I]\1[/I]#g' "${readme_forum}";
+  sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}";
+  sed -i 's#```#[/CODE]#g' "${readme_forum}";
+  sed -i 's#`\(.*\)`#[I]\1[/I]#g' "${readme_forum}";
+  sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B][U]\1[/U][/B][/SIZE]#g' "${readme_forum}";
+  sed -i 's#^<!-- \(\|/\)Center -->$#[\1CENTER]#g' "${readme_forum}";
+  sed -i 's#^<!-- \(\|/\)Indent -->$#[\1INDENT]#g' "${readme_forum}";
+  sed -i 's#^<!-- \(\|/\)List -->$#[\1LIST]#g' "${readme_forum}";
+  sed -i 's#^ \* #[*]#g' "${readme_forum}";
+
+  # Parsed header
+  echo '';
+  echo '  README.forum successfully rebuilt';
+  echo '';
+}
+
 # === Android Shell Tools README.md Updater ===
 function shtoolsreadme()
 {
