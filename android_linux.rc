@@ -42,6 +42,9 @@ function fileedit()
     return;
   fi;
 
+  # Variables
+  local opened;
+
   # Files editor for most environments
   for file in ${@}; do
 
@@ -56,16 +59,18 @@ function fileedit()
 
     # Computer environement
     xdg-open "${file}" 2> /dev/null;
+    opened=${?};
 
     # Server environment
-    if [ ${?} -ne 0 ]; then
+    if [ ${opened} -ne 0 ]; then
       if [ ! -z "$(type -t nano 2> /dev/null)" ]; then
         nano "${file}";
+        opened=${?};
       fi;
     fi;
 
     # Unknown environment
-    if [ ${?} -ne 0 ]; then
+    if [ ${opened} -ne 0 ]; then
       echo " Found in ${file}";
     fi;
 
