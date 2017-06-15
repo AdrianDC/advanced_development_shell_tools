@@ -286,6 +286,9 @@ function adbbootinfo()
 
   # Kernel informations
   adb shell "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
+
+  # Cleanup
+  adb shell "rm -f ${adb_tmpdir}/bbootimg"
 }
 
 # === FOTA Informations ===
@@ -320,6 +323,9 @@ function adbfotainfo()
 
   # FOTA informations
   adb shell "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
+
+  # Cleanup
+  adb shell "rm -f ${adb_tmpdir}/bbootimg"
 }
 
 # === Kernel Injector ===
@@ -387,6 +393,10 @@ function fbootk()
 
   # Kernel injection
   adb shell "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel";
+
+  # Cleanup
+  adb shell "rm -f ${adb_tmpdir}/bbootimg"
+  adb shell "rm -f ${adb_tmpdir}/tmpkernel"
 
   # Reboot to recovery if requested
   if [ ! -z "${2}" ]; then
