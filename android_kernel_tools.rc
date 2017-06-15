@@ -262,11 +262,23 @@ function adbbootinfo()
   # Variables
   local partitiontarget=$(androiddevicestarget boot);
 
-  # Kernel informations
+  # Give adb root permissions
   adbro;
-  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
+
+  # Check if '/tmp' exists
+  if [ -z "$(adb shell 'ls /tmp/ 2> /dev/null')" ]; then
+    echo '';
+    echo '  adbbootinfo: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push and fix permissions of 'bbootimg'
+  adb push "${android_development_shell_tools_bbootimg}" '/tmp/bbootimg';
   adb shell 'chmod 755 /tmp/bbootimg';
-  adb shell /tmp/bbootimg -i ${partitiontarget};
+
+  # Kernel informations
+  adb shell "/tmp/bbootimg -i ${partitiontarget}";
 }
 
 # === FOTA Informations ===
@@ -277,11 +289,23 @@ function adbfotainfo()
   # Variables
   local partitiontarget=$(androiddevicestarget fota);
 
-  # FOTA informations
+  # Give adb root permissions
   adbro;
-  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
+
+  # Check if '/tmp' exists
+  if [ -z "$(adb shell 'ls /tmp/ 2> /dev/null')" ]; then
+    echo '';
+    echo '  adbfotainfo: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push and fix permissions of 'bbootimg'
+  adb push "${android_development_shell_tools_bbootimg}" '/tmp/bbootimg';
   adb shell 'chmod 755 /tmp/bbootimg';
-  adb shell /tmp/bbootimg -i ${partitiontarget};
+
+  # FOTA informations
+  adb shell "/tmp/bbootimg -i ${partitiontarget}";
 }
 
 # === Kernel Injector ===
@@ -319,15 +343,29 @@ function fbootk()
     partitiontarget=$(androiddevicestarget boot);
   fi;
 
-  # Files to device push
+  # Give adb root permissions
   adbro;
-  adb push "${filepath}" /tmp/tmpkernel;
-  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
+
+  # Check if '/tmp' exists
+  if [ -z "$(adb shell 'ls /tmp/ 2> /dev/null')" ]; then
+    echo '';
+    echo '  fbootk: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push kernel to target
+  adb push "${filepath}" '/tmp/tmpkernel';
+
+  # Push and fix permissions of 'bbootimg'
+  adb push "${android_development_shell_tools_bbootimg}" '/tmp/bbootimg';
   adb shell 'chmod 755 /tmp/bbootimg';
 
+  # Kernel informations
+  adb shell "/tmp/bbootimg -i ${partitiontarget}";
+
   # Kernel injection
-  adb shell /tmp/bbootimg -i ${partitiontarget};
-  adb shell /tmp/bbootimg -u ${partitiontarget} -k /tmp/tmpkernel;
+  adb shell "/tmp/bbootimg -u ${partitiontarget} -k /tmp/tmpkernel";
 
   # Reboot to recovery if requested
   if [ ! -z "${2}" ]; then
