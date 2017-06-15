@@ -261,27 +261,71 @@ function adbbootinfo()
 
   # Variables
   local partitiontarget=$(androiddevicestarget boot);
+  local adb_tmpdir;
+
+  # Give adb root perission
+  adbro;
+
+  # Check if '/tmp' exists
+  if [ ! -z "$(adb shell 'ls /tmp/ 2> /dev/null')" ]; then
+    adb_tmpdir='/tmp';
+
+  # Check if '/data/local/tmp' exists
+  elif [ ! -z "$(adb shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
+    adb_tmpdir='/data/local/tmp';
+  else
+    echo '';
+    echo '  adbbootinfo: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push and fix perm of 'bbootimg'
+  adb push "${android_development_shell_tools_bbootimg}" "${adb_tmpdir}/bbootimg";
+  adb shell "chmod 755 ${adb_tmpdir}/bbootimg";
 
   # Kernel informations
-  adbro;
-  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
-  adb shell 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
-  adb shell /tmp/bbootimg -i ${partitiontarget};
+  adb shell "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
+
+  # Cleanup
+  adb shell "rm -f ${adb_tmpdir}/bbootimg"
 }
 
 # === FOTA Informations ===
-function adbfotainfos()
+function adbfotainfo()
 {
-  # Usage: adbfotainfos (FOTA bbootimg analyzer)
+  # Usage: adbfotainfo (FOTA bbootimg analyzer)
 
   # Variables
   local partitiontarget=$(androiddevicestarget fota);
+  local adb_tmpdir;
+
+  # Give adb root perission
+  adbro;
+
+  # Check if '/tmp' exists
+  if [ ! -z "$(adb shell 'ls /tmp/ 2> /dev/null')" ]; then
+    adb_tmpdir='/tmp';
+
+  # Check if '/data/local/tmp' exists
+  elif [ ! -z "$(adb shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
+    adb_tmpdir='/data/local/tmp';
+  else
+    echo '';
+    echo '  adbfotainfo: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push and fix perm of 'bbootimg'
+  adb push "${android_development_shell_tools_bbootimg}" "${adb_tmpdir}/bbootimg";
+  adb shell "chmod 755 ${adb_tmpdir}/bbootimg";
 
   # FOTA informations
-  adbro;
-  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
-  adb shell 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
-  adb shell /tmp/bbootimg -i ${partitiontarget};
+  adb shell "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
+
+  # Cleanup
+  adb shell "rm -f ${adb_tmpdir}/bbootimg"
 }
 
 # === Kernel Injector ===
@@ -289,6 +333,7 @@ function fbootk()
 {
   # Variables
   local filepath=${1};
+  local adb_tmpdir;
 
   # Detect zImage file
   if [ -z "${filepath}" ]; then
@@ -319,15 +364,39 @@ function fbootk()
     partitiontarget=$(androiddevicestarget boot);
   fi;
 
-  # Files to device push
+  # Give adb root perission
   adbro;
-  adb push "${filepath}" /tmp/tmpkernel;
-  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
-  adb shell 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
+
+  # Check if '/tmp' exists
+  if [ ! -z "$(adb shell 'ls /tmp/ 2> /dev/null')" ]; then
+    adb_tmpdir='/tmp';
+
+  # Check if '/data/local/tmp' exists
+  elif [ ! -z "$(adb shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
+    adb_tmpdir='/data/local/tmp';
+  else
+    echo '';
+    echo '  fbootk: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push kernel
+  adb push "${filepath}" "${adb_tmpdir}/tmpkernel";
+
+  # Push and fix perm of 'bbootimg'
+  adb push "${android_development_shell_tools_bbootimg}" "${adb_tmpdir}/bbootimg";
+  adb shell "chmod 755 ${adb_tmpdir}/bbootimg";
+
+  # Kernel informations
+  adb shell "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
 
   # Kernel injection
-  adb shell /tmp/bbootimg -i ${partitiontarget};
-  adb shell /tmp/bbootimg -u ${partitiontarget} -k /tmp/tmpkernel;
+  adb shell "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel";
+
+  # Cleanup
+  adb shell "rm -f ${adb_tmpdir}/bbootimg"
+  adb shell "rm -f ${adb_tmpdir}/tmpkernel"
 
   # Reboot to recovery if requested
   if [ ! -z "${2}" ]; then
