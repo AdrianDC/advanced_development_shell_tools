@@ -2,6 +2,8 @@
 
  * Project created by [Adrian DC](https://github.com/AdrianDC) - 2015-2017
 
+ * XDA-Developers thread for this project : [Android Development Shell Tools](http://forum.xda-developers.com/-/-/-t3622382)
+
  * The 'android_development_shell_tools' is a project meant to provide
    <br />
    multiple advanced functions and shortcuts to ease Android development
