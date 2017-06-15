@@ -1,4 +1,5 @@
-# Android Development Shell Tools
+![Android Development Shell Tools](docs/assets/res/logo.png)
+
  * Project created by [Adrian DC](https://github.com/AdrianDC) - 2015-2017
 
  * The 'android_development_shell_tools' is a project meant to provide
