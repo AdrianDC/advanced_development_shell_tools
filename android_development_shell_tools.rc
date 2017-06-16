@@ -276,36 +276,41 @@ function shtoolsforum()
   # Usage: shtoolsforum (Refresh README.forum project presentation)
 
   # Variables
-  local readme_forum=${android_development_shell_tools_dir}/forums/README.forum;
-  local readme_md=${android_development_shell_tools_dir}/README.md;
+  local readme_forum=${android_development_shell_tools_dir}/forums/README;
+  local readme_md=${android_development_shell_tools_dir}/README;
 
   # Header
   echo '';
-  echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README.forum documentation\e[0m';
+  echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README forum documentations\e[0m';
   echo '';
 
-  # Prepare README.forum
-  rm -f "${readme_forum}";
-  cp -v "${readme_md}" "${readme_forum}";
+  # Handle multiple README files
+  for ext in md; do
 
-  # Convert from markdown to bbcode
-  sed -i 's#!\[.*\](\(.*\))#[IMG]\1[/IMG]#g' "${readme_forum}";
-  sed -i 's#\[\([^]]*\)\](\([^)]*\))#[URL=\2]\1[/URL]#g' "${readme_forum}";
-  sed -i '/^[ ]*<br \/>$/d' "${readme_forum}";
-  sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}";
-  sed -i 's#\*\([^*]*\)\*#[I]\1[/I]#g' "${readme_forum}";
-  sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}";
-  sed -i 's#```#[/CODE]#g' "${readme_forum}";
-  sed -i 's#`\(.*\)`#[I]"\1"[/I]#g' "${readme_forum}";
-  sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B][U]\1[/U][/B][/SIZE]#g' "${readme_forum}";
-  sed -i 's#^<!-- \(\|/\)Center -->$#[\1CENTER]#g' "${readme_forum}";
-  sed -i 's#^<!-- \(\|/\)Indent -->$#[\1INDENT]#g' "${readme_forum}";
-  sed -i 's#^<!-- \(\|/\)List -->$#[\1LIST]#g' "${readme_forum}";
-  sed -i 's#^ \* #[*]#g' "${readme_forum}";
+    # Prepare README.forum
+    rm -f "${readme_forum}.${ext}";
+    cp -v "${readme_md}.${ext}" "${readme_forum}.${ext}";
+
+    # Convert from markdown to bbcode
+    sed -i 's#!\[.*\](\(.*\))#[IMG]\1[/IMG]#g' "${readme_forum}.${ext}";
+    sed -i 's#\[\([^]]*\)\](\([^)]*\))#[URL=\2]\1[/URL]#g' "${readme_forum}.${ext}";
+    sed -i '/^[ ]*<br \/>$/d' "${readme_forum}.${ext}";
+    sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}.${ext}";
+    sed -i 's#\*\([^*]*\)\*#[I]\1[/I]#g' "${readme_forum}.${ext}";
+    sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}.${ext}";
+    sed -i 's#```#[/CODE]#g' "${readme_forum}.${ext}";
+    sed -i 's#`\(.*\)`#[I]"\1"[/I]#g' "${readme_forum}.${ext}";
+    sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B][U]\1[/U][/B][/SIZE]#g' "${readme_forum}.${ext}";
+    sed -i 's#^<!-- \(\|/\)Center -->$#[\1CENTER]#g' "${readme_forum}.${ext}";
+    sed -i 's#^<!-- \(\|/\)Indent -->$#[\1INDENT]#g' "${readme_forum}.${ext}";
+    sed -i 's#^<!-- \(\|/\)List -->$#[\1LIST]#g' "${readme_forum}.${ext}";
+    sed -i 's#^ \* #[*]#g' "${readme_forum}.${ext}";
+
+  done;
 
   # Parsed header
   echo '';
-  echo '  README.forum successfully rebuilt';
+  echo '  README forum files successfully rebuilt';
   echo '';
 }
 
