@@ -285,7 +285,7 @@ function shtoolsforum()
   echo '';
 
   # Handle multiple README files
-  for ext in md previews; do
+  for ext in md previews.md; do
 
     # Prepare README.forum
     rm -f "${readme_forum}.${ext}";
