@@ -303,9 +303,9 @@ function shtoolsforum()
     sed -i 's#`\(.*\)`#[I]"\1"[/I]#g' "${readme_forum}.${ext}";
     sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
     sed -i 's#^\#\#\#\# \[ \(.*\) \]$#[SIZE=4][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
-    sed -i 's#^<!-- \(\|/\)Center -->$#[\1CENTER]#g' "${readme_forum}.${ext}";
-    sed -i 's#^<!-- \(\|/\)Indent -->$#[\1INDENT]#g' "${readme_forum}.${ext}";
-    sed -i 's#^<!-- \(\|/\)List -->$#[\1LIST]#g' "${readme_forum}.${ext}";
+    sed -i 's#<!-- \(\|/\)Center -->#[\1CENTER]#g' "${readme_forum}.${ext}";
+    sed -i 's#<!-- \(\|/\)Indent -->#[\1INDENT]#g' "${readme_forum}.${ext}";
+    sed -i 's#<!-- \(\|/\)List -->#[\1LIST]#g' "${readme_forum}.${ext}";
     sed -i 's#^ \* #[*]#g' "${readme_forum}.${ext}";
 
   done;
