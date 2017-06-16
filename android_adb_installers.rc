@@ -143,7 +143,7 @@ function adbpf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbpf <file_paths> (Recursive adb files pusher)';
+    echo ' Usage: adbpf <file_paths> (Advanced recursive adb files pusher)';
     echo '';
     return;
   fi;
