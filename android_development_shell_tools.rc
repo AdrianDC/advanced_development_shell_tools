@@ -276,7 +276,7 @@ function shtoolsforum()
   # Usage: shtoolsforum (Refresh README.forum project presentation)
 
   # Variables
-  local readme_forum=${android_development_shell_tools_dir}/README.forum;
+  local readme_forum=${android_development_shell_tools_dir}/forums/README.forum;
   local readme_md=${android_development_shell_tools_dir}/README.md;
 
   # Header
