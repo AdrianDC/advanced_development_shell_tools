@@ -1,12 +1,9 @@
-[CENTER]
-[IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/res/logo.png[/IMG]
-[/CENTER]
+[CENTER][IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/res/logo.png[/IMG][/CENTER]
 
 
 [SIZE=5][B][U]Disclaimer[/U][/B][/SIZE]
 
-[INDENT]
-[LIST]
+[INDENT][LIST]
 [*][I]"No wrong use or side effect of this project shall involve the responsibility of its developers."[/I]
    [I]"The scripts are shared as they are. Improvements are regularly done based on personal use"[/I]
    [I]"and developers reports, but no instantaneous changes shall be requested by anyone."[/I]
@@ -22,14 +19,12 @@
     * you point the finger at me for messing up your device, I will laugh at you.
     */
    [/CODE]
-[/LIST]
-[/INDENT]
+[/LIST][/INDENT]
 
 
 [SIZE=5][B][U]About the project[/U][/B][/SIZE]
 
-[INDENT]
-[LIST]
+[INDENT][LIST]
 [*][B]'android_development_shell_tools'[/B] is a project I started in 2015
    to [B]ease Android development, ADB usage, Git commands and related projects.[/B]
    Originally a private set of scripts, I made the project evolve towards
@@ -42,14 +37,12 @@
    [B]Developers or beginners[/B] interested in Shell commands and scripting
    can look into my sources and find documented [B]commands and syntaxes[/B],
    which can be used as a reference of Shell scripting and help making their own.
-[/LIST]
-[/INDENT]
+[/LIST][/INDENT]
 
 
 [SIZE=5][B][U]How to update with upstream changes[/U][/B][/SIZE]
 
-[INDENT]
-[LIST]
+[INDENT][LIST]
 [*][B]To keep a local sync of 'android_development_shell_tools' updated with upstream changes[/B],
    simply run the [B][I]"shtoolssync"[/I][/B] command and the updates will be downloaded.
    Local modifications will be lost through the update (read about [I]"git stash pop"[/I] in that case)
@@ -58,14 +51,12 @@
 [*]If you intend to keep personal or unfinished functions along this project,
    you can also look at the [B][URL=https://github.com/AdrianDC/android_development_shell_tools/tree/shell_users]shell_users[/URL][/B] branch, a minimal variant
    that allows holding functions or macros separately (like credentials).
-[/LIST]
-[/INDENT]
+[/LIST][/INDENT]
 
 
 [SIZE=5][B][U]About the documentation and structure[/U][/B][/SIZE]
 
-[INDENT]
-[LIST]
+[INDENT][LIST]
 [*]The linked [B]documentation holds a reference point of all functions and macros[/B]
    that this project provides, which details of their purpose, and if present,
    details on the [B][I]"<required>` or `[optional]"[/I] parameters[/B] available.
@@ -87,24 +78,20 @@
    [I](Keeping a copy or symlinking extensions scripts is recommended for safety)[/I]
    If the new extension is generic enough for public use or interest,
    I can easily consider merging it in the common upstream sources.
-[/LIST]
-[/INDENT]
+[/LIST][/INDENT]
 
 
 [SIZE=5][B][U]Project and documentations[/U][/B][/SIZE]
 
-[INDENT]
-[LIST]
+[INDENT][LIST]
 [*][B]Documentation and references :[/B] [URL=http://adriandc.github.io/android_development_shell_tools]android_development_shell_tools[/URL]
 [*][B]Sources on GitHub :[/B] [URL=https://github.com/AdrianDC/android_development_shell_tools]android_development_shell_tools[/URL]
-[/LIST]
-[/INDENT]
+[/LIST][/INDENT]
 
 
 [SIZE=5][B][U]How to install the project[/U][/B][/SIZE]
 
-[INDENT]
-[LIST]
+[INDENT][LIST]
 [*][B]First, you need to clone this project locally[/B]
    [I]"git clone https://github.com/AdrianDC/android_development_shell_tools -b master"[/I]
 
@@ -120,14 +107,12 @@
 [*][B]The [I]"ANDROID_DEV_DRIVE"[/I] variable[/B] is a reference folder I use
    for all Android projects, repositories, kernels and ROMs.
    You do not [I]need[/I] it, but a few functions rely on it to ease things.
-[/LIST]
-[/INDENT]
+[/LIST][/INDENT]
 
 
 [SIZE=5][B][U]How to contribute to the project[/U][/B][/SIZE]
 
-[INDENT]
-[LIST]
+[INDENT][LIST]
 [*]Perform the [B]scripts modifications, fixes or additions[/B].
 
 [*]Update README.md documentation with [B][I]"shtoolsreadme"[/I][/B].
@@ -135,17 +120,15 @@
 [*][B]Commit the changes[/B] with git (refer to older commits for style)
 
 [*]Push your changes and [B]create a pull-request[/B] once ready
-[/LIST]
-[/INDENT]
+[/LIST][/INDENT]
 
 
 [SIZE=5][B][U]Project contributors and modules[/U][/B][/SIZE]
 
-[INDENT]
-[LIST]
+[INDENT][LIST]
 [*][URL=https://github.com/AdrianDC]AdrianDC[/URL] : android_development_shell_tools creator and main developer
 [*][URL=https://github.com/Caio99BR]Caio99BR[/URL] : android_development_shell_tools user and contributor
 [*][URL=https://github.com/multirom-dev/libbootimg/graphs/contributors]multirom-dev[/URL] : libbootimg evolutions originally by [URL=https://github.com/Tasssadar]Tassadar[/URL]
 [*][URL=https://github.com/xiaolu/mkbootimg_tools]xiaolu[/URL] : mkbootimg_tools submodule original developer
-[/LIST]
-[/INDENT]
+[/LIST][/INDENT]
+

@@ -191,3 +191,5 @@
  * [xiaolu](https://github.com/xiaolu/mkbootimg_tools) : mkbootimg_tools submodule original developer
 <!-- /List -->
 <!-- /Indent -->
+
+<br />
