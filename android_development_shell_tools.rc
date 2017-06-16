@@ -297,10 +297,12 @@ function shtoolsforum()
     sed -i '/^[ ]*<br \/>$/d' "${readme_forum}.${ext}";
     sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}.${ext}";
     sed -i 's#\*\([^*]*\)\*#[I]\1[/I]#g' "${readme_forum}.${ext}";
+    sed -i 's#__\([^*]*\)__#[U]\1[/U]#g' "${readme_forum}.${ext}";
     sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}.${ext}";
     sed -i 's#```#[/CODE]#g' "${readme_forum}.${ext}";
     sed -i 's#`\(.*\)`#[I]"\1"[/I]#g' "${readme_forum}.${ext}";
-    sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B][U]\1[/U][/B][/SIZE]#g' "${readme_forum}.${ext}";
+    sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
+    sed -i 's#^\#\#\#\# \[ \(.*\) \]$#[SIZE=4][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
     sed -i 's#^<!-- \(\|/\)Center -->$#[\1CENTER]#g' "${readme_forum}.${ext}";
     sed -i 's#^<!-- \(\|/\)Indent -->$#[\1INDENT]#g' "${readme_forum}.${ext}";
     sed -i 's#^<!-- \(\|/\)List -->$#[\1LIST]#g' "${readme_forum}.${ext}";
