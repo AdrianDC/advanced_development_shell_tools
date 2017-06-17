@@ -295,9 +295,6 @@ function shtoolsforum()
     sed -i 's#!\[.*\](\(.*\))#[IMG]\1[/IMG]#g' "${readme_forum}.${ext}";
     sed -i 's#\[\([^]]*\)\](\([^)]*\))#[URL=\2]\1[/URL]#g' "${readme_forum}.${ext}";
     sed -i '/^[ ]*<br \/>$/d' "${readme_forum}.${ext}";
-    sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}.${ext}";
-    sed -i 's#\*\([^*]*\)\*#[I]\1[/I]#g' "${readme_forum}.${ext}";
-    sed -i 's#__\([^*]*\)__#[U]\1[/U]#g' "${readme_forum}.${ext}";
     sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}.${ext}";
     sed -i 's#```#[/CODE]#g' "${readme_forum}.${ext}";
     sed -i 's#\(`.*`\)#[FONT="Courier New"][I]\1[/I][/FONT]#g' "${readme_forum}.${ext}";
@@ -307,6 +304,9 @@ function shtoolsforum()
     sed -i ':a;N;$!ba;s#<!-- Indent -->\n#[INDENT]#g;s#\n<!-- /Indent -->#[/INDENT]#g' "${readme_forum}.${ext}";
     sed -i 's#<!-- \(\|/\)List -->#[\1LIST]#g' "${readme_forum}.${ext}";
     sed -i 's#^ \* #[*]#g' "${readme_forum}.${ext}";
+    sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}.${ext}";
+    sed -i 's#\*\([^]]\{1\}[^*]*\)\*#[I]\1[/I]#g' "${readme_forum}.${ext}";
+    sed -i 's#__\([^*]*\)__#[U]\1[/U]#g' "${readme_forum}.${ext}";
 
   done;
 
