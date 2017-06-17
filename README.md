@@ -3,7 +3,7 @@
 <!-- /Center -->
 
 
-### [ __Disclaimer__ ]
+### __Disclaimer__
 
 <!-- Indent -->
 <!-- List -->
@@ -31,7 +31,7 @@
 
 <br />
 
-### [ __About the project__ ]
+### __About the project__
 
 <!-- Indent -->
 <!-- List -->
@@ -61,7 +61,7 @@
 
 <br />
 
-### [ __How to update with upstream changes__ ]
+### __How to update with upstream changes__
 
 <!-- Indent -->
 <!-- List -->
@@ -83,7 +83,7 @@
 
 <br />
 
-### [ __About the documentation and structure__ ]
+### __About the documentation and structure__
 
 <!-- Indent -->
 <!-- List -->
@@ -127,7 +127,7 @@
 
 <br />
 
-### [ __Project and documentations__ ]
+### __Project and documentations__
 
 <!-- Indent -->
 <!-- List -->
@@ -138,7 +138,7 @@
 
 <br />
 
-### [ __How to install the project__ ]
+### __How to install the project__
 
 <!-- Indent -->
 <!-- List -->
@@ -165,7 +165,7 @@
 
 <br />
 
-### [ __How to contribute to the project__ ]
+### __How to contribute to the project__
 
 <!-- Indent -->
 <!-- List -->
@@ -181,7 +181,7 @@
 
 <br />
 
-### [ __Project contributors and modules__ ]
+### __Project contributors and modules__
 
 <!-- Indent -->
 <!-- List -->

@@ -298,8 +298,8 @@ function shtoolsforum()
     sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}.${ext}";
     sed -i 's#```#[/CODE]#g' "${readme_forum}.${ext}";
     sed -i 's#\(`.*`\)#[FONT="Courier New"][I]\1[/I][/FONT]#g' "${readme_forum}.${ext}";
-    sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
-    sed -i 's#^\#\#\#\# \[ \(.*\) \]$#[SIZE=4][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
+    sed -i 's#^\#\#\# \(.*\)$#[SIZE=5][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
+    sed -i 's#^\#\#\#\# \(.*\)$#[SIZE=4][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
     sed -i ':a;N;$!ba;s#<!-- Center -->\n#[CENTER]#g;s#\n<!-- /Center -->#[/CENTER]#g' "${readme_forum}.${ext}";
     sed -i ':a;N;$!ba;s#<!-- Indent -->\n#[INDENT]#g;s#\n<!-- /Indent -->#[/INDENT]#g' "${readme_forum}.${ext}";
     sed -i 's#<!-- \(\|/\)List -->#[\1LIST]#g' "${readme_forum}.${ext}";

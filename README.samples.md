@@ -1,4 +1,4 @@
-#### [ [ Samples ] Committing modifications with git ([git_commit](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_commitrc)) ]
+#### [ Samples ] Committing modifications with git ([git_commit](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_commitrc))
 
 <!-- List -->
  * Add new code changes with confirmation (y: Yes / n: No / d: Skip file / q: Stop)
@@ -36,7 +36,7 @@
 
 <br />
 
-#### [ [ Samples ] Cherry-pick and fix conflicts ([git_fetch](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_fetchrc), [git_merge](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_mergerc)) ]
+#### [ Samples ] Cherry-pick and fix conflicts ([git_fetch](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_fetchrc), [git_merge](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_mergerc))
 
 <!-- List -->
  * Cherry-pick a commit SHA1 reference (already fetched)
@@ -60,7 +60,7 @@
    `gitc`
 <!-- /List -->
 
-#### [ [ Samples ] Rebase commits and cleanup ([git_commit](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_commitrc), [git_rebase](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_rebaserc)) ]
+#### [ Samples ] Rebase commits and cleanup ([git_commit](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_commitrc), [git_rebase](http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_rebaserc))
 
 <!-- List -->
  * Reorder the last 8 commits (interactively)
@@ -104,7 +104,7 @@
    `gitsl`
 <!-- /List -->
 
-#### [ [ Samples ] Search through files ([grep](http://adriandc.github.io/android_development_shell_tools/#documentation-android_greprc----standalone-import-ready)), [tools](http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc----standalone-import-ready)) ]
+#### [ Samples ] Search through files ([grep](http://adriandc.github.io/android_development_shell_tools/#documentation-android_greprc----standalone-import-ready)), [tools](http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc----standalone-import-ready))
 
 <!-- List -->
  * Search directory for a word or multiple words
@@ -126,7 +126,7 @@
    `binaryeditor word new_word`
 <!-- /List -->
 
-#### [ [ Samples ] Android devices and ROM helpers ([repo_helpers](http://adriandc.github.io/android_development_shell_tools/#documentation-android_repo_helpersrc), [tools](http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc----standalone-import-ready)) ]
+#### [ Samples ] Android devices and ROM helpers ([repo_helpers](http://adriandc.github.io/android_development_shell_tools/#documentation-android_repo_helpersrc), [tools](http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc----standalone-import-ready))
 
 <!-- List -->
  * Return to repository root
@@ -162,7 +162,7 @@
    `overlaycompare path/to/overlay.xml`
 <!-- /List -->
 
-#### [ [ Samples ] Packages and ROM compilations helpers ([release_helpers](http://adriandc.github.io/android_development_shell_tools/#documentation-android_release_helpersrc), [release_packages](http://adriandc.github.io/android_development_shell_tools/#documentation-android_release_packagesrc)) ]
+#### [ Samples ] Packages and ROM compilations helpers ([release_helpers](http://adriandc.github.io/android_development_shell_tools/#documentation-android_release_helpersrc), [release_packages](http://adriandc.github.io/android_development_shell_tools/#documentation-android_release_packagesrc))
 
 <!-- List -->
  * Properly cleanup necessary outputs for rebuilds
