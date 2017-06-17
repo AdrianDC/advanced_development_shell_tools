@@ -300,7 +300,7 @@ function shtoolsforum()
     sed -i 's#__\([^*]*\)__#[U]\1[/U]#g' "${readme_forum}.${ext}";
     sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}.${ext}";
     sed -i 's#```#[/CODE]#g' "${readme_forum}.${ext}";
-    sed -i 's#`\(.*\)`#[I]"\1"[/I]#g' "${readme_forum}.${ext}";
+    sed -i 's#\(`.*`\)#[FONT="Courier New"][I]\1[/I][/FONT]#g' "${readme_forum}.${ext}";
     sed -i 's#^\#\#\# \[ \(.*\) \]$#[SIZE=5][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
     sed -i 's#^\#\#\#\# \[ \(.*\) \]$#[SIZE=4][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
     sed -i ':a;N;$!ba;s#<!-- Center -->\n#[CENTER]#g;s#\n<!-- /Center -->#[/CENTER]#g' "${readme_forum}.${ext}";
