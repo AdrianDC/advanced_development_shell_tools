@@ -87,11 +87,11 @@
 
 <!-- Indent -->
 <!-- List -->
- * The linked **documentation holds a reference point of all functions and macros**
+ * The linked **documentation holds a reference point to all functions and macros**
    <br />
-   that this project provides, which details of their purpose, and if present,
+   that this project provides, which details their purpose, and if present,
    <br />
-   details on the **`<required>` or `[optional]` parameters** available.
+   details the **`<required>` or `[optional]` parameters** available.
 
  * **The documentation is completely dynamically built**, through a function I wrote
    <br />
@@ -105,7 +105,7 @@
    <br />
    are able to be directly sourced through the provided commands in any terminal
    <br />
-   **without the need of this project being synced locally** or loaded in a root context.
+   **without the need of this project being synced locally** or loaded in the Shell.
    <br />
    This can be useful when using a different computer, when running from a root Shell,
    <br />

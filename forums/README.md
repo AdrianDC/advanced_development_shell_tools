@@ -57,9 +57,9 @@
 [SIZE=5][B][U]About the documentation and structure[/U][/B][/SIZE]
 
 [INDENT][LIST]
-[*]The linked [B]documentation holds a reference point of all functions and macros[/B]
-   that this project provides, which details of their purpose, and if present,
-   details on the [B][I]"<required>` or `[optional]"[/I] parameters[/B] available.
+[*]The linked [B]documentation holds a reference point to all functions and macros[/B]
+   that this project provides, which details their purpose, and if present,
+   details the [B][I]"<required>` or `[optional]"[/I] parameters[/B] available.
 
 [*][B]The documentation is completely dynamically built[/B], through a function I wrote
    to parse the whole project and to create this unique reference point.
@@ -68,7 +68,7 @@
 
 [*]Scripts flagged [B]"Standalone Import Ready"[/B] and starting with [B][I]"source <(curl -Ls..."[/I][/B]
    are able to be directly sourced through the provided commands in any terminal
-   [B]without the need of this project being synced locally[/B] or loaded in a root context.
+   [B]without the need of this project being synced locally[/B] or loaded in the Shell.
    This can be useful when using a different computer, when running from a root Shell,
    or even if you need a few functions for work to ease something.
 

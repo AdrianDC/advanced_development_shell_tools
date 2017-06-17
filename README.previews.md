@@ -54,7 +54,7 @@
 
 <br />
 
-#### [ [ Previews ] adbmrominjector : Select MultiROM installation for path ]
+#### [ [ Previews ] adbmrominjector : MultiROM kernel image injector ]
 
 <!-- Indent -->
 ![adbmrominjector](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/adbmrominjector.png)

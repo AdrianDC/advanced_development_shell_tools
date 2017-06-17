@@ -33,7 +33,7 @@
 [INDENT][IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/sepaud.png[/IMG][/INDENT]
 
 
-[SIZE=4][B][ Previews ] adbmrominjector : Select MultiROM installation for path[/B][/SIZE]
+[SIZE=4][B][ Previews ] adbmrominjector : MultiROM kernel image injector[/B][/SIZE]
 
 [INDENT][IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/adbmrominjector.png[/IMG][/INDENT]
 
