@@ -180,6 +180,21 @@ function torompaths()
   echo ${target}/;
 }
 
+# === Check Command for Path Changes ===
+function pathchanged()
+{
+  # Usage: pathchanged <command> <parameters> (Run command and notify path changes)
+
+  # Variables
+  local path=$(pwd);
+
+  # Run input command
+  ${@};
+
+  # Notify path differences
+  [ "${path}" = "$(pwd)" ];
+}
+
 # === ROMs Shortcuts ===
 function toaosp()       { torompaths 'AOSP' "${1}"; }
 function tolineage()    { torompaths 'LineageOS' "${1}"; }
