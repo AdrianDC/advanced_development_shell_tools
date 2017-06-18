@@ -18,13 +18,14 @@
 # === Git Branch Pusher ===
 function gitbranchpusher()
 {
-  # Usage: gitbranchpusher [y] (Push to project specific branch)
+  # Usage: gitbranchpusher [y] [project_remote_adder] (Push to project specific branch)
 
   # Variables
   local project_branch;
   local project_dir=${PWD};
   local repo_dir=${PWD};
   local param_send=${1};
+  local project_remote_adder=${2};
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -68,11 +69,20 @@ function gitbranchpusher()
   echo " Repository path: ${repo_dir}";
   echo '';
 
+  # Force given 'project' remote
+  if [ ! -z "${project_remote_adder}" ]; then
+    echo -e " \e[1;33mInformation:\e[0m Setting 'project' branch with '${project_remote_adder}'...";
+    ${project_remote_adder};
+    echo '';
+
   # Check remote existence
-  git ls-remote --exit-code 'project' >/dev/null 2>&1;
-  if [ ${?} -ne 0 ]; then
-    echo -e " \e[1;33mInformation:\e[0m Remote 'project' not found. Launching 'gitrap'...";
-    gitrap;
+  else
+    git ls-remote --exit-code 'project' >/dev/null 2>&1;
+    if [ ${?} -ne 0 ]; then
+      echo -e " \e[1;33mInformation:\e[0m Remote 'project' not found. Launching 'gitrap'...";
+      gitrap;
+      echo '';
+    fi;
   fi;
 
   # Fetch upstream project
