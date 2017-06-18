@@ -33,10 +33,10 @@ function autoreleaselegacyxperia()
   local devices=${1:-anzu haida coconut urushi smultron mango hallon iyokan satsuma zeus phoenix};
 
   # Access project repository
-  cdlineage lx;
+  pathchanged cdlineage lx;
 
   # When option enabled, sync tree
-  if ! romautorelease-nosync-active && [ -z "${2}" ]; then
+  if [ ${?} -ne 0 ] && ! romautorelease-nosync-active && [ -z "${2}" ]; then
     reposy;
   fi;
 

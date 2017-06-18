@@ -37,13 +37,13 @@ function autoreleaseaospsony8960()
 
     # Access device repository
     if echo ${device} | grep -q -e 'hayabusa\|mint\|tsubasa'; then
-      cdaosp blue;
+      pathchanged cdaosp blue;
     else
-      cdaosp ${device};
+      pathchanged cdaosp ${device};
     fi;
 
     # When option enabled, sync tree
-    if ! romautorelease-nosync-active; then
+    if [ ${?} -ne 0 ] && ! romautorelease-nosync-active; then
       reposy;
     fi;
 
@@ -83,10 +83,10 @@ function autoreleaselineagesony8960()
   for device in ${devices}; do
 
     # Access device repository
-    cdlineage ${device};
+    pathchanged cdlineage ${device};
 
     # When option enabled, sync tree
-    if ! romautorelease-nosync-active; then
+    if [ ${?} -ne 0 ] && ! romautorelease-nosync-active; then
       reposy;
     fi;
 
