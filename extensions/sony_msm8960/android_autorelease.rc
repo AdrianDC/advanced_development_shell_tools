@@ -23,8 +23,8 @@ function autoreleaseaospsony8960()
   # AndroidDev
   cdand;
 
-  # Repository sync
-  if [ -z "${1}" ]; then
+  # When option enabled, sync repository tree
+  if ! romautorelease-nosync-active && [ -z "${1}" ]; then
     cdaosp;
     reposy;
   fi;
@@ -70,8 +70,8 @@ function autoreleaselineagesony8960()
   # AndroidDev
   cdand;
 
-  # Repository sync
-  if [ -z "${1}" ]; then
+  # When option enabled, sync repository tree
+  if ! romautorelease-nosync-active && [ -z "${1}" ]; then
     cdlineage;
     reposy;
   fi;

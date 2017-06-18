@@ -23,8 +23,8 @@ function autoreleaselegacyxperia()
   # AndroidDev
   cdand;
 
-  # Repository sync
-  if [ -z "${1}" ]; then
+  # When option enabled, sync repository tree
+  if ! romautorelease-nosync-active && [ -z "${1}" ]; then
     cdlineage;
     reposy;
   fi;
@@ -32,8 +32,15 @@ function autoreleaselegacyxperia()
   # Devices to build
   local devices=${1:-anzu haida coconut urushi smultron mango hallon iyokan satsuma zeus phoenix};
 
-  # Devices sync
+  # Access project repository
   cdlineage lx;
+
+  # When option enabled, sync tree
+  if ! romautorelease-nosync-active && [ -z "${2}" ]; then
+    reposy;
+  fi;
+
+  # Patch project
   if [ -z "${2}" ]; then
     lineagelxpatcher;
   fi;
