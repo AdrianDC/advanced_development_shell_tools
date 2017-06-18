@@ -26,7 +26,7 @@ function aospsonysodppatcher()
   # Usage: aospsonysodppatcher [specific_paths] (AOSP SONY SODP Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sonyaosp' 'aosp_sonyaosp' '' "${*}";
+  androidprojectpatcher 'aosp_development_sonyaosp' 'aosp_sonyaosp' '' "${*}" 'gitrapaospsonysodp';
 }
 
 # === AOSP Sony SODP Rebaser ===

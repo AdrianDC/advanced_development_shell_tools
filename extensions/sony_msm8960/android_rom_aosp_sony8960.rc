@@ -26,7 +26,7 @@ function aospsony8960npatcher()
   # Usage: aospsony8960npatcher [specific_paths] (AOSP 8960 Nougat Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_n' 'aosp_sony8960_n' '' "${*}";
+  androidprojectpatcher 'aosp_development_sony8960_n' 'aosp_sony8960_n' '' "${*}" 'gitrapaospsony8960n';
 }
 
 # === AOSP Sony 8960 O Patcher ===
@@ -35,7 +35,7 @@ function aospsony8960opatcher()
   # Usage: aospsony8960opatcher [specific_paths] (AOSP 8960 O Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_o' 'aosp_sony8960_o' '' "${*}";
+  androidprojectpatcher 'aosp_development_sony8960_o' 'aosp_sony8960_o' '' "${*}" 'gitrapaospsony8960o';
 }
 
 # === AOSP Sony 8960 Master Patcher ===
@@ -44,5 +44,5 @@ function aospsony8960masterpatcher()
   # Usage: aospsony8960masterpatcher [specific_paths] (AOSP 8960 Master Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_master' 'aosp_sony8960_master' '' "${*}";
+  androidprojectpatcher 'aosp_development_sony8960_master' 'aosp_sony8960_master' '' "${*}" 'gitrapaospsony8960master';
 }
