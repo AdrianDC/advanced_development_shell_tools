@@ -18,6 +18,7 @@
 # Usage: run_cleanrambuild.sh (Build RAM processes cleanup)
 
 # Show available RAM
+echo '';
 free;
 echo '';
 
@@ -29,3 +30,4 @@ killall ninja;
 # Show available RAM
 echo '';
 free;
+echo '';
