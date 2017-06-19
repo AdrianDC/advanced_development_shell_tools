@@ -81,6 +81,7 @@ function adbsudo()
   alias adb &> /dev/null;
   if [ ${?} -ne 0 ]; then
     alias adb='sudo adb';
+    sudo printf '';
 
   # Disable adb sudo
   else
