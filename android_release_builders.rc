@@ -206,6 +206,11 @@ function romautorelease()
     echo '';
   fi;
 
+  # When option enabled, clean RAM after build
+  if romautorelease-cleanram-active; then
+    cleanrambuild;
+  fi;
+
   # Restore original path
   cd "${cwd}";
 }
