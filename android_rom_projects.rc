@@ -118,7 +118,7 @@ function androidprojectpatcher()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: androidprojectpatcher <project_name> <project_tag> ["project paths"] [specific_path] [project_adder] (Android project patcher)';
+    echo ' Usage: androidprojectpatcher <project_name> <project_tag> ["project paths"] [specific_path] (Android project patcher)';
     echo '';
     return;
   fi;
@@ -128,7 +128,6 @@ function androidprojectpatcher()
   local project_tag="${2}";
   local project_paths="${3}";
   local project_specific="${4}";
-  local project_adder="${5}";
   local projects_specific='';
   local currentdir=${PWD};
 
@@ -274,7 +273,7 @@ function androidprojectpatcher()
           done;
 
           # Automatic push
-          gitbranchpusher "${key_automated}" "${project_adder}";
+          gitbranchpusher "${key_automated}";
 
         # Project is ready, break the loop
         else
