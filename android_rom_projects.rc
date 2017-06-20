@@ -260,7 +260,8 @@ function androidprojectpatcher()
               echo '';
               echo '  < Automatic update failed...';
               echo '     Tried to add following commits: '${sha1} ${commits_list#*${sha1}};
-              echo "     Stopping, push with : gitbranchpusher '${key_automated}' '${project_github}';";
+              echo '  > Manually fix then push with :';
+              echo "     gitbranchpusher '${key_automated}' '${project_github}';";
               echo '';
               return;
             fi;
