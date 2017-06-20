@@ -116,6 +116,11 @@ function romautorelease()
     outdevcl "${rom_device}";
   fi;
 
+  # When option enabled, clean RAM before build
+  if romautorelease-cleanram-active; then
+    cleanrambuild;
+  fi;
+
   # CPU handling
   if [[ "${rom_params}" =~ 'j1' ]]; then
     build_cpu_count=1;
