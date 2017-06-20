@@ -18,14 +18,14 @@
 # === Git Branch Pusher ===
 function gitbranchpusher()
 {
-  # Usage: gitbranchpusher [y] [project_remote_adder] (Push to project specific branch)
+  # Usage: gitbranchpusher [y] [remote_url] (Push to project specific branch)
 
   # Variables
   local project_branch;
   local project_dir=${PWD};
   local repo_dir=${PWD};
   local param_send=${1};
-  local project_remote_adder=${2};
+  local remote=${2:-project};
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -69,14 +69,8 @@ function gitbranchpusher()
   echo " Repository path: ${repo_dir}";
   echo '';
 
-  # Force given 'project' remote
-  if [ ! -z "${project_remote_adder}" ]; then
-    echo -e " \e[1;33mInformation:\e[0m Setting 'project' branch with '${project_remote_adder}'...";
-    ${project_remote_adder};
-    echo '';
-
-  # Check remote existence
-  else
+  # Check 'project' remote existence
+  if [ "${remote}" = 'project' ]; then
     git ls-remote --exit-code 'project' >/dev/null 2>&1;
     if [ ${?} -ne 0 ]; then
       echo -e " \e[1;33mInformation:\e[0m Remote 'project' not found. Launching 'gitrap'...";
@@ -85,13 +79,13 @@ function gitbranchpusher()
     fi;
   fi;
 
-  # Fetch upstream project
-  git fetch project ${project_branch};
+  # Fetch upstream remote
+  git fetch "${remote}" ${project_branch};
   git rev-list --left-right --count FETCH_HEAD...HEAD;
   echo '';
 
   # Confirmation
-  command="git push -f project HEAD:refs/heads/${project_branch}";
+  command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
   echo " ${command}";
   printf '  > Proceed with project push [y/N] ? ';
   notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
@@ -102,7 +96,7 @@ function gitbranchpusher()
     echo "${key}";
   fi;
 
-  # Upload to project
+  # Upload to remote
   echo '';
   if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
     ${command};
