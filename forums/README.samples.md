@@ -13,9 +13,6 @@
 [*]Add all files without patch, including untracked files
    [FONT="Courier New"][I]`gitaa`[/I][/FONT]
 
-[*]Add all files without patch, including untracked files
-   [FONT="Courier New"][I]`gitaa`[/I][/FONT]
-
 [*]Amend changes to the commit without message changes
    [FONT="Courier New"][I]`gitcae`[/I][/FONT]
 

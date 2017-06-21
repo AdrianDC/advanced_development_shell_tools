@@ -17,10 +17,6 @@
    <br />
    `gitaa`
 
- * Add all files without patch, including untracked files
-   <br />
-   `gitaa`
-
  * Amend changes to the commit without message changes
    <br />
    `gitcae`
