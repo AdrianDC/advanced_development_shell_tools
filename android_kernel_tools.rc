@@ -628,6 +628,7 @@ function bootzip()
 
   # Variables
   local adb=$(adbcmd);
+  local adb_targetdir;
   local CurDir=$(pwd);
   local PhoneName="${1}";
   local BootFile=$(readlink -f "${2}");
@@ -676,21 +677,26 @@ function bootzip()
 
   # Push zip to the device
   if [ "${PushToDevice}" = 'true' ]; then
+
+    # Wait for device
     echo '';
-
-    # Waiting for adb device
     timeout 10 ${adb} 'wait-for-device';
 
-    # Push to common '/sdcard/' path
-    echo "  bootzip: Pushing to device /sdcard/${OutFile}";
-    timeout 10 ${adb} 'wait-for-device';
-    adb push "${TargetFile}" '/sdcard/';
+    # Check if '/sdcard' exists
+    if [ ! -z "$(${adb} shell 'ls /sdcard/ 2> /dev/null')" ]; then
+      adb_targetdir='/sdcard';
 
-    # If push failed, push to common '/data/media/0/' path
-    if [ -z "$(adb shell 'ls ${OutFile} 2> /dev/null')" ]; then
-      echo "           Failed pushing to /sdcard/${OutFile}";
-      echo "  bootzip: Pushing to device /data/media/0/${OutFile}";
-      adb push "${TargetFile}" '/data/media/0/';
+    # Check if '/data/media/0' exists
+    elif [ ! -z "$(${adb} shell 'ls /data/media/0/ 2> /dev/null')" ]; then
+      adb_targetdir='/data/media/0';
+    fi;
+
+    # Push zip to device target
+    if [ -z "${adb_targetdir}" ]; then
+      echo '  bootzip: Failed pushing to device';
+    else
+      echo "  bootzip: Pushing to device ${adb_targetdir}/${OutFile}";
+      ${adb} push "${TargetFile}" "${adb_targetdir}/";
     fi;
   fi;
 
