@@ -37,11 +37,15 @@ function fboota()
   fi;
 
   # Variables
+  local adb=$(adbcmd);
+  local bootimg;
   local cwd=$(pwd);
   local device=$(repogetdevice);
   local device_common='';
   local image_file;
   local image_name;
+  local modules;
+  local module_file;
   local params=${1};
   local tmpfile=$(mktemp);
 
@@ -133,9 +137,9 @@ function fboota()
   fi;
 
   # Bootimage file path
-  local bootimg=$(grep -a ".*image.*${image_file}\.img" ${tmpfile} \
-                | head -1 \
-                | sed "s/.*: \(.*${image_file}\.img\).*/\1/g");
+  bootimg=$(grep -a ".*image.*${image_file}\.img" ${tmpfile} \
+            | head -1 \
+            | sed "s/.*: \(.*${image_file}\.img\).*/\1/g");
 
   # Inject kernel inside bootimage
   if [[ "${params}" =~ 'inject' ]]; then
@@ -161,15 +165,13 @@ function fboota()
   elif [[ "${params}" =~ 'flash' ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
 
     # Detect modules
-    local modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
-    local module_file;
+    modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
 
     # Waiting to get adb
     echo '';
     echo '';
     echo -e '  \e[1;37m[ fboota: Waiting for adb root... ]\e[0m';
     echo '';
-    local adb=$(adbcmd);
     timeout 10 ${adb} 'wait-for-device';
 
     # Handle kernel modules
