@@ -167,33 +167,37 @@ function fboota()
     # Detect modules
     modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
 
-    # Waiting to get adb
-    echo '';
-    echo '';
-    echo -e '  \e[1;37m[ fboota: Waiting for adb root... ]\e[0m';
-    echo '';
-    timeout 10 ${adb} 'wait-for-device';
-
     # Handle kernel modules
     if [ ! -z "${modules}" ]; then
       echo '';
       echo -e '  \e[1;37m[ fboota: Kernel modules... ]\e[0m';
       echo '';
-      adb remount;
+
+      # Give adb root permissions
       timeout 10 ${adb} 'wait-for-device';
-      adb shell rm -rf '/system/lib/modules/';
+      adbro;
+
+      # Push the kernel modules
+      adbsu "rm -rf '/system/lib/modules/'";
       for module in ${modules[*]}; do
         module_file=$(basename "${module}");
-        adb push "${module}" "/system/lib/modules/${module_file}";
+        ${adb} push "${module}" "/system/lib/modules/${module_file}";
       done;
     fi;
 
     # Flash new bootimage
     echo '';
     echo -e "  \e[1;37m[ fboota: Bootloader ${bootimg}... ]\e[0m";
-    export PackageResult="${bootimg}";
     echo '';
-    adb reboot bootloader;
+
+    # Export to external usage
+    export PackageResult="${bootimg}";
+
+    # Reboot to bootloader
+    timeout 10 ${adb} 'wait-for-device';
+    ${adb} reboot bootloader;
+
+    # Flash new boot
     timeout 20 sudo fastboot flash boot "${bootimg}";
     timeout 5 sudo fastboot reboot;
     echo '';
