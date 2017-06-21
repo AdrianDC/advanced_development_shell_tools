@@ -478,10 +478,11 @@ function adbbootpush()
   fi;
 
   # Variables
+  local adb=$(adbcmd);
   local boot=$(androiddevicestarget boot);
 
   # Installer
-  adb push ${1} /sdcard/boot.img;
+  ${adb} push ${1} /sdcard/boot.img;
   adbsu "dd if=/dev/zero of=${boot}";
   adbsu "dd if=/sdcard/boot.img of=${boot}";
   adbsu 'rm -f /sdcard/boot.img';
@@ -499,14 +500,15 @@ function adbfotapush()
   fi;
 
   # Variables
+  local adb=$(adbcmd);
   local fota=$(androiddevicestarget fota);
 
   # Installer
-  adb push ${1} /sdcard/fota.img;
+  ${adb} push ${1} /sdcard/fota.img;
   adbsu "dd if=/dev/zero of=${fota}";
   adbsu "dd if=/sdcard/fota.img of=${fota}";
   adbsu 'rm -f /sdcard/fota.img';
-  #adb reboot recovery;
+  #${adb} reboot recovery;
 }
 
 # === ADB Recovery Pusher ===
@@ -521,14 +523,15 @@ function adbrecoverypush()
   fi;
 
   # Variables
+  local adb=$(adbcmd);
   local recovery=$(androiddevicestarget recovery);
 
   # Installer
-  adb push ${1} /sdcard/recovery.img;
+  ${adb} push ${1} /sdcard/recovery.img;
   adbsu "dd if=/dev/zero of=${recovery}";
   adbsu "dd if=/sdcard/recovery.img of=${recovery}";
   adbsu 'rm -f /sdcard/recovery.img';
-  #adb reboot recovery;
+  #${adb} reboot recovery;
 }
 
 # === Kernel Injector Zip ===
