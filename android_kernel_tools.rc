@@ -364,8 +364,9 @@ function adbfotainfo()
 function fbootk()
 {
   # Variables
-  local filepath=${1};
+  local adb=$(adbcmd);
   local adb_tmpdir;
+  local filepath=${1};
 
   # Detect zImage file
   if [ -z "${filepath}" ]; then
@@ -397,14 +398,15 @@ function fbootk()
   fi;
 
   # Give adb root permissions
+  timeout 10 ${adb} 'wait-for-device';
   adbro;
 
   # Check if '/tmp' exists
-  if [ ! -z "$(adb shell 'ls /tmp/ 2> /dev/null')" ]; then
+  if [ ! -z "$(${adb} shell 'ls /tmp/ 2> /dev/null')" ]; then
     adb_tmpdir='/tmp';
 
   # Check if '/data/local/tmp' exists
-  elif [ ! -z "$(adb shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
+  elif [ ! -z "$(${adb} shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
     adb_tmpdir='/data/local/tmp';
   else
     echo '';
@@ -414,25 +416,25 @@ function fbootk()
   fi;
 
   # Push kernel to target
-  adb push "${filepath}" "${adb_tmpdir}/tmpkernel";
+  ${adb} push "${filepath}" "${adb_tmpdir}/tmpkernel";
 
   # Push and fix permissions of 'bbootimg'
-  adb push "${android_development_shell_tools_bbootimg}" "${adb_tmpdir}/bbootimg";
-  adb shell "chmod 755 ${adb_tmpdir}/bbootimg";
+  ${adb} push "${android_development_shell_tools_bbootimg}" "${adb_tmpdir}/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/bbootimg";
 
   # Kernel informations
-  adb shell "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
+  adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
 
   # Kernel injection
-  adb shell "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel";
+  adbsu "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel";
 
   # Cleanup
-  adb shell "rm -f ${adb_tmpdir}/bbootimg"
-  adb shell "rm -f ${adb_tmpdir}/tmpkernel"
+  adbsu "rm -f ${adb_tmpdir}/bbootimg"
+  adbsu "rm -f ${adb_tmpdir}/tmpkernel"
 
   # Reboot to recovery if requested
   if [ ! -z "${2}" ]; then
-    adb reboot recovery;
+    ${adb} reboot recovery;
   fi;
   echo '';
 }
