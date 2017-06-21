@@ -440,8 +440,14 @@ function frecovery()
     return;
   fi;
 
+  # Variables
+  local adb=$(adbcmd);
+
+  # Reboot to bootloader
+  timeout 10 ${adb} 'wait-for-device';
+  ${adb} reboot bootloader;
+
   # Flash recovery with fastboot
-  sudo adb reboot bootloader;
   if [ ! -z "${1}" ]; then
     sudo fastboot flash recovery "${1}";
   else
