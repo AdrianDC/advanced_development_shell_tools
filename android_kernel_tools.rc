@@ -212,6 +212,7 @@ function fboota()
 function fboot()
 {
   # Variables
+  local adb=$(adbcmd);
   local bootimage=${1:-boot.img};
   bootimage=${bootimage#file:/};
 
@@ -223,8 +224,11 @@ function fboot()
     return;
   fi;
 
-  # Bootloader, flash bootimage and reboot
-  sudo adb reboot bootloader;
+  # Reboot to bootloader
+  timeout 10 ${adb} 'wait-for-device';
+  ${adb} reboot bootloader;
+
+  # Flash bootimage and reboot
   sudo fastboot flash boot "${bootimage}";
   sudo fastboot reboot;
 }
