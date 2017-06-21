@@ -598,6 +598,7 @@ function bootzip()
   fi;
 
   # Variables
+  local adb=$(adbcmd);
   local CurDir=$(pwd);
   local PhoneName="${1}";
   local BootFile=$(readlink -f "${2}");
@@ -649,7 +650,6 @@ function bootzip()
     echo '';
 
     # Waiting for adb device
-    local adb=$(adbcmd);
     timeout 10 ${adb} 'wait-for-device';
 
     # Push to common '/sdcard/' path
