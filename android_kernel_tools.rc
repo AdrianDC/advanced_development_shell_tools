@@ -288,18 +288,20 @@ function adbbootinfo()
   # Usage: adbbootinfo (Kernel bbootimg analyzer)
 
   # Variables
-  local partitiontarget=$(androiddevicestarget boot);
+  local adb=$(adbcmd);
   local adb_tmpdir;
+  local partitiontarget=$(androiddevicestarget boot);
 
   # Give adb root permissions
+  timeout 10 ${adb} 'wait-for-device';
   adbro;
 
   # Check if '/tmp' exists
-  if [ ! -z "$(adb shell 'ls /tmp/ 2> /dev/null')" ]; then
+  if [ ! -z "$(${adb} shell 'ls /tmp/ 2> /dev/null')" ]; then
     adb_tmpdir='/tmp';
 
   # Check if '/data/local/tmp' exists
-  elif [ ! -z "$(adb shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
+  elif [ ! -z "$(${adb} shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
     adb_tmpdir='/data/local/tmp';
   else
     echo '';
@@ -309,14 +311,14 @@ function adbbootinfo()
   fi;
 
   # Push and fix permissions of 'bbootimg'
-  adb push "${android_development_shell_tools_bbootimg}" "${adb_tmpdir}/bbootimg";
-  adb shell "chmod 755 ${adb_tmpdir}/bbootimg";
+  ${adb} push "${android_development_shell_tools_bbootimg}" "${adb_tmpdir}/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/bbootimg";
 
   # Kernel informations
-  adb shell "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
+  adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
 
   # Cleanup
-  adb shell "rm -f ${adb_tmpdir}/bbootimg"
+  adbsu "rm -f ${adb_tmpdir}/bbootimg"
 }
 
 # === FOTA Informations ===
