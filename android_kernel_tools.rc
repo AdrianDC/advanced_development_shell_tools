@@ -238,8 +238,14 @@ function fboots()
 {
   # Usage: fboots <system_img> (fastboot systemimage flashed)
 
-  # Bootloader and flash system
-  sudo adb reboot bootloader;
+  # Variables
+  local adb=$(adbcmd);
+
+  # Reboot to bootloader
+  timeout 10 ${adb} 'wait-for-device';
+  ${adb} reboot bootloader;
+
+  # Flash system
   if [ ! -z "${1}" ]; then
     local file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
     sudo fastboot flash system "${file}";
