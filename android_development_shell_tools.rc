@@ -291,6 +291,9 @@ function shtoolsforum()
   # Usage: shtoolsforum (Refresh README.forum project presentation)
 
   # Variables
+  local preview_file;
+  local preview_files;
+  local preview_timestamp;
   local readme_forum=${android_development_shell_tools_dir}/forums/README;
   local readme_md=${android_development_shell_tools_dir}/README;
 
@@ -322,6 +325,21 @@ function shtoolsforum()
     sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}.${ext}";
     sed -i 's#\*\([^]]\{1\}[^*]*\)\*#[I]\1[/I]#g' "${readme_forum}.${ext}";
     sed -i 's#__\([^*]*\)__#[U]\1[/U]#g' "${readme_forum}.${ext}";
+
+    # Get all previews png files
+    preview_files=$(grep 'docs/assets.*\.png' "${readme_forum}.${ext}" \
+                  | sed "s/.*${android_development_shell_tools_url//\//\\\/}\/raw\/master\/\(.*\.png\).*/\1/g");
+    for preview_file in ${preview_files}; do
+
+      # Filter out wrong outputs
+      if [ ! -f "${preview_file}" ]; then
+        continue;
+      fi;
+
+      # Get file timestamp and replace text
+      preview_timestamp=$(stat -c %Y "${preview_file}");
+      sed -i "s#${preview_file}#${preview_file}?timestamp=${preview_timestamp}#g" "${readme_forum}.${ext}";
+    done;
 
   done;
 
