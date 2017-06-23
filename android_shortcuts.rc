@@ -51,7 +51,7 @@ function cdd()
   fi;
 }
 
-# === Repo Shortcuts ===
+# === Repo Manifests ===
 function cdman()
 {
   # Usage: cdman (Access manifests path)
@@ -62,6 +62,8 @@ function cdman()
   mkdir -p ${path}/;
   cd ${path}/;
 }
+
+# === Repo Local Manifests ===
 function cdlocman()
 {
   # Usage: cdlocman (Access local manifests path)
@@ -73,7 +75,7 @@ function cdlocman()
   cd ${path}/;
 }
 
-# === Repo Out Access ===
+# === Repo Out Getter ===
 function toout()
 {
   # Usage
@@ -97,9 +99,17 @@ function toout()
     echo "${outtargetpath}/*";
   fi;
 }
+
+# === Repo Out Access ===
 function cdout()
 {
-  # Usage: cdout [device_name] (Access device build output path)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: cdout [device_name] (Access device build output path)';
+    echo '';
+    return;
+  fi;
 
   # Access out path
   cd $(toout ${1});
