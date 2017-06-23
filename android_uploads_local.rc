@@ -78,6 +78,9 @@ function androidfilessync()
   meganzreload;
 }
 
+# === AndroidFiles Download Helper ===
+alias androidfilesdownload='androidfilessync --download';
+
 # === AndroidFiles Folder ===
 function androidfilesopen()
 {
