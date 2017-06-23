@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-# === Build paths ===
-export android_development_shell_tools_tools_megacmd=${android_development_shell_tools_dir}/android_tools/mega-cmd;
-
 # === Mega.nz Reload ===
 function meganzreload()
 {
@@ -30,12 +27,6 @@ function meganzreload()
     echo '';
     return;
   fi;
-
-  # Prepare environment variables
-  local env_ld_library_path=${LD_LIBRARY_PATH};
-  local env_path=${PATH};
-  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${android_development_shell_tools_tools_megacmd};
-  export PATH=${PATH}:${android_development_shell_tools_tools_megacmd};
 
   # Start mega-cmd server
   echo '';
@@ -54,9 +45,5 @@ function meganzreload()
   # Stop mega-cmd server
   kill -9 "${proc_id}";
   kill "${proc_id}";
-
-  # Restore environment variables
-  export LD_LIBRARY_PATH=${env_ld_library_path};
-  export PATH=${env_path};
   echo '';
 }
