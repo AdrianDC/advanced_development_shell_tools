@@ -30,6 +30,8 @@ function gerritssh()
     export GerritUsername='Username';
     export GerritHTTPUsername='Username';
     export GerritHTTPPassword='abcdefgh12345678';
+    export GerritBranchPrimary='cm-14.1';
+    export GerritBranchSecondary='cm-13.0';
   fi;
 
   # Create  ~/.bash_android.gerrit.rc with the exports to override the credentials
@@ -70,16 +72,14 @@ function gerritssh()
 
   # Configurations
   local gerritssh="ssh -p 29418 ${GerritUsername}@${GerritRemote} gerrit";
-  local projectbranch="${1:-cm-14.1}";
+  local projectbranch="${1:-${GerritBranchPrimary}}";
   local projectreversemerge="${2}";
   local projectbranchmerger=false;
-  local projectbranchprimary='cm-14.1';
-  local projectbranchsecondary='cm-13.0';
 
   # Support reverse input only
   if [ -z "${projectbranch//[0-9]/}" ]; then
     projectreversemerge=${projectbranch};
-    projectbranch='cm-14.1';
+    projectbranch="${GerritBranchPrimary}";
   fi;
 
   # Splash Text
@@ -212,10 +212,10 @@ function gerritssh()
     fi;
 
     # Switch branches
-    if [[ "${projectbranch}" == "${projectbranchprimary}" ]]; then
-      projectbranch="${projectbranchsecondary}";
-    elif [[ "${projectbranch}" == "${projectbranchsecondary}" ]]; then
-      projectbranch="${projectbranchprimary}";
+    if [[ "${projectbranch}" == "${GerritBranchPrimary}" ]]; then
+      projectbranch="${GerritBranchSecondary}";
+    elif [[ "${projectbranch}" == "${GerritBranchSecondary}" ]]; then
+      projectbranch="${GerritBranchPrimary}";
     fi;
     echo -e "Moving to ${projectbranch}...\e[0m";
     rm -rf "${tmpdir}";
@@ -390,10 +390,10 @@ function gerritssh()
 
       # Commit Cherry-Pick Branch
       local projectbranchcp='';
-      if [[ "${projectbranch}" == "${projectbranchprimary}" ]]; then
-        projectbranchcp="${projectbranchsecondary}";
-      elif [[ "${projectbranch}" == "${projectbranchsecondary}" ]]; then
-        projectbranchcp="${projectbranchprimary}";
+      if [[ "${projectbranch}" == "${GerritBranchPrimary}" ]]; then
+        projectbranchcp="${GerritBranchSecondary}";
+      elif [[ "${projectbranch}" == "${GerritBranchSecondary}" ]]; then
+        projectbranchcp="${GerritBranchPrimary}";
       fi;
 
       # Commit Cherry-Pick Commit
