@@ -766,10 +766,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**overlaycompare** *<b>\[Compare device overlays against sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *overlaycompare &lt;overlay_file_path&gt;*
 
 ---
-### [&nbsp;Documentation: [android_uploads.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc)&nbsp;]
-  * [**fileupl** *<b>\[File to release server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *fileupl &lt;file_path&gt; [target_folder]*
-  * [**fastupl** *<b>\[Make zip and upload\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *fastupl &lt;device_name&gt; [none/zip/bootimage]*
-  * [**fileget** *<b>\[Download from MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads.rc) : *fileget &lt;remote_path&gt; [boot_remove_remote]*
+### [&nbsp;Documentation: [android_uploads_common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc)&nbsp;]
+  * [**fileupl** *<b>\[File to release server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc) : *fileupl &lt;file_path&gt; [target_folder]*
+  * [**fileget** *<b>\[Download from MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc) : *fileget &lt;remote_path&gt; [boot_remove_remote]*
+  * [**fastupl** *<b>\[Zip make and release server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc) : *fastupl &lt;device_name&gt; [none/zip/bootimage]*
 
 ---
 ### [&nbsp;Documentation: [android_uploads_ftp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc)&nbsp;]
@@ -788,6 +788,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**androidfilessync** *<b>\[Sync AndroidFiles folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync &lt;--upload/--download&gt;*
   * [**androidfilesdownload** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync --download*
   * [**androidfilesopen** *<b>\[Open AndroidFiles folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)
+
+---
+### [&nbsp;Documentation: [android_uploads_mega.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc)&nbsp;]
+  * [**uploadmega** *<b>\[File to mega.nz server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *uploadmega &lt;file_path&gt; [target_folder]*
+  * [**downloadmega** *<b>\[Download from MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *downloadmega &lt;remote_path&gt; [boot_remove_remote]*
+  * [**uploadprivatemega** *<b>\[Make zip and upload\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *uploadprivatemega &lt;device_name&gt; [none/zip/bootimage]*
 
 ---
 ### [&nbsp;Documentation: [megatools_mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_mirror.rc)&nbsp;]

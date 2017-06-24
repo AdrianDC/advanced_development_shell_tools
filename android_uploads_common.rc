@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+# Copyright 2015-2017 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === File Uploader Mega.nz ===
+function fileupl()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fileupl <file_path> [target_folder] (File to release server uploader)';
+    echo '';
+    return;
+  fi;
+
+  # Launch file uploader
+  uploadmega "${1}" "${2}";
+}
+
+# === File Downloader Mega.nz ===
+function fileget()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fileget <remote_path> [boot_remove_remote] (Download from MEGA.nz)';
+    echo '';
+    return;
+  fi;
+
+  # Launch file downloader
+  downloadmega "${1}" "${2}";
+}
+
+# === Fast File Uploader ===
+function fastupl()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fastupl <device_name> [none/zip/bootimage] (Zip make and release server uploader)';
+    echo '';
+    return;
+  fi;
+
+  # Launch file private uploader
+  uploadprivatemega "${1}" "${2}";
+}

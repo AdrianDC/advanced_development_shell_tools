@@ -16,12 +16,12 @@
 #
 
 # === File Uploader Mega.nz ===
-function fileupl()
+function uploadmega()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: fileupl <file_path> [target_folder] (File to release server uploader)';
+    echo ' Usage: uploadmega <file_path> [target_folder] (File to mega.nz server uploader)';
     echo '';
     return;
   fi;
@@ -82,45 +82,13 @@ function fileupl()
   echo '';
 }
 
-# === Fast File Uploader ===
-function fastupl()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: fastupl <device_name> [none/zip/bootimage] (Make zip and upload)';
-    echo '';
-    return;
-  fi;
-
-  # File upload to Private
-  fileupl "${1}" '/Root/Private';
-
-  # File download command
-  local filename=$(basename "${1}");
-  local cmd="fileget '/Root/Private/${filename}';";
-
-  # Additional install commands
-  if [ "${2}" = 'zip' ]; then
-    cmd="${cmd} adbside '${filename}' true;";
-  elif [ "${2}" = 'bootimage' ]; then
-    cmd="${cmd} fboot '${filename}';";
-  fi;
-
-  # Command outputs
-  echo -e '  \e[1;32mDirect download:\e[0m';
-  echo "${cmd}" | xclip -selection c 2> /dev/null;
-  echo "   ${cmd}";
-  echo '';
-}
-
 # === File Downloader Mega.nz ===
-function fileget()
+function downloadmega()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: fileget <remote_path> [boot_remove_remote] (Download from MEGA.nz)';
+    echo ' Usage: downloadmega <remote_path> [boot_remove_remote] (Download from MEGA.nz)';
     echo '';
     return;
   fi;
@@ -183,5 +151,37 @@ function fileget()
   echo '';
   time_span=$(($(date +%s)-${time_start}));
   echo -e " \e[1;37m[ Download done in ${time_span} secs ]\e[0m";
+  echo '';
+}
+
+# === Private Uploader Mega.nz ===
+function uploadprivatemega()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: uploadprivatemega <device_name> [none/zip/bootimage] (Make zip and upload)';
+    echo '';
+    return;
+  fi;
+
+  # File upload to Private
+  fileupl "${1}" '/Root/Private';
+
+  # File download command
+  local filename=$(basename "${1}");
+  local cmd="fileget '/Root/Private/${filename}';";
+
+  # Additional install commands
+  if [ "${2}" = 'zip' ]; then
+    cmd="${cmd} adbside '${filename}' true;";
+  elif [ "${2}" = 'bootimage' ]; then
+    cmd="${cmd} fboot '${filename}';";
+  fi;
+
+  # Command outputs
+  echo -e '  \e[1;32mDirect download:\e[0m';
+  echo "${cmd}" | xclip -selection c 2> /dev/null;
+  echo "   ${cmd}";
   echo '';
 }
