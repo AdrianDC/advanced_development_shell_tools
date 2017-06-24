@@ -74,6 +74,7 @@ function gerritssh()
   local gerritssh="ssh -p 29418 ${GerritUsername}@${GerritRemote} gerrit";
   local projectbranch="${1:-${GerritBranchPrimary}}";
   local projectreversemerge="${2}";
+  local recursivecall="${3}";
   local projectbranchmerger=false;
 
   # Support reverse input only
@@ -204,7 +205,7 @@ function gerritssh()
     printf '     \e[1;32m> No commit on review. ';
 
     # Exit on second execution
-    if [ ! -z "${2}" ]; then
+    if [ ! -z "${recursivecall}" ]; then
       echo -e 'Exiting...\e[0m';
       echo '';
       rm -rf "${tmpdir}";
@@ -219,7 +220,7 @@ function gerritssh()
     fi;
     echo -e "Moving to ${projectbranch}...\e[0m";
     rm -rf "${tmpdir}";
-    gerritssh ${projectbranch} true;
+    gerritssh "${projectbranch}" '' 'true';
     return;
 
   fi;
