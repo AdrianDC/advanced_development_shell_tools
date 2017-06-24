@@ -147,10 +147,22 @@ function gerritssh()
     # Parse the reverse indexes
     while true; do
       tmpcommitpos=$(grep -n "${tmpcommitid}" ${tmpfileids} | cut -d : -f 1);
+
+      # Exit on failed reverse search
+      if [ -z "${tmpcommitpos}" ]; then
+        echo '';
+        echo -e "     \e[1;31m> Aborting... '${projectreversemerge}' could not be reversed to HEAD\e[0m";
+        echo -e "     \e[1;33m> Commit '${tmpcommitid}' was not found on this project\e[0m";
+        echo '';
+        rm -rf "${tmpdir}";
+        return;
+      fi;
+
+      # Commit parent and next child search
       tmpcommitparent=$(sed "${tmpcommitpos}!d" ${tmpfileparents});
       tmpcommitidsearch=$(grep -n "${tmpcommitparent}" ${tmpfilesha1} | cut -d : -f 1);
 
-      # Reverse to HEAD succesful
+      # Reverse to HEAD successful
       if [ "${tmpcommitparent}" = "${remotecurrenthead}" ]; then
         tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
         break;
@@ -163,8 +175,8 @@ function gerritssh()
       # Exit on failed reverse search
       elif [ -z "${tmpcommitparent}" ] || [ -z "${tmpcommitidsearch}" ]; then
         echo '';
-        echo -e "     \e[1;31m> Aborting... ${projectreversemerge} could not be reversed to HEAD\e[0m";
-        echo -e "     \e[1;33m> Commit ${tmpcommitid} has no valid parent ${tmpcommitparent}\e[0m";
+        echo -e "     \e[1;31m> Aborting... '${projectreversemerge}' could not be reversed to HEAD\e[0m";
+        echo -e "     \e[1;33m> Commit '${tmpcommitid}' has no valid parent ${tmpcommitparent}\e[0m";
         echo '';
         rm -rf "${tmpdir}";
         return;
