@@ -21,7 +21,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaosp <android-7.1.2_r{XX}> [referenced,clean,shallow,example] (repo init for AOSP)';
+    echo ' Usage: repoinitaosp <android-7.1.2_r{XX}/master> [referenced,clean,shallow,example] (repo init for AOSP)';
     echo '';
     return;
   fi;
@@ -29,9 +29,16 @@ function repoinitaosp()
   # Variables
   local release="${1}";
   local params="${2}";
-  local branch="android-7.1.2_r${release}";
+  local branch;
   local init_command;
   local depth=;
+
+  # Branch selection
+  if [ "${release}" = 'master' ]; then
+    branch="${release}";
+  else
+    branch="android-7.1.2_r${release}";
+  fi;
 
   # Repo shallow
   if [[ "${params}" =~ 'shallow' ]]; then
