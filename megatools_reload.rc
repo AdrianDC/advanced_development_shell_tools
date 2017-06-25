@@ -30,8 +30,7 @@ function meganzreload()
 
   # Start mega-cmd server
   echo '';
-  nohup mega-cmd >/dev/null 2>&1 &
-  local proc_id=${!};
+  local proc_id=$(nohup mega-cmd >/dev/null 2>&1 & echo ${!});
   sleep 3;
 
   # Login with .megarc credentials
