@@ -60,6 +60,7 @@ function fastupl()
   uploadprivatemega "${1}" "${2}";
 
   # File download command
+  local apkname;
   local filename=$(basename "${1}");
   local filepath;
   local cmd="fileget '/Root/Private/${filename}';";
@@ -83,6 +84,16 @@ function fastupl()
       if [[ "${1}" =~ '/system/' ]]; then
         filepath="/system/${1#*/system/}";
         cmd="${cmd} adbpu '${filename}' '${filepath}';";
+
+        # .apk application
+        if [ "${1: -4}" = '.apk' ]; then
+          apkname=$(aapt d xmltree "${1}" AndroidManifest.xml | grep -i 'package=');
+          apkname=${apkname#*$'"'};
+          apkname=${apkname%%$'"'*};
+          if [ ! -z "${apkname}" ]; then
+            cmd="${cmd} adbu '${apkname}';";
+          fi;
+        fi;
       fi;
       ;;
 
