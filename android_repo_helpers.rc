@@ -312,6 +312,8 @@ function reposwitcher()
   if [ -e '.repo/local_manifests' ] && [ ! -L '.repo/local_manifests' ]; then
     echo '';
     echo ' reposwitcher: local_manifests is not a symlink';
+    echo '   Please delete the ".repo/local_manifests" folder';
+    echo '   Add ".repo/local_manifests_NAME" folders';
     echo '';
     return;
   fi;
@@ -320,6 +322,7 @@ function reposwitcher()
   if [ -e 'out' ] && [ ! -L 'out' ]; then
     echo '';
     echo ' reposwitcher: out is not a symlink';
+    echo '   Please delete the "out" folder';
     echo '';
     return;
   fi;
