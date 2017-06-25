@@ -46,6 +46,7 @@ function gitstat()
 # === Git Projects Statistics (shortcuts) ===
 alias gitst='gitremoteverify origin gitrao && gitstat origin cm-14.1';
 alias gitsto='gitremoteverify origin gitrao && gitstat origin $(git rev-parse --abbrev-ref HEAD)';
+alias gitstom='gitremoteverify origin gitrao && gitstat origin master';
 alias gitsta='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) cm-14.1';
 alias gitstam='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master';
 alias gitstg='gitremoteverify github false && gitstat github';
