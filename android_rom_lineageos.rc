@@ -55,3 +55,47 @@ function lineagewebjekyll()
   # Launch Jekyll
   bundle exec jekyll serve --incremental --port 4001;
 }
+
+# === LineageOS CVE Tracker ===
+function lineagecvetracker()
+{
+  # Usage: lineagecvetracker [bool_install] (CVE tracker instance helper)
+
+  # Installation mode
+  if [ ! -z "${1}" ]; then
+    sudo apt remove -y python3-pip;
+    sudo rm -rfv /usr/local/lib/python3*;
+    sudo apt install -y python3-pip;
+  fi;
+
+  # Update pip3
+  echo '';
+  sudo -H pip3 install --upgrade pip;
+
+  # Load all pip3 dependencies
+  sudo -H pip3 install --upgrade setuptools;
+  sudo -H pip3 install --upgrade -r requirements.txt;
+
+  # Start MongoDB
+  echo '';
+  sudo service mongod start;
+  sleep 2;
+
+  # Seed database
+  echo '';
+  python3 seed.py;
+
+  # Open webviewer
+  echo '';
+  xdg-open "http://127.0.0.1:5000" &
+
+  # Launch cve_tracker
+  echo '';
+  echo ' lineagecvetracker: Use Ctrl+C to stop';
+  echo '';
+  ./run;
+
+  # Stop MongoDB
+  sudo service mongod stop;
+  echo '';
+}
