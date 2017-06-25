@@ -231,6 +231,7 @@ function adbpf()
 
 # === ADB Pushes ===
 alias adbp='adbro; adbpf';
+alias adbpu='adbro; adbpushfile';
 
 # === ADB Sideload Helper ===
 function adbside()
