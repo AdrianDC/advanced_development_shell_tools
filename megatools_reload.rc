@@ -21,24 +21,26 @@ function meganzreload()
   # Usage
   if [ ! -f ~/.megarc ] || [ ! -z "${1}" ]; then
     echo '';
-    echo ' Usage: meganzreload (Reload MEGA.nz account and keys)';
+    echo ' Usage: meganzreload (Reload Mega.nz account and keys)';
     echo '  ~/.megarc from megatools has to be configured';
     echo '  Dependencies: sudo apt-get install libc-ares-dev libcrypto++-dev libfreeimage-dev';
     echo '';
     return;
   fi;
 
+  # Variables
+  local username=$(grep 'Username' ~/.megarc | sed 's/.*= //');
+  local password=$(grep 'Password' ~/.megarc | sed 's/.*= //');
+
   # Start mega-cmd server
   echo '';
   local proc_id=$(nohup mega-cmd >/dev/null 2>&1 & echo ${!});
   sleep 3;
 
-  # Login with .megarc credentials
-  local username=$(grep 'Username' ~/.megarc | sed 's/.*= //');
-  local password=$(grep 'Password' ~/.megarc | sed 's/.*= //');
-  mega-login "${username}" "${password}";
+  # Login Mega account
+  mega-login "${username}" "${password}" | grep -v 'Already logged in.';
 
-  # Launch mega-reload
+  # Reload Mega account
   mega-reload;
 
   # Stop mega-cmd server

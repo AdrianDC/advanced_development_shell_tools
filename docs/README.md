@@ -808,7 +808,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [megatools_reload.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc)&nbsp;]
-  * [**meganzreload** *<b>\[Reload MEGA.nz account and keys\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc)
+  * [**meganzreload** *<b>\[Reload Mega.nz account and keys\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc)
 
 ---
 ### [&nbsp;Documentation: [extensions/semc_msm7x30/android_autorelease.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_msm7x30/android_autorelease.rc)&nbsp;]
