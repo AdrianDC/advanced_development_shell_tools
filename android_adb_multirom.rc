@@ -178,3 +178,25 @@ function adbmrominjector()
   fi;
   echo '';
 }
+
+# === ADB MultiROM AutoBoot ===
+function adbmromautoboot()
+{
+  # Usage: adbmromautoboot (MultiROM autoboot selection)
+
+  # Read multirom.ini
+  echo '';
+  adbsu "cat /data/media/0/multirom/multirom.ini";
+
+  # Variables
+  local romtarget=$(adbmromselect);
+
+  # Modify multirom.ini
+  adbsu "sed -i 's#auto_boot_rom=.*#auto_boot_rom=${romtarget##*/}#' /data/media/0/multirom/multirom.ini";
+  adbsu "sed -i 's#current_rom=.*#current_rom=${romtarget##*/}#' /data/media/0/multirom/multirom.ini";
+  adbsu "cat /data/media/0/multirom/multirom.ini";
+
+  # Reboot to Android
+  adb reboot;
+  echo '';
+}
