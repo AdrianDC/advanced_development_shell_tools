@@ -21,16 +21,24 @@ function adbmromlist()
   # Usage: adbmromlist (List available MultiROM installations)
 
   # Variables
+  local enforced;
   local path;
   local roms;
 
+  # Prepare selinux access
+  enforced=$(adb shell getenforce);
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 0';
+  fi;
+
   # List all MultiROM installations
   roms=$(mktemp);
-  adb shell 'find \
-             /sdcard/multirom/roms/* \
-             /sdcard1/multirom-*/* \
-             /external_sd/multirom-*/* \
-             -maxdepth 0 -type d 2> /dev/null' \
+  adbsu 'find \
+         /sdcard/multirom/roms/* \
+         /sdcard1/multirom-*/* \
+         /external_sd/multirom-*/* \
+         /data/media/0/external_multirom/multirom-*/* \
+         -maxdepth 0 -type d 2> /dev/null' \
     | grep -v '/sdcard/multirom/roms/Internal' \
     > ${roms};
 
@@ -43,6 +51,11 @@ function adbmromlist()
     echo "   ${path}";
   done < ${roms};
   echo '';
+
+  # Restore selinux access
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 1';
+  fi;
 }
 
 # === ADB MultiROM Selector ===
@@ -52,18 +65,26 @@ function adbmromselect()
 
   # Variables
   local cnt;
+  local enforced;
   local key;
   local options;
   local path;
   local roms;
 
+  # Prepare selinux access
+  enforced=$(adb shell getenforce);
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 0';
+  fi;
+
   # List all MultiROM installations
   roms=$(mktemp);
-  adb shell 'find \
-             /sdcard/multirom/roms/* \
-             /sdcard1/multirom-*/* \
-             /external_sd/multirom-*/* \
-             -maxdepth 0 -type d 2> /dev/null' \
+  adbsu 'find \
+         /sdcard/multirom/roms/* \
+         /sdcard1/multirom-*/* \
+         /external_sd/multirom-*/* \
+         /data/media/0/external_multirom/multirom-*/* \
+         -maxdepth 0 -type d 2> /dev/null' \
     | grep -v '/sdcard/multirom/roms/Internal' \
     > ${roms};
 
@@ -84,6 +105,11 @@ function adbmromselect()
   >&2 printf " \e[1;33mROM to use [0 to ${cnt}] :\e[0m ";
   >&2 read key;
   >&2 echo '';
+
+  # Restore selinux access
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 1';
+  fi;
 
   # Return selected ROM path
   if [ ${key} -gt 0 ] && [ ${key} -le ${cnt} ]; then
