@@ -302,6 +302,7 @@ function reposwitcher()
   local folder;
   local key;
   local options;
+  local out;
   local path=$(pwd);
 
   # Access Android root
@@ -311,6 +312,14 @@ function reposwitcher()
   if [ -e '.repo/local_manifests' ] && [ ! -L '.repo/local_manifests' ]; then
     echo '';
     echo ' reposwitcher: local_manifests is not a symlink';
+    echo '';
+    return;
+  fi;
+
+  # Abort if out is not a symlink
+  if [ -e 'out' ] && [ ! -L 'out' ]; then
+    echo '';
+    echo ' reposwitcher: out is not a symlink';
     echo '';
     return;
   fi;
@@ -341,10 +350,22 @@ function reposwitcher()
   # If folder provided
   if [ ! -z "${folder}" ]; then
 
-    # Generate symlink to folder
+    # Generate symlink to local_manifests folder
     printf ' ';
-    rm -f .repo/local_manifests;
+    rm -fv .repo/local_manifests;
     ln -fsv ${folder} .repo/local_manifests;
+    echo '';
+
+    # Generate out specific folder
+    out="out_${folder#local_manifests_}";
+    if [ ! -d "${out}" ]; then
+      mkdir "${out}";
+    fi;
+
+    # Generate symlink to out folder
+    printf ' ';
+    rm -fv out;
+    ln -fsv ${out} out;
     echo '';
 
   # Delete otherwise
