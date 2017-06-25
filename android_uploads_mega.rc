@@ -21,7 +21,7 @@ function uploadmega()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: uploadmega <file_path> [target_folder] (File to mega.nz server uploader)';
+    echo ' Usage: uploadmega <file_path> [target_folder] (Upload to MEGA.nz)';
     echo '';
     return;
   fi;
@@ -160,7 +160,7 @@ function uploadprivatemega()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: uploadprivatemega <device_name> [none/zip/bootimage] (Make zip and upload)';
+    echo ' Usage: uploadprivatemega <device_name> (Upload to private MEGA.nz)';
     echo '';
     return;
   fi;
