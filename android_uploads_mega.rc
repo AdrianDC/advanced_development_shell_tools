@@ -167,21 +167,4 @@ function uploadprivatemega()
 
   # File upload to Private
   fileupl "${1}" '/Root/Private';
-
-  # File download command
-  local filename=$(basename "${1}");
-  local cmd="fileget '/Root/Private/${filename}';";
-
-  # Additional install commands
-  if [ "${2}" = 'zip' ]; then
-    cmd="${cmd} adbside '${filename}' true;";
-  elif [ "${2}" = 'bootimage' ]; then
-    cmd="${cmd} fboot '${filename}';";
-  fi;
-
-  # Command outputs
-  echo -e '  \e[1;32mDirect download:\e[0m';
-  echo "${cmd}" | xclip -selection c 2> /dev/null;
-  echo "   ${cmd}";
-  echo '';
 }
