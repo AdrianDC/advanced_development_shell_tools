@@ -247,7 +247,7 @@ function haste()
   echo '';
 
   # Upload to hastebin
-  local url=$(timeout 10 curl -X POST -s -d @"${tmp}" https://hastebin.com/documents \
+  local url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" https://hastebin.com/documents \
       | awk -F '"' '{ print "http://hastebin.com/"$4; }');
   echo " haste: ${url}";
 
