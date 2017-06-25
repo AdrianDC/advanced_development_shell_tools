@@ -20,13 +20,18 @@ function makekernelinjector()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo ' Usage: makekernelinjector <device_name> (Helper to makekernel with injector zip)';
+    echo ' Usage: makekernelinjector <device_names> (Helper to makekernel with injector zip)';
     return;
   fi;
 
-  # Make the kernel
-  makekernel ${1};
+  # Handle multiple devices
+  for device_name in ${@}; do
 
-  # Package kernel injector
-  kernelinjectorzip ${1} .build/arch/arm/boot/zImage;
+    # Make the kernel
+    makekernel ${device_name};
+
+    # Package kernel injector
+    kernelinjectorzip ${device_name} .build/arch/arm/boot/zImage;
+
+  done;
 }

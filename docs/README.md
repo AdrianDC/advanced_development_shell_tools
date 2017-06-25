@@ -487,7 +487,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_kernel_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc)&nbsp;]
-  * [**makekernelinjector** *<b>\[Helper to makekernel with injector zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makekernelinjector &lt;device_name&gt;*
+  * [**makekernelinjector** *<b>\[Helper to makekernel with injector zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makekernelinjector &lt;device_names&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_kernel_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc)  - Standalone Import Ready&nbsp;]
