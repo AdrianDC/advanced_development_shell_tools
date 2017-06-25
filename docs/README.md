@@ -303,8 +303,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitcpc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset; git cherry-pick --continue*
   * [**gitcpa** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *for sha1 in ${@}; do echo ''; echo ${sha1}; git cherry-pick ${sha1}; done*
   * [**gitcpf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git fetch ${1} ${2}; git cherry-pick FETCH_HEAD*
-  * [**gitfcp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git fetch ${1}; git cherry-pick FETCH_HEAD~${2:-0}*
   * [**gitcpr** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show ${1} --no-color \| sed "s/${2}/${3}/g" \| patch*
+  * [**gitfcp** *<b>\[Git cherry-pick from path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *gitfcp &lt;path&gt; [amount_of_commits]*
   * [**gitc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam)*
   * [**gitcs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) -s*
   * [**gitca** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend*
