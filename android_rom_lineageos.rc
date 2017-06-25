@@ -33,9 +33,6 @@ function lineagepatcher()
 
   # Import commits from topic "network-traffic"
   repopick -i -t network-traffic;
-
-  # Import commits from topic "long-press-power-torch"
-  repopick -i -t long-press-power-torch;
 }
 
 # === LineageOS Web Jekyll ===
