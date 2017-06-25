@@ -30,7 +30,7 @@ function autoreleaseaospsodp8996()
   fi;
 
   # Access project repository
-  pathchanged cdaosp sony;
+  pathchanged cdaosp sodp;
 
   # When option enabled, sync tree
   if [ ${?} -ne 0 ] && ! romautorelease-nosync-active; then
