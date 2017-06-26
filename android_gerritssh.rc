@@ -94,6 +94,7 @@ function gerritssh()
   fi;
   local projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
   local tmpdir=$(mktemp -d);
+  local tmpfileidscount;
   local tmpfilestate="${tmpdir}/state";
   local tmpfileids="${tmpdir}/ids";
   local tmpfileidsfor="${tmpdir}/for";
@@ -252,8 +253,9 @@ function gerritssh()
 
 
   # Commits on Review
+  tmpfileidscount=$(cat "${tmpfileidsfor}" | wc -w);
   echo '';
-  echo -e "  \e[1;34m\e[4;34mChanges on Review\e[0m";
+  echo -e "  \e[1;34m\e[4;34mChanges on Review (${tmpfileidscount} commits)\e[0m";
   for i in $(cat ${tmpfileidsfor}); do
 
     # Commit Details
