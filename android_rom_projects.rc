@@ -527,3 +527,38 @@ function androidprojectrebaser()
   echo '';
   cd "${currentdir}";
 }
+
+# === Android Project For Each Path ===
+function androidprojectforeach()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: androidprojectforeach <project_name> '<commands>' (Android project paths commands runner)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local path;
+
+  # Android project remote paths list
+  for path in $(androidprojectpaths "${1}"); do
+
+    # Access path
+    croot;
+    cd "${path}";
+
+    # Information
+    echo '';
+    echo "[${path}]";
+
+    # Run commands
+    ${2};
+
+  done;
+
+  # Return to repo root
+  croot;
+  echo '';
+}
