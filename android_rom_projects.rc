@@ -108,6 +108,25 @@ function gitbranchpusher()
   echo '';
 }
 
+# === Android Project Paths ===
+function androidprojectpaths()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: androidprojectpaths <project_name> (Android project remote paths list)';
+    echo '';
+    return;
+  fi;
+
+  # Android project remote paths list
+  git ls-remote --heads "https://github.com/AdrianDC/${1}.git" \
+      2> /dev/null \
+      | sed 's/.*refs\/heads\///' \
+      | grep -v 'local_manifests' \
+      | sed 's/_/\//g';
+}
+
 # === Android Project Patcher ===
 function androidprojectpatcher()
 {
@@ -164,10 +183,7 @@ function androidprojectpatcher()
   fi;
 
   # Automated remote changes detection
-  project_paths=$(git ls-remote --heads "https://github.com/AdrianDC/${project_name}.git" \
-                | sed 's/.*refs\/heads\///' \
-                | grep -v 'local_manifests' \
-                | sed 's/_/\//g');
+  project_paths=$(androidprojectpaths "${project_name}");
 
   # ==========================================================
   # Repo root
