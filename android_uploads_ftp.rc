@@ -78,7 +78,8 @@ function uploadftp()
     echo '';
 
     # Upload through FTP
-    ncftpput -R \
+    ncftpput -m \
+             -R \
              -v \
              -t 10 \
              -u "${FTPUploadUserName}" \
