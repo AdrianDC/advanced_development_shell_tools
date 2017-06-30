@@ -27,7 +27,9 @@ function fileupl()
   fi;
 
   # Launch file uploader
-  uploadmega "${1}" "${2}";
+  if shtools-uploads-mega-active; then
+    uploadmega "${1}" "${2}";
+  fi;
 }
 
 # === File Downloader Mega.nz ===
@@ -42,7 +44,9 @@ function fileget()
   fi;
 
   # Launch file downloader
-  downloadmega "${1}" "${2}";
+  if shtools-uploads-mega-active; then
+    downloadmega "${1}" "${2}";
+  fi;
 }
 
 # === Fast File Uploader ===
@@ -56,14 +60,23 @@ function fastupl()
     return;
   fi;
 
-  # Launch file private uploader
-  uploadprivatemega "${1}" "${2}";
-
   # File download command
   local apkname;
   local filename=$(basename "${1}");
   local filepath;
-  local cmd="fileget '/Root/Private/${filename}';";
+  local cmd;
+
+  # Launch file private uploader
+  if shtools-uploads-mega-active; then
+    uploadprivatemega "${1}" "${2}";
+    cmd="downloadmega '/Root/Private/${filename}';";
+  fi;
+
+  # Abort if no command provided
+  if [ -z "${cmd}" ]; then
+    echo '';
+    return;
+  fi;
 
   # Additional install commands
   case "${2}" in
