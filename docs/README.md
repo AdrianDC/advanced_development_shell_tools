@@ -776,6 +776,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**overlaycompare** *<b>\[Compare device overlays against sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *overlaycompare &lt;overlay_file_path&gt;*
 
 ---
+### [&nbsp;Documentation: [android_uploads_basketbuild.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc)&nbsp;]
+  * [**uploadbasketbuild** *<b>\[File to BasketBuild server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *uploadbasketbuild &lt;file_path&gt; [target_folder]*
+  * [**downloadbasketbuild** *<b>\[Download from BasketBuild\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *downloadbasketbuild &lt;remote_path&gt;*
+  * [**uploadprivatebasketbuild** *<b>\[Upload to private BasketBuild\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *uploadprivatebasketbuild &lt;device_name&gt;*
+
+---
 ### [&nbsp;Documentation: [android_uploads_common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc)&nbsp;]
   * [**fileupl** *<b>\[File to release server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc) : *fileupl &lt;file_path&gt; [target_folder]*
   * [**fileget** *<b>\[File from release server downloader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc) : *fileget &lt;remote_path&gt; [boot_remove_remote]*

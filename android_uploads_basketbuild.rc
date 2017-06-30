@@ -1,0 +1,89 @@
+#!/bin/bash
+#
+# Copyright 2015-2017 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === File Uploader BasketBuild ===
+function uploadbasketbuild()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: uploadbasketbuild <file_path> [target_folder] (File to BasketBuild server uploader)';
+    echo '';
+    return;
+  fi;
+
+  # BasketBuild Upload Credentials
+  # export FTPUploadUserUrl='basketbuild.com';
+  # export FTPUploadUserName='username.basketbuild.com';
+  # export FTPUploadPassword='';
+  # export FTPUploadPath='';
+
+  # Ignore missing credentials
+  if [ ! -f ~/.bash_android.uploadftp.basketbuild.rc ]; then
+    >&2 echo '';
+    >&2 echo ' uploadbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
+    >&2 echo '';
+    return;
+  fi;
+
+  # Upload file to target with FTP
+  uploadftp "${1}" "${2}" 'basketbuild';
+}
+
+# === File Downloader BasketBuild ===
+function downloadbasketbuild()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: downloadbasketbuild <remote_path> (Download from BasketBuild)';
+    echo '';
+    return;
+  fi;
+
+  # BasketBuild Upload Credentials
+  # export FTPUploadUserUrl='basketbuild.com';
+  # export FTPUploadUserName='username.basketbuild.com';
+  # export FTPUploadPassword='';
+  # export FTPUploadPath='';
+
+  # Ignore missing credentials
+  if [ ! -f ~/.bash_android.uploadftp.basketbuild.rc ]; then
+    >&2 echo '';
+    >&2 echo ' downloadbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
+    >&2 echo '';
+    return;
+  fi;
+
+  # Download file to target with FTP
+  downloadftp "${1}" 'basketbuild';
+}
+
+# === Private Uploader BasketBuild ===
+function uploadprivatebasketbuild()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: uploadprivatebasketbuild <device_name> (Upload to private BasketBuild)';
+    echo '';
+    return;
+  fi;
+
+  # File upload to Private
+  uploadbasketbuild "${1}" '.private';
+}
