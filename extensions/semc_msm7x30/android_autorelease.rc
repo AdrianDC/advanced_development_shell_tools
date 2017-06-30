@@ -24,7 +24,7 @@ function autoreleaselegacyxperia()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! romautorelease-nosync-active && [ -z "${1}" ]; then
+  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
     cdlineage;
     reposy;
   fi;
@@ -36,7 +36,7 @@ function autoreleaselegacyxperia()
   pathchanged cdlineage lx;
 
   # When option enabled, sync tree
-  if [ ${?} -ne 0 ] && ! romautorelease-nosync-active && [ -z "${2}" ]; then
+  if [ ${?} -ne 0 ] && ! shtools-builds-nosync-active && [ -z "${2}" ]; then
     reposy;
   fi;
 
@@ -46,7 +46,7 @@ function autoreleaselegacyxperia()
   fi;
 
   # Force clean option
-  romautorelease-clean-enable;
+  shtools-builds-clean-enable;
 
   # Walk through devices
   for device in ${devices}; do

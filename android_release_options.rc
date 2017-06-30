@@ -15,27 +15,87 @@
 # limitations under the License.
 #
 
-# === ROM Automatic Releaser - Option clean ===
-function romautorelease-clean-enable()  { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN='true'; }
-function romautorelease-clean-disable() { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN=; }
-function romautorelease-clean-active()  { [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN}" ]; }
+# === Options - Builds - clean ===
+function shtools-builds-clean-enable()
+{
+  # Usage: shtools-builds-clean-enable (Enable clean builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN='true';
+}
+function shtools-builds-clean-disable()
+{
+  # Usage: shtools-builds-clean-disable (Disable clean builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN=;
+}
+function shtools-builds-clean-active()
+{
+  # Usage: shtools-builds-clean-active (Get clean builds option)
+  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN}" ];
+}
 
-# === ROM Automatic Releaser - Option cleanram ===
-function romautorelease-cleanram-enable()  { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEANRAM='true'; }
-function romautorelease-cleanram-disable() { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEANRAM=; }
-function romautorelease-cleanram-active()  { [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEANRAM}" ]; }
+# === Options - Builds - cleanram ===
+function shtools-builds-cleanram-enable()
+{
+  # Usage: shtools-builds-cleanram-enable (Enable cleanram builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM='true';
+}
+function shtools-builds-cleanram-disable()
+{
+  # Usage: shtools-builds-cleanram-disable (Disable cleanram builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM=;
+}
+function shtools-builds-cleanram-active()
+{
+  # Usage: shtools-builds-cleanram-active (Get cleanram builds option)
+  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM}" ];
+}
 
-# === ROM Automatic Releaser - Option debug ===
-function romautorelease-debug-enable()  { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_DEBUG='true'; }
-function romautorelease-debug-disable() { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_DEBUG=; }
-function romautorelease-debug-active()  { [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_DEBUG}" ]; }
+# === Options - Builds - debug ===
+function shtools-builds-debug-enable()
+{
+  # Usage: shtools-builds-debug-enable (Enable debug builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG='true';
+}
+function shtools-builds-debug-disable()
+{
+  # Usage: shtools-builds-debug-disable (Disable debug builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG=;
+}
+function shtools-builds-debug-active()
+{
+  # Usage: shtools-builds-debug-active (Get debug builds option)
+  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG}" ];
+}
 
-# === ROM Automatic Releaser - Option local ===
-function romautorelease-local-enable()  { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL='true'; }
-function romautorelease-local-disable() { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL=; }
-function romautorelease-local-active()  { [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL}" ]; }
+# === Options - Builds - local ===
+function shtools-builds-local-enable()
+{
+  # Usage: shtools-builds-local-enable (Enable local builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL='true';
+}
+function shtools-builds-local-disable()
+{
+  # Usage: shtools-builds-local-disable (Disable local builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL=;
+}
+function shtools-builds-local-active()
+{
+  # Usage: shtools-builds-local-active (Get local builds option)
+  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL}" ];
+}
 
-# === ROM Automatic Releaser - Option nosync ===
-function romautorelease-nosync-enable()  { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC='true'; }
-function romautorelease-nosync-disable() { export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC=; }
-function romautorelease-nosync-active()  { [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC}" ]; }
+# === Options - Builds - nosync ===
+function shtools-builds-nosync-enable()
+{
+  # Usage: shtools-builds-nosync-enable (Enable nosync builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC='true';
+}
+function shtools-builds-nosync-disable()
+{
+  # Usage: shtools-builds-nosync-disable (Disable nosync builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC=;
+}
+function shtools-builds-nosync-active()
+{
+  # Usage: shtools-builds-nosync-active (Get nosync builds option)
+  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC}" ];
+}

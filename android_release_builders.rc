@@ -95,7 +95,7 @@ function romautorelease()
   fi;
 
   # When option enabled, use debuggable bootimages
-  if romautorelease-debug-active; then
+  if shtools-builds-debug-active; then
     bootimagedebuggable "${rom_device}" true;
     export WITH_SU=true;
   fi;
@@ -105,7 +105,7 @@ function romautorelease()
     echo ' Cleaning skipped...';
 
   # When option enabled, clean device out folder
-  elif romautorelease-clean-active; then
+  elif shtools-builds-clean-active; then
     echo '';
     echo ' romautorelease: Cleaning out product folder...';
     rm -rfv out/target/product &> /dev/null;
@@ -117,7 +117,7 @@ function romautorelease()
   fi;
 
   # When option enabled, clean RAM before build
-  if romautorelease-cleanram-active; then
+  if shtools-builds-cleanram-active; then
     cleanrambuild;
   fi;
 
@@ -173,7 +173,7 @@ function romautorelease()
   fi;
 
   # When option enabled, use debuggable bootimages
-  if romautorelease-debug-active; then
+  if shtools-builds-debug-active; then
     bootimagedebuggable "${rom_device}" false;
     export WITH_SU=;
   fi;
@@ -182,10 +182,10 @@ function romautorelease()
   pushbrom "${rom_device}" "${rom_tag}";
 
   # Upload ROM when not working locally
-  if ! romautorelease-local-active; then
+  if ! shtools-builds-local-active; then
 
     # Upload in multitasking when possible and allowed
-    if ! romautorelease-clean-active && \
+    if ! shtools-builds-clean-active && \
        [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
       gnome-terminal -x bash -c "\
         source $(shtoolsget)/android_development_shell_tools.rc;\
@@ -204,7 +204,7 @@ function romautorelease()
   fi;
 
   # When option enabled and not local, clean out folder
-  if romautorelease-clean-active && ! romautorelease-local-active; then
+  if shtools-builds-clean-active && ! shtools-builds-local-active; then
     echo '';
     echo ' romautorelease: Cleaning out product folder...';
     rm -rfv out/target/product &> /dev/null;
@@ -212,7 +212,7 @@ function romautorelease()
   fi;
 
   # When option enabled, clean RAM after build
-  if romautorelease-cleanram-active; then
+  if shtools-builds-cleanram-active; then
     cleanrambuild;
   fi;
 

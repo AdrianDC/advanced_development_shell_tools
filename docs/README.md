@@ -571,21 +571,21 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_release_options.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)&nbsp;]
-  * [**romautorelease-clean-enable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN='true'*
-  * [**romautorelease-clean-disable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN=*
-  * [**romautorelease-clean-active** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEAN}" ]*
-  * [**romautorelease-cleanram-enable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEANRAM='true'*
-  * [**romautorelease-cleanram-disable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEANRAM=*
-  * [**romautorelease-cleanram-active** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_CLEANRAM}" ]*
-  * [**romautorelease-debug-enable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_DEBUG='true'*
-  * [**romautorelease-debug-disable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_DEBUG=*
-  * [**romautorelease-debug-active** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_DEBUG}" ]*
-  * [**romautorelease-local-enable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL='true'*
-  * [**romautorelease-local-disable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL=*
-  * [**romautorelease-local-active** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_LOCAL}" ]*
-  * [**romautorelease-nosync-enable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC='true'*
-  * [**romautorelease-nosync-disable** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *export ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC=*
-  * [**romautorelease-nosync-active** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc) : *[ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_AUTORELEASE_NOSYNC}" ]*
+  * [**shtools-builds-clean-enable** *<b>\[Enable clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-clean-disable** *<b>\[Disable clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-clean-active** *<b>\[Get clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-cleanram-enable** *<b>\[Enable cleanram builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-cleanram-disable** *<b>\[Disable cleanram builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-cleanram-active** *<b>\[Get cleanram builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-debug-enable** *<b>\[Enable debug builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-debug-disable** *<b>\[Disable debug builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-debug-active** *<b>\[Get debug builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-local-enable** *<b>\[Enable local builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-local-disable** *<b>\[Disable local builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-local-active** *<b>\[Get local builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-nosync-enable** *<b>\[Enable nosync builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-nosync-disable** *<b>\[Disable nosync builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-nosync-active** *<b>\[Get nosync builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
 
 ---
 ### [&nbsp;Documentation: [android_release_packages.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc)&nbsp;]

@@ -24,7 +24,7 @@ function autoreleaseaospsodp8996()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! romautorelease-nosync-active && [ -z "${1}" ]; then
+  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
     cdaosp;
     reposy;
   fi;
@@ -33,7 +33,7 @@ function autoreleaseaospsodp8996()
   pathchanged cdaosp sodp;
 
   # When option enabled, sync tree
-  if [ ${?} -ne 0 ] && ! romautorelease-nosync-active; then
+  if [ ${?} -ne 0 ] && ! shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -53,7 +53,7 @@ function autoreleaseaospsodp8996()
   done;
 
   # When option enabled, clean out folder
-  if romautorelease-clean-active; then
+  if shtools-builds-clean-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
     rm -rfv out &> /dev/null;

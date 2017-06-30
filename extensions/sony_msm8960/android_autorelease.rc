@@ -24,7 +24,7 @@ function autoreleaseaospsony8960()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! romautorelease-nosync-active && [ -z "${1}" ]; then
+  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
     cdaosp;
     reposy;
   fi;
@@ -39,7 +39,7 @@ function autoreleaseaospsony8960()
     pathchanged cdaosp 8960;
 
     # When option enabled, sync tree
-    if [ ${?} -ne 0 ] && ! romautorelease-nosync-active; then
+    if [ ${?} -ne 0 ] && ! shtools-builds-nosync-active; then
       reposy;
     fi;
 
@@ -50,7 +50,7 @@ function autoreleaseaospsony8960()
   done;
 
   # When option enabled, clean out folder
-  if romautorelease-clean-active; then
+  if shtools-builds-clean-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
     rm -rfv out &> /dev/null;
@@ -67,7 +67,7 @@ function autoreleaselineagesony8960()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! romautorelease-nosync-active && [ -z "${1}" ]; then
+  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
     cdlineage;
     reposy;
   fi;
@@ -82,7 +82,7 @@ function autoreleaselineagesony8960()
     pathchanged cdlineage ${device};
 
     # When option enabled, sync tree
-    if [ ${?} -ne 0 ] && ! romautorelease-nosync-active; then
+    if [ ${?} -ne 0 ] && ! shtools-builds-nosync-active; then
       reposy;
     fi;
 
@@ -95,7 +95,7 @@ function autoreleaselineagesony8960()
   done;
 
   # When option enabled, clean out folder
-  if romautorelease-clean-active; then
+  if shtools-builds-clean-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
     rm -rfv out &> /dev/null;
@@ -112,7 +112,7 @@ function autoreleaserrsony8960()
   cdand;
 
   # When option enabled, sync tree
-  if ! romautorelease-nosync-active; then
+  if ! shtools-builds-nosync-active; then
     cdlineage;
     reposy;
     cdrr;
@@ -131,7 +131,7 @@ function autoreleaserrsony8960()
   done;
 
   # When option enabled, clean out folder
-  if romautorelease-clean-active; then
+  if shtools-builds-clean-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
     rm -rfv out &> /dev/null;
@@ -151,7 +151,7 @@ function autoreleasecafsony8960()
   cdaospcaf;
 
   # When option enabled, sync tree
-  if ! romautorelease-nosync-active; then
+  if ! shtools-builds-nosync-active; then
     reposycl;
   fi;
 
@@ -167,7 +167,7 @@ function autoreleasecafsony8960()
   done;
 
   # When option enabled, clean out folder
-  if romautorelease-clean-active; then
+  if shtools-builds-clean-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
     rm -rfv out &> /dev/null;
