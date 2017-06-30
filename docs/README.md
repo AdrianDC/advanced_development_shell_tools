@@ -813,6 +813,18 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**uploadprivatemega** *<b>\[Upload to private MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *uploadprivatemega &lt;device_name&gt;*
 
 ---
+### [&nbsp;Documentation: [android_uploads_options.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)&nbsp;]
+  * [**shtools-uploads-basketbuild-enable** *<b>\[Enable optional BasketBuild uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+  * [**shtools-uploads-basketbuild-disable** *<b>\[Disable optional BasketBuild uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+  * [**shtools-uploads-basketbuild-active** *<b>\[Get optional BasketBuild uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+  * [**shtools-uploads-ftp-enable** *<b>\[Enable optional FTP uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+  * [**shtools-uploads-ftp-disable** *<b>\[Disable optional FTP uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+  * [**shtools-uploads-ftp-active** *<b>\[Get optional FTP uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+  * [**shtools-uploads-mega-enable** *<b>\[Enable optional Mega.nz uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+  * [**shtools-uploads-mega-disable** *<b>\[Disable optional Mega.nz uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+  * [**shtools-uploads-mega-active** *<b>\[Get optional Mega.nz uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
+
+---
 ### [&nbsp;Documentation: [megatools_mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_mirror.rc)&nbsp;]
   * [**megamirror** *<b>\[MEGA mirror syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_mirror.rc) : *megamirror &lt;local_folder&gt; &lt;remote_folder&gt; &lt;--upload/--download&gt; [--copy,-y/-n]*
 
