@@ -106,3 +106,84 @@ function uploadftp()
   echo -e " \e[1;37m[ Upload done in ${time_span} secs ]\e[0m";
   echo '';
 }
+
+# === File Downloader FTP ===
+function downloadftp()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: downloadftp <remote_path> [uploadftp_variant] (Download from FTP)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local download_file="${1}";
+  local download_file_name=$(basename "${download_file}");
+  local variant="${2}";
+  local time_start=$(date +%s);
+  local time_span;
+
+  # FTP Upload Credentials
+  export FTPUploadUserUrl='ftp.domain.universe';
+  export FTPUploadUserName='Username';
+  export FTPUploadPassword='';
+  export FTPUploadPath='';
+
+  # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
+  if [ ! -z "${variant}" ] && [ -f ~/.bash_android.uploadftp.${variant}.rc ]; then
+    source ~/.bash_android.uploadftp.${variant}.rc;
+  elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
+    source ~/.bash_android.uploadftp.main.rc;
+  fi;
+
+  # Ignore missing credentials
+  if [ "${FTPUploadUserUrl}" = 'ftp.domain.universe' ]; then
+    >&2 echo '';
+    >&2 echo ' downloadftp: Open android_uploads_ftp.rc to see how to set your logins';
+    >&2 echo '';
+    return;
+  fi;
+
+  # Download header
+  echo '';
+  echo -e " \e[1;33m[ Downloading from the server - User '${FTPUploadUserName}' ]\e[0m";
+  echo '';
+
+  # Path prepend
+  if [ ! -z "${FTPUploadPath}" ]; then
+    download_file="${FTPUploadPath}/${download_file}";
+  fi;
+
+  # Notify the file name
+  echo "   File '${download_file}' downloading...";
+  echo '';
+
+  # Upload through FTP
+  ncftpget -C \
+           -v \
+           -t 10 \
+           -u "${FTPUploadUserName}" \
+           -p "${FTPUploadPassword}" \
+           "${FTPUploadUserUrl}" \
+           "${download_file}" \
+           "./${download_file_name}";
+
+  # Detect result FTP download
+  case ${?} in
+    0) ;;
+    3) echo '   Local file is identical to remote file.';
+       ;;
+    *) notify-send 'Failed downloading through FTP...' 2> /dev/null;
+       echo '';
+       echo '   Failed downloading through FTP.';
+       ;;
+  esac;
+
+  # Show download time
+  time_span=$(($(date +%s)-${time_start}));
+  echo '';
+  echo -e " \e[1;37m[ Download done in ${time_span} secs ]\e[0m";
+  echo '';
+}
