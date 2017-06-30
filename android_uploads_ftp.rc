@@ -89,12 +89,9 @@ function uploadftp()
 
     # Detect failed FTP upload
     if [ ${?} -ne 0 ]; then
-
-      # Fallback to WebUI upload
       notify-send 'Failed uploading through FTP...' 2> /dev/null;
       echo '';
       echo '   Failed uploading through FTP.';
-
     fi;
 
   # File missing
