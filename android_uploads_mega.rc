@@ -166,5 +166,5 @@ function uploadprivatemega()
   fi;
 
   # File upload to Private
-  fileupl "${1}" '/Root/Private';
+  uploadmega "${1}" '/Root/Private';
 }
