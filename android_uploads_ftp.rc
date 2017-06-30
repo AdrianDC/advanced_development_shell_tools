@@ -21,7 +21,7 @@ function uploadftp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: uploadftp <file_path> [target_folder] [uploadftp_variant) (File to FTP server uploader)';
+    echo ' Usage: uploadftp <file_path> [target_folder] [uploadftp_variant] (File to FTP server uploader)';
     echo '';
     return;
   fi;

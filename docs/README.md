@@ -783,7 +783,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_uploads_ftp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc)&nbsp;]
-  * [**uploadftp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc) : *uploadftp &lt;file_path&gt; [target_folder] [uploadftp_variant-SUMMARY-*
+  * [**uploadftp** *<b>\[File to FTP server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc) : *uploadftp &lt;file_path&gt; [target_folder] [uploadftp_variant]*
 
 ---
 ### [&nbsp;Documentation: [android_uploads_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc)&nbsp;]
