@@ -221,6 +221,48 @@ function shtools()
   ${list_functions[${key}]};
 }
 
+# === Android Shell Tools Options Menu ===
+function shtools-()
+{
+  # Usage: shtools- (Options menu for android_development_shell_tools)
+
+  # Variables
+  local cnt=0;
+  local key;
+  local line_function;
+  local line_usage;
+  local list_functions=('');
+
+  # Display shtools-* menu
+  echo '';
+  for line_function in $(typeset -F | grep 'shtools-' | cut -d' ' -f 3 \
+                       | grep -v '^shtools-$' \
+                       | grep -v '\-active$'); do
+
+    # Parse usage
+    line_usage=$(grep -a "Usage: ${line_function} " ${android_development_shell_tools_sources[@]});
+    if [ -z "${line_usage}" ]; then
+      continue;
+    fi;
+    line_usage=${line_usage#*\(};
+    line_usage=${line_usage%\)*};
+    list_functions+=(${line_function});
+
+    # Item choice
+    cnt=$((cnt + 1));
+    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
+
+  done;
+  echo '';
+
+  # Request user input
+  printf " > Command to run [1-${cnt}] : ";
+  read key;
+
+  # Execute requested function
+  ${list_functions[${key}]};
+}
+
 # === Android Shell Tools Differ ===
 function shtoolsdiff()
 {
