@@ -168,3 +168,6 @@ function uploadprivatemega()
   # File upload to Private
   uploadmega "${1}" '/Root/Private';
 }
+
+# === Folder Syncer Mega.nz ===
+alias syncmega='megamirror';
