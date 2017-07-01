@@ -193,8 +193,12 @@ function shtools()
   local line_usage;
   local list_functions=('');
 
-  # Display shtools* menu
+  # Function header
   echo '';
+  echo -e " \e[1;37m[ Android Development Shell Tools - Menu ]\e[0m";
+  echo '';
+
+  # Display shtools* menu
   for line_function in $(typeset -F | grep shtools | cut -d' ' -f 3 | grep -v '^shtools$'); do
 
     # Parse usage
@@ -216,6 +220,7 @@ function shtools()
   # Request user input
   printf " > Command to run [1-${cnt}] : ";
   read key;
+  echo '';
 
   # Execute requested function
   ${list_functions[${key}]};
