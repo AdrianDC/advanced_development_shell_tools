@@ -15,6 +15,28 @@
 # limitations under the License.
 #
 
+# === Uploads Credentials for FTP ===
+function __shtools_credentials_ftp()
+{
+  # Usage: __shtools_credentials_ftp [uploadftp_variant] (Credentials for FTP server)
+
+  # FTP Uploads Credentials
+  export FTPUploadUserUrl='ftp.domain.universe';
+  export FTPUploadUserName='Username';
+  export FTPUploadPassword='';
+  export FTPUploadPath='';
+
+  # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
+  if [ ! -z "${1}" ] && [ -f ~/.bash_android.uploadftp.${1}.rc ]; then
+    source ~/.bash_android.uploadftp.${variant}.rc;
+  elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
+    source ~/.bash_android.uploadftp.main.rc;
+  fi;
+
+  # Check missing credentials
+  [ ! "${FTPUploadUserUrl}" = 'ftp.domain.universe' ];
+}
+
 # === File Uploader FTP ===
 function uploadftp()
 {
@@ -35,21 +57,8 @@ function uploadftp()
   local time_start=$(date +%s);
   local time_span;
 
-  # FTP Upload Credentials
-  export FTPUploadUserUrl='ftp.domain.universe';
-  export FTPUploadUserName='Username';
-  export FTPUploadPassword='';
-  export FTPUploadPath='';
-
-  # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
-  if [ ! -z "${variant}" ] && [ -f ~/.bash_android.uploadftp.${variant}.rc ]; then
-    source ~/.bash_android.uploadftp.${variant}.rc;
-  elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
-    source ~/.bash_android.uploadftp.main.rc;
-  fi;
-
-  # Ignore missing credentials
-  if [ "${FTPUploadUserUrl}" = 'ftp.domain.universe' ]; then
+  # FTP Uploads Credentials
+  if ! __shtools_credentials_ftp "${variant}"; then
     >&2 echo '';
     >&2 echo ' uploadftp: Open android_uploads_ftp.rc to see how to set your logins';
     >&2 echo '';
@@ -124,21 +133,8 @@ function downloadftp()
   local time_start=$(date +%s);
   local time_span;
 
-  # FTP Upload Credentials
-  export FTPUploadUserUrl='ftp.domain.universe';
-  export FTPUploadUserName='Username';
-  export FTPUploadPassword='';
-  export FTPUploadPath='';
-
-  # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
-  if [ ! -z "${variant}" ] && [ -f ~/.bash_android.uploadftp.${variant}.rc ]; then
-    source ~/.bash_android.uploadftp.${variant}.rc;
-  elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
-    source ~/.bash_android.uploadftp.main.rc;
-  fi;
-
-  # Ignore missing credentials
-  if [ "${FTPUploadUserUrl}" = 'ftp.domain.universe' ]; then
+  # FTP Uploads Credentials
+  if ! __shtools_credentials_ftp "${variant}"; then
     >&2 echo '';
     >&2 echo ' downloadftp: Open android_uploads_ftp.rc to see how to set your logins';
     >&2 echo '';
@@ -206,23 +202,10 @@ function syncftp()
   local time_start=$(date +%s);
   local time_span;
 
-  # FTP Upload Credentials
-  export FTPUploadUserUrl='ftp.domain.universe';
-  export FTPUploadUserName='Username';
-  export FTPUploadPassword='';
-  export FTPUploadPath='';
-
-  # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
-  if [ ! -z "${variant}" ] && [ -f ~/.bash_android.uploadftp.${variant}.rc ]; then
-    source ~/.bash_android.uploadftp.${variant}.rc;
-  elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
-    source ~/.bash_android.uploadftp.main.rc;
-  fi;
-
-  # Ignore missing credentials
-  if [ "${FTPUploadUserUrl}" = 'ftp.domain.universe' ]; then
+  # FTP Uploads Credentials
+  if ! __shtools_credentials_ftp "${variant}"; then
     >&2 echo '';
-    >&2 echo ' uploadftp: Open android_uploads_ftp.rc to see how to set your logins';
+    >&2 echo ' syncftp: Open android_uploads_ftp.rc to see how to set your logins';
     >&2 echo '';
     return;
   fi;
