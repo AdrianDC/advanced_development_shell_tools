@@ -230,6 +230,7 @@ function shtools-()
   local cnt=0;
   local key;
   local line_function;
+  local line_option;
   local line_usage;
   local list_functions=('');
 
@@ -238,6 +239,18 @@ function shtools-()
   for line_function in $(typeset -F | grep 'shtools-' | cut -d' ' -f 3 \
                        | grep -v '^shtools-$' \
                        | grep -v '\-active$'); do
+
+    # Verify if the option is active
+    line_option=${line_function%-enable};
+    if [ ! "${line_option}" = "${line_function}" ] && ${line_option}-active 2> /dev/null; then
+      continue;
+    fi;
+
+    # Verify if the option is inactive
+    line_option=${line_function%-disable};
+    if [ ! "${line_option}" = "${line_function}" ] && ! ${line_option}-active 2> /dev/null; then
+      continue;
+    fi;
 
     # Parse usage
     line_usage=$(grep -a "Usage: ${line_function} " ${android_development_shell_tools_sources[@]});
@@ -261,6 +274,7 @@ function shtools-()
 
   # Execute requested function
   ${list_functions[${key}]};
+  echo '';
 }
 
 # === Android Shell Tools Differ ===
