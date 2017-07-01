@@ -544,6 +544,11 @@ function shtoolsreadme()
       line_summary="\(${line_type}\)";
       line_usage='';
 
+      # Hide internal functions starting by __
+      if [ "${line_function:0:2}" = '__' ]; then
+        continue;
+      fi;
+
       # Parse function content
       if [ "${line_type}" = 'Function' ]; then
 
