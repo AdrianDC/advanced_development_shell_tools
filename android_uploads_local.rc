@@ -81,6 +81,9 @@ function androidfilessync()
 # === AndroidFiles Download Helper ===
 alias androidfilesdownload='androidfilessync --download';
 
+# === AndroidFiles Folder Helper ===
+alias androidfilescd='cd "${ANDROID_FILES_PATH}/"';
+
 # === AndroidFiles Folder ===
 function androidfilesopen()
 {
