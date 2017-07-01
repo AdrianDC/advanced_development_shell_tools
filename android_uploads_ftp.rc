@@ -186,3 +186,90 @@ function downloadftp()
   echo -e " \e[1;37m[ Download done in ${time_span} secs ]\e[0m";
   echo '';
 }
+
+# === Folder Syncer FTP ===
+function syncftp()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${3}" ]; then
+    echo '';
+    echo ' Usage: syncftp <local_path> <remote_path> <--download/--upload> [uploadftp_variant] (Folder with FTP server syncer)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local local_path=$(readlink -f "${1}");
+  local remote_path="${2}";
+  local mode="${3}";
+  local variant="${4}";
+  local time_start=$(date +%s);
+  local time_span;
+
+  # FTP Upload Credentials
+  export FTPUploadUserUrl='ftp.domain.universe';
+  export FTPUploadUserName='Username';
+  export FTPUploadPassword='';
+  export FTPUploadPath='';
+
+  # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
+  if [ ! -z "${variant}" ] && [ -f ~/.bash_android.uploadftp.${variant}.rc ]; then
+    source ~/.bash_android.uploadftp.${variant}.rc;
+  elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
+    source ~/.bash_android.uploadftp.main.rc;
+  fi;
+
+  # Ignore missing credentials
+  if [ "${FTPUploadUserUrl}" = 'ftp.domain.universe' ]; then
+    >&2 echo '';
+    >&2 echo ' uploadftp: Open android_uploads_ftp.rc to see how to set your logins';
+    >&2 echo '';
+    return;
+  fi;
+
+  # Upload header
+  echo '';
+  echo -e " \e[1;33m[ Syncing with the server - User '${FTPUploadUserName}' ]\e[0m";
+  echo '';
+
+  # Path prepend
+  if [ ! -z "${FTPUploadPath}" ] && [ ! -z "${remote_path}" ]; then
+    remote_path="${FTPUploadPath}/${remote_path}";
+  fi;
+
+  # Sync local to remote target
+  if [ "${mode}" = '--upload' ]; then
+
+    # Notify the folder name
+    echo "   Syncing local '${local_path}' to remote '${remote_path}'...";
+    echo '';
+
+    # Sync through FTP
+    lftp "ftp://${FTPUploadUserName}:${FTPUploadPassword}@${FTPUploadUserUrl}" \
+         -e "mirror -e -R '${local_path}' '${remote_path}'; quit;";
+
+  # Sync remote to local target
+  elif [ "${mode}" = '--download' ]; then
+
+    # Notify the folder name
+    echo "   Syncing remote '${remote_path}' to local '${local_path}'...";
+    echo '';
+
+    # Sync through FTP
+    lftp "ftp://${FTPUploadUserName}:${FTPUploadPassword}@${FTPUploadUserUrl}" \
+         -e "mirror -e '${remote_path}' '${local_path}'; quit;";
+
+  fi;
+
+  # Detect failed FTP sync
+  if [ ${?} -ne 0 ]; then
+    notify-send 'Failed syncing through FTP...' 2> /dev/null;
+    echo '';
+    echo '   Failed syncing through FTP.';
+  fi;
+
+  # Show sync time
+  time_span=$(($(date +%s)-${time_start}));
+  echo -e " \e[1;37m[ Syncing done in ${time_span} secs ]\e[0m";
+  echo '';
+}
