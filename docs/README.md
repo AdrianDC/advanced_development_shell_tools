@@ -781,6 +781,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**uploadbasketbuild** *<b>\[File to BasketBuild server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *uploadbasketbuild &lt;file_path&gt; [target_folder]*
   * [**downloadbasketbuild** *<b>\[Download from BasketBuild\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *downloadbasketbuild &lt;remote_path&gt;*
   * [**uploadprivatebasketbuild** *<b>\[Upload to private BasketBuild\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *uploadprivatebasketbuild &lt;device_name&gt;*
+  * [**syncbasketbuild** *<b>\[Folder with BasketBuild server syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *syncbasketbuild &lt;local_path&gt; &lt;remote_path&gt; &lt;--download/--upload&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_uploads_common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc)&nbsp;]

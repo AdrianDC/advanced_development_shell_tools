@@ -87,3 +87,32 @@ function uploadprivatebasketbuild()
   # File upload to Private
   uploadbasketbuild "${1}" '.private';
 }
+
+# === Folder Syncer BasketBuild ===
+function syncbasketbuild()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${3}" ]; then
+    echo '';
+    echo ' Usage: syncbasketbuild <local_path> <remote_path> <--download/--upload> (Folder with BasketBuild server syncer)';
+    echo '';
+    return;
+  fi;
+
+  # BasketBuild Upload Credentials
+  # export FTPUploadUserUrl='basketbuild.com';
+  # export FTPUploadUserName='username.basketbuild.com';
+  # export FTPUploadPassword='';
+  # export FTPUploadPath='';
+
+  # Ignore missing credentials
+  if [ ! -f ~/.bash_android.uploadftp.basketbuild.rc ]; then
+    >&2 echo '';
+    >&2 echo ' syncbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
+    >&2 echo '';
+    return;
+  fi;
+
+  # Upload file to target with FTP
+  syncftp "${1}" "${2}" "${3}" 'basketbuild';
+}
