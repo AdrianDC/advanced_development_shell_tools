@@ -15,6 +15,24 @@
 # limitations under the License.
 #
 
+# === Uploads Credentials for BasketBuild ===
+function __shtools_credentials_basketbuild()
+{
+  # Usage: __shtools_credentials_basketbuild (Credentials for BasketBuild server)
+
+  # BasketBuild Upload Credentials
+  export FTPUploadUserUrl='basketbuild.com';
+  export FTPUploadUserName='username.basketbuild.com';
+  export FTPUploadPassword='';
+  export FTPUploadPath='';
+
+  # Create  ~/.bash_android.uploadftp.basketbuild.rc with the exports to override the credentials
+  source ~/.bash_android.uploadftp.basketbuild.rc;
+
+  # Check missing credentials
+  [ ! "${FTPUploadUserName}" = 'username.basketbuild.com' ];
+}
+
 # === File Uploader BasketBuild ===
 function uploadbasketbuild()
 {
@@ -26,14 +44,8 @@ function uploadbasketbuild()
     return;
   fi;
 
-  # BasketBuild Upload Credentials
-  # export FTPUploadUserUrl='basketbuild.com';
-  # export FTPUploadUserName='username.basketbuild.com';
-  # export FTPUploadPassword='';
-  # export FTPUploadPath='';
-
-  # Ignore missing credentials
-  if [ ! -f ~/.bash_android.uploadftp.basketbuild.rc ]; then
+  # BasketBuild Uploads Credentials
+  if ! __shtools_credentials_basketbuild; then
     >&2 echo '';
     >&2 echo ' uploadbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
     >&2 echo '';
@@ -55,14 +67,8 @@ function downloadbasketbuild()
     return;
   fi;
 
-  # BasketBuild Upload Credentials
-  # export FTPUploadUserUrl='basketbuild.com';
-  # export FTPUploadUserName='username.basketbuild.com';
-  # export FTPUploadPassword='';
-  # export FTPUploadPath='';
-
-  # Ignore missing credentials
-  if [ ! -f ~/.bash_android.uploadftp.basketbuild.rc ]; then
+  # BasketBuild Uploads Credentials
+  if ! __shtools_credentials_basketbuild; then
     >&2 echo '';
     >&2 echo ' downloadbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
     >&2 echo '';
@@ -99,14 +105,8 @@ function syncbasketbuild()
     return;
   fi;
 
-  # BasketBuild Upload Credentials
-  # export FTPUploadUserUrl='basketbuild.com';
-  # export FTPUploadUserName='username.basketbuild.com';
-  # export FTPUploadPassword='';
-  # export FTPUploadPath='';
-
-  # Ignore missing credentials
-  if [ ! -f ~/.bash_android.uploadftp.basketbuild.rc ]; then
+  # BasketBuild Uploads Credentials
+  if ! __shtools_credentials_basketbuild; then
     >&2 echo '';
     >&2 echo ' syncbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
     >&2 echo '';
