@@ -232,54 +232,71 @@ function shtools-()
   # Usage: shtools- (Options menu for android_development_shell_tools)
 
   # Variables
-  local cnt=0;
+  local cnt;
   local key;
   local line_function;
   local line_option;
   local line_usage;
-  local list_functions=('');
+  local list_functions;
 
-  # Display shtools-* menu
+  # Loop until user exits
+  key=-1;
   echo '';
-  for line_function in $(typeset -F | grep 'shtools-' | cut -d' ' -f 3 \
-                       | grep -v '^shtools-$' \
-                       | grep -v '\-active$'); do
+  while [ ! "${key}" = '0' ]; do
 
-    # Verify if the option is active
-    line_option=${line_function%-enable};
-    if [ ! "${line_option}" = "${line_function}" ] && ${line_option}-active 2> /dev/null; then
-      continue;
-    fi;
+    # Function header
+    echo -e " \e[1;37m[ Android Development Shell Tools - Options ]\e[0m";
+    echo '';
 
-    # Verify if the option is inactive
-    line_option=${line_function%-disable};
-    if [ ! "${line_option}" = "${line_function}" ] && ! ${line_option}-active 2> /dev/null; then
-      continue;
-    fi;
+    # Display exit item
+    echo -e "  \e[1;33m0: \e[1;37mKeep current options \e[1;32m[Exit the configuration]\e[0m";
 
-    # Parse usage
-    line_usage=$(grep -a "Usage: ${line_function} " ${android_development_shell_tools_sources[@]});
-    if [ -z "${line_usage}" ]; then
-      continue;
-    fi;
-    line_usage=${line_usage#*\(};
-    line_usage=${line_usage%\)*};
-    list_functions+=(${line_function});
+    # Reset containers
+    cnt=0;
+    list_functions=('');
 
-    # Item choice
-    cnt=$((cnt + 1));
-    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
+    # Display shtools-* menu
+    for line_function in $(typeset -F | grep 'shtools-' | cut -d' ' -f 3 \
+                         | grep -v '^shtools-$' \
+                         | grep -v '\-active$'); do
+
+      # Verify if the option is active
+      line_option=${line_function%-enable};
+      if [ ! "${line_option}" = "${line_function}" ] && ${line_option}-active 2> /dev/null; then
+        continue;
+      fi;
+
+      # Verify if the option is inactive
+      line_option=${line_function%-disable};
+      if [ ! "${line_option}" = "${line_function}" ] && ! ${line_option}-active 2> /dev/null; then
+        continue;
+      fi;
+
+      # Parse usage
+      line_usage=$(grep -a "Usage: ${line_function} " ${android_development_shell_tools_sources[@]});
+      if [ -z "${line_usage}" ]; then
+        continue;
+      fi;
+      line_usage=${line_usage#*\(};
+      line_usage=${line_usage%\)*};
+      list_functions+=(${line_function});
+
+      # Item choice
+      cnt=$((cnt + 1));
+      echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
+
+    done;
+    echo '';
+
+    # Request user input
+    printf " > Command to run [0-${cnt}] : ";
+    read key;
+    echo '';
+
+    # Execute requested function
+    ${list_functions[${key}]};
 
   done;
-  echo '';
-
-  # Request user input
-  printf " > Command to run [1-${cnt}] : ";
-  read key;
-
-  # Execute requested function
-  ${list_functions[${key}]};
-  echo '';
 }
 
 # === Android Shell Tools Differ ===
