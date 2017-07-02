@@ -142,10 +142,13 @@ function kerneltoolchains()
   # Usage
   if [ -z "${ARCH}" ]; then
     echo '';
-    echo ' Usage: kerneltoolchains (Select toolchains based on ARCH in Android build tree)';
+    echo ' Usage: kerneltoolchains [version] (Select toolchains based on ARCH in Android build tree)';
     echo '';
     return;
   fi;
+
+  # Variables
+  local version=${1};
 
   # Architecture environment
   local cross_compiler=;
@@ -160,11 +163,15 @@ function kerneltoolchains()
 
   # Architecture ARM-64
   if [ "${ARCH}" = 'arm64' ]; then
-    cross_compiler=$(readlink -f ${dir_cross_compiler}/aarch64/aarch64-linux-android-4.9/bin);
+
+    # Android 4.9 toolchain
+    cross_compiler=$([ "${version:-4.9}" = '4.9' ] && readlink -f ${dir_cross_compiler}/aarch64/aarch64-linux-android-4.9/bin);
     if [ ! -z "${cross_compiler}" ]; then
       echo '  makekernel: Using Android 4.9 toolchain';
     else
-      cross_compiler=$(readlink -f ${dir_cross_compiler}/aarch64/aarch64-linux-android-4.8/bin);
+
+      # Android 4.8 toolchain
+      cross_compiler=$([ "${version:-4.8}" = '4.8' ] && readlink -f ${dir_cross_compiler}/aarch64/aarch64-linux-android-4.8/bin);
       if [ ! -z "${cross_compiler}" ]; then
         echo '  makekernel: Falling back to Android 4.8 toolchain';
       fi;
@@ -182,23 +189,33 @@ function kerneltoolchains()
 
   # Architecture ARM-32
   else
-    cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.9/bin);
+
+    # Android 4.9 toolchain
+    cross_compiler=$([ "${version:-4.9}" = '4.9' ] && readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.9/bin);
     if [ ! -z "${cross_compiler}" ]; then
       echo '  makekernel: Using Android 4.9 toolchain';
     else
-      cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.8/bin);
+
+      # Android 4.8 toolchain
+      cross_compiler=$([ "${version:-4.8}" = '4.8' ] && readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.8/bin);
       if [ ! -z "${cross_compiler}" ]; then
         echo '  makekernel: Falling back to Android 4.8 toolchain';
       else
-        cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-eabi-4.8/bin);
+
+        # GCC 4.8 toolchain
+        cross_compiler=$([ "${version:-4.8}" = '4.8' ] && readlink -f ${dir_cross_compiler}/arm/arm-eabi-4.8/bin);
         if [ ! -z "${cross_compiler}" ]; then
           echo '  makekernel: Falling back to GCC 4.8 toolchain';
         else
-          cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.7/bin);
+
+          # Android 4.7 toolchain
+          cross_compiler=$([ "${version:-4.7}" = '4.7' ] && readlink -f ${dir_cross_compiler}/arm/arm-linux-androideabi-4.7/bin);
           if [ ! -z "${cross_compiler}" ]; then
             echo '  makekernel: Falling back to Android 4.7 toolchain';
           else
-            cross_compiler=$(readlink -f ${dir_cross_compiler}/arm/arm-eabi-4.7/bin);
+
+            # GCC 4.7 toolchain
+            cross_compiler=$([ "${version:-4.7}" = '4.7' ] && readlink -f ${dir_cross_compiler}/arm/arm-eabi-4.7/bin);
             if [ ! -z "${cross_compiler}" ]; then
               echo '  makekernel: Falling back to GCC 4.7 toolchain';
             fi;

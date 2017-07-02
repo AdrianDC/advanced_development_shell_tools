@@ -473,7 +473,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * [**makekernel** *<b>\[Kernel inline compiler\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *makekernel [platform_device_to_init / clean / mrproper] [make_parameters]*
   * [**kerneldefconfig** *<b>\[Select defconfig easily\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *kerneldefconfig [platform_device]*
-  * [**kerneltoolchains** *<b>\[Select toolchains based on ARCH in Android build tree\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)
+  * [**kerneltoolchains** *<b>\[Select toolchains based on ARCH in Android build tree\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *kerneltoolchains [version]*
 
 ---
 ### [&nbsp;Documentation: [android_kernel_defconfig.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_defconfig.rc)  - Standalone Import Ready&nbsp;]
