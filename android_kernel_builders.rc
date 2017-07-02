@@ -40,7 +40,7 @@ function makekernel()
     # Usage
     if [ -z "${1}" ] || ! ls arch/arm*/configs/*${1}*_defconfig 1> /dev/null 2>&1; then
       echo '';
-      echo ' Usage: makekernel [platform_device_to_init / clean / mrproper] [make_parameters] (Kernel inline compiler)';
+      echo ' Usage: makekernel [platform_device_to_init / clean / mrproper] [toolchain_version] [make_parameters] (Kernel inline compiler)';
       echo '   Details: The kernel needs to be under an Android build tree to select toolchains'
       echo '';
       return;
@@ -50,7 +50,7 @@ function makekernel()
     kerneldefconfig "${1}";
 
     # Kernel toolchains selection
-    kerneltoolchains;
+    kerneltoolchains "${2}";
 
     # Kernel configuration
     make ${DEFCONFIG_NAME} O=./.build;
@@ -58,7 +58,7 @@ function makekernel()
 
   # Variables
   local time_diff;
-  local make_parameters="${@:2}";
+  local make_parameters="${@:3}";
 
   # Kernel build
   time_diff=$(date +%s);
