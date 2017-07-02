@@ -126,6 +126,30 @@ function shtoolse()
   fi;
 }
 
+# === Android Shell Tools Syntax Checker ===
+function shtoolscheck()
+{
+  # Usage: shtoolscheck [bool_all] (Run ShellCheck on the project)
+
+  # Variables
+  local file_source;
+
+  # Study all script files
+  for file_source in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[*]} ${android_development_shell_tools_scripts[*]}; do
+
+    # Launch ShellCheck
+    shellcheck "${file_source}";
+
+    # Check result
+    if [ ${?} -ne 0 ] && [ -z "${1}" ]; then
+      echo '';
+      echo -e " \e[1;33mERROR: ${file_source} contains syntax errors or warnings";
+      echo '';
+      return;
+    fi;
+  done;
+}
+
 # === Android Shell Tools Syncer ===
 function shtoolssync()
 {
