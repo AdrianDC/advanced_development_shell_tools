@@ -28,7 +28,7 @@ function __shtools_credentials_ftp()
 
   # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
   if [ ! -z "${1}" ] && [ -f ~/.bash_android.uploadftp.${1}.rc ]; then
-    source ~/.bash_android.uploadftp.${variant}.rc;
+    source ~/.bash_android.uploadftp.${1}.rc;
   elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
     source ~/.bash_android.uploadftp.main.rc;
   fi;
