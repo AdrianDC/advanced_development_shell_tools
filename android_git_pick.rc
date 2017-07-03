@@ -27,12 +27,16 @@ function gitcpu()
   fi;
 
   # Variables
-  local link="${1}";
-  local project=$(echo "${link}" \
-                | sed 's/.*\(github.com\/.*\)\/commit\/.*/http:\/\/\1/');
-  local commit=$(echo "${link}" \
-               | sed 's/.*\/commit\/\(.*\)/\1/');
+  local link=${1};
   local branch=${2:-cm-14.1};
+  local project;
+  local commit;
+
+  # Input handling
+  project=$(echo "${link}" \
+          | sed 's/.*\(github.com\/.*\)\/commit\/.*/http:\/\/\1/');
+  commit=$(echo "${link}" \
+         | sed 's/.*\/commit\/\(.*\)/\1/');
 
   # Input verification
   if [ -z "${project}" ] || [ -z "${commit}" ]; then
@@ -43,11 +47,11 @@ function gitcpu()
   fi;
 
   # Fetch and pick
-  git fetch ${project} ${branch};
+  git fetch "${project}" "${branch}";
   echo '';
-  git show --oneline --stat ${commit};
+  git show --oneline --stat "${commit}";
   echo '';
-  git cherry-pick ${commit};
+  git cherry-pick "${commit}";
 }
 
 # === Git Merger ===
@@ -70,16 +74,15 @@ function gitmerges()
   echo '';
 
   # Search commits
-  git rev-list ${1} --reverse --pretty=oneline -- . \
-    | tail -n ${cnt} \
-    | while read line;
+  git rev-list "${1}" --reverse --pretty=oneline -- . \
+    | tail -n "${cnt}" \
+    | while read -r line;
   do
-    sha1=$(echo ${line} | cut -c -40);
-    title=$(echo ${line} | cut -c 42-);
-    if [ -z "$(git rev-list HEAD --pretty=oneline -- . \
-       | grep -i "${title}")" ]; then
+    sha1=$(echo "${line}" | cut -c -40);
+    title=$(echo "${line}" | cut -c 42-);
+    if ! git rev-list HEAD --pretty=oneline -- . | grep -iq "${title}"; then
       echo -e " \e[1;31m${sha1} : \e[1;37m${title}\e[0m";
-      git cherry-pick ${sha1};
+      git cherry-pick "${sha1}";
       git reset --hard HEAD;
       echo '';
     fi;
@@ -89,9 +92,6 @@ function gitmerges()
 # === GitHub Origin Cherry-Pick ===
 function gitcpo()
 {
-  # Configurations
-  gitremote='origin';
-
   # Usage
   echo '';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
@@ -101,11 +101,13 @@ function gitcpo()
     return;
   fi;
 
+  # Variables
+  local gitremote=origin;
+
   # Cherry-Pick
-  git cherry-pick --abort >/dev/null 2>&1;
-  git fetch ${gitremote} ${1};
-  if [ ${?} -eq 0 ] && [ ${2} -gt 0 ]; then
-    git cherry-pick FETCH_HEAD~$((${2}-1))^..FETCH_HEAD;
+  git cherry-pick --abort > /dev/null 2>&1;
+  if git fetch "${gitremote}" "${1}" && [ "${2}" -gt 0 ]; then
+    git cherry-pick FETCH_HEAD~$((${2} - 1))^..FETCH_HEAD;
   fi;
 }
 
@@ -116,8 +118,8 @@ function gitcpup()
   # Usage: gitcpup [url] (Git URL patch applier)';
 
   # Variables
-  local tmpfile=$(mktemp);
-  local tmpurl="${1}";
+  local tmpfile;
+  local tmpurl=${1};
   echo '';
 
   # Finish previous one
@@ -130,19 +132,19 @@ function gitcpup()
   tmpurl=${tmpurl%%#*};
 
   # GitHub/GitLab patch
-  if [[ ! "${tmpurl}" =~ '.patch' ]]; then
-    if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]] ||
-       [[ "${tmpurl}" =~ 'git.bricked.de' ]]; then
-      tmpurl="${tmpurl}.patch";
+  if [[ ! "${tmpurl}" == *'.patch'* ]]; then
+    if [[ "${tmpurl}" == *'github.com'* ]] || [[ "${tmpurl}" == *'gitlab.com'* ]] ||
+       [[ "${tmpurl}" == *'git.bricked.de'* ]]; then
+      tmpurl=${tmpurl}.patch;
     fi;
   fi;
 
   # CodeAurora patch
-  if [[ "${tmpurl}" =~ 'codeaurora.org' ]]; then
-    if [[ ! "${tmpurl}" =~ 'patch/' ]]; then
-      tmpurl="${tmpurl/commit\/?*id=/patch\/?id=}";
+  if [[ "${tmpurl}" == *'codeaurora.org'* ]]; then
+    if [[ ! "${tmpurl}" == *'patch/'* ]]; then
+      tmpurl=${tmpurl/commit\/?*id=/patch\/?id=};
     fi;
-    if [[ ! "${tmpurl}" =~ 'patch/' ]]; then
+    if [[ ! "${tmpurl}" == *'patch/'* ]]; then
       echo '';
       echo -e ' \e[1;33mgitcpup: Link incomplete, add "..." around the url\e[0m';
       echo " Failed on ${tmpurl}";
@@ -152,11 +154,11 @@ function gitcpup()
   fi;
 
   # Git Kernel patch
-  if [[ "${tmpurl}" =~ 'kernel.org' ]]; then
-    if [[ ! "${tmpurl}" =~ 'patch/' ]]; then
-      tmpurl="${tmpurl/commit\/?*id=/patch\/?id=}";
+  if [[ "${tmpurl}" == *'kernel.org'* ]]; then
+    if [[ ! "${tmpurl}" == *'patch/'* ]]; then
+      tmpurl=${tmpurl/commit\/?*id=/patch\/?id=};
     fi;
-    if [[ ! "${tmpurl}" =~ 'patch/' ]]; then
+    if [[ ! "${tmpurl}" == *'patch/'* ]]; then
       echo '';
       echo -e ' \e[1;33mgitcpup: Link incomplete, add "..." around the url\e[0m';
       echo " Failed on ${tmpurl}";
@@ -166,8 +168,9 @@ function gitcpup()
   fi;
 
   # Download patch
+  tmpfile=$(mktemp);
   rm -rf .git/rebase-apply;
-  curl "${tmpurl}" > ${tmpfile} 2> /dev/null;
+  curl "${tmpurl}" > "${tmpfile}" 2> /dev/null;
 
   # Files renaming
   if [ ! -z "${2}" ] && [ ! -z "${3}" ]; then
@@ -175,8 +178,7 @@ function gitcpup()
   fi;
 
   # Cherry-pick
-  git am -3 ${tmpfile};
-  if [ ${?} -ne 0 ]; then
+  if ! git am -3 "${tmpfile}"; then
     echo '';
     echo " Failed on ${tmpurl}";
     echo '';
@@ -186,7 +188,7 @@ function gitcpup()
   echo '';
 
   # End of process
-  rm -f ${tmpfile};
+  rm -f "${tmpfile}";
 }
 
 # === GitHub Url Cherry-pick Renamed ===
@@ -201,28 +203,28 @@ function gitcpur()
   fi;
 
   # Variables
-  local tmpfile=$(mktemp);
-  local tmpurl="${1}";
-  local search="${2//\//\\\/}";
-  local replace="${3//\//\\\/}";
+  local tmpurl=${1};
+  local search=${2//\//\\\/};
+  local replace=${3//\//\\\/};
+  local tmpfile;
   echo '';
 
   # Remote additional informations
   tmpurl=${tmpurl%%#*};
 
   # GitHub/GitLab patch
-  if [[ ! "${tmpurl}" =~ '.patch' ]]; then
-    if [[ "${tmpurl}" =~ 'github.com' ]] || [[ "${tmpurl}" =~ 'gitlab.com' ]] ||
-       [[ "${tmpurl}" =~ 'git.bricked.de' ]]; then
-      tmpurl="${tmpurl}.patch";
+  if [[ ! "${tmpurl}" == *'.patch'* ]]; then
+    if [[ "${tmpurl}" == *'github.com'* ]] || [[ "${tmpurl}" == *'gitlab.com'* ]] ||
+       [[ "${tmpurl}" == *'git.bricked.de'* ]]; then
+      tmpurl=${tmpurl}.patch;
     fi;
   fi;
 
   # Cherry-pick
+  tmpfile=$(mktemp);
   rm -rf .git/rebase-apply;
-  curl "${tmpurl}" | sed "s/${search}/${replace}/g" > ${tmpfile} 2> /dev/null;
-  git am -3 ${tmpfile};
-  if [ ${?} -ne 0 ]; then
+  curl "${tmpurl}" | sed "s/${search}/${replace}/g" > "${tmpfile}" 2> /dev/null;
+  if ! git am -3 "${tmpfile}"; then
     echo '';
     echo " Failed on ${tmpurl}";
     echo '';
@@ -232,7 +234,7 @@ function gitcpur()
   echo '';
 
   # End of process
-  rm -f ${tmpfile};
+  rm -f "${tmpfile}";
 }
 
 # === GitHub Url Cherry-pick Helpers ===

@@ -16,81 +16,98 @@
 #
 
 # === Shell Entrypoint Handling ===
-android_development_shell_tools_entrypoint=${BASH_SOURCE[0]};
-android_development_shell_tools_entrypoint=${android_development_shell_tools_entrypoint:-${(%):-%N}};
-if [ -z "${android_development_shell_tools_entrypoint}" ]; then
+ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=${BASH_SOURCE[0]};
+ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT:-${(%):-%N}};
+if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" ]; then
   echo '';
   echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[0;33mExecution path could not be found\e[0m';
   echo '';
   return;
 fi;
 
-# === Android Shell Tools Folder ===
-android_development_shell_tools_branch=${android_development_shell_tools_branch:-master};
-android_development_shell_tools_dir=$(dirname ${android_development_shell_tools_entrypoint});
-android_development_shell_tools_extensions=${android_development_shell_tools_dir}/extensions;
+# === Android Development Shell Tools Folder ===
+ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH=${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH:-master};
+ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR=$(dirname "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}");
+ANDROID_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/extensions;
+ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS=();
+ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES=();
 
-# === Android Shell Tools Variables ===
-android_development_shell_tools_url='https://github.com/AdrianDC/android_development_shell_tools';
+# === Android Development Shell Tools Variables ===
+ANDROID_DEVELOPMENT_SHELL_TOOLS_URL='https://github.com/AdrianDC/android_development_shell_tools';
 
-# === Android Shell Tools Update ===
+# === Android Development Shell Tools Update ===
 function shtoolsup()
 {
   # Usage: shtoolsup (Reloads android_development_shell_tools scripts)
 
   # Reload sources
-  source "${android_development_shell_tools_entrypoint}";
+  source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
   echo '';
   echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[0;33mFunctions loaded properly\e[0m';
   echo '';
 }
 
-# === Android Shell Tools Sources ===
-android_development_shell_tools_sources=(
-  $(ls -1 ${android_development_shell_tools_dir}'/'*'.rc' \
-  | grep -v "${android_development_shell_tools_entrypoint}" \
-  | LC_ALL=C sort \
-  | tr '\n' ' ')
-  $(ls -1 ${android_development_shell_tools_extensions}'/'*'/'*'.rc' 2> /dev/null \
-  | LC_ALL=C sort \
-  | tr '\n' ' ')
-);
-android_development_shell_tools_scripts=(
-  $(ls -1 ${android_development_shell_tools_dir}'/'*'.sh' \
-  | LC_ALL=C sort \
-  | tr '\n' ' ')
-);
+# === Android Development Shell Tools Sources ===
+function __shtoolssources()
+{
+  # Variables
+  local LC_ALL_HOST;
 
-# === Android Shell Tools Importations ===
-for file_source in ${android_development_shell_tools_sources[@]}; do
+  # Locale override
+  LC_ALL_HOST=${LC_ALL};
+  export LC_ALL=C;
 
-  # Import all android_development_shell_tools scripts
-  source "${file_source}";
+  # Android Development Shell Tools Sources
+  ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES=();
+  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/"*'.rc'; do
+    if [ ! "${path}" = "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" ]; then
+      ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
+    fi;
+  done;
+  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS}/"*'/'*'.rc'; do
+    ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
+  done;
 
-done;
+  # Android Development Shell Tools Scripts
+  ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS=();
+  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/"*'.sh'; do
+    ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS+=("${path}");
+  done;
 
-# === Android Shell Tools Prebuilt Files ===
-export android_development_shell_tools_files_strace_32=${android_development_shell_tools_dir}/android_files/strace_arm32;
-export android_development_shell_tools_files_strace_64=${android_development_shell_tools_dir}/android_files/strace_arm64;
-export android_development_shell_tools_flashable_android_base=${android_development_shell_tools_dir}/android_files/flashable_android_base.zip;
-export android_development_shell_tools_scripts_kernel_injector=${android_development_shell_tools_dir}/android_files/scripts_kernel_injector;
-export android_development_shell_tools_signapk_dir=${android_development_shell_tools_dir}/android_signapk;
-export android_development_shell_tools_updater_flash_boot=${android_development_shell_tools_dir}/android_files/updater_script_flash_boot;
-export android_development_shell_tools_updater_flash_fota=${android_development_shell_tools_dir}/android_files/updater_script_flash_fota;
-export android_development_shell_tools_updater_install_system=${android_development_shell_tools_dir}/android_files/updater_script_install_system;
-export android_development_shell_tools_updater_kernel_injector=${android_development_shell_tools_dir}/android_files/updater_script_kernel_injector;
-export android_development_shell_tools_updater_multirom_secondary=${android_development_shell_tools_dir}/android_files/updater_script_multirom_secondary;
+  # Android Development Shell Tools Inclusion
+  for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
+    source "${file_source}";
+  done;
 
-# === Android Shell Tools Path Getter ===
+  # Locale restore
+  export LC_ALL=${LC_ALL_HOST};
+}
+
+# === Android Development Shell Tools Sources Inclusion ===
+__shtoolssources;
+
+# === Android Development Shell Tools Prebuilt Files ===
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/strace_arm32;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/strace_arm64;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/flashable_android_base.zip;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/scripts_kernel_injector;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_signapk;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_BOOT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/updater_script_flash_boot;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_FOTA=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/updater_script_flash_fota;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_SYSTEM=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/updater_script_install_system;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_KERNEL_INJECTOR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/updater_script_kernel_injector;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_MULTIROM_SECONDARY=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/updater_script_multirom_secondary;
+
+# === Android Development Shell Tools Path Getter ===
 function shtoolsget()
 {
   # Usage: shtoolsget (Get android_development_shell_tools path)
 
   # Get android_development_shell_tools path
-  echo ${android_development_shell_tools_dir};
+  echo "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}";
 }
 
-# === Android Shell Tools Path Access ===
+# === Android Development Shell Tools Path Access ===
 function shtoolscd()
 {
   # Usage: shtoolscd (Access android_development_shell_tools path)
@@ -99,34 +116,33 @@ function shtoolscd()
   cd "$(shtoolsget)";
 }
 
-# === Android Shell Tools Functions Editor ===
+# === Android Development Shell Tools Functions Editor ===
 function shtoolse()
 {
   # Usage: shtoolse <words> <to> <search> (Direct access to related sources)
 
   # Variables
-  local files='';
+  local files=();
 
   # Study all script files
-  for file_source in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[@]}; do
+  for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
     for word in "${@}"; do
-      grep -aiq "${word}" "${file_source}";
 
       # List found files
-      if [ ${?} -eq 0 ]; then
-        files="${files} ${file_source}";
+      if grep -aiq "${word}" "${file_source}"; then
+        files+=("${file_source}");
         continue;
       fi;
     done;
   done;
 
   # Open listed files
-  if [ ! -z "${files}" ]; then
-    fileedit ${files};
+  if [ ! -z "${files[*]}" ]; then
+    fileedit "${files[@]}" ;
   fi;
 }
 
-# === Android Shell Tools Syntax Checker ===
+# === Android Development Shell Tools Syntax Checker ===
 function shtoolscheck()
 {
   # Usage: shtoolscheck [bool_all] (Run ShellCheck on the project)
@@ -135,13 +151,12 @@ function shtoolscheck()
   local file_source;
 
   # Study all script files
-  for file_source in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[*]} ${android_development_shell_tools_scripts[*]}; do
+  for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
 
     # Launch ShellCheck
-    shellcheck "${file_source}";
-
-    # Check result
-    if [ ${?} -ne 0 ] && [ -z "${1}" ]; then
+    if ! shellcheck "${file_source}" \
+        -e SC1090,SC1091,SC2164 \
+        && [ -z "${1}" ]; then
       echo '';
       echo -e " \e[1;33mERROR: ${file_source} contains syntax errors or warnings\e[0m";
       echo '';
@@ -155,16 +170,16 @@ function shtoolscheck()
   echo '';
 }
 
-# === Android Shell Tools Syncer ===
+# === Android Development Shell Tools Syncer ===
 function shtoolssync()
 {
   # Usage: shtoolssync (Download new android_development_shell_tools changes)
 
   # Download upstream changes
   local currentdir=${PWD};
-  cd "${android_development_shell_tools_dir}/";
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git fetch origin;
-  git reset origin/${android_development_shell_tools_branch};
+  git reset "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   git stash -u;
   git submodule init;
   git submodule update;
@@ -172,7 +187,7 @@ function shtoolssync()
   shtoolsup;
 }
 
-# === Android Shell Tools Pusher ===
+# === Android Development Shell Tools Pusher ===
 function shtoolspush()
 {
   # Usage: shtoolspush (Commit new changes to android_development_shell_tools)
@@ -182,16 +197,16 @@ function shtoolspush()
 
   # Commit changes to upstream
   local currentdir=${PWD};
-  cd "${android_development_shell_tools_dir}/";
-  git add -N *;
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git add -N ./*;
   git add . -Ap;
   git commit -s;
-  git push -f origin HEAD:${android_development_shell_tools_branch};
+  git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   cd "${currentdir}/";
   shtoolsup;
 }
 
-# === Android Shell Tools Amend ===
+# === Android Development Shell Tools Amend ===
 function shtoolsamend()
 {
   # Usage: shtoolsamend (Amend new changes to android_development_shell_tools)
@@ -201,16 +216,16 @@ function shtoolsamend()
 
   # Amend changes to upstream
   local currentdir=${PWD};
-  cd "${android_development_shell_tools_dir}/";
-  git add -N *;
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git add -N ./*;
   git add . -Ap;
   git commit -s --amend;
-  git push -f origin HEAD:${android_development_shell_tools_branch};
+  git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   cd "${currentdir}/";
   shtoolsup;
 }
 
-# === Android Shell Tools Menu ===
+# === Android Development Shell Tools Menu ===
 function shtools()
 {
   # Usage: shtools (Entrypoint menu to android_development_shell_tools)
@@ -231,13 +246,13 @@ function shtools()
   for line_function in $(typeset -F | grep shtools | cut -d' ' -f 3 | grep -v '^shtools$'); do
 
     # Parse usage
-    line_usage=$(grep -a "Usage: ${line_function} " ${android_development_shell_tools_entrypoint});
+    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
     line_usage=${line_usage#*\(};
     line_usage=${line_usage%\)*};
-    list_functions+=(${line_function});
+    list_functions+=("${line_function}");
 
     # Item choice
     cnt=$((cnt + 1));
@@ -247,15 +262,15 @@ function shtools()
   echo '';
 
   # Request user input
-  printf " > Command to run [1-${cnt}] : ";
-  read key;
+  echo -n " > Command to run [1-${cnt}] : ";
+  read -r key;
   echo '';
 
   # Execute requested function
   ${list_functions[${key}]};
 }
 
-# === Android Shell Tools Options Menu ===
+# === Android Development Shell Tools Options Menu ===
 function shtools-()
 {
   # Usage: shtools- (Options menu for android_development_shell_tools)
@@ -291,24 +306,24 @@ function shtools-()
 
       # Verify if the option is active
       line_option=${line_function%-enable};
-      if [ ! "${line_option}" = "${line_function}" ] && ${line_option}-active 2> /dev/null; then
+      if [ ! "${line_option}" = "${line_function}" ] && "${line_option}-active" 2> /dev/null; then
         continue;
       fi;
 
       # Verify if the option is inactive
       line_option=${line_function%-disable};
-      if [ ! "${line_option}" = "${line_function}" ] && ! ${line_option}-active 2> /dev/null; then
+      if [ ! "${line_option}" = "${line_function}" ] && ! "${line_option}-active" 2> /dev/null; then
         continue;
       fi;
 
       # Parse usage
-      line_usage=$(grep -a "Usage: ${line_function} " ${android_development_shell_tools_sources[@]});
+      line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
       if [ -z "${line_usage}" ]; then
         continue;
       fi;
       line_usage=${line_usage#*\(};
       line_usage=${line_usage%\)*};
-      list_functions+=(${line_function});
+      list_functions+=("${line_function}");
 
       # Item choice
       cnt=$((cnt + 1));
@@ -318,8 +333,8 @@ function shtools-()
     echo '';
 
     # Request user input
-    printf " > Command to run [0-${cnt}] : ";
-    read key;
+    echo -n " > Command to run [0-${cnt}] : ";
+    read -r key;
     echo '';
 
     # Execute requested function
@@ -328,71 +343,71 @@ function shtools-()
   done;
 }
 
-# === Android Shell Tools Differ ===
+# === Android Development Shell Tools Differ ===
 function shtoolsdiff()
 {
   # Usage: shtoolsdiff (Compare with upstream android_development_shell_tools)
 
   # Compare with upstream
   local currentdir=${PWD};
-  cd "${android_development_shell_tools_dir}/";
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git fetch origin;
-  git diff HEAD origin/${android_development_shell_tools_branch};
+  git diff HEAD "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   git diff HEAD;
   cd "${currentdir}/";
 }
 
-# === Android Shell Tools Log ===
+# === Android Development Shell Tools Log ===
 function shtoolslog()
 {
   # Usage: shtoolslog (Display android_development_shell_tools history)
 
   # Display project history
   local currentdir=${PWD};
-  cd "${android_development_shell_tools_dir}/";
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git log --pretty=oneline -n 10;
   cd "${currentdir}/";
 }
 
-# === Android Shell Tools Reset ===
+# === Android Development Shell Tools Reset ===
 function shtoolsreset()
 {
   # Usage: shtoolsreset (Reset project to remote HEAD)
 
   # Reset project to remote HEAD
-  cd "${android_development_shell_tools_dir}/";
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git fetch origin;
-  git reset origin/${android_development_shell_tools_branch};
+  git reset "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   git diff --stat HEAD;
 }
 
-# === Android Shell Tools Master ===
+# === Android Development Shell Tools Master ===
 function shtoolsmaster()
 {
   # Usage: shtoolsmaster (Switch android_development_shell_tools to master branch)
 
   # Switch android_development_shell_tools to master branch
-  local branch=${android_development_shell_tools_branch};
-  android_development_shell_tools_branch=master;
+  local branch=${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH};
+  ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH=master;
   echo '';
-  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${android_development_shell_tools_branch}' branch\e[0m";
+  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}' branch\e[0m";
   echo '';
 }
 
-# === Android Shell Tools Staging ===
+# === Android Development Shell Tools Staging ===
 function shtoolsstaging()
 {
   # Usage: shtoolsstaging (Switch android_development_shell_tools to staging branch)
 
   # Switch android_development_shell_tools to staging branch
-  local branch=${android_development_shell_tools_branch};
-  android_development_shell_tools_branch=staging;
+  local branch=${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH};
+  ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH=staging;
   echo '';
-  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${android_development_shell_tools_branch}' branch\e[0m";
+  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}' branch\e[0m";
   echo '';
 }
 
-# === Android Shell Tools README.forum Updater ===
+# === Android Development Shell Tools README.forum Updater ===
 function shtoolsforum()
 {
   # Usage: shtoolsforum (Refresh README.forum project presentation)
@@ -401,8 +416,8 @@ function shtoolsforum()
   local preview_file;
   local preview_files;
   local preview_timestamp;
-  local readme_forum=${android_development_shell_tools_dir}/forums/README;
-  local readme_md=${android_development_shell_tools_dir}/README;
+  local readme_forum=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/forums/README;
+  local readme_md=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README;
 
   # Header
   echo '';
@@ -420,9 +435,9 @@ function shtoolsforum()
     sed -i 's#!\[.*\](\(.*\))#[IMG]\1[/IMG]#g' "${readme_forum}.${ext}";
     sed -i 's#\[\([^]]*\)\](\([^)]*\))#[URL=\2]\1[/URL]#g' "${readme_forum}.${ext}";
     sed -i '/^[ ]*<br \/>$/d' "${readme_forum}.${ext}";
-    sed -i 's#```\(cpp\|Shell\)#[CODE]#g' "${readme_forum}.${ext}";
-    sed -i 's#```#[/CODE]#g' "${readme_forum}.${ext}";
-    sed -i 's#\(`.*`\)#[FONT="Courier New"][I]\1[/I][/FONT]#g' "${readme_forum}.${ext}";
+    sed -i "s#\`\`\`\(cpp\|Shell\)#[CODE]#g" "${readme_forum}.${ext}";
+    sed -i "s#\`\`\`#[/CODE]#g" "${readme_forum}.${ext}";
+    sed -i "s#\(\`.*\`\)#[FONT=\"Courier New\"][I]\1[/I][/FONT]#g" "${readme_forum}.${ext}";
     sed -i 's#^\#\#\# \(.*\)$#[SIZE=5][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
     sed -i 's#^\#\#\#\# \(.*\)$#[SIZE=4][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
     sed -i ':a;N;$!ba;s#<!-- Center -->\n#[CENTER]#g;s#\n<!-- /Center -->#[/CENTER]#g' "${readme_forum}.${ext}";
@@ -435,7 +450,7 @@ function shtoolsforum()
 
     # Get all previews png files
     preview_files=$(grep 'docs/assets.*\.png' "${readme_forum}.${ext}" \
-                  | sed "s/.*${android_development_shell_tools_url//\//\\\/}\/raw\/master\/\(.*\.png\).*/\1/g");
+                  | sed "s/.*${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/}\/raw\/master\/\(.*\.png\).*/\1/g");
     for preview_file in ${preview_files}; do
 
       # Filter out wrong outputs
@@ -456,16 +471,16 @@ function shtoolsforum()
   echo '';
 }
 
-# === Android Shell Tools README.md Updater ===
+# === Android Development Shell Tools README.md Updater ===
 function shtoolsreadme()
 {
   # Usage: shtoolsreadme (Refresh README.md functions usages)
 
   # Variables
-  local command_file=$(mktemp);
+  local command_file;
   local delimiter_start='<!-- Functions Start -->';
   local delimiter_end='<!-- Functions End -->';
-  local github_project_url="${android_development_shell_tools_url//\//\\\/}";
+  local github_project_url=${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/};
   local github_file_path='blob\/master';
   local github_raw_path='raw\/master';
   local line;
@@ -475,7 +490,10 @@ function shtoolsreadme()
   local line_type;
   local line_usage;
   local path;
-  local readme_functions='';
+  local readme_functions=;
+
+  # Initialize variables
+  command_file=$(mktemp);
 
   # Unify locale for sorting
   local lc_all=${LC_ALL};
@@ -489,10 +507,12 @@ function shtoolsreadme()
   echo -n '  ...';
 
   # Read all sources
-  for file in ${android_development_shell_tools_entrypoint} ${android_development_shell_tools_sources[@]} ${android_development_shell_tools_scripts[@]}; do
+  for file in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" \
+              "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" \
+              "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
 
     # Handle file path
-    path=${file##${android_development_shell_tools_dir}/};
+    path=${file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
 
     # Parsing header
     echo -en "\r\033[K  Parsing ${path}";
@@ -559,6 +579,7 @@ function shtoolsreadme()
     fi;
 
     # Handle source contents
+    # shellcheck disable=SC2162
     while read line; do
 
       # Parse source functions
@@ -571,7 +592,7 @@ function shtoolsreadme()
       line_type=${line_type//*alias*/Alias};
       line_type=${line_type//*function*/Function};
       line_summary="\(${line_type}\)";
-      line_usage='';
+      line_usage=;
 
       # Hide internal functions starting by __
       if [ "${line_function:0:2}" = '__' ]; then
@@ -646,7 +667,7 @@ function shtoolsreadme()
 
         # Ignore function usage
         else
-          line_usage='';
+          line_usage=;
         fi;
 
       # Warning about missing usages
@@ -671,8 +692,9 @@ function shtoolsreadme()
   readme_functions+="* #### Automatically generated by [shtoolsreadme](${github_project_url}\/${github_file_path}\/android_development_shell_tools.rc) for [android_development_shell_tools](${github_project_url})\n";
 
   # Inject README.md changes
+  # shellcheck disable=SC2028
   echo "/${delimiter_start}/{p; :a; N; /${delimiter_end}/!ba; s/.*\n/${readme_functions}/; };" > "${command_file}";
-  sed -i -f "${command_file}" "${android_development_shell_tools_dir}/docs/README.md";
+  sed -i -f "${command_file}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
   rm "${command_file}";
 
   # Restore locale

@@ -29,11 +29,11 @@ function gitmte()
 
   # Edit all unmerged files
   for file in $(git diff --name-only | uniq); do
-    printf " - ${file} : ";
-    fileedit ${file};
-    printf ' Done ? [Enter / Ctrl+C] ';
-    read;
-    git add ${file};
+    echo -n " - ${file} : ";
+    fileedit "${file}";
+    echo -n ' Done ? [Enter / Ctrl+C] ';
+    read -r;
+    git add "${file}";
   done;
 }
 
@@ -54,10 +54,10 @@ function gitmtr()
 
   # Edit all unmerged files with reference
   for file in $(git diff --name-only | uniq); do
-    printf " - ${file} : ";
-    meld ${file} "${1}/${file}";
-    printf ' Done ? [Enter / Ctrl+C] ';
-    read;
-    git add ${file};
+    echo -n " - ${file} : ";
+    meld "${file}" "${1}/${file}";
+    echo -n ' Done ? [Enter / Ctrl+C] ';
+    read -r;
+    git add "${file}";
   done;
 }

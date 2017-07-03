@@ -36,7 +36,7 @@ function gitcleantags()
   local branch_keep=${1};
 
   # Delete tags
-  git tag | grep -v ${branch_keep} | xargs git tag -d;
+  git tag | grep -v "${branch_keep}" | xargs git tag -d;
 }
 
 # === Git One Branch Keeper ===
@@ -45,17 +45,18 @@ function gitonebranch()
   # Usage: gitonebranch (Git remove non-default remote branches)
 
   # Fetch remotes
-  local username=$(githubusername);
-  git fetch ${username};
-  git fetch ${username} refs/heads/*:refs/heads/*;
-  git fetch ${username} refs/tags/*:refs/tags/*;
+  local username;
+  username=$(githubusername);
+  git fetch "${username}";
+  git fetch "${username}" refs/heads/*:refs/heads/*;
+  git fetch "${username}" refs/tags/*:refs/tags/*;
 
   # Remove branches
   git branch -r | sed "s/${username}\/\(.*\)/\1/" \
                 | grep -v "HEAD" \
-                | grep -v $(git rev-parse --abbrev-ref HEAD) \
-                | xargs -I {} sh -c "printf \" Removing branch {} : \"; git push ${username} :{};";
+                | grep -v "$(git rev-parse --abbrev-ref HEAD)" \
+                | xargs -I {} sh -c "echo -n \" Removing branch {} : \"; git push ${username} :{};";
 
   # Remove tags
-  git tag -l | xargs -I {} sh -c "printf \" Removing tag {} : \"; git push ${username} :{}; printf "  "; git tag -d {};";
+  git tag -l | xargs -I {} sh -c "echo -n \" Removing tag {} : \"; git push ${username} :{}; echo -n "  "; git tag -d {};";
 }

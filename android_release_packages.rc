@@ -27,21 +27,27 @@ function signzip()
   fi;
 
   # Variables
-  local zip_input="${1}";
-  local zip_output="${2}";
-  local pwd_folder=$(pwd);
-  local tmp_folder=$(mktemp -d);
-  local check_java=$(java -version 2>&1 | grep 'version.*1\.' | cut -d"\"" -f 2 | cut -d'.' -f 2);
-  local check_javac=$(javac -version 2>&1 | grep '1\.' | cut -d' ' -f 2 | cut -d'.' -f 2);
+  local zip_input=${1};
+  local zip_output=${2};
+  local check_java;
+  local check_javac;
+
+  # Initialize variables
+  check_java=$(java -version 2>&1 | grep 'version.*1\.' | cut -d"\"" -f 2 | cut -d'.' -f 2);
+  check_javac=$(javac -version 2>&1 | grep '1\.' | cut -d' ' -f 2 | cut -d'.' -f 2);
 
   # Direct ZIP signature
   if [ -z "${zip_output}" ]; then
-    zip_output="${zip_input}";
+    zip_output=${zip_input};
     zip_input=$(readlink -f "${zip_input}.unsigned.zip");
     mv -v "${zip_output}" "${zip_input}";
   fi;
 
   # Apply the metadata file
+  #local tmp_folder;
+  #local pwd_folder;
+  #tmp_folder=$(mktemp -d);
+  #pwd_folder=$(pwd);
   #cd ${tmp_folder}/;
   #mkdir -p ./META-INF/com/android/;
   #echo 'ota-required-cache=0' > ./META-INF/com/android/metadata;
@@ -58,7 +64,7 @@ function signzip()
 
   # Check Java installed version
   if [ -z "${check_java}" ] || [ -z "${check_javac}" ] ||
-     [ ${check_java} -lt 7 ] || [ ${check_javac} -lt 7 ]; then
+     [ "${check_java}" -lt 7 ] || [ "${check_javac}" -lt 7 ]; then
     echo '';
     echo "  signzip: Current java version: '1.${check_java}' - javac: '1.${check_javac}'";
     echo '           Please install java[c] 1.7[1.7] or newer to use this command';
@@ -67,9 +73,9 @@ function signzip()
   fi;
 
   # Sign ZIP
-  java -jar "${android_development_shell_tools_signapk_dir}/signapk-cm121.jar" \
-      -w "${android_development_shell_tools_signapk_dir}/testkey.x509.pem" \
-      "${android_development_shell_tools_signapk_dir}/testkey.pk8" \
+  java -jar "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/signapk-cm121.jar" \
+      -w "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/testkey.x509.pem" \
+      "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/testkey.pk8" \
       "${zip_input}" \
       "${zip_output}";
 
@@ -106,23 +112,39 @@ function mmmzip()
   fi;
 
   # Variables
-  local CurDir=$(pwd);
-  local TmpDir=$(mktemp -d);
-  local BuildParams="${@:-.}";
-  local BuildPathFirst="${1:-.}";
-  local LogFile="${TmpDir}/mmm_logs.txt";
-  local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${BuildPathFirst}))'-'$(date +'%Y%m%d-%H%M')'.zip';
-  local path=$(readlink -f "${BuildPathFirst}");
-  local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
-  mkdir -p $(dirname ${TargetFile});
+  local BuildMode;
+  local BuildParams;
+  local BuildPathFirst;
+  local CurDir;
+  local FilesList=();
+  local Installs;
+  local LogFile;
+  local OutFile;
+  local path;
+  local SystemPartition;
+  local TargetFile;
+  local TmpDir;
+
+  # Initialize variables
+  CurDir=$(pwd);
+  TmpDir=$(mktemp -d);
+  BuildParams=${*:-.};
+  BuildPathFirst=${1:-.};
+  LogFile=${TmpDir}/mmm_logs.txt;
+  OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
+  path=$(readlink -f "${BuildPathFirst}");
+  TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
+
+  # Handle paths
+  mkdir -p "$(dirname "${TargetFile}")";
   if [ ! -d "${path}" ]; then
     croot;
   fi;
 
   # Handle build mode
-  local BuildMode='-B';
+  BuildMode=-B;
   if [ "${MMMZIP_BUILD_PARTIAL}" = 'true' ]; then
-    BuildMode='';
+    BuildMode=;
   fi;
 
   # Disable Ninja
@@ -136,28 +158,27 @@ function mmmzip()
   echo '';
 
   # Make the modules
-  if [ -d "$(readlink -f "${path}")" ] || ! $(mms -v >/dev/null 2>&1); then
-    mmm ${BuildMode} ${BuildParams} | tee ${LogFile};
+  if [ -d "$(readlink -f "${path}")" ] || ! mms -v > /dev/null 2>&1; then
+    mmm "${BuildMode}" "${BuildParams}" | tee "${LogFile}";
   else
-    mka ${BuildParams} | tee ${LogFile};
+    mka "${BuildParams}" | tee "${LogFile}";
   fi;
 
   # Return to repo root
   croot;
 
   # Files handling
-  local Installs=$(grep "target/product/.*/system" ${LogFile} | sort | uniq);
-  local FilesList='';
+  Installs=$(grep "target/product/.*/system" "${LogFile}" | sort | uniq);
   for FilePath in ${Installs[*]}; do
 
     # Target selection
-    if [[ "${FilePath}" =~ '/system' ]]; then
-      FilePath=$(printf "${FilePath}" | tail -1 \
+    if [[ "${FilePath}" == *'/system'* ]]; then
+      FilePath=$(echo -n "${FilePath}" | tail -1 \
                | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
                | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
-      FileTarget=$(echo ${FilePath} \
+      FileTarget=$(echo "${FilePath}" \
                  | sed "s/.*\(system\/.*\)/\1/g");
-      FileDir=$(dirname ${FileTarget});
+      FileDir=$(dirname "${FileTarget}"); 
       if [ ! -d "${TmpDir}/${FileDir}" ]; then
         mkdir -p "${TmpDir}/${FileDir}";
       fi;
@@ -165,37 +186,37 @@ function mmmzip()
       # Target copy
       if [ -f "${FilePath}" ]; then
         cp "${FilePath}" "${TmpDir}/${FileTarget}";
-        FilesList="${FilesList} ./${FileTarget}";
+        FilesList+=("./${FileTarget}");
       fi;
     fi;
   done;
 
   # Pack zip output
   cd "${TmpDir}/";
-  if [ ! -z "${FilesList}" ]; then
+  if [ ! -z "${FilesList[*]}" ]; then
 
     # Partitions
-    local SystemPartition=$(androiddevicestarget system);
+    SystemPartition=$(androiddevicestarget system);
 
     # Generate zip, updater-script and include files
     mkdir -p ./META-INF/com/google/android/;
-    cp "${android_development_shell_tools_flashable_android_base}" "${OutFile}.unsigned.zip";
-    cp "${android_development_shell_tools_updater_install_system}" ./META-INF/com/google/android/updater-script;
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${OutFile}.unsigned.zip";
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_SYSTEM}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
-    zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
+    zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${FilesList[@]}";
     rm -rf ./META-INF;
 
     # Zip signature
     signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
     cp "${TmpDir}/${OutFile}" "${TargetFile}";
-    export PackageResult="${TargetFile}";
+    export PACKAGE_RESULT=${TargetFile};
 
     # End of work
     echo '';
     echo -e " \e[1;37mPackage File:\e[0m ${TargetFile}";
   else
-    export PackageResult='';
+    export PACKAGE_RESULT=;
   fi;
   echo '';
 
@@ -220,15 +241,28 @@ function systozip()
   fi;
 
   # Variables
-  local CurDir=$(pwd);
-  local TmpDir=$(mktemp -d);
-  local BuildParams="${1:-.}";
-  local BuildPathFirst="${1:-.}";
-  local LogFile="${TmpDir}/mmm_logs.txt";
-  local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${BuildPathFirst}))'-'$(date +'%Y%m%d-%H%M')'.zip';
-  local path=$(readlink -f "${BuildPathFirst}");
-  local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
-  mkdir -p $(dirname ${TargetFile});
+  local BuildParams=${1:-.};
+  local BuildPathFirst=${1:-.};
+  local CurDir;
+  local FilesList=();
+  local Installs;
+  local LogFile;
+  local OutFile;
+  local path;
+  local SystemPartition;
+  local TargetFile;
+  local TmpDir;
+
+  # Initialize variables
+  CurDir=$(pwd);
+  TmpDir=$(mktemp -d);
+  LogFile=${TmpDir}/mmm_logs.txt;
+  OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
+  path=$(readlink -f "${BuildPathFirst}");
+  TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
+
+  # Handle paths
+  mkdir -p "$(dirname "${TargetFile}")";
 
   # Header
   echo '';
@@ -236,16 +270,15 @@ function systozip()
   echo '';
 
   # Files handling
-  local Installs=$(find "${BuildParams}" -type f -printf '%P\n');
-  local FilesList='';
+  Installs=$(find "${BuildParams}" -type f -printf '%P\n');
   for FilePath in ${Installs[*]}; do
 
     # Target selection
-    FilePath=$(printf "${FilePath}" | tail -1 \
+    FilePath=$(echo -n "${FilePath}" | tail -1 \
              | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
              | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
-    FileTarget="system/${FilePath}";
-    FileDir=$(dirname ${FileTarget});
+    FileTarget=system/${FilePath};
+    FileDir=$(dirname "${FileTarget}");
     if [ ! -d "${TmpDir}/${FileDir}" ]; then
       mkdir -p "${TmpDir}/${FileDir}";
     fi;
@@ -254,36 +287,36 @@ function systozip()
     FilePath=$(readlink -f "${BuildParams}/${FilePath}");
     if [ -f "${FilePath}" ]; then
       cp "${FilePath}" "${TmpDir}/${FileTarget}";
-      FilesList="${FilesList} ./${FileTarget}";
+      FilesList+=("./${FileTarget}");
     fi;
   done;
 
   # Pack zip output
   cd "${TmpDir}/";
-  if [ ! -z "${FilesList}" ]; then
+  if [ ! -z "${FilesList[*]}" ]; then
 
     # Partitions
-    local SystemPartition=$(androiddevicestarget system);
+    SystemPartition=$(androiddevicestarget system);
 
     # Generate zip, updater-script and include files
     mkdir -p ./META-INF/com/google/android/;
-    cp "${android_development_shell_tools_flashable_android_base}" "${OutFile}.unsigned.zip";
-    cp "${android_development_shell_tools_updater_install_system}" ./META-INF/com/google/android/updater-script;
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${OutFile}.unsigned.zip";
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_SYSTEM}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
-    zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
+    zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${FilesList[@]}";
     rm -rf ./META-INF;
 
     # Zip signature
     signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
     cp "${TmpDir}/${OutFile}" "${TargetFile}";
-    export PackageResult="${TargetFile}";
+    export PACKAGE_RESULT=${TargetFile};
 
     # Package result
     echo '';
     echo -e " \e[1;37mPackage File:\e[0m ${TargetFile}";
   else
-    export PackageResult='';
+    export PACKAGE_RESULT=;
   fi;
   echo '';
 
@@ -304,12 +337,23 @@ function packzip()
   fi;
 
   # Variables
-  local CurDir=$(pwd);
-  local TmpDir=$(mktemp -d);
-  local BuildParams="${@}";
-  local OutFile='pack-'${TARGET_PRODUCT}'-'$(basename $(readlink -f ${1}))'-'$(date +'%Y%m%d-%H%M')'.zip';
-  local TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
-  mkdir -p $(dirname ${TargetFile});
+  local CurDir;
+  local FilesList=();
+  local FileTarget;
+  local Installs;
+  local OutFile;
+  local SystemPartition;
+  local TargetFile;
+  local TmpDir;
+
+  # Variables
+  CurDir=$(pwd);
+  TmpDir=$(mktemp -d);
+  OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${1}")")-$(date +'%Y%m%d-%H%M').zip";
+  TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
+
+  # Handle paths
+  mkdir -p "$(dirname "${TargetFile}")";
 
   # Header
   echo '';
@@ -317,55 +361,53 @@ function packzip()
   echo '';
 
   # Files handling
-  local Installs=${@};
-  local FilesList='';
-  local FileTarget;
+  Installs=${*};
   for FilePath in ${Installs[*]}; do
 
     # Target selection
-    FileTarget='';
-    if [[ "${FilePath}" =~ '/system' ]]; then
-      FilePath=$(printf "${FilePath}" | tail -1 \
+    FileTarget=;
+    if [[ "${FilePath}" == *'/system'* ]]; then
+      FilePath=$(echo -n "${FilePath}" | tail -1 \
                | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
                | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
-      FileTarget=$(echo ${FilePath} \
+      FileTarget=$(echo "${FilePath}" \
                  | sed "s/.*\(system\/.*\)/\1/g");
-    elif [[ "${FilePath}" =~ '/proprietary' ]]; then
-      FilePath=$(printf "${FilePath}" | tail -1 \
+    elif [[ "${FilePath}" == *'/proprietary'* ]]; then
+      FilePath=$(echo -n "${FilePath}" | tail -1 \
                | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
                | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
-      FileTarget=$(echo ${FilePath} \
+      FileTarget=$(echo "${FilePath}" \
                  | sed "s/.*proprietary\/\(.*\)/system\/\1/g");
     fi;
 
     # Target copy
     if [ ! -z "${FileTarget}" ]; then
-      FileDir=$(dirname ${FileTarget});
+      FileDir=$(dirname "${FileTarget}");
       if [ ! -d "${TmpDir}/${FileDir}" ]; then
         mkdir -p "${TmpDir}/${FileDir}";
       fi;
       if [ -f "${FilePath}" ]; then
         cp "${FilePath}" "${TmpDir}/${FileTarget}";
-        FilesList="${FilesList} ./${FileTarget}";
+        FilesList+=("./${FileTarget}");
       fi;
     fi;
   done;
 
   # Partitions
-  local SystemPartition=$(androiddevicestarget system);
+  SystemPartition=$(androiddevicestarget system);
 
   # Generate zip, updater-script and include files
   cd "${TmpDir}/";
   mkdir -p ./META-INF/com/google/android/;
-  cp "${android_development_shell_tools_flashable_android_base}" "${OutFile}.unsigned.zip";
-  cp "${android_development_shell_tools_updater_install_system}" ./META-INF/com/google/android/updater-script;
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${OutFile}.unsigned.zip";
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_SYSTEM}" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
   rm -rf ./META-INF;
 
   # Pack zip output
-  if [ ! -z "${FilesList}" ]; then
-    zip -g "${TmpDir}/${OutFile}.unsigned.zip" ${FilesList};
+  if [ ! -z "${FilesList[*]}" ]; then
+    zip -g "${TmpDir}/${OutFile}.unsigned.zip" "${FilesList[@]}";
 
     # Zip signature
     signzip "${TmpDir}/${OutFile}.unsigned.zip" "${TmpDir}/${OutFile}";
@@ -374,7 +416,7 @@ function packzip()
     # End of work
     echo '';
     echo -e " \e[1;37mPackage File:\e[0m ${TargetFile}";
-    export PackageResult="${TargetFile}";
+    export PACKAGE_RESULT=${TargetFile};
   fi;
   echo '';
 
@@ -396,22 +438,23 @@ function gitzip()
 
   # Variables
   local file_path;
-  local files_list='';
+  local files_list=;
   local status;
-  local tmpfile=$(mktemp);
+  local tmpfile;
 
   # Files parsing
-  git diff-tree --no-commit-id --name-status -r ${1} > ${tmpfile};
-  while read line; do
+  tmpfile=$(mktemp);
+  git diff-tree --no-commit-id --name-status -r "${1}" > "${tmpfile}";
+  while read -r line; do
     status=$(echo "${line}" | awk '{ print $1 }');
     file_path=$(echo "${line}" | awk '{ print $2 }');
-    if [[ "${status}" =~ 'D' || "${line}" =~ '.mk' ]]; then
+    if [[ "${status}" == *'D'* || "${line}" == *'.mk'* ]]; then
       continue;
     fi;
     files_list="${files_list} ${file_path}";
-  done < ${tmpfile};
+  done < "${tmpfile}";
 
   # Pack into zip
-  packzip ${files_list};
-  rm -f ${tmpfile};
+  packzip "${files_list}";
+  rm -f "${tmpfile}";
 }

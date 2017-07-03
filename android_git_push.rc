@@ -31,16 +31,16 @@ function gitpu()
 
   # Get remote stats
   echo '';
-  gitstat ${remote} ${branch} true;
+  gitstat "${remote}" "${branch}" true;
 
   # Introduction
   echo '';
   local cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
-  printf "  ${cmd} [Y/n] ? ";
+  echo -n "  ${cmd} [Y/n] ? ";
   if [ -z "${input}" ]; then
-    read key;
+    read -r key;
   else
-    key="${input}";
+    key=${input};
     echo "${key}";
   fi;
   echo '';
@@ -51,7 +51,7 @@ function gitpu()
   fi;
 
   # Fetch and push
-  git fetch ${remote} ${branch};
+  git fetch "${remote}" "${branch}";
   ${cmd};
   echo '';
 }

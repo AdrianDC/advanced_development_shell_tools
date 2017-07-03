@@ -21,9 +21,9 @@ function githubusername()
   # Usage: githubusername (GitHub username getter)
 
   # GitHub Credentials
-  export GitEMail="user.name@gmail.com";
-  export GitFullName="Full Name";
-  export GitUserName="Username";
+  export GitEMail='user.name@gmail.com';
+  export GitFullName='Full Name';
+  export GitUserName='Username';
 
   # Create  ~/.bash_android.github.rc with the exports to override the credentials
   if [ -f ~/.bash_android.github.rc ]; then

@@ -26,7 +26,7 @@ function lineagesonysodppatcher()
   # Usage: lineagesonysodppatcher [specific_paths] (LineageOS SONY SODP Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'lineage_development_sonysodp' 'lineageos_sony' '' "${*}";
+  androidprojectpatcher 'lineage_development_sonysodp' 'lineageos_sony' '' "${@}";
 }
 
 # === LineageOS Sony SODP Rebaser ===
@@ -39,5 +39,5 @@ function lineagesonysodprebaser()
     hardware/sony/camera::camera::aosp/LA.UM.5.5.r1
     hardware/sony/dataservices::vendor-qcom-opensource-dataservices::master
     kernel/sony/msm::kernel::aosp/LA.UM.5.5.r1
-    ' "${*}";
+    ' "${@}";
 }

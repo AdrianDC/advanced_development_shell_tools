@@ -56,13 +56,13 @@ function gerritssh()
     # Credentials acquisition
     local input;
     echo -e "      \e[1;37mServer:\e[0m ${GerritRemote}";
-    printf '      \e[1;37mUsername:\e[0m ';
-    read input;
-    export GerritUsername="${input}";
-    export GerritHTTPUsername="${input}";
-    printf '      \e[1;37mPassword (HTTP):\e[0m ';
-    read input;
-    export GerritHTTPPassword="${input}";
+    echo -en  '      \e[1;37mUsername:\e[0m ';
+    read -r input;
+    export GerritUsername=${input};
+    export GerritHTTPUsername=${input};
+    echo -en  '      \e[1;37mPassword (HTTP):\e[0m ';
+    read -r input;
+    export GerritHTTPPassword=${input};
 
     # Credentials ready
     echo '';
@@ -72,15 +72,15 @@ function gerritssh()
 
   # Configurations
   local gerritssh="ssh -p 29418 ${GerritUsername}@${GerritRemote} gerrit";
-  local projectbranch="${1:-${GerritBranchPrimary}}";
-  local projectreversemerge="${2}";
-  local recursivecall="${3}";
+  local projectbranch=${1:-${GerritBranchPrimary}};
+  local projectreversemerge=${2};
+  local recursivecall=${3};
   local projectbranchmerger=false;
 
   # Support reverse input only
   if [ -z "${projectbranch//[0-9]/}" ]; then
     projectreversemerge=${projectbranch};
-    projectbranch="${GerritBranchPrimary}";
+    projectbranch=${GerritBranchPrimary};
   fi;
 
   # Splash Text
@@ -88,29 +88,34 @@ function gerritssh()
   echo -e "    \e[1;37mShell Gerrit Reviewer by Adrian DC - Connecting to ${projectbranch}\e[0m";
 
   # Project Loading
-  local projectorigin=$(git remote -v | grep origin | tail -n 1);
+  local projectorigin;
+  local projectname;
+  local tmpdir;
+  projectorigin=$(git remote -v | grep origin | tail -n 1);
   if [ -z "${projectorigin}" ]; then
     projectorigin=$(git remote -v | grep ${GerritReview} | tail -n 1);
   fi;
-  local projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
-  local tmpdir=$(mktemp -d);
+  projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  tmpdir=$(mktemp -d);
+
+  # Project Temp Files
   local tmpfileidscount;
-  local tmpfilestate="${tmpdir}/state";
-  local tmpfileids="${tmpdir}/ids";
-  local tmpfileidsfor="${tmpdir}/for";
-  local tmpfilebranch="${tmpdir}/branch";
-  local tmpfilenames="${tmpdir}/names";
-  local tmpfileparents="${tmpdir}/parents";
-  local tmpfilepatchsets="${tmpdir}/ps";
-  local tmpfilepatchinfo="${tmpdir}/pi";
-  local tmpfilepatchmessage="${tmpdir}/pm";
-  local tmpfilepatchdrafts="${tmpdir}/drafts";
+  local tmpfileidsforcat;
+  local tmpfilestate=${tmpdir}/state;
+  local tmpfileids=${tmpdir}/ids;
+  local tmpfileidsfor=${tmpdir}/'for';
+  local tmpfilebranch=${tmpdir}/branch;
+  local tmpfilenames=${tmpdir}/names;
+  local tmpfileparents=${tmpdir}/parents;
+  local tmpfilepatchsets=${tmpdir}/ps;
+  local tmpfilepatchinfo=${tmpdir}/pi;
+  local tmpfilepatchmessage=${tmpdir}/pm;
+  local tmpfilepatchdrafts=${tmpdir}/drafts;
 
   # Query gerrit through ssh
-  ${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} branch:${projectbranch}" > ${tmpfilestate};
-
-  # Exit on failed ssh connection
-  if [ ${?} -ne 0 ]; then
+  if ! ${gerritssh} query \
+      --current-patch-set "status:open project:${GerritReview}/${projectname} branch:${projectbranch}" \
+      > "${tmpfilestate}"; then
     echo '';
     echo -e "     \e[1;31m> Error... '${gerritssh}' did not connect properly\e[0m";
     echo '';
@@ -119,35 +124,36 @@ function gerritssh()
   fi;
 
   # Parse relevant informations
-  cat ${tmpfilestate} | egrep '^\  number' | cut -d' ' -f4- > ${tmpfileids};
-  cat ${tmpfilestate} | egrep '^\  branch' | cut -d' ' -f4- > ${tmpfilebranch};
-  cat ${tmpfilestate} | egrep '^\  subject' | cut -d' ' -f4- > ${tmpfilenames};
-  cat ${tmpfilestate} | egrep '^\ \[' | sed 's/.*\[\(.*\)\].*/\1/' > ${tmpfileparents};
-  cat ${tmpfilestate} | egrep '^\    number' | cut -d' ' -f6- > ${tmpfilepatchsets};
-  cat ${tmpfilestate} | egrep '^\    isDraft' | cut -d' ' -f6- > ${tmpfilepatchdrafts};
-  cat ${tmpfileids} | sort > ${tmpfileidsfor};
+  grep -E '^\  number' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfileids}";
+  grep -E '^\  branch' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfilebranch}";
+  grep -E '^\  subject' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfilenames}";
+  grep -E '^\ \[' "${tmpfilestate}" | sed 's/.*\[\(.*\)\].*/\1/' > "${tmpfileparents}";
+  grep -E '^\    number' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilepatchsets}";
+  grep -E '^\    isDraft' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilepatchdrafts}";
+  sort "${tmpfileids}" > "${tmpfileidsfor}";
 
   # Handle commit reverse merging
   if [ ! -z "${projectreversemerge}" ]; then
 
     # Read remote current HEAD
-    git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2>/dev/null;
-    local remotecurrenthead=$(git rev-parse FETCH_HEAD);
+    git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2> /dev/null;
+    local remotecurrenthead;
+    remotecurrenthead=$(git rev-parse FETCH_HEAD);
 
     # Reverse merging variables
     local tmpcommitid=${projectreversemerge};
     local tmpcommitidsearch;
     local tmpcommitpos;
     local tmpcommitparent;
-    local tmpcommitspattern='';
+    export tmpcommitspattern=;
 
     # Parse commits SHA1
-    local tmpfilesha1="${tmpdir}/sha1";
-    cat ${tmpfilestate} | egrep '^\    revision' | cut -d' ' -f6- > ${tmpfilesha1};
+    local tmpfilesha1=${tmpdir}/sha1;
+    grep -E '^\    revision' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilesha1}";
 
     # Parse the reverse indexes
     while true; do
-      tmpcommitpos=$(grep -n "${tmpcommitid}" ${tmpfileids} | cut -d : -f 1);
+      tmpcommitpos=$(grep -n "${tmpcommitid}" "${tmpfileids}" | cut -d : -f 1);
 
       # Exit on failed reverse search
       if [ -z "${tmpcommitpos}" ]; then
@@ -160,18 +166,18 @@ function gerritssh()
       fi;
 
       # Commit parent and next child search
-      tmpcommitparent=$(sed "${tmpcommitpos}!d" ${tmpfileparents});
-      tmpcommitidsearch=$(grep -n "${tmpcommitparent}" ${tmpfilesha1} | cut -d : -f 1);
+      tmpcommitparent=$(sed "${tmpcommitpos}!d" "${tmpfileparents}");
+      tmpcommitidsearch=$(grep -n "${tmpcommitparent}" "${tmpfilesha1}" | cut -d : -f 1);
 
       # Reverse to HEAD successful
       if [ "${tmpcommitparent}" = "${remotecurrenthead}" ]; then
-        tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
+        export tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
         break;
 
       # Valid ID available to continue
       elif [ ! -z "${tmpcommitidsearch}" ]; then
-        tmpcommitid=$(sed "${tmpcommitidsearch}!d" ${tmpfileids});
-        tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
+        tmpcommitid=$(sed "${tmpcommitidsearch}!d" "${tmpfileids}");
+        export tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
 
       # Exit on failed reverse search
       elif [ -z "${tmpcommitparent}" ] || [ -z "${tmpcommitidsearch}" ]; then
@@ -185,37 +191,38 @@ function gerritssh()
     done;
 
     # Prepare gerrit state files
-    tmpcommitparent=$(sed "${tmpcommitpos}!d" ${tmpfileparents});
-    mv ${tmpfileids} ${tmpfileids}.tmp;
-    mv ${tmpfilebranch} ${tmpfilebranch}.tmp;
-    mv ${tmpfilenames} ${tmpfilenames}.tmp;
-    mv ${tmpfileparents} ${tmpfileparents}.tmp;
-    mv ${tmpfilepatchsets} ${tmpfilepatchsets}.tmp;
-    mv ${tmpfilepatchdrafts} ${tmpfilepatchdrafts}.tmp;
-    touch ${tmpfileids};
-    touch ${tmpfilebranch};
-    touch ${tmpfilenames};
-    touch ${tmpfileparents};
-    touch ${tmpfilepatchsets};
-    touch ${tmpfilepatchdrafts};
+    tmpcommitparent=$(sed "${tmpcommitpos}!d" "${tmpfileparents}");
+    mv "${tmpfileids}" "${tmpfileids}.tmp";
+    mv "${tmpfilebranch}" "${tmpfilebranch}.tmp";
+    mv "${tmpfilenames}" "${tmpfilenames}.tmp";
+    mv "${tmpfileparents}" "${tmpfileparents}.tmp";
+    mv "${tmpfilepatchsets}" "${tmpfilepatchsets}.tmp";
+    mv "${tmpfilepatchdrafts}" "${tmpfilepatchdrafts}.tmp";
+    touch "${tmpfileids}";
+    touch "${tmpfilebranch}";
+    touch "${tmpfilenames}";
+    touch "${tmpfileparents}";
+    touch "${tmpfilepatchsets}";
+    touch "${tmpfilepatchdrafts}";
 
     # Regenerate gerrit files
     for lineid in ${tmpcommitspattern}; do
-      sed "${lineid}!d" ${tmpfileids}.tmp >> ${tmpfileids};
-      sed "${lineid}!d" ${tmpfilebranch}.tmp >> ${tmpfilebranch};
-      sed "${lineid}!d" ${tmpfilenames}.tmp >> ${tmpfilenames};
-      sed "${lineid}!d" ${tmpfileparents}.tmp >> ${tmpfileparents};
-      sed "${lineid}!d" ${tmpfilepatchsets}.tmp >> ${tmpfilepatchsets};
-      sed "${lineid}!d" ${tmpfilepatchdrafts}.tmp >> ${tmpfilepatchdrafts};
+      sed "${lineid}!d" "${tmpfileids}.tmp" >> "${tmpfileids}";
+      sed "${lineid}!d" "${tmpfilebranch}.tmp" >> "${tmpfilebranch}";
+      sed "${lineid}!d" "${tmpfilenames}.tmp" >> "${tmpfilenames}";
+      sed "${lineid}!d" "${tmpfileparents}.tmp" >> "${tmpfileparents}";
+      sed "${lineid}!d" "${tmpfilepatchsets}.tmp" >> "${tmpfilepatchsets}";
+      sed "${lineid}!d" "${tmpfilepatchdrafts}.tmp" >> "${tmpfilepatchdrafts}";
     done;
-    cp ${tmpfileids} ${tmpfileidsfor};
+    cp "${tmpfileids}" "${tmpfileidsfor}";
+    export tmpcommitspattern=;
     echo '';
   fi;
 
   # Branch empty
-  if [ ! -s ${tmpfileidsfor} ]; then
+  if [ ! -s "${tmpfileidsfor}" ]; then
     echo '';
-    printf '     \e[1;32m> No commit on review. ';
+    echo -en  '     \e[1;32m> No commit on review. ';
 
     # Exit on second execution
     if [ ! -z "${recursivecall}" ]; then
@@ -227,9 +234,9 @@ function gerritssh()
 
     # Switch branches
     if [[ "${projectbranch}" == "${GerritBranchPrimary}" ]]; then
-      projectbranch="${GerritBranchSecondary}";
+      projectbranch=${GerritBranchSecondary};
     elif [[ "${projectbranch}" == "${GerritBranchSecondary}" ]]; then
-      projectbranch="${GerritBranchPrimary}";
+      projectbranch=${GerritBranchPrimary};
     fi;
     echo -e "Moving to ${projectbranch}...\e[0m";
     rm -rf "${tmpdir}";
@@ -253,35 +260,41 @@ function gerritssh()
 
 
   # Commits on Review
-  tmpfileidscount=$(cat "${tmpfileidsfor}" | wc -w);
+  tmpfileidscount=$(wc -w "${tmpfileidsfor}");
   echo '';
   echo -e "  \e[1;34m\e[4;34mChanges on Review (${tmpfileidscount} commits)\e[0m";
-  for i in $(cat ${tmpfileidsfor}); do
+  while IFS= read -r i; do
+
+    # Commit Variables
+    local patchbranch;
+    local patchname;
+    local patchset;
+    local patchdraft;
 
     # Commit Details
     local gerritidpos=-1;
     local gerritidcount=0;
-    for j in $(cat ${tmpfileids}); do
+    while IFS= read -r j; do
       gerritidcount=$((gerritidcount+1));
       if [[ "${i}" == "${j}" ]]; then
         gerritidpos=${gerritidcount};
         break;
       fi;
-    done;
-    local patchbranch=$(sed ${gerritidpos}'!d' ${tmpfilebranch});
-    local patchname=$(sed ${gerritidpos}'!d' ${tmpfilenames});
-    local patchset=$(sed ${gerritidpos}'!d' ${tmpfilepatchsets});
-    local patchdraft=$(sed ${gerritidpos}'!d' ${tmpfilepatchdrafts});
+    done < "${tmpfileids}";
+    patchbranch=$(sed ${gerritidpos}'!d' "${tmpfilebranch}");
+    patchname=$(sed ${gerritidpos}'!d' "${tmpfilenames}");
+    patchset=$(sed ${gerritidpos}'!d' "${tmpfilepatchsets}");
+    patchdraft=$(sed ${gerritidpos}'!d' "${tmpfilepatchdrafts}");
     if [[ ! "${patchdraft}" == 'false' ]]; then
       patchdraft=' [DRAFT]';
     else
-      patchdraft='';
+      patchdraft=;
     fi;
 
     # Commit details
     echo -e "    \e[1;33m${i}/${patchset}:\e[0m ${patchname}${patchdraft}";
 
-  done;
+  done < "${tmpfileidsfor}";
   echo '';
 
   # Commands variables
@@ -293,39 +306,47 @@ function gerritssh()
   local key;
 
   # Commits Selection
-  for i in $(cat ${tmpfileidsfor}); do
+  tmpfileidsforcat=("$(cat "${tmpfileidsfor}")");
+  for i in "${tmpfileidsforcat[@]}"; do
+
+    # Commit Variables
+    local patchbranch;
+    local patchname;
+    local patchparent;
+    local patchset;
+    local patchdraft;
 
     # Commit Details
     local gerritidpos=-1;
     local gerritidcount=0;
-    for j in $(cat ${tmpfileids}); do
+    while IFS= read -r j; do
       gerritidcount=$((gerritidcount+1));
       if [[ "${i}" == "${j}" ]]; then
         gerritidpos=${gerritidcount};
         break;
       fi;
-    done;
-    local patchbranch=$(sed ${gerritidpos}'!d' ${tmpfilebranch});
-    local patchname=$(sed ${gerritidpos}'!d' ${tmpfilenames});
-    local patchparent=$(sed ${gerritidpos}'!d' ${tmpfileparents});
-    local patchset=$(sed ${gerritidpos}'!d' ${tmpfilepatchsets});
-    local patchdraft=$(sed ${gerritidpos}'!d' ${tmpfilepatchdrafts});
+    done < "${tmpfileids}";
+    patchbranch=$(sed "${gerritidpos}!d" "${tmpfilebranch}");
+    patchname=$(sed "${gerritidpos}!d" "${tmpfilenames}");
+    patchparent=$(sed "${gerritidpos}!d" "${tmpfileparents}");
+    patchset=$(sed "${gerritidpos}!d" "${tmpfilepatchsets}");
+    patchdraft=$(sed "${gerritidpos}!d" "${tmpfilepatchdrafts}");
 
     # Commit Work
     echo '';
     echo -e "  \e[1;34m\e[4;34mChange ${i}/${patchset}\e[0m";
     echo "    \"${patchname}\"";
     echo '';
-    printf "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/s/a/u/q) ?\e[0m ";
+    echo -en  "    \e[1;32m> Work on commit ${patchbranch}/${i} (y/N/p/s/a/u/q) ?\e[0m ";
     if [ -z "${cmd_global}" ]; then
-      read key;
+      read -r key;
     else
       key=${cmd_global};
       echo "${key}";
     fi;
-    if [[ 'qQ' =~ "${key}" ]]; then
+    if [[ 'qQ' == *"${key}"* ]]; then
       break;
-    elif [[ ! 'yYpPsSaAuU' =~ "${key}" ]]; then
+    elif [[ ! 'yYpPsSaAuU' == *"${key}"* ]]; then
       continue;
     fi;
 
@@ -365,22 +386,23 @@ function gerritssh()
     if [[ ! "${cmd_rebase}" == 'n' ]]; then
 
       # Read remote current HEAD
-      git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2>/dev/null;
-      local remotecurrenthead=$(git rev-parse FETCH_HEAD);
+      local remotecurrenthead;
+      git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2> /dev/null;
+      remotecurrenthead=$(git rev-parse FETCH_HEAD);
 
       # Commit Rebase
       if [[ ! "${remotecurrenthead}" == "${patchparent}" ]]; then
-        printf "      \e[1;31m> Rebase on HEAD  \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+        echo -en  "      \e[1;31m> Rebase on HEAD  \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
         if [ -z "${cmd_rebase}" ]; then
-          read key;
+          read -r key;
         else
           echo "${cmd_rebase}";
           key=${cmd_rebase};
         fi;
         if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-          ${gerritssh} review --rebase --project ${GerritReview}/${projectname} ${i},${patchset};
+          ${gerritssh} review --rebase --project "${GerritReview}/${projectname}" "${i},${patchset}";
           patchset=$(${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" \
-                   | egrep '^\    number' \
+                   | grep -E '^\    number' \
                    | cut -d' ' -f6-);
         fi;
       fi;
@@ -388,15 +410,15 @@ function gerritssh()
 
     # Commit Draft Publish
     if [[ ! "${patchdraft}" == 'false' ]]; then
-      printf "      \e[1;31m> Publish draft   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+      echo -en  "      \e[1;31m> Publish draft   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
       if [ -z "${cmd_publish}" ]; then
-        read key;
+        read -r key;
       else
         echo "${cmd_publish}";
         key=${cmd_publish};
       fi;
       if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-        ${gerritssh} review --publish --project ${GerritReview}/${projectname} ${i},${patchset};
+        ${gerritssh} review --publish --project "${GerritReview}/${projectname}" "${i},${patchset}";
       fi;
     fi;
 
@@ -404,73 +426,75 @@ function gerritssh()
     if [[ ! "${projectbranchmerger}" == 'false' ]]; then
 
       # Commit Cherry-Pick Branch
-      local projectbranchcp='';
+      local projectbranchcp=;
       if [[ "${projectbranch}" == "${GerritBranchPrimary}" ]]; then
-        projectbranchcp="${GerritBranchSecondary}";
+        projectbranchcp=${GerritBranchSecondary};
       elif [[ "${projectbranch}" == "${GerritBranchSecondary}" ]]; then
-        projectbranchcp="${GerritBranchPrimary}";
+        projectbranchcp=${GerritBranchPrimary};
       fi;
 
       # Commit Cherry-Pick Commit
       if [ ! -z "${projectbranchcp}" ]; then
-        printf "      \e[1;31m> Copy to ${projectbranchcp} \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
-        read key;
+        echo -en  "      \e[1;31m> Copy to ${projectbranchcp} \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+        read -r key;
         if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
 
+          # Commit variables
+          local patchcommit;
+          local patchmessage;
+
           # Get Commit Details
-          ${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" > ${tmpfilepatchinfo};
-          local patchcommit=$(cat ${tmpfilepatchinfo} \
-                            | egrep '^\    revision' \
-                            | cut -d' ' -f6-);
-          cat ${tmpfilepatchinfo} \
-            | sed -n '/commitMessage/,/createdOn/ p' \
-            | sed '${d}' \
-            | cut -c 18- > ${tmpfilepatchmessage};
-          echo "(cherry picked from commit ${patchcommit})" >> ${tmpfilepatchmessage};
-          local patchmessage=$(cat ${tmpfilepatchmessage} \
-                             | sed 's/\"/\\\"/g' \
-                             | sed ':begin;$!N;s/\n/\\n/;tbegin');
-          echo "{\"destination\":\"${projectbranchcp}\",\"message\":\"${patchmessage}\"}" > ${tmpfilepatchmessage};
+          ${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" > "${tmpfilepatchinfo}";
+          patchcommit=$(grep -E '^\    revision' "${tmpfilepatchinfo}" \
+                      | cut -d' ' -f6-);
+          # | sed '${d}'
+          sed -n '/commitMessage/,/createdOn/ p' "${tmpfilepatchinfo}" \
+            | cut -c 18- > "${tmpfilepatchmessage}";
+          echo "(cherry picked from commit ${patchcommit})" >> "${tmpfilepatchmessage}";
+          patchmessage=$(sed 's/\"/\\\"/g' "${tmpfilepatchmessage}" \
+                       | sed ':begin;$!N;s/\n/\\n/;tbegin');
+          echo "{\"destination\":\"${projectbranchcp}\",\"message\":\"${patchmessage}\"}" > "${tmpfilepatchmessage}";
 
           # Post Cherry-Pick Request
           curl -X POST --digest \
                -H "Content-Type: application/json" \
-               --data @${tmpfilepatchmessage} \
-               --user ${GerritHTTPUsername}:${GerritHTTPPassword} \
-               http://review.lineageos.org/a/changes/${i}/revisions/${patchcommit}/cherrypick;
+               --data @"${tmpfilepatchmessage}" \
+               --user "${GerritHTTPUsername}:${GerritHTTPPassword}" \
+               "http://review.lineageos.org/a/changes/${i}/revisions/${patchcommit}/cherrypick";
         fi;
       fi;
     fi;
 
     # Commit Review
-    printf "      \e[1;31m> Review +1/+2    \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+    echo -en  "      \e[1;31m> Review +1/+2    \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
     if [ -z "${cmd_review}" ]; then
-      read key;
+      read -r key;
     else
       echo "${cmd_review}";
       key=${cmd_review};
     fi;
     if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-      ${gerritssh} review --verified 1 --code-review 2 --project ${GerritReview}/${projectname} ${i},${patchset};
+      ${gerritssh} review --verified 1 --code-review 2 --project "${GerritReview}/${projectname}" "${i},${patchset}";
     fi;
 
     # Commit Submission
-    printf "      \e[1;31m> Submit commit   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
+    echo -en  "      \e[1;31m> Submit commit   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
     if [ -z "${cmd_submit}" ]; then
-      read key;
+      read -r key;
     else
       echo "${cmd_submit}";
       key=${cmd_submit};
     fi;
     if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-      ${gerritssh} review --submit --project ${GerritReview}/${projectname} ${i},${patchset};
+      ${gerritssh} review --submit --project "${GerritReview}/${projectname}" "${i},${patchset}";
     fi;
 
     # Commit Finished
     echo -e "    \e[1;32m> Done working on ${i}\e[0m ";
 
-  # End of Project
   done;
+
+  # End of Project
   rm -rf "${tmpdir}";
   echo '';
   echo -e "  \e[1;37m\e[4;37mDone with ${GerritReview}/${projectname} - ${projectbranch}\e[0m ";

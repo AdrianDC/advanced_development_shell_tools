@@ -42,7 +42,7 @@ function gitlos()
     input=${2};
     cnt=${3:-30};
   else
-    path='.';
+    path=.;
     input=${1};
     cnt=${2:-30};
   fi;
@@ -51,10 +51,10 @@ function gitlos()
   echo '';
   echo -e " \e[1;37mSearching for ${input} in last ${cnt} commits...\e[0m";
   echo '';
-  for sha1 in $(git log --max-count=${cnt} --format=format:%H -- "${path}"); do
-    if [ ! -z "$(git show ${sha1} | grep -i "${input}")" ]; then
-      git show --name-only --oneline ${sha1};
-      git show ${sha1} | grep -i "${input}";
+  for sha1 in $(git log --max-count="${cnt}" --format=format:%H -- "${path}"); do
+    if git show "${sha1}" | grep -iq "${input}"; then
+      git show --name-only --oneline "${sha1}";
+      git show "${sha1}" | grep -i "${input}";
       echo '';
     fi;
   done;
@@ -82,7 +82,7 @@ function gitdfs()
   fi;
 
   # Diff commits
-  git diff-tree --no-commit-id --name-status -r ${1};
+  git diff-tree --no-commit-id --name-status -r "${1}";
 }
 
 # === Git Diff SHA1 On Path ===
@@ -97,7 +97,7 @@ function gitdf()
   fi;
 
   # Diff commits with paths
-  git diff ${1}^:${2} ${1}:${2};
+  git diff "${1}^:${2}" "${1}:${2}";
 }
 
 # === Git Commit Finder ===
@@ -112,7 +112,7 @@ function gitfindsha1()
   fi;
 
   # Search
-  git log --pretty=oneline ${1} \
+  git log --pretty=oneline "${1}" \
     | grep "${2}" \
     | head -n 1 \
     | cut -f 1 -d ' ';

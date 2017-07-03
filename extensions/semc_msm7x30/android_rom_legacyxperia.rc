@@ -31,7 +31,7 @@ function lineagelxpatcher()
   source ./build/envsetup.sh;
 
   # Variables
-  local BuildBranch="${1:-cm-14.1}";
+  local BuildBranch=${1:-cm-14.1};
 
   # Sources Manifest
   if [ ! -f '.repo/local_manifests/semc.xml' ]; then
@@ -39,7 +39,7 @@ function lineagelxpatcher()
       mkdir './.repo/local_manifests/';
     fi;
     cd './.repo/local_manifests/'
-    git clone https://github.com/LegacyXperia/local_manifests.git --single-branch -b ${BuildBranch} .;
+    git clone https://github.com/LegacyXperia/local_manifests.git --single-branch -b "${BuildBranch}" .;
     cd '../../';
   fi;
 
@@ -88,7 +88,7 @@ function lxrepopick()
   fi;
 
   # Execute repopick command
-  vendor/extra/repopick.py -b LX_${1};
+  vendor/extra/repopick.py -b "LX_${1}";
 }
 
 # === LegacyXperia Kernel Defconfig ===
@@ -102,11 +102,15 @@ function lxdefconfig()
     return;
   fi;
 
+  # Variables
+  local defconfig;
+  local defconfigs;
+
   # Find all defconfigs
-  local defconfigs=$(ls arch/arm/configs/lx_*);
+  defconfigs=$(ls arch/arm/configs/lx_*);
 
   # Update all defconfigs
   for defconfig in ${defconfigs}; do
-    makedefconf ${defconfig//*\/};
+    makedefconf "${defconfig//*\/}";
   done;
 }

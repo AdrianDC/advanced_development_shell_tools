@@ -40,8 +40,8 @@ function pushb()
 
   # PushBullet notification message
   if [ ! -z "${1}" ]; then
-    PushBulletComment="${1}";
-    PushBulletNoteUrl='';
+    PushBulletComment=${1};
+    PushBulletNoteUrl=;
   else
     PushBulletComment='Done';
   fi;
@@ -52,5 +52,5 @@ function pushb()
        --data-binary "{\"body\":\"${PushBulletComment}\",\"title\":\"\",\"type\":\"note\", \
                        \"url\":\"${PushBulletNoteUrl}\",\"created\":\"$(date +%s)\", \
                        \"active\":\"true\",\"sender_name\":\"${PushBulletUser}\"}" \
-       --request POST https://api.pushbullet.com/v2/pushes >/dev/null;
+       --request POST https://api.pushbullet.com/v2/pushes > /dev/null;
 }

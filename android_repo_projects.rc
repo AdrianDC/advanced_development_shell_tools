@@ -32,13 +32,13 @@ function gitrap()
   for line_function in $(typeset -F | grep gitrap | cut -d' ' -f 3 | grep -v '^gitrap$'); do
 
     # Parse usage
-    line_usage=$(grep -a "Usage: ${line_function} " "${android_development_shell_tools_dir}/android_repo_projects.rc");
+    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_repo_projects.rc");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
     line_usage=${line_usage#*\(};
     line_usage=${line_usage%\)*};
-    list_functions+=(${line_function});
+    list_functions+=("${line_function}");
 
     # Item choice
     cnt=$((cnt + 1));
@@ -50,8 +50,8 @@ function gitrap()
   # Request user input
   key=0;
   while [ -z "${key}" ] || [ ! -z "${key//[0-9]/}" ] || [ ${key} -le 0 ] || [ ${key} -gt ${cnt} ]; do
-    printf " > Project to select [1-${cnt}] : ";
-    read key;
+    echo -n " > Project to select [1-${cnt}] : ";
+    read -r key;
   done;
 
   # Execute requested function
@@ -75,7 +75,7 @@ function gitrapaospsony8960n()
   # Usage: gitrapaospsony8960n (AOSP Sony 8960 Nougat development project remote)
 
   # AOSP 8960 Nougat development remote
-  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+  if [[ "$(pwd)" == *"frameworks/base"* ]]; then
     gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
   else
     gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_n.git;
@@ -88,7 +88,7 @@ function gitrapaospsony8960o()
   # Usage: gitrapaospsony8960o (AOSP Sony 8960 O development project remote)
 
   # AOSP Sony 8960 O development remote
-  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+  if [[ "$(pwd)" == *"frameworks/base"* ]]; then
     gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
   else
     gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_o.git;
@@ -101,7 +101,7 @@ function gitrapaospsony8960master()
   # Usage: gitrapaospsony8960master (AOSP Sony 8960 Master development project remote)
 
   # AOSP Sony 8960 Master development remote
-  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+  if [[ "$(pwd)" == *"frameworks/base"* ]]; then
     gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
   else
     gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_master.git;
@@ -123,7 +123,7 @@ function gitrapaospcaf()
   # Usage: gitrapaospcaf (AOSP-CAF development project remote)
 
   # AOSP-CAF development remote
-  if [[ "$(pwd)" =~ "frameworks/base" ]]; then
+  if [[ "$(pwd)" == *"frameworks/base"* ]]; then
     gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
   else
     gitremoteset project https://github.com/AdrianDC/aosp_development_aospcaf.git;

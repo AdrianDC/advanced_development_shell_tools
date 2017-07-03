@@ -33,12 +33,14 @@ function grepbs()
 {
   # Usage: grepbs [inputs] (Grep through sources and binaries)
 
+  # Variables
+  local strings_params;
+
   # Grep through files
-  GREP_COLORS='fn=1;1';
-  local strings_params=$(stringsparams);
+  strings_params=$(stringsparams);
   for file in $(find . -type f -not -path "*.git/*" -not -path "*.repo/*" | sort); do
     if [ -f "${file}" ]; then
-      found=$(strings ${string_params} "$(readlink -f ${file})" | grep -ai "${*}");
+      found=$(strings "${strings_params}" "$(readlink -f "${file}")" | grep -ai "${*}");
       if [ ! -z "${found}" ]; then
         echo -e "\e[1;31m${file} :\e[0m ${found}";
       fi;
@@ -52,11 +54,13 @@ function gck()
 {
   # Usage: gck [inputs] (Grep through kernel configurations)
 
+  # Variables
+  local strings_params;
+
   # Grep through files
-  GREP_COLORS='fn=1;1';
-  local strings_params=$(stringsparams);
+  strings_params=$(stringsparams);
   for file in $(find . -name "Kconfig" -o -name "Makefile" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
-    found=$(strings ${string_params} $(readlink -f ${file}) | grep -ai "${*}");
+    found=$(strings "${strings_params}" "$(readlink -f "${file}")" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -68,11 +72,13 @@ function gca()
 {
   # Usage: gca [inputs] (Grep through Android makefiles)
 
+  # Variables
+  local strings_params;
+
   # Grep through files
-  GREP_COLORS='fn=1;1';
-  local strings_params=$(stringsparams);
+  strings_params=$(stringsparams);
   for file in $(find . -name "*.mk" -o -name "*.bp" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
-    found=$(strings ${string_params} $(readlink -f ${file}) | grep -ai "${*}");
+    found=$(strings "${strings_params}" "$(readlink -f "${file}")" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -81,19 +87,19 @@ function gca()
 
 # === Grep Search Helpers ===
 alias grepi='grep -ai';
-function glc() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h -anr '.\{80,\}' .; }
-function glj() { GREP_COLORS='fn=1;1' grep --include \*.java -anr '.\{100,\}' .; }
-function gle() { GREP_COLORS='fn=1;1' grep --include \*.c --include \*.cpp --include \*.h --include \*.java -anr '.* $' .; }
 
 # === Grep Android Modules ===
 function gcmodules()
 {
   # Usage: gcmodules (List all LOCAL_MODULE elements)
 
+  # Variables
+  local strings_params;
+
   # Search all build definitions
-  local strings_params=$(stringsparams);
+  strings_params=$(stringsparams);
   for file in $(find . -name "*.mk" -o -name "*.bp" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
-    strings ${strings_params} $(readlink -f ${file}) \
+    strings "${strings_params}" "$(readlink -f "${file}")" \
       | grep -ai "LOCAL_MODULE:=\|LOCAL_MODULE :=" \
       | sed 's/[ \t]*\(LOCAL_MODULE:=\|LOCAL_MODULE :=\)[ \t]*//g';
   done;
@@ -105,7 +111,7 @@ function stringsparams()
   # Usage: stringsparams (Get the strings command parameters for variants)
 
   # Handle Sysinternals strings variant
-  if [ ! -z "$(strings -accepteula 2> /dev/null | grep 'sysinternals')" ]; then
+  if strings -accepteula 2> /dev/null | grep -q 'sysinternals'; then
     echo '-accepteula -nobanner';
     return;
   fi;

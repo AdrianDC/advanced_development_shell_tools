@@ -23,12 +23,12 @@ function __shtools_credentials_ftp()
   # FTP Uploads Credentials
   export FTPUploadUserUrl='ftp.domain.universe';
   export FTPUploadUserName='Username';
-  export FTPUploadPassword='';
-  export FTPUploadPath='';
+  export FTPUploadPassword=;
+  export FTPUploadPath=;
 
   # Create  ~/.bash_android.uploadftp.**name**.rc with the exports to override the credentials
-  if [ ! -z "${1}" ] && [ -f ~/.bash_android.uploadftp.${1}.rc ]; then
-    source ~/.bash_android.uploadftp.${1}.rc;
+  if [ ! -z "${1}" ] && [ -f ~/".bash_android.uploadftp.${1}.rc" ]; then
+    source ~/".bash_android.uploadftp.${1}.rc";
   elif [ -f ~/.bash_android.uploadftp.main.rc ]; then
     source ~/.bash_android.uploadftp.main.rc;
   fi;
@@ -49,13 +49,16 @@ function uploadftp()
   fi;
 
   # Variables
-  local send_file="${1}";
-  local upload_folder="${2:-Development}";
-  local variant="${3}";
+  local send_file=${1};
+  local upload_folder=${2:-Development};
+  local variant=${3};
   local send_file_ext;
   local send_file_name;
-  local time_start=$(date +%s);
+  local time_start;
   local time_span;
+
+  # Initialize variables
+  time_start=$(date +%s);
 
   # FTP Uploads Credentials
   if ! __shtools_credentials_ftp "${variant}"; then
@@ -79,7 +82,7 @@ function uploadftp()
 
     # Path prepend
     if [ ! -z "${FTPUploadPath}" ] && [ ! -z "${upload_folder}" ]; then
-      upload_folder="${FTPUploadPath}/${upload_folder}";
+      upload_folder=${FTPUploadPath}/${upload_folder};
     fi;
 
     # Notify the file name
@@ -87,17 +90,17 @@ function uploadftp()
     echo '';
 
     # Upload through FTP
-    ncftpput -m \
-             -v \
-             -t 10 \
-             -u "${FTPUploadUserName}" \
-             -p "${FTPUploadPassword}" \
-             "${FTPUploadUserUrl}" \
-             ${upload_folder} \
-             ${send_file};
+    if ! ncftpput \
+        -m \
+        -v \
+        -t 10 \
+        -u "${FTPUploadUserName}" \
+        -p "${FTPUploadPassword}" \
+        "${FTPUploadUserUrl}" \
+        "${upload_folder}" \
+        "${send_file}"; then
 
-    # Detect failed FTP upload
-    if [ ${?} -ne 0 ]; then
+      # Failed FTP upload
       notify-send 'Failed uploading through FTP...' 2> /dev/null;
       echo '';
       echo '   Failed uploading through FTP.';
@@ -109,7 +112,7 @@ function uploadftp()
   fi;
 
   # Show upload time
-  time_span=$(($(date +%s)-${time_start}));
+  time_span=$(($(date +%s) - time_start));
   echo '';
   echo -e " \e[1;37m[ Upload done in ${time_span} secs ]\e[0m";
   echo '';
@@ -127,11 +130,15 @@ function downloadftp()
   fi;
 
   # Variables
-  local download_file="${1}";
-  local download_file_name=$(basename "${download_file}");
-  local variant="${2}";
-  local time_start=$(date +%s);
+  local download_file=${1};
+  local variant=${2};
+  local download_file_name;
+  local time_start;
   local time_span;
+
+  # Initialize variables
+  download_file_name=$(basename "${download_file}");
+  time_start=$(date +%s);
 
   # FTP Uploads Credentials
   if ! __shtools_credentials_ftp "${variant}"; then
@@ -148,7 +155,7 @@ function downloadftp()
 
   # Path prepend
   if [ ! -z "${FTPUploadPath}" ]; then
-    download_file="${FTPUploadPath}/${download_file}";
+    download_file=${FTPUploadPath}/${download_file};
   fi;
 
   # Notify the file name
@@ -177,7 +184,7 @@ function downloadftp()
   esac;
 
   # Show download time
-  time_span=$(($(date +%s)-${time_start}));
+  time_span=$(($(date +%s) - time_start));
   echo '';
   echo -e " \e[1;37m[ Download done in ${time_span} secs ]\e[0m";
   echo '';
@@ -195,12 +202,16 @@ function syncftp()
   fi;
 
   # Variables
-  local local_path=$(readlink -f "${1}");
-  local remote_path="${2}";
-  local mode="${3}";
-  local variant="${4}";
-  local time_start=$(date +%s);
+  local remote_path=${2};
+  local mode=${3};
+  local variant=${4};
+  local local_path;
+  local time_start;
   local time_span;
+
+  # Initialize variables
+  local_path=$(readlink -f "${1}");
+  time_start=$(date +%s);
 
   # FTP Uploads Credentials
   if ! __shtools_credentials_ftp "${variant}"; then
@@ -217,7 +228,7 @@ function syncftp()
 
   # Path prepend
   if [ ! -z "${FTPUploadPath}" ] && [ ! -z "${remote_path}" ]; then
-    remote_path="${FTPUploadPath}/${remote_path}";
+    remote_path=${FTPUploadPath}/${remote_path};
   fi;
 
   # Sync local to remote target
@@ -228,8 +239,15 @@ function syncftp()
     echo '';
 
     # Sync through FTP
-    lftp "ftp://${FTPUploadUserName}:${FTPUploadPassword}@${FTPUploadUserUrl}" \
-         -e "mirror -e -R '${local_path}' '${remote_path}'; quit;";
+    if ! lftp \
+        "ftp://${FTPUploadUserName}:${FTPUploadPassword}@${FTPUploadUserUrl}" \
+         -e "mirror -e -R '${local_path}' '${remote_path}'; quit;"; then
+
+      # Failed FTP sync
+      notify-send 'Failed syncing through FTP...' 2> /dev/null;
+      echo '';
+      echo '   Failed syncing through FTP.';
+    fi;
 
   # Sync remote to local target
   elif [ "${mode}" = '--download' ]; then
@@ -239,20 +257,20 @@ function syncftp()
     echo '';
 
     # Sync through FTP
-    lftp "ftp://${FTPUploadUserName}:${FTPUploadPassword}@${FTPUploadUserUrl}" \
-         -e "mirror -e '${remote_path}' '${local_path}'; quit;";
+    if ! lftp \
+         "ftp://${FTPUploadUserName}:${FTPUploadPassword}@${FTPUploadUserUrl}" \
+         -e "mirror -e '${remote_path}' '${local_path}'; quit;"; then
 
-  fi;
+      # Failed FTP sync
+      notify-send 'Failed syncing through FTP...' 2> /dev/null;
+      echo '';
+      echo '   Failed syncing through FTP.';
+    fi;
 
-  # Detect failed FTP sync
-  if [ ${?} -ne 0 ]; then
-    notify-send 'Failed syncing through FTP...' 2> /dev/null;
-    echo '';
-    echo '   Failed syncing through FTP.';
   fi;
 
   # Show sync time
-  time_span=$(($(date +%s)-${time_start}));
+  time_span=$(($(date +%s) - time_start));
   echo -e " \e[1;37m[ Syncing done in ${time_span} secs ]\e[0m";
   echo '';
 }

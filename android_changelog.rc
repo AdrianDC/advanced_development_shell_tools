@@ -20,27 +20,51 @@ function repochangelog()
 {
   # Usage: repochangelog <days_count> [project1_path,project2_path,...] (Generate ROM changelogs)
 
+  # Exports
+  export red;
+  export grn;
+  export ylw;
+  export blu;
+  export ppl;
+  export cya;
+  export txtbld;
+  export bldred;
+  export bldgrn;
+  export bldylw;
+  export bldblu;
+  export bldppl;
+  export bldcya;
+  export txtrst;
+  export rev;
+  export pplrev;
+  export cyarev;
+  export ylwrev;
+  export blurev;
+  export normal;
+  export After_Date;
+  export Until_Date;
+
   # Load colors
-  export red=$(tput setaf 1);             #  red
-  export grn=$(tput setaf 2);             #  green
-  export ylw=$(tput setaf 3);             #  yellow
-  export blu=$(tput setaf 4);             #  blue
-  export ppl=$(tput setaf 5);             #  purple
-  export cya=$(tput setaf 6);             #  cyan
-  export txtbld=$(tput bold);             #  Bold
-  export bldred=${txtbld}$(tput setaf 1); #  red
-  export bldgrn=${txtbld}$(tput setaf 2); #  green
-  export bldylw=${txtbld}$(tput setaf 3); #  yellow
-  export bldblu=${txtbld}$(tput setaf 4); #  blue
-  export bldppl=${txtbld}$(tput setaf 5); #  purple
-  export bldcya=${txtbld}$(tput setaf 6); #  cyan
-  export txtrst=$(tput sgr0);             #  Reset
-  export rev=$(tput rev);                 #  Reverse color
-  export pplrev=${rev}$(tput setaf 5);
-  export cyarev=${rev}$(tput setaf 6);
-  export ylwrev=${rev}$(tput setaf 3);
-  export blurev=${rev}$(tput setaf 4);
-  export normal='tput sgr0';
+  red=$(tput setaf 1);             #  red
+  grn=$(tput setaf 2);             #  green
+  ylw=$(tput setaf 3);             #  yellow
+  blu=$(tput setaf 4);             #  blue
+  ppl=$(tput setaf 5);             #  purple
+  cya=$(tput setaf 6);             #  cyan
+  txtbld=$(tput bold);             #  Bold
+  bldred=${txtbld}$(tput setaf 1); #  red
+  bldgrn=${txtbld}$(tput setaf 2); #  green
+  bldylw=${txtbld}$(tput setaf 3); #  yellow
+  bldblu=${txtbld}$(tput setaf 4); #  blue
+  bldppl=${txtbld}$(tput setaf 5); #  purple
+  bldcya=${txtbld}$(tput setaf 6); #  cyan
+  txtrst=$(tput sgr0);             #  Reset
+  rev=$(tput rev);                 #  Reverse color
+  pplrev=${rev}$(tput setaf 5);
+  cyarev=${rev}$(tput setaf 6);
+  ylwrev=${rev}$(tput setaf 3);
+  blurev=${rev}$(tput setaf 4);
+  normal='tput sgr0';
 
   # Repo detection
   if [ -z "${ANDROID_BUILD_TOP}" ] || [ -z "${OUT}" ]; then
@@ -50,12 +74,13 @@ function repochangelog()
   fi;
 
   # Variables
-  local cwd=$(pwd);
+  local cwd;
   local changelogname=Changelog.txt;
   local changelog=${OUT}/${changelogname};
 
   # Repo root
-  cd ${ANDROID_BUILD_TOP};
+  cwd=$(pwd);
+  cd "${ANDROID_BUILD_TOP}";
 
   local changelogdays=5;
   if [ ! -z "${1}" ]; then
@@ -71,29 +96,28 @@ function repochangelog()
 
   # Print something to build output
   echo '';
-  echo ${bldppl}' Generating changelog...'${txtrst};
+  echo "${bldppl} Generating changelog...${txtrst}";
 
-  for i in $(seq ${changelogdays}); do
-    export After_Date=$(date --date="${i} days ago" +%m-%d-%Y);
-    export Until_Date=$(date --date="$(expr ${i} - 1) days ago" +%m-%d-%Y);
+  for i in $(seq "${changelogdays}"); do
+    After_Date=$(date --date="${i} days ago" +%m-%d-%Y);
+    Until_Date=$(date --date="$((i - 1)) days ago" +%m-%d-%Y);
 
     # Line with after --- until was too long for a small ListView
-    echo ${ylw}"  Processing ${Until_Date}..."${txtrst};
-    echo ' ======================' >> "${changelog}";
-    echo '  ChangeLog '${Until_Date} >> "${changelog}";
-    echo ' ======================' >> "${changelog}";
+    echo "${ylw}  Processing ${Until_Date}...${txtrst}";
+    { echo ' ======================';
+      echo "  ChangeLog ${Until_Date}";
+      echo ' ======================'; } >> "${changelog}";
 
     # Handle the usage of repochangelog days_count project1_path,project2_path,...
-    command="git log --oneline --pretty=\"tformat:    %h - %s (%cr) <%an>\" --after=${After_Date} --until=${Until_Date}";
     if [ ! -z "${2}" ]; then
       # Cycle through the selected projects to find commits between 2 dates
-      for projectpath in $(echo "${2}" | sed 's/,/ /g'); do
+      for projectpath in ${2//,/ }; do
         if [ -d "${projectpath}" ]; then
-          cd ${projectpath}/;
-          echo '' >> "${changelog}";
-          echo "project ${projectpath}/" >> "${changelog}";
-          git log --oneline --pretty="tformat:    %h - %s (%cr) <%an>" --after=${After_Date} --until=${Until_Date} >> "${changelog}";
-          cd ${ANDROID_BUILD_TOP};
+          cd "${projectpath}/";
+          { echo '';
+            echo "project ${projectpath}/";
+            git log --oneline --pretty="tformat:    %h - %s (%cr) <%an>" --after="${After_Date}" --until="${Until_Date}"; } >> "${changelog}";
+          cd "${ANDROID_BUILD_TOP}";
         fi;
       done;
     else
@@ -111,8 +135,8 @@ function repochangelog()
     rm "${OUT}/system/etc/${changelogname}";
   fi;
   cp "${changelog}" "${OUT}/system/etc/";
-  cd ${cwd};
+  cd "${cwd}";
 
-  echo ${bldcya}" ChangeLog saved:"${txtrst}" "${txtbld}"${changelog}"${txtrst};
+  echo "${bldcya} ChangeLog saved:${txtrst} ${txtbld}${changelog}${txtrst}";
   echo '';
 }

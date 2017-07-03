@@ -25,14 +25,19 @@ function adbbootdump()
 {
   # Usage: adbbootdump (Dump bootimage from device)
 
+  # Variables
+  local cmdaddr;
+  local cmdsize;
+  local kernel;
+
   # Dump bootimage from device
-  local kernel=$(androiddevicestarget boot);
-  local cmdaddr=$(adb shell od -j 152 -N 4 -tx4 -An ${kernel} \
-                | tr -d ' ' | cut -c 2-9);
-  local cmdsize=$(adb shell od -j 164 -N 4 -tx4 -An ${kernel} \
-                | tr -d ' ' | cut -c 2-9);
-  if [ ! -z "${cmdaddr}" ] && [ $(echo "${cmdaddr}" | wc -l) -eq 1 ] && \
-     [ ! -z "${cmdsize}" ] && [ $(echo "${cmdsize}" | wc -l) -eq 1 ]; then
+  kernel=$(androiddevicestarget boot);
+  cmdaddr=$(adb shell od -j 152 -N 4 -tx4 -An "${kernel}" \
+          | tr -d ' ' | cut -c 2-9);
+  cmdsize=$(adb shell od -j 164 -N 4 -tx4 -An "${kernel}" \
+          | tr -d ' ' | cut -c 2-9);
+  if [ ! -z "${cmdaddr}" ] && [ "$(echo "${cmdaddr}" | wc -l)" -eq 1 ] && \
+     [ ! -z "${cmdsize}" ] && [ "$(echo "${cmdsize}" | wc -l)" -eq 1 ]; then
     local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
     adbsu "dd if=${kernel} of=/sdcard/boot.img skip=0 bs=${bootsize} count=1";
     adb pull /sdcard/boot.img;
@@ -56,13 +61,18 @@ function adbbootcut()
     return;
   fi;
 
+  # Variables
+  local bootsize;
+  local cmdaddr;
+  local cmdsize;
+
   # Trim bootimage dump
-  local cmdaddr=$(od -j 152 -N 4 -tx4 -An ${1} \
-                | cut -c 2-9);
-  local cmdsize=$(od -j 164 -N 4 -tx4 -An ${1} \
-                | cut -c 2-9);
-  local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
-  dd if=${1} of=boot.img skip=0 bs=${bootsize} count=1;
+  cmdaddr=$(od -j 152 -N 4 -tx4 -An "${1}" \
+          | cut -c 2-9);
+  cmdsize=$(od -j 164 -N 4 -tx4 -An "${1}" \
+          | cut -c 2-9);
+  bootsize=$((16#${cmdaddr}+16#${cmdsize}));
+  dd if="${1}" of=boot.img skip=0 bs="${bootsize}" count=1;
 }
 
 # === ADB TWRP Installer ===
@@ -76,13 +86,16 @@ function adbrecoveryinstall()
     return;
   fi;
 
+  # Variables
+  local filename;
+
   # Inject and reboot recovery
-  local filename=$(basename ${1});
+  filename=$(basename "${1}");
   adbro;
   adb shell mkdir -p /sdcard/;
-  adb push "${1}" /sdcard/${filename};
+  adb push "${1}" "/sdcard/${filename}";
   adb shell 'mkdir -p /cache/recovery';
   adb shell "echo 'install /sdcard/${filename}' > /cache/recovery/command";
-  adb shell 'echo /cache/recovery/command: $(/cache/recovery/command)';
+  adb shell 'cat /cache/recovery/command';
   adb reboot recovery;
 }

@@ -27,33 +27,33 @@ function repoinitaosp()
   fi;
 
   # Variables
-  local release="${1}";
-  local params="${2}";
+  local release=${1};
+  local params=${2};
   local branch;
   local init_command;
   local depth=;
 
   # Branch selection
   if [ "${release}" = 'master' ]; then
-    branch="${release}";
+    branch=${release};
   else
-    branch="android-7.1.2_r${release}";
+    branch=android-7.1.2_r${release};
   fi;
 
   # Repo shallow
-  if [[ "${params}" =~ 'shallow' ]]; then
+  if [[ "${params}" == *'shallow'* ]]; then
     depth='--depth 1';
   fi;
 
   # Repo init command
-  if [[ "${params}" =~ 'referenced' ]]; then
-    init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch} ${depth} --reference=$(readlink -f $(getand)/AOSP)";
+  if [[ "${params}" == *'referenced'* ]]; then
+    init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch} ${depth} --reference=$(readlink -f "$(getand)/AOSP")";
   else
     init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch} ${depth}";
   fi;
 
   # Output example command
-  if [[ "${params}" =~ 'example' ]]; then
+  if [[ "${params}" == *'example'* ]]; then
     echo '';
     echo "${init_command}";
     echo '';
@@ -61,7 +61,7 @@ function repoinitaosp()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'clean' ]] && [[ ! "${params}" =~ 'shallow' ]]; then
+  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     ${init_command};
     reposy;
   fi;
@@ -73,11 +73,11 @@ function repoinitaosp()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" =~ 'clean' ]] || [[ "${params}" =~ 'shallow' ]]; then
+  if [[ "${params}" == *'clean'* ]] || [[ "${params}" == *'shallow'* ]]; then
     rm -rfv .repo/project-objects;
   fi;
-  if [[ "${params}" =~ 'clean' ]]; then
-    rm -rfv *;
+  if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv ./*;
   fi;
   rm -rfv prebuilts/qemu-kernel;
   rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
@@ -94,7 +94,7 @@ function repoinitaosp()
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
-  git tag | grep -v ${branch} | xargs git tag -d > /dev/null;
+  git tag | grep -v "${branch}" | xargs git tag -d > /dev/null;
   echo "repoinitaosp done for ${branch}";
   echo '';
   cd ../../;
@@ -112,26 +112,26 @@ function repoinitlineage()
   fi;
 
   # Variables
-  local release="${1}";
-  local params="${2}";
-  local branch="cm-${release}";
+  local release=${1};
+  local params=${2};
+  local branch=cm-${release};
   local init_command;
   local depth=;
 
   # Repo shallow
-  if [[ "${params}" =~ 'shallow' ]]; then
+  if [[ "${params}" == *'shallow'* ]]; then
     depth='--depth 1';
   fi;
 
   # Repo init command
-  if [[ "${params}" =~ 'referenced' ]]; then
-    init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch} ${depth} --reference=$(readlink -f $(getand)/LineageOS)";
+  if [[ "${params}" == *'referenced'* ]]; then
+    init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch} ${depth} --reference=$(readlink -f "$(getand)/LineageOS")";
   else
     init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch} ${depth}";
   fi;
 
   # Output example command
-  if [[ "${params}" =~ 'example' ]]; then
+  if [[ "${params}" == *'example'* ]]; then
     echo '';
     echo "${init_command}";
     echo '';
@@ -139,7 +139,7 @@ function repoinitlineage()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'clean' ]] && [[ ! "${params}" =~ 'shallow' ]]; then
+  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     ${init_command};
     reposy;
   fi;
@@ -151,11 +151,11 @@ function repoinitlineage()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" =~ 'clean' ]] || [[ "${params}" =~ 'shallow' ]]; then
+  if [[ "${params}" == *'clean'* ]] || [[ "${params}" == *'shallow'* ]]; then
     rm -rfv .repo/project-objects;
   fi;
-  if [[ "${params}" =~ 'clean' ]]; then
-    rm -rfv *;
+  if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv ./*;
   fi;
   rm -rfv prebuilts/qemu-kernel;
   rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
@@ -195,16 +195,16 @@ function repoinitaospall()
   # Update common repo
   cdaosp;
   repocommon=$(pwd);
-  repoinitaosp ${1} ${2};
+  repoinitaosp "${1}" "${2}";
   reposy;
 
   # Walk through devices
-  for device in ${android_development_shell_tools_referenced_aosp}; do
+  for device in ${ANDROID_DEVELOPMENT_SHELL_TOOLS_REFERENCED_AOSP}; do
 
     # Verify and update device repo
-    cdaosp ${device};
+    cdaosp "${device}";
     if [ ! "$(pwd)" = "${repocommon}" ]; then
-      repoinitaosp ${1} referenced,${2};
+      repoinitaosp "${1}" "referenced,${2}";
       reposy;
     fi;
 
@@ -228,16 +228,16 @@ function repoinitlineageall()
   # Update common repo
   cdlineage;
   repocommon=$(pwd);
-  repoinitlineage ${1} ${2};
+  repoinitlineage "${1}" "${2}";
   reposy;
 
   # Walk through devices
-  for device in ${android_development_shell_tools_referenced_lineage}; do
+  for device in ${ANDROID_DEVELOPMENT_SHELL_TOOLS_REFERENCED_LINEAGE}; do
 
     # Verify and update device repo
-    cdlineage ${device};
+    cdlineage "${device}";
     if [ ! "$(pwd)" = "${repocommon}" ]; then
-      repoinitlineage ${1} referenced,${2};
+      repoinitlineage "${1}" "referenced,${2}";
       reposy;
     fi;
 
@@ -256,18 +256,18 @@ function repoinitrr()
   fi;
 
   # Variables
-  local release="${1}";
-  local params="${2}";
-  local branch="${release}";
+  local release=${1};
+  local params=${2};
+  local branch=${release};
   local depth=;
 
   # Repo shallow
-  if [[ "${params}" =~ 'shallow' ]]; then
+  if [[ "${params}" == *'shallow'* ]]; then
     depth='--depth 1';
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" =~ 'clean' ]] && [[ ! "${params}" =~ 'shallow' ]]; then
+  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     reposy;
   fi;
 
@@ -278,23 +278,23 @@ function repoinitrr()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" =~ 'clean' ]] || [[ "${params}" =~ 'shallow' ]]; then
+  if [[ "${params}" == *'clean'* ]] || [[ "${params}" == *'shallow'* ]]; then
     rm -rfv .repo/project-objects;
   fi;
-  if [[ "${params}" =~ 'clean' ]]; then
-    rm -rfv *;
+  if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv ./*;
   fi;
 
   # Repo init
-  if [[ "${params}" =~ 'referenced' ]]; then
+  if [[ "${params}" == *'referenced'* ]]; then
     repo init -u http://github.com/ResurrectionRemix/platform_manifest.git \
-              -b ${branch} \
-              ${depth} \
-              --reference=$(readlink -f $(getand)/LineageOS);
+              -b "${branch}" \
+              "${depth}" \
+              --reference="$(readlink -f "$(getand)/LineageOS")";
   else
     repo init -u http://github.com/ResurrectionRemix/platform_manifest.git \
-              -b ${branch} \
-              ${depth};
+              -b "${branch}" \
+              "${depth}";
   fi;
 
   # Exit on repo init failure
@@ -322,13 +322,13 @@ function repoinittwrp()
   fi;
 
   # Variables
-  local release="${1}";
-  local params="${2}";
-  local branch="twrp-${release}";
+  local release=${1};
+  local params=${2};
+  local branch=twrp-${release};
   local depth=;
 
   # Repo shallow
-  if [[ "${params}" =~ 'shallow' ]]; then
+  if [[ "${params}" == *'shallow'* ]]; then
     depth='--depth 1';
   fi;
 
@@ -342,23 +342,23 @@ function repoinittwrp()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" =~ 'clean' ]] || [[ "${params}" =~ 'shallow' ]]; then
+  if [[ "${params}" == *'clean'* ]] || [[ "${params}" == *'shallow'* ]]; then
     rm -rfv .repo/project-objects;
   fi;
-  if [[ "${params}" =~ 'clean' ]]; then
-    rm -rfv *;
+  if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv ./*;
   fi;
 
   # Repo init
-  if [[ "${params}" =~ 'referenced' ]]; then
+  if [[ "${params}" == *'referenced'* ]]; then
     repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git \
-              -b ${branch} \
-              ${depth} \
-              --reference=$(readlink -f $(getand)/TWRP);
+              -b "${branch}" \
+              "${depth}" \
+              --reference="$(readlink -f "$(getand)/TWRP")";
   else
     repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git \
-              -b ${branch} \
-              ${depth};
+              -b "${branch}" \
+              "${depth}";
   fi;
 
   # Exit on repo init failure

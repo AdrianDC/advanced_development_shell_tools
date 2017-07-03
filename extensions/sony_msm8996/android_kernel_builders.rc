@@ -39,7 +39,7 @@ function makekernelcopyleft()
   if [ -z "${KBUILD_DIFFCONFIG}" ] || [ ! -z "${1}" ]; then
 
     # Usage
-    if [ -z "${1}" ] || ! ls arch/arm*/configs/diffconfig/${1}_diffconfig 1> /dev/null 2>&1; then
+    if [ -z "${1}" ] || ! ls 'arch/arm'*"/configs/diffconfig/${1}_diffconfig" 1> /dev/null 2>&1; then
       echo '';
       echo ' Usage: makekernelcopyleft [platform_device_to_init / clean / mrproper] [make_parameters] (Kernel inline compiler for Sony Copyleft)';
       echo '   Details: The kernel needs to be under an Android build tree to select toolchains'
@@ -48,26 +48,27 @@ function makekernelcopyleft()
     fi;
 
     # Kernel defconfig
-    export KBUILD_DIFFCONFIG="${1}_diffconfig";
+    export KBUILD_DIFFCONFIG=${1}_diffconfig;
     kerneldefconfig 'msm-perf';
 
     # Kernel toolchains selection
     kerneltoolchains;
 
     # Kernel configuration
-    make ${DEFCONFIG_NAME} O=./.build;
+    make "${DEFCONFIG_NAME}" O=./.build;
   fi;
 
   # Variables
   local time_diff;
-  local make_parameters="${@:2}";
+  local make_parameters=${*:2};
 
   # Kernel build
   time_diff=$(date +%s);
-  make -j$(grep -c ^processor /proc/cpuinfo) ${make_parameters} O=./.build;
+  make_parameters="make ${make_parameters}";
+  ${make_parameters} -j"$(grep -c ^processor /proc/cpuinfo)" O=./.build;
 
   # Show compilation time
-  time_diff=$(($(date +%s)-${time_diff}));
+  time_diff=$(($(date +%s) - time_diff));
   echo '';
   echo -e " \e[1;37m[ Done compiling in ${time_diff} secs ]\e[0m";
   echo '';
@@ -81,7 +82,7 @@ function kernelcopyleftmerger()
   # Stash all lost .gitignore files
   echo '';
   echo ' kernelcopyleftmerger: Stashing all lost .gitignore files';
-  git checkout HEAD $(git diff --name-only | grep -ai .gitignore);
+  git checkout HEAD "$(git diff --name-only | grep -ai .gitignore)";
 
   # List all real file differences
   echo '';

@@ -21,8 +21,9 @@ function gitcpaicp()
   # Usage: gitcpaicp (Automated upstream to AICP device merger)
 
   # Variables
-  local branch_origin='cm-14.1';
-  local branch_target='n7.1';
+  local branch_origin=cm-14.1;
+  local branch_target=n7.1;
+  local headsha1;
 
   # Fetch remotes
   gitremoteverify aicp gitrai;
@@ -40,27 +41,27 @@ function gitcpaicp()
   echo '';
 
   # Process cherry-picks request
-  printf '  \e[1;34m\e[4;34mNumber of commits :\e[0m ';
-  read cnt;
-  git cherry-pick FETCH_HEAD~${cnt}..FETCH_HEAD;
+  echo -en  '  \e[1;34m\e[4;34mNumber of commits :\e[0m ';
+  read -r cnt;
+  git cherry-pick FETCH_HEAD~"${cnt}"..FETCH_HEAD;
 
   # Diff branches
   echo '';
-  printf "  \e[1;34m\e[4;34mPress Enter to diff with origin/${branch_origin} :\e[0m ";
-  read key;
+  echo -en  "  \e[1;34m\e[4;34mPress Enter to diff with origin/${branch_origin} :\e[0m ";
+  read -r;
   git diff HEAD origin/${branch_origin} \
     | filterdiff -p1 -x aicp.dependencies -x system.prop \
     | colordiff
 
   # Upload changes
   echo '';
-  local headsha1=$(git log --max-count=1 --format=format:%H -- .);
-  for i in `seq $((${cnt}-1)) -1 0`; do
+  headsha1=$(git log --max-count=1 --format=format:%H -- .);
+  for i in $(seq $((cnt - 1)) -1 0); do
     echo -e " \e[1;34m\e[4;34m===[ ${headsha1}~${i} ]===\e[0m";
     echo '';
-    git reset --hard ${headsha1}~${i};
+    git reset --hard "${headsha1}~${i}";
     git show --stat HEAD;
-    gitstat aicp ${branch_target};
+    gitstat aicp "${branch_target}";
     gitpraicp;
     gitpgaicp;
     echo '';

@@ -35,14 +35,17 @@ function uploadmega()
   fi;
 
   # Variables
-  local path="${1}";
-  local target="${2:-Development}";
-  local time_start=$(date +%s);
+  local path=${1};
+  local target=${2:-Development};
+  local time_start;
   local time_span;
 
-  # Load path from PackageResult
-  if [ -z "${path}" ] && [ -f "${PackageResult}" ]; then
-    path="${PackageResult}";
+  # Initialize variables
+  time_start=$(date +%s);
+
+  # Load path from PACKAGE_RESULT
+  if [ -z "${path}" ] && [ -f "${PACKAGE_RESULT}" ]; then
+    path=${PACKAGE_RESULT};
   fi;
 
   # File full path
@@ -51,8 +54,8 @@ function uploadmega()
   fi;
 
   # Detect main target inclusion
-  if [[ ! "${target}" =~ '/Root/' ]]; then
-    target="/Root/Android/${target}";
+  if [[ ! "${target}" == *'/Root/'* ]]; then
+    target=/Root/Android/${target};
   fi;
 
   # Upload header informations
@@ -60,7 +63,7 @@ function uploadmega()
   echo -e " \e[1;33m[ Uploading to the server - Path '${target}' ]\e[0m";
 
   # Use AndroidFiles to save the file
-  if [ ! -z "${ANDROID_FILES_PATH}" ] && [[ "${target}" =~ 'Root/Android' ]]; then
+  if [ ! -z "${ANDROID_FILES_PATH}" ] && [[ "${target}" == *'Root/Android'* ]]; then
     androidfilesadd "${path}" "${target#/Root/Android/}";
   fi;
 
@@ -69,15 +72,15 @@ function uploadmega()
 
   # Upload file to target
   echo '';
-  megarm "${target}/$(basename ${path})" 2>/dev/null;
-  megamkdir "${target}" 2>/dev/null;
+  megarm "${target}/$(basename "${path}")" 2> /dev/null;
+  megamkdir "${target}" 2> /dev/null;
   megaput --path "${target}" "${path}";
 
   # Reload mega.nz account
   meganzreload;
 
   # Show upload time
-  time_span=$(($(date +%s)-${time_start}));
+  time_span=$(($(date +%s) - time_start));
   echo -e " \e[1;37m[ Upload done in ${time_span} secs ]\e[0m";
   echo '';
 }
@@ -102,15 +105,19 @@ function downloadmega()
   fi;
 
   # Variables
-  local path="${1}";
-  local remove_remote="${2}";
-  local file_name=$(basename "${path}");
-  local time_start=$(date +%s);
+  local path=${1};
+  local remove_remote=${2};
+  local file_name;
+  local time_start;
   local time_span;
 
+  # Initialize variables
+  file_name=$(basename "${path}");
+  time_start=$(date +%s);
+
   # Detect main target inclusion
-  if [[ ! "${path}" =~ '/Root/' ]]; then
-    path="/Root/Android/${path}";
+  if [[ ! "${path}" == *'/Root/'* ]]; then
+    path=/Root/Android/${path};
   fi;
 
   # Upload header informations
@@ -149,7 +156,7 @@ function downloadmega()
 
   # Show download time
   echo '';
-  time_span=$(($(date +%s)-${time_start}));
+  time_span=$(($(date +%s) - time_start));
   echo -e " \e[1;37m[ Download done in ${time_span} secs ]\e[0m";
   echo '';
 }

@@ -34,12 +34,16 @@ function makedefconf()
   local configmode=${2};
   local diffcommon=${3};
   local forceconfig=${4};
+  local defconfig_file;
+  local diffconfig;
 
   # DiffConfig
-  local diffconfig=$(ls "arch/arm"*"/configs/diffconfig/${configmode}_diffconfig" 2> /dev/null);
+  diffconfig=$(ls "arch/arm"*"/configs/diffconfig/${configmode}_diffconfig" 2> /dev/null);
   if [ ! -z "${diffconfig}" ] && [ -f "${diffconfig}" ]; then
-    export ARCH=$(echo "${diffconfig}" | sed 's/.*\(arm[^\/]*\)\/.*/\1/');
-    export KBUILD_DIFFCONFIG="${configmode}_diffconfig";
+    export ARCH;
+    export KBUILD_DIFFCONFIG;
+    ARCH=$(echo "${diffconfig}" | sed 's/.*\(arm[^\/]*\)\/.*/\1/');
+    KBUILD_DIFFCONFIG=${configmode}_diffconfig;
     diffcommon=$(dirname "${diffconfig}")/${diffcommon}_diffconfig;
   fi;
 
@@ -52,7 +56,7 @@ function makedefconf()
   local DEFCONFIG_CHECKS;
   for arch_check in arm arm64; do
     DEFCONFIG_CHECKS=("./arch/${arch_check}/configs/"*"${defconfig}"*);
-    if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS}" ]; then
+    if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS[*]}" ]; then
       export ARCH=${arch_check};
       break;
     fi;
@@ -60,18 +64,19 @@ function makedefconf()
 
   # Kernel input
   local DEFCONFIG_PATH=./arch/${ARCH}/configs;
-  local DEFCONFIG_INPUT=("${DEFCONFIG_PATH}/"*"${defconfig}"*);
+  local DEFCONFIG_INPUTS=("${DEFCONFIG_PATH}/"*"${defconfig}"*);
+  local DEFCONFIG_INPUT="${DEFCONFIG_INPUTS[*]}";
 
   # Handle looped forced config
-  if [ ! -z "${forceconfig}" ] && [ ${#DEFCONFIG_INPUT[@]} -gt 1 ]; then
-    for defconfig in ${DEFCONFIG_INPUT[*]}; do
+  if [ ! -z "${forceconfig}" ] && [ ${#DEFCONFIG_INPUTS[@]} -gt 1 ]; then
+    for defconfig in ${DEFCONFIG_INPUTS[*]}; do
       makedefconf "${defconfig##*/}" "${configmode}" "${diffcommon}" "${forceconfig}";
     done;
     return;
 
   # Handle failed defconfig selection
-  elif [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
-    if [ ${#DEFCONFIG_INPUT[@]} -eq 1 ]; then
+  elif [ ${#DEFCONFIG_INPUTS[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUTS[*]}" ]; then
+    if [ ${#DEFCONFIG_INPUTS[@]} -eq 1 ]; then
       echo '';
       echo '  Error: makedefconf found no defconfigs';
       echo '';
@@ -81,20 +86,20 @@ function makedefconf()
     # Create defconfig selector list
     local cnt=0;
     echo '';
-    echo '  Warning: makedefconf found '${#DEFCONFIG_INPUT[@]}' defconfigs';
+    echo '  Warning: makedefconf found '${#DEFCONFIG_INPUTS[@]}' defconfigs';
     echo '';
-    for defconfig_path in ${DEFCONFIG_INPUT[@]}; do
-      cnt=$((${cnt} + 1));
+    for defconfig_path in "${DEFCONFIG_INPUTS[@]}"; do
+      cnt=$((cnt + 1));
       echo "   ${cnt}: ${defconfig_path}";
     done;
     echo '';
-    printf "  Defconfig to use [1 to {cnt}] : ";
-    read key;
-    key=$((${key} - 1));
+    echo -n "  Defconfig to use [1 to {cnt}] : ";
+    read -r key;
+    key=$((key - 1));
     if [ ${key} -ge 0 ] && [ ${key} -lt ${cnt} ]; then
-      DEFCONFIG_INPUT=${DEFCONFIG_INPUT[${key}]};
+      DEFCONFIG_INPUT=${DEFCONFIG_INPUTS[${key}]};
     else
-      DEFCONFIG_INPUT='';
+      DEFCONFIG_INPUT=;
     fi;
 
     # Validate user choice
@@ -107,13 +112,13 @@ function makedefconf()
   fi;
 
   # Kernel defconfig
-  local DEFCONFIG_FILE=$(basename "${DEFCONFIG_INPUT}");
+  defconfig_file=$(basename "${DEFCONFIG_INPUT}");
 
   # Google configurations
   if [[ "${defconfig}" == 'google' ]]; then
-    ./scripts/kconfig/merge_config.sh ${DEFCONFIG_PATH}/${DEFCONFIG_FILE} android/configs/android-base.cfg android/configs/android-recommended.cfg
+    ./scripts/kconfig/merge_config.sh "${DEFCONFIG_PATH}/${defconfig_file}" android/configs/android-base.cfg android/configs/android-recommended.cfg
     mv ./.config ./.config_android;
-    make ${DEFCONFIG_FILE};
+    make "${defconfig_file}";
     if [ ! -z "${forceconfig}" ]; then
       kernelconfigupdater "${forceconfig}";
     fi;
@@ -122,7 +127,7 @@ function makedefconf()
 
   # Make full defconfig
   elif [ ! -z "${configmode}" ]; then
-    make ${DEFCONFIG_FILE};
+    make "${defconfig_file}";
     if [ ! -z "${forceconfig}" ]; then
       kernelconfigupdater "${forceconfig}";
     fi;
@@ -130,23 +135,23 @@ function makedefconf()
       if [ -f "${diffcommon}" ]; then
         meld ./.config "${diffconfig}" &
           meld ./.config "${diffcommon}" &
-          meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+          meld ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
       else
         meld ./.config "${diffconfig}" &
-          meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+          meld ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
       fi;
     else
-      meld ./.config "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+      meld ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
     fi;
 
   # Make minimal defconfig
   else
-    make "${DEFCONFIG_FILE}";
+    make "${defconfig_file}";
     if [ ! -z "${forceconfig}" ]; then
       kernelconfigupdater "${forceconfig}";
     fi;
     make savedefconfig;
-    meld ./defconfig "${DEFCONFIG_PATH}/${DEFCONFIG_FILE}";
+    meld ./defconfig "${DEFCONFIG_PATH}/${defconfig_file}";
     rm ./defconfig;
   fi;
 
@@ -177,23 +182,23 @@ function kernelconfigupdater()
   fi;
 
   # Configuration variables
-  local config_string=(${@})
-  local config_name='';
-  local config_output='';
+  local config_string=("${@}")
+  local config_name;
+  local config_output;
 
   # Configuration parsing
   if [ "${config_string[0]:0:1}" = "#" ]; then
     config_name=${config_string[1]};
     config_output="# ${config_name} is not set";
   else
-    config_name=${config_string[@]%%=*};
-    config_output="${config_name}=${config_string[@]##*=}";
+    config_name=${config_string[*]%%=*};
+    config_output="${config_name}=${config_string[*]##*=}";
   fi;
 
   # Configuration output
   sed -i "/# ${config_name} is not set/d" .config;
   sed -i "/${config_name}=/d" .config;
-  echo ${config_output} >> .config;
+  echo "${config_output}" >> .config;
   rm -f .config.old;
   cp .config .config.old;
 

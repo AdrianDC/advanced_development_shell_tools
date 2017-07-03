@@ -33,31 +33,34 @@ function adbpushfile()
   # Variables
   local filepath=${1};
   local filetarget=${2};
+  local filedir;
 
   # Debug target file
-  printf '\e[1;36m # '${filetarget}'\n';
-  printf '\e[1;33m | ';
+  echo -e "\e[1;36m # ${filetarget}";
+  echo -en '\e[1;33m | ';
   adb shell "ls -l '${filetarget}'";
 
   # Push file to target
   if [ -f "${filepath}" ]; then
-    printf '\e[1;32m |';
+    echo -en '\e[1;32m |';
     adb push "${filepath}" "${filetarget}";
 
   # Create symlink on target
   elif [ -L "${filepath}" ]; then
-    printf '\e[1;32m |';
-    adb shell "mkdir -p '$(dirname ${filetarget})'";
-    adb shell "ln -fs '$(readlink ${filepath})' '${filetarget}'";
+    filedir=$(dirname "${filetarget}");
+    filepath=$(readlink "${filepath}");
+    echo -en '\e[1;32m |';
+    adb shell "mkdir -p '${filedir}'";
+    adb shell "ln -fs '${filepath}' '${filetarget}'";
     adb shell "ls -l '${filetarget}'" | tr -s ' ' | cut -d' ' -f 9-;
 
   # Debug missing file
   else
-    printf "\e[1;31m | ${filepath} does not exist...\n";
+    echo -e "\e[1;31m | ${filepath} does not exist...";
   fi;
 
   # Restore colours
-  printf '\e[0m\n';
+  echo -e '\e[0m';
 }
 
 # === ADB System File Listener / Installer ===
@@ -72,23 +75,26 @@ function adbif()
   fi;
 
   # Variables
-  local repo_top=$(gettop 2> /dev/null);
-  local tmp_file=$(mktemp);
+  local repo_top;
+  local tmp_file;
+  local tmp_installs;
 
   # Execute input command
-  ${@} | tee ${tmp_file};
+  tmp_file=$(mktemp);
+  "${@}" | tee "${tmp_file}";
   echo '';
 
   # Find new files
-  local tmp_installs=$(grep -a 'target/product/[^\/]*/system' ${tmp_file} \
-                     | sort \
-                     | uniq);
+  repo_top=$(gettop 2> /dev/null);
+  tmp_installs=$(grep -a 'target/product/[^\/]*/system' "${tmp_file}" \
+               | sort \
+               | uniq);
 
   # Install new files
   for file_path in ${tmp_installs[*]}; do
-    echo ${file_path};
-    if [[ "${file_path}" =~ '/system' && ! "${file_path}" =~ '/NOTICE_FILES' ]]; then
-      file_path=$(printf "${file_path}" | tail -1 \
+    echo "${file_path}";
+    if [[ "${file_path}" == *'/system'* ]] && [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
+      file_path=$(echo -n "${file_path}" | tail -1 \
                 | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
                 | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
       if [ ! -f "${file_path}" ]; then
@@ -101,7 +107,7 @@ function adbif()
   done;
 
   # End of process
-  rm -f ${tmp_file};
+  rm -f "${tmp_file}";
   echo '';
 }
 
@@ -117,21 +123,23 @@ function adbil()
   fi;
 
   # Variables
-  local tmp_file=$(mktemp);
+  local tmp_file;
+  local tmp_installs;
 
   # Execute input command
-  ${@} | tee ${tmp_file};
+  tmp_file=$(mktemp);
+  "${@}" | tee "${tmp_file}";
   echo '';
 
   # Find new files
-  local tmp_installs=$(grep -a "target/product/[^\/]*/system" ${tmp_file} \
-                     | sort \
-                     | uniq);
+  tmp_installs=$(grep -a "target/product/[^\/]*/system" "${tmp_file}" \
+               | sort \
+               | uniq);
 
   # List new files
   for file_path in ${tmp_installs[*]}; do
-    if [[ "${file_path}" =~ '/system' && ! "${file_path}" =~ '/NOTICE_FILES' ]]; then
-      file_path=$(printf "${file_path}" | tail -1 \
+    if [[ "${file_path}" == *'/system'* ]] && [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
+      file_path=$(echo -n "${file_path}" | tail -1 \
                 | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
                 | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
       if [ -f "${file_path}" ]; then
@@ -142,7 +150,7 @@ function adbil()
   done;
 
   # End of process
-  rm -f ${tmp_file};
+  rm -f "${tmp_file}";
   echo '';
 }
 
@@ -161,23 +169,22 @@ function adbpf()
   fi;
 
   # Variables
-  local filepath='';
-  local filepathext='';
-  local filepathtest='';
-  local filetarget='';
-  local filepaths="${@}";
+  local filepath=;
+  local filepathext=;
+  local filepathtest=;
+  local filetarget=;
 
   # Input files
   if [ -z "${recursive_call}" ]; then
     echo '';
   fi;
-  for filepath in ${filepaths}; do
+  for filepath in "${@}"; do
 
     # Extract full paths
     if [ -L "$(pwd)/${filepath}" ]; then
-      filepath="$(pwd)/${filepath}";
+      filepath=$(pwd)/${filepath};
     elif [ -L "${filepath}" ]; then
-      filepath="${filepath}";
+      filepath=${filepath};
     else
       filepath=$(readlink -f "${filepath}");
     fi;
@@ -197,29 +204,29 @@ function adbpf()
       if [ "${filepathext}" = 'mk' ] || [ "${filepathext}" = 'py' ]; then
         continue;
       fi;
-      if [[ "${filepathtest}" =~ 'proprietary' ]]; then
-        filetarget=$(printf "${filepathtest}" | sed "s/.*proprietary\(.*\)/\/system\1/g");
+      if [[ "${filepathtest}" == *'proprietary'* ]]; then
+        filetarget=$(echo -n "${filepathtest}" | sed "s/.*proprietary\(.*\)/\/system\1/g");
         filepathtest=${filetarget};
       fi;
-      if [[ "${filepathtest}" =~ 'vendor/' ]]; then
-        filetarget=$(printf "${filepathtest}" | sed "s/.*vendor\/\(.*\)/\/system\/vendor\/\1/g");
+      if [[ "${filepathtest}" == *'vendor/'* ]]; then
+        filetarget=$(echo -n "${filepathtest}" | sed "s/.*vendor\/\(.*\)/\/system\/vendor\/\1/g");
         filepathtest=${filetarget};
       fi;
-      if [[ "${filepathtest}" =~ 'configs' ]]; then
-        filetarget=$(printf "${filepathtest}" | sed "s/.*configs\(.*\)/\/system\/etc\1/g");
+      if [[ "${filepathtest}" == *'configs'* ]]; then
+        filetarget=$(echo -n "${filepathtest}" | sed "s/.*configs\(.*\)/\/system\/etc\1/g");
         filepathtest=${filetarget};
       fi;
-      if [[ "${filepathtest}" =~ 'system/' ]]; then
-        filetarget=$(printf "${filepathtest}" | sed "s/.*\(system\/.*\)/\/\1/g");
+      if [[ "${filepathtest}" == *'system/'* ]]; then
+        filetarget=$(echo -n "${filepathtest}" | sed "s/.*\(system\/.*\)/\/\1/g");
         filepathtest=${filetarget};
       fi;
       if [[ "${filepathtest}" == "${filepath}" ]]; then
-        if [[ "${filepathtest}" =~ '.xml' ]] || [[ "${filepathtest}" =~ '.conf' ]]; then
-          filetarget="/system/etc/"$(basename ${filepath});
-        elif [[ "${filepathtest}" =~ '.so' ]]; then
-          filetarget="/system/lib/"$(basename ${filepath});
+        if [[ "${filepathtest}" == *'.xml'* ]] || [[ "${filepathtest}" == *'.conf'* ]]; then
+          filetarget=/system/etc/$(basename "${filepath}");
+        elif [[ "${filepathtest}" == *'.so'* ]]; then
+          filetarget=/system/lib/$(basename "${filepath}");
         else
-          filetarget=$(printf "${filepath}" | sed "s/.*\(system.*\)/\/\1/g");
+          filetarget=$(echo -n "${filepath}" | sed "s/.*\(system.*\)/\/\1/g");
         fi;
       fi;
 
@@ -244,19 +251,19 @@ function adbside()
     return;
   fi;
 
-  # Initiate adb
+  # Initialize adb
   echo '';
   adb devices;
 
   # Reboot to recovery if needed
-  if ! timeout 2 sh -c "adb devices | grep -q 'recovery\|sideload'" 2>/dev/null; then
+  if ! timeout 2 sh -c "adb devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
     echo -e '\e[1;33madbside: Rebooting to recovery\e[0m';
     adb reboot recovery;
   fi;
 
   # Wait for an adb recovery
   while true; do
-    if timeout .5 sh -c "adb devices | grep -q 'recovery\|sideload'" 2>/dev/null; then
+    if timeout .5 sh -c "adb devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
       break;
     fi;
     echo -e '\e[1;33madbside: Waiting for recovery or sideload\e[0m';
@@ -265,7 +272,7 @@ function adbside()
 
   # Wait for an adb sideload
   while true; do
-    if timeout .5 sh -c "adb devices | grep -q 'sideload'" 2>/dev/null; then
+    if timeout .5 sh -c "adb devices | grep -q 'sideload'" 2> /dev/null; then
       break;
     fi;
 
@@ -280,7 +287,7 @@ function adbside()
 
   # Wait for an adb recovery
   while true; do
-    if timeout .5 sh -c "adb devices | grep -q 'recovery'" 2>/dev/null; then
+    if timeout .5 sh -c "adb devices | grep -q 'recovery'" 2> /dev/null; then
       break;
     fi;
     echo -e '\e[1;33madbside: Waiting for recovery\e[0m';
@@ -306,6 +313,9 @@ function adbu()
     return;
   fi;
 
+  # Variables
+  local pid;
+
   # Introduction
   echo '';
   echo " [ Launching '${1}' ]";
@@ -313,13 +323,13 @@ function adbu()
 
   # Optimize
   echo '    Optimizing...';
-  sudo adb ${2} shell pm force-dex-opt ${1};
+  sudo adb "${2}" shell pm force-dex-opt "${1}";
 
   # Force close
   echo '    Killing...';
-  sudo adb ${2} shell pkill ${1};
-  local pid=$(sudo adb shell ps | grep ${1} | awk '{ print $2 }');
-  sudo adb shell kill ${pid} >/dev/null;
+  sudo adb "${2}" shell pkill "${1}";
+  pid=$(sudo adb shell ps | grep "${1}" | awk '{ print $2 }');
+  sudo adb shell kill "${pid}" > /dev/null;
   echo '';
 }
 
@@ -334,19 +344,24 @@ function adbgitpf()
     return;
   fi;
 
+  # Variables
+  local file_path;
+  local status;
+  local tmpfile;
+
   # Push files through adb from commit
   adbro;
-  local tmpfile=$(mktemp);
-  git diff-tree --no-commit-id --name-status -r ${1} >"${tmpfile}";
-  while read line; do
-    local status=$(echo "${line}" | awk '{ print $1 }');
-    local file_path=$(echo "${line}" | awk '{ print $2 }');
-    if [[ "${status}" =~ "D" || "${file_path}" =~ ".mk" ]]; then
+  tmpfile=$(mktemp);
+  git diff-tree --no-commit-id --name-status -r "${1}" >"${tmpfile}";
+  while read -r line; do
+    status=$(echo "${line}" | awk '{ print $1 }');
+    file_path=$(echo "${line}" | awk '{ print $2 }');
+    if [[ "${status}" == *'D'* ]] || [[ "${file_path}" == *'.mk'* ]]; then
       continue;
     fi;
     adbpf "${file_path}";
-  done <${tmpfile};
-  rm -f ${tmpfile};
+  done < "${tmpfile}";
+  rm -f "${tmpfile}";
 }
 
 # === MultiROM File Pusher ===
@@ -361,14 +376,14 @@ function adbpmrom()
   fi;
 
   # Variables
-  local filepath="${1}";
+  local filepath=${1};
   local filetarget;
 
   # Target file selection
   if [ ! -z "${2}" ]; then
-    filetarget="/sdcard/multirom/${2}/${1}";
+    filetarget=/sdcard/multirom/${2}/${1};
   else
-    filetarget="/sdcard/multirom/${1}";
+    filetarget=/sdcard/multirom/${1};
   fi;
 
   # Push file

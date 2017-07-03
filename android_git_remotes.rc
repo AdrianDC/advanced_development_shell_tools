@@ -30,12 +30,12 @@ function gitremoteset()
   fi;
 
   # Set and update the remote
-  git remote add ${1} ${2} 2> /dev/null;
-  git remote set-url ${1} ${2};
+  git remote add "${1}" "${2}" 2> /dev/null;
+  git remote set-url "${1}" "${2}";
 
   # Debug the remote
-  printf ' \e[1;32mRemote :\e[0m ';
-  git remote -v | grep ${1} \
+  echo -en  ' \e[1;32mRemote :\e[0m ';
+  git remote -v | grep "${1}" \
                 | grep -i '(fetch)' \
                 | awk '{ printf("%s -> %s", $1, $2); }';
   echo '';
@@ -55,11 +55,11 @@ function gitremoteadaptset()
   # Variables
   local project;
   local target;
-  local remote="${1:-origin}";
-  local repository="${2:-LineageOS}";
-  local prefix_removal="${3}";
-  local prefix_android="${4}";
-  local underscore_to_dash="${5}";
+  local remote=${1:-origin};
+  local repository=${2:-LineageOS};
+  local prefix_removal=${3};
+  local prefix_android=${4};
+  local underscore_to_dash=${5};
 
   # Target detection
   target=$(git remote -v \
@@ -77,13 +77,13 @@ function gitremoteadaptset()
                  | sed 's/.*\.com\///' \
                  | sed 's/platform/android/' \
                  | sed 's/\//_/g');
-    echo ${project};
+    echo "${project}";
     target='http://github.com/'${repository}'/'${project};
   fi;
 
   # Remove additional content
-  if [ ! -z "${prefix_android}" ] && [[ "${target}" =~ "${prefix_android}" ]]; then
-    if [[ "${target}" =~ 'device_' ]]; then
+  if [ ! -z "${prefix_android}" ] && [[ "${target}" == *"${prefix_android}"* ]]; then
+    if [[ "${target}" == *'device_'* ]]; then
       target=${target/device_/android_device_};
     else
       target=${target/platform_/android_};
@@ -91,7 +91,7 @@ function gitremoteadaptset()
   fi;
 
   # Parse the target to repository
-  target=$(echo ${target} \
+  target=$(echo "${target}" \
          | sed "s/\(http:\/\/\|https:\/\/\|git:\/\/\)\(.*\)\/[^\/]*\/\(.*\)/http:\/\/\2\/${repository}\/\3/");
 
   # Remove additional content
@@ -120,8 +120,7 @@ function gitremoteverify()
   fi;
 
   # Check remote existence
-  git ls-remote --exit-code ${1} >/dev/null 2>&1;
-  if [ ${?} -ne 0 ]; then
+  if ! git ls-remote --exit-code "${1}" > /dev/null 2>&1; then
     echo '';
     echo -e " \e[1;32mInformation :\e[0m Remote ${1} not found, executing '${2}'...";
     ${2};
@@ -134,17 +133,20 @@ function gitraa()
 {
   # Usage: gitraa (Add GitHub Username remote)
 
+  # Variables
+  local git_username;
+
   # Add GitHub Username remote
-  local git_username=$(githubusername 2>/dev/null);
+  git_username=$(githubusername 2> /dev/null);
   git_username=${git_username:-AdrianDC};
-  gitremoteadaptset "${git_username}" "${git_username}" '';
+  gitremoteadaptset "${git_username}" "${git_username}" ;
 }
 
 # === Git Remotes Helpers ===
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
-function gitraoo()  { gitremoteadaptset 'origin' "${1}" ''; }
-function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ''; }
-function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin' ''; }
+function gitraoo()  { gitremoteadaptset 'origin' "${1}" ; }
+function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ; }
+function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin' ; }
 function gitral()   { gitremoteset lineage "${1}"; }
 
 # === Git Remotes set-url Shortcuts ===
@@ -157,7 +159,7 @@ function gitrao()
   # Usage: gitrao (Add LineageOS origin remote)
 
   # Add LineageOS origin remote
-  if [[ "$(pwd)/" =~ "vendor/sony/" ]]; then
+  if [[ "$(pwd)/" == *"vendor/sony/"* ]]; then
     gitremoteadaptset 'origin' 'TheMuppets' '' 'true';
   else
     gitremoteadaptset 'origin' 'LineageOS' '' 'true';
@@ -170,10 +172,10 @@ function gitrax()
   # Usage: gitrax (Add XperiaMultiROM xperia remote)
 
   # Add XperiaMultiROM xperia remote
-  if [[ "$(pwd)/" =~ 'system/extras/multirom' ]]; then
+  if [[ "$(pwd)/" == *'system/extras/multirom'* ]]; then
     gitremoteset 'xperia' https://github.com/XperiaMultiROM/multirom.git;
   else
-    gitremoteadaptset 'xperia' 'XperiaMultiROM' '';
+    gitremoteadaptset 'xperia' 'XperiaMultiROM' ;
   fi;
 }
 
@@ -183,10 +185,10 @@ function gitramd()
   # Usage: gitramd (Add MultiROM-Dev mromdev remote)
 
   # Add MultiROM-Dev mromdev remote
-  if [[ "$(pwd)/" =~ 'system/extras/multirom' ]]; then
+  if [[ "$(pwd)/" == *'system/extras/multirom'* ]]; then
     gitremoteset 'mromdev' https://github.com/multirom-dev/multirom.git;
   else
-    gitremoteadaptset 'mromdev' 'multirom-dev' '';
+    gitremoteadaptset 'mromdev' 'multirom-dev' ;
   fi;
 }
 
@@ -196,11 +198,11 @@ function gitraos()
   # Usage: gitraos (Add sonyxperiadev origin remote)
 
   # Add sonyxperiadev origin remote
-  if [[ "$(pwd)/" =~ 'copyleft' ]]; then
+  if [[ "$(pwd)/" == *'copyleft'* ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/kernel-copyleft.git;
-  elif [[ "$(pwd)/" =~ 'kernel/sony/msm/' ]]; then
+  elif [[ "$(pwd)/" == *'kernel/sony/msm/'* ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/kernel.git;
-  elif [[ "$(pwd)/" =~ 'manifests' ]]; then
+  elif [[ "$(pwd)/" == *'manifests'* ]]; then
     gitremoteset origin https://github.com/sonyxperiadev/local_manifests.git;
   else
     gitremoteadaptset 'origin' 'sonyxperiadev' 'android_' '' 'true';

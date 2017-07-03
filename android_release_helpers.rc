@@ -27,7 +27,7 @@ function outdevcl()
   fi;
 
   # Out path
-  out_device_path="./out/target/product/${1}";
+  out_device_path=./out/target/product/${1};
 
   # Rebuild the build properties
   if [ -f "${out_device_path}/obj/ETC/system_build_prop_intermediates/build.prop" ]; then
@@ -41,8 +41,8 @@ function outdevcl()
   fi;
 
   # Delete relevant outputs
-  rm -rfv "${out_device_path}/"*${1}*".zip";
-  rm -rfv "${out_device_path}/"*${1}*".zip.md5sum";
+  rm -rfv "${out_device_path}/"*"${1}"*".zip";
+  rm -rfv "${out_device_path}/"*"${1}"*".zip.md5sum";
   rm -rfv "${out_device_path}/boot"*;
   rm -rfv "${out_device_path}/combinedroot";
   rm -rfv "${out_device_path}/data";
@@ -76,7 +76,7 @@ function noninja()
   # Run command without ninja
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
-  ${@};
+  "${@}";
   export USE_NINJA=;
   export USE_SOONG_UI=;
 }
@@ -95,7 +95,7 @@ function mmo()
   # Build module without ninja
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
-  mmm ${@};
+  mmm "${@}";
   export USE_NINJA=;
   export USE_SOONG_UI=;
 }
@@ -114,7 +114,7 @@ function mmi()
   # Build & install module without ninja
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
-  adbi mmm ${@};
+  adbi mmm "${@}";
   export USE_NINJA=;
   export USE_SOONG_UI=;
 }
@@ -133,7 +133,7 @@ function mmil()
   # Build & list module without ninja
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
-  adbil mmm ${@};
+  adbil mmm "${@}";
   export USE_NINJA=;
   export USE_SOONG_UI=;
 }
@@ -152,6 +152,6 @@ function noccache()
   # Run command without CCache
   local use_ccache=${USE_CCACHE};
   export USE_CCACHE=0;
-  ${@};
+  "${@}";
   export USE_CCACHE=${use_ccache};
 }

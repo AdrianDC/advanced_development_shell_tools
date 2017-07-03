@@ -16,8 +16,8 @@
 #
 
 # === Repo References Variables ===
-export android_development_shell_tools_referenced_aosp='8960 8996';
-export android_development_shell_tools_referenced_lineage='8960 8996 sodp';
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_REFERENCED_AOSP='8960 8996';
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_REFERENCED_LINEAGE='8960 8996 sodp';
 
 # === Repo Referenced AOSP Devices ===
 function reporeferencedaosp()
@@ -33,7 +33,7 @@ function reporeferencedaosp()
   # Variables
   local repocommon;
   local command_to_run=${1};
-  local referenced_devices=${2:-${android_development_shell_tools_referenced_aosp}};
+  local referenced_devices=${2:-${ANDROID_DEVELOPMENT_SHELL_TOOLS_REFERENCED_AOSP}};
 
   # Execute on common repo
   cdaosp;
@@ -45,7 +45,7 @@ function reporeferencedaosp()
   for device in ${referenced_devices}; do
 
     # Select and verify the path existence
-    cdaosp ${device};
+    cdaosp "${device}";
     if [ ! "$(pwd)" = "${repocommon}" ]; then
 
       # Execute on device repo
@@ -71,7 +71,7 @@ function reporeferencedlineage()
   # Variables
   local repocommon;
   local command_to_run=${1};
-  local referenced_devices=${2:-${android_development_shell_tools_referenced_lineage}};
+  local referenced_devices=${2:-${ANDROID_DEVELOPMENT_SHELL_TOOLS_REFERENCED_LINEAGE}};
 
   # Execute on common repo
   cdlineage;
@@ -83,7 +83,7 @@ function reporeferencedlineage()
   for device in ${referenced_devices}; do
 
     # Select and verify the path existence
-    cdlineage ${device};
+    cdlineage "${device}";
     if [ ! "$(pwd)" = "${repocommon}" ]; then
 
       # Execute on device repo
@@ -100,13 +100,15 @@ function reporefupdate()
 {
   # Usage: reporefupdate (Upload new projects manifests)
 
+  # Variables
+  local current_dir;
+
   # Path backup
-  local current_dir=$(pwd);
+  current_dir=$(pwd);
 
   # Detect and update AOSP references
   for project in sony8960_n sony8960_o sony8960_master sonyaosp aospcaf; do
-    cddevaosp ${project};
-    if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
+    if cddevaosp "${project}" && git add -N ./* && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating AOSP ${project} references...";
       git add -Ap;
@@ -119,8 +121,7 @@ function reporefupdate()
 
   # Detect and update LineageOS references
   for project in sony8960 sony8996 sonysodp; do
-    cddevlineage ${project};
-    if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
+    if cddevlineage "${project}" && git add -N ./* && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
       git add -Ap;
@@ -132,8 +133,7 @@ function reporefupdate()
   done;
 
   # Detect and update common manifests references
-  cddev 'android_development_manifests';
-  if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
+  if cddev 'android_development_manifests' && git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating common manifests references...";
     git add -Ap;
@@ -144,8 +144,7 @@ function reporefupdate()
   fi;
 
   # Detect and update MultiROM references
-  cddevmrom;
-  if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
+  if cddevmrom && git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating MultiROM references...";
     git add -Ap;
@@ -156,8 +155,7 @@ function reporefupdate()
   fi;
 
   # Detect and update TWRP references
-  cddevtwrp;
-  if [ ${?} -eq 0 ] && git add -N * && ! git diff-index --quiet HEAD --; then
+  if cddevtwrp && git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating TWRP references...";
     git add -Ap;
@@ -168,7 +166,7 @@ function reporefupdate()
   fi;
 
   # Path restore
-  cd ${current_dir};
+  cd "${current_dir}";
 }
 
 # === Repo References Syncer ===
@@ -176,13 +174,15 @@ function reporefsync()
 {
   # Usage: reporefsync (Download new projects manifests)
 
+  # Variables
+  local current_dir;
+
   # Path backup
-  local current_dir=$(pwd);
+  current_dir=$(pwd);
 
   # Fetch and update AOSP references
   for project in sony8960_n sony8960_o sony8960_master sonyaosp aospcaf; do
-    cddevaosp ${project};
-    if [ ${?} -eq 0 ]; then
+    if cddevaosp "${project}"; then
       echo '';
       echo " Syncing AOSP ${project} references...";
       git fetch origin local_manifests;
@@ -194,8 +194,7 @@ function reporefsync()
 
   # Fetch and update LineageOS references
   for project in sony8960 sony8996 sonysodp; do
-    cddevlineage ${project};
-    if [ ${?} -eq 0 ]; then
+    if cddevlineage "${project}"; then
       echo '';
       echo " Syncing LineageOS ${project} references...";
       git fetch origin local_manifests;
@@ -206,8 +205,7 @@ function reporefsync()
   done;
 
   # Fetch and update common manifests references
-  cddev 'android_development_manifests';
-  if [ ${?} -eq 0 ]; then
+  if cddev 'android_development_manifests'; then
     echo '';
     echo " Syncing common manifests references...";
     git fetch origin local_manifests;
@@ -217,8 +215,7 @@ function reporefsync()
   fi;
 
   # Fetch and update MultiROM references
-  cddevmrom;
-  if [ ${?} -eq 0 ]; then
+  if cddevmrom; then
     echo '';
     echo " Syncing MultiROM references...";
     git fetch origin local_manifests;
@@ -228,8 +225,7 @@ function reporefsync()
   fi;
 
   # Fetch and update TWRP references
-  cddevtwrp;
-  if [ ${?} -eq 0 ]; then
+  if cddevtwrp; then
     echo '';
     echo " Syncing TWRP references...";
     git fetch origin local_manifests;
@@ -239,7 +235,7 @@ function reporefsync()
   fi;
 
   # Path restore
-  cd ${current_dir};
+  cd "${current_dir}";
 }
 
 # === Repo Referenced Linker ===
@@ -249,14 +245,16 @@ function reporeflinker()
 
   # Variables
   local cnt;
+  local dev_path;
   local key;
   local options;
+  local path;
   local project;
   local target;
 
   # Development path
-  local dev_path=$(getand)/Development;
-  local path=$(pwd);
+  dev_path=$(getand)/Development;
+  path=$(pwd);
 
   # Access local_manifests
   croot;
@@ -278,24 +276,24 @@ function reporeflinker()
     # Create projects selector list
     cnt=0;
     options=('None');
-    project='';
+    project=;
     echo '';
     echo -e " \e[1;37m[ Select a project for '${file}' ]\e[0m";
     echo '';
     echo "   ${cnt}: ${options[${cnt}]}";
     for project in ${dev_path}/*; do
-      cnt=$((${cnt} + 1));
+      cnt=$((cnt + 1));
       options[${cnt}]=${project##*/};
       echo "   ${cnt}: ${options[${cnt}]}";
     done;
     echo '';
-    printf " \e[1;33mProject to use [0 to ${cnt}] :\e[0m ";
-    read key;
+    echo -en  " \e[1;33mProject to use [0 to ${cnt}] :\e[0m ";
+    read -r key;
     echo '';
-    if [ ${key} -gt 0 ] && [ ${key} -le ${cnt} ]; then
+    if [ "${key}" -gt 0 ] && [ "${key}" -le ${cnt} ]; then
       project=${options[${key}]};
     else
-      project='';
+      project=;
     fi;
 
     # If project provided
@@ -309,20 +307,20 @@ function reporeflinker()
       echo '';
       echo "   ${cnt}: ${options[${cnt}]}";
       for target in ${dev_path}/${project}/*.xml; do
-        cnt=$((${cnt} + 1));
+        cnt=$((cnt + 1));
         options[${cnt}]=${target##*/};
         echo "   ${cnt}: ${options[${cnt}]}";
       done;
       echo '';
-      printf " \e[1;33mmanifest target to use [0 to ${cnt}] :\e[0m ";
-      read key;
+      echo -en  " \e[1;33mmanifest target to use [0 to ${cnt}] :\e[0m ";
+      read -r key;
       echo '';
-      if [ ${key} -gt 0 ] && [ ${key} -le ${cnt} ]; then
+      if [ "${key}" -gt 0 ] && [ "${key}" -le ${cnt} ]; then
         target=${options[${key}]};
 
         # Generate symlink to file
-        printf ' ';
-        ln -fsv ${dev_path}/${project}/${target} ./${file};
+        echo -n ' ';
+        ln -fsv "${dev_path}/${project}/${target}" "./${file}";
         echo '';
 
       fi;

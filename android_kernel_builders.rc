@@ -38,7 +38,7 @@ function makekernel()
   if [ -z "${DEFCONFIG_NAME}" ] || [ ! -z "${1}" ]; then
 
     # Usage
-    if [ -z "${1}" ] || ! ls arch/arm*/configs/*${1}*_defconfig 1> /dev/null 2>&1; then
+    if [ -z "${1}" ] || ! ls arch/arm*/configs/*"${1}"*_defconfig 1> /dev/null 2>&1; then
       echo '';
       echo ' Usage: makekernel [platform_device_to_init / clean / mrproper] [toolchain_version] [make_parameters] (Kernel inline compiler)';
       echo '   Details: The kernel needs to be under an Android build tree to select toolchains'
@@ -53,19 +53,20 @@ function makekernel()
     kerneltoolchains "${2}";
 
     # Kernel configuration
-    make ${DEFCONFIG_NAME} O=./.build;
+    make "${DEFCONFIG_NAME}" O=./.build;
   fi;
 
   # Variables
   local time_diff;
-  local make_parameters="${@:3}";
+  local make_parameters=${*:3};
 
   # Kernel build
   time_diff=$(date +%s);
-  make -j$(grep -c ^processor /proc/cpuinfo) ${make_parameters} O=./.build;
+  make_parameters="make ${make_parameters}";
+  ${make_parameters} -j"$(grep -c ^processor /proc/cpuinfo)" O=./.build;
 
   # Show compilation time
-  time_diff=$(($(date +%s)-${time_diff}));
+  time_diff=$(($(date +%s) - time_diff));
   echo '';
   echo -e " \e[1;37m[ Done compiling in ${time_diff} secs ]\e[0m";
   echo '';
@@ -87,7 +88,7 @@ function kerneldefconfig()
   local DEFCONFIG_CHECKS;
   for arch_check in arm arm64; do
     DEFCONFIG_CHECKS=("./arch/${arch_check}/configs/"*"${1}"*);
-    if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS}" ]; then
+    if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS[*]}" ]; then
       export ARCH=${arch_check};
       break;
     fi;
@@ -95,9 +96,12 @@ function kerneldefconfig()
 
   # Defconfig detection
   local DEFCONFIG_PATH=./arch/${ARCH}/configs;
-  local DEFCONFIG_INPUT=("${DEFCONFIG_PATH}/"*"${1}"*);
-  if [ ${#DEFCONFIG_INPUT[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUT}" ]; then
-    if [ ${#DEFCONFIG_INPUT[@]} -eq 1 ]; then
+  local DEFCONFIG_INPUTS=("${DEFCONFIG_PATH}/"*"${1}"*);
+  local DEFCONFIG_INPUT="${DEFCONFIG_INPUTS[*]}";
+
+  # Defconfig multiple files handling
+  if [ ${#DEFCONFIG_INPUTS[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUTS[*]}" ]; then
+    if [ ${#DEFCONFIG_INPUTS[@]} -eq 1 ]; then
       echo '';
       echo '  Error: makedefconf found no defconfigs';
       echo '';
@@ -107,20 +111,20 @@ function kerneldefconfig()
     # Create defconfig selector list
     local cnt=0;
     echo '';
-    echo '  Warning: makedefconf found '${#DEFCONFIG_INPUT[@]}' defconfigs';
+    echo '  Warning: makedefconf found '${#DEFCONFIG_INPUTS[@]}' defconfigs';
     echo '';
-    for defconfig_path in ${DEFCONFIG_INPUT[@]}; do
-      cnt=$((${cnt} + 1));
+    for defconfig_path in "${DEFCONFIG_INPUTS[@]}"; do
+      cnt=$((cnt + 1));
       echo "   ${cnt}: ${defconfig_path}";
     done;
     echo '';
-    printf "  Defconfig to use [1 to ${cnt}] : ";
-    read key;
-    key=$((${key} - 1));
-    if [ ${key} -ge 0 ] && [ ${key} -lt ${cnt} ]; then
-      DEFCONFIG_INPUT=${DEFCONFIG_INPUT[${key}]};
+    echo -n "  Defconfig to use [1 to ${cnt}] : ";
+    read -r key;
+    key=$((key - 1));
+    if [ "${key}" -ge 0 ] && [ "${key}" -lt "${cnt}" ]; then
+      DEFCONFIG_INPUT=${DEFCONFIG_INPUTS[${key}]};
     else
-      DEFCONFIG_INPUT='';
+      DEFCONFIG_INPUT=;
     fi;
 
     # Validate user choice
@@ -133,7 +137,8 @@ function kerneldefconfig()
   fi;
 
   # Kernel defconfig
-  export DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
+  export DEFCONFIG_NAME;
+  DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
 }
 
 # === Kernel Toolchains Selection ===
@@ -157,7 +162,7 @@ function kerneltoolchains()
 
   # CCache environment
   local ccache=;
-  if [ ! -z "${USE_CCACHE}" ] && [ ${USE_CCACHE} -eq 1 ]; then
+  if [ ! -z "${USE_CCACHE}" ] && [ "${USE_CCACHE}" -eq 1 ]; then
     ccache=$(which ccache);
   fi;
 
@@ -232,7 +237,7 @@ function kerneltoolchains()
     fi;
 
     # Cross-Compiler environment variable
-    if [[ ${cross_compiler} =~ 'arm-linux-androideabi-' ]]; then
+    if [[ ${cross_compiler} == *'arm-linux-androideabi-'* ]]; then
       export CROSS_COMPILE="${ccache} arm-linux-androideabi-";
     else
       export CROSS_COMPILE="${ccache} arm-eabi-";
@@ -241,7 +246,7 @@ function kerneltoolchains()
   echo '';
 
   # Path environment variable
-  if [[ ! "${PATH}" =~ "${cross_compiler}" ]]; then
+  if [[ ! "${PATH}" == *"${cross_compiler}"* ]]; then
     export PATH=${cross_compiler}:${PATH};
   fi;
 }

@@ -24,9 +24,7 @@ function autoreleasemultiromsony8996()
   cdand;
   cdmultirom;
   repomrom 'dora';
-  for device in kagura; do
-    repomrom "${device}" 'nosync';
-  done;
+  repomrom 'kagura' 'nosync';
 }
 
 # === TWRP Sony 8996 Automatic Releaser ===
@@ -38,7 +36,5 @@ function autoreleasetwrpsony8996()
   cdand;
   cdtwrp;
   repotwrp 'dora';
-  for device in kagura; do
-    repotwrp "${device}" 'nosync';
-  done;
+  repotwrp 'kagura' 'nosync';
 }

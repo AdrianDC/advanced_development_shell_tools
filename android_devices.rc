@@ -23,13 +23,14 @@ function androiddevicestarget()
   # Variables
   local request=${1};
   local device=${2};
-  local platform='';
-  local partition='';
-  local target_devices="dora kagura kugo suzu huashan hayabusa mint tsubasa shuang";
+  local fullpath;
+  local platform=;
+  local partition=;
+  local target_devices='dora kagura kugo suzu huashan hayabusa mint tsubasa shuang';
 
   # Ignore unsupported devices
-  if [[ ! "${target_devices}" =~ "${device}" ]]; then
-    device='';
+  if [[ ! "${target_devices}" == *"${device}"* ]]; then
+    device=;
   fi;
 
   # Autodetect
@@ -43,10 +44,10 @@ function androiddevicestarget()
     device=${ANDROID_DEVICE_TARGET};
   fi;
   if [ -z "${device}" ]; then
-    local fullpath=$(pwd);
+    fullpath=$(pwd);
     for devicename in ${target_devices}; do
-      if [[ "${fullpath}" =~ "${devicename}" ]]; then
-        device="${devicename}";
+      if [[ "${fullpath}" == *"${devicename}"* ]]; then
+        device=${devicename};
       fi;
     done;
   fi;
@@ -54,8 +55,8 @@ function androiddevicestarget()
     >&2 echo '';
     >&2 echo ' export TARGET_PRODUCT=device_name is empty';
     >&2 echo '';
-    >&2 printf " > Device target [${target_devices}] : ";
-    read device;
+    >&2 echo -n " > Device target [${target_devices}] : ";
+    read -r device;
     >&2 echo '';
     export ANDROID_DEVICE_TARGET=${device};
   fi;
@@ -63,9 +64,9 @@ function androiddevicestarget()
   # Platform
   case "${device}" in
     dora|kagura|kugo|suzu)
-      platform='/dev/block/bootdevice/by-name';;
+      platform=/dev/block/bootdevice/by-name;;
     huashan|hayabusa|mint|tsubasa|shuang|*)
-      platform='/dev/block/platform/msm_sdcc.1/by-name';;
+      platform=/dev/block/platform/msm_sdcc.1/by-name;;
   esac;
 
   # Input request
@@ -80,36 +81,36 @@ function androiddevicestarget()
     boot)
       case "${device}" in
         huashan|hayabusa|mint|tsubasa)
-          partition='Kernel';;
+          partition=Kernel;;
         dora|f8131|shuang|*)
-          partition='boot';;
+          partition=boot;;
       esac;;
 
     # FOTAKernel partition
     fota)
-      partition='FOTAKernel';;
+      partition=FOTAKernel;;
 
     # Recovery partition
     recovery)
       case "${device}" in
         dora|f8131)
-          partition='recovery';;
+          partition=recovery;;
         huashan|hayabusa|mint|tsubasa|shuang|*)
-          partition='FOTAKernel';;
+          partition=FOTAKernel;;
       esac;;
 
     # System partition
     system)
       case "${device}" in
         huashan|hayabusa|mint|tsubasa)
-          partition='System';;
+          partition=System;;
         dora|f8131|shuang|*)
-          partition='system';;
+          partition=system;;
       esac;;
 
     # Unknown partition
     *)
-      partition='unknown';;
+      partition=unknown;;
   esac;
 
   # Result
@@ -144,25 +145,27 @@ function repogetdevice()
   # Usage: repogetdevice (Detect device name from repo environment)
 
   # Variables
-  local cwd=$(pwd);
+  local cwd;
   local product=${TARGET_PRODUCT#*_};
 
   # Repo root
+  cwd=$(pwd);
   croot;
 
   # Check device
-  if ! ls ./device/*/${product} 1> /dev/null 2>&1; then
+  if ! ls './device/'*"/${product}" 1> /dev/null 2>&1; then
 
     # Analyse devices
-    for device_path in $(find ./device/ -name cm.mk -or -name lineage.mk -or -name vendorsetup.sh); do
-      if grep -q ${TARGET_PRODUCT} ${device_path}; then
-        product=$(basename $(dirname ${device_path}));
+    while IFS= read -r -d '' device_path; do
+      if grep -q "${TARGET_PRODUCT}" "${device_path}"; then
+        product=$(dirname "${device_path}");
+        product=$(basename "${product}");
       fi;
-    done;
+    done < <(find ./device/ -name cm.mk -or -name lineage.mk -or -name vendorsetup.sh);
 
   fi;
 
   # Result
-  echo ${product};
-  cd ${cwd};
+  echo "${product}";
+  cd "${cwd}";
 }

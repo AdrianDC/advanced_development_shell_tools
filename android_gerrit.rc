@@ -22,22 +22,22 @@
 function gerritreview()
 {
   # Variables
-  local gerrit_url="${1}";
-  local gerrit_organisation="${2}";
-  local gerrit_type="${3}";
-  local gerrit_branch="${4:-$(repogetbranch)}";
-  local gerrit_confirm_twice='';
-  local gerrit_project='';
-  local gerrit_remote='';
+  local gerrit_url=${1};
+  local gerrit_organisation=${2};
+  local gerrit_type=${3};
+  local gerrit_branch=${4:-$(repogetbranch)};
+  local gerrit_confirm_twice=;
+  local gerrit_project=;
+  local gerrit_remote=;
 
   # Handle gerrit commit types
   case "${gerrit_type}" in
     drafts)
       ;;
     for|heads)
-      gerrit_confirm_twice='true';;
+      gerrit_confirm_twice=true;;
     *)
-      gerrit_type='';;
+      gerrit_type=;;
   esac;
 
   # Usage
@@ -76,14 +76,14 @@ function gerritreview()
                    | cut -f 2 \
                    | sed 's/.*\/\([^.]*\).* .*/\1/');
     if [ ! "${gerrit_organisation}" = '.' ]; then
-      gerrit_project="${gerrit_organisation}/${gerrit_project}";
+      gerrit_project=${gerrit_organisation}/${gerrit_project};
     fi;
   fi;
 
   # Check review statistics
-  git fetch ${gerrit_url}/${gerrit_project} refs/heads/${gerrit_branch};
+  git fetch "${gerrit_url}/${gerrit_project}" "refs/heads/${gerrit_branch}";
   echo '';
-  printf ' [Gerrit branch] New changes - missing : ';
+  echo -n ' [Gerrit branch] New changes - missing : ';
   git rev-list --left-right --count HEAD...FETCH_HEAD;
 
   # Command creation
@@ -92,15 +92,15 @@ function gerritreview()
   # Command confirmation
   echo '';
   echo " ${command}";
-  printf '  > Proceed with review upload (y/N/t) ? ';
-  read key;
+  echo -n '  > Proceed with review upload (y/N/t) ? ';
+  read -r key;
 
   # Set a topic
   if [ "${key}" = 't' ] || [ "${key}" = 'T' ]; then
-    printf '  > Topic to set on gerrit : ';
-    read key;
-    command="${command}/${key}";
-    key='y';
+    echo -n '  > Topic to set on gerrit : ';
+    read -r key;
+    command=${command}/${key};
+    key=y;
   fi;
 
   # Abort if denied
@@ -111,8 +111,8 @@ function gerritreview()
 
   # Command second confirmation
   if [ ! -z "${gerrit_confirm_twice}" ]; then
-    printf '  > Are you sure (y/N) ? ';
-    read key;
+    echo -n '  > Are you sure (y/N) ? ';
+    read -r key;
     echo '';
 
     # Abort if denied
@@ -161,7 +161,7 @@ alias gitprdh='gerritreview http://review.lineageos.org LineageOS drafts';
 alias gitpg='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS heads';
 alias gitpgh='gerritreview http://review.lineageos.org LineageOS heads';
 alias gitprg='gitpr; gitpg';
-alias gitprgy='printf "y\ny\n" | gitpr; printf "y\ny" | gitpg';
+alias gitprgy='echo -n "y\ny\n" | gitpr; echo -n "y\ny" | gitpg';
 
 # === Gerrit AOSP ===
 alias gitpraosp='gerritreview https://android.googlesource.com aosp for';

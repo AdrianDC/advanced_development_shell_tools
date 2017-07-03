@@ -31,16 +31,17 @@ function binaryeditor()
   fi;
 
   # Variables
-  local PATTERN="${1}";
-  local FILES="${2:-.}";
-  local REPLACEMENT="${3}";
-  local REPLACE='';
-  local STRINGS='';
+  local PATTERN=${1};
+  local FILES=${2:-.};
+  local REPLACEMENT=${3};
+  local REPLACE=;
+  local STRINGS=;
+  local strings_param;
   PATTERN=${PATTERN//\*/.\*};
   PATTERN=${PATTERN//./.};
 
   # Handle strings variants
-  local strings_param=$(stringsparams);
+  strings_param=$(stringsparams);
 
   # Headers
   echo '';
@@ -52,47 +53,46 @@ function binaryeditor()
   echo '';
 
   # Search files
-  for FILE in $(find ${FILES} -not -path "*.git/*" -not -path "*.repo/*" | sort); do
+  for FILE in $(find "${FILES}" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
 
     # File / directory detection
     FILE=$(readlink -f "${FILE}");
-    if [ -d ${FILE} ]; then
+    if [ -d "${FILE}" ]; then
       continue;
     fi;
 
     # Replacement mode
     if [ ! -z "${REPLACEMENT}" ]; then
-      STRINGS=$(strings ${strings_param} ${FILE} \
+      STRINGS=$(strings "${strings_param}" "${FILE}" \
               | grep "${PATTERN}" \
               | sort -u -r);
 
       # Information found
       if [ ! -z "${STRINGS}" ]; then
-        printf "   \e[1;37m${FILE} :\e[0m ${STRINGS} ";
-        for OLD_STRING in ${STRINGS};
-        do
+        echo -en  "   \e[1;37m${FILE} :\e[0m ${STRINGS} ";
+        for OLD_STRING in ${STRINGS}; do
           NEW_STRING=${OLD_STRING//${PATTERN}/${REPLACEMENT}};
 
           # String conversions
-          OLD_STRING_HEX="$(echo -n ${OLD_STRING} | xxd -g 0 -u -ps -c 256)00";
-          NEW_STRING_HEX="$(echo -n ${NEW_STRING} | xxd -g 0 -u -ps -c 256)00";
+          OLD_STRING_HEX=$(echo -n "${OLD_STRING}" | xxd -g 0 -u -ps -c 256)00;
+          NEW_STRING_HEX=$(echo -n "${NEW_STRING}" | xxd -g 0 -u -ps -c 256)00;
 
           # Dimensions security
           if [ ${#NEW_STRING_HEX} -le ${#OLD_STRING_HEX} ]; then
             while [ ${#NEW_STRING_HEX} -lt ${#OLD_STRING_HEX} ];
             do
-              NEW_STRING_HEX="${NEW_STRING_HEX}00";
+              NEW_STRING_HEX=${NEW_STRING_HEX}00;
             done;
 
             # Modification confirmation
-            printf '\e[1;36m[y/N] \e[0m';
-            read -s -d'' -s -n1 REPLACE;
+            echo -en  '\e[1;36m[y/N] \e[0m';
+            read -r -s -d'' -s -n1 REPLACE;
             if [[ "${REPLACE}" == 'y' || "${REPLACE}" == 'Y' ]]; then
-              hexdump -ve '1/1 "%.2X"' ${FILE} | \
+              hexdump -ve '1/1 "%.2X"' "${FILE}" | \
                 sed "s/${OLD_STRING_HEX}/${NEW_STRING_HEX}/g" | \
-                xxd -r -p > ${FILE}.tmp;
-              chmod --reference ${FILE} ${FILE}.tmp;
-              mv ${FILE}.tmp ${FILE};
+                xxd -r -p > "${FILE}.tmp";
+              chmod --reference "${FILE}" "${FILE}.tmp";
+              mv "${FILE}.tmp" "${FILE}";
               echo -e '\e[1;32mDone!\e[0m';
             else
               echo -e '\e[1;33mIgnored.\e[0m';
@@ -106,8 +106,8 @@ function binaryeditor()
 
       # Information not found
       else
-        STRINGS=$(strings ${strings_param} ${FILE} \
-                | grep ${REPLACEMENT} \
+        STRINGS=$(strings "${strings_param}" "${FILE}" \
+                | grep "${REPLACEMENT}" \
                 | sort -u -r);
         if [ ! -z "${STRINGS}" ]; then
           echo -e "   \e[1;37m${FILE}:\e[0m ${REPLACEMENT} \e[1;33mFound.\e[0m";
@@ -116,7 +116,7 @@ function binaryeditor()
 
     # Search mode
     else
-      STRINGS=$(strings ${strings_param} ${FILE} \
+      STRINGS=$(strings "${strings_param}" "${FILE}" \
               | grep "${PATTERN}" \
               | sort -u -r \
               | tr '\n' ',');
@@ -141,7 +141,7 @@ function binarysearch()
   fi;
 
   # Run binaryeditor in search mode
-  binaryeditor "${1}" "${2}" '';
+  binaryeditor "${1}" "${2}" ;
 }
 
 # === Libraries Hunter ===
@@ -156,30 +156,31 @@ function librarieshunter()
   fi;
 
   # Variables
-  local FILES="${1}";
-  local FILE_NAME='';
-  local FILE_REFERENCED='';
-  local SYSTEM_PATH='';
-  local LIB_ARCH='';
-  local LIB_NAME='';
-  local DIR_NAMES='';
-  local DIR_COMMON_NAMES='';
-  local DIR_VENDOR_NAMES='';
+  local FILES=${1};
+  local FILE_NAME=;
+  local FILE_REFERENCED=;
+  local SYSTEM_PATH=;
+  local LIB_ARCH=;
+  local LIB_NAME=;
+  local DIR_NAMES=;
+  local DIR_COMMON_NAMES=;
+  local DIR_VENDOR_NAMES=;
+  local strings_param;
 
   # Handle strings variants
-  local strings_param=$(stringsparams);
+  strings_param=$(stringsparams);
 
   # Scan the libraries
   echo '';
   echo -e " \e[1;31m=== Searching missing libraries in ${FILES} ===\e[0m";
   echo '';
-  for FILE in $(find ${FILES} -not -path "*.git/*" -not -path "*.repo/*" | sort);
+  for FILE in $(find "${FILES}" -not -path "*.git/*" -not -path "*.repo/*" | sort);
   do
     FILE=$(readlink -f "${FILE}");
-    if [ -d ${FILE} ]; then continue; fi;
+    if [ -d "${FILE}" ]; then continue; fi;
 
     # Internal references
-    STRINGS=$(strings ${strings_param} ${FILE} \
+    STRINGS=$(strings "${strings_param}" "${FILE}" \
             | grep "\\.so" \
             | sort -u -r \
             | tr '\n' ',');
@@ -191,34 +192,34 @@ function librarieshunter()
       for LIB in ${STRINGS};
       do
         if [[ ! "${LIB}" == *'lib'*'.so' ]]; then continue; fi;
-        if [[ "${LIB}" =~ '%' ]]; then continue; fi;
+        if [[ "${LIB}" == *'%'* ]]; then continue; fi;
 
-        LIB_NAME=$(basename ${LIB});
+        LIB_NAME=$(basename "${LIB}");
         SYSTEM_PATH=${FILES%system\/*}system;
         LIB_ARCH=${FILES//vendor\//};
         LIB_ARCH=${LIB_ARCH/*system\/lib};
         LIB_ARCH=${LIB_ARCH%%\/*};
-        DIR_COMMON_NAMES="${SYSTEM_PATH}/lib${LIB_ARCH}";
-        DIR_VENDOR_NAMES="${SYSTEM_PATH}/vendor/lib${LIB_ARCH}";
+        DIR_COMMON_NAMES=${SYSTEM_PATH}/lib${LIB_ARCH};
+        DIR_VENDOR_NAMES=${SYSTEM_PATH}/vendor/lib${LIB_ARCH};
         DIR_NAMES="${DIR_COMMON_NAMES} ${DIR_COMMON_NAMES}/*/ ${DIR_VENDOR_NAMES} ${DIR_VENDOR_NAMES}/*/";
-        if [ -z "$(find ${DIR_NAMES} -name ${LIB_NAME})" ]; then
+        if [ -z "$(find "${DIR_NAMES}" -name "${LIB_NAME}")" ]; then
           echo -e "    \e[1;31m- Missing reference: \e[1;31m${LIB_NAME}\e[0m";
         fi;
       done;
 
       # Search unused library
       FILE_NAME=$(basename "${FILE}");
-      FILE_REFERENCED='';
-      for FILE_SUB in $(find ${FILES} -not -path "*.git/*" -not -path "*.repo/*" | sort);
+      FILE_REFERENCED=;
+      for FILE_SUB in $(find "${FILES}" -not -path "*.git/*" -not -path "*.repo/*" | sort);
       do
         FILE_SUB=$(readlink -f "${FILE_SUB}");
         if [ -d "${FILE_SUB}" ] || [ "${FILE}" = "${FILE_SUB}" ]; then continue; fi;
-        STRINGS_SUB=$(strings ${strings_param} ${FILE_SUB} \
+        STRINGS_SUB=$(strings "${strings_param}" "${FILE_SUB}" \
                     | grep "${FILE_NAME}" \
                     | sort -u -r \
                     | tr '\n' ',');
         if [ ! -z "${STRINGS_SUB}" ]; then
-          FILE_REFERENCED='true';
+          FILE_REFERENCED=true;
           break;
         fi;
       done;
@@ -237,17 +238,21 @@ function haste()
 
   # Based upon https://github.com/seejohnrun/haste-client
 
+  # Variables
+  local tmp;
+  local url;
+
   # Get output
-  local tmp=$(mktemp);
+  tmp=$(mktemp);
   if [ ! -z "${1}" ] && [ -f "${1}" ]; then
-    cat "${1}" | tee ${tmp};
+    tee "${tmp}" < "${1}";
   else
-    cat | tee ${tmp};
+    cat | tee "${tmp}";
   fi;
   echo '';
 
   # Upload to hastebin
-  local url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" https://hastebin.com/documents \
+  url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" https://hastebin.com/documents \
       | awk -F '"' '{ print "http://hastebin.com/"$4; }');
   echo " haste: ${url}";
 
@@ -256,7 +261,7 @@ function haste()
   echo '' &
   sleep 1;
   echo '';
-  rm ${tmp};
+  rm "${tmp}";
 }
 
 # === Overlay Compare ===
@@ -274,7 +279,7 @@ function overlaycompare()
   local source_path;
 
   # Loop through files
-  for overlay_path in $(find ${*} -type f); do
+  while IFS= read -r -d '' overlay_path; do
 
     # Launch meld on both paths
     source_path=$(echo "../../../${overlay_path}" \
@@ -282,5 +287,5 @@ function overlaycompare()
                 | sed 's/overlay[^\/]*\///');
     meld "${overlay_path}" "${source_path}";
 
-  done;
+  done < <(find "${@}" -type f);
 }

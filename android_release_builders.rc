@@ -36,28 +36,34 @@ function romautorelease()
     return;
   fi;
 
-  # Logs path handling
-  local rom_logs="${ANDROID_DEV_DRIVE}/Logs";
+  # Variables
+  local rom_device=${1};
+  local rom_name=${2};
+  local rom_params=${3};
+  local cwd;
+  local rom_logs;
   local rom_logs_output;
-  mkdir -p "${rom_logs}";
-
-  # Access ROM root
-  local cwd=$(pwd);
-  croot;
-
-  # ROM variables
-  local rom_device="${1}";
-  local rom_name="${2}";
-  local rom_params="${3}";
-  local rom_phone="${rom_device^}";
-  local rom_target=$(codenametotarget "${rom_device}");
+  local rom_phone;
+  local rom_target;
   local rom_tag;
   local rom_upload;
 
+  # Logs path handling
+  rom_logs=${ANDROID_DEV_DRIVE}/Logs;
+  mkdir -p "${rom_logs}";
+
+  # Access ROM root
+  cwd=$(pwd);
+  croot;
+
+  # ROM variables
+  rom_phone=${rom_device^};
+  rom_target=$(codenametotarget "${rom_device}");
+
   # AOSP 7.1
   if [[ "${rom_name}" == 'aosp' ]]; then
-    rom_tag='AOSP71';
-    rom_upload="${rom_phone}/AOSP-7.x";
+    rom_tag=AOSP71;
+    rom_upload=${rom_phone}/AOSP-7.x;
 
     # Handle Sony AOSP kernel build
     if [ ! "${rom_device}" = "${rom_target}" ]; then
@@ -66,24 +72,24 @@ function romautorelease()
 
   # LineageOS 14.1
   elif [[ "${rom_name}" == 'lineage' ]]; then
-    rom_tag='LINEAGE141';
-    rom_target="${rom_device}";
-    rom_upload="${rom_phone}/LineageOS-14.x";
+    rom_tag=LINEAGE141;
+    rom_target=${rom_device};
+    rom_upload=${rom_phone}/LineageOS-14.x;
 
   # AOSP-CAF 7.x
   elif [[ "${rom_name}" == 'caf' ]]; then
-    rom_tag='CAF71';
-    rom_upload="${rom_phone}/AOSP-CAF-7.x";
+    rom_tag=CAF71;
+    rom_upload=${rom_phone}/AOSP-CAF-7.x;
 
   # LegacyXperia 14.1
   elif [[ "${rom_name}" == 'lx' ]]; then
-    rom_tag='LX141';
-    rom_upload="LegacyXperia/${rom_device}/LineageOS-14.x";
+    rom_tag=LX141;
+    rom_upload=LegacyXperia/${rom_device}/LineageOS-14.x;
 
   # ResurrectionRemix Nougat
   elif [[ "${rom_name}" == 'rr' ]]; then
-    rom_tag='RR71';
-    rom_upload="${rom_phone}/ResurrectionRemix-N";
+    rom_tag=RR71;
+    rom_upload=${rom_phone}/ResurrectionRemix-N;
 
   # Automatic per-device selection
   else
@@ -101,7 +107,7 @@ function romautorelease()
   fi;
 
   # Ignore the build
-  if [[ "${rom_params}" =~ 'nobuild' ]]; then
+  if [[ "${rom_params}" == *'nobuild'* ]]; then
     echo ' Cleaning skipped...';
 
   # When option enabled, clean device out folder
@@ -112,7 +118,7 @@ function romautorelease()
     echo '';
 
   # Delete the devices relevant results
-  elif [[ ! "${rom_params}" =~ 'nowipe' ]]; then
+  elif [[ ! "${rom_params}" == *'nowipe'* ]]; then
     outdevcl "${rom_device}";
   fi;
 
@@ -122,54 +128,54 @@ function romautorelease()
   fi;
 
   # CPU handling
-  if [[ "${rom_params}" =~ 'j1' ]]; then
+  if [[ "${rom_params}" == *'j1'* ]]; then
     build_cpu_count=1;
-  elif [[ "${rom_params}" =~ 'j2' ]]; then
+  elif [[ "${rom_params}" == *'j2'* ]]; then
     build_cpu_count=2;
   else
     build_cpu_count=$(grep -c ^processor /proc/cpuinfo);
   fi;
 
   # Compilation logs
-  rom_logs_output="${rom_logs}/Build.${rom_device}.${rom_tag}.log";
+  rom_logs_output=${rom_logs}/Build.${rom_device}.${rom_tag}.log;
 
   # Ignore the build
-  if [[ "${rom_params}" =~ 'nobuild' ]]; then
+  if [[ "${rom_params}" == *'nobuild'* ]]; then
     echo ' Build skipped...';
 
   # Build Android AOSP
-  elif [[ "${rom_tag}" =~ 'AOSP71' ]]; then
+  elif [[ "${rom_tag}" == *'AOSP71'* ]]; then
     source ./build/envsetup.sh;
-    lunch aosp_${rom_target}-userdebug;
-    make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
+    lunch "aosp_${rom_target}-userdebug";
+    make -j"${build_cpu_count}" otapackage | tee "${rom_logs_output}";
 
   # Build Android AOSP-CAF
-  elif [[ "${rom_tag}" =~ 'CAF' ]]; then
+  elif [[ "${rom_tag}" == *'CAF'* ]]; then
     source ./build/envsetup.sh;
-    lunch aospcaf_${rom_target}-userdebug;
-    make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
+    lunch "aospcaf_${rom_target}-userdebug";
+    make -j"${build_cpu_count}" otapackage | tee "${rom_logs_output}";
 
   # Build Android ResurrectionRemix
-  elif [[ "${rom_tag}" =~ 'RR' ]]; then
+  elif [[ "${rom_tag}" == *'RR'* ]]; then
     export RR_BUILDTYPE=OFFICIAL;
     repos "${rom_target}";
-    brunch "${rom_target}" | tee ${rom_logs_output};
+    brunch "${rom_target}" | tee "${rom_logs_output}";
 
   # Build Android Sony AOSP
-  elif [[ "${rom_tag}" =~ 'SONY' ]]; then
+  elif [[ "${rom_tag}" == *'SONY'* ]]; then
     source ./build/envsetup.sh;
-    lunch aosp_${rom_target}-userdebug;
-    make -j${build_cpu_count} otapackage | tee ${rom_logs_output};
+    lunch "aosp_${rom_target}-userdebug";
+    make -j"${build_cpu_count}" otapackage | tee "${rom_logs_output}";
 
   # Build Android LegacyXperia
-  elif [[ "${rom_tag}" =~ 'LX' ]]; then
+  elif [[ "${rom_tag}" == *'LX'* ]]; then
     repos "${rom_target}";
-    brunch "${rom_target}" | tee ${rom_logs_output};
+    brunch "${rom_target}" | tee "${rom_logs_output}";
 
   # Build Android LineageOS
   else
     repos "${rom_target}";
-    brunch "${rom_target}" | tee ${rom_logs_output};
+    brunch "${rom_target}" | tee "${rom_logs_output}";
   fi;
 
   # When option enabled, use debuggable bootimages
@@ -190,14 +196,14 @@ function romautorelease()
       gnome-terminal -x bash -c "\
         source $(shtoolsget)/android_development_shell_tools.rc;\
         devuplrom \"${rom_device}\" \"${rom_upload}\"; \
-        if [ ! -z "\${android_development_shell_tools_uploaded_file}" ]; then \
+        if [ ! -z \"\${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}\" ]; then \
           pushb \"$(hostname): ${rom_tag} for ${rom_device} uploaded\"; \
         fi";
 
     # Upload inline
     else
       devuplrom "${rom_device}" "${rom_upload}";
-      if [ ! -z "${android_development_shell_tools_uploaded_file}" ]; then
+      if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}" ]; then
         pushb "$(hostname): ${rom_tag} for ${rom_device} uploaded";
       fi;
     fi;
@@ -237,13 +243,13 @@ function autorelease()
   for line_function in $(typeset -F | grep ' autorelease' | cut -d' ' -f 3 | grep -v '^autorelease$'); do
 
     # Parse usage
-    line_usage=$(grep -a "Usage: ${line_function} " ${android_development_shell_tools_sources[@]});
+    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
     line_usage=${line_usage#*\(};
     line_usage=${line_usage%\)*};
-    list_functions+=(${line_function});
+    list_functions+=("${line_function}");
 
     # Item choice
     cnt=$((cnt + 1));
@@ -253,8 +259,8 @@ function autorelease()
   echo '';
 
   # Request user input
-  printf " > Command to run [1-${cnt}] : ";
-  read key;
+  echo -n " > Command to run [1-${cnt}] : ";
+  read -r key;
 
   # Execute requested function
   ${list_functions[${key}]};

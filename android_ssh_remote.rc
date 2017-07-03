@@ -56,17 +56,20 @@ function sshsync()
   fi;
 
   # Variables
-  local mode="${1}";
-  local local_path="${2}";
-  local remote_path="${3}";
-  local remote_ssh=$(sshremote);
+  local mode=${1};
+  local local_path=${2};
+  local remote_path=${3};
+  local remote_ssh;
+
+  # Initialize variables
+  remote_ssh=$(sshremote);
 
   # Upload sync execution
   if [ "${mode}" = 'up' ]; then
-    rsync -av --delete "${local_path}" "${remote_ssh}:${remote_path}" ${@:4};
+    rsync -av --delete "${local_path}" "${remote_ssh}:${remote_path}" "${@:4}";
 
   # Download sync execution
   else
-    rsync -av --delete "${remote_ssh}:${remote_path}" "${local_path}" ${@:4};
+    rsync -av --delete "${remote_ssh}:${remote_path}" "${local_path}" "${@:4}";
   fi;
 }

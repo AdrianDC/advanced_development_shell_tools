@@ -21,7 +21,7 @@ function gitfetchtreset()
   # Usage: gitfetchtreset [remote] [branch] (Git fetch and reset hard)
 
   # Fetch and reset hard
-  git fetch ${1:-$(githubusername)} ${2:-$(repogetbranch)};
+  git fetch "${1:-$(githubusername)}" "${2:-$(repogetbranch)}";
   git reset FETCH_HEAD --hard;
 }
 
@@ -37,12 +37,12 @@ function gitfcu()
   fi;
 
   # Variables
-  link="${1}";
+  link=${1};
 
   if [ ! -z "${2}" ]; then
-    branch="${2}";
+    branch=${2};
   else
-    branch='cm-14.1';
+    branch=cm-14.1;
   fi;
 
   if [ -z "${link}" ]; then
@@ -50,7 +50,7 @@ function gitfcu()
     return;
   fi;
 
-  git fetch ${link} ${branch};
+  git fetch "${link}" "${branch}";
   echo '';
   git reset --hard FETCH_HEAD;
 }

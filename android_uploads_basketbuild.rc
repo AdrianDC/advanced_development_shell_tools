@@ -23,8 +23,8 @@ function __shtools_credentials_basketbuild()
   # BasketBuild Upload Credentials
   export FTPUploadUserUrl='basketbuild.com';
   export FTPUploadUserName='username.basketbuild.com';
-  export FTPUploadPassword='';
-  export FTPUploadPath='';
+  export FTPUploadPassword=;
+  export FTPUploadPath=;
 
   # Create  ~/.bash_android.uploadftp.basketbuild.rc with the exports to override the credentials
   source ~/.bash_android.uploadftp.basketbuild.rc;

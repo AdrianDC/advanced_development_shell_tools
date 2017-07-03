@@ -26,23 +26,29 @@ function repoprojectscleaner()
     return;
   fi;
 
+  # Variables
+  local git_folders;
+  local git_projects;
+  local git_project_objects;
+
   # Search
   echo '';
   echo ' Starting the git folders detection...';
   echo '';
-  local git_folders=$(repo forall -c 'printf "$(dirname $(readlink -f .git/info)) ${REPO_PATH} ";');
+  # shellcheck disable=SC2016
+  git_folders=$(repo forall -c 'echo -n "$(dirname $(readlink -f .git/info)) ${REPO_PATH} ";');
 
   # Analyse
   echo '';
   echo ' Studying the .repo /project-objects folder...';
   echo '';
-  local git_projects=$(find .repo/project-objects -name '*.git');
+  git_projects=$(find .repo/project-objects -name '*.git');
   for git_path in ${git_projects}; do
-    if [[ ! "${git_folders}" =~ "${git_path}" ]]; then
-      printf "  Objects ${git_path} are unreferenced. Delete [y/N] ? ";
-      read key;
+    if [[ ! "${git_folders}" == *"${git_path}"* ]]; then
+      echo -n "  Objects ${git_path} are unreferenced. Delete [y/N] ? ";
+      read -r key;
       if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-        rm -rf ${git_path};
+        rm -rf "${git_path}";
       fi;
     fi;
   done;
@@ -52,15 +58,15 @@ function repoprojectscleaner()
   echo '';
   echo ' Studying the .repo/projects folder...';
   echo '';
-  local git_project_objects=$(find .repo/project-objects -name '*.git');
+  git_project_objects=$(find .repo/project-objects -name '*.git');
   cd .repo/projects/;
-  local git_projects=$(find . -name '*.git' | cut -c 3-);
+  git_projects=$(find . -name '*.git' | cut -c 3-);
   for git_path in ${git_project_objects}; do
-    if [[ ! "${git_project_objects}" =~ "${git_path}" ]]; then
+    if [[ ! "${git_project_objects}" == *"${git_path}"* ]]; then
       echo "  Project ${git_path} is unreferenced. Deleting [y/N] ? ";
-      read key;
+      read -r key;
       if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
-        rm -rf ${git_path};
+        rm -rf "${git_path}";
       fi;
     fi;
   done;
@@ -84,21 +90,22 @@ function repotagscleaner()
   echo '';
   echo ' Starting the projects analysis...';
   echo '';
-  repo forall -c 'tags_output=$(git tag 2>&1 \
+  # shellcheck disable=SC2016
+  repo forall -c 'tags_output=$(git tag 2>&1
                               | grep -v "${REPO_RREV##*/}$");
                   if [ ! -z "${tags_output}" ]; then
-                    echo '';
+                    echo "";
                     echo " Project: ${REPO_PROJECT} [${REPO_REMOTE}/${REPO_RREV##*/}]";
-                    echo '';
-                    git tag \
-                        | grep -v ${REPO_RREV##*/} \
+                    echo "";
+                    git tag
+                        | grep -v ${REPO_RREV##*/}
                         | xargs git tag -d 2> /dev/null;
-                    tags_output=$(git tag 2>&1 \
+                    tags_output=$(git tag 2>&1
                               | grep -v "${REPO_RREV##*/}$");
                     if [ ! -z "${tags_output}" ]; then
                       git fetch --all --prune --tags;
-                      git tag \
-                          | grep -v ${REPO_RREV##*/} \
+                      git tag
+                          | grep -v ${REPO_RREV##*/}
                           | xargs git tag -d 2> /dev/null;
                     fi;
                     git fetch --prune ${REPO_REMOTE} ${REPO_RREV##*/};
@@ -118,9 +125,10 @@ function repoheadscleaner()
 
   # Cleanup repo projects refs/ contents
   echo '';
+  # shellcheck disable=SC2016
   repo forall -c 'echo " Project ${REPO_PROJECT} : ${REPO_REMOTE}/${REPO_RREV##*/}";
-                  git show-ref 2>&1 >/dev/null | \
-                    while read line; do
+                  git show-ref 2>&1 > /dev/null |
+                    while read -r line; do
                      refs_path=$(echo ${line} | sed "s/.*\(refs.*\) does.*/\1/");
                      echo "  Deleting ${refs_path}...";
                      rm .git/${refs_path} .git/logs/${refs_path};
@@ -141,11 +149,11 @@ function reposyrm()
 
   # Perform actions
   local project_path;
-  for project_paths in ${@}; do
+  for project_paths in "${@}"; do
     project_path=${project_paths%/};
-    rm -rfv ${project_path};
-    rm -rfv .repo/projects/${project_path}.git;
-    reposy ${project_path};
+    rm -rfv "${project_path}";
+    rm -rfv ".repo/projects/${project_path}.git";
+    reposy "${project_path}";
     echo '';
   done;
 }
@@ -163,12 +171,12 @@ function reposyrmf()
 
   # Perform actions
   local project_path;
-  for project_paths in ${@}; do
+  for project_paths in "${@}"; do
     project_path=${project_paths%/};
-    sudo rm -rfv ${project_path};
-    sudo rm -rfv .repo/projects/${project_path}.git;
-    sudo rm -rfv .repo/project-objects/${project_path}.git;
-    reposy ${project_path};
+    sudo rm -rfv "${project_path}";
+    sudo rm -rfv ".repo/projects/${project_path}.git";
+    sudo rm -rfv ".repo/project-objects/${project_path}.git";
+    reposy "${project_path}";
     echo '';
   done;
 }

@@ -29,11 +29,8 @@ function autoreleaseaospsodp8996()
     reposy;
   fi;
 
-  # Access project repository
-  pathchanged cdaosp sodp;
-
-  # When option enabled, sync tree
-  if [ ${?} -ne 0 ] && ! shtools-builds-nosync-active; then
+  # Access project repository and when option enabled, sync tree
+  if ! pathchanged cdaosp sodp && ! shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -48,7 +45,7 @@ function autoreleaseaospsodp8996()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} aosp;
+    romautorelease "${device}" aosp;
 
   done;
 

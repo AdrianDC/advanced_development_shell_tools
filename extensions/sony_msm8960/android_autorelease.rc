@@ -35,17 +35,14 @@ function autoreleaseaospsony8960()
   # Walk through devices
   for device in ${devices}; do
 
-    # Access device repository
-    pathchanged cdaosp 8960;
-
-    # When option enabled, sync tree
-    if [ ${?} -ne 0 ] && ! shtools-builds-nosync-active; then
+    # Access device repository and when option enabled, sync tree
+    if ! pathchanged cdaosp 8960 && ! shtools-builds-nosync-active; then
       reposy;
     fi;
 
     # ROM build and release
     aospsony8960npatcher;
-    romautorelease ${device} aosp;
+    romautorelease "${device}" aosp;
 
   done;
 
@@ -78,11 +75,8 @@ function autoreleaselineagesony8960()
   # Walk through devices
   for device in ${devices}; do
 
-    # Access device repository
-    pathchanged cdlineage ${device};
-
-    # When option enabled, sync tree
-    if [ ${?} -ne 0 ] && ! shtools-builds-nosync-active; then
+    # Access device repository and when option enabled, sync tree
+    if ! pathchanged cdlineage "${device}" && ! shtools-builds-nosync-active; then
       reposy;
     fi;
 
@@ -90,7 +84,7 @@ function autoreleaselineagesony8960()
     lineagepatcher;
 
     # ROM build and release
-    romautorelease ${device} lineage;
+    romautorelease "${device}" lineage;
 
   done;
 
@@ -126,7 +120,7 @@ function autoreleaserrsony8960()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} rr;
+    romautorelease "${device}" rr;
 
   done;
 
@@ -162,7 +156,7 @@ function autoreleasecafsony8960()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease ${device} caf;
+    romautorelease "${device}" caf;
 
   done;
 

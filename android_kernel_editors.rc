@@ -16,8 +16,8 @@
 #
 
 # === Build paths ===
-export android_development_shell_tools_mkboot=${android_development_shell_tools_dir}/android_mkboot;
-export android_development_shell_tools_mkelf=${android_development_shell_tools_dir}/android_files/mkelf.py;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_mkboot;
+export android_development_shell_tools_mkelf=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/mkelf.py;
 
 # === Boot Tools ===
 function boottools()
@@ -31,8 +31,8 @@ function boottools()
   fi;
 
   # Variables
-  local boot_file="${1}";
-  local out_folder="${2}";
+  local boot_file=${1};
+  local out_folder=${2};
 
   # Extraction
   if [ -z "${out_folder}" ]; then
@@ -41,7 +41,7 @@ function boottools()
 
   # Unpack
   rm -rf "${out_folder}";
-  ${android_development_shell_tools_mkboot}/mkboot "${boot_file}" "${out_folder}";
+  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT}/mkboot" "${boot_file}" "${out_folder}";
 
   # Edition mode
   if [ -z "${2}" ]; then
@@ -49,8 +49,8 @@ function boottools()
     # Edit
     diropen "${out_folder}";
     echo '';
-    printf ' Press Enter to continue [ENTER] ';
-    read key;
+    echo -n ' Press Enter to continue [ENTER] ';
+    read -r;
     echo '';
 
     # Repack
@@ -59,7 +59,7 @@ function boottools()
     fi;
     rm -f "${boot_file}.tmp";
     mv "${boot_file}" "${boot_file}.tmp";
-    ${android_development_shell_tools_mkboot}/mkboot "${out_folder}" "${boot_file}";
+    "${ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT}/mkboot" "${out_folder}" "${boot_file}";
     if [ -f "${boot_file}.tmp" ]; then
       rm -f "${boot_file}.tmp";
     fi;
@@ -83,9 +83,9 @@ function bootelf()
   fi;
 
   # Variables
-  local boot_file="${1}";
-  local out_folder="${2}";
-  local pwd_folder="$(pwd)";
+  local boot_file=${1};
+  local out_folder=${2};
+  local pwd_folder;
 
   # Path generations
   boot_file=$(readlink -f "${boot_file}");
@@ -98,6 +98,7 @@ function bootelf()
   fi;
 
   # Unpack
+  pwd_folder=$(pwd);
   cp "${boot_file}" "${out_folder}/boot.elf";
   cd "${out_folder}/";
   7z e ./boot.elf;
@@ -108,7 +109,7 @@ function bootelf()
     echo '';
     echo ' [ The boot.img is corrupted, extraction failed ]';
     echo '';
-    read key;
+    read -r;
     exit;
   fi;
 
@@ -152,8 +153,8 @@ function bootelf()
     # Edit
     diropen "${out_folder}";
     echo '';
-    printf ' Press Enter to continue [ENTER] ';
-    read key;
+    echo -n ' Press Enter to continue [ENTER] ';
+    read -r;
     echo '';
 
     # Backup original file
@@ -199,7 +200,7 @@ function bootelf()
       echo '';
       echo ' [ A file is missing for the boot.img compilation ]';
       echo '';
-      read key;
+      read -r;
       exit;
     fi;
 

@@ -32,7 +32,7 @@ function mmmupl()
   export MMMZIP_BUILD_PARTIAL=;
 
   # Upload to Private
-  fastupl "${PackageResult}" 'zip';
+  fastupl "${PACKAGE_RESULT}" 'zip';
 }
 
 # === Bootimage File Uploader ===
@@ -47,8 +47,11 @@ function devuplboot()
   fi;
 
   # Variables
-  local cwd=$(pwd);
-  local device="${1}";
+  local cwd;
+  local device=${1};
+
+  # Access repo root
+  cwd=$(pwd);
   croot;
 
   # Rename and upload
@@ -71,25 +74,26 @@ function devuplrom()
   fi;
 
   # Variables
-  local cwd=$(pwd);
-  local device="${1}";
-  local upload="${2}";
-  local target=$(codenametotarget "${device}");
+  local device=${1};
+  local upload=${2:-Development};
+  local cwd;
+  local target;
   local romfiles;
   local romfile;
-  if [ -z "${upload}" ]; then
-    upload="Development";
-  fi;
+
+  # Initialize variables
+  cwd=$(pwd);
+  target=$(codenametotarget "${device}");
 
   # ROM detection
   croot;
   romfiles=$(find "./out/target/product/${device}/"*"${device}"*".zip" \
                   "./out/target/product/${device}/"*"${target}"*".zip" \
                   -mtime -1 | sort);
-  romfile='';
+  romfile=;
   for romfiletest in ${romfiles}; do
     if [ -f "${romfiletest}.md5sum" ]; then
-      romfile="${romfiletest}";
+      romfile=${romfiletest};
     fi;
   done;
   if [ -z "${romfile}" ]; then
@@ -99,9 +103,9 @@ function devuplrom()
   # ROM upload
   if [ ! -z "${romfile}" ]; then
     fileupl "${romfile}" "${upload}";
-    export android_development_shell_tools_uploaded_file="${romfile}";
+    export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE=${romfile};
   else
-    export android_development_shell_tools_uploaded_file='';
+    export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE=;
   fi;
 
   # End of process
@@ -119,17 +123,19 @@ function pushbrom()
     return;
   fi;
 
-  # Access ROM root
-  local cwd=$(pwd);
-  croot;
-
   # Variables
-  local device="${1}";
-  local rom="${2:-ROM}";
-  local host=$(hostname);
+  local device=${1};
+  local rom=${2:-ROM};
+  local cwd;
+  local host;
+
+  # Access repo root
+  cwd=$(pwd);
+  croot;
 
   # ROM file
   romfile=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mmin -30 | tail -n 1);
+  host=$(hostname);
   if [ ! -z "${romfile}" ]; then
      pushb "${host}: ${rom} for ${device} ready";
   else

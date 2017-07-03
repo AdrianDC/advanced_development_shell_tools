@@ -38,12 +38,12 @@ function megamirror()
   fi;
 
   # Variables
-  local local_folder="${1}";
-  local remote_folder="${2%/}";
-  local option_direction="${3}";
-  local option_params="${4}";
-  local tmp_local_ls=$(mktemp);
-  local tmp_remote_ls=$(mktemp);
+  local local_folder=${1};
+  local remote_folder=${2%/};
+  local option_direction=${3};
+  local option_params=${4};
+  local tmp_local_ls;
+  local tmp_remote_ls;
   local flag_delete;
   local key;
   local key_override;
@@ -55,19 +55,24 @@ function megamirror()
   local file_local;
   local file_escaped;
   local file_local_output;
+  local file_local_size;
   local time_start;
   local time_span;
 
+  # Initialize variables
+  tmp_local_ls=$(mktemp);
+  tmp_remote_ls=$(mktemp);
+
   # =======================================================
   # Parameters input
-  if [[ "${option_params}" =~ '-y' ]]; then
-    key_override='true';
-    key='y';
-  elif [[ "${option_params}" =~ '-n' ]]; then
-    key_override='true';
-    key='n';
+  if [[ "${option_params}" == *'-y'* ]]; then
+    key_override=true;
+    key=y;
+  elif [[ "${option_params}" == *'-n'* ]]; then
+    key_override=true;
+    key=n;
   else
-    key_override='';
+    key_override=;
   fi;
 
   # =======================================================
@@ -90,25 +95,25 @@ function megamirror()
     while [ -s "${tmp_remote_ls}" ]; do
 
       # Extract first line
-      line=($(sed '1!d' "${tmp_remote_ls}"));
+      line=("$(sed '1!d' "${tmp_remote_ls}")");
       sed -i '1d' "${tmp_remote_ls}";
 
       # Ignore empty lines
-      if [ -z "${line}" ]; then
+      if [ -z "${line[*]}" ]; then
         continue;
       fi;
 
       # Parse line content
-      file_type="${line[2]}";
-      file_size="${line[3]}";
-      file_path="${line[@]:6}";
-      file_local="${file_path#${remote_folder}}";
-      file_local="${file_local#/}";
-      file_local_output="${file_local//\\/\\\\}";
-      file_escaped="${file_local_output//\|/\\\|}";
-      file_escaped="${file_escaped//\[/\\\[}";
-      file_escaped="${file_escaped//\]/\\\]}";
-      flag_delete='';
+      file_type=${line[2]};
+      file_size=${line[3]};
+      file_path=${line[*]:6};
+      file_local=${file_path#${remote_folder}};
+      file_local=${file_local#/};
+      file_local_output=${file_local//\\/\\\\};
+      file_escaped=${file_local_output//\|/\\\|};
+      file_escaped=${file_escaped//\[/\\\[};
+      file_escaped=${file_escaped//\]/\\\]};
+      flag_delete=;
 
       # Ignore irrelevant paths
       if [ "${file_path}" = "${remote_folder}" ]; then
@@ -118,8 +123,8 @@ function megamirror()
       # Verify folder exists
       if [ "${file_type}" = '1' ] && [ "${file_size}" = '-' ]; then
         if [ ! -d "${file_local}" ]; then
-          printf " \e[1;31mmegamirror: Remote folder '${file_local_output}/' is missing:\e[0m";
-          flag_delete='true';
+          echo -en " \e[1;31mmegamirror: Remote folder '${file_local_output}/' is missing:\e[0m";
+          flag_delete=true;
 
         # Exclude folder from needed uploads
         else
@@ -128,9 +133,10 @@ function megamirror()
 
       # Verify files sizes do not mismatch
       elif [ -f "${file_local}" ]; then
-        if [ ${file_size/-/0} -ne $(stat -c "%s" "${file_local}") ]; then
-          printf " \e[1;31mmegamirror: Remote file '${file_local_output}' is different:\e[0m";
-          flag_delete='true';
+        file_local_size=$(stat -c "%s" "${file_local}");
+        if [ "${file_size/-/0}" -ne "${file_local_size}" ]; then
+          echo -en " \e[1;31mmegamirror: Remote file '${file_local_output}' is different:\e[0m";
+          flag_delete=true;
 
         # Exclude file from needed uploads
         else
@@ -139,19 +145,18 @@ function megamirror()
 
       # Remote file no longer exist locally
       else
-        printf " \e[1;31mmegamirror: Remote file '${file_local_output}' locally removed:\e[0m";
-        flag_delete='true';
+        echo -en " \e[1;31mmegamirror: Remote file '${file_local_output}' locally removed:\e[0m";
+        flag_delete=true;
       fi;
 
       # Delete remote file
       if [ ! -z "${flag_delete}" ]; then
-        printf " Delete remote [y/N] ? ";
+        echo -n ' Delete remote [y/N] ? ';
         if [ -z "${key_override}" ]; then
-          read -t 20 key;
+          if ! read -r -t 20 key; then
+            echo '';
+          fi;
         else
-          echo '';
-        fi;
-        if [ ${?} -ne 0 ]; then
           echo '';
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
@@ -169,7 +174,7 @@ function megamirror()
 
     # ===========================================
     # Upload with megacopy to remote
-    if [[ "${option_params}" =~ '--copy' ]]; then
+    if [[ "${option_params}" == *'--copy'* ]]; then
       echo -e " \e[1;33mmegamirror: megacopy starting...\e[0m";
       rm -rf /tmp/*.megatools.cache;
       megacopy --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
@@ -180,14 +185,14 @@ function megamirror()
 
       # Check all files listed for upload
       while [ -s "${tmp_local_ls}" ]; do
-        line=($(sed '1!d' "${tmp_local_ls}"));
+        line=("$(sed '1!d' "${tmp_local_ls}")");
         sed -i '1d' "${tmp_local_ls}";
 
         # Parse file informations
-        file_local="${line[@]:1}";
-        file_local="${file_local#/}";
-        file_local="${file_local%#}";
-        file_path="${remote_folder}/${file_local}";
+        file_local=${line[*]:1};
+        file_local=${file_local#/};
+        file_local=${file_local%#};
+        file_path=${remote_folder}/${file_local};
         time_start=$(date +%s);
 
         # Create remote folder
@@ -204,7 +209,7 @@ function megamirror()
           megaput --path "${file_path}" "${file_local}";
 
           # Show upload time
-          time_span=$(($(date +%s)-${time_start}));
+          time_span=$(($(date +%s) - time_start));
           echo -e " \e[1;37mmegamirror: Upload done in ${time_span} secs\e[0m";
 
         fi;
@@ -219,26 +224,26 @@ function megamirror()
     while [ -s "${tmp_local_ls}" ]; do
 
       # Extract first line
-      line=($(sed '1!d' "${tmp_local_ls}"));
+      line=("$(sed '1!d' "${tmp_local_ls}")");
       sed -i '1d' "${tmp_local_ls}";
 
       # Ignore empty lines
-      if [ -z "${line}" ]; then
+      if [ -z "${line[*]}" ]; then
         continue;
       fi;
 
       # Parse line content
-      file_size="${line[0]}";
-      file_path="${line[@]:1}";
-      file_path="${file_path%#}";
-      file_local="${file_path#${local_folder}}";
-      file_local="${file_local#/}";
-      file_local_output="${file_local//\\/\\\\}";
-      file_escaped="${file_path//\\/\\\\}";
-      file_escaped="${file_escaped//\|/\\\|}";
-      file_escaped="${file_escaped//\[/\\\[}";
-      file_escaped="${file_escaped//\]/\\\]}";
-      flag_delete='';
+      file_size=${line[0]};
+      file_path=${line[*]:1};
+      file_path=${file_path%#};
+      file_local=${file_path#${local_folder}};
+      file_local=${file_local#/};
+      file_local_output=${file_local//\\/\\\\};
+      file_escaped=${file_path//\\/\\\\};
+      file_escaped=${file_escaped//\|/\\\|};
+      file_escaped=${file_escaped//\[/\\\[};
+      file_escaped=${file_escaped//\]/\\\]};
+      flag_delete=;
 
       # Ignore irrelevant paths
       if [ "${file_path}" = '' ] || [ ! -e "${file_path}" ]; then
@@ -246,18 +251,18 @@ function megamirror()
       fi;
 
       # Extract remote information
-      file_type='0';
+      file_type=0;
       if [ -d "${file_path}" ]; then
-        file_type='1';
+        file_type=1;
       fi;
       line_tmp=$(awk "\$3 == ${file_type}" "${tmp_remote_ls}" 2>&1 | grep "${remote_folder}/${file_escaped//\\\|/\|}$");
-      line_tmp=(${line_tmp});
+      line_tmp=("${line_tmp}");
 
       # Verify folder exists
       if [ -d "${file_path}" ]; then
         if [ -z "${line_tmp[2]}" ]; then
-          printf " \e[1;31mmegamirror: Remote folder '${file_local_output}/' is missing:\e[0m";
-          flag_delete='true';
+          echo -en " \e[1;31mmegamirror: Remote folder '${file_local_output}/' is missing:\e[0m";
+          flag_delete=true;
 
         # Exclude folder from needed downloads
         else
@@ -265,10 +270,10 @@ function megamirror()
         fi;
 
       # Verify files sizes do not mismatch
-      elif [ ! -z "${line_tmp}" ]; then
-        if [ ${file_size} -ne ${line_tmp[3]/-/0} ]; then
-          printf " \e[1;31mmegamirror: Local file '${file_local_output}' is different:\e[0m";
-          flag_delete='true';
+      elif [ ! -z "${line_tmp[*]}" ]; then
+        if [ "${file_size}" -ne "${line_tmp[3]/-/0}" ]; then
+          echo -en " \e[1;31mmegamirror: Local file '${file_local_output}' is different:\e[0m";
+          flag_delete=true;
 
         # Exclude file from needed downloads
         else
@@ -277,19 +282,18 @@ function megamirror()
 
       # Local file no longer exist remotely
       else
-        printf " \e[1;31mmegamirror: Local file '${file_local_output}' remotely removed:\e[0m";
-        flag_delete='true';
+        echo -en " \e[1;31mmegamirror: Local file '${file_local_output}' remotely removed:\e[0m";
+        flag_delete=true;
       fi;
 
       # Delete local file
       if [ ! -z "${flag_delete}" ]; then
-        printf " Delete local [y/N] ? ";
+        echo -n ' Delete local [y/N] ? ';
         if [ -z "${key_override}" ]; then
-          read -t 20 key;
+          if ! read -r -t 20 key; then
+            echo '';
+          fi;
         else
-          echo '';
-        fi;
-        if [ ${?} -ne 0 ]; then
           echo '';
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
@@ -302,7 +306,7 @@ function megamirror()
 
     # ===========================================
     # Download with megacopy to local
-    if [[ "${option_params}" =~ '--copy' ]]; then
+    if [[ "${option_params}" == *'--copy'* ]]; then
       echo -e " \e[1;33mmegamirror: megacopy starting...\e[0m";
       rm -rf /tmp/*.megatools.cache;
       megacopy --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
@@ -313,17 +317,17 @@ function megamirror()
 
       # Check all files listed for upload
       while [ -s "${tmp_remote_ls}" ]; do
-        line=($(sed '1!d' "${tmp_remote_ls}"));
+        line=("$(sed '1!d' "${tmp_remote_ls}")");
         sed -i '1d' "${tmp_remote_ls}";
 
         # Parse file informations
-        file_type="${line[2]}";
-        file_path="${line[@]:6}";
-        file_local="${file_path#${remote_folder}}";
-        file_local="${file_local#/}";
-        file_escaped="${file_local//\|/\\\|}";
-        file_escaped="${file_escaped//\[/\\\[}";
-        file_escaped="${file_escaped//\]/\\\]}";
+        file_type=${line[2]};
+        file_path=${line[*]:6};
+        file_local=${file_path#${remote_folder}};
+        file_local=${file_local#/};
+        file_escaped=${file_local//\|/\\\|};
+        file_escaped=${file_escaped//\[/\\\[};
+        file_escaped=${file_escaped//\]/\\\]};
         time_start=$(date +%s);
 
         # Ignore irrelevant paths
@@ -350,7 +354,7 @@ function megamirror()
           megaget --path "${file_local}" "${file_path}";
 
           # Show download time
-          time_span=$(($(date +%s)-${time_start}));
+          time_span=$(($(date +%s) - time_start));
           echo -e " \e[1;37mmegamirror: Download done in ${time_span} secs\e[0m";
 
         fi;
@@ -364,6 +368,6 @@ function megamirror()
   echo '';
 
   # Cleanup temp files
-  rm ${tmp_local_ls};
-  rm ${tmp_remote_ls};
+  rm "${tmp_local_ls}";
+  rm "${tmp_remote_ls}";
 }

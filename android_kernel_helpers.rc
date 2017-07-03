@@ -25,13 +25,13 @@ function makekernelinjector()
   fi;
 
   # Handle multiple devices
-  for device_name in ${@}; do
+  for device_name in "${@}"; do
 
     # Make the kernel
-    makekernel ${device_name};
+    makekernel "${device_name}";
 
     # Package kernel injector
-    kernelinjectorzip ${device_name} .build/arch/arm/boot/zImage;
+    kernelinjectorzip "${device_name}" .build/arch/arm/boot/zImage;
 
   done;
 }

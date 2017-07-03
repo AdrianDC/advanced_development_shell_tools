@@ -37,12 +37,12 @@ function androidfilesadd()
   fi;
 
   # Variables
-  local path="${1}";
-  local target="${2}";
+  local path=${1};
+  local target=${2};
 
   # Add new file to AndroidFiles
   echo '';
-  printf ' \e[1;33mandroidfilesadd:\e[0m ';
+  echo -en  ' \e[1;33mandroidfilesadd:\e[0m ';
   mkdir -p "${ANDROID_FILES_PATH}/${target}";
   cp -fv "${path}" "${ANDROID_FILES_PATH}/${target}";
 }
@@ -58,6 +58,9 @@ function androidfilessync()
     return;
   fi;
 
+  # Variables
+  local cwd;
+
   # Check ANDROID_FILES_PATH is defined
   if [ -z "${ANDROID_FILES_PATH}" ]; then
     echo '';
@@ -69,7 +72,7 @@ function androidfilessync()
   fi;
 
   # Use megamirror inside AndroidFiles folder
-  local cwd=$(pwd);
+  cwd=$(pwd);
   cd "${ANDROID_FILES_PATH}";
   megamirror . '/Root/Android' "${1}" "${2}";
   cd "${cwd}";

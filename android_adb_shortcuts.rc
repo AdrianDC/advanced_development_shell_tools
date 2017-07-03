@@ -24,7 +24,7 @@ alias adbdf='adb shell df -H';
 alias adbpo='adb shell reboot -p';
 alias adbrb='adb reboot bootloader';
 alias adbre='adb reboot';
-function adbrh() { adb ${1} shell setprop ctl.restart zygote; }
+function adbrh() { adb shell setprop ctl.restart zygote; }
 alias adbrr='adb reboot recovery';
 alias adbsl='adb shell ls -l';
 alias adbslz='adb shell ls -lZ';

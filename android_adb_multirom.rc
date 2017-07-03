@@ -33,23 +33,18 @@ function adbmromlist()
 
   # List all MultiROM installations
   roms=$(mktemp);
-  adbsu 'find \
-         /sdcard/multirom/roms/* \
-         /sdcard1/multirom-*/* \
-         /external_sd/multirom-*/* \
-         /data/media/0/external_multirom/multirom-*/* \
-         -maxdepth 0 -type d 2> /dev/null' \
+  adbsu 'find /sdcard/multirom/roms/* /sdcard1/multirom-*/* /external_sd/multirom-*/* /data/media/0/external_multirom/multirom-*/* -maxdepth 0 -type d 2> /dev/null' \
     | grep -v '/sdcard/multirom/roms/Internal' \
-    > ${roms};
+    > "${roms}";
 
   # Create ROMs list
-  path='';
+  path=;
   echo '';
   echo -e " \e[1;37m[ MultiROM installations ]\e[0m";
   echo '';
-  while read path; do
+  while read -r path; do
     echo "   ${path}";
-  done < ${roms};
+  done < "${roms}";
   echo '';
 
   # Restore selinux access
@@ -79,41 +74,36 @@ function adbmromselect()
 
   # List all MultiROM installations
   roms=$(mktemp);
-  adbsu 'find \
-         /sdcard/multirom/roms/* \
-         /sdcard1/multirom-*/* \
-         /external_sd/multirom-*/* \
-         /data/media/0/external_multirom/multirom-*/* \
-         -maxdepth 0 -type d 2> /dev/null' \
+  adbsu 'find /sdcard/multirom/roms/* /sdcard1/multirom-*/* /external_sd/multirom-*/* /data/media/0/external_multirom/multirom-*/* -maxdepth 0 -type d 2> /dev/null' \
     | grep -v '/sdcard/multirom/roms/Internal' \
-    > ${roms};
+    > "${roms}";
 
   # Create ROMs selector list
   cnt=0;
   options=('None');
-  path='';
+  path=;
   >&2 echo '';
   >&2 echo -e " \e[1;37m[ Select MultiROM installation ]\e[0m";
   >&2 echo '';
   >&2 echo "   ${cnt}: ${options[${cnt}]}";
-  while read path; do
-    cnt=$((${cnt} + 1));
+  while read -r path; do
+    cnt=$((cnt + 1));
     options[${cnt}]=${path};
     >&2 echo "   ${cnt}: ${options[${cnt}]}";
-  done < ${roms};
+  done < "${roms}";
   >&2 echo '';
-  >&2 printf " \e[1;33mROM to use [0 to ${cnt}] :\e[0m ";
-  >&2 read key;
+  >&2 echo -en " \e[1;33mROM to use [0 to ${cnt}] :\e[0m ";
+  >&2 read -r key;
   >&2 echo '';
 
   # Restore selinux access
   if [ "${enforced}" = 'Enforcing' ]; then
-    adbsu 'setenforce 1';
+    >&2 adbsu 'setenforce 1';
   fi;
 
   # Return selected ROM path
-  if [ ${key} -gt 0 ] && [ ${key} -le ${cnt} ]; then
-    echo ${options[${key}]};
+  if [ "${key}" -gt 0 ] && [ "${key}" -le "${cnt}" ]; then
+    echo -n "${options[${key}]}";
   fi;
 }
 
@@ -145,19 +135,24 @@ function adbmrominjector()
   fi;
 
   # Variables
-  local partitiontarget=$(androiddevicestarget boot);
-  local romtarget=$(adbmromselect)/boot.img;
+  local partitiontarget;
+  local romtarget;
+
+  # Get ROM and bootimage
+  partitiontarget=$(androiddevicestarget boot);
+  romtarget=$(adbmromselect)/boot.img;
 
   # Load ROM bootimage to partition
   echo " Injecting '${romtarget}' to '${partitiontarget}'";
   echo '';
+  adbro;
   adbsu "dd if='${partitiontarget}' of='/sdcard/boot.dump'";
   adbsu "dd if='${romtarget}' of='${partitiontarget}'";
 
   # Files to device push
   adbro;
   adb push "${filepath}" /tmp/tmpkernel;
-  adb push "${android_development_shell_tools_bbootimg}" /tmp/bbootimg;
+  adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" /tmp/bbootimg;
   adbsu 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
 
   # Kernel injection
@@ -189,7 +184,10 @@ function adbmromautoboot()
   adbsu "cat /data/media/0/multirom/multirom.ini";
 
   # Variables
-  local romtarget=$(adbmromselect);
+  local romtarget;
+
+  # Get ROM
+  romtarget=$(adbmromselect);
 
   # Modify multirom.ini
   adbsu "sed -i 's#auto_boot_rom=.*#auto_boot_rom=${romtarget##*/}#' /data/media/0/multirom/multirom.ini";

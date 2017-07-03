@@ -21,36 +21,42 @@ function adbst()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbst <process_name> [bool_get_root] [parameters] (strace)';
+    echo ' Usage: adbst <process_name> [bool_no_root] [parameters] (strace)';
     echo '';
     return;
   fi;
 
+  # Variables
+  local adb_timeout;
+  local cmd;
+  local pid;
+  local strace_exists;
+
   # Get adb root access
   if [ -z "${2}" ]; then
-    local adb=$(adbcmd);
-    timeout 5 ${adb} 'wait-for-device';
-    timeout 5 ${adb} root;
-    timeout 5 ${adb} 'wait-for-device';
-    timeout 5 ${adb} remount;
-    timeout 5 ${adb} 'wait-for-device';
+    adb_timeout="timeout 5 $(adbcmd)";
+    ${adb_timeout} 'wait-for-device';
+    ${adb_timeout} 'root';
+    ${adb_timeout} 'wait-for-device';
+    ${adb_timeout} 'remount';
+    ${adb_timeout} 'wait-for-device';
   fi;
 
   # Detect strace requirement
-  local strace_exists=$(adb shell 'test -e /system/bin/strace; printf ${?}');
-  if [ ${strace_exists} -ne 0 ]; then
+  strace_exists=$(adb shell 'if [ -e /system/bin/strace ]; then echo 0; fi;');
+  if [ ! "${strace_exists}" = '0' ]; then
     adb shell mkdir -p /system/bin/;
-    if [ ! -z "$(adb shell cat /proc/cpuinfo | grep '64')" ]; then
-      adb push "${android_development_shell_tools_files_strace_64}" /system/bin/strace;
+    if [ ! -z "$(adb shell grep '64' /proc/cpuinfo)" ]; then
+      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64}" /system/bin/strace;
     else
-      adb push "${android_development_shell_tools_files_strace_32}" /system/bin/strace;
+      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" /system/bin/strace;
     fi;
     adb shell chmod 777 /system/bin/strace;
     echo '';
   fi;
 
   # Get process identifier
-  local pid=$(adb shell ps -A | grep "${1}" | tail -n 1 | awk '{ print $2 }');
+  pid=$(adb shell ps -A | grep "${1}" | tail -n 1 | awk '{ print $2 }');
   if [ ! -z "${pid}" ]; then
     adb shell ps -A | grep "${1}";
   else
@@ -67,7 +73,8 @@ function adbst()
   fi;
 
   # Strace the process
-  adb shell /system/bin/strace ${3} -s 4096 -p ${pid};
+  cmd="adb shell /system/bin/strace ${3}";
+  ${cmd} -s 4096 -p "${pid}";
 }
 
 # === ADB Strace Followed Helper ===

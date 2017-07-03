@@ -27,7 +27,7 @@ echo ' [ Installing the repo components ]';
 echo '';
 
 # Verify apt based Linux
-if ! type apt >/dev/null 2>&1; then
+if ! type apt > /dev/null 2>&1; then
   echo 'install_repo.sh is meant to be used with apt';
   echo '';
   return;
@@ -73,13 +73,13 @@ echo '';
 echo '# Android';
 echo "export ANDROID_DEV_DRIVE=/media/${current_user_name}/AndroidDev;";
 echo "export ANDROID_DESKTOP=$(xdg-user-dir DESKTOP);";
-echo 'export PATH=~/bin:${PATH};';
+echo "export PATH=~/bin:\${PATH};";
 echo '';
 echo '# CCache';
 echo 'export USE_CCACHE=1;';
 echo 'export USE_PREBUILT_CACHE=1;';
-echo 'export CCACHE_DIR=${ANDROID_DEV_DRIVE}/CCache;';
-echo 'export CCACHE_LOGFILE=${CCACHE_DIR}/ccache.log;';
+echo "export CCACHE_DIR=\${ANDROID_DEV_DRIVE}/CCache;";
+echo "export CCACHE_LOGFILE=\${CCACHE_DIR}/ccache.log;";
 echo '';
 echo '# Bash Scripts';
 echo "source ${current_bash_dir}/android_development_shell_tools.rc;";
@@ -87,9 +87,9 @@ echo '';
 sudo gedit ~/.bashrc;
 
 # Done
-TimeDiff=$(($(date +%s)-${TimeStart}));
+TimeDiff=$(($(date +%s) - TimeStart));
 echo '';
 echo '';
 echo " [ Done in ${TimeDiff} secs ]";
 echo '';
-read key;
+read -r;

@@ -29,12 +29,17 @@ function meganzreload()
   fi;
 
   # Variables
-  local username=$(grep 'Username' ~/.megarc | sed 's/.*= //');
-  local password=$(grep 'Password' ~/.megarc | sed 's/.*= //');
+  local username;
+  local password;
+  local proc_id;
+
+  # Load user credentials
+  username=$(grep 'Username' ~/.megarc | sed 's/.*= //');
+  password=$(grep 'Password' ~/.megarc | sed 's/.*= //');
 
   # Start mega-cmd server
   echo '';
-  local proc_id=$(nohup mega-cmd >/dev/null 2>&1 & echo ${!});
+  proc_id=$(nohup mega-cmd > /dev/null 2>&1 & echo ${!});
   sleep 3;
 
   # Login Mega account

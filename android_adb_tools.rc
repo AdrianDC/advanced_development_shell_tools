@@ -27,7 +27,7 @@ function adbscr()
   # Take a screenshot from connected device
   mkdir -p ./screenshots;
   adb shell screencap /sdcard/screenshot.png;
-  adb pull /sdcard/screenshot.png ./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png;
+  adb pull /sdcard/screenshot.png "./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png";
   adb shell rm -f /sdcard/screenshot.png;
 }
 
@@ -36,13 +36,18 @@ function adbr()
 {
   # Usage: adbr (adb root and remount rw system)
 
+  # Variables
+  local adb_timeout;
+
   # Get root access and rw system
-  local adb=$(adbcmd);
-  timeout 5 ${adb} ${1} 'wait-for-device';
-  timeout 5 ${adb} ${1} root; sleep 2;
-  timeout 5 ${adb} ${1} 'wait-for-device';
-  timeout 5 ${adb} ${1} remount; sleep 1;
-  timeout 5 ${adb} ${1} 'wait-for-device';
+  adb_timeout="timeout 5 $(adbcmd)";
+  ${adb_timeout} 'wait-for-device';
+  ${adb_timeout} 'root';
+  sleep 2;
+  ${adb_timeout} 'wait-for-device';
+  ${adb_timeout} 'remount';
+  sleep 1;
+  ${adb_timeout} 'wait-for-device';
 }
 
 # === ADB Root Checked Mounter ===
@@ -50,22 +55,30 @@ function adbro()
 {
   # Usage: adbro (Verified adb root and remount rw system)
 
+  # Variables
+  local adb_timeout;
+  local rootaccess;
+  local systemaccess;
+  local systemmount;
+
   # Get root access
-  local adb=$(adbcmd);
-  local rootaccess=$(${adb} shell whoami);
+  adb_timeout="timeout 5 $(adbcmd)";
+  rootaccess=$(${adb_timeout} shell whoami);
   if [ "${rootaccess:0:4}" != 'root' ] && [ "${rootaccess:16:5}" != 'uid 0' ]; then
-    timeout 5 ${adb} ${1} 'wait-for-device';
-    timeout 5 ${adb} ${1} root; sleep 2;
-    timeout 5 ${adb} ${1} 'wait-for-device';
+    ${adb_timeout} 'wait-for-device';
+    ${adb_timeout} 'root';
+    sleep 2;
+    ${adb_timeout} 'wait-for-device';
   fi;
 
   # Get rw system
-  local systemmount=$(${adb} shell mount | grep system);
-  local systemacess=$(echo "${systemmount}" | grep rw);
-  if [ ! -z "${systemmount}" ] && [ -z "${systemacess}" ]; then
-    timeout 5 ${adb} ${1} 'wait-for-device';
-    timeout 5 ${adb} ${1} remount; sleep 1;
-    timeout 5 ${adb} ${1} 'wait-for-device';
+  systemmount=$(${adb_timeout} shell mount | grep system);
+  systemaccess=$(echo "${systemmount}" | grep rw);
+  if [ ! -z "${systemmount}" ] && [ -z "${systemaccess}" ]; then
+    ${adb_timeout} 'wait-for-device';
+    ${adb_timeout} 'remount';
+    sleep 1;
+    ${adb_timeout} 'wait-for-device';
   fi;
 }
 
@@ -78,10 +91,9 @@ function adbsudo()
   # Usage: adbsudo (ADB sudo toggle helper)
 
   # Enable adb sudo
-  alias adb &> /dev/null;
-  if [ ${?} -ne 0 ]; then
+  if ! alias adb &> /dev/null; then
     alias adb='sudo adb';
-    sudo printf '';
+    sudo echo -n ;
 
   # Disable adb sudo
   else
@@ -101,8 +113,7 @@ function adbcmd()
   # Usage: adbcmd (Return adb command based on alias)
 
   # Use regular adb
-  alias adb &> /dev/null;
-  if [ ${?} -ne 0 ]; then
+  if ! alias adb &> /dev/null; then
     echo 'adb';
 
   # Use aliased adb
@@ -132,10 +143,12 @@ function adbsu()
     return;
   fi;
 
-  # Run on root adb shell
-  if [ -z $(adb shell type su | grep 'no found') ]; then
+  # Run as adb root shell
+  if adb shell type su | grep -q 'not found'; then
     adbro;
     adb shell "${@}";
+
+  # Run on root adb shell
   else
     adb shell su -c "${@}";
   fi;
@@ -147,7 +160,7 @@ function adbco()
   # Relaunch handling
   echo '';
   if [ ! -z "${1}" ]; then
-    export ADB_IP_ADDRESS="${1}";
+    export ADB_IP_ADDRESS=${1};
   fi;
 
   # Usage
@@ -158,24 +171,27 @@ function adbco()
     return;
   fi;
 
+  # Variables
+  local adb_timeout;
+
   # Connect and acquire adb root access
-  local adb=$(adbcmd);
-  export ADB_IP_PORT='5555';
+  adb_timeout="timeout 5 $(adbcmd)";
+  export ADB_IP_PORT=5555;
   echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
-  timeout 5 ${adb} connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
+  ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";
   echo -e '\e[1;36mConnected...\e[0m';
-  timeout 5 ${adb} 'wait-for-device';
+  ${adb_timeout} 'wait-for-device';
   echo -e '\e[1;36mGetting root access...\e[0m';
-  timeout 5 ${adb} root;
+  ${adb_timeout} root;
   sleep 2;
   echo -e '\e[1;36mReconnecting...\e[0m';
-  timeout 5 ${adb} connect ${ADB_IP_ADDRESS}:${ADB_IP_PORT};
+  ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";
   echo -e '\e[1;36mConnected...\e[0m';
-  timeout 5 ${adb} 'wait-for-device';
+  ${adb_timeout} 'wait-for-device';
   echo -e '\e[1;36mMounting as root...\e[0m';
-  timeout 5 ${adb} remount;
+  ${adb_timeout} remount;
   sleep 1;
-  timeout 5 ${adb} 'wait-for-device';
+  ${adb_timeout} 'wait-for-device';
   echo -e '\e[1;36mReady...\e[0m';
   echo '';
 }
@@ -185,14 +201,18 @@ function adbedit()
 {
   # Usage: adbedit [file_path] (Edit adb file, default on /system/build.prop)
 
+  # Variables
+  local name;
+  local path;
+
   # Edit adb file, default on /system/build.prop
   adbro;
-  local path="${1:-/system/build.prop}";
-  local name=$(basename "${path}");
+  path=${1:-/system/build.prop};
+  name=$(basename "${path}");
   adb pull "${path}";
   fileedit "${name}";
-  printf ' Ok ? [ENTER] ';
-  read key;
+  echo -n ' Ok ? [ENTER] ';
+  read -r;
   adb push "${name}" "${path}";
   rm "${name}";
 }
@@ -223,6 +243,6 @@ function adbreadevents()
   fi;
 
   # Read input events
-  adb shell od -x /dev/input/${1} \
+  adb shell od -x "/dev/input/${1}" \
    | awk -Wposix '{ if ($7) printf(" Key %4d - State %4d\n", "0x" $7, "0x" $8) }';
 }

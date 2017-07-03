@@ -27,9 +27,9 @@ function romlogs()
   fi;
 
   # Variables
-  local rom_device="${1}";
-  local rom_name="${2}";
-  local logs_count="${3:-200}";
+  local rom_device=${1};
+  local rom_name=${2};
+  local logs_count=${3:-200};
   local logs_files;
   local logs_file;
 
@@ -40,7 +40,7 @@ function romlogs()
   # Logs view
   echo '';
   if [ ! -z "${logs_files}" ]; then
-    cat "${logs_file}" | tail -n ${logs_count};
+    tail -n "${logs_count}" "${logs_file}";
     echo '';
     echo "${logs_files}";
   else

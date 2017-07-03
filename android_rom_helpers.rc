@@ -38,13 +38,13 @@ function rompatcher()
                        | grep -v '^androidprojectpatcher$'); do
 
     # Parse usage
-    line_usage=$(grep -a "Usage: ${line_function} " ${android_development_shell_tools_sources[@]});
+    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
     line_usage=${line_usage#*\(};
     line_usage=${line_usage%\)*};
-    list_functions+=(${line_function});
+    list_functions+=("${line_function}");
 
     # Item choice
     cnt=$((cnt + 1));
@@ -54,8 +54,8 @@ function rompatcher()
   echo '';
 
   # Request user input
-  printf " > Command to run [1-${cnt}] : ";
-  read key;
+  echo -n " > Command to run [1-${cnt}] : ";
+  read -r key;
   echo '';
 
   # Execute requested function

@@ -19,7 +19,7 @@
 function shtools-builds-clean-enable()
 {
   # Usage: shtools-builds-clean-enable (Enable clean builds option)
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN='true';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN=true;
 }
 function shtools-builds-clean-disable()
 {
@@ -36,7 +36,7 @@ function shtools-builds-clean-active()
 function shtools-builds-cleanram-enable()
 {
   # Usage: shtools-builds-cleanram-enable (Enable cleanram builds option)
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM='true';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM=true;
 }
 function shtools-builds-cleanram-disable()
 {
@@ -53,7 +53,7 @@ function shtools-builds-cleanram-active()
 function shtools-builds-debug-enable()
 {
   # Usage: shtools-builds-debug-enable (Enable debug builds option)
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG='true';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG=true;
 }
 function shtools-builds-debug-disable()
 {
@@ -70,7 +70,7 @@ function shtools-builds-debug-active()
 function shtools-builds-local-enable()
 {
   # Usage: shtools-builds-local-enable (Enable local builds option)
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL='true';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL=true;
 }
 function shtools-builds-local-disable()
 {
@@ -87,7 +87,7 @@ function shtools-builds-local-active()
 function shtools-builds-nosync-enable()
 {
   # Usage: shtools-builds-nosync-enable (Enable nosync builds option)
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC='true';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC=true;
 }
 function shtools-builds-nosync-disable()
 {

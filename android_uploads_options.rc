@@ -19,7 +19,7 @@
 function shtools-uploads-basketbuild-enable()
 {
   # Usage: shtools-uploads-basketbuild-enable (Enable optional BasketBuild uploads)
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD='true';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=true;
 }
 function shtools-uploads-basketbuild-disable()
 {
@@ -36,7 +36,7 @@ function shtools-uploads-basketbuild-active()
 function shtools-uploads-ftp-enable()
 {
   # Usage: shtools-uploads-ftp-enable (Enable optional FTP uploads)
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP='true';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP=true;
 }
 function shtools-uploads-ftp-disable()
 {
@@ -53,7 +53,7 @@ function shtools-uploads-ftp-active()
 function shtools-uploads-mega-enable()
 {
   # Usage: shtools-uploads-mega-enable (Enable optional Mega.nz uploads)
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA='true';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA=true;
 }
 function shtools-uploads-mega-disable()
 {

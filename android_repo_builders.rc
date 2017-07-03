@@ -27,60 +27,69 @@ function repotwrp()
   fi;
 
   # Variables
-  local CurDir=${PWD};
-  local PhoneName="${1}";
-  local BuildParams="${2}";
+  local PhoneName=${1};
+  local BuildParams=${2};
+  local adb_timeout;
+  local CurDir;
+  local RootDir;
+
+  # Access repo root
+  CurDir=${PWD};
   croot;
+  RootDir=$(pwd);
 
   # Sources Sync
-  if [[ ! "${BuildParams}" =~ 'nosync' ]]; then
+  if [[ ! "${BuildParams}" == *'nosync'* ]]; then
     repo sync --current-branch --detach --force-broken --force-sync --no-clone-bundle --no-tags;
   fi;
 
   # Clean
-  if [[ ! "${BuildParams}" =~ 'nowipe' ]]; then
+  if [[ ! "${BuildParams}" == *'nowipe'* ]]; then
     make clean;
 
   # Cleanout
-  elif [[ "${BuildParams}" =~ 'outcl' ]]; then
-    rm -rfv ./out/target/product/${PhoneName}/recovery/*;
-    rm -rfv ./out/target/product/${PhoneName}/root/*;
+  elif [[ "${BuildParams}" == *'outcl'* ]]; then
+    rm -rfv "./out/target/product/${PhoneName}/recovery/"*;
+    rm -rfv "./out/target/product/${PhoneName}/root/"*;
   fi;
 
   # Handle boot types
-  MultiROMBootableTWRP='true';
+  MultiROMBootableTWRP=true;
   case "${PhoneName}" in
     dora|kagura)
-        MultiROMBootableTWRP='';;
+        MultiROMBootableTWRP=;;
   esac;
 
   # Make recovery
   source ./build/envsetup.sh;
   croot;
-  RootDir=$(pwd);
-  lunch omni_${PhoneName}-userdebug;
-  make -j$(grep -c ^processor /proc/cpuinfo) recoveryimage ${RootDir}/out/target/product/${PhoneName}/system/build.prop;
+  lunch "omni_${PhoneName}-userdebug";
+  make -j"$(grep -c ^processor /proc/cpuinfo)" recoveryimage "${RootDir}/out/target/product/${PhoneName}/system/build.prop";
   echo '';
 
   # Make releases
   echo '  [ Making release files ]';
   echo '';
-  local TWRPVersion=$(grep '#define TW_MAIN_VERSION_STR' bootable/recovery/variables.h | sed 's/.*\"\(.*\)\".*/\1/' | cut -c 1-5);
+  local TWRPVersion;
+  TWRPVersion=$(grep '#define TW_MAIN_VERSION_STR' bootable/recovery/variables.h | sed 's/.*\"\(.*\)\".*/\1/' | cut -c 1-5);
   if [ -z "${TWRPVersion}" ]; then
     TWRPVersion=$(grep 'TW_VERSION_STR' bootable/recovery/variables.h | sed 's/.*\"\(.*\)\".*/\1/' | cut -c 1-5);
   fi;
   local TWRPImg=./out/target/product/${PhoneName}/recovery.img;
-  local DateTag=$(date +'%Y%m%d');
-  local OutBootImg="twrp-${TWRPVersion}-${DateTag}-boot-${PhoneName}.img";
-  local OutFOTAZip="twrp-${TWRPVersion}-${DateTag}-fota-${PhoneName}.zip";
-  local OutMultiROMZip="twrp-${TWRPVersion}-${DateTag}-secondary-multirom-${PhoneName}.zip";
-  local OutTWRP="twrp.img";
-  local TargetDir="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/TWRP-Android";
+  local DateTag;
+  DateTag=$(date +'%Y%m%d');
+  local OutBootImg=twrp-${TWRPVersion}-${DateTag}-boot-${PhoneName}.img;
+  local OutFOTAZip=twrp-${TWRPVersion}-${DateTag}-fota-${PhoneName}.zip;
+  local OutMultiROMZip=twrp-${TWRPVersion}-${DateTag}-secondary-multirom-${PhoneName}.zip;
+  local OutTWRP=twrp.img;
+  local TargetDir=${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/TWRP-Android;
   mkdir -p "${TargetDir}/";
 
   # Partitions
-  local FOTAPartition=$(androiddevicestarget fota);
-  local SystemPartition=$(androiddevicestarget system);
+  local FOTAPartition;
+  local SystemPartition;
+  FOTAPartition=$(androiddevicestarget fota);
+  SystemPartition=$(androiddevicestarget system);
 
   # Clean old releases
   rm -f "${TargetDir}/${OutTWRP}";
@@ -95,7 +104,7 @@ function repotwrp()
     echo '';
     echo ' Error: Output files missing';
     echo '';
-    cd ${CurDir};
+    cd "${CurDir}";
     return;
   fi;
 
@@ -106,8 +115,8 @@ function repotwrp()
   # Generate recovery zip, updater-script and recovery files
   cd "${TargetDir}/";
   mkdir -p ./META-INF/com/google/android/;
-  cp "${android_development_shell_tools_flashable_android_base}" "${TargetDir}/${OutFOTAZip}.unsigned.zip";
-  cp "${android_development_shell_tools_updater_flash_fota}" ./META-INF/com/google/android/updater-script;
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TargetDir}/${OutFOTAZip}.unsigned.zip";
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_FOTA}" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${TargetDir}/${OutFOTAZip}.unsigned.zip" ./META-INF/com/google/android/updater-script;
   zip -j -g "${TargetDir}/${OutFOTAZip}.unsigned.zip" "${TargetDir}/${OutTWRP}";
@@ -115,14 +124,14 @@ function repotwrp()
 
   # Generate secondary zip, updater-script and recovery files
   mkdir -p ./META-INF/com/google/android/;
-  cp "${android_development_shell_tools_flashable_android_base}" "${TargetDir}/${OutMultiROMZip}.unsigned.zip";
-  cp "${android_development_shell_tools_updater_multirom_secondary}" ./META-INF/com/google/android/updater-script;
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TargetDir}/${OutMultiROMZip}.unsigned.zip";
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_MULTIROM_SECONDARY}" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${TargetDir}/${OutMultiROMZip}.unsigned.zip" ./META-INF/com/google/android/updater-script;
   zip -j -g "${TargetDir}/${OutMultiROMZip}.unsigned.zip" "${TargetDir}/${OutTWRP}";
   rm -rf ./META-INF;
-  cd ${RootDir}/out/target/product/${PhoneName}/;
+  cd "${RootDir}/out/target/product/${PhoneName}/";
   zip -g "${TargetDir}/${OutMultiROMZip}.unsigned.zip" -r ./system/build.prop;
 
   # Zips signatures
@@ -141,23 +150,24 @@ function repotwrp()
   echo '';
   echo "  [ Install TWRP on the '${PhoneName}' ]";
   echo '';
-  printf '  Flash Recovery to FOTA (y/N) ? ';
-  if [[ "${BuildParams}" =~ 'fota' ]]; then
-    key='y';
+  echo -n '  Flash Recovery to FOTA (y/N) ? ';
+  if [[ "${BuildParams}" == *'fota'* ]]; then
+    key=y;
   else
-    read -t 10 key;
+    read -r -t 10 key;
   fi;
   if [[ "${key}" == 'y' || "${key}" == 'Y' ]] && [ -f "${TWRPImg}" ]; then
     echo '';
     adb root;
-    timeout 5 $(adbcmd) 'wait-for-device';
-    adb push ${TWRPImg} /tmp/twrp.img;
+    adb_timeout="timeout 5 $(adbcmd) wait-for-device";
+    ${adb_timeout};
+    adb push "${TWRPImg}" /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
-      adb shell /system/bin/dd if=/tmp/twrp.img of=${FOTAPartition};
+      adb shell /system/bin/dd if=/tmp/twrp.img of="${FOTAPartition}";
     else
-      adb shell /sbin/dd if=/tmp/twrp.img of=${FOTAPartition};
+      adb shell /sbin/dd if=/tmp/twrp.img of="${FOTAPartition}";
     fi;
-    if [[ "${BuildParams}" =~ 'fotareboot' ]]; then
+    if [[ "${BuildParams}" == *'fotareboot'* ]]; then
       adb reboot recovery;
     fi;
   else
@@ -165,17 +175,17 @@ function repotwrp()
   fi;
 
   # Upload new release
-  local UploadFolder="${PhoneName^}/TWRP-Recovery";
+  local UploadFolder=${PhoneName^}/TWRP-Recovery;
   echo '';
   echo '';
   echo "  [ Publish online to '${UploadFolder}' ]";
   echo '';
-  printf "  Upload (Y/n) ? ";
+  echo -n '  Upload (Y/n) ? ';
   local key;
-  if [[ "${BuildParams}" =~ 'local' ]]; then
-    key='n';
+  if [[ "${BuildParams}" == *'local'* ]]; then
+    key=n;
   else
-    read -t 30 key;
+    read -r -t 30 key;
   fi;
   echo '';
   if [[ ! "${key}" == 'n' && ! "${key}" == 'N' ]]; then
@@ -188,7 +198,7 @@ function repotwrp()
 
   # End of work
   echo '';
-  cd ${CurDir};
+  cd "${CurDir}";
 }
 
 # === Repo MultiROM ===
@@ -203,25 +213,30 @@ function repomrom()
   fi;
 
   # Variables
-  local CurDir=${PWD};
-  local PhoneName="${1}";
-  local BuildParams="${2}";
+  local PhoneName=${1};
+  local BuildParams=${2};
+  local adb_timeout;
+  local CurDir;
+  local RootDir;
+
+  # Access repo root
+  CurDir=${PWD};
   croot;
-  local RootDir=$(pwd);
+  RootDir=$(pwd);
 
   # Handle boot types
-  local MultiROMBootableTWRP='true';
-  local MultiROMRecoveryInjector='';
-  local MultiROMUninstaller='';
+  local MultiROMBootableTWRP=true;
+  local MultiROMRecoveryInjector=;
+  local MultiROMUninstaller=;
   case "${PhoneName}" in
     dora|kagura)
-        MultiROMBootableTWRP='';
-        MultiROMRecoveryInjector='true';
-        MultiROMUninstaller='true';;
+        MultiROMBootableTWRP=;
+        MultiROMRecoveryInjector=true;
+        MultiROMUninstaller=true;;
   esac;
 
   # Sources Sync
-  if [[ ! "${BuildParams}" =~ 'nosync' ]]; then
+  if [[ ! "${BuildParams}" == *'nosync'* ]]; then
     repo sync --current-branch --detach --force-broken --force-sync --no-clone-bundle --no-tags;
 
     # MutiROM submodules
@@ -232,27 +247,26 @@ function repomrom()
   fi;
 
   # Clean
-  if [[ ! "${BuildParams}" =~ 'nowipe' ]]; then
+  if [[ ! "${BuildParams}" == *'nowipe'* ]]; then
     make clean;
 
   # Cleanout
-  elif [[ "${BuildParams}" =~ 'outcl' ]]; then
-    rm -rfv ./out/target/product/${PhoneName}/recovery/*;
-    rm -rfv ./out/target/product/${PhoneName}/root/*;
+  elif [[ "${BuildParams}" == *'outcl'* ]]; then
+    rm -rfv "./out/target/product/${PhoneName}/recovery/"*;
+    rm -rfv "./out/target/product/${PhoneName}/root/"*;
   fi;
 
   # Make recovery
   source ./build/envsetup.sh;
-  if [[ ! "${BuildParams}" =~ 'nobuild' ]]; then
-    rm -rf "${BuildDir}/multirom"*
-    RootDir=$(pwd);
+  if [[ ! "${BuildParams}" == *'nobuild'* ]]; then
+    rm -rf "${BuildDir}/multirom"*;
 
     # Build
-    lunch omni_${PhoneName}-userdebug;
-    if [[ "${BuildParams}" =~ 'kernel' ]]; then
-      make -j$(grep -c ^processor /proc/cpuinfo) multirom_kernel_zip;
+    lunch "omni_${PhoneName}-userdebug";
+    if [[ "${BuildParams}" == *'kernel'* ]]; then
+      make -j"$(grep -c ^processor /proc/cpuinfo)" multirom_kernel_zip;
     else
-      make -j$(grep -c ^processor /proc/cpuinfo) recoveryimage multirom trampoline multirom_zip multirom_uninstaller multirom_recovery_injector_zip;
+      make -j"$(grep -c ^processor /proc/cpuinfo)" recoveryimage multirom trampoline multirom_zip multirom_uninstaller multirom_recovery_injector_zip;
     fi;
   else
     echo 'Build skipped...';
@@ -263,42 +277,45 @@ function repomrom()
   echo '  [ Making release files ]';
   echo '';
   local TWRPImg=./out/target/product/${PhoneName}/recovery.img;
-  local DateTag=$(date +'%Y%m%d');
-  local TargetDir="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}";
+  local DateTag;
+  DateTag=$(date +'%Y%m%d');
+  local TargetDir=${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)};
   local BuildDir=./out/target/product/${PhoneName};
-  cp ${BuildDir}/obj/ETC/system_build_prop_intermediates/build.prop ${BuildDir}/system/build.prop;
+  cp "${BuildDir}/obj/ETC/system_build_prop_intermediates/build.prop" "${BuildDir}/system/build.prop";
 
   # Partitions
-  local FOTAPartition=$(androiddevicestarget fota);
-  local SystemPartition=$(androiddevicestarget system);
+  local FOTAPartition;
+  local SystemPartition;
+  FOTAPartition=$(androiddevicestarget fota);
+  SystemPartition=$(androiddevicestarget system);
 
   # Built files
   local BuiltInstaller="multirom-*-v33x-UNOFFICIAL-${PhoneName}.zip";
   local BuiltKernel="multirom_kernel-*-v33x-UNOFFICIAL-${PhoneName}.zip";
-  local BuiltRecovery='recovery.img';
-  local BuiltRecoveryInjector='multirom_recovery_injector.zip';
-  local BuiltUninstaller='multirom_uninstaller.zip';
+  local BuiltRecovery=recovery.img;
+  local BuiltRecoveryInjector=multirom_recovery_injector.zip;
+  local BuiltUninstaller=multirom_uninstaller.zip;
 
   # Published files
-  local PublishDir='MultiROM-Android';
-  local PublishInstaller="${PublishDir}/multirom-${DateTag}-v33x-${PhoneName}.zip";
+  local PublishDir=MultiROM-Android;
+  local PublishInstaller=${PublishDir}/multirom-${DateTag}-v33x-${PhoneName}.zip;
   local PublishKernel;
   if [ ! -z "${3}" ]; then
-    PublishKernel="${PublishDir}/kernel-${DateTag}-${PhoneName}-${3}.zip";
+    PublishKernel=${PublishDir}/kernel-${DateTag}-${PhoneName}-${3}.zip;
   else
-    PublishKernel="${PublishDir}/kernel-${DateTag}-${PhoneName}.zip";
+    PublishKernel=${PublishDir}/kernel-${DateTag}-${PhoneName}.zip;
   fi;
-  local PublishRecoveryFOTA="${PublishDir}/multirom-${DateTag}-recovery-fota-${PhoneName}.zip";
-  local PublishRecoveryMultiROM="${PublishDir}/multirom-${DateTag}-recovery-secondary-${PhoneName}.zip";
-  local PublishRecoveryInjector="${PublishDir}/multirom-${DateTag}-recovery-injector-${PhoneName}.zip";
-  local PublishUninstaller="${PublishDir}/multirom-${DateTag}-uninstaller-${PhoneName}.zip";
+  local PublishRecoveryFOTA=${PublishDir}/multirom-${DateTag}-recovery-fota-${PhoneName}.zip;
+  local PublishRecoveryMultiROM=${PublishDir}/multirom-${DateTag}-recovery-secondary-${PhoneName}.zip;
+  local PublishRecoveryInjector=${PublishDir}/multirom-${DateTag}-recovery-injector-${PhoneName}.zip;
+  local PublishUninstaller=${PublishDir}/multirom-${DateTag}-uninstaller-${PhoneName}.zip;
 
   # Missing built recovery
   if [ ! -f "${BuildDir}/${BuiltRecovery}" ]; then
     echo '';
     echo ' Error: Output files missing';
     echo '';
-    cd ${CurDir};
+    cd "${CurDir}";
     return;
   fi;
 
@@ -306,14 +323,14 @@ function repomrom()
     mkdir -p "${TargetDir}/${PublishDir}";
   fi;
 
-  BuiltInstaller="$(find ${BuildDir} -maxdepth 1 -name ${BuiltInstaller} -print \
-                | tail -n 1)";
+  BuiltInstaller=$(find "${BuildDir}" -maxdepth 1 -name "${BuiltInstaller}" -print \
+                 | tail -n 1);
   if [ ! -z "${BuiltInstaller}" ]; then
     cp -f "${BuiltInstaller}" "${TargetDir}/${PublishInstaller}.unsigned.zip";
     signzip "${TargetDir}/${PublishInstaller}.unsigned.zip" "${TargetDir}/${PublishInstaller}";
   fi;
 
-  BuiltKernel="$(find ${BuildDir} -maxdepth 1 -name ${BuiltKernel} -print)";
+  BuiltKernel=$(find "${BuildDir}" -maxdepth 1 -name "${BuiltKernel}" -print);
   if [ ! -z "${BuiltKernel}" ]; then
     cp -f "${BuiltKernel}" "${TargetDir}/${PublishKernel}.unsigned.zip";
     signzip "${TargetDir}/${PublishKernel}.unsigned.zip" "${TargetDir}/${PublishKernel}";
@@ -332,8 +349,8 @@ function repomrom()
     # Generate recovery zip, updater-script and recovery files
     cd "${TargetDir}/${PublishDir}";
     mkdir -p ./META-INF/com/google/android/;
-    cp "${android_development_shell_tools_flashable_android_base}" "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip";
-    cp "${android_development_shell_tools_updater_flash_fota}" ./META-INF/com/google/android/updater-script;
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip";
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_FOTA}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip" ./META-INF/com/google/android/updater-script;
     zip -j -g "${TargetDir}/${PublishRecoveryFOTA}.unsigned.zip" "${TargetDir}/twrp.img";
@@ -341,14 +358,14 @@ function repomrom()
 
     # Generate secondary zip, updater-script and recovery files
     mkdir -p ./META-INF/com/google/android/;
-    cp "${android_development_shell_tools_flashable_android_base}" "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip";
-    cp "${android_development_shell_tools_updater_multirom_secondary}" ./META-INF/com/google/android/updater-script;
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip";
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_MULTIROM_SECONDARY}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_FOTA_PARTITION/${FOTAPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" ./META-INF/com/google/android/updater-script;
     zip -j -g "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" "${TargetDir}/twrp.img";
     rm -rf ./META-INF;
-    cd ${RootDir}/out/target/product/${PhoneName}/;
+    cd "${RootDir}/out/target/product/${PhoneName}/";
     zip -g "${TargetDir}/${PublishRecoveryMultiROM}.unsigned.zip" -r ./system/build.prop;
 
     # Zips signatures
@@ -376,24 +393,25 @@ function repomrom()
   echo '';
   echo "  [ Install Recovery on the '${PhoneName}' ]";
   echo '';
-  printf '  Flash Recovery to FOTA (y/N) ? ';
+  echo -n '  Flash Recovery to FOTA (y/N) ? ';
   local  key
-  if [[ "${BuildParams}" =~ 'fota' ]]; then
-    key='y';
+  if [[ "${BuildParams}" == *'fota'* ]]; then
+    key=y;
   else
-    read -t 10 key;
+    read -r -t 10 key;
   fi;
   if [[ "${key}" == 'y' || "${key}" == 'Y' ]] && [ -f "${TWRPImg}" ]; then
     echo '';
     adb root;
-    timeout 5 $(adbcmd) 'wait-for-device';
+    adb_timeout="timeout 5 $(adbcmd) wait-for-device";
+    ${adb_timeout} '';
     adb push "${TWRPImg}" /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
-      adb shell /system/bin/dd if=/tmp/twrp.img of=${FOTAPartition};
+      adb shell /system/bin/dd if=/tmp/twrp.img of="${FOTAPartition}";
     else
-      adb shell /sbin/dd if=/tmp/twrp.img of=${FOTAPartition};
+      adb shell /sbin/dd if=/tmp/twrp.img of="${FOTAPartition}";
     fi;
-    if [[ "${BuildParams}" =~ 'fotareboot' ]]; then
+    if [[ "${BuildParams}" == *'fotareboot'* ]]; then
       adb reboot recovery;
     fi;
   else
@@ -401,17 +419,17 @@ function repomrom()
   fi;
 
   # Upload new release
-  local UploadFolder="${PhoneName^}/MultiROM-Android";
+  local UploadFolder=${PhoneName^}/MultiROM-Android;
   echo '';
   echo '';
-  echo '  [ Publish online to '${UploadFolder}' ]';
+  echo "  [ Publish online to '${UploadFolder}' ]";
   echo '';
-  printf '  Upload (Y/n) ? ';
+  echo -n '  Upload (Y/n) ? ';
   local key;
-  if [[ "${BuildParams}" =~ 'local' ]]; then
-    key='n';
+  if [[ "${BuildParams}" == *'local'* ]]; then
+    key=n;
   else
-    read -t 30 key;
+    read -r -t 30 key;
   fi;
   echo '';
   if [[ ! "${key}" == 'n' && ! "${key}" == 'N' ]]; then
@@ -430,5 +448,5 @@ function repomrom()
 
   # End of work
   echo '';
-  cd ${CurDir};
+  cd "${CurDir}";
 }

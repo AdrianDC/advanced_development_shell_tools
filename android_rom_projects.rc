@@ -49,17 +49,17 @@ function gitbranchpusher()
   # Status
   project_dir=${project_dir#${repo_dir}/};
   case "${project_dir}" in
-    frameworks\/base)
-      if [[ "${repo_dir}" =~ 'LineageOS' ]]; then
-        project_branch='lineage_sonyaosp';
-      elif [[ "${repo_dir}" =~ 'AOSP-CAF' ]]; then
-        project_branch='aosp_caf';
-      elif [[ "${repo_dir}" =~ 'AOSP-o' ]]; then
-        project_branch='aosp_sony8960_o';
-      elif [[ "${repo_dir}" =~ 'AOSP-master' ]]; then
-        project_branch='aosp_sony8960_master';
+    'frameworks/base')
+      if [[ "${repo_dir}" == *'LineageOS'* ]]; then
+        project_branch=lineage_sonyaosp;
+      elif [[ "${repo_dir}" == *'AOSP-CAF'* ]]; then
+        project_branch=aosp_caf;
+      elif [[ "${repo_dir}" == *'AOSP-o'* ]]; then
+        project_branch=aosp_sony8960_o;
+      elif [[ "${repo_dir}" == *'AOSP-master'* ]]; then
+        project_branch=aosp_sony8960_master;
       else
-        project_branch='aosp_sony8960_n';
+        project_branch=aosp_sony8960_n;
       fi;;
     *)
       project_branch=${project_dir//\//_};;
@@ -71,8 +71,7 @@ function gitbranchpusher()
 
   # Check 'project' remote existence
   if [ "${remote}" = 'project' ]; then
-    git ls-remote --exit-code 'project' >/dev/null 2>&1;
-    if [ ${?} -ne 0 ]; then
+    if ! git ls-remote --exit-code 'project' > /dev/null 2>&1; then
       echo -e " \e[1;33mInformation:\e[0m Remote 'project' not found. Launching 'gitrap'...";
       gitrap;
       echo '';
@@ -80,19 +79,19 @@ function gitbranchpusher()
   fi;
 
   # Fetch upstream remote
-  git fetch "${remote}" ${project_branch};
+  git fetch "${remote}" "${project_branch}";
   git rev-list --left-right --count FETCH_HEAD...HEAD;
   echo '';
 
   # Confirmation
   command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
   echo " ${command}";
-  printf '  > Proceed with project push [y/N] ? ';
+  echo -n '  > Proceed with project push [y/N] ? ';
   notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
   if [ -z "${param_send}" ]; then
-    read -t 20 key;
+    read -r -t 20 key;
   else
-    key='y';
+    key=y;
     echo "${key}";
   fi;
 
@@ -139,17 +138,18 @@ function androidprojectpatcher()
   fi;
 
   # Variables
-  local project_name="${1}";
-  local project_tag="${2}";
-  local project_paths="${3}";
-  local project_specific="${4}";
-  local projects_specific='';
+  local project_name=${1};
+  local project_tag=${2};
+  local project_paths=${3};
+  local project_specific=${4};
+  local android_top;
+  local projects_specific=;
   local currentdir=${PWD};
 
   # GitHub Credentials
-  export GitEMail="user.name@gmail.com";
-  export GitFullName="Full Name";
-  export GitUserName="Username";
+  export GitEMail='user.name@gmail.com';
+  export GitFullName='Full Name';
+  export GitUserName='Username';
 
   # Load Android tools
   if [ -z "$(type -t croot)" ]; then
@@ -161,16 +161,16 @@ function androidprojectpatcher()
   cd "${currentdir}";
 
   # Automated key shortcut
-  local key_automated='';
-  local key_automated_push='';
+  local key_automated=;
+  local key_automated_push=;
   if [[ "${project_specific}" == 'y' ]] || [[ "${project_specific}" == 'n' ]]; then
-    key_automated="${project_specific}";
-    project_specific='';
+    key_automated=${project_specific};
+    project_specific=;
   fi;
 
   # Extract specific projects paths
   if [ ! -z "${project_specific}" ]; then
-    local android_top=$(gettop);
+    android_top=$(gettop);
     for path in ${project_specific}; do
       path=$(readlink -f "${path}");
       projects_specific="${projects_specific} ${path#${android_top}/}";
@@ -210,19 +210,19 @@ function androidprojectpatcher()
     croot;
 
     # Ignore missing git projects
-    if [ ! -d ${path}/.git ]; then
+    if [ ! -d "${path}/.git" ]; then
       echo '  .git project not found, ignoring...';
       continue;
     fi;
-    cd ${path}/;
+    cd "${path}/";
 
     # Targets selection
     case "${path}" in
-      frameworks\/base)
+      'frameworks/base')
         project_github='https://github.com/AdrianDC/platform_frameworks_base.git';
-        path_branch="${project_tag}";;
+        path_branch=${project_tag};;
       *)
-        project_github="https://github.com/AdrianDC/${project_name}.git";;
+        project_github=https://github.com/AdrianDC/${project_name}.git;;
     esac;
 
     # Loop until project ready
@@ -230,8 +230,7 @@ function androidprojectpatcher()
     while [ ${project_unfinished} -eq 1 ]; do
 
       # Fetch
-      git fetch ${project_github} ${path_branch};
-      if [ ${?} -ne 0 ]; then
+      if ! git fetch "${project_github}" "${path_branch}"; then
         echo 'Remote project branch not found, ignoring...';
         project_unfinished=2;
         continue;
@@ -244,20 +243,20 @@ function androidprojectpatcher()
       echo " Differences: ${git_revs_count:-Missing history}";
 
       # Handle unupdated projects
-      if [ ${git_revs_count_local} -ne 0 ]; then
+      if [ "${git_revs_count_local}" -ne 0 ]; then
         echo '';
-        printf '  > Recreate onto newest changes [Y/n/a/l] ? ';
+        echo -n '  > Recreate onto newest changes [Y/n/a/l] ? ';
         if [ -z "${key_automated}" ]; then
-          read -t 20 key;
+          read -r -t 20 key;
         else
-          key="${key_automated}";
+          key=${key_automated};
         fi;
         if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
-          key_automated='y';
-          key_automated_push='y';
+          key_automated=y;
+          key_automated_push=y;
         elif [ "${key}" = 'l' ] || [ "${key}" = 'L' ]; then
-          key_automated='y';
-          key_automated_push='n';
+          key_automated=y;
+          key_automated_push=n;
         fi;
 
         # Rebase the tree
@@ -266,23 +265,23 @@ function androidprojectpatcher()
           git cherry-pick --abort &> /dev/null;
 
           # Detect commits to pick
-          commits_list=$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD);
-          if [ -z "${commits_list}" ]; then
-            commits_list=$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD);
+          IFS=" " read -r -a commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD)";
+          if [ -z "${commits_list[*]}" ]; then
+            IFS=" " read -r -a commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD)";
           else
-            commits_list=$(git rev-list --reverse FETCH_HEAD~${git_revs_count_remote}..FETCH_HEAD);
+            IFS=" " read -r -a commits_list <<< "$(git rev-list --reverse FETCH_HEAD~"${git_revs_count_remote}"..FETCH_HEAD)";
           fi;
 
           # Pick all commits
-          for sha1 in ${commits_list}; do
-            git cherry-pick ${sha1};
+          for sha1 in "${commits_list[@]}"; do
+            git cherry-pick "${sha1}";
             commits_result=${?};
 
             # Failed update
             if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ] || ! git diff-index --quiet HEAD --; then
               echo '';
               echo '  < Automatic update failed...';
-              echo '     Tried to add following commits: '${sha1} ${commits_list#*${sha1}};
+              echo "     Tried to add following commits: ${sha1} ${commits_list[*]#*${sha1}}";
               echo '  > Manually fix then push with :';
               echo "     gitbranchpusher '${key_automated}' '${project_github}';";
               echo '';
@@ -331,17 +330,17 @@ function androidprojectrebaser()
   fi;
 
   # Variables
-  local upstream_repository="${1}";
-  local project_branch="${2}";
-  local project_paths="${3}";
-  local project_specific="${4}";
+  local upstream_repository=${1};
+  local project_branch=${2};
+  local project_paths=${3};
+  local project_specific=${4};
   local currentdir=${PWD};
 
   # Automated key shortcut
-  local key_automated='';
+  local key_automated=;
   if [[ "${project_specific}" == 'y' ]] || [[ "${project_specific}" == 'n' ]]; then
-    key_automated="${project_specific}";
-    project_specific='';
+    key_automated=${project_specific};
+    project_specific=;
   fi;
 
   # Repo root
@@ -357,7 +356,7 @@ function androidprojectrebaser()
   # Variables
   local git_revs_count;
   local git_revs_count_local;
-  local git_username=$(githubusername 2>/dev/null);
+  local git_username;
   local path;
   local path_branch;
   local path_name;
@@ -370,7 +369,8 @@ function androidprojectrebaser()
   local upstream_branch;
   local upstream_project;
 
-  # Username fallback
+  # Username and fallback
+  git_username=$(githubusername 2> /dev/null);
   git_username=${git_username:-AdrianDC};
 
   # Projects loader
@@ -378,7 +378,7 @@ function androidprojectrebaser()
 
     # Jump to specific project
     if [ ! -z "${project_specific}" ]; then
-      if [[ ! "${project}" =~ "${project_specific%/}::" ]]; then
+      if [[ ! "${project}" == *"${project_specific%/}::"* ]]; then
         continue;
       fi;
     fi;
@@ -386,19 +386,19 @@ function androidprojectrebaser()
     # Project selection
     path=${project%%::*};
     path_temp=${project#*::};
-    path_name="${path_temp%::*}";
-    project_fetch='';
+    path_name=${path_temp%::*};
+    project_fetch=;
     upstream_project=${upstream_repository}/${path_name:-.};
     upstream_branch=${path_temp#*::};
     upstream_branch=${upstream_branch:-${project_branch}};
-    push_branch="${upstream_branch}";
+    push_branch=${upstream_branch};
 
     # Variables generic changes
     if [ ! -z "${project_branch}" ]; then
-      push_branch="${project_branch}";
+      push_branch=${project_branch};
     fi;
     if [ -z "${upstream_project}" ]; then
-      upstream_project="${upstream_repository}";
+      upstream_project=${upstream_repository};
     fi;
 
     # Project introduction
@@ -407,11 +407,11 @@ function androidprojectrebaser()
     croot;
 
     # Ignore non-git projects
-    if [ ! -d ${path}/.git ]; then
+    if [ ! -d "${path}/.git" ]; then
       echo '  .git project not found, ignoring...';
       continue;
     fi;
-    cd ${path}/;
+    cd "${path}/";
 
     # Loop until project ready
     project_unfinished=1;
@@ -420,9 +420,8 @@ function androidprojectrebaser()
 
       # Standard origin repository
       if [[ "${upstream_repository}" == 'origin' ]]; then
-        project_fetch='origin';
-        git ls-remote --exit-code ${project_fetch} >/dev/null 2>&1;
-        if [ $? -ne 0 ]; then
+        project_fetch=origin;
+        if ! git ls-remote --exit-code ${project_fetch} > /dev/null 2>&1; then
           echo ' Branch origin was not found...';
           gitrao;
           continue;
@@ -430,9 +429,8 @@ function androidprojectrebaser()
 
       # SonyXperiaDev origin repository
       elif [[ "${upstream_repository}" == 'sodp' ]]; then
-        project_fetch='origin';
-        git ls-remote --exit-code ${project_fetch} >/dev/null 2>&1;
-        if [ $? -ne 0 ]; then
+        project_fetch=origin;
+        if ! git ls-remote --exit-code ${project_fetch} > /dev/null 2>&1; then
           echo ' Branch origin was not found...';
           gitraos;
           continue;
@@ -440,41 +438,39 @@ function androidprojectrebaser()
 
       # Custom upstream repository
       else
-        project_fetch='upstream';
-        git ls-remote --exit-code ${project_fetch} >/dev/null 2>&1;
-        if [ $? -ne 0 ]; then
+        project_fetch=upstream;
+        if ! git ls-remote --exit-code ${project_fetch} > /dev/null 2>&1; then
           echo ' Branch upstream was not found...';
-          gitremoteset upstream https://github.com/${upstream_project};
+          gitremoteset upstream "https://github.com/${upstream_project}";
           continue;
         fi;
       fi;
 
       # Check private remote
-      git ls-remote --exit-code ${git_username} >/dev/null 2>&1;
-      if [ $? -ne 0 ]; then
+      if ! git ls-remote --exit-code "${git_username}" > /dev/null 2>&1; then
         echo " Branch ${git_username} was not found...";
         gitraa;
         continue;
       fi;
 
       # Fetch and compare
-      git fetch ${project_fetch} ${upstream_branch};
+      git fetch "${project_fetch}" "${upstream_branch}";
       git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
       git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
       git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
       echo " Differences: ${git_revs_count}";
 
       # Handle unupdated projects
-      if [ ${git_revs_count_remote} -ne 0 ]; then
+      if [ "${git_revs_count_remote}" -ne 0 ]; then
         echo '';
-        printf '  > Rebase onto newest changes [Y/a/n] ? ';
+        echo -n '  > Rebase onto newest changes [Y/a/n] ? ';
         if [ -z "${key_automated}" ]; then
-          read -t 20 key;
+          read -r -t 20 key;
           if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
-            key_automated='y';
+            key_automated=y;
           fi;
         else
-          key="${key_automated}";
+          key=${key_automated};
         fi;
 
         # Rebase the tree
@@ -484,15 +480,15 @@ function androidprojectrebaser()
           git rebase FETCH_HEAD;
           push_command="git push -f ${git_username} HEAD:refs/heads/${push_branch}";
           echo '';
-          printf "  > ${push_command} [y/a/N] ? ";
+          echo -n "  > ${push_command} [y/a/N] ? ";
           notify-send "androidprojectrebaser: Push ${path} ?" 2> /dev/null;
           if [ -z "${key_automated}" ]; then
-            read -t 20 key;
+            read -r -t 20 key;
             if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
-              key_automated='y';
+              key_automated=y;
             fi;
           else
-            key="${key_automated}";
+            key=${key_automated};
           fi;
 
           # Push the tree
@@ -534,7 +530,7 @@ function androidprojectforeach()
   # Usage
   if [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: androidprojectforeach <project_name> '<commands>' (Android project paths commands runner)';
+    echo ' Usage: androidprojectforeach <project_name> <"commands"> (Android project paths commands runner)';
     echo '';
     return;
   fi;

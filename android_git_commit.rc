@@ -18,14 +18,14 @@
 # === Git Show Helpers ===
 alias gitshow='git show --name-status';
 alias gitshf='git show --pretty=full';
-function gitshl() { git show --oneline --name-only ${1} | tail -n +2 | cut -c $((1+${2:-0}))-; }
+function gitshl() { git show --oneline --name-only "${1}" | tail -n +2 | cut -c $((1+${2:-0}))-; }
 
 # === Git Add Helpers ===
 alias gitap='git add -p';
 alias gitaa='git add . -Av';
 alias gitan='git add . -An';
 alias gitanp='git config core.fileMode false; git add -p; git config --unset core.fileMode';
-function gite() { fileedit ${1}; printf ' Done ? [Enter] '; read; git add ${1}; }
+function gite() { fileedit "${1}"; echo -n ' Done ? [Enter] '; read -r; git add "${1}"; }
 
 # === Git Branch Helpers ===
 alias gitbd='git branch -D';
@@ -37,9 +37,9 @@ alias gitch='git checkout';
 # === Git Cherry-Pick Helpers ===
 alias gitcp='git cherry-pick';
 alias gitcpc='git reset; git cherry-pick --continue';
-function gitcpa() { for sha1 in ${@}; do echo ''; echo ${sha1}; git cherry-pick ${sha1}; done; }
-function gitcpf() { git fetch ${1} ${2}; git cherry-pick FETCH_HEAD; }
-function gitcpr() { git show ${1} --no-color | sed "s/${2}/${3}/g" | patch; }
+function gitcpa() { for sha1 in "${@}"; do echo ''; echo "${sha1}"; git cherry-pick "${sha1}"; done; }
+function gitcpf() { git fetch "${1}" "${2}"; git cherry-pick FETCH_HEAD; }
+function gitcpr() { git show "${1}" --no-color | sed "s/${2}/${3}/g" | patch; }
 
 # === Git Cherry-Pick Path ===
 function gitfcp()
@@ -53,9 +53,9 @@ function gitfcp()
   fi;
 
   # Git cherry-pick from path
-  git fetch ${1};
+  git fetch "${1}";
   git cherry-pick --abort;
-  git cherry-pick FETCH_HEAD~${2:-1}..FETCH_HEAD;
+  git cherry-pick "FETCH_HEAD~${2:-1}..FETCH_HEAD";
 }
 
 # === Git Commits Helpers ===
@@ -73,7 +73,7 @@ function gitcid()
   # Usage: gitcid (Apply commit-msg hook to commit)
 
   # Copy commit-msg
-  cp -fv "${android_development_shell_tools_dir}/android_tools/commit-msg" '.git/hooks/commit-msg';
+  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_tools/commit-msg" '.git/hooks/commit-msg';
   chmod u+x ./.git/hooks/commit-msg;
 
   # Update commit with Change-ID
@@ -88,7 +88,7 @@ function gitcidupstream()
 
   # Fetch commit-msg file
   curl -Lo .git/hooks/commit-msg http://review.lineageos.org/tools/hooks/commit-msg;
-  cp -fv '.git/hooks/commit-msg' "${android_development_shell_tools_dir}/android_tools/commit-msg";
+  cp -fv '.git/hooks/commit-msg' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_tools/commit-msg";
   chmod u+x ./.git/hooks/commit-msg;
 }
 
@@ -96,7 +96,7 @@ function gitcidupstream()
 function gitcommitstable
 {
   # Default variables
-  local to_insert_default='RM-290';
+  local to_insert_default=RM-290;
 
   # Usage
   if [ -z "${1}" ]; then
@@ -111,15 +111,15 @@ function gitcommitstable
   local to_insert=${2:-${to_insert_default}};
 
   # Single commits changes
-  if [[ ! "${commit_range}" =~ '..' ]]; then
+  if [[ ! "${commit_range}" == *'..'* ]]; then
     commit_range=${commit_range}^..${commit_range};
   fi;
 
   # Pick and edit
-  for commit_sha1 in $(git rev-list --reverse ${commit_range}); do
+  for commit_sha1 in $(git rev-list --reverse "${commit_range}"); do
     rm -f .git/COMMIT_EDITMSG;
     rm -f .git/.COMMIT_EDITMSG.swp;
-    git cherry-pick ${commit_sha1};
+    git cherry-pick "${commit_sha1}";
     sed -i -e "2,/^[^ ]*: .*/s/^\([^ ]*: .*\)/${to_insert}\n\n\1/" .git/COMMIT_EDITMSG;
     git commit --amend --edit --file=.git/COMMIT_EDITMSG;
     echo '';

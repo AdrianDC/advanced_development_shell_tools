@@ -21,9 +21,8 @@ function repocomparestable()
   # Usage: repocomparestable [stable_ZNH5Y] [github_account_LineageOS] [full_diff] (Helper to compare with stable branch)
 
   # Default variables
-  local default_github_account='LineageOS';
-  local default_to_insert='ZNH5Y';
-  local default_see_translations=;
+  local default_github_account=LineageOS;
+  local default_to_insert=ZNH5Y;
 
   # Variables
   local stable_tag=${1:-${default_to_insert}};
@@ -32,12 +31,12 @@ function repocomparestable()
 
   # Diff execution
   echo '';
-  printf ' Scanning...';
+  echo -n ' Scanning...';
   repo forall -c "
 
      # Filter out projects
      if [ -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${github_account}\") ]; then
-       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
        return;
      fi;
 
@@ -47,13 +46,13 @@ function repocomparestable()
                      | sed 's/-${stable_tag}//');
 
      # Show and fetch projects
-     printf \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+     echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
      git fetch --quiet \${REPO_REMOTE} \${project_branch};
 
      # Detect local differences
      if [ \$(git diff --quiet HEAD FETCH_HEAD; echo \${?}) -ne 0 ]; then
-       printf \"\r\033[K==========================================================\n\";
-       printf \"Project \${REPO_PROJECT} [\${REPO_RREV##*/} / \${project_branch}]\n\";
+       echo -e  \"\r\033[K==========================================================\";
+       echo -e  \"Project \${REPO_PROJECT} [\${REPO_RREV##*/} / \${project_branch}]\";
        if [ -z \"${full_diff}\" ]; then
          git --no-pager diff --stat HEAD FETCH_HEAD  -- . \":(exclude)*res/*-*/*\";
        elif [ ! -z \"\${default_see_translations}\" ]; then
@@ -61,22 +60,22 @@ function repocomparestable()
        else
          git --no-pager diff HEAD FETCH_HEAD;
        fi;
-       printf ' Stable commits / Mainline new commits :  ';
+       echo -n ' Stable commits / Mainline new commits :  ';
        git rev-list --left-right --count HEAD...FETCH_HEAD;
        echo '';
      fi;
 
      # Detect local differences
      if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
-       printf \"\r\033[K==========================================================\n\";
-       printf \"Project \${REPO_PROJECT} / \${project_branch}: Unmerged differences\n\";
+       echo -e  \"\r\033[K==========================================================\";
+       echo \"Project \${REPO_PROJECT} / \${project_branch}: Unmerged differences\";
        git --no-pager diff;
        echo '';
      fi;
     " 2> /dev/null;
 
   # Done
-  printf '\r\033[K Done searching';
+  echo -en  '\r\033[K Done searching';
   echo '';
 }
 
@@ -86,16 +85,17 @@ function repocompareupstream()
   # Usage: repocompareupstream [github_account_LineageOS] [full_diff] (Helper to compare with upstream branch)';
 
   # Default variables
-  local default_github_account='LineageOS';
-  local default_filtered_projects='chromium-webview';
-  local default_see_translations=;
+  local default_github_account=LineageOS;
+  local default_filtered_projects=chromium-webview;
+
+  # Variables
+  local upstream_branch;
 
   # Upstream branch
-  local upstream_branch=$(cat .repo/manifest.xml 2> /dev/null \
-                        | grep revision \
-                        | grep android- \
-                        | head -n 1 \
-                        | sed 's/.*"\(refs.*\)".*/\1/');
+  upstream_branch=$(grep revision .repo/manifest.xml 2> /dev/null \
+                  | grep android- \
+                  | head -n 1 \
+                  | sed 's/.*"\(refs.*\)".*/\1/');
 
   # Variables
   local github_account=${1:-${default_github_account}};
@@ -103,13 +103,13 @@ function repocompareupstream()
 
   # Diff execution
   echo '';
-  printf ' Scanning...';
+  echo -n ' Scanning...';
   repo forall -c "
 
      # Filter out projects
      if [ -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${github_account}\") ] || \
              [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_filtered_projects}\") ]; then
-       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
        return;
      fi;
 
@@ -121,13 +121,13 @@ function repocompareupstream()
      project_upstream=\${project_upstream}/\${REPO_PATH};
 
      # Show and fetch projects
-     printf \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+     echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
      git fetch -v \${project_upstream} ${upstream_branch};
 
      # Detect new remote commits
      changescount=\$(git rev-list --right-only --count HEAD...FETCH_HEAD);
      if [ \${changescount} -ne 0 ]; then
-       printf \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
+       echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
        echo '';
        git log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
        echo '';
@@ -136,7 +136,7 @@ function repocompareupstream()
     " 2> /dev/null;
 
   # Done
-  printf '\r\033[K Done searching';
+  echo -en  '\r\033[K Done searching';
   echo '';
 }
 
@@ -153,16 +153,17 @@ function repocomparetags()
   fi;
 
   # Default variables
-  local default_ignore_account='LineageOS';
-  local default_filtered_projects='chromium-webview';
-  local default_see_translations=;
+  local default_ignore_account=LineageOS;
+  local default_filtered_projects=chromium-webview;
+
+  # Variables
+  local upstream_branch;
 
   # Upstream branch
-  local upstream_branch=$(cat .repo/manifest.xml 2> /dev/null \
-                        | grep revision \
-                        | grep android- \
-                        | head -n 1 \
-                        | sed 's/.*"\(refs.*\)".*/\1/');
+  upstream_branch=$(grep revision .repo/manifest.xml 2> /dev/null \
+                  | grep android- \
+                  | head -n 1 \
+                  | sed 's/.*"\(refs.*\)".*/\1/');
 
   # Variables
   local upstream_to_compare=${1};
@@ -171,13 +172,13 @@ function repocomparetags()
 
   # Diff execution
   echo '';
-  printf ' Scanning...';
+  echo -n ' Scanning...';
   repo forall -c "
 
      # Filter out projects
-     if [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_ignore_account}\") ] || \
+     if [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${ignore_account}\") ] || \
              [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_filtered_projects}\") ]; then
-       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
        return;
      fi;
 
@@ -189,14 +190,14 @@ function repocomparetags()
      project_upstream=\${project_upstream}/\${REPO_PATH};
 
      # Show and fetch projects
-     printf \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+     echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
      git fetch -v \${project_upstream} ${upstream_branch};
      git fetch -v \${project_upstream} ${upstream_to_compare};
 
      # Detect local differences
      if [ \$(git diff --quiet ${upstream_branch} ${upstream_to_compare}; echo \${?}) -ne 0 ]; then
-       printf \"\r\033[K==========================================================\n\";
-       printf \"Project \${REPO_PROJECT} / ${upstream_branch} & ${upstream_to_compare}\n\";
+       echo -e  \"\r\033[K==========================================================\";
+       echo \"Project \${REPO_PROJECT} / ${upstream_branch} & ${upstream_to_compare}\";
        git --no-pager diff ${upstream_branch} ${upstream_to_compare};
        echo '';
      fi;
@@ -204,6 +205,6 @@ function repocomparetags()
     " 2> /dev/null;
 
   # Done
-  printf '\r\033[K Done searching';
+  echo -en  '\r\033[K Done searching';
   echo '';
 }

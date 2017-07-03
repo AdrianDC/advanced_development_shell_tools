@@ -72,11 +72,14 @@ function fastupl()
     return;
   fi;
 
-  # File download command
+  # Variables
   local apkname;
-  local filename=$(basename "${1}");
+  local filename;
   local filepath;
   local cmd;
+
+  # Initialize variables
+  filename=$(basename "${1}");
 
   # Launch file private uploader
   if shtools-uploads-basketbuild-active; then
@@ -110,8 +113,8 @@ function fastupl()
     # Generic case
     *)
       # /system/ file
-      if [[ "${1}" =~ '/system/' ]]; then
-        filepath="/system/${1#*/system/}";
+      if [[ "${1}" == *'/system/'* ]]; then
+        filepath=/system/${1#*/system/};
         cmd="${cmd} adbpu '${filename}' '${filepath}';";
 
         # .apk application

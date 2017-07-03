@@ -25,7 +25,7 @@ function cdd()
   local path;
 
   # Shortcut
-  content="${1}";
+  content=${1};
   if [ -z "${content}" ]; then
     content=$(repogetdevice);
   fi;
@@ -34,14 +34,14 @@ function cdd()
   path=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/*\/*${content}*/g");
   for path_item in ${path}; do
     if [ -d "${path_item}" ] && [[ ! "${path_item}" == *'generic'* ]] && [[ ! "${path_item}" == *'/qcom/'* ]]; then
-      path="${path_item}";
+      path=${path_item};
       break;
     fi;
   done;
 
   # Check path
   if [ ! -d "${path}" ]; then
-    path=$(find ./*"${1}"* -type d -depth 0 2>/dev/null | head -n 1);
+    path=$(find ./*"${1}"* -type d -depth 0 2> /dev/null | head -n 1);
     if [ -z "${path}" ]; then
       echo " cdd: '${1}' not found...";
       return;
@@ -57,11 +57,14 @@ function cdman()
 {
   # Usage: cdman (Access manifests path)
 
+  # Variables
+  local path;
+
   # Access manifests path
-  local path=$(echo "$(pwd)" \
-             | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/manifests/g");
-  mkdir -p ${path}/;
-  cd ${path}/;
+  path=$(pwd \
+       | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/manifests/g");
+  mkdir -p "${path}/";
+  cd "${path}/";
 }
 
 # === Repo Local Manifests ===
@@ -69,11 +72,14 @@ function cdlocman()
 {
   # Usage: cdlocman (Access local manifests path)
 
+  # Variables
+  local path;
+
   # Access local manifests path
-  local path=$(echo "$(pwd)" \
-             | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/local_manifests/g");
-  mkdir -p ${path}/;
-  cd ${path}/;
+  path=$(pwd \
+       | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/local_manifests/g");
+  mkdir -p "${path}/";
+  cd "${path}/";
 }
 
 # === Repo Out Getter ===
@@ -88,17 +94,21 @@ function toout()
   fi;
 
   # Variables
-  local device="${1}";
+  local device=${1};
+  local outtargetpath;
+  local outtargetpaths;
 
   # Get out target path
-  local outtargetpath=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/out\/target\/product/g");
+  outtargetpath=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/out\/target\/product/g");
 
   # Path detection
-  if [ -d "${outtargetpath}/"*"${device}"* ]; then
-    echo "${outtargetpath}/"*"${device}"*;
-  else
-    echo "${outtargetpath}/*";
+  outtargetpaths=("${outtargetpath}/"*"${device}"*);
+  if [ "${#outtargetpaths[@]}" -ne 1 ]; then
+    outtargetpaths=("${outtargetpath}/"*);
   fi;
+
+  # Return path result
+  echo "${outtargetpaths[0]}";
 }
 
 # === Repo Out Access ===
@@ -113,7 +123,7 @@ function cdout()
   fi;
 
   # Access out path
-  cd $(toout ${1});
+  cd "$(toout "${1}")";
 }
 
 # === Find Android Dev Drive ===
@@ -131,9 +141,9 @@ function getand()
 
   # Return Bash location
   if [ -d "${android_dev_dir}/Bash" ]; then
-    echo ${android_dev_dir};
+    echo "${android_dev_dir}";
   else
-    echo ${ANDROID_DEV_DRIVE};
+    echo "${ANDROID_DEV_DRIVE}";
   fi;
 }
 
@@ -149,8 +159,12 @@ function torompaths()
   fi;
 
   # Variables
-  local android_dev_dir=$(getand);
-  local target='';
+  local android_dev_dir;
+  local targets=();
+  local target=;
+
+  # AndroidDev access
+  android_dev_dir=$(getand);
 
   # AndroidDev verification
   if [ -z "${android_dev_dir}" ]; then
@@ -170,25 +184,26 @@ function torompaths()
 
   # ROM subpath
   if [ ! -z "${2}" ]; then
-    target=$(pwd | sed "s/\(${android_dev_dir}\)\(\/[^/]*\(.*\)\|\)$/\1\/${1}-*${2}*\3/g");
-    target=$(echo ${target} | cut -f1 -d\ );
+    for targets in $(pwd | sed "s/\(${android_dev_dir}\)\(\/[^/]*\(.*\)\|\)$/\1\/${1}-*${2}*\3/g"); do
+      target=$(echo "${targets[*]}" | cut -f1 -d\ );
+    done;
   fi;
 
   # ROM path
-  if [ -z "${target}" ] || [ ! -d ${target} ]; then
+  if [ -z "${target}" ] || [ ! -d "${target}" ]; then
     target=$(pwd | sed "s/\(${android_dev_dir}\)\(\/[^/]*\(.*\)\|\)$/\1\/${1}\3/g");
-    target=$(echo ${target} | cut -f1 -d\ );
+    target=$(echo "${target}" | cut -f1 -d\ );
   fi;
 
   # Mismatching ROM path
-  if [ -z "${target}" ] || [ ! -d ${target} ]; then
+  if [ -z "${target}" ] || [ ! -d "${target}" ]; then
     cdand;
     target=$(pwd | sed "s/\(${android_dev_dir}\)\(\/[^/]*\(.*\)\|\)$/\1\/${1}\3/g");
-    target=$(echo ${target} | cut -f1 -d\ );
+    target=$(echo "${target}" | cut -f1 -d\ );
   fi;
 
   # Return target
-  echo ${target}/;
+  echo "${target}/";
 }
 
 # === Check Command for Path Changes ===
@@ -197,10 +212,13 @@ function pathchanged()
   # Usage: pathchanged <command> <parameters> (Run command and notify path changes)
 
   # Variables
-  local path=$(pwd);
+  local path;
+
+  # Save current path;
+  path=$(pwd);
 
   # Run input command
-  ${@};
+  "${@}";
 
   # Notify path differences
   [ "${path}" = "$(pwd)" ];
@@ -210,42 +228,42 @@ function pathchanged()
 function toaosp()       { torompaths 'AOSP' "${1}"; }
 function tolineage()    { torompaths 'LineageOS' "${1}"; }
 function toaospcaf()    { torompaths 'AOSP-CAF' "${1}"; }
-function tomultirom()   { torompaths 'MultiROM' "${1}"; }
+function tomultirom()   { torompaths 'MultiROM' ; }
 function torr()         { torompaths 'ResurrectionRemix' "${1}"; }
-function totwrp()       { torompaths 'TWRP' "${1}"; }
-function cdaosp()       { cd $(toaosp ${1}); }
-function cdl()          { cd $(tolineage ${1}); }
-function cdlineage()    { cd $(tolineage ${1}); }
-function cdaospcaf()    { cd $(toaospcaf); }
-function cdmultirom()   { cd $(tomultirom); }
-function cdrr()         { cd $(torr ${1}); }
-function cdtwrp()       { cd $(totwrp); }
+function totwrp()       { torompaths 'TWRP' ; }
+function cdaosp()       { cd "$(toaosp "${1}")"; }
+function cdl()          { cd "$(tolineage "${1}")"; }
+function cdlineage()    { cd "$(tolineage "${1}")"; }
+function cdaospcaf()    { cd "$(toaospcaf)"; }
+function cdmultirom()   { cd "$(tomultirom)"; }
+function cdrr()         { cd "$(torr "${1}")"; }
+function cdtwrp()       { cd "$(totwrp)"; }
 
 # === Private Shortcuts ===
-function cdand()        { cd $(getand); }
+function cdand()        { cd "$(getand)"; }
 function cddesk()       { cd "${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}"; }
-function cddev()        { cd $(getand)/Development/${1} 2> /dev/null; }
-function cddevaosp()    { cd $(getand)/Development/aosp_*${1} 2> /dev/null; }
-function cddevlineage() { cd $(getand)/Development/lineage_*${1} 2> /dev/null; }
-function cddevmrom()    { cd $(getand)/Development/multirom_development_sony 2> /dev/null; }
-function cddevtwrp()    { cd $(getand)/Development/twrp_development_sony 2> /dev/null; }
-function cdprojects()   { cd $(getand)/Projects/${1}; }
-function cdref()        { cd $(getand)/References/${1}; }
-function cdrefapk()     { cd $(getand)/References/apk; }
-function cdserv()       { cd $(getand)/Server; }
+function cddev()        { cd "$(getand)/Development/${1}" 2> /dev/null; }
+function cddevaosp()    { cd "$(getand)/Development/aosp_*${1}" 2> /dev/null; }
+function cddevlineage() { cd "$(getand)/Development/lineage_*${1}" 2> /dev/null; }
+function cddevmrom()    { cd "$(getand)/Development/multirom_development_sony" 2> /dev/null; }
+function cddevtwrp()    { cd "$(getand)/Development/twrp_development_sony" 2> /dev/null; }
+function cdprojects()   { cd "$(getand)/Projects/${1}"; }
+function cdref()        { cd "$(getand)/References/${1}"; }
+function cdrefapk()     { cd "$(getand)/References/apk"; }
+function cdserv()       { cd "$(getand)/Server"; }
 function adbapks()      { cdrefapk; adbapkinstall; }
 function cdandfiles()   { cd "${ANDROID_FILES_PATH}/"; }
-function impaospcaf()   { rsync -arv --delete --delete-after $(toaospcaf ${1}) ./${1}; }
-function implineage()   { rsync -arv --delete --delete-after $(tolineage ${1}) ./${1}; }
-function cpaosp()       { cp -fv ./${1} $(toaosp ${2})/${1}; }
-function cplineage()    { cp -fv ./${1} $(tolineage ${2})/${1}; }
-function meldaosp()     { meld ./${1} $(toaosp ${2})/${1}; }
-function meldaospsony() { meld ./${1} $(toaosp sony)/${1}; }
-function meldaospcaf()  { meld ./${1} $(toaospcaf)/${1}; }
-function meldlineage()  { meld ./${1} $(tolineage ${2})/${1}; }
-function meldmrom()     { meld ./${1} $(tomultirom)/${1}; }
-function meldtwrp()     { meld ./${1} $(totwrp)/${1}; }
-function nout()         { diropen $(toout ${1}); }
+function impaospcaf()   { rsync -arv --delete --delete-after "$(toaospcaf "${1}")" "./${1}"; }
+function implineage()   { rsync -arv --delete --delete-after "$(tolineage "${1}")" "./${1}"; }
+function cpaosp()       { cp -fv "./${1}" "$(toaosp "${2}")/${1}"; }
+function cplineage()    { cp -fv "./${1}" "$(tolineage "${2}")/${1}"; }
+function meldaosp()     { meld "./${1}" "$(toaosp "${2}")/${1}"; }
+function meldaospsony() { meld "./${1}" "$(toaosp sony)/${1}"; }
+function meldaospcaf()  { meld "./${1}" "$(toaospcaf)/${1}"; }
+function meldlineage()  { meld "./${1}" "$(tolineage "${2}")/${1}"; }
+function meldmrom()     { meld "./${1}" "$(tomultirom)/${1}"; }
+function meldtwrp()     { meld "./${1}" "$(totwrp)/${1}"; }
+function nout()         { diropen "$(toout "${1}")"; }
 
 # === Syncer Shortcuts ===
 function aospsyncall() { reporeferencedaosp "reposy"; }

@@ -58,7 +58,7 @@ function fileedit()
   local opened;
 
   # Files editor for most environments
-  for file in ${@}; do
+  for file in "${@}"; do
 
     # Filter only files
     if [ ! -f "${file}" ]; then
@@ -103,11 +103,10 @@ function diropen()
     return;
   fi;
 
-  # Computer environement
-  xdg-open "${1}" 2> /dev/null;
+  # Computer environment
+  if ! xdg-open "${1}" 2> /dev/null; then
 
-  # Server environment
-  if [ ${?} -ne 0 ]; then
+    # Server environment
     cd "${1}";
   fi;
 }
@@ -146,7 +145,7 @@ function findnewer()
   fi;
 
   # Search for newer files
-  touch -t ${1}0000.01 /tmp/filetimeref;
+  touch -t "${1}0000.01" /tmp/filetimeref;
   find . -type f -newer /tmp/filetimeref -print;
   rm -f /tmp/filetimeref;
 }
@@ -162,11 +161,17 @@ function cpioext()
     return;
   fi;
 
+  # Variables
+  local cwd;
+  local file;
+  local name;
+  local outdir;
+
   # Extract cpio file
-  local cwd=$(pwd);
-  local file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
-  local name=$(basename "${file}");
-  local outdir=$(mktemp -d);
+  cwd=$(pwd);
+  file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
+  name=$(basename "${file}");
+  outdir=$(mktemp -d);
   cp "${file}" "${outdir}/";
   cd "${outdir}";
   cpio -i -F "${name}";
@@ -223,7 +228,7 @@ function diffbin()
 
   # Partial view
   else
-    diff -sy <(xxd "${1}") <(xxd "${2}") | less | colordiff | head -n ${3};
+    diff -sy <(xxd "${1}") <(xxd "${2}") | less | colordiff | head -n "${3}";
   fi;
 }
 
@@ -238,20 +243,20 @@ function netspeed()
   dev_wlan=$(grep -c wlan0 /proc/net/dev);
   tput sc;
 
-  while [ ${dev_eth} -ne 0 ] || [ ${dev_wlan} -ne 0 ]; do
-    if [ ${dev_eth} -ne 0 ]; then
+  while [ "${dev_eth}" -ne 0 ] || [ "${dev_wlan}" -ne 0 ]; do
+    if [ "${dev_eth}" -ne 0 ]; then
       vals_eth=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
                <(grep eth0 /proc/net/dev) \
                <(sleep 1; grep eth0 /proc/net/dev));
     else
-      vals_eth='';
+      vals_eth=;
     fi;
-    if [ ${dev_wlan} -ne 0 ]; then
+    if [ "${dev_wlan}" -ne 0 ]; then
       vals_wlan=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
                 <(grep wlan0 /proc/net/dev) \
                 <(sleep 1; grep wlan0 /proc/net/dev));
     else
-      vals_wlan='';
+      vals_wlan=;
     fi;
 
     if [ ! -z "${vals_eth}" ]; then
@@ -260,13 +265,13 @@ function netspeed()
       tput el;
       if [ ! -z "${vals_eth}" ]; then
         echo -e " \e[1;33mEthernet:\e[0m";
-        echo -e "   Download: "$(echo "${vals_eth}" | awk '{ print $1 }');
-        echo -e "   Upload: "$(echo "${vals_eth}" | awk '{ print $2 }');
+        echo -e "   Download: $(echo "${vals_eth}" | awk '{ print $1 }')";
+        echo -e "   Upload: $(echo "${vals_eth}" | awk '{ print $2 }')";
       fi;
       if [ ! -z "${vals_wlan}" ]; then
         echo -e " \e[1;33mWLAN:    \e[0m";
-        echo -e "   Download: "$(echo "${vals_wlan}" | awk '{ print $1 }');
-        echo -e "   Upload: "$(echo "${vals_wlan}" | awk '{ print $2 }');
+        echo -e "   Download: $(echo "${vals_wlan}" | awk '{ print $1 }')";
+        echo -e "   Upload: $(echo "${vals_wlan}" | awk '{ print $2 }')";
       fi;
     fi;
     sleep 1;
@@ -294,7 +299,7 @@ function drivespeedtest()
   fi;
 
   # Variables
-  local path="${1}";
+  local path=${1};
   local time_diff;
   local value;
 
@@ -303,12 +308,12 @@ function drivespeedtest()
   sync;
   time_diff=$(date +%s%N);
   time sh -c "dd if=/dev/zero of=${path} bs=100k count=1k && sync";
-  time_diff=$(($(date +%s%N)-${time_diff}));
-  rm ${path};
+  time_diff=$(($(date +%s%N) - time_diff));
+  rm "${path}";
   echo '';
 
   # Calculate performance
-  value=$((104857600 * 1000 / ${time_diff}));
+  value=$((104857600 * 1000 / time_diff));
   echo -e " \e[1;33m[ Path transfer performance: ${value} MB/s ]\e[0m";
   echo '';
 }
@@ -319,7 +324,7 @@ function trimtrees()
   # Usage: trimtrees <paths> (Hardlink duplicated files with trimtrees from cpansearch.perl.org)
 
   # Hardlink duplicated files with trimtrees from cpansearch.perl.org
-  perl <(curl -Ls http://cpansearch.perl.org/src/ANDK/Perl-Repository-APC-2.002/eg/trimtrees.pl) ${@};
+  perl <(curl -Ls http://cpansearch.perl.org/src/ANDK/Perl-Repository-APC-2.002/eg/trimtrees.pl) "${@}";
 }
 
 # === Build Locker ===
@@ -346,7 +351,7 @@ function buildlock()
 
   # Run work
   echo 1 > "${file_lock}";
-  ${@};
+  "${@}";
   rm -f "${file_lock}";
 }
 
@@ -362,22 +367,27 @@ function fileschemesorter()
   fi;
 
   # Variables
-  local file_to_sort="${1}";
-  local file_reference="${2}";
-  local file_temp_1=$(mktemp);
-  local file_temp_2=$(mktemp);
-  local file_temp_3=$(mktemp);
+  local file_to_sort=${1};
+  local file_reference=${2};
+  local file_temp_1;
+  local file_temp_2;
+  local file_temp_3;
+
+  # Initialize variables
+  file_temp_1=$(mktemp);
+  file_temp_2=$(mktemp);
+  file_temp_3=$(mktemp);
 
   # Reference browse
-  touch ${file_temp_1};
-  cat ${file_reference} | while read line; do
+  touch "${file_temp_1}";
+  while read -r line; do
 
     # Relevant lines
     if [ ! -z "${line}" ] && grep -q "${line}$" "${file_to_sort}"; then
-      echo ${line} >> "${file_temp_1}";
+      echo "${line}" >> "${file_temp_1}";
     fi;
 
-  done;
+  done < "${file_reference}";
 
   # Final comparison
   sort "${file_to_sort}" -o "${file_temp_2}";
@@ -387,13 +397,13 @@ function fileschemesorter()
   echo '';
   echo ' Press [ENTER] to continue...';
   echo '';
-  read key;
+  read -r;
   rm "${file_to_sort}";
   mv "${file_temp_1}" "${file_to_sort}";
 
   # Cleanup
-  rm -f ${file_temp_2};
-  rm -f ${file_temp_3};
+  rm -f "${file_temp_2}";
+  rm -f "${file_temp_3}";
 }
 
 # === USB MTP Mounts ===
@@ -418,7 +428,7 @@ function cleanram()
   # Usage: cleanram (RAM caches cleanup)
 
   # Run cleanram script
-  "${android_development_shell_tools_dir}/run_cleanram.sh";
+  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/run_cleanram.sh";
 }
 
 # === CleanRAM after builds ===
@@ -427,7 +437,7 @@ function cleanrambuild()
   # Usage: cleanrambuild (RAM caches cleanup)
 
   # Run cleanram script
-  "${android_development_shell_tools_dir}/run_cleanrambuild.sh";
+  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/run_cleanrambuild.sh";
 }
 
 # === CleanRAM with Kills ===
@@ -462,11 +472,14 @@ function pushbsizes()
     return;
   fi;
 
+  # Variables
+  local message;
+
   # Notify all input sizes
   echo '';
   echo " Studying sizes of inputs: ${*}";
   echo '';
-  local message=$(du -csh ${*} | tee /dev/stderr | tr '\t' ' ');
+  message=$(du -csh "${@}" | tee /dev/stderr | tr '\t' ' ');
   pushb "${message//$'\n'/\\\n}";
 }
 

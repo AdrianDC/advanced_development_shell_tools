@@ -18,15 +18,19 @@
 # === ADB Logcat Reader ===
 function adbl()
 {
+  # Variables
+  local adb_log=${2:-adb.log};
+  local buffer;
+  local logcat;
+
   # Buffer selection
-  local adb_buffer='';
   case "${1}" in
-    all|'')    adb_buffer='-b all';;
-    crash)  adb_buffer='-b crash';;
-    events) adb_buffer='-b events';;
-    main)   adb_buffer='-b main';;
-    radio)  adb_buffer='-b radio';;
-    system) adb_buffer='-b system';;
+    all|'') buffer='all';;
+    crash)  buffer='crash';;
+    events) buffer='events';;
+    main)   buffer='main';;
+    radio)  buffer='radio';;
+    system) buffer='system';;
     help|*)
       echo '';
       echo ' Usage: adbl [all/crash/events/main/radio/system] [file_output] [bool_clean] (adb Logcat helper)';
@@ -34,17 +38,17 @@ function adbl()
       return;;
   esac;
 
-  # Logs filename
-  local adb_log=${2:-adb.log};
+  # Logcat command
+  logcat="adb logcat -b ${buffer}";
 
   # Logcat read
-  while [ 1 ]; do
+  while true; do
     cls;
-    printf '' > "${adb_log}";
+    echo -n '' > "${adb_log}";
 
     # Logs output
-    if [[ "${3}" =~ 'clean' ]]; then
-      adb logcat ${adb_buffer} -v threadtime *:V \
+    if [[ "${3}" == *'clean'* ]]; then
+      ${logcat} -v threadtime '*:V' \
         | cut -c 32- \
         | sed -E "s/[0-9]{8}/00000000/g" \
         | sed -E "s/\[[0-9]*\]/[...]/g" \
@@ -52,14 +56,14 @@ function adbl()
         | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
         | tee -a "${adb_log}";
     else
-      adb logcat ${adb_buffer} -v threadtime *:V \
+      ${logcat} -v threadtime '*:V' \
         | tee -a "${adb_log}";
     fi;
 
     # End of logs
     echo '';
-    printf 'Press Enter to continue... ';
-    read key;
+    echo -n 'Press Enter to continue... ';
+    read -r;
   done;
 }
 
@@ -70,9 +74,8 @@ function adbcl()
 
   # Clean input file
   filename=${1:-adb.log};
-  cat "${filename}" \
-      | grep -v chatty \
-      | cut -c ${2:-32}- \
+  grep -v chatty "${filename}" \
+      | cut -c "${2:-32}-" \
       | sed -E "s/[0-9]{8}/00000000/g" \
       | sed -E "s/\[[0-9]*\]/[...]/g" \
       | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
@@ -87,8 +90,7 @@ function adbstcl()
 
   # Clean input file
   filename=${1:-adb.log};
-  cat "${filename}" \
-      | grep -v chatty \
+  grep -v chatty "${filename}" \
       | sed -E "s/[0-9]{8}/00000000/g" \
       | sed -E "s/\[[0-9]*\]/[...]/g" \
       | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
@@ -98,28 +100,28 @@ function adbstcl()
 }
 
 # === ADB Loggers ===
-alias adbld='cls; adbro; printf "" >adb.data; adb shell cat /data/logcat.txt | tee -a adb.data';
+alias adbld='cls; adbro; echo -n '' > adb.data; adb shell cat /data/logcat.txt | tee -a adb.data';
 alias adblr='adbl radio';
-alias adblb='while [ 1 ]; do cls; printf "" >adb.log; adb logcat -v audit2allow *:V | tee -a adb.log;
-             echo ""; printf "Press Enter to continue... "; read key; done';
+alias adblb='while true; do cls; echo -n "" > adb.log; adb logcat -v audit2allow *:V | tee -a adb.log;
+             echo ""; echo -n "Press Enter to continue... "; read -r; done';
 alias adblc='adb logcat -c; adbl';
-alias adbk='adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
-alias adbdm='adbro; printf "" >dmesg; adb shell dmesg | tee -a dmesg';
-alias adbkd='printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
-alias adbkl='cls; adbro; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
-alias adbkld='cls; printf "" >last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
-alias adbpl='cls; adbro; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
-alias adbpld='cls; printf "" >last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
-alias adbrl='cls; printf "" >recovery_log; adb shell cat /tmp/recovery.log | tee -a recovery_log';
-alias adbse='adbro; printf "" >kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
+alias adbk='adbro; echo -n '' > kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
+alias adbdm='adbro; echo -n '' > dmesg; adb shell dmesg | tee -a dmesg';
+alias adbkd='echo -n '' > kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
+alias adbkl='cls; adbro; echo -n '' > last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbkld='cls; echo -n '' > last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbpl='cls; adbro; echo -n '' > last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbpld='cls; echo -n '' > last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbrl='cls; echo -n '' > recovery_log; adb shell cat /tmp/recovery.log | tee -a recovery_log';
+alias adbse='adbro; echo -n '' > kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
 alias adbdumpsensors='adb shell dumpsys sensorservice';
 alias adbsel='adbkl; sepaud kmsg';
 alias adblf='adb logcat -v audit2allow';
 alias adblh='adb logcat -b events -b main -b radio | highlight';
 alias adbtrampoline='adb shell "dmesg | grep -i trampoline"';
-function adbdcln() { cat ${1} | cut -d']' -f 2- | tee ${1}.clean; }
-function adblcln() { cat ${1} | cut -c 32- | tee ${1}.clean; }
-function adbkcln() { cat ${1} | cut -c 15- | tee ${1}.clean; }
+function adbdcln() { cut -d']' -f 2- "${1}" | tee "${1}.clean"; }
+function adblcln() { cut -c 32- "${1}" | tee "${1}.clean"; }
+function adbkcln() { cut -c 15- "${1}" | tee "${1}.clean"; }
 
 # === ADB Init Bootchart ===
 function adbbootchart()
@@ -132,8 +134,8 @@ function adbbootchart()
 
   # Timeout configuration
   echo '';
-  printf ' Timeout in seconds ? [Enter] ';
-  read timeinput;
+  echo -n ' Timeout in seconds ? [Enter] ';
+  read -r timeinput;
   if [ -z "${timeinput}" ]; then
     timeinput=120;
   fi;
@@ -142,8 +144,8 @@ function adbbootchart()
   adb shell "echo ${timeinput} > /data/bootchart/start";
 
   # Reboot
-  printf ' Reboot Android ? [Enter] ';
-  read;
+  echo -n ' Reboot Android ? [Enter] ';
+  read -r;
   adb reboot;
 
   # Listen for device
@@ -151,8 +153,8 @@ function adbbootchart()
   adb 'wait-for-device';
 
   # Wait for timeout or break
-  printf " Export Logs now ? [Enter] ";
-  read -t ${timeinput} key;
+  echo -n ' Export Logs now ? [Enter] ';
+  read -r -t "${timeinput}";
 
   # End bootchart
   adb shell 'echo 1 > /data/bootchart/stop'
@@ -160,6 +162,6 @@ function adbbootchart()
 
   # Export bootchart results
   sleep 1;
-  ${ANDROID_DEV_DRIVE}/LineageOS/system/core/init/grab-bootchart.sh;
+  "${ANDROID_DEV_DRIVE}/LineageOS/system/core/init/grab-bootchart.sh";
   echo '';
 }

@@ -29,10 +29,10 @@ function editreplacematch()
   # Variables
   local match_line=${1};
   local to_write=${2};
-  local files=${@:3};
+  local files=("${@:3}");
 
   # Replace
-  sed -i "s/\(^.*${match_line}.*\)/${to_write}/g" ${files};
+  sed -i "s/\(^.*${match_line}.*\)/${to_write}/g" "${files[@]}";
 }
 
 # === Edit Remove Match ===
@@ -48,10 +48,10 @@ function editremovematch()
 
   # Variables
   local match_line=${1};
-  local files=${@:2};
+  local files=("${@:2}");
 
   # Remove
-  sed -i "/^.*${match_line}.*/d" ${files};
+  sed -i "/^.*${match_line}.*/d" "${files[@]}";
 }
 
 # === Edit Insert Above ===
@@ -68,10 +68,10 @@ function editinsertabove()
   # Variables
   local match_line=${1};
   local to_insert=${2};
-  local files=${@:3};
+  local files=("${@:3}");
 
   # Insert above
-  sed -i "s/\(^.*${match_line}.*\)/${to_insert}\n\1/g" ${files};
+  sed -i "s/\(^.*${match_line}.*\)/${to_insert}\n\1/g" "${files[@]}";
 }
 
 # === Edit Insert Below ===
@@ -88,10 +88,10 @@ function editinsertbelow()
   # Variables
   local match_line=${1};
   local to_insert=${2};
-  local files=${@:3};
+  local files=("${@:3}");
 
   # Insert below
-  sed -i "s/\(^.*${match_line}.*\)/\1\n${to_insert}/g" ${files};
+  sed -i "s/\(^.*${match_line}.*\)/\1\n${to_insert}/g" "${files[@]}";
 }
 
 # === Edit Replace Multiline ===
@@ -109,8 +109,8 @@ function editreplacemultiline()
   local match_first=${1};
   local match_last=${2};
   local replace=${3};
-  local files=${@:4};
+  local files=("${@:4}");
 
   # Replace section from first to last
-  sed -i "/${match_first}/{:a; N; /${match_last}/!ba; s/${match_first}.*${match_last}/${replace}/; };" ${files};
+  sed -i "/${match_first}/{:a; N; /${match_last}/!ba; s/${match_first}.*${match_last}/${replace}/; };" "${files[@]}";
 }

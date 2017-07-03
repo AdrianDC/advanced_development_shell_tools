@@ -30,7 +30,7 @@ function gitstat()
   echo "git fetch ${1} ${2}; git rev-list --left-right --count HEAD...FETCH_HEAD;";
 
   # Request
-  git fetch ${1} ${2};
+  git fetch "${1}" "${2}";
   if [ ! -z "${3}" ]; then
     git --no-pager diff --stat HEAD FETCH_HEAD;
   else
@@ -39,7 +39,7 @@ function gitstat()
 
   # Comparison
   echo '';
-  printf ' New changes - missing : ';
+  echo -n ' New changes - missing : ';
   git rev-list --left-right --count HEAD...FETCH_HEAD;
 }
 
