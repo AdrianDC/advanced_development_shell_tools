@@ -18,37 +18,38 @@
 # === Device Shortcuts ===
 function cdd()
 {
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: cdd <device_name> (Access device sources)';
-    echo '';
-    return;
-  fi;
+  # Usage: cdd <device_name> (Access device sources)
+
+  # Variables
+  local content;
+  local path;
 
   # Shortcut
-  local content="${1}";
+  content="${1}";
   if [ -z "${content}" ]; then
     content=$(repogetdevice);
   fi;
 
   # Path generation
-  local path=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/*\/*${content}*/g");
+  path=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/*\/*${content}*/g");
   for path_item in ${path}; do
-    if [ -d "${path_item}" ] && [[ ! "${path_item}" =~ 'generic' ]] && [[ ! "${path_item}" =~ '/qcom/' ]]; then
+    if [ -d "${path_item}" ] && [[ ! "${path_item}" == *'generic'* ]] && [[ ! "${path_item}" == *'/qcom/'* ]]; then
       path="${path_item}";
       break;
     fi;
   done;
 
-  # Access path
-  if [ -d ${path} ]; then
-    cd ${path};
-  elif [ -d *"${1}"* ]; then
-    cd *"${1}"*;
-  else
-    echo " ${1}: '${path}' not found...";
+  # Check path
+  if [ ! -d "${path}" ]; then
+    path=$(find ./*"${1}"* -type d -depth 0 2>/dev/null | head -n 1);
+    if [ -z "${path}" ]; then
+      echo " cdd: '${1}' not found...";
+      return;
+    fi;
   fi;
+
+  # Access path
+  cd "${path}";
 }
 
 # === Repo Manifests ===
