@@ -143,11 +143,16 @@ function shtoolscheck()
     # Check result
     if [ ${?} -ne 0 ] && [ -z "${1}" ]; then
       echo '';
-      echo -e " \e[1;33mERROR: ${file_source} contains syntax errors or warnings";
+      echo -e " \e[1;33mERROR: ${file_source} contains syntax errors or warnings\e[0m";
       echo '';
       return;
     fi;
   done;
+
+  # Successfull syntax check
+  echo '';
+  echo -e " \e[1;32mshtoolscheck: Syntax checked successfully\e[0m";
+  echo '';
 }
 
 # === Android Shell Tools Syncer ===
