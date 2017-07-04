@@ -38,6 +38,23 @@ function adbl()
       return;;
   esac;
 
+  # Check buffer available
+  logcat=$(adb shell "if [ ! -e /dev/log/${buffer} ]; then echo false; fi;");
+  if [ ! -z "${logcat}" ]; then
+
+    # Recursive call when without parameter
+    if [ -z "${1}" ]; then
+      adbl 'main' "${2}" "${3}";
+      return;
+    fi;
+
+    # Abort on missing buffer
+    echo '';
+    echo " adbl: Buffer '${buffer}' is not available. Use 'adbl help' to list possible buffers";
+    echo '';
+    return;
+  fi;
+
   # Logcat command
   logcat="adb logcat -b ${buffer}";
 
