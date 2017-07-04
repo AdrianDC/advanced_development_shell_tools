@@ -143,17 +143,20 @@ function adbsu()
     return;
   fi;
 
+  # Variables
+  local cmd=${*};
+
   # Run as adb root shell
   if adb shell type su | grep -q 'not found'; then
     adbro;
-    adb shell "${@}";
+    adb shell "${cmd}";
 
   # Run on root adb shell
   else
-    if ! mount | grep /system | grep rw; then
-      adb shell su -c 'mount -o rw,remount /system';
+    if ! mount | grep '/system ' | grep -q rw; then
+      adb shell "su -c 'mount -o rw,remount /system'";
     fi;
-    adb shell su -c "${@}";
+    adb shell "su -c '${cmd}'";
   fi;
 }
 
