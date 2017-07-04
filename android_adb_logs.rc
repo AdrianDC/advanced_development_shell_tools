@@ -117,25 +117,25 @@ function adbstcl()
 }
 
 # === ADB Loggers ===
-alias adbld='cls; adbro; echo -n '' > adb.data; adb shell cat /data/logcat.txt | tee -a adb.data';
+alias adbld='cls; echo -n '' > adb.data; adbsu cat /data/logcat.txt | tee -a adb.data';
 alias adblr='adbl radio';
 alias adblb='while true; do cls; echo -n "" > adb.log; adb logcat -v audit2allow *:V | tee -a adb.log;
              echo ""; echo -n "Press Enter to continue... "; read -r; done';
 alias adblc='adb logcat -c; adbl';
-alias adbk='adbro; echo -n '' > kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
-alias adbdm='adbro; echo -n '' > dmesg; adb shell dmesg | tee -a dmesg';
-alias adbkd='echo -n '' > kmsg; adb shell cat /proc/kmsg | tee -a kmsg';
-alias adbkl='cls; adbro; echo -n '' > last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
-alias adbkld='cls; echo -n '' > last_kmsg; adb shell cat /proc/last_kmsg | tee -a last_kmsg';
-alias adbpl='cls; adbro; echo -n '' > last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
-alias adbpld='cls; echo -n '' > last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
-alias adbrl='cls; echo -n '' > recovery_log; adb shell cat /tmp/recovery.log | tee -a recovery_log';
-alias adbse='adbro; echo -n '' > kmsg; adb shell cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
-alias adbdumpsensors='adb shell dumpsys sensorservice';
+alias adbk='echo -n '' > kmsg; adbsu cat /proc/kmsg | tee -a kmsg';
+alias adbdm='echo -n '' > dmesg; adbsu dmesg | tee -a dmesg';
+alias adbkd='echo -n '' > kmsg; adbsu cat /proc/kmsg | tee -a kmsg';
+alias adbkl='cls; echo -n '' > last_kmsg; adbsu cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbkld='cls; echo -n '' > last_kmsg; adbsu cat /proc/last_kmsg | tee -a last_kmsg';
+alias adbpl='cls; echo -n '' > last_kmsg; adbsu cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbpld='cls; echo -n '' > last_kmsg; adbsu cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg';
+alias adbrl='cls; echo -n '' > recovery_log; adbsu cat /tmp/recovery.log | tee -a recovery_log';
+alias adbse='echo -n '' > kmsg; adbsu cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
+alias adbdumpsensors='adbsu dumpsys sensorservice';
 alias adbsel='adbkl; sepaud kmsg';
 alias adblf='adb logcat -v audit2allow';
 alias adblh='adb logcat -b events -b main -b radio | highlight';
-alias adbtrampoline='adb shell "dmesg | grep -i trampoline"';
+alias adbtrampoline='adbsu "dmesg | grep -i trampoline"';
 function adbdcln() { cut -d']' -f 2- "${1}" | tee "${1}.clean"; }
 function adblcln() { cut -c 32- "${1}" | tee "${1}.clean"; }
 function adbkcln() { cut -c 15- "${1}" | tee "${1}.clean"; }

@@ -120,24 +120,24 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbl** *<b>\[adb Logcat helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbl [all/crash/events/main/radio/system] [file_output] [bool_clean]*
   * [**adbcl** *<b>\[Logcat output cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbcl [file_adb.log]*
   * [**adbstcl** *<b>\[strace output cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbstcl [file_adb.log]*
-  * [**adbld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; adbro; echo -n '' &gt; adb.data; adb shell cat /data/logcat.txt \| tee -a adb.data*
+  * [**adbld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; adb.data; adbsu cat /data/logcat.txt \| tee -a adb.data*
   * [**adblr** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbl radio*
   * [**adblb** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *while true; do cls; echo -n "" &gt; adb.log; adb logcat -v audit2allow *:V \| tee -a adb.log*
   * [**adblc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adb logcat -c; adbl*
-  * [**adbk** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbro; echo -n '' &gt; kmsg; adb shell cat /proc/kmsg \| tee -a kmsg*
-  * [**adbdm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbro; echo -n '' &gt; dmesg; adb shell dmesg \| tee -a dmesg*
-  * [**adbkd** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; kmsg; adb shell cat /proc/kmsg \| tee -a kmsg*
-  * [**adbkl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; adbro; echo -n '' &gt; last_kmsg; adb shell cat /proc/last_kmsg \| tee -a last_kmsg*
-  * [**adbkld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adb shell cat /proc/last_kmsg \| tee -a last_kmsg*
-  * [**adbpl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; adbro; echo -n '' &gt; last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops \| tee -a last_kmsg*
-  * [**adbpld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adb shell cat /sys/fs/pstore/console-ramoops \| tee -a last_kmsg*
-  * [**adbrl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; recovery_log; adb shell cat /tmp/recovery.log \| tee -a recovery_log*
-  * [**adbse** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbro; echo -n '' &gt; kmsg; adb shell cat /proc/kmsg \| tee -a kmsg; sepaud kmsg*
-  * [**adbdumpsensors** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adb shell dumpsys sensorservice*
+  * [**adbk** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; kmsg; adbsu cat /proc/kmsg \| tee -a kmsg*
+  * [**adbdm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; dmesg; adbsu dmesg \| tee -a dmesg*
+  * [**adbkd** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; kmsg; adbsu cat /proc/kmsg \| tee -a kmsg*
+  * [**adbkl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adbsu cat /proc/last_kmsg \| tee -a last_kmsg*
+  * [**adbkld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adbsu cat /proc/last_kmsg \| tee -a last_kmsg*
+  * [**adbpl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adbsu cat /sys/fs/pstore/console-ramoops \| tee -a last_kmsg*
+  * [**adbpld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adbsu cat /sys/fs/pstore/console-ramoops \| tee -a last_kmsg*
+  * [**adbrl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; recovery_log; adbsu cat /tmp/recovery.log \| tee -a recovery_log*
+  * [**adbse** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; kmsg; adbsu cat /proc/kmsg \| tee -a kmsg; sepaud kmsg*
+  * [**adbdumpsensors** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbsu dumpsys sensorservice*
   * [**adbsel** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbkl; sepaud kmsg*
   * [**adblf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adb logcat -v audit2allow*
   * [**adblh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adb logcat -b events -b main -b radio \| highlight*
-  * [**adbtrampoline** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adb shell "dmesg \| grep -i trampoline*
+  * [**adbtrampoline** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbsu "dmesg \| grep -i trampoline*
   * [**adbdcln** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cut -d']' -f 2- "${1}" \| tee "${1}.clean"*
   * [**adblcln** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cut -c 32- "${1}" \| tee "${1}.clean"*
   * [**adbkcln** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cut -c 15- "${1}" \| tee "${1}.clean"*
