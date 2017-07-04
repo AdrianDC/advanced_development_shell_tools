@@ -43,15 +43,16 @@ function adbst()
   fi;
 
   # Detect strace requirement
-  strace_exists=$(adb shell 'if [ -e /system/bin/strace ]; then echo 0; fi;');
-  if [ ! "${strace_exists}" = '0' ]; then
-    adb shell mkdir -p /system/bin/;
-    if [ ! -z "$(adb shell grep '64' /proc/cpuinfo)" ]; then
-      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64}" /system/bin/strace;
+  strace_exists=$(adbsu 'if [ ! -e /system/bin/strace ]; then echo false; fi;');
+  if [ ! -z "${strace_exists}" ]; then
+    if [ ! -z "$(adbsu grep '64' /proc/cpuinfo)" ]; then
+      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64}" /sdcard/strace;
     else
-      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" /system/bin/strace;
+      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" /sdcard/strace;
     fi;
-    adb shell chmod 777 /system/bin/strace;
+    adbsu 'cp /sdcard/strace /system/bin/strace';
+    adbsu 'rm /sdcard/strace';
+    adbsu 'chmod 777 /system/bin/strace';
     echo '';
   fi;
 
@@ -73,7 +74,7 @@ function adbst()
   fi;
 
   # Strace the process
-  cmd="adb shell /system/bin/strace ${3}";
+  cmd="adbsu /system/bin/strace ${3}";
   ${cmd} -s 4096 -p "${pid}";
 }
 
