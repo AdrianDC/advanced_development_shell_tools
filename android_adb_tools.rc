@@ -150,6 +150,9 @@ function adbsu()
 
   # Run on root adb shell
   else
+    if ! mount | grep /system | grep rw; then
+      adb shell su -c 'mount -o rw,remount /system';
+    fi;
     adb shell su -c "${@}";
   fi;
 }
