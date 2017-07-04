@@ -67,7 +67,7 @@
 <!-- List -->
  * **To keep a local sync of 'android_development_shell_tools' updated with upstream changes**,
    <br />
-   simply run the **`shtoolssync`** command and the updates will be downloaded.
+   simply run the **`shtoolssync;`** command and the updates will be downloaded.
    <br />
    Local modifications will be lost through the update (read about `git stash pop` in that case)
    <br />
@@ -143,9 +143,10 @@
 <!-- Indent -->
 <!-- List -->
  * **First, you need to clone this project locally**
-   `git clone https://github.com/AdrianDC/android_development_shell_tools -b master`
+   <br />
+   `git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`
 
- * To load the scripts, do `source <path/to/folder/android_development_shell_tools.rc`
+ * To load the scripts, do `source /path/to/folder/android_development_shell_tools.rc;`
 
  * **To permanently load the scripts** in your Shell terminals,
    <br />
@@ -171,7 +172,7 @@
 <!-- List -->
  * Perform the **scripts modifications, fixes or additions**.
 
- * Update README.md documentation with **`shtoolsreadme`**.
+ * Update README.md documentation with **`shtoolsreadme;`**.
 
  * **Commit the changes** with git (refer to older commits for style)
 

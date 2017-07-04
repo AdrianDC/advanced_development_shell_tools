@@ -14,7 +14,7 @@
 
  * To keep a local sync of 'android_development_shell_tools' updated with upstream changes,
    <br />
-   simply run the *`shtoolssync`* command and the updates will be downloaded
+   simply run the *`shtoolssync;`* command and the updates will be downloaded
 
  * Scripts flagged "Standalone Import Ready" and starting with *`source <(curl -Ls...`*
    <br />

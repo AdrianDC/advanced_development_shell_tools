@@ -44,7 +44,7 @@
 
 [INDENT][LIST]
 [*][B]To keep a local sync of 'android_development_shell_tools' updated with upstream changes[/B],
-   simply run the [B][FONT="Courier New"][I]`shtoolssync`[/I][/FONT][/B] command and the updates will be downloaded.
+   simply run the [B][FONT="Courier New"][I]`shtoolssync;`[/I][/FONT][/B] command and the updates will be downloaded.
    Local modifications will be lost through the update (read about [FONT="Courier New"][I]`git stash pop`[/I][/FONT] in that case)
    and the [B]newest commits / improvements will be added[/B] to your available tools.
 
@@ -93,9 +93,9 @@
 
 [INDENT][LIST]
 [*][B]First, you need to clone this project locally[/B]
-   [FONT="Courier New"][I]`git clone https://github.com/AdrianDC/android_development_shell_tools -b master`[/I][/FONT]
+   [FONT="Courier New"][I]`git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`[/I][/FONT]
 
-[*]To load the scripts, do [FONT="Courier New"][I]`source <path/to/folder/android_development_shell_tools.rc`[/I][/FONT]
+[*]To load the scripts, do [FONT="Courier New"][I]`source /path/to/folder/android_development_shell_tools.rc;`[/I][/FONT]
 
 [*][B]To permanently load the scripts[/B] in your Shell terminals,
    open the [FONT="Courier New"][I]`~/.bashrc`[/I][/FONT] file, adapt and add the following lines:
@@ -115,7 +115,7 @@
 [INDENT][LIST]
 [*]Perform the [B]scripts modifications, fixes or additions[/B].
 
-[*]Update README.md documentation with [B][FONT="Courier New"][I]`shtoolsreadme`[/I][/FONT][/B].
+[*]Update README.md documentation with [B][FONT="Courier New"][I]`shtoolsreadme;`[/I][/FONT][/B].
 
 [*][B]Commit the changes[/B] with git (refer to older commits for style)
 
