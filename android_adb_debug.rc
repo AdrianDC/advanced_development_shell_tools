@@ -74,7 +74,7 @@ function adbst()
   fi;
 
   # Strace the process
-  cmd="adbsu /system/bin/strace ${3}";
+  cmd="adbsu /system/bin/strace -y ${3}";
   ${cmd} -s 4096 -p "${pid}";
 }
 
