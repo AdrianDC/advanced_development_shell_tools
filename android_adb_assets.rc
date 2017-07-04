@@ -123,7 +123,6 @@ function adbdu()
 
   # Android /data/ sizes study
   tmp=$(mktemp);
-  adbro;
   adbsu 'du /data/ | sort -hr' > "${tmp}";
   fileedit "${tmp}";
 }
