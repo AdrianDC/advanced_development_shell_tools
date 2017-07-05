@@ -146,8 +146,8 @@ function adbmrominjector()
   echo " Injecting '${romtarget}' to '${partitiontarget}'";
   echo '';
   adbro;
-  adbsu "dd if='${partitiontarget}' of='/sdcard/boot.dump'";
-  adbsu "dd if='${romtarget}' of='${partitiontarget}'";
+  adbsu "dd if=\"${partitiontarget}\" of=/sdcard/boot.dump";
+  adbsu "dd if=\"${romtarget}\" of=\"${partitiontarget}\"";
 
   # Files to device push
   adbro;
@@ -156,15 +156,15 @@ function adbmrominjector()
   adbsu 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
 
   # Kernel injection
-  adbsu "/tmp/bbootimg -i '${partitiontarget}'";
-  adbsu "/tmp/bbootimg -u '${partitiontarget}' -k /tmp/tmpkernel";
+  adbsu "/tmp/bbootimg -i \"${partitiontarget}\"";
+  adbsu "/tmp/bbootimg -u \"${partitiontarget}\" -k /tmp/tmpkernel";
 
   # Restore ROM bootimage to partition
   echo '';
   echo " Restoring '${partitiontarget}' to '${romtarget}'";
   echo '';
-  adbsu "dd if='${partitiontarget}' of='${romtarget}'";
-  adbsu "dd if=/sdcard/boot.dump of='${partitiontarget}'";
+  adbsu "dd if=\"${partitiontarget}\" of=\"${romtarget}\"";
+  adbsu "dd if=/sdcard/boot.dump of=\"${partitiontarget}\"";
   adbsu 'rm -f /sdcard/boot.dump';
 
   # Reboot to recovery if requested
