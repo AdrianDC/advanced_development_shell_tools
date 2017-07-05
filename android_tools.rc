@@ -57,7 +57,7 @@ function binaryeditor()
 
     # File / directory detection
     FILE=$(readlink -f "${FILE}");
-    if [ -d "${FILE}" ]; then
+    if [ ! -e "${FILE}" ] || [ -d "${FILE}" ]; then
       continue;
     fi;
 
@@ -177,7 +177,9 @@ function librarieshunter()
   for FILE in $(find "${FILES}" -not -path "*.git/*" -not -path "*.repo/*" | sort);
   do
     FILE=$(readlink -f "${FILE}");
-    if [ -d "${FILE}" ]; then continue; fi;
+    if [ ! -e "${FILE}" ] || [ -d "${FILE}" ]; then
+      continue;
+    fi;
 
     # Internal references
     STRINGS=$(${strings_param} "${FILE}" \
