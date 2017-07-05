@@ -79,6 +79,7 @@
   * [**adbdu** *<b>\[Android /data/ sizes study\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
   * [**adbpropradiolog** *<b>\[Radio debug property overrider\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adbpropradiolog &lt;value&gt;*
   * [**adbalsa** *<b>\[Audio cards advanced study\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
+  * [**adbtinymix** *<b>\[Run tinymix on the device\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
 
 ---
 ### [&nbsp;Documentation: [android_adb_debug.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc)&nbsp;]
