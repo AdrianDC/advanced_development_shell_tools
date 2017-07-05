@@ -70,5 +70,7 @@ alias gitpama='gitremoteverify $(githubusername) gitraa && gitpu $(githubusernam
 alias gitpanmr='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) n-mr1'
 alias gitpan='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) nougat';
 alias gitpat='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) twrp';
+alias gitpo='gitremoteverify origin false && gitpu origin';
+alias gitpom='gitremoteverify origin false && gitpu origin master';
 alias gitpp='gitremoteverify project gitrap && gitpu project';
 alias gitppm='gitremoteverify project false && gitpu project master';
