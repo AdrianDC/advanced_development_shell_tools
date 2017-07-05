@@ -103,7 +103,7 @@ function adbmromselect()
 
   # Return selected ROM path
   if [ "${key}" -gt 0 ] && [ "${key}" -le "${cnt}" ]; then
-    echo -n "${options[${key}]}";
+    echo -n "${options[${key}]}" | tr -d '\r';
   fi;
 }
 
