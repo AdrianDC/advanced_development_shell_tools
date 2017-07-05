@@ -37,10 +37,10 @@ function grepbs()
   local strings_params;
 
   # Grep through files
-  strings_params=$(stringsparams);
+  strings_params="strings $(stringsparams)";
   for file in $(find . -type f -not -path "*.git/*" -not -path "*.repo/*" | sort); do
     if [ -f "${file}" ]; then
-      found=$(strings "${strings_params}" "$(readlink -f "${file}")" | grep -ai "${*}");
+      found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
       if [ ! -z "${found}" ]; then
         echo -e "\e[1;31m${file} :\e[0m ${found}";
       fi;
@@ -58,9 +58,9 @@ function gck()
   local strings_params;
 
   # Grep through files
-  strings_params=$(stringsparams);
+  strings_params="strings $(stringsparams)";
   for file in $(find . -name "Kconfig" -o -name "Makefile" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
-    found=$(strings "${strings_params}" "$(readlink -f "${file}")" | grep -ai "${*}");
+    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -76,9 +76,9 @@ function gca()
   local strings_params;
 
   # Grep through files
-  strings_params=$(stringsparams);
+  strings_params="strings $(stringsparams)";
   for file in $(find . -name "*.mk" -o -name "*.bp" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
-    found=$(strings "${strings_params}" "$(readlink -f "${file}")" | grep -ai "${*}");
+    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -97,9 +97,9 @@ function gcmodules()
   local strings_params;
 
   # Search all build definitions
-  strings_params=$(stringsparams);
+  strings_params="strings $(stringsparams)";
   for file in $(find . -name "*.mk" -o -name "*.bp" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
-    strings "${strings_params}" "$(readlink -f "${file}")" \
+    ${strings_params} "$(readlink -f "${file}")" \
       | grep -ai "LOCAL_MODULE[ ]\{0,1\}:=\|LOCAL_PACKAGE_NAME[ ]\{0,1\}:=" \
       | sed 's/.*:=[ \t]*//g';
   done;

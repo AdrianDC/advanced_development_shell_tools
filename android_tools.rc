@@ -41,7 +41,7 @@ function binaryeditor()
   PATTERN=${PATTERN//./.};
 
   # Handle strings variants
-  strings_param=$(stringsparams);
+  strings_param="strings $(stringsparams)";
 
   # Headers
   echo '';
@@ -63,7 +63,7 @@ function binaryeditor()
 
     # Replacement mode
     if [ ! -z "${REPLACEMENT}" ]; then
-      STRINGS=$(strings "${strings_param}" "${FILE}" \
+      STRINGS=$(${strings_param} "${FILE}" \
               | grep "${PATTERN}" \
               | sort -u -r);
 
@@ -106,7 +106,7 @@ function binaryeditor()
 
       # Information not found
       else
-        STRINGS=$(strings "${strings_param}" "${FILE}" \
+        STRINGS=$(${strings_param} "${FILE}" \
                 | grep "${REPLACEMENT}" \
                 | sort -u -r);
         if [ ! -z "${STRINGS}" ]; then
@@ -116,7 +116,7 @@ function binaryeditor()
 
     # Search mode
     else
-      STRINGS=$(strings "${strings_param}" "${FILE}" \
+      STRINGS=$(${strings_param} "${FILE}" \
               | grep "${PATTERN}" \
               | sort -u -r \
               | tr '\n' ',');
@@ -168,7 +168,7 @@ function librarieshunter()
   local strings_param;
 
   # Handle strings variants
-  strings_param=$(stringsparams);
+  strings_param="strings $(stringsparams)";
 
   # Scan the libraries
   echo '';
@@ -180,7 +180,7 @@ function librarieshunter()
     if [ -d "${FILE}" ]; then continue; fi;
 
     # Internal references
-    STRINGS=$(strings "${strings_param}" "${FILE}" \
+    STRINGS=$(${strings_param} "${FILE}" \
             | grep "\\.so" \
             | sort -u -r \
             | tr '\n' ',');
@@ -214,7 +214,7 @@ function librarieshunter()
       do
         FILE_SUB=$(readlink -f "${FILE_SUB}");
         if [ -d "${FILE_SUB}" ] || [ "${FILE}" = "${FILE_SUB}" ]; then continue; fi;
-        STRINGS_SUB=$(strings "${strings_param}" "${FILE_SUB}" \
+        STRINGS_SUB=$(${strings_param} "${FILE_SUB}" \
                     | grep "${FILE_NAME}" \
                     | sort -u -r \
                     | tr '\n' ',');
