@@ -38,7 +38,6 @@ function fboota()
 
   # Variables
   local adb;
-  local adb_timeout;
   local bootimg;
   local cwd;
   local device;
@@ -52,7 +51,7 @@ function fboota()
 
   # Initialize variables
   adb=$(adbcmd);
-  adb_timeout="timeout 10 ${adb}";
+  adbwait;
   cwd=$(pwd);
   device=$(repogetdevice);
   tmpfile=$(mktemp);
@@ -182,7 +181,7 @@ function fboota()
       echo '';
 
       # Give adb root permissions
-      ${adb_timeout} 'wait-for-device';
+      adbwait;
       adbro;
 
       # Push the kernel modules
@@ -202,7 +201,7 @@ function fboota()
     export PACKAGE_RESULT=${bootimg};
 
     # Reboot to bootloader
-    ${adb_timeout} 'wait-for-device';
+    adbwait;
     ${adb} reboot bootloader;
 
     # Flash new boot
@@ -225,12 +224,10 @@ function fboot()
 {
   # Variables
   local adb;
-  local adb_timeout;
   local bootimage;
 
   # Initialize variables
   adb=$(adbcmd);
-  adb_timeout="timeout 10 ${adb}";
   bootimage=${1:-boot.img};
   bootimage=${bootimage#file:/};
 
@@ -243,7 +240,7 @@ function fboot()
   fi;
 
   # Reboot to bootloader
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   ${adb} reboot bootloader;
 
   # Flash bootimage and reboot
@@ -262,10 +259,9 @@ function fboots()
 
   # Initialize variables
   adb=$(adbcmd);
-  adb_timeout="timeout 10 ${adb}";
 
   # Reboot to bootloader
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   ${adb} reboot bootloader;
 
   # Flash system
@@ -308,17 +304,15 @@ function adbbootinfo()
 
   # Variables
   local adb;
-  local adb_timeout;
   local adb_tmpdir;
   local partitiontarget;
 
   # Initialize variables
   adb=$(adbcmd);
-  adb_timeout="timeout 10 ${adb}";
   partitiontarget=$(androiddevicestarget boot);
 
   # Give adb root permissions
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   adbro;
 
   # Check if '/tmp' exists
@@ -353,17 +347,15 @@ function adbfotainfo()
 
   # Variables
   local adb;
-  local adb_timeout;
   local adb_tmpdir;
   local partitiontarget;
 
   # Initialize variables
   adb=$(adbcmd);
-  adb_timeout="timeout 10 ${adb}";
   partitiontarget=$(androiddevicestarget fota);
 
   # Give adb root permissions
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   adbro;
 
   # Check if '/tmp' exists
@@ -396,13 +388,11 @@ function fbootk()
 {
   # Variables
   local adb;
-  local adb_timeout;
   local adb_tmpdir;
   local filepath=${1};
 
   # Initialize variables
   adb=$(adbcmd);
-  adb_timeout="timeout 10 ${adb}";
 
   # Detect zImage file
   if [ -z "${filepath}" ]; then
@@ -434,7 +424,7 @@ function fbootk()
   fi;
 
   # Give adb root permissions
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   adbro;
 
   # Check if '/tmp' exists
@@ -488,14 +478,12 @@ function frecovery()
 
   # Variables
   local adb;
-  local adb_timeout;
 
   # Initialize variables
   adb=$(adbcmd);
-  adb_timeout="timeout 10 ${adb}";
 
   # Reboot to bootloader
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   ${adb} reboot bootloader;
 
   # Flash recovery with fastboot
@@ -694,7 +682,6 @@ function bootzip()
   local PushToDevice=${3};
   local adb;
   local adb_targetdir;
-  local adb_timeout;
   local BootPartition;
   local CurDir;
   local BootFile;
@@ -704,7 +691,6 @@ function bootzip()
 
   # Initialize variables
   adb=$(adbcmd);
-  adb_timeout="timeout 10 ${adb}";
   BootFile=$(readlink -f "${2}");
   CurDir=$(pwd);
   OutFile=boot-${PhoneName}-$(date +'%Y%m%d');
@@ -754,7 +740,7 @@ function bootzip()
 
     # Wait for device
     echo '';
-    ${adb_timeout} 'wait-for-device';
+    adbwait;
 
     # Check if '/sdcard' exists
     if [ ! -z "$(${adb} shell 'ls /sdcard/ 2> /dev/null')" ]; then

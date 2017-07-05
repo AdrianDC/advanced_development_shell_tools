@@ -206,6 +206,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbsudo** *<b>\[ADB sudo toggle helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbcmd** *<b>\[Return adb command based on alias\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbrstock** *<b>\[Stock ROM adb root access\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
+  * [**adbwait** *<b>\[adb wait for device\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbsu** *<b>\[Run on root adb shell\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbsu &lt;command...&gt;*
   * [**adbco** *<b>\[Helper for adb network access\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbco [ipaddress_once]*
   * [**adbedit** *<b>\[Edit adb file, default on /system/build.prop\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbedit [file_path]*

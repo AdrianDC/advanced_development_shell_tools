@@ -132,6 +132,19 @@ function adbrstock()
   adb shell getprop ro.secure;
 }
 
+# === ADB Wait For Device ===
+function adbwait()
+{
+  # Usage: adbwait (adb wait for device)
+
+  # Variables
+  local adb_timeout;
+
+  # Get root access and rw system
+  adb_timeout="timeout 10 $(adbcmd)";
+  ${adb_timeout} 'wait-for-device';
+}
+
 # === ADB Shell Root ===
 function adbsu()
 {

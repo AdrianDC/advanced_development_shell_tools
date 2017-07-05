@@ -29,7 +29,6 @@ function repotwrp()
   # Variables
   local PhoneName=${1};
   local BuildParams=${2};
-  local adb_timeout;
   local CurDir;
   local RootDir;
 
@@ -159,8 +158,7 @@ function repotwrp()
   if [[ "${key}" == 'y' || "${key}" == 'Y' ]] && [ -f "${TWRPImg}" ]; then
     echo '';
     adb root;
-    adb_timeout="timeout 5 $(adbcmd) wait-for-device";
-    ${adb_timeout};
+    adbwait;
     adb push "${TWRPImg}" /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
       adb shell /system/bin/dd if=/tmp/twrp.img of="${FOTAPartition}";
@@ -215,7 +213,6 @@ function repomrom()
   # Variables
   local PhoneName=${1};
   local BuildParams=${2};
-  local adb_timeout;
   local CurDir;
   local RootDir;
 
@@ -403,8 +400,7 @@ function repomrom()
   if [[ "${key}" == 'y' || "${key}" == 'Y' ]] && [ -f "${TWRPImg}" ]; then
     echo '';
     adb root;
-    adb_timeout="timeout 5 $(adbcmd) wait-for-device";
-    ${adb_timeout} '';
+    adbwait;
     adb push "${TWRPImg}" /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
       adb shell /system/bin/dd if=/tmp/twrp.img of="${FOTAPartition}";
