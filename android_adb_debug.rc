@@ -21,26 +21,15 @@ function adbst()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbst <process_name> [bool_no_root] [parameters] (strace)';
+    echo ' Usage: adbst <process_name> [parameters] (strace)';
     echo '';
     return;
   fi;
 
   # Variables
-  local adb_timeout;
   local cmd;
   local pid;
   local strace_exists;
-
-  # Get adb root access
-  if [ -z "${2}" ]; then
-    adb_timeout="timeout 5 $(adbcmd)";
-    ${adb_timeout} 'wait-for-device';
-    ${adb_timeout} 'root';
-    ${adb_timeout} 'wait-for-device';
-    ${adb_timeout} 'remount';
-    ${adb_timeout} 'wait-for-device';
-  fi;
 
   # Detect strace requirement
   strace_exists=$(adbsu 'if [ ! -e /system/bin/strace ]; then echo false; fi;');
@@ -74,7 +63,7 @@ function adbst()
   fi;
 
   # Strace the process
-  cmd="adbsu /system/bin/strace -y ${3}";
+  cmd="adbsu /system/bin/strace -y ${2}";
   ${cmd} -s 4096 -p "${pid}";
 }
 
@@ -84,11 +73,11 @@ function adbstf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbstf <process_name> [bool_get_root] (Followed strace)';
+    echo ' Usage: adbstf <process_name> (Followed strace)';
     echo '';
     return;
   fi;
 
   # Use ADB Strace helper
-  adbst "${1}" "${2}" '-f';
+  adbst "${1}" '-f';
 }
