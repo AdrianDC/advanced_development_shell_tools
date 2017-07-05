@@ -343,6 +343,28 @@ function shtools-()
   done;
 }
 
+# === Android Development Shell Tools Stats ===
+function shtoolsstats()
+{
+  # Usage: shtoolsstats (Statistics on the project files)
+
+  # Variables
+  local currentdir=${PWD};
+  local paths;
+
+  # List all project files
+  paths=("${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}");
+  paths=("${paths[@]#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/}");
+
+  # Statistics on the project files
+  echo '';
+  echo ' Lines| Sizes| Paths';
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  wc -cl "${paths[@]}";
+  echo '';
+  cd "${currentdir}/";
+}
+
 # === Android Development Shell Tools Differ ===
 function shtoolsdiff()
 {
