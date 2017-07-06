@@ -72,7 +72,7 @@ function adbro()
   fi;
 
   # Get rw system
-  systemmount=$(${adb_timeout} shell mount | grep system);
+  systemmount=$(${adb_timeout} shell mount | grep '/system ');
   systemaccess=$(echo "${systemmount}" | grep rw);
   if [ ! -z "${systemmount}" ] && [ -z "${systemaccess}" ]; then
     ${adb_timeout} 'wait-for-device';
