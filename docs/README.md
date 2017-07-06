@@ -149,7 +149,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_adb_multirom.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)&nbsp;]
   * [**adbmromlist** *<b>\[List available MultiROM installations\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)
   * [**adbmromselect** *<b>\[Select MultiROM installation for path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)
-  * [**adbmrominjector** *<b>\[MultiROM kernel image injector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmrominjector &lt;kernelpath&gt;*
+  * [**adbmrombootimage** *<b>\[MultiROM bootimage installer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmrombootimage &lt;bootimage_path&gt;*
+  * [**adbmrominjector** *<b>\[MultiROM kernel image injector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmrominjector &lt;kernel_path&gt;*
   * [**adbmromautoboot** *<b>\[MultiROM autoboot selection\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)
 
 ---

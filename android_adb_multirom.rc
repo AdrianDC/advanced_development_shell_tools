@@ -107,6 +107,59 @@ function adbmromselect()
   fi;
 }
 
+# === ADB MultiROM Bootimage Installer ===
+function adbmrombootimage()
+{
+  # Variables
+  local filepath=${1};
+
+  # Detect bootimage file
+  if [ -z "${filepath}" ]; then
+    if [ -f 'boot.img' ]; then
+      filepath=boot.img;
+    fi;
+  fi;
+
+  # Usage
+  if [ -z "${filepath}" ] || [ ! -f "${filepath}" ]; then
+    echo '';
+    echo '  Usage: adbmrombootimage <bootimage_path> (MultiROM bootimage installer)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local partitiontarget;
+  local romtarget;
+
+  # Get ROM and bootimage
+  partitiontarget=$(androiddevicestarget boot);
+  romtarget=$(adbmromselect)/boot.img;
+
+  # Load ROM bootimage to partition
+  echo " Injecting '${romtarget}' to '${partitiontarget}'";
+  echo '';
+  adbro;
+  adbsu "dd if=\"${partitiontarget}\" of=/sdcard/boot.dump";
+
+  # Files to device push
+  adb push "${filepath}" '/sdcard/boot.mrom';
+
+  # Bootimage injection
+  adbsu "dd if=/dev/zero of=\"${partitiontarget}\"";
+  adbsu "dd if=/sdcard/boot.mrom of=\"${partitiontarget}\"";
+  adbsu 'rm -f /sdcard/boot.mrom';
+
+  # Restore ROM bootimage to partition
+  echo '';
+  echo " Restoring '${partitiontarget}' to '${romtarget}'";
+  echo '';
+  adbsu "dd if=\"${partitiontarget}\" of=\"${romtarget}\"";
+  adbsu "dd if=/sdcard/boot.dump of=\"${partitiontarget}\"";
+  adbsu 'rm -f /sdcard/boot.dump';
+  echo '';
+}
+
 # === ADB MultiROM Kernel Injector ===
 function adbmrominjector()
 {
@@ -129,7 +182,7 @@ function adbmrominjector()
   # Usage
   if [ -z "${filepath}" ] || [ ! -f "${filepath}" ]; then
     echo '';
-    echo '  Usage: adbmrominjector <kernelpath> (MultiROM kernel image injector)';
+    echo '  Usage: adbmrominjector <kernel_path> (MultiROM kernel image injector)';
     echo '';
     return;
   fi;
@@ -149,15 +202,15 @@ function adbmrominjector()
   adbsu "dd if=\"${partitiontarget}\" of=/sdcard/boot.dump";
   adbsu "dd if=\"${romtarget}\" of=\"${partitiontarget}\"";
 
-  # Files to device push
-  adbro;
-  adb push "${filepath}" /tmp/tmpkernel;
-  adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" /tmp/bbootimg;
+  # Files to device push=
+  adb push "${filepath}" '/tmp/tmpkernel';
+  adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" '/tmp/bbootimg';
   adbsu 'chmod +x /tmp/bbootimg; chmod 755 /tmp/bbootimg';
 
   # Kernel injection
   adbsu "/tmp/bbootimg -i \"${partitiontarget}\"";
   adbsu "/tmp/bbootimg -u \"${partitiontarget}\" -k /tmp/tmpkernel";
+  adbsu 'rm -f /tmp/bbootimg; /tmp/tmpkernel';
 
   # Restore ROM bootimage to partition
   echo '';
@@ -166,11 +219,6 @@ function adbmrominjector()
   adbsu "dd if=\"${partitiontarget}\" of=\"${romtarget}\"";
   adbsu "dd if=/sdcard/boot.dump of=\"${partitiontarget}\"";
   adbsu 'rm -f /sdcard/boot.dump';
-
-  # Reboot to recovery if requested
-  if [ ! -z "${2}" ]; then
-    adb reboot recovery;
-  fi;
   echo '';
 }
 
