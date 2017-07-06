@@ -160,7 +160,8 @@ function adbsu()
   local cmd=${*};
 
   # Run as adb root shell
-  if adb shell type su | grep -q 'not found'; then
+  if adb shell type su | grep -q 'not found' ||
+      adb shell 'su -c echo "";' | grep -q 'su: invalid'; then
     adbro;
     adb shell "${cmd}";
 
