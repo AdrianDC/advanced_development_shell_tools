@@ -39,7 +39,7 @@ function adbl()
   esac;
 
   # Check buffer available
-  logcat=$(adb shell "if [ ! -e /dev/log/${buffer} ]; then echo false; fi;");
+  logcat=$(adb shell "if [ -d /dev/log ] && [ ! -e /dev/log/${buffer} ]; then echo false; fi;");
   if [ ! -z "${logcat}" ]; then
 
     # Recursive call when without parameter
