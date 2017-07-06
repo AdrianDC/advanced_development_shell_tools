@@ -63,6 +63,7 @@ function adbro()
 
   # Get root access
   adb_timeout="timeout 5 $(adbcmd)";
+  ${adb_timeout} shell 'echo -n "";';
   rootaccess=$(${adb_timeout} shell whoami);
   if [ "${rootaccess:0:4}" != 'root' ] && [ "${rootaccess:16:5}" != 'uid 0' ]; then
     ${adb_timeout} 'wait-for-device';
@@ -160,6 +161,7 @@ function adbsu()
   local cmd=${*};
 
   # Run as adb root shell
+  adb shell 'echo -n "";';
   if adb shell type su | grep -q 'not found' ||
       adb shell 'su -c echo "";' | grep -q 'su: invalid'; then
     adbro;
