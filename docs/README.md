@@ -471,7 +471,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**stringsparams** *<b>\[Get the strings command parameters for variants\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)
 
 ---
-### [&nbsp;Documentation: [android_host.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc)&nbsp;]
+### [&nbsp;Documentation: [android_host.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc)  - Standalone Import Ready&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+  ```
   * [**fileedit** *<b>\[Files editor for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *fileedit &lt;paths&gt;*
   * [**fe** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *fileedit*
   * [**diropen** *<b>\[Directory opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *diropen &lt;path&gt;*
