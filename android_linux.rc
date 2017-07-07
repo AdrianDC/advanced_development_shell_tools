@@ -69,16 +69,20 @@ function fileedit()
     # Resolve symlink paths
     file=$(readlink -f "${file}");
 
-    # Computer environement
+    # GUI xdg editor
     xdg-open "${file}" 2> /dev/null;
     opened=${?};
 
-    # Server environment
-    if [ ${opened} -ne 0 ]; then
-      if [ ! -z "$(type -t nano 2> /dev/null)" ]; then
-        nano "${file}";
-        opened=${?};
-      fi;
+    # Terminal nano editor
+    if [ ${opened} -ne 0 ] && [ ! -z "$(type -t nano 2> /dev/null)" ]; then
+      nano "${file}";
+      opened=${?};
+    fi;
+
+    # Terminal vim editor
+    if [ ${opened} -ne 0 ] && [ ! -z "$(type -t vim 2> /dev/null)" ]; then
+      vim "${file}";
+      opened=${?};
     fi;
 
     # Unknown environment
