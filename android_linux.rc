@@ -113,10 +113,21 @@ function diropen()
     return;
   fi;
 
-  # Computer environment
-  if ! xdg-open "${1}" 2> /dev/null; then
+  # Variables
+  local opened;
 
-    # Server environment
+  # GUI xdg directory viewer
+  xdg-open "${1}" 2> /dev/null;
+  opened=${?};
+
+  # GUI explorer directory viewer
+  if [ ${opened} -ne 0 ] && [ ! -z "$(type -t explorer 2> /dev/null)" ]; then
+    explorer "${1}";
+    opened=0;
+  fi;
+
+  # Unknown environment
+  if [ ${opened} -ne 0 ]; then
     cd "${1}";
   fi;
 }
