@@ -532,6 +532,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**toclip** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *xclip -selection c*
   * [**findn** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *find -name*
   * [**rsynca** *<b>\[Mirror a path to another\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *rsynca &lt;path1&gt; &lt;path2&gt;*
+  * [**rsyncf** *<b>\[Mirror a path to another based on size only\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *rsyncf &lt;path1&gt; &lt;path2&gt;*
   * [**pcinfo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *inxi -Fxz*
   * [**findnewer** *<b>\[Search files newer than a date\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *findnewer &lt;20160123&gt;*
   * [**cpioext** *<b>\[Extract cpio file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *cpioext &lt;cpio_file_to_extract&gt;*
