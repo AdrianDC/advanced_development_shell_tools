@@ -471,6 +471,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**stringsparams** *<b>\[Get the strings command parameters for variants\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)
 
 ---
+### [&nbsp;Documentation: [android_host.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc)&nbsp;]
+  * [**fileedit** *<b>\[Files editor for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *fileedit &lt;paths&gt;*
+  * [**fe** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *fileedit*
+  * [**diropen** *<b>\[Directory opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *diropen &lt;path&gt;*
+
+---
 ### [&nbsp;Documentation: [android_kernel_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_builders.rc)
@@ -526,9 +532,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**bashup** *<b>\[Reload ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**bashe** *<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
   * [**cls** *<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**fileedit** *<b>\[Files editor for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *fileedit &lt;paths&gt;*
-  * [**fe** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *fileedit*
-  * [**diropen** *<b>\[Directory opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *diropen &lt;path&gt;*
   * [**toclip** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *xclip -selection c*
   * [**findn** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *find -name*
   * [**rsynca** *<b>\[Mirror a path to another\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *rsynca &lt;path1&gt; &lt;path2&gt;*
