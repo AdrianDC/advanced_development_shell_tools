@@ -73,6 +73,12 @@ function fileedit()
     xdg-open "${file}" 2> /dev/null;
     opened=${?};
 
+    # GUI notepad++ editor
+    if [ ${opened} -ne 0 ] && [ ! -z "$(type -t notepad++ 2> /dev/null)" ]; then
+      $(nohup notepad++ -nosession "${file}" > /dev/null 2>&1 & echo '');
+      opened=0;
+    fi;
+
     # Terminal nano editor
     if [ ${opened} -ne 0 ] && [ ! -z "$(type -t nano 2> /dev/null)" ]; then
       nano "${file}";
