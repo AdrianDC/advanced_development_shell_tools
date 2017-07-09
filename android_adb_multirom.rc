@@ -56,13 +56,14 @@ function adbmromlist()
 # === ADB MultiROM Selector ===
 function adbmromselect()
 {
-  # Usage: adbmromselect (Select MultiROM installation for path)
+  # Usage: adbmromselect [preselect] (Select MultiROM installation for path)
 
   # Variables
   local cnt;
   local enforced;
   local key;
   local options;
+  local preselect=${1};
   local path;
   local roms;
 
@@ -93,7 +94,12 @@ function adbmromselect()
   done < "${roms}";
   >&2 echo '';
   >&2 echo -en " \e[1;33mROM to use [0 to ${cnt}] :\e[0m ";
-  >&2 read -r key;
+  if [ -z "${preselect}" ]; then
+    >&2 read -r key;
+  else
+    >&2 echo "${preselect}";
+    key=${preselect};
+  fi;
   >&2 echo '';
 
   # Restore selinux access
@@ -123,18 +129,19 @@ function adbmrombootimage()
   # Usage
   if [ -z "${filepath}" ] || [ ! -f "${filepath}" ]; then
     echo '';
-    echo '  Usage: adbmrombootimage <bootimage_path> (MultiROM bootimage installer)';
+    echo '  Usage: adbmrombootimage <bootimage_path> [preselect] (MultiROM bootimage installer)';
     echo '';
     return;
   fi;
 
   # Variables
   local partitiontarget;
+  local preselect=${2};
   local romtarget;
 
   # Get ROM and bootimage
   partitiontarget=$(androiddevicestarget boot);
-  romtarget=$(adbmromselect)/boot.img;
+  romtarget=$(adbmromselect "${preselect}")/boot.img;
 
   # Load ROM bootimage to partition
   echo " Injecting '${romtarget}' to '${partitiontarget}'";
@@ -165,6 +172,7 @@ function adbmrominjector()
 {
   # Variables
   local filepath=${1};
+  local preselect=${2};
 
   # Detect zImage file
   if [ -z "${filepath}" ]; then
@@ -193,7 +201,7 @@ function adbmrominjector()
 
   # Get ROM and bootimage
   partitiontarget=$(androiddevicestarget boot);
-  romtarget=$(adbmromselect)/boot.img;
+  romtarget=$(adbmromselect "${preselect}")/boot.img;
 
   # Load ROM bootimage to partition
   echo " Injecting '${romtarget}' to '${partitiontarget}'";
@@ -210,7 +218,7 @@ function adbmrominjector()
   # Kernel injection
   adbsu "/tmp/bbootimg -i \"${partitiontarget}\"";
   adbsu "/tmp/bbootimg -u \"${partitiontarget}\" -k /tmp/tmpkernel";
-  adbsu 'rm -f /tmp/bbootimg; /tmp/tmpkernel';
+  adbsu 'rm -f /tmp/bbootimg /tmp/tmpkernel';
 
   # Restore ROM bootimage to partition
   echo '';
@@ -227,15 +235,16 @@ function adbmromautoboot()
 {
   # Usage: adbmromautoboot (MultiROM autoboot selection)
 
+  # Variables
+  local romtarget;
+  local preselect=${2};
+
   # Read multirom.ini
   echo '';
   adbsu "cat /data/media/0/multirom/multirom.ini";
 
-  # Variables
-  local romtarget;
-
   # Get ROM
-  romtarget=$(adbmromselect);
+  romtarget=$(adbmromselect "${preselect}");
 
   # Modify multirom.ini
   adbsu "sed -i 's#auto_boot_rom=.*#auto_boot_rom=${romtarget##*/}#' /data/media/0/multirom/multirom.ini";
