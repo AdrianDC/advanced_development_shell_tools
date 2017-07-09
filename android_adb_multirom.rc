@@ -117,7 +117,13 @@ function adbmromselect()
 function adbmrombootimage()
 {
   # Variables
+  local boot_extracted_files;
   local filepath=${1};
+  local filedir;
+  local partitiontarget;
+  local preselect=${2};
+  local romdir;
+  local romtarget;
 
   # Detect bootimage file
   if [ -z "${filepath}" ]; then
@@ -134,14 +140,10 @@ function adbmrombootimage()
     return;
   fi;
 
-  # Variables
-  local partitiontarget;
-  local preselect=${2};
-  local romtarget;
-
   # Get ROM and bootimage
   partitiontarget=$(androiddevicestarget boot);
-  romtarget=$(adbmromselect "${preselect}")/boot.img;
+  romdir=$(adbmromselect "${preselect}");
+  romtarget=${romdir}/boot.img;
 
   # Load ROM bootimage to partition
   echo " Injecting '${romtarget}' to '${partitiontarget}'";
@@ -164,6 +166,22 @@ function adbmrombootimage()
   adbsu "dd if=\"${partitiontarget}\" of=\"${romtarget}\"";
   adbsu "dd if=/sdcard/boot.dump of=\"${partitiontarget}\"";
   adbsu 'rm -f /sdcard/boot.dump';
+  echo '';
+
+  # Check if filepath has built extracted files
+  filedir=$(dirname "${filepath}");
+
+  # Read all boot extracted files
+  boot_extracted_files=$(adb shell ls "${romdir}/boot");
+
+  # Replace extracted files with new ones
+  for file in ${boot_extracted_files}; do
+    if [ -f "${filedir}/root/${file}" ]; then
+      adb push "${filedir}/root/${file}" "/tmp/${file}";
+      adbsu "cp \"/tmp/${file}\" \"${romdir}/boot/${file}\";";
+      adbsu "rm -f \"/tmp/${file}\";";
+    fi;
+  done;
   echo '';
 }
 
