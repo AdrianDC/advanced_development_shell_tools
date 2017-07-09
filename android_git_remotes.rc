@@ -120,7 +120,8 @@ function gitremoteverify()
   fi;
 
   # Check remote existence
-  if ! git ls-remote --exit-code "${1}" > /dev/null 2>&1; then
+  if ! git ls-remote --exit-code "${1}" > /dev/null 2>&1 &&
+      ! git config "remote.${1}.url" 2> /dev/null; then
     echo '';
     echo -e " \e[1;32mInformation :\e[0m Remote ${1} not found, executing '${2}'...";
     ${2};
