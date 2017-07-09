@@ -100,7 +100,7 @@ function gerritssh()
 
   # Project Temp Files
   local tmpfileidscount;
-  local tmpfileidsforcat;
+  local tmpfileidslist=();
   local tmpfilestate=${tmpdir}/state;
   local tmpfileids=${tmpdir}/ids;
   local tmpfileidsfor=${tmpdir}/'for';
@@ -294,6 +294,9 @@ function gerritssh()
     # Commit details
     echo -e "    \e[1;33m${i}/${patchset}:\e[0m ${patchname}${patchdraft}";
 
+    # Commits list
+    tmpfileidslist+=("${i}");
+
   done < "${tmpfileidsfor}";
   echo '';
 
@@ -306,8 +309,7 @@ function gerritssh()
   local key;
 
   # Commits Selection
-  tmpfileidsforcat=("$(cat "${tmpfileidsfor}")");
-  for i in "${tmpfileidsforcat[@]}"; do
+  for i in "${tmpfileidslist[@]}"; do
 
     # Commit Variables
     local patchbranch;
