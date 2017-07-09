@@ -50,8 +50,7 @@ function fileedit()
 
     # GUI notepad++ editor
     if [ ${opened} -ne 0 ] && [ ! -z "$(type -t notepad++ 2> /dev/null)" ]; then
-      $(nohup notepad++ -nosession "${file}" > /dev/null 2>&1 & echo '');
-      opened=0;
+      [ "$(nohup notepad++ -nosession "${file}" > /dev/null 2>&1 & echo ${?})" -eq 0 ] && opened=0;
     fi;
 
     # Terminal nano editor
