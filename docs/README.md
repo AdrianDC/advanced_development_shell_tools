@@ -407,7 +407,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitpo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify origin false && gitpu origin*
   * [**gitpom** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify origin false && gitpu origin master*
   * [**gitpp** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify project gitrap && gitpu project*
-  * [**gitppm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify project false && gitpu project master*
+  * [**gitppm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify project gitrap && gitpu project master*
+  * [**gitppriv** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify private false && gitpu private*
+  * [**gitpprivm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify private false && gitpu private master*
 
 ---
 ### [&nbsp;Documentation: [android_git_rebase.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc)&nbsp;]
