@@ -61,9 +61,17 @@ function adbro()
   local systemaccess;
   local systemmount;
 
-  # Get root access
+  # Prepare adb access
   adb_timeout="timeout 5 $(adbcmd)";
-  ${adb_timeout} shell 'echo -n "";';
+  if ${adb_timeout} shell 'echo -n "";' 2>&1 | grep -q 'insufficient permissions'; then
+
+    # Run adbsudo if permission denied
+    adbsudo;
+    adb_timeout="timeout 5 $(adbcmd)";
+
+  fi;
+
+  # Get root access
   rootaccess=$(${adb_timeout} shell whoami);
   if [ "${rootaccess:0:4}" != 'root' ] && [ "${rootaccess:16:5}" != 'uid 0' ]; then
     ${adb_timeout} 'wait-for-device';
