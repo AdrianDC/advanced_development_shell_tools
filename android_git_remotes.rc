@@ -139,14 +139,14 @@ function gitraa()
   # Add GitHub Username remote
   git_username=$(githubusername 2> /dev/null);
   git_username=${git_username:-AdrianDC};
-  gitremoteadaptset "${git_username}" "${git_username}" ;
+  gitremoteadaptset "${git_username}" "${git_username}";
 }
 
 # === Git Remotes Helpers ===
 function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
-function gitraoo()  { gitremoteadaptset 'origin' "${1}" ; }
-function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets' ; }
-function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin' ; }
+function gitraoo()  { gitremoteadaptset 'origin' "${1}"; }
+function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets'; }
+function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin'; }
 function gitral()   { gitremoteset lineage "${1}"; }
 
 # === Git Remotes set-url Shortcuts ===
@@ -175,7 +175,7 @@ function gitrax()
   if [[ "$(pwd)/" == *'system/extras/multirom'* ]]; then
     gitremoteset 'xperia' https://github.com/XperiaMultiROM/multirom.git;
   else
-    gitremoteadaptset 'xperia' 'XperiaMultiROM' ;
+    gitremoteadaptset 'xperia' 'XperiaMultiROM';
   fi;
 }
 
@@ -188,7 +188,7 @@ function gitramd()
   if [[ "$(pwd)/" == *'system/extras/multirom'* ]]; then
     gitremoteset 'mromdev' https://github.com/multirom-dev/multirom.git;
   else
-    gitremoteadaptset 'mromdev' 'multirom-dev' ;
+    gitremoteadaptset 'mromdev' 'multirom-dev';
   fi;
 }
 

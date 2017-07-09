@@ -139,7 +139,7 @@ function shtoolse()
 
   # Open listed files
   if [ ! -z "${files[*]}" ]; then
-    fileedit "${files[@]}" ;
+    fileedit "${files[@]}";
   fi;
 }
 

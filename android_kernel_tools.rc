@@ -28,7 +28,7 @@ function fboota()
 {
   # Usage
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] ||
-      [ -z "${TARGET_PRODUCT}" ] || [ "${1}" = '-h' ] ; then
+      [ -z "${TARGET_PRODUCT}" ] || [ "${1}" = '-h' ]; then
     echo '';
     echo ' Usage: fboota [fastupl,flash,full,init,inject,push,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
     echo '  Details: fboota needs the envbuild and lunch variables';
@@ -68,7 +68,7 @@ function fboota()
 
   # Root holder for fastboot flash
   if [[ "${params}" == *'flash'* ]]; then
-    sudo echo -n ;
+    sudo echo -n '';
   fi;
 
   # Output cleaner

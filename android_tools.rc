@@ -141,7 +141,7 @@ function binarysearch()
   fi;
 
   # Run binaryeditor in search mode
-  binaryeditor "${1}" "${2}" ;
+  binaryeditor "${1}" "${2}";
 }
 
 # === Libraries Hunter ===
