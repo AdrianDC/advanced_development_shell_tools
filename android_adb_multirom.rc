@@ -176,7 +176,7 @@ function adbmrombootimage()
 
   # Replace extracted files with new ones
   for file in ${boot_extracted_files}; do
-    if [ -f "${filedir}/root/${file}" ]; then
+    if [ -f "${filedir}/root/${file}" ] && [ ! -L "${filedir}/root/${file}" ]; then
       adb push "${filedir}/root/${file}" "/tmp/${file}";
       adbsu "cp \"/tmp/${file}\" \"${romdir}/boot/${file}\";";
       adbsu "rm -f \"/tmp/${file}\";";
