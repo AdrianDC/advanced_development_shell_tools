@@ -323,11 +323,11 @@ function adbu()
 
   # Optimize
   echo '    Optimizing...';
-  sudo adb "${2}" shell pm force-dex-opt "${1}";
+  sudo adb shell pm force-dex-opt "${1}";
 
   # Force close
   echo '    Killing...';
-  sudo adb "${2}" shell pkill "${1}";
+  sudo adb shell pkill "${1}";
   pid=$(sudo adb shell ps | grep "${1}" | awk '{ print $2 }');
   sudo adb shell kill "${pid}" > /dev/null;
   echo '';
