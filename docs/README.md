@@ -362,6 +362,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitfor** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfetchtreset origin*
   * [**gitforla** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfetchtreset origin aosp/LA.UM.5.5_rb1.10*
   * [**gitfar** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfetchtreset $(githubusername)*
+  * [**gitfprivr** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfetchtreset private*
 
 ---
 ### [&nbsp;Documentation: [android_git_history.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc)&nbsp;]

@@ -67,3 +67,4 @@ alias gitfgr='gitfetchtreset github';
 alias gitfor='gitfetchtreset origin';
 alias gitforla='gitfetchtreset origin aosp/LA.UM.5.5_rb1.10';
 alias gitfar='gitfetchtreset $(githubusername)';
+alias gitfprivr='gitfetchtreset private';
