@@ -82,13 +82,12 @@ function fastupl()
   filename=$(basename "${1}");
 
   # Launch file private uploader
-  if shtools-uploads-basketbuild-active; then
-    uploadprivatebasketbuild "${1}" "${2}";
-    cmd="downloadbasketbuild '/Root/Private/${filename}';";
-  fi;
   if shtools-uploads-mega-active; then
     uploadprivatemega "${1}" "${2}";
     cmd="downloadmega '/Root/Private/${filename}';";
+  elif shtools-uploads-basketbuild-active; then
+    uploadprivatebasketbuild "${1}" "${2}";
+    cmd="downloadbasketbuild '/Root/Private/${filename}';";
   fi;
 
   # Abort if no command provided
