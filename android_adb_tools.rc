@@ -56,14 +56,16 @@ function adbro()
   # Usage: adbro (Verified adb root and remount rw system)
 
   # Variables
+  local adb_cmd;
   local adb_timeout;
   local rootaccess;
   local systemaccess;
   local systemmount;
 
   # Prepare adb access
-  adb_timeout="timeout 5 $(adbcmd)";
-  if ${adb_timeout} shell 'echo -n "";' 2>&1 | grep -q 'insufficient permissions'; then
+  adb_cmd=$(adbcmd);
+  adb_timeout="timeout 5 ${adb_cmd}";
+  if ${adb_cmd} shell 'echo -n "";' 2>&1 | grep -q 'insufficient permissions'; then
 
     # Run adbsudo if permission denied
     adbsudo;
