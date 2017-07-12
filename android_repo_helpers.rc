@@ -299,6 +299,24 @@ function repogetbranch()
   echo "${branch}";
 }
 
+# === Repo Project Remote ===
+function repogetremote()
+{
+  # Usage: repogetremote (Get repo project remote)
+
+  # Variables
+  local remote;
+
+  # Remote detection
+  remote=$(git 'for-each-ref' \
+         | grep -i 'remotes' \
+         | head -n 1 \
+         | sed 's/.*\/remotes\/\([^\/]*\).*/\1/');
+
+  # Output result
+  echo "${remote}";
+}
+
 # === Repo List Exclude Search ===
 function repolistexclude()
 {
