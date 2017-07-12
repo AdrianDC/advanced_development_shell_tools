@@ -156,6 +156,7 @@ function kerneltoolchains()
   local version=${1};
 
   # Architecture environment
+  export CROSS_COMPILE=;
   local cross_compiler=;
   local dir_cross_compiler='../../../prebuilts/gcc/linux-x86';
   echo '';
@@ -182,15 +183,19 @@ function kerneltoolchains()
       fi;
     fi;
 
+    # Cross-Compiler environment variable
+    if [ -e "${cross_compiler}/aarch64-linux-androidkernel-ld" ]; then
+      export CROSS_COMPILE="${ccache} aarch64-linux-androidkernel-";
+    elif [ -e "${cross_compiler}/aarch64-linux-android-ld" ]; then
+      export CROSS_COMPILE="${ccache} aarch64-linux-android-";
+    fi;
+
     # Failed Cross-Compiler search
-    if [ -z "${cross_compiler}" ]; then
+    if [ -z "${cross_compiler}" ] || [ -z "${CROSS_COMPILE}" ]; then
       echo '  makekernel: No cross compiler found!';
       echo '';
       return;
     fi;
-
-    # Cross-Compiler environment variable
-    export CROSS_COMPILE="${ccache} aarch64-linux-android-";
 
   # Architecture ARM-32
   else
@@ -229,19 +234,22 @@ function kerneltoolchains()
       fi;
     fi;
 
+    # Cross-Compiler environment variable
+    if [ -e "${cross_compiler}/arm-linux-androidkernel-ld" ]; then
+      export CROSS_COMPILE="${ccache} arm-linux-androidkernel-";
+    elif [ -e "${cross_compiler}/arm-linux-androideabi-ld" ]; then
+      export CROSS_COMPILE="${ccache} arm-linux-androideabi-";
+    elif [ -e "${cross_compiler}/arm-eabi-ld" ]; then
+      export CROSS_COMPILE="${ccache} arm-eabi-";
+    fi;
+
     # Failed Cross-Compiler search
-    if [ -z "${cross_compiler}" ]; then
+    if [ -z "${cross_compiler}" ] || [ -z "${CROSS_COMPILE}" ]; then
       echo '  makekernel: No cross compiler found!';
       echo '';
       return;
     fi;
 
-    # Cross-Compiler environment variable
-    if [[ ${cross_compiler} == *'arm-linux-androideabi-'* ]]; then
-      export CROSS_COMPILE="${ccache} arm-linux-androideabi-";
-    else
-      export CROSS_COMPILE="${ccache} arm-eabi-";
-    fi;
   fi;
   echo '';
 
