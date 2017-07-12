@@ -558,3 +558,39 @@ function androidprojectforeach()
   croot;
   echo '';
 }
+
+# === Android Project Unshallow ===
+function androidprojectunshallow()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: androidprojectunshallow <project_name> (Android project paths unshallower)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local path;
+
+  # Android project remote paths list
+  for path in $(androidprojectpaths "${1}"); do
+
+    # Access path
+    croot;
+    cd "${path}";
+
+    # Information
+    echo '';
+    echo "[${path}]";
+
+    # Fetch and unshallow
+    git fetch --unshallow "$(repogetremote)" "$(repogetbranch)" 2>&1 \
+	    | grep -v 'on a complete repository does not make sense';
+
+  done;
+
+  # Return to repo root
+  croot;
+  echo '';
+}
