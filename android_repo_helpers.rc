@@ -262,13 +262,13 @@ function repocache()
   cd "${currentdir}/";
 }
 
-# === Repo Branch ===
+# === Repo Project Branch ===
 function repogetbranch()
 {
-  # Usage: repogetbranch (Get repo main branch)
+  # Usage: repogetbranch (Get repo project branch)
 
   # Variables
-  local branch=;
+  local branch='';
   local infos;
 
   # Initialize variables
@@ -279,7 +279,7 @@ function repogetbranch()
     branch=$(echo "${infos}" \
           | grep -i 'Manifest branch' \
           | head -n 1 \
-          | sed 's/.*\/heads\/\(.*\)/\1/');
+          | sed 's/.*\/\(heads\|tags\)\/\(.*\)/\2/');
   fi;
 
   # Recent remotes
