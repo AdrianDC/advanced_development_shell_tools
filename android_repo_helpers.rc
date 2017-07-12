@@ -277,7 +277,7 @@ function repogetbranch()
   # Repo detection
   if [[ ! "${infos}" == *'repo to be installed'* ]] && [[ ! "${infos}" == *'sudo apt'* ]]; then
     branch=$(echo "${infos}" \
-          | grep -i 'Manifest branch' \
+          | grep -i 'Current revision:' \
           | head -n 1 \
           | sed 's/.*\/\(heads\|tags\)\/\(.*\)/\2/');
   fi;
