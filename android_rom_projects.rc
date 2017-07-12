@@ -191,7 +191,7 @@ function androidprojectpatcher()
 
   # ==========================================================
   # Variables
-  local commits_list;
+  local commits_list=();
   local commits_result;
   local git_revs_count;
   local git_revs_count_local;
@@ -265,11 +265,11 @@ function androidprojectpatcher()
           git cherry-pick --abort &> /dev/null;
 
           # Detect commits to pick
-          IFS=" " read -r -a commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD)";
+          readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD)";
           if [ -z "${commits_list[*]}" ]; then
-            IFS=" " read -r -a commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD)";
+            readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD)";
           else
-            IFS=" " read -r -a commits_list <<< "$(git rev-list --reverse FETCH_HEAD~"${git_revs_count_remote}"..FETCH_HEAD)";
+            readarray -t commits_list <<< "$(git rev-list --reverse FETCH_HEAD~"${git_revs_count_remote}"..FETCH_HEAD)";
           fi;
 
           # Pick all commits
@@ -416,7 +416,6 @@ function androidprojectrebaser()
     # Loop until project ready
     project_unfinished=1;
     while [ ${project_unfinished} -eq 1 ]; do
-
 
       # Standard origin repository
       if [[ "${upstream_repository}" == 'origin' ]]; then
