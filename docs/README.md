@@ -702,6 +702,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**rompatcher** *<b>\[Helper menu access to *patcher functions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc)
 
 ---
+### [&nbsp;Documentation: [android_rom_lineageoms.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageoms.rc)&nbsp;]
+  * [**lineageomspatcher** *<b>\[LineageOMS Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageoms.rc)
+
+---
 ### [&nbsp;Documentation: [android_rom_lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)

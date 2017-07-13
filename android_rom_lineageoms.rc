@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# Copyright 2015-2017 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === LineageOMS Commits Patcher ===
+function lineageomspatcher()
+{
+  # Usage: lineageomspatcher (LineageOMS Patcher)
+
+  # Build environment
+  while [ ! -e './build/envsetup.sh' ]; do
+    cd ../;
+  done;
+
+  # Variables
+  local tmp_script;
+
+  # Download script
+  tmp_script=$(mktemp);
+  curl -s https://raw.githubusercontent.com/LineageOMS/merge_script/master/lineage_oms_merge.sh -o "${tmp_script}";
+  chmod +x "${tmp_script}";
+
+  # Launch script
+  "${tmp_script}" "$(pwd)";
+}
