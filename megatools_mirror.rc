@@ -95,7 +95,7 @@ function megamirror()
     while [ -s "${tmp_remote_ls}" ]; do
 
       # Extract first line
-      line=("$(sed '1!d' "${tmp_remote_ls}")");
+      IFS=' ' read -r -a line <<< "$(sed '1!d' "${tmp_remote_ls}")";
       sed -i '1d' "${tmp_remote_ls}";
 
       # Ignore empty lines
@@ -185,7 +185,7 @@ function megamirror()
 
       # Check all files listed for upload
       while [ -s "${tmp_local_ls}" ]; do
-        line=("$(sed '1!d' "${tmp_local_ls}")");
+        IFS=' ' read -r -a line <<< "$(sed '1!d' "${tmp_local_ls}")";
         sed -i '1d' "${tmp_local_ls}";
 
         # Parse file informations
@@ -224,7 +224,7 @@ function megamirror()
     while [ -s "${tmp_local_ls}" ]; do
 
       # Extract first line
-      line=("$(sed '1!d' "${tmp_local_ls}")");
+      IFS=$'\t' read -r -a line <<< "$(sed '1!d' "${tmp_local_ls}")";
       sed -i '1d' "${tmp_local_ls}";
 
       # Ignore empty lines
@@ -255,8 +255,7 @@ function megamirror()
       if [ -d "${file_path}" ]; then
         file_type=1;
       fi;
-      line_tmp=$(awk "\$3 == ${file_type}" "${tmp_remote_ls}" 2>&1 | grep "${remote_folder}/${file_escaped//\\\|/\|}$");
-      line_tmp=("${line_tmp}");
+      IFS=' ' read -r -a line_tmp <<< "$(awk "\$3 == ${file_type}" "${tmp_remote_ls}" 2>&1 | grep "${remote_folder}/${file_escaped//\\\|/\|}$")";
 
       # Verify folder exists
       if [ -d "${file_path}" ]; then
@@ -317,7 +316,7 @@ function megamirror()
 
       # Check all files listed for upload
       while [ -s "${tmp_remote_ls}" ]; do
-        line=("$(sed '1!d' "${tmp_remote_ls}")");
+        IFS=' ' read -r -a line <<< "$(sed '1!d' "${tmp_remote_ls}")";
         sed -i '1d' "${tmp_remote_ls}";
 
         # Parse file informations
