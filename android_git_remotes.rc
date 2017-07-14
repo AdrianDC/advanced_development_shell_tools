@@ -144,11 +144,12 @@ function gitraa()
 }
 
 # === Git Remotes Helpers ===
-function gitrai()   { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
-function gitraoo()  { gitremoteadaptset 'origin' "${1}"; }
-function gitraot()  { gitremoteadaptset 'origin' 'TheMuppets'; }
-function gitrat()   { gitremoteadaptset 'twrp' 'TeamWin'; }
-function gitral()   { gitremoteset lineage "${1}"; }
+function gitrai()    { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
+function gitraoo()   { gitremoteadaptset 'origin' "${1}"; }
+function gitraot()   { gitremoteadaptset 'origin' 'TheMuppets'; }
+function gitrat()    { gitremoteadaptset 'twrp' 'TeamWin'; }
+function gitral()    { gitremoteset lineage "${1}"; }
+function gitrapriv() { gitremoteset private "${1}"; }
 
 # === Git Remotes set-url Shortcuts ===
 alias gitraau='git remote set-url $(githubusername)';

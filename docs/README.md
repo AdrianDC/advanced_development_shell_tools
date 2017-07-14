@@ -438,6 +438,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitraot** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteadaptset 'origin' 'TheMuppets'*
   * [**gitrat** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteadaptset 'twrp' 'TeamWin'*
   * [**gitral** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteset lineage "${1}"*
+  * [**gitrapriv** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteset private "${1}"*
   * [**gitraau** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *git remote set-url $(githubusername)*
   * [**gitraou** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *git remote set-url origin*
   * [**gitrao** *<b>\[Add LineageOS origin remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)
