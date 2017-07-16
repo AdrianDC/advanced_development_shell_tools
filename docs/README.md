@@ -752,8 +752,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdand** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)"*
   * [**cddesk** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}"*
   * [**cddev** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Development/${1}"*
-  * [**cddevaosp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Development/aosp_*${1}"*
-  * [**cddevlineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Development/lineage_*${1}"*
+  * [**cddevaosp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Development/aosp_"*"${1}"*
+  * [**cddevlineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Development/lineage_"*"${1}"*
   * [**cddevmrom** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Development/multirom_development_sony"*
   * [**cddevtwrp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Development/twrp_development_sony"*
   * [**cdprojects** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Projects/${1}"*

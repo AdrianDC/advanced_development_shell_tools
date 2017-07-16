@@ -243,8 +243,8 @@ function cdtwrp()       { cd "$(totwrp)"; }
 function cdand()        { cd "$(getand)"; }
 function cddesk()       { cd "${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}"; }
 function cddev()        { cd "$(getand)/Development/${1}" 2> /dev/null; }
-function cddevaosp()    { cd "$(getand)/Development/aosp_*${1}" 2> /dev/null; }
-function cddevlineage() { cd "$(getand)/Development/lineage_*${1}" 2> /dev/null; }
+function cddevaosp()    { cd "$(getand)/Development/aosp_"*"${1}" 2> /dev/null; }
+function cddevlineage() { cd "$(getand)/Development/lineage_"*"${1}" 2> /dev/null; }
 function cddevmrom()    { cd "$(getand)/Development/multirom_development_sony" 2> /dev/null; }
 function cddevtwrp()    { cd "$(getand)/Development/twrp_development_sony" 2> /dev/null; }
 function cdprojects()   { cd "$(getand)/Projects/${1}"; }
