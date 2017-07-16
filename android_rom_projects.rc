@@ -193,6 +193,7 @@ function androidprojectpatcher()
   # Variables
   local commits_list=();
   local commits_result;
+  local commits_todo;
   local git_revs_count;
   local git_revs_count_local;
   local path_branch;
@@ -279,9 +280,11 @@ function androidprojectpatcher()
 
             # Failed update
             if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ] || ! git diff-index --quiet HEAD --; then
+              commits_todo=${commits_list[*]};
+              commits_todo=${commits_todo#*${sha1}};
               echo '';
               echo '  < Automatic update failed...';
-              echo "     Tried to add following commits: ${sha1} ${commits_list[*]#*${sha1}}";
+              echo "     Tried to add following commits: ${sha1} ${commits_todo}";
               echo '  > Manually fix then push with :';
               echo "     gitbranchpusher '${key_automated}' '${project_github}';";
               echo '';
