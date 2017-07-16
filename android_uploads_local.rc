@@ -81,8 +81,9 @@ function androidfilessync()
   meganzreload;
 }
 
-# === AndroidFiles Download Helper ===
+# === AndroidFiles Download / Upload Helper ===
 alias androidfilesdownload='androidfilessync --download';
+alias androidfilesupload='androidfilessync --upload';
 
 # === AndroidFiles Folder Helper ===
 alias androidfilescd='cd "${ANDROID_FILES_PATH}/"';
