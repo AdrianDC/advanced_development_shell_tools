@@ -34,8 +34,7 @@ function autoreleaseaospsodp8996()
     reposy;
   fi;
 
-  # Patch and rebase project
-  aospsonysodprebaser n-mr1;
+  # Patch the project
   aospsonysodppatcher;
 
   # Devices to build
