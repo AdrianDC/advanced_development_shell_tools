@@ -82,7 +82,9 @@ function kernelcopyleftmerger()
   # Stash all lost .gitignore files
   echo '';
   echo ' kernelcopyleftmerger: Stashing all lost .gitignore files';
-  git checkout HEAD "$(git diff --name-only | grep -ai .gitignore)";
+  git diff --name-only | grep -ai .gitignore | while IFS='' read -r line; do
+    git checkout HEAD "${line}";
+  done;
 
   # List all real file differences
   echo '';
