@@ -136,16 +136,16 @@ function androidprojectpatcher()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: androidprojectpatcher <project_name> ["project paths"] [specific_path] (Android project patcher)';
+    echo ' Usage: androidprojectpatcher <project_name> [specific_path] (Android project patcher)';
     echo '';
     return;
   fi;
 
   # Variables
   local project_name=${1};
-  local project_paths=${2};
-  local project_specific=${3};
+  local project_specific=${2};
   local android_top;
+  local project_paths;
   local projects_specific=;
   local currentdir=${PWD};
 
