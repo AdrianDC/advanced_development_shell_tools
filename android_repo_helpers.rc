@@ -422,6 +422,9 @@ function reposwitcher()
     rm -f .repo/local_manifests;
   fi;
 
+  # Launch repo init menu
+  repoinit;
+
   # Return to current path
   cd "${path}";
 }
