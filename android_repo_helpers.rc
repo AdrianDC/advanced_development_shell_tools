@@ -279,7 +279,7 @@ function repogetbranch()
     branch=$(echo "${infos}" \
           | grep -i 'Current revision:' \
           | head -n 1 \
-          | sed 's/.*\/\(heads\|tags\)\/\(.*\)/\2/');
+          | sed 's/.*: \(refs\/heads\/\|refs\/tags\/\|\)\(.*\)/\2/');
   fi;
 
   # Recent remotes
