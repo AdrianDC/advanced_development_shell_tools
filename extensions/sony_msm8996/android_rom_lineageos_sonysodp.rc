@@ -26,7 +26,7 @@ function lineagesonysodppatcher()
   # Usage: lineagesonysodppatcher [specific_paths] (LineageOS SONY SODP Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'lineage_development_sonysodp' 'lineageos_sony' '' "${@}";
+  androidprojectpatcher 'lineage_development_sonysodp' '' "${@}";
 }
 
 # === LineageOS Sony SODP Rebaser ===

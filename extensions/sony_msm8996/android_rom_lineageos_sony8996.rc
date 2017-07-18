@@ -26,5 +26,5 @@ function lineagesony8996patcher()
   # Usage: lineagesony8996patcher [specific_paths] (LineageOS Sony 8996 Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'lineage_development_sony8996' 'lineageos_sony8996' '' "${@}";
+  androidprojectpatcher 'lineage_development_sony8996' '' "${@}";
 }

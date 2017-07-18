@@ -26,5 +26,5 @@ function aospcafpatcher()
   # Usage: aospcafpatcher [specific_paths] (AOSP-CAF Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_aospcaf' 'aosp_aospcaf' '' "${@}";
+  androidprojectpatcher 'aosp_development_aospcaf' '' "${@}";
 }
