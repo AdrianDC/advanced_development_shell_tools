@@ -51,17 +51,11 @@ function gitbranchpusher()
   if [ -z "${project_branch}" ]; then
     case "${project_dir}" in
       'frameworks/base')
-        if [[ "${repo_dir}" == *'LineageOS'* ]]; then
-          project_branch=lineage_sonyaosp;
-        elif [[ "${repo_dir}" == *'AOSP-CAF'* ]]; then
-          project_branch=aosp_caf;
-        elif [[ "${repo_dir}" == *'AOSP-o'* ]]; then
-          project_branch=aosp_sony8960_o;
-        elif [[ "${repo_dir}" == *'AOSP-master'* ]]; then
-          project_branch=aosp_sony8960_master;
-        else
-          project_branch=aosp_sony8960_n;
-        fi;;
+        echo '';
+        echo ' gitbranchpusher: frameworks/base target branch needs to be explicitely passed';
+        echo '  Check the related *patcher command for further informations';
+        echo '';
+        return;;
       *)
         project_branch=${project_dir//\//_};;
     esac;
@@ -70,6 +64,7 @@ function gitbranchpusher()
   # Status information
   echo '';
   echo " Project directory: ${project_dir}";
+  echo " Project branch: ${project_branch}";
   echo " Repository path: ${repo_dir}";
   echo '';
 
