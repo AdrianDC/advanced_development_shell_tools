@@ -73,10 +73,8 @@ function repoinitaosp()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" == *'clean'* ]] || [[ "${params}" == *'shallow'* ]]; then
-    rm -rfv .repo/project-objects;
-  fi;
   if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project-objects;
     rm -rfv ./*;
   fi;
   rm -rfv prebuilts/qemu-kernel;
@@ -151,10 +149,8 @@ function repoinitlineage()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" == *'clean'* ]] || [[ "${params}" == *'shallow'* ]]; then
-    rm -rfv .repo/project-objects;
-  fi;
   if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project-objects;
     rm -rfv ./*;
   fi;
   rm -rfv prebuilts/qemu-kernel;
@@ -278,10 +274,8 @@ function repoinitrr()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" == *'clean'* ]] || [[ "${params}" == *'shallow'* ]]; then
-    rm -rfv .repo/project-objects;
-  fi;
   if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project-objects;
     rm -rfv ./*;
   fi;
 
@@ -342,10 +336,8 @@ function repoinittwrp()
   rm -rfv .repo/project.list;
   rm -rfv .repo/projects;
   rm -rfv .repo/repo;
-  if [[ "${params}" == *'clean'* ]] || [[ "${params}" == *'shallow'* ]]; then
-    rm -rfv .repo/project-objects;
-  fi;
   if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project-objects;
     rm -rfv ./*;
   fi;
 
