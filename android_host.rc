@@ -96,7 +96,7 @@ function diropen()
 
   # GUI explorer directory viewer
   if [ ${opened} -ne 0 ] && [ ! -z "$(type -t explorer 2> /dev/null)" ]; then
-    explorer "${1}";
+    explorer "${1//\//\\}";
     opened=0;
   fi;
 
