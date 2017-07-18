@@ -67,7 +67,7 @@ function fastupl()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: fastupl <device_name> [none/zip/bootimage] (Fast private file to server uploader)';
+    echo ' Usage: fastupl <file_path> [none/zip/bootimage] (Fast private file to server uploader)';
     echo '';
     return;
   fi;
