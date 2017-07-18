@@ -102,7 +102,11 @@ function devuplrom()
 
   # ROM upload
   if [ ! -z "${romfile}" ]; then
-    fileupl "${romfile}" "${upload}";
+    if [ "${upload}" = 'private' ]; then
+      fastupl "${romfile}";
+    else
+      fileupl "${romfile}" "${upload}";
+    fi;
     export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE=${romfile};
   else
     export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE=;
