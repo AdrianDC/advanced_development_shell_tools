@@ -168,3 +168,69 @@ function autoreleasecafsony8960()
     echo '';
   fi;
 }
+
+# === AOSP 8960 Automatic Releaser ===
+function autoreleaseaospsony8960master()
+{
+  # Usage: autoreleaseaospsony8960master [devices] (Automated AOSP Master Sony 8960 releaser)
+
+  # AndroidDev
+  cdand;
+
+  # When option enabled, sync repository tree
+  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
+    cdaosp;
+    reposy;
+  fi;
+
+  # Enable bringup build option
+  local bringup_active=;
+  if shtools-builds-bringup-active; then
+    bringup_active=true;
+  else
+    shtools-builds-bringup-enable;
+  fi;
+
+  # Enable debug build option
+  local debug_active=;
+  if shtools-builds-debug-active; then
+    debug_active=true;
+  else
+    shtools-builds-debug-enable;
+  fi;
+
+  # Devices to build
+  local devices=${1:-huashan mint};
+
+  # Walk through devices
+  for device in ${devices}; do
+
+    # Access device repository and when option enabled, sync tree
+    if ! pathchanged cdaosp master && ! shtools-builds-nosync-active; then
+      reposy;
+    fi;
+
+    # ROM build and release
+    aospsony8960masterpatcher;
+    romautorelease "${device}" aosp;
+
+  done;
+
+  # When option enabled, clean out folder
+  if shtools-builds-clean-active; then
+    echo '';
+    echo ' romautorelease: Cleaning out folder...';
+    rm -rfv out &> /dev/null;
+    echo '';
+  fi;
+
+  # Restore bringup build option
+  if [ -z "${bringup_active}" ]; then
+    shtools-builds-bringup-disable;
+  fi;
+
+  # Restore debug build option
+  if [ -z "${debug_active}" ]; then
+    shtools-builds-debug-disable;
+  fi;
+}
