@@ -588,6 +588,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_release_options.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)&nbsp;]
+  * [**shtools-builds-bringup-enable** *<b>\[Enable bringup builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-bringup-disable** *<b>\[Disable bringup builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
+  * [**shtools-builds-bringup-active** *<b>\[Get bringup builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
   * [**shtools-builds-clean-enable** *<b>\[Enable clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
   * [**shtools-builds-clean-disable** *<b>\[Disable clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
   * [**shtools-builds-clean-active** *<b>\[Get clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)

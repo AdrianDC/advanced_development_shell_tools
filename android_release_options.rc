@@ -15,6 +15,23 @@
 # limitations under the License.
 #
 
+# === Options - Builds - bringup ===
+function shtools-builds-bringup-enable()
+{
+  # Usage: shtools-builds-bringup-enable (Enable bringup builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP=true;
+}
+function shtools-builds-bringup-disable()
+{
+  # Usage: shtools-builds-bringup-disable (Disable bringup builds option)
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP=;
+}
+function shtools-builds-bringup-active()
+{
+  # Usage: shtools-builds-bringup-active (Get bringup builds option)
+  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP}" ];
+}
+
 # === Options - Builds - clean ===
 function shtools-builds-clean-enable()
 {
