@@ -18,14 +18,14 @@
 # === Git Branch Pusher ===
 function gitbranchpusher()
 {
-  # Usage: gitbranchpusher [y/n] [remote_url] (Push to project specific branch)
+  # Usage: gitbranchpusher [y/n] [remote_url] [branch] (Push to project specific branch)
 
   # Variables
-  local project_branch;
   local project_dir=${PWD};
   local repo_dir=${PWD};
   local param_send=${1};
   local remote=${2:-project};
+  local project_branch=${3};
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -46,24 +46,28 @@ function gitbranchpusher()
     return;
   fi;
 
-  # Status
+  # Project target
   project_dir=${project_dir#${repo_dir}/};
-  case "${project_dir}" in
-    'frameworks/base')
-      if [[ "${repo_dir}" == *'LineageOS'* ]]; then
-        project_branch=lineage_sonyaosp;
-      elif [[ "${repo_dir}" == *'AOSP-CAF'* ]]; then
-        project_branch=aosp_caf;
-      elif [[ "${repo_dir}" == *'AOSP-o'* ]]; then
-        project_branch=aosp_sony8960_o;
-      elif [[ "${repo_dir}" == *'AOSP-master'* ]]; then
-        project_branch=aosp_sony8960_master;
-      else
-        project_branch=aosp_sony8960_n;
-      fi;;
-    *)
-      project_branch=${project_dir//\//_};;
-  esac;
+  if [ -z "${project_branch}" ]; then
+    case "${project_dir}" in
+      'frameworks/base')
+        if [[ "${repo_dir}" == *'LineageOS'* ]]; then
+          project_branch=lineage_sonyaosp;
+        elif [[ "${repo_dir}" == *'AOSP-CAF'* ]]; then
+          project_branch=aosp_caf;
+        elif [[ "${repo_dir}" == *'AOSP-o'* ]]; then
+          project_branch=aosp_sony8960_o;
+        elif [[ "${repo_dir}" == *'AOSP-master'* ]]; then
+          project_branch=aosp_sony8960_master;
+        else
+          project_branch=aosp_sony8960_n;
+        fi;;
+      *)
+        project_branch=${project_dir//\//_};;
+    esac;
+  fi;
+
+  # Status information
   echo '';
   echo " Project directory: ${project_dir}";
   echo " Repository path: ${repo_dir}";
@@ -286,14 +290,14 @@ function androidprojectpatcher()
               echo '  < Automatic update failed...';
               echo "     Tried to add following commits: ${sha1} ${commits_todo}";
               echo '  > Manually fix then push with :';
-              echo "     gitbranchpusher '${key_automated}' '${project_github}';";
+              echo "     gitbranchpusher '${key_automated}' '${project_github}' '${path_branch}';";
               echo '';
               return;
             fi;
           done;
 
           # Automatic push
-          gitbranchpusher "${key_automated_push}" "${project_github}";
+          gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
 
         # Project is ready, break the loop
         else
