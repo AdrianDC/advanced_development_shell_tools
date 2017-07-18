@@ -100,6 +100,11 @@ function romautorelease()
     return;
   fi;
 
+  # When option enabled, use private upload for bringups
+  if shtools-builds-bringup-active; then
+    rom_upload='private';
+  fi;
+
   # When option enabled, use debuggable bootimages
   if shtools-builds-debug-active; then
     bootimagedebuggable "${rom_device}" true;
