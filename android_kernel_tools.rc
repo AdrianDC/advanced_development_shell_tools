@@ -390,6 +390,7 @@ function fbootk()
   local adb;
   local adb_tmpdir;
   local filepath=${1};
+  local fota=${2};
 
   # Initialize variables
   adb=$(adbcmd);
@@ -417,7 +418,7 @@ function fbootk()
 
   # Variables
   local partitiontarget=;
-  if [ ! -z "${2}" ]; then
+  if [ ! -z "${fota}" ]; then
     partitiontarget=$(androiddevicestarget fota);
   else
     partitiontarget=$(androiddevicestarget boot);
@@ -459,7 +460,7 @@ function fbootk()
   adbsu "rm -f ${adb_tmpdir}/tmpkernel"
 
   # Reboot to recovery if requested
-  if [ ! -z "${2}" ]; then
+  if [ -z "${fota}" ]; then
     ${adb} reboot recovery;
   fi;
   echo '';
