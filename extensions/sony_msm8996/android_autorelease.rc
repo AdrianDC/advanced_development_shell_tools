@@ -35,7 +35,9 @@ function autoreleaseaospsodp8996()
   fi;
 
   # Patch the project
-  aospsonysodppatcher;
+  if ! aospsonysodppatcher; then
+    return;
+  fi;
 
   # Devices to build
   local devices=${1:-dora};

@@ -39,7 +39,9 @@ function autoreleaselegacyxperia()
 
   # Patch project
   if [ -z "${2}" ]; then
-    lineagelxpatcher;
+    if ! lineagelxpatcher; then
+      return;
+    fi;
   fi;
 
   # Force clean option

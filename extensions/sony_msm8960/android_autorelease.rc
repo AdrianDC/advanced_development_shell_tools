@@ -40,8 +40,12 @@ function autoreleaseaospsony8960()
       reposy;
     fi;
 
+    # ROM patcher
+    if ! aospsony8960npatcher; then
+      continue;
+    fi;
+
     # ROM build and release
-    aospsony8960npatcher;
     romautorelease "${device}" aosp;
 
   done;
@@ -81,7 +85,9 @@ function autoreleaselineagesony8960()
     fi;
 
     # Import pending reviews
-    lineagepatcher;
+    if ! lineagepatcher; then
+      continue;
+    fi;
 
     # ROM build and release
     romautorelease "${device}" lineage;
@@ -216,8 +222,12 @@ function autoreleaseaospsony8960master()
       reposy;
     fi;
 
+    # ROM patcher
+    if ! aospsony8960masterpatcher; then
+      continue;
+    fi;
+
     # ROM build and release
-    aospsony8960masterpatcher;
     romautorelease "${device}" aosp;
 
   done;
