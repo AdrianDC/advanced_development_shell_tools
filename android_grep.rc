@@ -85,6 +85,24 @@ function gca()
   done;
 }
 
+# === Grep Android Sepolicies ===
+function gcsep()
+{
+  # Usage: gcsep [inputs] (Grep through Android sepolicies)
+
+  # Variables
+  local strings_params;
+
+  # Grep through files
+  strings_params="strings $(stringsparams)";
+  for file in $(find . -name "*.te" -o -name "*_contexts" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
+    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done;
+}
+
 # === Grep Search Helpers ===
 alias grepi='grep -ai';
 
