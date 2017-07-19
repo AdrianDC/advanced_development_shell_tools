@@ -145,9 +145,7 @@ function androidprojectpatcher()
   local currentdir=${PWD};
 
   # GitHub Credentials
-  export GitEMail='user.name@gmail.com';
-  export GitFullName='Full Name';
-  export GitUserName='Username';
+  githubusername;
 
   # Load Android tools
   if [ -z "$(type -t croot)" ]; then
@@ -173,11 +171,6 @@ function androidprojectpatcher()
       path=$(readlink -f "${path}");
       projects_specific="${projects_specific} ${path#${android_top}/}";
     done;
-  fi;
-
-  # Create  ~/.bash_android.github.rc with the exports to override the credentials
-  if [ -f ~/.bash_android.github.rc ]; then
-    source ~/.bash_android.github.rc;
   fi;
 
   # Automated remote changes detection

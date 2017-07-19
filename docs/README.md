@@ -696,6 +696,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_rom_aospcaf.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aosp_aospcaf.rc)
@@ -893,6 +894,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8960/android_rom_aosp_sony8960.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc)
@@ -930,6 +932,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_aosp_sonysodp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)
@@ -941,6 +944,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_lineageos_sony8996.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sony8996.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_lineageos_sony8996.rc)
@@ -950,6 +954,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc)  - Standalone Import Ready&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc)
