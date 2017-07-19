@@ -133,7 +133,7 @@ function androidprojectpatcher()
     echo '';
     echo ' Usage: androidprojectpatcher <project_name> [specific_path] (Android project patcher)';
     echo '';
-    return;
+    return 1;
   fi;
 
   # Variables
@@ -276,7 +276,7 @@ function androidprojectpatcher()
             echo '  > Manually fix then push with :';
             echo "     gitbranchpusher '${key_automated}' '${project_github}' '${path_branch}';";
             echo '';
-            return;
+            return 1;
           fi;
         done;
 
@@ -307,6 +307,7 @@ function androidprojectpatcher()
   # Return to current folder
   echo '';
   cd "${currentdir}";
+  return 0;
 }
 
 # === Android Project Rebaser ===
