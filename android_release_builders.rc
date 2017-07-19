@@ -268,5 +268,5 @@ function autorelease()
   read -r key;
 
   # Execute requested function
-  ${list_functions[${key}]};
+  ${list_functions[${key}]} "${@}";
 }
