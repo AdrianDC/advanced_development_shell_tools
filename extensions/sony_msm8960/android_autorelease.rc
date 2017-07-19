@@ -172,7 +172,13 @@ function autoreleasecafsony8960()
 # === AOSP 8960 Automatic Releaser ===
 function autoreleaseaospsony8960master()
 {
-  # Usage: autoreleaseaospsony8960master [devices] (Automated AOSP Master Sony 8960 releaser)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: autoreleaseaospsony8960master <devices> (Automated AOSP Master Sony 8960 releaser)';
+    echo '';
+    return;
+  fi;
 
   # AndroidDev
   cdand;
@@ -200,7 +206,7 @@ function autoreleaseaospsony8960master()
   fi;
 
   # Devices to build
-  local devices=${1:-huashan mint};
+  local devices=${1};
 
   # Walk through devices
   for device in ${devices}; do
