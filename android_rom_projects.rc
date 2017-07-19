@@ -147,6 +147,7 @@ function androidprojectpatcher()
   # GitHub Credentials
   githubusername;
 
+  # ==========================================================
   # Load Android tools
   if [ -z "$(type -t croot)" ]; then
     while [ ! -e './build/envsetup.sh' ]; do
@@ -156,6 +157,7 @@ function androidprojectpatcher()
   fi;
   cd "${currentdir}";
 
+  # ==========================================================
   # Automated key shortcut
   local key_automated=;
   local key_automated_push=;
@@ -164,6 +166,7 @@ function androidprojectpatcher()
     project_specific=;
   fi;
 
+  # ==========================================================
   # Extract specific projects paths
   if [ ! -z "${project_specific}" ]; then
     android_top=$(gettop);
@@ -173,7 +176,7 @@ function androidprojectpatcher()
     done;
   fi;
 
-  # Automated remote changes detection
+  # Automated remote changes list detection
   project_paths=$(androidprojectpaths "${project_name}");
 
   # ==========================================================
@@ -189,7 +192,6 @@ function androidprojectpatcher()
   local git_revs_count_local;
   local path_branch;
   local project_github;
-  local project_unfinished;
 
   # Projects loader
   for path in ${projects_specific:-${project_paths}}; do
@@ -214,98 +216,87 @@ function androidprojectpatcher()
         project_github='https://github.com/AdrianDC/platform_frameworks_base.git';
         path_branch=${project_name};;
       *)
-        project_github=https://github.com/AdrianDC/${project_name}.git;;
+        project_github="https://github.com/AdrianDC/${project_name}.git";;
     esac;
 
-    # Loop until project ready
-    project_unfinished=1;
-    while [ ${project_unfinished} -eq 1 ]; do
+    # Fetch
+    if ! git fetch "${project_github}" "${path_branch}"; then
+      echo 'Remote project branch not found, ignoring...';
+      continue;
+    fi;
 
-      # Fetch
-      if ! git fetch "${project_github}" "${path_branch}"; then
-        echo 'Remote project branch not found, ignoring...';
-        project_unfinished=2;
-        continue;
+    # Compare
+    git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
+    git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
+    git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
+    echo " Differences: ${git_revs_count:-Missing history}";
+
+    # Handle unupdated projects
+    if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
+      echo '';
+      echo -n '  > Recreate onto newest changes [Y/n/a/l] ? ';
+      if [ -z "${key_automated}" ]; then
+        read -r -t 20 key;
+      else
+        key=${key_automated};
+      fi;
+      if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
+        key_automated=y;
+        key_automated_push=y;
+      elif [ "${key}" = 'l' ] || [ "${key}" = 'L' ]; then
+        key_automated=y;
+        key_automated_push=n;
       fi;
 
-      # Compare
-      git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-      git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
-      git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
-      echo " Differences: ${git_revs_count:-Missing history}";
-
-      # Handle unupdated projects
-      if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
+      # Rebase the tree
+      if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
         echo '';
-        echo -n '  > Recreate onto newest changes [Y/n/a/l] ? ';
-        if [ -z "${key_automated}" ]; then
-          read -r -t 20 key;
+        git cherry-pick --abort &> /dev/null;
+
+        # Detect commits to pick
+        readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD)";
+        if [ -z "${commits_list[*]}" ]; then
+          readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD)";
         else
-          key=${key_automated};
-        fi;
-        if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
-          key_automated=y;
-          key_automated_push=y;
-        elif [ "${key}" = 'l' ] || [ "${key}" = 'L' ]; then
-          key_automated=y;
-          key_automated_push=n;
+          readarray -t commits_list <<< "$(git rev-list --reverse FETCH_HEAD~"${git_revs_count_remote}"..FETCH_HEAD)";
         fi;
 
-        # Rebase the tree
-        if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
-          echo '';
-          git cherry-pick --abort &> /dev/null;
+        # Pick all commits
+        for sha1 in "${commits_list[@]}"; do
+          git cherry-pick "${sha1}";
+          commits_result=${?};
 
-          # Detect commits to pick
-          readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD)";
-          if [ -z "${commits_list[*]}" ]; then
-            readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD)";
-          else
-            readarray -t commits_list <<< "$(git rev-list --reverse FETCH_HEAD~"${git_revs_count_remote}"..FETCH_HEAD)";
+          # Failed update
+          if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ] || ! git diff-index --quiet HEAD --; then
+            commits_todo=${commits_list[*]};
+            commits_todo=${commits_todo#*${sha1}};
+            echo '';
+            echo '  < Automatic update failed...';
+            echo "     Tried to add following commits: ${sha1} ${commits_todo}";
+            echo '  > Manually fix then push with :';
+            echo "     gitbranchpusher '${key_automated}' '${project_github}' '${path_branch}';";
+            echo '';
+            return;
           fi;
-
-          # Pick all commits
-          for sha1 in "${commits_list[@]}"; do
-            git cherry-pick "${sha1}";
-            commits_result=${?};
-
-            # Failed update
-            if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ] || ! git diff-index --quiet HEAD --; then
-              commits_todo=${commits_list[*]};
-              commits_todo=${commits_todo#*${sha1}};
-              echo '';
-              echo '  < Automatic update failed...';
-              echo "     Tried to add following commits: ${sha1} ${commits_todo}";
-              echo '  > Manually fix then push with :';
-              echo "     gitbranchpusher '${key_automated}' '${project_github}' '${path_branch}';";
-              echo '';
-              return;
-            fi;
-          done;
-
-          # Automatic push
-          gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
-
-        # Project is ready, break the loop
-        else
-          project_unfinished=0;
-        fi;
-
-      # Handle unupdated remotes
-      elif [ "${git_revs_count_local}" -ne 0 ]; then
+        done;
 
         # Automatic push
         gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
 
-      # Project is ready, break the loop
+      # Project is ready
       else
-        project_unfinished=0;
+        git reset --hard FETCH_HEAD;
+        git stash -u;
       fi;
 
-    done;
+    # Handle unupdated remotes
+    elif [ "${git_revs_count_local}" -ne 0 ]; then
 
-    # Cleanup
-    if [ ${project_unfinished} -eq 0 ]; then
+      # Automatic push
+      gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+
+    # Project is ready
+    else
       git reset --hard FETCH_HEAD;
       git stash -u;
     fi;
