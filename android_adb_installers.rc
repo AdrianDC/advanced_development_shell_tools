@@ -142,7 +142,9 @@ function adbil()
       file_path=$(echo -n "${file_path}" | tail -1 \
                 | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
                 | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
-      file_path=$(gettop)/${file_path};
+      if [ ! -f "${file_path}" ] && [ ! "${file_path:0:1}" = '/' ]; then
+        file_path=$(gettop)/${file_path};
+      fi;
       if [ -f "${file_path}" ]; then
         echo '';
         echo -e " \e[1;36m${file_path}\e[0m";
