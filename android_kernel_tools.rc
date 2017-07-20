@@ -790,9 +790,9 @@ function makesep()
 
   # Start sepolicies full compilations
   if [ -d ./system/sepolicy ]; then
-    mmm -B -j"$(grep -c ^processor /proc/cpuinfo)" ./system/sepolicy/;
+    mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./system/sepolicy/;
   else
-    mmm -B -j"$(grep -c ^processor /proc/cpuinfo)" ./external/sepolicy/;
+    mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./external/sepolicy/;
   fi;
 
   # Restore build environment and path
