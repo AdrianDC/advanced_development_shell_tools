@@ -187,6 +187,41 @@ function reposysafe()
   echo '';
 }
 
+# === Repo Sync Efficiently Without Error Allowed ===
+function reposynoerror()
+{
+  # Usage: reposynoerror (Optimized relevant repo sync without errors allowed)
+
+  # Variables
+  local tmp_file;
+  local tmp_installs;
+
+  # Execute input command
+  tmp_file=$(mktemp);
+  reposy "${@}" 2>&1 | tee "${tmp_file}";
+  echo '';
+
+  # Find failed projects
+  tmp_installs=$(grep -a "error.GitError: " "${tmp_file}" \
+               | sed 's/error.GitError: \(platform\/\)\([^ ]*\) .*/\2/g' \
+               | sort \
+               | uniq);
+
+  # List new files
+  for file_path in ${tmp_installs[*]}; do
+    reposyrm "${file_path}";
+  done;
+
+  # Relaunch reposynoerror if needed
+  if [ ! -z "${tmp_installs[*]}" ]; then
+    reposynoerror "${@}";
+  fi;
+
+  # End of process
+  rm -f "${tmp_file}";
+  echo '';
+}
+
 # === Repo Branch Sync ===
 function reposybranch()
 {
