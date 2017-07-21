@@ -168,6 +168,13 @@ function androidprojectpatcher()
   fi;
 
   # ==========================================================
+  # Detect 'unshallow' input
+  if [ "${project_specific}" = 'unshallow' ]; then
+    androidprojectunshallow "${project_name}";
+    return;
+  fi;
+
+  # ==========================================================
   # Extract specific projects paths
   if [ ! -z "${project_specific}" ]; then
     android_top=$(gettop);
