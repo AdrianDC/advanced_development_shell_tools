@@ -145,6 +145,7 @@ function androidprojectpatcher()
   local currentdir=${PWD};
 
   # GitHub Credentials
+  export GitEMail=;
   githubusername;
 
   # ==========================================================
