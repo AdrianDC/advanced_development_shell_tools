@@ -162,7 +162,9 @@ function androidprojectpatcher()
   # Automated key shortcut
   local key_automated=;
   local key_automated_push=;
-  if [[ "${project_specific}" == 'y' ]] || [[ "${project_specific}" == 'n' ]]; then
+  if [[ "${project_specific}" == 'a' ]] || \
+      [[ "${project_specific}" == 'y' ]] || \
+      [[ "${project_specific}" == 'n' ]]; then
     key_automated=${project_specific};
     project_specific=;
   fi;
