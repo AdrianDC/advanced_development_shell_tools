@@ -223,7 +223,7 @@ function autoreleaseaospsony8960master()
     fi;
 
     # ROM patcher
-    if ! aospsony8960masterpatcher; then
+    if ! aospsony8960masterpatcher 'a'; then
       continue;
     fi;
 
