@@ -55,6 +55,30 @@ function sepaud()
   grep -a 'avc.*denied' "${1}" | audit2allow -p sepolicy;
 }
 
+# === Sepolicies Message Extractor ===
+function sepmsg()
+{
+  # Usage
+  if [ ! -f "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: sepmsg <logs_file> <context> (Logs sepolicy message extractor)';
+    echo '';
+    return;
+  fi;
+
+  # Logs sepolicy message extractor
+  echo '';
+  grep -a "avc.*denied.*scontext=u:r:${2}:s0" "${1}" \
+      | sed 's/.*avc: /avc: /g' \
+      | sed 's/ permissive=.*//g' \
+      | sed 's/\(comm\|ino\|ioctlcmd\)=\("\|\)[^ ]*\("\|\) //g' \
+      | uniq \
+      | fold -w 70 -s \
+      | sed 's/^/    /g' \
+      | sed 's/.*avc: denied/ * denied/g';
+  echo '';
+}
+
 # === ADB Intents ===
 alias adbintents='adb shell dumpsys package r > intents.txt';
 alias adbcamera='adb shell pm enable com.android.camera2/com.android.camera.CameraLauncher;

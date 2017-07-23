@@ -67,6 +67,7 @@
 ### [&nbsp;Documentation: [android_adb_assets.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)&nbsp;]
   * [**adbdatabase** *<b>\[Android sqlite3 database opener\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adbdatabase &lt;/data/.../sqlite.db&gt;*
   * [**sepaud** *<b>\[Logs sepolicy analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *sepaud &lt;logs_file&gt;*
+  * [**sepmsg** *<b>\[Logs sepolicy message extractor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *sepmsg &lt;logs_file&gt; &lt;context&gt;*
   * [**adbintents** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adb shell dumpsys package r &gt; intents.txt*
   * [**adbcamera** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adb shell pm enable com.android.camera2/com.android.camera.CameraLauncher*
   * [**adblkl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adb root; adb wait-for-device; adb shell killall zigote; adbl*
