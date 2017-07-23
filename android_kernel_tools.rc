@@ -17,6 +17,7 @@
 
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_helpers.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_tools.rc)
 
 # === Build paths ===
@@ -72,11 +73,7 @@ function fboota()
   fi;
 
   # Output cleaner
-  rm -fv "./out/target/product/${device}/boot."*;
-  rm -fv "./out/target/product/${device}/"*'.cpio';
-  rm -fv "./out/target/product/${device}/"*'.fs';
-  rm -fv "./out/target/product/${device}/"*'.img';
-  rm -fv "./out/target/product/${device}/system/lib/modules/"*;
+  outbootdevcl "${device}";
   echo '';
 
   # Unsecure adb changes
