@@ -172,53 +172,35 @@ function reposysafe()
 {
   # Usage: reposysafe (Safeguarded repo projects sync)
 
+  # Variables
+  local shtools_path;
+
+  # Load shtools_path
+  shtools_path=$(shtoolsget);
+
   # Safeguarded repo projects sync
   echo '';
   # shellcheck disable=SC2016
-  repo forall -j"$(grep -c ^processor /proc/cpuinfo)" -c '
+  repo forall -j"$(grep -c ^processor /proc/cpuinfo)" -c "
         false;
-        while [ ${?} -ne 0 ]; do
-          timeout 20 git fetch --progress ${REPO_REMOTE} ${REPO_RREV##*/};
+        while [ \${?} -ne 0 ]; do
+          echo -e \"\n \e[1;33mFetch: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+          timeout 20 git fetch --progress \"\${REPO_REMOTE}\" \"\${REPO_RREV##*/}\";
         done;
-        echo "";
-        echo " Project ${REPO_PROJECT} : ${REPO_REMOTE}/${REPO_RREV##*/}";
-        git checkout ${REPO_RREV##*/};
-        ';
-  echo '';
-}
-
-# === Repo Sync Efficiently Without Error Allowed ===
-function reposynoerror()
-{
-  # Usage: reposynoerror (Optimized relevant repo sync without errors allowed)
-
-  # Variables
-  local tmp_file;
-  local tmp_installs;
-
-  # Execute input command
-  tmp_file=$(mktemp);
-  reposy "${@}" 2>&1 | tee "${tmp_file}";
-  echo '';
-
-  # Find failed projects
-  tmp_installs=$(grep -a "error.GitError: " "${tmp_file}" \
-               | sed 's/error.GitError: \(platform\/\)\([^ ]*\) .*/\2/g' \
-               | sort \
-               | uniq);
-
-  # List new files
-  for file_path in ${tmp_installs[*]}; do
-    reposyrm "${file_path}";
-  done;
-
-  # Relaunch reposynoerror if needed
-  if [ ! -z "${tmp_installs[*]}" ]; then
-    reposynoerror "${@}";
-  fi;
-
-  # End of process
-  rm -f "${tmp_file}";
+        if git add -N ./* && ! git diff-index --quiet HEAD -- || git am --abort >/dev/null 2>&1; then
+          echo -e \"\n \e[1;32mCleaning: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+          git reset HEAD --hard;
+          git stash -u;
+          git am --abort;
+        fi;
+        echo -e \"\n \e[1;32mCheckout: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+        if ! git checkout \"\${REPO_RREV##*/}\"; then
+          source \"${shtools_path}/android_repo_cleaners.rc\";
+          source \"${shtools_path}/android_repo_helpers.rc\";
+          echo -e \"\n \e[1;32mRestarting: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+          echo reposyrm './';
+        fi;
+        ";
   echo '';
 }
 
