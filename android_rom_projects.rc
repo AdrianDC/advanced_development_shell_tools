@@ -146,7 +146,7 @@ function androidprojectpatcher()
 
   # GitHub Credentials
   export GitEMail=;
-  githubusername;
+  githubusername >/dev/null;
 
   # ==========================================================
   # Load Android tools
