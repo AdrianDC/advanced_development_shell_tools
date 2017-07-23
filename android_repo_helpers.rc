@@ -182,23 +182,39 @@ function reposysafe()
   echo '';
   # shellcheck disable=SC2016
   repo forall -j"$(grep -c ^processor /proc/cpuinfo)" -c "
-        false;
-        while [ \${?} -ne 0 ]; do
-          echo -e \"\n \e[1;33mFetch: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
-          timeout 20 git fetch --progress \"\${REPO_REMOTE}\" \"\${REPO_RREV##*/}\";
-        done;
-        if git add -N ./* && ! git diff-index --quiet HEAD -- || git am --abort >/dev/null 2>&1; then
-          echo -e \"\n \e[1;32mCleaning: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
-          git reset HEAD --hard;
-          git stash -u;
-          git am --abort;
+        is_git_valid=;
+        git rev-parse --git-dir
+        if git rev-parse --git-dir > /dev/null 2>&1; then
+          is_git_valid=true;
         fi;
-        echo -e \"\n \e[1;32mCheckout: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
-        if ! git checkout \"\${REPO_RREV##*/}\"; then
+        if [ -z \"\${is_git_valid}\" ]; then
           source \"${shtools_path}/android_repo_cleaners.rc\";
           source \"${shtools_path}/android_repo_helpers.rc\";
-          echo -e \"\n \e[1;32mRestarting: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
-          echo reposyrm './';
+          cd ./$(echo \"\$\{REPO_PATH\}\" | sed 's/[^\/]*/../g');
+          rm -rf \"\$\{REPO_PATH\}\";
+          echo -e \"\n \e[1;32mStarting: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+          reposy \"\$\{REPO_PATH\}\";
+
+        else
+          false;
+          while [ \${?} -ne 0 ]; do
+            echo -e \"\n \e[1;33mFetch: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+            timeout 20 git fetch --progress \"\${REPO_REMOTE}\" \"\${REPO_RREV##*/}\";
+          done;
+          if git add -N ./* && ! git diff-index --quiet HEAD -- || git am --abort >/dev/null 2>&1; then
+            echo -e \"\n \e[1;32mCleaning: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+            git reset HEAD --hard;
+            git stash -u;
+            git am --abort;
+          fi;
+          echo -e \"\n \e[1;32mCheckout: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+          if git rev-parse --git-dir > /dev/null 2>&1 || ! git checkout \"\${REPO_RREV##*/}\"; then
+            source \"${shtools_path}/android_repo_cleaners.rc\";
+            source \"${shtools_path}/android_repo_helpers.rc\";
+            echo -e \"\n \e[1;32mRestarting: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
+            cd ./$(echo \"\$\{REPO_PATH\}\" | sed 's/[^\/]*/../g');
+            reposyrm \"\${REPO_PATH}\";
+          fi;
         fi;
         ";
   echo '';
