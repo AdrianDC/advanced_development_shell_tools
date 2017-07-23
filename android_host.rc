@@ -35,8 +35,12 @@ function fileedit()
   # Files editor for most environments
   for file in "${@}"; do
 
+    # If option enabled, create missing files
+    if [ ! -z "${FILEEDIT_TOUCH_NEW_FILE}" ] && [ ! -f "${file}" ]; then
+      touch "${file}";
+
     # Filter only files
-    if [ ! -f "${file}" ]; then
+    elif [ ! -f "${file}" ]; then
       echo " fileedit: '${file}' not found";
       continue;
     fi;
@@ -75,6 +79,7 @@ function fileedit()
 
 # === File Editor Shortcut ===
 alias fe='fileedit';
+alias fen='FILEEDIT_TOUCH_NEW_FILE=true fileedit';
 
 # === Director Opener ===
 function diropen()
