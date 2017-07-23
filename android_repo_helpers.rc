@@ -346,6 +346,12 @@ function repogetremote()
          | head -n 1 \
          | sed 's/.*\/remotes\/\([^\/]*\).*/\1/');
 
+  # Fix remote for AOSP
+  if ! git ls-remote --exit-code "${remote}" > /dev/null 2>&1 &&
+      git ls-remote --exit-code "aosp" > /dev/null 2>&1; then
+    remote='aosp';
+  fi;
+
   # Output result
   echo "${remote}";
 }
