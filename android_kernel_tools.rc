@@ -145,14 +145,20 @@ function fboota()
             | head -1 \
             | sed "s/.*: \(.*${image_file}\.img\).*/\1/g");
 
+  # Detect failed build
+  if [ -z "${bootimg}" ] || [ ! -f "${bootimg}" ]; then
+    echo '';
+    echo ' fboota: Bootimage build failed';
+    echo '';
+
   # Inject kernel inside bootimage
-  if [[ "${params}" == *'inject'* ]]; then
+  elif [[ "${params}" == *'inject'* ]]; then
 
     # Use the fbootk function
     fbootk "$(dirname "${bootimg}")/kernel";
 
   # Zip the bootimage
-  elif [[ "${params}" == *'zip'* ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
+  elif [[ "${params}" == *'zip'* ]]; then
 
     # Push zip to device
     if [[ "${params}" == *'push'* ]]; then
@@ -162,11 +168,11 @@ function fboota()
     fi;
 
   # Upload the bootimage
-  elif [[ "${params}" == *'fastupl'* ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
+  elif [[ "${params}" == *'fastupl'* ]]; then
     fastupl "${bootimg}" 'bootimage';
 
   # Flash the bootimage to the device
-  elif [[ "${params}" == *'flash'* ]] && [ ! -z "${bootimg}" ] && [ -f "${bootimg}" ]; then
+  elif [[ "${params}" == *'flash'* ]]; then
 
     # Detect modules
     modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
