@@ -191,10 +191,12 @@ function shtoolssync()
 # === Android Development Shell Tools Pusher ===
 function shtoolspush()
 {
-  # Usage: shtoolspush (Commit new changes to android_development_shell_tools)
+  # Usage: shtoolspush [bool_ignore_readme] (Commit new changes to android_development_shell_tools)
 
   # Update README.md
-  shtoolsreadme;
+  if [ -z "${1}" ]; then
+    shtoolsreadme;
+  fi;
 
   # Commit changes to upstream
   local currentdir=${PWD};
