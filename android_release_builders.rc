@@ -115,8 +115,8 @@ function romautorelease()
   if [[ "${rom_params}" == *'nobuild'* ]]; then
     echo ' Cleaning skipped...';
 
-  # When option enabled, clean device out folder
-  elif shtools-builds-clean-active; then
+  # When option enabled, not local and not bringup, clean device out folder
+  elif shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
     echo '';
     echo ' romautorelease: Cleaning out product folder...';
     rm -rfv out/target/product &> /dev/null;
@@ -214,8 +214,8 @@ function romautorelease()
     fi;
   fi;
 
-  # When option enabled and not local, clean out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active; then
+  # When option enabled, not local and not bringup, clean device out folder
+  if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
     echo '';
     echo ' romautorelease: Cleaning out product folder...';
     rm -rfv out/target/product &> /dev/null;
