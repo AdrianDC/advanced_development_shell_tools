@@ -175,7 +175,7 @@ function autoreleasecafsony8960()
   fi;
 }
 
-# === AOSP 8960 Automatic Releaser ===
+# === AOSP 8960 Master Automatic Releaser ===
 function autoreleaseaospsony8960master()
 {
   # Usage
@@ -186,11 +186,45 @@ function autoreleaseaospsony8960master()
     return;
   fi;
 
+  # Launch internal releaser
+  __autoreleaseaospsony8960dev 'master' "${1}";
+}
+
+# === AOSP 8960 O Automatic Releaser ===
+function autoreleaseaospsony8960o()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: autoreleaseaospsony8960o <devices> (Automated AOSP O Sony 8960 releaser)';
+    echo '';
+    return;
+  fi;
+
+  # Launch internal releaser
+  __autoreleaseaospsony8960dev 'o' "${1}";
+}
+
+# === AOSP 8960 Development Automatic Releaser ===
+function __autoreleaseaospsony8960dev()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: __autoreleaseaospsony8960dev <branch_tag> <devices> (Automated AOSP Development Sony 8960 releaser)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local branch_tag=${1};
+  local devices=${2};
+
   # AndroidDev
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
+  if ! shtools-builds-nosync-active && [ -z "${devices}" ]; then
     cdaosp;
     reposy;
   fi;
@@ -211,19 +245,16 @@ function autoreleaseaospsony8960master()
     shtools-builds-debug-enable;
   fi;
 
-  # Devices to build
-  local devices=${1};
-
   # Walk through devices
   for device in ${devices}; do
 
     # Access device repository and when option enabled, sync tree
-    if ! pathchanged cdaosp master && ! shtools-builds-nosync-active; then
+    if ! pathchanged cdaosp "${branch_tag}" && ! shtools-builds-nosync-active; then
       reposy;
     fi;
 
     # ROM patcher
-    if ! aospsony8960masterpatcher 'a'; then
+    if ! "aospsony8960${branch_tag}patcher" 'a'; then
       continue;
     fi;
 
