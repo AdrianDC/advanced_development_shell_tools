@@ -39,8 +39,8 @@ function pushb()
   fi;
 
   # PushBullet notification message
-  if [ ! -z "${1}" ]; then
-    PushBulletComment=${1};
+  if [ ! -z "${*}" ]; then
+    PushBulletComment=${*};
     PushBulletNoteUrl=;
   else
     PushBulletComment='Done';
