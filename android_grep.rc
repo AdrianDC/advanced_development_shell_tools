@@ -77,7 +77,7 @@ function gca()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . \( -name '*.mk' -o -name '*.bp' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
+  for file in $(find . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
     found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
