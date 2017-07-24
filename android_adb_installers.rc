@@ -321,8 +321,7 @@ function adbsiderom()
   if [ ! -d ~/.bash_android.rom.addons ]; then
     mkdir ~/.bash_android.rom.addons;
     echo '';
-    echo ' adbsiderom: Fill the ~/.bash_android.rom.addons/ folder with zip Addons to flash after the ROM zip';
-    echo '';
+    echo -e '\e[1;33madbsiderom: Fill the ~/.bash_android.rom.addons/ folder with zip Addons to flash after the ROM zip\e[0m';
     diropen ~/.bash_android.rom.addons;
     echo '';
     echo -n ' adbsiderom: Press [Enter] to continue... ';
@@ -330,16 +329,19 @@ function adbsiderom()
   fi;
 
   # Launch adbside with ROM zip
+  echo '';
+  echo -e "\e[1;32madbsiderom: Flashing '$(basename "${1}")'\e[0m";
   adbside "${1}";
 
   # Launch adbside for addons zip files
   for file in ~/.bash_android.rom.addons/*.zip; do
+    echo -e "\e[1;32madbsiderom: Flashing '$(basename "${file}")'\e[0m";
     adbside "${file}";
   done;
 
   # Reboot to Android if requested
   if [ ! -z "${2}" ]; then
-    echo -e '\e[1;33madbsiderom: Rebooting to Android\e[0m';
+    echo -e '\e[1;32madbsiderom: Rebooting to Android\e[0m';
     adb shell reboot;
     echo '';
   fi;
