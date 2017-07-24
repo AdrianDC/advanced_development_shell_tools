@@ -158,10 +158,12 @@ function mmmzip()
   echo '';
 
   # Make the modules
-  if [ -d "$(readlink -f "${path}")" ] || ! mms -v > /dev/null 2>&1; then
+  if [ -d "$(readlink -f "${path}")" ]; then
     mmm "${BuildMode}" "${BuildParams}" | tee "${LogFile}";
-  else
+  elif mka -v > /dev/null 2>&1; then
     mka "${BuildParams}" | tee "${LogFile}";
+  else
+    make -j"$(grep -c ^processor /proc/cpuinfo)" "${BuildParams}" | tee "${LogFile}";
   fi;
 
   # Return to repo root
