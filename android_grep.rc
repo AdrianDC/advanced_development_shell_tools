@@ -123,6 +123,23 @@ function gcmodules()
   done;
 }
 
+# === Grep Android Phony ===
+function gcphony()
+{
+  # Usage: gcphony (List all PHONY rules)
+
+  # Variables
+  local strings_params;
+
+  # Search all build definitions
+  strings_params="strings $(stringsparams)";
+  for file in $(find . -name '*.mk' -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
+    ${strings_params} "$(readlink -f "${file}")" \
+      | grep -ai ".PHONY:" \
+      | sed 's/.PHONY: //g';
+  done;
+}
+
 # === Strings Parameters ===
 function stringsparams()
 {
