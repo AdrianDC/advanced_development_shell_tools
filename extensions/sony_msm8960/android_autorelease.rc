@@ -232,8 +232,8 @@ function autoreleaseaospsony8960master()
 
   done;
 
-  # When option enabled, clean out folder
-  if shtools-builds-clean-active; then
+  # When option enabled and not local, clean out folder
+  if shtools-builds-clean-active && ! shtools-builds-local-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
     rm -rfv out &> /dev/null;
