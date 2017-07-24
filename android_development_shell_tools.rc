@@ -143,6 +143,15 @@ function shtoolse()
   fi;
 }
 
+# === Android Development Shell Tools Functions Editor ===
+function shtoolsf()
+{
+  # Usage: shtoolsf <function_or_alias> (Direct access to related function or alias sources)
+
+  # Launch shtoolse with function or alias syntax
+  shtoolse "${1}()" "${1}=";
+}
+
 # === Android Development Shell Tools Syntax Checker ===
 function shtoolscheck()
 {

@@ -48,6 +48,7 @@
   * [**shtoolsget** *<b>\[Get android_development_shell_tools path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolscd** *<b>\[Access android_development_shell_tools path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolse** *<b>\[Direct access to related sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) : *shtoolse &lt;words&gt; &lt;to&gt; &lt;search&gt;*
+  * [**shtoolsf** *<b>\[Direct access to related function or alias sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) : *shtoolsf &lt;function_or_alias&gt;*
   * [**shtoolscheck** *<b>\[Run ShellCheck on the project\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) : *shtoolscheck [bool_all]*
   * [**shtoolssync** *<b>\[Download new android_development_shell_tools changes\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolspush** *<b>\[Commit new changes to android_development_shell_tools\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) : *shtoolspush [bool_ignore_readme]*
