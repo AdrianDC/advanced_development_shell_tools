@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_host.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_installers.rc)
 
@@ -303,6 +304,45 @@ function adbside()
     adb shell reboot;
   fi;
   echo '';
+}
+
+# === ADB Sideload ROM with Addons Helper ===
+function adbsiderom()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbsiderom <rom_zip> [boot_reboot] (adb sideload ROM with addons helper)';
+    echo '';
+    return;
+  fi;
+
+  # ROM addons folder
+  if [ ! -d ~/.bash_android.rom.addons ]; then
+    mkdir ~/.bash_android.rom.addons;
+    echo '';
+    echo ' adbsiderom: Fill the ~/.bash_android.rom.addons/ folder with zip Addons to flash after the ROM zip';
+    echo '';
+    diropen ~/.bash_android.rom.addons;
+    echo '';
+    echo -n ' adbsiderom: Press [Enter] to continue... ';
+    read -r;
+  fi;
+
+  # Launch adbside with ROM zip
+  adbside "${1}";
+
+  # Launch adbside for addons zip files
+  for file in ~/.bash_android.rom.addons/*.zip; do
+    adbside "${file}";
+  done;
+
+  # Reboot to Android if requested
+  if [ ! -z "${2}" ]; then
+    echo -e '\e[1;33madbsiderom: Rebooting to Android\e[0m';
+    adb shell reboot;
+    echo '';
+  fi;
 }
 
 # === ADB Force Optimization ===
