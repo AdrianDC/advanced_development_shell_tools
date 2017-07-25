@@ -474,6 +474,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepbs*
   * [**gck** *<b>\[Grep through kernel configurations\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gck [inputs]*
   * [**gca** *<b>\[Grep through Android makefiles\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gca [inputs]*
+  * [**gcmanifest** *<b>\[Grep through Android Manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gcmanifest [inputs]*
   * [**gcsep** *<b>\[Grep through Android sepolicies\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gcsep [inputs]*
   * [**grepi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grep -ai*
   * [**gcmodules** *<b>\[List all LOCAL_MODULE elements\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)

@@ -85,6 +85,24 @@ function gca()
   done;
 }
 
+# === Grep Android Manifests ===
+function gcmanifest()
+{
+  # Usage: gcmanifest [inputs] (Grep through Android Manifests)
+
+  # Variables
+  local strings_params;
+
+  # Grep through files
+  strings_params="strings $(stringsparams)";
+  for file in $(find . \( -name 'AndroidManifest.xml' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
+    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done;
+}
+
 # === Grep Android Sepolicies ===
 function gcsep()
 {
