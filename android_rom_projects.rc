@@ -264,16 +264,16 @@ function androidprojectpatcher()
         git cherry-pick --abort &> /dev/null;
 
         # Detect commits to pick - Detect own updated project
-        readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD)";
+        readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --committer='marker.commit' --reverse --format=format:%H HEAD)";
         if [ -z "${commits_list[*]}" ]; then
 
           # Detect commits to pick - Detect own cherry-picked commits
-          readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD)";
+          readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --committer='marker.commit' --reverse --format=format:%H FETCH_HEAD)";
 
         else
 
           # Detect commits to pick - Detect own cherry-picked additional commits in an own updated project
-          readarray -t commits_list <<< "$(git log --format=format:'%H|%ce' FETCH_HEAD | sed "s/|${GitEMail}//g" | sed '/|/q' | head -n -1)";
+          readarray -t commits_list <<< "$(git log --format=format:'%H|%ce' FETCH_HEAD | sed "s/|${GitEMail}//g" | sed '/|/q' | sed 's/|marker.commit//' | sed 's/|.*//' | tac)";
           if [ -z "${commits_list[*]}" ]; then
 
             # Detect commits to pick - Detect own cherry-picked commits based on commits delta
@@ -299,6 +299,12 @@ function androidprojectpatcher()
             echo '';
             return 1;
           fi;
+
+          # Detect marker commits and tag them
+          if git --no-pager log -1 --pretty=format:"%ae" "${sha1}" | grep -q 'marker.commit'; then
+            gitcamarker;
+          fi;
+
         done;
 
         # Automatic push
