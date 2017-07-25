@@ -263,12 +263,23 @@ function androidprojectpatcher()
         echo '';
         git cherry-pick --abort &> /dev/null;
 
-        # Detect commits to pick
+        # Detect commits to pick - Detect own updated project
         readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H HEAD)";
         if [ -z "${commits_list[*]}" ]; then
+
+          # Detect commits to pick - Detect own cherry-picked commits
           readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --reverse --format=format:%H FETCH_HEAD)";
+
         else
-          readarray -t commits_list <<< "$(git rev-list --reverse FETCH_HEAD~"${git_revs_count_remote}"..FETCH_HEAD)";
+
+          # Detect commits to pick - Detect own cherry-picked additional commits in an own updated project
+          readarray -t commits_list <<< "$(git log --format=format:'%H|%ce' FETCH_HEAD | sed "s/|${GitEMail}//g" | sed '/|/q' | head -n -1)";
+          if [ -z "${commits_list[*]}" ]; then
+
+            # Detect commits to pick - Detect own cherry-picked commits based on commits delta
+            readarray -t commits_list <<< "$(git rev-list --reverse FETCH_HEAD~"${git_revs_count_remote}"..FETCH_HEAD)";
+
+          fi;
         fi;
 
         # Pick all commits
