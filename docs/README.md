@@ -696,7 +696,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**reporeferencedaosp** *<b>\[AOSP referenced repo commands launcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc) : *reporeferencedaosp &lt;"command_to_run"&gt; &lt;"device1 device2 ..."&gt;*
   * [**reporeferencedlineage** *<b>\[LineageOS referenced repo commands launcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc) : *reporeferencedlineage &lt;"command_to_run"&gt; &lt;"device1 device2 ..."&gt;*
   * [**reporefupdate** *<b>\[Upload new projects manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc)
-  * [**reporefsync** *<b>\[Download new projects manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc)
+  * [**reporefsync** *<b>\[Download new projects manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc) : *reporefsync [bool_dry_run]*
   * [**reporeflinker** *<b>\[Helper to symlink local_manifests to Developments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc)
 
 ---

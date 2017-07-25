@@ -172,7 +172,7 @@ function reporefupdate()
 # === Repo References Syncer ===
 function reporefsync()
 {
-  # Usage: reporefsync (Download new projects manifests)
+  # Usage: reporefsync [bool_dry_run] (Download new projects manifests)
 
   # Variables
   local current_dir;
@@ -187,8 +187,10 @@ function reporefsync()
       echo " Syncing AOSP ${project} references...";
       git fetch origin local_manifests;
       git --no-pager diff FETCH_HEAD;
-      git reset FETCH_HEAD;
-      git stash -u;
+      if [ -z "${1}" ]; then
+        git reset FETCH_HEAD;
+        git stash -u;
+      fi;
     fi;
   done;
 
@@ -199,8 +201,10 @@ function reporefsync()
       echo " Syncing LineageOS ${project} references...";
       git fetch origin local_manifests;
       git --no-pager diff FETCH_HEAD;
-      git reset FETCH_HEAD;
-      git stash -u;
+      if [ -z "${1}" ]; then
+        git reset FETCH_HEAD;
+        git stash -u;
+      fi;
     fi;
   done;
 
@@ -210,8 +214,10 @@ function reporefsync()
     echo " Syncing common manifests references...";
     git fetch origin local_manifests;
     git --no-pager diff FETCH_HEAD;
-    git reset FETCH_HEAD;
-    git stash -u;
+    if [ -z "${1}" ]; then
+      git reset FETCH_HEAD;
+      git stash -u;
+    fi;
   fi;
 
   # Fetch and update MultiROM references
@@ -220,8 +226,10 @@ function reporefsync()
     echo " Syncing MultiROM references...";
     git fetch origin local_manifests;
     git --no-pager diff FETCH_HEAD;
-    git reset FETCH_HEAD;
-    git stash -u;
+    if [ -z "${1}" ]; then
+      git reset FETCH_HEAD;
+      git stash -u;
+    fi;
   fi;
 
   # Fetch and update TWRP references
@@ -230,8 +238,10 @@ function reporefsync()
     echo " Syncing TWRP references...";
     git fetch origin local_manifests;
     git --no-pager diff FETCH_HEAD;
-    git reset FETCH_HEAD;
-    git stash -u;
+    if [ -z "${1}" ]; then
+      git reset FETCH_HEAD;
+      git stash -u;
+    fi;
   fi;
 
   # Path restore
