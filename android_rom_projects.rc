@@ -138,7 +138,7 @@ function androidprojectpatcher()
 
   # Variables
   local project_name=${1};
-  local project_specific=${2};
+  local project_specific=${@:2};
   local android_top;
   local project_paths;
   local projects_specific=;
