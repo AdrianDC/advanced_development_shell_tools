@@ -138,7 +138,7 @@ function androidprojectpatcher()
 
   # Variables
   local project_name=${1};
-  local project_specific=${@:2};
+  local project_specific_inputs=("${@:2}");
   local android_top;
   local project_paths;
   local projects_specific=;
@@ -162,25 +162,25 @@ function androidprojectpatcher()
   # Automated key shortcut
   local key_automated=;
   local key_automated_push=;
-  if [[ "${project_specific}" == 'a' ]] || \
-      [[ "${project_specific}" == 'y' ]] || \
-      [[ "${project_specific}" == 'n' ]]; then
-    key_automated=${project_specific};
-    project_specific=;
+  if [[ "${project_specific_inputs[*]}" == 'a' ]] || \
+      [[ "${project_specific_inputs[*]}" == 'y' ]] || \
+      [[ "${project_specific_inputs[*]}" == 'n' ]]; then
+    key_automated=${project_specific_inputs[*]};
+    project_specific_inputs=();
   fi;
 
   # ==========================================================
   # Detect 'unshallow' input
-  if [ "${project_specific}" = 'unshallow' ]; then
+  if [ "${project_specific_inputs[*]}" = 'unshallow' ]; then
     androidprojectunshallow "${project_name}";
     return;
   fi;
 
   # ==========================================================
   # Extract specific projects paths
-  if [ ! -z "${project_specific}" ]; then
+  if [ ! -z "${project_specific_inputs[*]}" ]; then
     android_top=$(gettop);
-    for path in ${project_specific}; do
+    for path in "${project_specific_inputs[@]}"; do
       path=$(readlink -f "${path}");
       projects_specific="${projects_specific} ${path#${android_top}/}";
     done;
