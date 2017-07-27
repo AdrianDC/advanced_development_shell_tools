@@ -462,8 +462,10 @@ function fbootk()
   adbsu "rm -f ${adb_tmpdir}/bbootimg"
   adbsu "rm -f ${adb_tmpdir}/tmpkernel"
 
-  # Reboot to recovery if requested
+  # Reboot the device
   if [ -z "${fota}" ]; then
+    ${adb} reboot;
+  else
     ${adb} reboot recovery;
   fi;
   echo '';
