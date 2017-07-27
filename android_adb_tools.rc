@@ -237,14 +237,26 @@ function adbedit()
   local name;
   local path;
 
-  # Edit adb file, default on /system/build.prop
-  adbro;
+  # Initialize variables
   path=${1:-/system/build.prop};
   name=$(basename "${path}");
+
+  # Pull file as root
+  adbro;
   adb pull "${path}";
+
+  # Check local file permissions
+  if [ ! -r "${name}" ] || [ ! -w "${name}" ]; then
+    sudo chown "$(whoami):$(whoami)" "${name}";
+    chmod 666 "${name}";
+  fi;
+
+  # Edit local file
   fileedit "${name}";
   echo -n ' Ok ? [ENTER] ';
   read -r;
+
+  # Push back file to device
   adb push "${name}" "${path}";
   rm "${name}";
 }
