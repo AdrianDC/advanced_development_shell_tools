@@ -149,6 +149,11 @@ function kerneltoolchains()
     echo '';
     echo ' Usage: kerneltoolchains [version] (Select toolchains based on ARCH in Android build tree)';
     echo '';
+    echo ' Versions:';
+    echo '  - default: Automatic';
+    echo '  - Android: <4.9>, <4.8>, <4.7>';
+    echo '  - gcc: <gcc-4.8>, <gcc-4.7>';
+    echo '';
     return;
   fi;
 
