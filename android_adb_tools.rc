@@ -112,7 +112,8 @@ function adbsudo()
   fi;
 
   # Kill adb server
-  adb kill-server;
+  timeout 5 sudo adb kill-server;
+  sudo killall 'adb' 2>/dev/null;
 
   # Reload scripts
   shtoolsup &> /dev/null;
