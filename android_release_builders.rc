@@ -19,7 +19,7 @@
 function romautorelease()
 {
   # Usage
-  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr> [nowipe,j1/j2] (Advanced automated ROM builder)';
+  local function_usage='Usage: romautorelease <devicename> <aosp/lineage/lx/caf/rr/sodp> [nowipe,j1/j2] (Advanced automated ROM builder)';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " ${function_usage}";
@@ -58,22 +58,16 @@ function romautorelease()
 
   # ROM variables
   rom_phone=${rom_device^};
-  rom_target=$(codenametotarget "${rom_device}");
+  rom_target=${rom_device};
 
   # AOSP 7.1
   if [[ "${rom_name}" == 'aosp' ]]; then
     rom_tag=AOSP71;
     rom_upload=${rom_phone}/AOSP-7.x;
 
-    # Handle Sony AOSP kernel build
-    if [ ! "${rom_device}" = "${rom_target}" ]; then
-      sonyaospkernelupdate "${rom_device}";
-    fi;
-
   # LineageOS 14.1
   elif [[ "${rom_name}" == 'lineage' ]]; then
     rom_tag=LINEAGE141;
-    rom_target=${rom_device};
     rom_upload=${rom_phone}/LineageOS-14.x;
 
   # AOSP-CAF 7.x
@@ -90,6 +84,15 @@ function romautorelease()
   elif [[ "${rom_name}" == 'rr' ]]; then
     rom_tag=RR71;
     rom_upload=${rom_phone}/ResurrectionRemix-N;
+
+  # Sony AOSP 7.1
+  elif [[ "${rom_name}" == 'sodp' ]]; then
+    rom_tag=AOSP71;
+    rom_target=$(codenametotarget "${rom_device}");
+    rom_upload=${rom_phone}/AOSP-7.x;
+
+    # Handle Sony AOSP kernel build
+    sonyaospkernelupdate "${rom_device}";
 
   # Automatic per-device selection
   else

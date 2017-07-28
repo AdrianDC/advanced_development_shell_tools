@@ -46,7 +46,7 @@ function autoreleaseaospsodp8996()
   for device in ${devices}; do
 
     # ROM build and release
-    romautorelease "${device}" aosp;
+    romautorelease "${device}" sodp;
 
   done;
 
