@@ -227,7 +227,7 @@ function pathchanged()
 # === ROMs Shortcuts ===
 function toaosp()       { torompaths 'AOSP' "${1}"; }
 function tolineage()    { torompaths 'LineageOS' "${1}"; }
-function toaospcaf()    { torompaths 'AOSP-CAF' "${1}"; }
+function toaospcaf()    { toaosp 'AOSP' 'CAF'; }
 function tomultirom()   { torompaths 'MultiROM'; }
 function torr()         { torompaths 'ResurrectionRemix' "${1}"; }
 function totwrp()       { torompaths 'TWRP'; }

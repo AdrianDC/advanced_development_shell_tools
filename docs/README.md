@@ -753,7 +753,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**pathchanged** *<b>\[Run command and notify path changes\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *pathchanged &lt;command&gt; &lt;parameters&gt;*
   * [**toaosp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *torompaths 'AOSP' "${1}"*
   * [**tolineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *torompaths 'LineageOS' "${1}"*
-  * [**toaospcaf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *torompaths 'AOSP-CAF' "${1}"*
+  * [**toaospcaf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *toaosp 'AOSP' 'CAF'*
   * [**tomultirom** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *torompaths 'MultiROM'*
   * [**torr** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *torompaths 'ResurrectionRemix' "${1}"*
   * [**totwrp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *torompaths 'TWRP'*
