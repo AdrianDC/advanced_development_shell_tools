@@ -155,6 +155,11 @@ function autoreleasecafsony8960()
     reposycl;
   fi;
 
+  # ROM patcher
+  if ! aospcafpatcher 'a'; then
+    continue;
+  fi;
+
   # Devices to build
   local devices=${1:-huashan mint hayabusa tsubasa};
 
