@@ -134,9 +134,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbdm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; dmesg; adbsu dmesg \| tee -a dmesg*
   * [**adbkd** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; kmsg; adbsu cat /proc/kmsg \| tee -a kmsg*
   * [**adbkl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adbsu cat /proc/last_kmsg \| tee -a last_kmsg*
-  * [**adbkld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adbsu cat /proc/last_kmsg \| tee -a last_kmsg*
   * [**adbpl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adbsu cat /sys/fs/pstore/console-ramoops \| tee -a last_kmsg*
-  * [**adbpld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; last_kmsg; adbsu cat /sys/fs/pstore/console-ramoops \| tee -a last_kmsg*
   * [**adbrl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; recovery_log; adbsu cat /tmp/recovery.log \| tee -a recovery_log*
   * [**adbse** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; kmsg; adbsu cat /proc/kmsg \| tee -a kmsg; sepaud kmsg*
   * [**adbdumpsensors** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbsu dumpsys sensorservice*
