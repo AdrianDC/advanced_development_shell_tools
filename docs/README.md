@@ -145,6 +145,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbdcln** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cut -d']' -f 2- "${1}" \| tee "${1}.clean"*
   * [**adblcln** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cut -c 32- "${1}" \| tee "${1}.clean"*
   * [**adbkcln** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cut -c 15- "${1}" \| tee "${1}.clean"*
+  * [**adbple** *<b>\[ADB Ramoops Compressed Logger\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc)
   * [**adbbootchart** *<b>\[Bootchart debug helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc)
 
 ---

@@ -138,6 +138,22 @@ function adbdcln() { cut -d']' -f 2- "${1}" | tee "${1}.clean"; }
 function adblcln() { cut -c 32- "${1}" | tee "${1}.clean"; }
 function adbkcln() { cut -c 15- "${1}" | tee "${1}.clean"; }
 
+# === ADB Ramoops Compressed Logger ===
+function adbple()
+{
+  # Usage: adbple (ADB Ramoops Compressed Logger)
+  # Prepare last_kmsg
+  cls;
+  echo -n '' > last_kmsg;
+
+  # Pull logs file
+  adb pull /sys/fs/pstore/dmesg-ramoops-0.enc.z;
+
+  # Decompress and display logs content
+  sed -i '1d' ./dmesg-ramoops-0.enc.z;
+  zlib-flate -uncompress  < ./dmesg-ramoops-0.enc.z;
+}
+
 # === ADB Init Bootchart ===
 function adbbootchart()
 {
