@@ -104,10 +104,12 @@ function sonyaospkernelupdate()
   # Copy prebuilt kernel
   croot;
   cp -v './kernel/sony/msm/.build/arch/arm64/boot/Image.gz-dtb' "./device/sony/common-kernel/kernel-dtb-${device_name}";
+  echo '';
 
   # Commit prebuilt kernel
   cd ./device/sony/common-kernel/;
   git add -v "kernel-dtb-${device_name}";
   git commit --no-edit -m "sony: ${device_name}: Update prebuilt kernel";
+  echo '';
   croot;
 }
