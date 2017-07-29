@@ -296,6 +296,11 @@ function reporeflinker()
       search_project=${untracked_project};
     fi;
 
+    # Disabled file search
+    if [ "${search_project}" = 'None' ]; then
+      key=0;
+    fi;
+
     # Create projects selector list
     cnt=0;
     options=('None');
@@ -372,7 +377,7 @@ function reporeflinker()
         # Detect untracked tags from roomservice
         if [ "${file}" = 'roomservice.xml' ]; then
           untracked_file=$(grep "Untracked: '" "${file}" | sed "s/.* '\(.*\)' .*/\1/");
-          if [ ! -z "${untracked_file}" ]; then
+          if grep -q "Untracked: '" "${file}"; then
 
             # Extract untracked tags
             untracked_project=${untracked_file%/*};
@@ -380,6 +385,11 @@ function reporeflinker()
             echo '';
             echo -e  " \e[1;32mDetected untracked.xml to use : '${untracked_file}' in '${untracked_project}'\e[0m ";
             echo '';
+
+            # Disable empty untracked tags
+            if [ -z "${untracked_file}" ] && [ -z "${untracked_project}" ]; then
+              untracked_project='None';
+            fi;
 
           fi;
         fi;
