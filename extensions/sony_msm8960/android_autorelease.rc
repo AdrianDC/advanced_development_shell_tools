@@ -157,7 +157,7 @@ function autoreleasecafsony8960()
 
   # ROM patcher
   if ! aospcafpatcher 'a'; then
-    continue;
+    return;
   fi;
 
   # Devices to build
