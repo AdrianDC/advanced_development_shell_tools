@@ -281,7 +281,7 @@ function overlaycompare()
   local source_path;
 
   # Loop through files
-  while IFS= read -r -d '' overlay_path; do
+  while IFS= read -r overlay_path; do
 
     # Launch meld on both paths
     source_path=$(echo "../../../${overlay_path}" \
