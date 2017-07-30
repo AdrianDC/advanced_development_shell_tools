@@ -398,7 +398,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_git_push.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc)&nbsp;]
   * [**gitpf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *git push -f*
   * [**gitpu** *<b>\[Git push to validated remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitpu [remote] [branch] [input]*
-  * [**gitpurl** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitpu "${1%/commits/*}" "${1#*/commits/}"*
+  * [**gitpurl** *<b>\[Git pull to full url\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitpurl &lt;url&gt;*
   * [**gitpa** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)*
   * [**gitpa14** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1*
   * [**gitpala** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) LA.UM.5.5_rb1.10*

@@ -56,8 +56,31 @@ function gitpu()
   echo '';
 }
 
-# === Git Push Url Helper ===
-function gitpurl() { gitpu "${1%/commits/*}" "${1#*/commits/}"; }
+# === Git Full Url Push ===
+function gitpurl()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitpurl <url> (Git pull to full url)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local url=${1};
+  local branch;
+
+  # Prepare url
+  branch=${url};
+  url=${url%/commits/*};
+  url=${url%/tree/*};
+  branch=${branch#*/commits/};
+  branch=${branch#*/tree/};
+
+  # Git push to full url
+  gitpu "${url}" "${branch}";
+}
 
 # === Git Push Helpers ===
 alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';
