@@ -46,7 +46,7 @@ function repochanges()
      if [ \${changescount} -ne 0 ]; then
        echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
        echo '';
-       git log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
+       git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
        echo '';
      fi;
 
@@ -55,7 +55,7 @@ function repochanges()
      if [ \${changescount} -ne 0 ]; then
        echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} local changes\";
        echo '';
-       git log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
+       git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
        echo '';
      fi;
 
@@ -63,7 +63,7 @@ function repochanges()
      if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
        echo -en  \"\r\033[K Project \${REPO_PROJECT}: Unmerged differences\";
        echo '';
-       git diff;
+       git --no-pager diff;
        echo '';
      fi;
     " 2> /dev/null;
