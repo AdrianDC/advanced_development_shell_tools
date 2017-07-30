@@ -319,6 +319,8 @@ function reporeflinker()
     done;
     echo '';
     echo -en  " \e[1;33mProject to use [0 to ${cnt}] :\e[0m ";
+
+    # Retrieve user input
     if [ -z "${key}" ]; then
       read -r key;
     else
@@ -360,6 +362,13 @@ function reporeflinker()
       done;
       echo '';
       echo -en  " \e[1;33mmanifest target to use [0 to ${cnt}] :\e[0m ";
+
+      # Force default file if only one choice available
+      if [ "${cnt}" -eq 1 ]; then
+        key=1;
+      fi;
+
+      # Retrieve user input
       if [ -z "${key}" ]; then
         read -r key;
       else
