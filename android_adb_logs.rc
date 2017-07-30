@@ -84,10 +84,10 @@ function adbl()
   done;
 }
 
-# === ADB Logcat Cleaner ===
-function adbcl()
+# === ADB Logcat Public Cleaner ===
+function adblpcln()
 {
-  # Usage: adbcl [file_adb.log] (Logcat output cleaner)
+  # Usage: adblpcln [file_adb.log] (Logcat output public cleaner)
 
   # Clean input file
   filename=${1:-adb.log};
@@ -100,10 +100,37 @@ function adbcl()
       | tee "${filename}.cut.log";
 }
 
-# === ADB Strace Cleaner ===
-function adbstcl()
+# === ADB Logcat Cleaner ===
+function adblcln()
 {
-  # Usage: adbstcl [file_adb.log] (strace output cleaner)
+  # Usage: adblcln [file_adb.log] (Logcat output cleaner)
+
+  # Clean input file
+  cut -c 32- "${1}" | tee "${1}.clean";
+}
+
+# === ADB Dmesg Cleaner ===
+function adbdcln()
+{
+  # Usage: adbdcln [file_adb.log] (dmesg output cleaner)
+
+  # Clean input file
+  cut -d']' -f 2- "${1}" | tee "${1}.clean";
+}
+
+# === ADB Kernel Logs Cleaner ===
+function adbkcln()
+{
+  # Usage: adbkcln [file_kmsg] (Kernel logs output cleaner)
+
+  # Clean input file
+  cut -c 15- "${1}" | tee "${1}.clean";
+}
+
+# === ADB Strace Cleaner ===
+function adbstcln()
+{
+  # Usage: adbstcln [file_adb.log] (strace output cleaner)
 
   # Clean input file
   filename=${1:-adb.log};
@@ -134,9 +161,6 @@ alias adbsel='adbkl; sepaud kmsg';
 alias adblf='adb logcat -v audit2allow';
 alias adblh='adb logcat -b events -b main -b radio | highlight';
 alias adbtrampoline='adbsu "dmesg | grep -i trampoline"';
-function adbdcln() { cut -d']' -f 2- "${1}" | tee "${1}.clean"; }
-function adblcln() { cut -c 32- "${1}" | tee "${1}.clean"; }
-function adbkcln() { cut -c 15- "${1}" | tee "${1}.clean"; }
 
 # === ADB Ramoops Compressed Logger ===
 function adbple()
