@@ -357,7 +357,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_git_fetch.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc)&nbsp;]
   * [**gitfetchtreset** *<b>\[Git fetch and reset hard\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfetchtreset [remote] [branch]*
   * [**gitfcu** *<b>\[Git fetch url and reset\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfcu &lt;url&gt; [branch]*
-  * [**gitfurl** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch "${1%/commits/*}" "${1#*/commits/}"*
+  * [**gitfurl** *<b>\[Git fetch from full url\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfurl &lt;url&gt;*
   * [**gitf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch*
   * [**gitfmr** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch origin; git reset origin/master*
   * [**gitfs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash*

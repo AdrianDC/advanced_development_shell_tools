@@ -55,8 +55,31 @@ function gitfcu()
   git reset --hard FETCH_HEAD;
 }
 
-# === Git Fetch Helpers ===
-function gitfurl() { git fetch "${1%/commits/*}" "${1#*/commits/}"; }
+# === Git Full Url Fetch ===
+function gitfurl()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitfurl <url> (Git fetch from full url)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local url=${1};
+  local branch;
+
+  # Prepare url
+  branch=${url};
+  url=${url%/commits/*};
+  url=${url%/tree/*};
+  branch=${branch#*/commits/};
+  branch=${branch#*/tree/};
+
+  # Git fetch from full url
+  git fetch "${url}" "${branch}";
+}
 
 # === Git Fetch Shortcuts ===
 alias gitf='git fetch';
