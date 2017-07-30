@@ -186,7 +186,7 @@ function reporefsync()
       echo '';
       echo " Syncing AOSP ${project} references...";
       git fetch origin local_manifests;
-      git --no-pager diff FETCH_HEAD;
+      git --no-pager diff FETCH_HEAD HEAD;
       if [ -z "${1}" ]; then
         git reset FETCH_HEAD;
         git stash -u;
@@ -200,7 +200,7 @@ function reporefsync()
       echo '';
       echo " Syncing LineageOS ${project} references...";
       git fetch origin local_manifests;
-      git --no-pager diff FETCH_HEAD;
+      git --no-pager diff FETCH_HEAD HEAD;
       if [ -z "${1}" ]; then
         git reset FETCH_HEAD;
         git stash -u;
@@ -213,7 +213,7 @@ function reporefsync()
     echo '';
     echo " Syncing common manifests references...";
     git fetch origin local_manifests;
-    git --no-pager diff FETCH_HEAD;
+    git --no-pager diff FETCH_HEAD HEAD;
     if [ -z "${1}" ]; then
       git reset FETCH_HEAD;
       git stash -u;
@@ -225,7 +225,7 @@ function reporefsync()
     echo '';
     echo " Syncing MultiROM references...";
     git fetch origin local_manifests;
-    git --no-pager diff FETCH_HEAD;
+    git --no-pager diff FETCH_HEAD HEAD;
     if [ -z "${1}" ]; then
       git reset FETCH_HEAD;
       git stash -u;
@@ -237,7 +237,7 @@ function reporefsync()
     echo '';
     echo " Syncing TWRP references...";
     git fetch origin local_manifests;
-    git --no-pager diff FETCH_HEAD;
+    git --no-pager diff FETCH_HEAD HEAD;
     if [ -z "${1}" ]; then
       git reset FETCH_HEAD;
       git stash -u;
