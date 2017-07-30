@@ -249,6 +249,15 @@ function adbpf()
 alias adbp='adbro; adbpf';
 alias adbpu='adbro; adbpushfile';
 
+# === ADB Packages Results Pusher ===
+function adbppr()
+{
+  # Usage: adbppr (adb automated PACKAGES_RESULTS files pusher)
+
+  # adb automated PACKAGES_RESULTS files pusher
+  adbp "${PACKAGES_RESULTS[@]}";
+}
+
 # === ADB Sideload Helper ===
 function adbside()
 {
