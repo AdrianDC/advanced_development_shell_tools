@@ -91,6 +91,9 @@ function repoinitaosp()
   echo "repoinitaosp done for ${branch}";
   echo '';
   cd ../../;
+
+  # Post-clean repo manifest
+  repoinitsafecleaner "${params}";
 }
 
 # === Repo Init LineageOS ===
@@ -155,6 +158,9 @@ function repoinitlineage()
   echo "repoinitlineage done for ${branch}";
   echo '';
   cd ../../;
+
+  # Post-clean repo manifest
+  repoinitsafecleaner "${params}";
 }
 
 # === Repo Init AOSP Devices ===
@@ -276,6 +282,9 @@ function repoinitrr()
   git tag | grep -v "${branch}" | xargs git tag -d;
   echo "repoinitrr done for ${branch}";
   cd ../../;
+
+  # Post-clean repo manifest
+  repoinitsafecleaner "${params}";
 }
 
 # === Repo Init TWRP ===
@@ -329,6 +338,9 @@ function repoinittwrp()
   git tag | grep -v "${branch}" | xargs git tag -d;
   echo "repoinittwrp done for ${branch}";
   cd ../../;
+
+  # Post-clean repo manifest
+  repoinitsafecleaner "${params}";
 }
 
 # === Repo Init Cleaner ===
@@ -354,6 +366,37 @@ function repoinitcleaner()
   rm -rfv prebuilts/qemu-kernel;
   rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
   rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
+}
+
+# === Repo Init Safe Cleaner ===
+function repoinitsafecleaner()
+{
+  # Usage: repoinitsafecleaner [clean] (repo init safety cleaner)
+
+  # Variables
+  local temp_list_data;
+  local temp_list_grep;
+
+  # Prepare temp files
+  temp_list_data=$(mktemp);
+  temp_list_grep=$(mktemp);
+
+  # Detect nested projects causing sync issues
+  repo list -p > "${temp_list_data}";
+  cp -f "${temp_list_data}" "${temp_list_grep}";
+  while IFS= read -r path; do
+    if [ ! "${path: -1}" = '/' ]; then
+      path="${path}/";
+    fi;
+    if grep -q "${path}" "${temp_list_grep}"; then
+      echo " repoinitcleaner: '${path}' has nested projects, deleting...";
+      rm -rfv "${path}";
+    fi;
+  done < "${temp_list_data}";
+
+  # Remove temporary files
+  rm -f "${temp_list_data}";
+  rm -f "${temp_list_grep}";
 }
 
 # === Repo Init Menu ===

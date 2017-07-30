@@ -678,6 +678,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**repoinitrr** *<b>\[repo init for ResurrectionRemix\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitrr &lt;nougat&gt; [referenced,clean,shallow]*
   * [**repoinittwrp** *<b>\[repo init for TWRP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinittwrp &lt;twrp-{X.X}&gt; [referenced,clean,shallow]*
   * [**repoinitcleaner** *<b>\[repo init cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitcleaner [clean]*
+  * [**repoinitsafecleaner** *<b>\[repo init safety cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitsafecleaner [clean]*
   * [**repoinit** *<b>\[repo init menu\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc)
 
 ---
