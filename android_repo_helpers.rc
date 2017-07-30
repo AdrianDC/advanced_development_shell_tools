@@ -388,6 +388,7 @@ function reposwitcher()
   local options;
   local out;
   local path;
+  local reposy_all=();
 
   # Access Android root
   path=$(pwd);
@@ -463,6 +464,9 @@ function reposwitcher()
 
   # Launch repo init menu
   repoinit;
+
+  # Launch repo syncer
+  reposy "${reposy_all[@]}";
 
   # Return to current path
   cd "${path}";
