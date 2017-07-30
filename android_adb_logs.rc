@@ -91,13 +91,14 @@ function adblpcln()
 
   # Clean input file
   filename=${1:-adb.log};
-  grep -v chatty "${filename}" \
+  mv -f "${filename}" "${filename}.orig";
+  grep -v chatty "${filename}.orig" \
       | cut -c "${2:-32}-" \
       | sed -E "s/[0-9]{8}/00000000/g" \
       | sed -E "s/\[[0-9]*\]/[...]/g" \
       | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
       | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
-      | tee "${filename}.cut.log";
+      | tee "${filename}";
 }
 
 # === ADB Logcat Cleaner ===
@@ -106,7 +107,8 @@ function adblcln()
   # Usage: adblcln [file_adb.log] (Logcat output cleaner)
 
   # Clean input file
-  cut -c 32- "${1}" | tee "${1}.clean";
+  mv -f "${1}" "${1}.orig";
+  cut -c 32- "${1}.orig" | tee "${1}";
 }
 
 # === ADB Dmesg Cleaner ===
@@ -115,7 +117,8 @@ function adbdcln()
   # Usage: adbdcln [file_adb.log] (dmesg output cleaner)
 
   # Clean input file
-  cut -d']' -f 2- "${1}" | tee "${1}.clean";
+  mv -f "${1}" "${1}.orig";
+  cut -d']' -f 2- "${1}.orig" | tee "${1}";
 }
 
 # === ADB Kernel Logs Cleaner ===
@@ -124,7 +127,8 @@ function adbkcln()
   # Usage: adbkcln [file_kmsg] (Kernel logs output cleaner)
 
   # Clean input file
-  cut -c 15- "${1}" | tee "${1}.clean";
+  mv -f "${1}" "${1}.orig";
+  cut -c 15- "${1}.orig" | tee "${1}";
 }
 
 # === ADB Strace Cleaner ===
@@ -134,13 +138,14 @@ function adbstcln()
 
   # Clean input file
   filename=${1:-adb.log};
-  grep -v chatty "${filename}" \
+  mv -f "${filename}.orig" "${filename}";
+  grep -v chatty "${filename}.orig" \
       | sed -E "s/[0-9]{8}/00000000/g" \
       | sed -E "s/\[[0-9]*\]/[...]/g" \
       | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
       | sed -E "s/0x[0-9a-f]{6,8}/0x......./g" \
       | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
-      | tee "${filename}.cut.log";
+      | tee "${filename}";
 }
 
 # === ADB Loggers Helpers ===
