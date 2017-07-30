@@ -243,6 +243,7 @@ function fboot()
   fi;
 
   # Reboot to bootloader
+  adbro;
   adbwait;
   ${adb} reboot bootloader;
 
