@@ -348,6 +348,9 @@ function repoinitcleaner()
 {
   # Usage: repoinitcleaner [clean] (repo init cleaner)
 
+  # Run the safety cleaner before removing repo
+  repoinitsafecleaner "${1}";
+
   # Cleanup repo and manifests
   rm -rfv .repo/manifests;
   rm -rfv .repo/manifests.git;
