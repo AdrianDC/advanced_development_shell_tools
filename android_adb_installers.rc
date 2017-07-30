@@ -403,7 +403,7 @@ function adbgitpf()
   while read -r line; do
     status=$(echo "${line}" | awk '{ print $1 }');
     file_path=$(echo "${line}" | awk '{ print $2 }');
-    if [[ "${status}" == *'D'* ]] || [[ "${file_path}" == *'.mk'* ]]; then
+    if [[ "${file_path}" == *'.mk'* ]]; then
       continue;
     fi;
     adbpf "${file_path}";
