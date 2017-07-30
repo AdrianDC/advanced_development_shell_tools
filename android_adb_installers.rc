@@ -393,7 +393,6 @@ function adbgitpf()
 
   # Variables
   local file_path;
-  local status;
   local tmpfile;
 
   # Push files through adb from commit
@@ -401,7 +400,6 @@ function adbgitpf()
   tmpfile=$(mktemp);
   git diff-tree --no-commit-id --name-status -r "${1}" >"${tmpfile}";
   while read -r line; do
-    status=$(echo "${line}" | awk '{ print $1 }');
     file_path=$(git rev-parse --show-toplevel)/$(echo "${line}" | awk '{ print $2 }');
     if [[ "${file_path}" == *'.mk'* ]]; then
       continue;
