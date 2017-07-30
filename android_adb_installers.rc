@@ -189,7 +189,7 @@ function adbpf()
       filepath=$(pwd)/${filepath};
     elif [ -L "${filepath}" ]; then
       filepath=${filepath};
-    else
+    elif [ -e "${filepath}" ]; then
       filepath=$(readlink -f "${filepath}");
     fi;
     filepathtest=${filepath};
