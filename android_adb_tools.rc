@@ -65,6 +65,17 @@ function adbro()
   # Prepare adb access
   adb_cmd=$(adbcmd);
   adb_timeout="timeout 5 ${adb_cmd}";
+
+  # Verify faulty adb server
+  if ${adb_cmd} shell 'echo -n "";' 2>&1 | grep -q 'protocol fault'; then
+
+    # Kill current running adb server
+    ${adb_timeout} kill-server;
+    sudo killall 'adb' 2>/dev/null;
+
+  fi;
+
+  # Verify sudo requirements
   if ${adb_cmd} shell 'echo -n "";' 2>&1 | grep -q 'insufficient permissions'; then
 
     # Run adbsudo if permission denied
