@@ -43,21 +43,22 @@ function adbpushfile()
 
   # Push file to target
   if [ -f "${filepath}" ]; then
-    echo -en '\e[1;32m |';
+    echo -en '\e[1;32m | ';
     adb push "${filepath}" "${filetarget}";
 
   # Create symlink on target
   elif [ -L "${filepath}" ]; then
     filedir=$(dirname "${filetarget}");
     filepath=$(readlink "${filepath}");
-    echo -en '\e[1;32m |';
+    echo -en '\e[1;32m | ';
     adb shell "mkdir -p '${filedir}'";
     adb shell "ln -fs '${filepath}' '${filetarget}'";
     adb shell "ls -l '${filetarget}'" | tr -s ' ' | cut -d' ' -f 9-;
 
-  # Debug missing file
+  # Delete missing file
   else
-    echo -e "\e[1;31m | ${filepath} does not exist...";
+    echo -en "\e[1;31m | Removing '${filetarget}' : ";
+    adb shell "if [ -f '${filetarget}' ]; then rm '${filetarget}'; echo 'Done.'; else echo 'No such file on the target...'; fi;";
   fi;
 
   # Restore colours
