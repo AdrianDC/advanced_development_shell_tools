@@ -138,6 +138,9 @@ function adbil()
                | sort \
                | uniq);
 
+  # Prepare public PACKAGES_RESULTS
+  export PACKAGES_RESULTS=();
+
   # List new files
   for file_path in ${tmp_installs[*]}; do
     if [[ "${file_path}" == *'/system'* ]] && [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
@@ -150,6 +153,7 @@ function adbil()
       if [ -f "${file_path}" ]; then
         echo '';
         echo -e " \e[1;36m${file_path}\e[0m";
+        PACKAGES_RESULTS+=("${file_path}");
       fi;
     fi;
   done;
