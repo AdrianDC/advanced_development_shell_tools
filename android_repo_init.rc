@@ -77,9 +77,9 @@ function repoinitaosp()
   rm -rfv .repo/manifests;
   rm -rfv .repo/manifests.git;
   rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/project.list;
   rm -rfv .repo/repo;
   if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project.list;
     rm -rfv .repo/projects;
     rm -rfv .repo/project-objects;
     rm -rfv ./*;
@@ -153,9 +153,9 @@ function repoinitlineage()
   rm -rfv .repo/manifests;
   rm -rfv .repo/manifests.git;
   rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/project.list;
   rm -rfv .repo/repo;
   if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project.list;
     rm -rfv .repo/projects;
     rm -rfv .repo/project-objects;
     rm -rfv ./*;
@@ -278,9 +278,9 @@ function repoinitrr()
   rm -rfv .repo/manifests;
   rm -rfv .repo/manifests.git;
   rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/project.list;
   rm -rfv .repo/repo;
   if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project.list;
     rm -rfv .repo/projects;
     rm -rfv .repo/project-objects;
     rm -rfv ./*;
@@ -340,9 +340,9 @@ function repoinittwrp()
   rm -rfv .repo/manifests;
   rm -rfv .repo/manifests.git;
   rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/project.list;
   rm -rfv .repo/repo;
   if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project.list;
     rm -rfv .repo/projects;
     rm -rfv .repo/project-objects;
     rm -rfv ./*;
