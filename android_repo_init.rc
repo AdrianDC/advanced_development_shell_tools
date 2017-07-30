@@ -74,19 +74,7 @@ function repoinitaosp()
   fi;
 
   # Clean repo manifest
-  rm -rfv .repo/manifests;
-  rm -rfv .repo/manifests.git;
-  rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/repo;
-  if [[ "${params}" == *'clean'* ]]; then
-    rm -rfv .repo/project.list;
-    rm -rfv .repo/projects;
-    rm -rfv .repo/project-objects;
-    rm -rfv ./*;
-  fi;
-  rm -rfv prebuilts/qemu-kernel;
-  rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
-  rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
+  repoinitcleaner "${params}";
 
   # Launch init command
   ${init_command};
@@ -150,19 +138,7 @@ function repoinitlineage()
   fi;
 
   # Clean repo manifest
-  rm -rfv .repo/manifests;
-  rm -rfv .repo/manifests.git;
-  rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/repo;
-  if [[ "${params}" == *'clean'* ]]; then
-    rm -rfv .repo/project.list;
-    rm -rfv .repo/projects;
-    rm -rfv .repo/project-objects;
-    rm -rfv ./*;
-  fi;
-  rm -rfv prebuilts/qemu-kernel;
-  rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
-  rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
+  repoinitcleaner "${params}";
 
   # Launch init command
   ${init_command};
@@ -275,16 +251,7 @@ function repoinitrr()
   fi;
 
   # Clean repo manifest
-  rm -rfv .repo/manifests;
-  rm -rfv .repo/manifests.git;
-  rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/repo;
-  if [[ "${params}" == *'clean'* ]]; then
-    rm -rfv .repo/project.list;
-    rm -rfv .repo/projects;
-    rm -rfv .repo/project-objects;
-    rm -rfv ./*;
-  fi;
+  repoinitcleaner "${params}";
 
   # Repo init
   if [[ "${params}" == *'referenced'* ]]; then
@@ -337,16 +304,7 @@ function repoinittwrp()
   rm -rfv out;
 
   # Clean repo manifest
-  rm -rfv .repo/manifests;
-  rm -rfv .repo/manifests.git;
-  rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/repo;
-  if [[ "${params}" == *'clean'* ]]; then
-    rm -rfv .repo/project.list;
-    rm -rfv .repo/projects;
-    rm -rfv .repo/project-objects;
-    rm -rfv ./*;
-  fi;
+  repoinitcleaner "${params}";
 
   # Repo init
   if [[ "${params}" == *'referenced'* ]]; then
@@ -371,6 +329,31 @@ function repoinittwrp()
   git tag | grep -v "${branch}" | xargs git tag -d;
   echo "repoinittwrp done for ${branch}";
   cd ../../;
+}
+
+# === Repo Init Cleaner ===
+function repoinitcleaner()
+{
+  # Usage: repoinitcleaner [clean] (repo init cleaner)
+
+  # Cleanup repo and manifests
+  rm -rfv .repo/manifests;
+  rm -rfv .repo/manifests.git;
+  rm -rfv .repo/manifest.xml;
+  rm -rfv .repo/repo;
+
+  # Cleanup project files and history if requested
+  if [[ "${params}" == *'clean'* ]]; then
+    rm -rfv .repo/project.list;
+    rm -rfv .repo/projects;
+    rm -rfv .repo/project-objects;
+    rm -rfv ./*;
+  fi;
+
+  # Cleanup known faulty projects
+  rm -rfv prebuilts/qemu-kernel;
+  rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
+  rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
 }
 
 # === Repo Init Menu ===
