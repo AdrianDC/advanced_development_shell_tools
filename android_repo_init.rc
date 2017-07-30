@@ -386,6 +386,27 @@ function repoinit()
   local line_usage;
   local list_functions=('');
   local options;
+  local search_branch;
+  local search_repo;
+
+  # Reset inputs
+  key='';
+  search_branch='';
+  search_repo='';
+
+  # Detect the existence of roomservice.xml
+  if [ -f '.repo/local_manifests/roomservice.xml' ]; then
+    search_repo=$(grep "Repo Init: '" '.repo/local_manifests/roomservice.xml' | sed "s/.* '\(.*\)' .*/\1/");
+    if [ ! -z "${search_repo}" ]; then
+
+      # Extract repoinit tags
+      search_branch=${search_repo#* };
+      search_repo=${search_repo% *};
+      echo '';
+      echo -e  " \e[1;32mDetected repoinit to use : '${search_repo}' with branch '${search_branch}'\e[0m ";
+
+    fi;
+  fi;
 
   # Display exit item
   echo '';
@@ -405,6 +426,9 @@ function repoinit()
 
     # Item choice
     cnt=$((cnt + 1));
+    if [ "${line_function}" = "${search_repo}" ]; then
+      key=${cnt};
+    fi;
     echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
 
   done;
@@ -412,7 +436,12 @@ function repoinit()
 
   # Request user input
   echo -en " \e[1;37m> Command to run [0-${cnt}] :\e[0m ";
-  read -r key;
+  if [ -z "${key}" ]; then
+    read -r key;
+    search_branch='';
+  else
+    echo "${key}";
+  fi;
 
   # Abort on exit
   if [ -z "${key}" ] || [ "${key}" -eq 0 ]; then
@@ -427,11 +456,21 @@ function repoinit()
 
   # Request branch input
   echo -en " \e[1;37m> Branch to track :\e[0m ";
-  read -r branch;
+  if [ -z "${search_branch}" ]; then
+    read -r branch;
+  else
+    branch=${search_branch};
+    echo "${branch}";
+  fi;
 
   # Request options input
   echo -en " \e[1;37m> Options to use :\e[0m ";
-  read -r options;
+  if [ -z "${search_branch}" ] || [ -z "${ANDROID_REPO_INIT_OPTIONS}" ]; then
+    read -r options;
+  else
+    options=${ANDROID_REPO_INIT_OPTIONS};
+    echo "${options}";
+  fi;
 
   # Show repo init command
   echo '';
