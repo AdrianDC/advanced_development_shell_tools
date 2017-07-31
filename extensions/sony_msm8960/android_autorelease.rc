@@ -256,7 +256,7 @@ function __autoreleaseaospsony8960dev()
     fi;
 
     # ROM build and release
-    romautorelease "${device}" aosp;
+    romautorelease "${device}" master;
 
   done;
 
