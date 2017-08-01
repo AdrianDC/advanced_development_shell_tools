@@ -21,7 +21,7 @@ function repoinitaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitaosp <branch_id> [referenced,clean,shallow,example] (repo init for AOSP)';
+    echo ' Usage: repoinitaosp <branch_id> [referenced,clean,light/shallow,example] (repo init for AOSP)';
     echo '';
     echo ' Branch identifications:';
     echo '  - android-7.1.2_r<XX>';
@@ -50,6 +50,8 @@ function repoinitaosp()
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
     depth='--depth 1';
+  elif [[ "${params}" == *'light'* ]]; then
+    depth="--depth ${ANDROID_REPO_INIT_LIGHT:-100}";
   fi;
 
   # Repo init command
@@ -68,7 +70,7 @@ function repoinitaosp()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
+  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     ${init_command};
     reposy;
   fi;
@@ -102,7 +104,7 @@ function repoinitlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,shallow,example] (repo init for LineageOS)';
+    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,light/shallow,example] (repo init for LineageOS)';
     echo '';
     return;
   fi;
@@ -117,6 +119,8 @@ function repoinitlineage()
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
     depth='--depth 1';
+  elif [[ "${params}" == *'light'* ]]; then
+    depth="--depth ${ANDROID_REPO_INIT_LIGHT:-100}";
   fi;
 
   # Repo init command
@@ -135,7 +139,7 @@ function repoinitlineage()
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
+  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     ${init_command};
     reposy;
   fi;
@@ -169,7 +173,7 @@ function repoinitrr()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitrr <nougat> [referenced,clean,shallow] (repo init for ResurrectionRemix)';
+    echo ' Usage: repoinitrr <nougat> [referenced,clean,light/shallow] (repo init for ResurrectionRemix)';
     echo '';
     return;
   fi;
@@ -183,10 +187,12 @@ function repoinitrr()
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
     depth='--depth 1';
+  elif [[ "${params}" == *'light'* ]]; then
+    depth="--depth ${ANDROID_REPO_INIT_LIGHT:-100}";
   fi;
 
   # Prepare synced objects for migrations
-  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
+  if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     reposy;
   fi;
 
@@ -227,7 +233,7 @@ function repoinittwrp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinittwrp <twrp-{X.X}> [referenced,clean,shallow] (repo init for TWRP)';
+    echo ' Usage: repoinittwrp <twrp-{X.X}> [referenced,clean,light/shallow] (repo init for TWRP)';
     echo '';
     return;
   fi;
@@ -241,6 +247,8 @@ function repoinittwrp()
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
     depth='--depth 1';
+  elif [[ "${params}" == *'light'* ]]; then
+    depth="--depth ${ANDROID_REPO_INIT_LIGHT:-100}";
   fi;
 
   # Wipe the out folder
