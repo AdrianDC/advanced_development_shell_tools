@@ -70,7 +70,7 @@
   * [**sepaud** *<b>\[Logs sepolicy analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *sepaud &lt;logs_file&gt;*
   * [**sepmsg** *<b>\[Logs sepolicy message extractor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *sepmsg &lt;logs_file&gt; &lt;context&gt;*
   * [**adbintents** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adb shell dumpsys package r &gt; intents.txt*
-  * [**adbcamera** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adb shell pm enable com.android.camera2/com.android.camera.CameraLauncher*
+  * [**adbcamera** *<b>\[Enable and launch camera applications\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
   * [**adbkp** *<b>\[Kill process by name\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adbkp &lt;process_name&gt;*
   * [**adbpk** *<b>\[Android mediaserver debug logger\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
   * [**adbms** *<b>\[Android mediaserver debug stracer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)

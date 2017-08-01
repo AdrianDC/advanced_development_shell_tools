@@ -81,9 +81,17 @@ function sepmsg()
 
 # === ADB Intents ===
 alias adbintents='adb shell dumpsys package r > intents.txt';
-alias adbcamera='adb shell pm enable com.android.camera2/com.android.camera.CameraLauncher;
-                 adb shell pm enable com.google.android.GoogleCamera/com.android.camera.CameraLauncher;
-                 adb shell "am start -a android.media.action.IMAGE_CAPTURE"';
+
+# === ADB Camera Enabled / Launcher ===
+function adbcamera()
+{
+  # Usage: adbcamera (Enable and launch camera applications)
+
+  # Enable and launch camera applications
+  adb shell pm enable com.android.camera2/com.android.camera.CameraLauncher;
+  adb shell pm enable com.google.android.GoogleCamera/com.android.camera.CameraLauncher;
+  adb shell "am start -a android.media.action.IMAGE_CAPTURE";
+}
 
 # === ADB Kill Process ===
 function adbkp()
