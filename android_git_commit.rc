@@ -63,9 +63,17 @@ alias gitc='git commit $(gitgpgparam)';
 alias gitcs='git commit $(gitgpgparam) -s';
 alias gitca='git commit $(gitgpgparam) --amend';
 alias gitcae='git commit $(gitgpgparam) --amend --no-edit';
-alias gitcauthor='git commit $(gitgpgparam) --amend --no-edit --author="$(git config --global --get user.name) <$(git config --global --get user.email)>"';
 alias gitrevert='git revert $(gitgpgparam) --no-edit';
 alias gitfix='rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp';
+
+# === Git Author Commit ===
+function gitcauthor()
+{
+  # Usage: gitcauthor (Apply own author to commit)
+
+  # Apply own author to commit
+  git commit "$(gitgpgparam)" --amend --no-edit --author="$(git config --global --get user.name) <$(git config --global --get user.email)>";
+}
 
 # === Git Marker Commit ===
 function gitcamarker()
