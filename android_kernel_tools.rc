@@ -341,7 +341,7 @@ function adbbootinfo()
   adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
 
   # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg"
+  adbsu "rm -f ${adb_tmpdir}/bbootimg";
 }
 
 # === FOTA Informations ===
@@ -384,7 +384,7 @@ function adbfotainfo()
   adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
 
   # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg"
+  adbsu "rm -f ${adb_tmpdir}/bbootimg";
 }
 
 # === Kernel Injector ===
@@ -470,8 +470,8 @@ function fbootk()
   adbsu "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel ${dtimg}";
 
   # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg"
-  adbsu "rm -f ${adb_tmpdir}/tmpkernel"
+  adbsu "rm -f ${adb_tmpdir}/bbootimg";
+  adbsu "rm -f ${adb_tmpdir}/tmpkernel";
   if [ ! -z "${dtimg}" ]; then
     adbsu "rm -f ${adb_tmpdir}/dt.img";
   fi
