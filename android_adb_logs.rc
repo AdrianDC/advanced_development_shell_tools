@@ -162,7 +162,6 @@ alias adbpl='cls; echo -n '' > last_kmsg; adbsu cat /sys/fs/pstore/console-ramoo
 alias adbrl='cls; echo -n '' > recovery_log; adbsu cat /tmp/recovery.log | tee -a recovery_log';
 alias adbse='echo -n '' > kmsg; adbsu cat /proc/kmsg | tee -a kmsg; sepaud kmsg';
 alias adbdumpsensors='adbsu dumpsys sensorservice';
-alias adbsel='adbkl; sepaud kmsg';
 alias adblf='adb logcat -v audit2allow';
 alias adblh='adb logcat -b events -b main -b radio | highlight';
 alias adbtrampoline='adbsu "dmesg | grep -i trampoline"';
