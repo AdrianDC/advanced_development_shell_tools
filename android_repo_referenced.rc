@@ -246,6 +246,7 @@ function reporefsync()
 
   # Path restore
   cd "${current_dir}";
+  echo '';
 }
 
 # === Repo Referenced Linker ===
