@@ -244,7 +244,7 @@ function androidprojectpatcher()
     # Handle unupdated projects
     if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
       echo '';
-      echo -n '  > Recreate onto newest changes [Y/n/a/l] ? ';
+      echo -n '  > Recreate onto newest changes [Y/n/a/l/p] ? ';
       if [ -z "${key_automated}" ]; then
         read -r -t 20 key;
       else
@@ -253,13 +253,21 @@ function androidprojectpatcher()
       if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
         key_automated=y;
         key_automated_push=y;
+      elif [ "${key}" = 'n' ] || [ "${key}" = 'N' ]; then
+        key_automated=n;
+        key_automated_push=n;
       elif [ "${key}" = 'l' ] || [ "${key}" = 'L' ]; then
         key_automated=y;
         key_automated_push=n;
+      elif [ "${key}" = 'p' ] || [ "${key}" = 'P' ]; then
+        key_automated=n;
+        key_automated_push=y;
       fi;
 
       # Rebase the tree
-      if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
+      if [ "${key_automated}" = 'y' ]; then
+
+        # Abort last cherry-pick
         echo '';
         git cherry-pick --abort &> /dev/null;
 
@@ -270,9 +278,8 @@ function androidprojectpatcher()
           # Detect commits to pick - Detect own cherry-picked commits
           readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --committer='marker.commit' --reverse --format=format:%H FETCH_HEAD)";
 
+        # Detect commits to pick - Detect own cherry-picked additional commits in an own updated project
         else
-
-          # Detect commits to pick - Detect own cherry-picked additional commits in an own updated project
           readarray -t commits_list <<< "$(git log --format=format:'%H|%ce' FETCH_HEAD | sed "s/|${GitEMail}//g" | sed '/|/q' | sed 's/|marker.commit//' | sed 's/|.*//' | tac)";
           if [ -z "${commits_list[*]}" ] || [ "${#commits_list[@]}" -gt "${git_revs_count_remote}" ]; then
 
@@ -306,6 +313,12 @@ function androidprojectpatcher()
           fi;
 
         done;
+
+        # Automatic push
+        gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+
+      # Only push the project
+      elif [ "${key_automated_push}" = 'y' ]; then
 
         # Automatic push
         gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
