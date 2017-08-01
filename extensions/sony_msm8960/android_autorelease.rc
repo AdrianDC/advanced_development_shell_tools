@@ -234,14 +234,6 @@ function __autoreleaseaospsony8960dev()
     reposy;
   fi;
 
-  # Enable bringup build option
-  local bringup_active=;
-  if shtools-builds-bringup-active; then
-    bringup_active=true;
-  else
-    shtools-builds-bringup-enable;
-  fi;
-
   # Walk through devices
   for device in ${devices}; do
 
@@ -266,10 +258,5 @@ function __autoreleaseaospsony8960dev()
     echo ' romautorelease: Cleaning out folder...';
     rm -rfv out &> /dev/null;
     echo '';
-  fi;
-
-  # Restore bringup build option
-  if [ -z "${bringup_active}" ]; then
-    shtools-builds-bringup-disable;
   fi;
 }
