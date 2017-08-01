@@ -320,9 +320,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitca** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend*
   * [**gitcae** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend --no-edit*
   * [**gitcauthor** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend --no-edit --author="$(git config --global --get user.name) &lt;$(git config --global --get user.email)&gt;*
-  * [**gitcamarker** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *export GIT_COMMITTER_NAME="Marker Commit"; export GIT_COMMITTER_EMAIL="marker.commit"; git commit $(gitgpgparam) --amend --no-edit --author="${GIT_COMMITTER_NAME} &lt;${GIT_COMMITTER_EMAIL}&gt;"; unset  GIT_COMMITTER_NAME; unset  GIT_COMMITTER_EMAIL*
   * [**gitrevert** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git revert $(gitgpgparam) --no-edit*
   * [**gitfix** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp*
+  * [**gitcamarker** *<b>\[Apply marker commit to author/committer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
   * [**gitcid** *<b>\[Apply commit-msg hook to commit\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
   * [**gitcidupstream** *<b>\[Load commit-msg hook from upstream\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
   * [**gitrh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset FETCH_HEAD --hard*
