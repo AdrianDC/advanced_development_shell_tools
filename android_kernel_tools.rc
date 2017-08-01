@@ -439,8 +439,11 @@ function fbootk()
     fi;
   fi;
 
+  # Check if file exists
+  filepath=$(readlink -e "${filepath}");
+
   # Usage
-  if [ -z "${filepath}" ] || [ ! -f "${filepath}" ]; then
+  if [ -z "${filepath}" ]; then
     echo '';
     echo '  Usage: fbootk <kernelpath> [bool_fota] (Kernel image to boot partition injector)';
     echo '';
