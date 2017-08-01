@@ -422,13 +422,13 @@ function adbgitpf()
   rm -f "${tmpfile}";
 }
 
-# === MultiROM File Pusher ===
+# === MultiROM Development File Pusher ===
 function adbpmrom()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbpmrom <file> (MultiROM file pusher)';
+    echo ' Usage: adbpmrom <file> (MultiROM development file pusher)';
     echo '';
     return;
   fi;
@@ -454,7 +454,7 @@ function adbpmromenc()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbpmromenc <file> (MultiROM encryption file pusher)';
+    echo ' Usage: adbpmromenc <file> (MultiROM development encryption file pusher)';
     echo '';
     return;
   fi;
