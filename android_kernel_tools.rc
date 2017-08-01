@@ -309,26 +309,38 @@ function adbbootinfo()
   # Variables
   local adb;
   local adb_tmpdir;
+  local adb_tmpfile=;
+  local adb_test=;
   local partitiontarget;
 
   # Initialize variables
   adb=$(adbcmd);
+  adb_tmpfile=$(mktemp);
   partitiontarget=$(androiddevicestarget boot);
 
   # Give adb root permissions
   adbwait;
   adbro;
 
-  # Check if '/tmp' exists
-  if [ ! -z "$(${adb} shell 'ls /tmp/ 2> /dev/null')" ]; then
-    adb_tmpdir=/tmp;
+  # Check if device have a temporary folder
+  for read in '/tmp' '/data/local/tmp'; do
 
-  # Check if '/data/local/tmp' exists
-  elif [ ! -z "$(${adb} shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
-    adb_tmpdir=/data/local/tmp;
-  else
+    # Send a empty file to folder
+    ${adb} push "${adb_tmpfile}" "${read}/${adb_tmpfile#/tmp/}" > /dev/null;
+
+    # Check if temporary folder is not empty
+    adb_test=$(${adb} shell "ls ${read}/ 2> /dev/null")
+    if [ ! -z "${adb_test}" ]; then
+      adb_tmpdir="${read}";
+      adbsu "rm -f ${read}/${adb_tmpfile#/tmp/}";
+      break;
+    fi;
+  done
+
+  # Check if variable is not empty
+  if [ -z "${adb_tmpdir}" ]; then
     echo '';
-    echo '  adbbootinfo: No /tmp folder found, exiting...';
+    echo '  adbbootinfo: No temporary folder found, exiting...';
     echo '';
     return;
   fi;
@@ -341,7 +353,7 @@ function adbbootinfo()
   adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
 
   # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg"
+  adbsu "rm -f ${adb_tmpdir}/bbootimg";
 }
 
 # === FOTA Informations ===
@@ -352,26 +364,38 @@ function adbfotainfo()
   # Variables
   local adb;
   local adb_tmpdir;
+  local adb_tmpfile=;
+  local adb_test=;
   local partitiontarget;
 
   # Initialize variables
   adb=$(adbcmd);
+  adb_tmpfile=$(mktemp);
   partitiontarget=$(androiddevicestarget fota);
 
   # Give adb root permissions
   adbwait;
   adbro;
 
-  # Check if '/tmp' exists
-  if [ ! -z "$(${adb} shell 'ls /tmp/ 2> /dev/null')" ]; then
-    adb_tmpdir=/tmp;
+  # Check if device have a temporary folder
+  for read in '/tmp' '/data/local/tmp'; do
 
-  # Check if '/data/local/tmp' exists
-  elif [ ! -z "$(${adb} shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
-    adb_tmpdir=/data/local/tmp;
-  else
+    # Send a empty file to folder
+    ${adb} push "${adb_tmpfile}" "${read}/${adb_tmpfile#/tmp/}" > /dev/null;
+
+    # Check if temporary folder is not empty
+    adb_test=$(${adb} shell "ls ${read}/ 2> /dev/null")
+    if [ ! -z "${adb_test}" ]; then
+      adb_tmpdir="${read}";
+      adbsu "rm -f ${read}/${adb_tmpfile#/tmp/}";
+      break;
+    fi;
+  done
+
+  # Check if variable is not empty
+  if [ -z "${adb_tmpdir}" ]; then
     echo '';
-    echo '  adbfotainfo: No /tmp folder found, exiting...';
+    echo '  adbfotainfo: No temporary folder found, exiting...';
     echo '';
     return;
   fi;
@@ -384,7 +408,7 @@ function adbfotainfo()
   adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
 
   # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg"
+  adbsu "rm -f ${adb_tmpdir}/bbootimg";
 }
 
 # === Kernel Injector ===
@@ -395,9 +419,12 @@ function fbootk()
   local adb_tmpdir;
   local filepath=${1};
   local fota=${2};
+  local adb_tmpdir=;
+  local adb_tmpfile=;
 
   # Initialize variables
   adb=$(adbcmd);
+  adb_tmpfile=$(mktemp);
 
   # Detect zImage file
   if [ -z "${filepath}" ]; then
@@ -432,16 +459,25 @@ function fbootk()
   adbwait;
   adbro;
 
-  # Check if '/tmp' exists
-  if [ ! -z "$(${adb} shell 'ls /tmp/ 2> /dev/null')" ]; then
-    adb_tmpdir=/tmp;
+  # Check if device have a temporary folder
+  for read in '/tmp' '/data/local/tmp'; do
 
-  # Check if '/data/local/tmp' exists
-  elif [ ! -z "$(${adb} shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
-    adb_tmpdir=/data/local/tmp;
-  else
+    # Send a empty file to folder
+    ${adb} push "${adb_tmpfile}" "${read}/${adb_tmpfile#/tmp/}" > /dev/null;
+
+    # Check if temporary folder is not empty
+    adb_test=$(${adb} shell "ls ${read}/ 2> /dev/null")
+    if [ ! -z "${adb_test}" ]; then
+      adb_tmpdir="${read}";
+      adbsu "rm -f ${read}/${adb_tmpfile#/tmp/}";
+      break;
+    fi;
+  done
+
+  # Check if variable is not empty
+  if [ -z "${adb_tmpdir}" ]; then
     echo '';
-    echo '  fbootk: No /tmp folder found, exiting...';
+    echo '  fbootk: No temporary folder found, exiting...';
     echo '';
     return;
   fi;
@@ -460,8 +496,8 @@ function fbootk()
   adbsu "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel";
 
   # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg"
-  adbsu "rm -f ${adb_tmpdir}/tmpkernel"
+  adbsu "rm -f ${adb_tmpdir}/bbootimg";
+  adbsu "rm -f ${adb_tmpdir}/tmpkernel";
 
   # Reboot the device
   if [ -z "${fota}" ]; then
