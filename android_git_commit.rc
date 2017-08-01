@@ -64,7 +64,16 @@ alias gitcs='git commit $(gitgpgparam) -s';
 alias gitca='git commit $(gitgpgparam) --amend';
 alias gitcae='git commit $(gitgpgparam) --amend --no-edit';
 alias gitrevert='git revert $(gitgpgparam) --no-edit';
-alias gitfix='rm -fv .git/COMMIT_EDITMSG*; rm -fv .git/.COMMIT_EDITMSG.swp';
+
+# === Git Commit Fixer ===
+function gitfix()
+{
+  # Usage: gitfix (Fix git commit issues)
+
+  # Fix git commit issues
+  rm -fv .git/COMMIT_EDITMSG*;
+  rm -fv .git/.COMMIT_EDITMSG.swp;
+}
 
 # === Git Author Commit ===
 function gitcauthor()
