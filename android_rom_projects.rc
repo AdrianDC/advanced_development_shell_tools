@@ -600,7 +600,7 @@ function androidprojectunshallow()
 
     # Information
     echo '';
-    echo "[${path}]";
+    echo " androidprojectunshallow: Checking '${path}' shallow status...";
 
     # Fetch and unshallow
     git fetch --unshallow "$(repogetremote)" "$(repogetbranch)" 2>&1 \
