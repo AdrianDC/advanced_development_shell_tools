@@ -119,7 +119,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbgitpf** *<b>\[Push files through adb from commit\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbgitpf &lt;commit_sha1&gt;*
   * [**adbpmrom** *<b>\[MultiROM development file pusher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbpmrom &lt;file&gt;*
   * [**adbpmromenc** *<b>\[MultiROM development encryption file pusher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbpmromenc &lt;file&gt;*
-  * [**adbapkinstall** *<b>\[Install all available apk files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc)
+  * [**adbapkinstall** *<b>\[Install available apk files from current path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc)
 
 ---
 ### [&nbsp;Documentation: [android_adb_logs.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc)&nbsp;]

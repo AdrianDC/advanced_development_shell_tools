@@ -466,7 +466,7 @@ function adbpmromenc()
 # === ADB apk Installers ===
 function adbapkinstall()
 {
-  # Usage: adbapkinstall (Install all available apk files)
+  # Usage: adbapkinstall (Install available apk files from current path)
 
   # Install all available apk files
   for file in *.apk; do
