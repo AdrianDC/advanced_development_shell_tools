@@ -673,8 +673,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_repo_init.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc)&nbsp;]
   * [**repoinitaosp** *<b>\[repo init for AOSP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitaosp &lt;branch_id&gt; [referenced,clean,shallow,example]*
   * [**repoinitlineage** *<b>\[repo init for LineageOS\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitlineage &lt;13.0/14.1&gt; [referenced,clean,shallow,example]*
-  * [**repoinitaospall** *<b>\[repo init for referenced AOSP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitaospall &lt;android-7.1.2_r{XX}&gt; [clean]*
-  * [**repoinitlineageall** *<b>\[repo init for referenced LineageOS\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitlineageall &lt;13.0/14.1&gt; [clean]*
   * [**repoinitrr** *<b>\[repo init for ResurrectionRemix\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitrr &lt;nougat&gt; [referenced,clean,shallow]*
   * [**repoinittwrp** *<b>\[repo init for TWRP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinittwrp &lt;twrp-{X.X}&gt; [referenced,clean,shallow]*
   * [**repoinitcleaner** *<b>\[repo init cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitcleaner [clean]*
