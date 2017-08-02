@@ -388,6 +388,7 @@ function reposwitcher()
   local options;
   local out;
   local path;
+  local path_current='';
   local reposy_all=();
 
   # Access Android root
@@ -413,6 +414,12 @@ function reposwitcher()
     return;
   fi;
 
+  # Detect current local_manifests symlink
+  if [ -L '.repo/local_manifests' ]; then
+    path_current=$(readlink -f '.repo/local_manifests');
+    path_current=${path_current##*/};
+  fi;
+
   # Create folders selector list
   cnt=0;
   options=('None');
@@ -424,7 +431,11 @@ function reposwitcher()
   for folder in .repo/local_manifests_*; do
     cnt=$((cnt + 1));
     options[${cnt}]=${folder##*/};
-    echo "   ${cnt}: ${options[${cnt}]}";
+    if [ "${options[${cnt}]}" = "${path_current}" ]; then
+      echo -e "   ${cnt}: ${options[${cnt}]} \e[1;37m(Active)\e[0m";
+    else
+      echo "   ${cnt}: ${options[${cnt}]}";
+    fi;
   done;
   echo '';
   echo -en  " \e[1;33mlocal_manifests to use [0 to ${cnt}] :\e[0m ";
