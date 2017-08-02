@@ -61,11 +61,13 @@ function repoinitaosp()
     init_command="repo init -u http://android.googlesource.com/platform/manifest -b ${branch} ${depth}";
   fi;
 
-  # Output example command
+  # Output init command
+  echo '';
+  echo " ${init_command}";
+  echo '';
+
+  # Exit init for examples only
   if [[ "${params}" == *'example'* ]]; then
-    echo '';
-    echo "${init_command}";
-    echo '';
     return;
   fi;
 
@@ -130,11 +132,13 @@ function repoinitlineage()
     init_command="repo init -u http://github.com/LineageOS/android.git -b ${branch} ${depth}";
   fi;
 
-  # Output example command
+  # Output init command
+  echo '';
+  echo " ${init_command}";
+  echo '';
+
+  # Exit init for examples only
   if [[ "${params}" == *'example'* ]]; then
-    echo '';
-    echo "${init_command}";
-    echo '';
     return;
   fi;
 
