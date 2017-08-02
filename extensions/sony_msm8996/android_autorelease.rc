@@ -35,7 +35,7 @@ function autoreleaseaospsodp8996()
   fi;
 
   # Patch the project
-  if ! aospsonysodppatcher; then
+  if ! aospsonysodppatcher 'a'; then
     return;
   fi;
 
