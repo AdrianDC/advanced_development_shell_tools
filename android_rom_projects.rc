@@ -250,7 +250,10 @@ function androidprojectpatcher()
       else
         key=${key_automated};
       fi;
-      if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
+      if [ -z "${key}" ]; then
+        key_automated=y;
+        key_automated_push=;
+      elif [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
         key_automated=y;
         key_automated_push=y;
       elif [ "${key}" = 'n' ] || [ "${key}" = 'N' ]; then
