@@ -421,6 +421,7 @@ function fbootk()
   local fota=${2};
   local adb_tmpdir=;
   local adb_tmpfile=;
+  local dtimg=;;
 
   # Initialize variables
   adb=$(adbcmd);
@@ -488,6 +489,12 @@ function fbootk()
   # Push kernel to target
   ${adb} push "${filepath}" "${adb_tmpdir}/tmpkernel";
 
+  # Push DT image to target (fboota extension)
+  if [ -f "${filepath%/kernel}/dt.img" ]; then
+    ${adb} push "${filepath%/kernel}/dt.img" "${adb_tmpdir}/dt.img";
+    dtimg="-d ${adb_tmpdir}/dt.img";
+  fi
+
   # Push and fix permissions of 'bbootimg'
   ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
   adbsu "chmod 755 ${adb_tmpdir}/bbootimg";
@@ -496,11 +503,14 @@ function fbootk()
   adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
 
   # Kernel injection
-  adbsu "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel";
+  adbsu "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel ${dtimg}";
 
   # Cleanup
   adbsu "rm -f ${adb_tmpdir}/bbootimg";
   adbsu "rm -f ${adb_tmpdir}/tmpkernel";
+  if [ ! -z "${dtimg}" ]; then
+    adbsu "rm -f ${adb_tmpdir}/dt.img";
+  fi
 
   # Reboot the device
   if [ -z "${fota}" ]; then
