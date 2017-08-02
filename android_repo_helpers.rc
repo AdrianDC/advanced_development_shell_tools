@@ -439,9 +439,6 @@ function reposwitcher()
   # If folder provided
   if [ ! -z "${folder}" ]; then
 
-    # Run the safety cleaner before changing local_manifests
-    repoinitsafecleaner '';
-
     # Generate symlink to local_manifests folder
     echo -n ' ';
     rm -fv .repo/local_manifests;
