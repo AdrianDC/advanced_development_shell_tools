@@ -319,29 +319,30 @@ function repoinitsafecleaner()
   # Usage: repoinitsafecleaner [clean] (repo init safety cleaner)
 
   # Variables
-  local temp_list_data;
   local temp_list_grep;
 
   # Prepare temp files
-  temp_list_data=$(mktemp);
   temp_list_grep=$(mktemp);
 
+  # Function header
+  echo '';
+  echo " repoinitsafecleaner: Searching for nested projects...";
+
   # Detect nested projects causing sync issues
-  repo list -p > "${temp_list_data}";
-  cp -f "${temp_list_data}" "${temp_list_grep}";
+  cp .repo/project.list "${temp_list_grep}";
   while IFS= read -r path; do
     if [ ! "${path: -1}" = '/' ]; then
       path="${path}/";
     fi;
     if grep -q "${path}" "${temp_list_grep}"; then
-      echo " repoinitcleaner: '${path}' has nested projects, deleting...";
+      echo " repoinitsafecleaner: '${path}' has nested projects, deleting...";
       rm -rfv "${path}";
     fi;
-  done < "${temp_list_data}";
+  done < '.repo/project.list';
 
   # Remove temporary files
-  rm -f "${temp_list_data}";
   rm -f "${temp_list_grep}";
+  echo '';
 }
 
 # === Repo Init Menu ===
