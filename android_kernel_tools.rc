@@ -320,11 +320,11 @@ function adbbootinfo()
   adbro;
 
   # Check if '/tmp' exists
-  if [ ! -z "$(${adb} shell 'ls /tmp/ 2> /dev/null')" ]; then
+  if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
     adb_tmpdir=/tmp;
 
   # Check if '/data/local/tmp' exists
-  elif [ ! -z "$(${adb} shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
+  elif [ ! -z "$(${adb} shell 'if [ -d /data/local/tmp ]; then echo true; fi;')" ]; then
     adb_tmpdir=/data/local/tmp;
   else
     echo '';
@@ -363,11 +363,11 @@ function adbfotainfo()
   adbro;
 
   # Check if '/tmp' exists
-  if [ ! -z "$(${adb} shell 'ls /tmp/ 2> /dev/null')" ]; then
+  if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
     adb_tmpdir=/tmp;
 
   # Check if '/data/local/tmp' exists
-  elif [ ! -z "$(${adb} shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
+  elif [ ! -z "$(${adb} shell 'if [ -d /data/local/tmp ]; then echo true; fi;')" ]; then
     adb_tmpdir=/data/local/tmp;
   else
     echo '';
@@ -437,11 +437,11 @@ function fbootk()
   adbro;
 
   # Check if '/tmp' exists
-  if [ ! -z "$(${adb} shell 'ls /tmp/ 2> /dev/null')" ]; then
+  if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
     adb_tmpdir=/tmp;
 
   # Check if '/data/local/tmp' exists
-  elif [ ! -z "$(${adb} shell 'ls /data/local/tmp/ 2> /dev/null')" ]; then
+  elif [ ! -z "$(${adb} shell 'if [ -d /data/local/tmp ]; then echo true; fi;')" ]; then
     adb_tmpdir=/data/local/tmp;
   else
     echo '';
