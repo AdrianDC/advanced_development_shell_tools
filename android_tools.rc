@@ -233,6 +233,47 @@ function librarieshunter()
   echo '';
 }
 
+# === Libraries Checker ===
+function librarieschecker()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: librarieschecker <prebuilts_path> (Unreferenced libraries analyzer)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local FILES_PATH=${1};
+  local FILE_NAME=;
+  local strings_param;
+
+  # Handle strings variants
+  strings_param="strings $(stringsparams)";
+
+  # Scan the libraries
+  echo '';
+  echo -e " \e[1;31m=== Searching unreferenced libraries in ${FILES_PATH} ===\e[0m";
+  echo '';
+  for FILE in $(find "${FILES_PATH}" -not -path "*.git/*" -not -path "*.repo/*" | sort); do
+
+    # Detect file and allow only library extensions
+    FILE=$(readlink -f "${FILE}");
+    if [ ! -e "${FILE}" ] || [ -d "${FILE}" ] || [ ! "${FILE: -3}" = '.so' ]; then
+      continue;
+    fi;
+
+    # Search missing references
+    FILE_NAME=$(basename "${FILE}");
+    if ! grep -aiqr --exclude '*.mk' --exclude "${FILE_NAME}" "${FILE_NAME}" "${FILES_PATH}"; then
+      echo -e "    \e[1;31m- Missing reference: \e[1;31m${FILE_NAME}\e[0m";
+    fi;
+
+  done;
+  echo '';
+}
+
 # === Hastebin ===
 function haste()
 {
