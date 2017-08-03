@@ -264,14 +264,19 @@ function librarieschecker()
       continue;
     fi;
 
-    # Search missing references
+    # Get file name only
     FILE_NAME=$(basename "${FILE}");
+
+    # Present the file being checked
+    echo -en "\r\033[K  - Looking for '${FILE_NAME}'...";
+
+    # Search missing references
     if ! grep -aiqr --exclude '*.mk' --exclude "${FILE_NAME}" "${FILE_NAME}" "${FILES_PATH}"; then
-      echo -e "    \e[1;31m- Missing reference: \e[1;31m${FILE_NAME}\e[0m";
+      echo -e "\r\033[K  \e[1;31m- Missing reference: \e[1;31m${FILE_NAME}\e[0m";
     fi;
 
   done;
-  echo '';
+  echo -e '\r\033[K';
 }
 
 # === Hastebin ===
