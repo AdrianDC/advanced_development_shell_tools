@@ -225,6 +225,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbupdate** *<b>\[adb binary update from upstream\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_updater.rc)
 
 ---
+### [&nbsp;Documentation: [android_build_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_build_helpers.rc)&nbsp;]
+  * [**makej** *<b>\[Helper to 'make -jPROCESSORS'\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_build_helpers.rc) : *makej &lt;parameters&gt;*
+
+---
 ### [&nbsp;Documentation: [android_changelog.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_changelog.rc)&nbsp;]
   * [**repochangelog** *<b>\[Generate ROM changelogs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_changelog.rc) : *repochangelog &lt;days_count&gt; [project1_path,project2_path,...]*
 
