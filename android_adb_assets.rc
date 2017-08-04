@@ -44,15 +44,15 @@ function sepaud()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: sepaud <logs_file> (Logs sepolicy analyzer)';
+    echo ' Usage: sepaud <logs_file> [context_search] (Logs sepolicy analyzer)';
     echo '';
     return;
   fi;
 
   # Logs sepolicy analyzer
-  grep -a 'avc.*denied' "${1}";
+  grep -a "avc.*denied .*${2}" "${1}";
   grep -a 'does not have a SELinux domain defined' "${1}";
-  grep -a 'avc.*denied' "${1}" | audit2allow -p sepolicy;
+  grep -a "avc.*denied .*${2}" "${1}" | audit2allow -p sepolicy;
 }
 
 # === Sepolicies Message Extractor ===
