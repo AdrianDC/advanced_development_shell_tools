@@ -207,12 +207,21 @@ function shtoolspush()
     shtoolsreadme;
   fi;
 
-  # Commit changes to upstream
+  # Commit changes
   local currentdir=${PWD};
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git add -N ./*;
   git add . -Ap;
   git commit -s;
+
+  # Commits stats with upstream
+  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  echo '';
+  echo -n ' New changes - missing : ';
+  git rev-list --left-right --count HEAD...FETCH_HEAD;
+  echo '';
+
+  # Push to upstream
   git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   cd "${currentdir}/";
   shtoolsup;
@@ -228,7 +237,7 @@ function shtoolsamend()
     shtoolsreadme;
   fi;
 
-  # Amend changes to upstream
+  # Commit changes
   local currentdir=${PWD};
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git add -N ./*;
@@ -238,6 +247,15 @@ function shtoolsamend()
   else
     git commit -s --amend --no-edit;
   fi;
+
+  # Commits stats with upstream
+  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  echo '';
+  echo -n ' New changes - missing : ';
+  git rev-list --left-right --count HEAD...FETCH_HEAD;
+  echo '';
+
+  # Push to upstream
   git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   cd "${currentdir}/";
   shtoolsup;
