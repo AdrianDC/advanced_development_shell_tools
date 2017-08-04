@@ -52,10 +52,7 @@ function autoreleaseaospsony8960()
 
   # When option enabled and not local, clean out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
-    echo '';
-    echo ' romautorelease: Cleaning out folder...';
-    find out/ -mindepth 1 -delete;
-    echo '';
+    repoclean;
   fi;
 }
 
@@ -96,10 +93,7 @@ function autoreleaselineagesony8960()
 
   # When option enabled and not local, clean out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
-    echo '';
-    echo ' romautorelease: Cleaning out folder...';
-    find out/ -mindepth 1 -delete;
-    echo '';
+    repoclean;
   fi;
 }
 
@@ -132,10 +126,7 @@ function autoreleaserrsony8960()
 
   # When option enabled and not local, clean out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
-    echo '';
-    echo ' romautorelease: Cleaning out folder...';
-    find out/ -mindepth 1 -delete;
-    echo '';
+    repoclean;
   fi;
 }
 
@@ -173,10 +164,7 @@ function autoreleasecafsony8960()
 
   # When option enabled and not local, clean out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
-    echo '';
-    echo ' romautorelease: Cleaning out folder...';
-    find out/ -mindepth 1 -delete;
-    echo '';
+    repoclean;
   fi;
 }
 
@@ -254,9 +242,6 @@ function __autoreleaseaospsony8960dev()
 
   # When option enabled, not local and not bringup, clean device out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
-    echo '';
-    echo ' romautorelease: Cleaning out folder...';
-    find out/ -mindepth 1 -delete;
-    echo '';
+    repoclean;
   fi;
 }

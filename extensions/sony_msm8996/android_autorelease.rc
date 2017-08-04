@@ -52,9 +52,6 @@ function autoreleaseaospsodp8996()
 
   # When option enabled and not local, clean out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
-    echo '';
-    echo ' romautorelease: Cleaning out folder...';
-    find out/ -mindepth 1 -delete;
-    echo '';
+    repoclean;
   fi;
 }
