@@ -256,7 +256,7 @@ function repoinittwrp()
   fi;
 
   # Wipe the out folder
-  rm -rfv out;
+  find out/ -mindepth 1 -delete;
 
   # Clean repo manifest
   repoinitcleaner "${params}";

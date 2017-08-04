@@ -54,7 +54,7 @@ function autoreleaseaospsony8960()
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
-    rm -rfv out &> /dev/null;
+    find out/ -mindepth 1 -delete;
     echo '';
   fi;
 }
@@ -98,7 +98,7 @@ function autoreleaselineagesony8960()
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
-    rm -rfv out &> /dev/null;
+    find out/ -mindepth 1 -delete;
     echo '';
   fi;
 }
@@ -134,7 +134,7 @@ function autoreleaserrsony8960()
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
-    rm -rfv out &> /dev/null;
+    find out/ -mindepth 1 -delete;
     echo '';
   fi;
 }
@@ -175,7 +175,7 @@ function autoreleasecafsony8960()
   if shtools-builds-clean-active && ! shtools-builds-local-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
-    rm -rfv out &> /dev/null;
+    find out/ -mindepth 1 -delete;
     echo '';
   fi;
 }
@@ -256,7 +256,7 @@ function __autoreleaseaospsony8960dev()
   if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
     echo '';
     echo ' romautorelease: Cleaning out folder...';
-    rm -rfv out &> /dev/null;
+    find out/ -mindepth 1 -delete;
     echo '';
   fi;
 }
