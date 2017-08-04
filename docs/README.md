@@ -114,7 +114,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbpu** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbro; adbpushfile*
   * [**adbppr** *<b>\[adb automated PACKAGES_RESULTS files pusher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc)
   * [**adbside** *<b>\[adb sideload helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbside &lt;file_zip&gt; [boot_reboot]*
-  * [**adbsiderom** *<b>\[adb sideload ROM with addons helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbsiderom &lt;device&gt; &lt;rom_zip&gt; [boot_reboot]*
+  * [**adbsiderom** *<b>\[adb sideload ROM with addons helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbsiderom &lt;device&gt; &lt;rom_zip&gt; [boot_no_reboot]*
   * [**adbu** *<b>\[Force optimization of a package\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbu &lt;package_name&gt;*
   * [**adbgitpf** *<b>\[Push files through adb from commit\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbgitpf &lt;commit_sha1&gt;*
   * [**adbpmrom** *<b>\[MultiROM development file pusher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc) : *adbpmrom &lt;file&gt;*

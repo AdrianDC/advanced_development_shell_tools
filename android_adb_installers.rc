@@ -326,7 +326,7 @@ function adbsiderom()
   # Usage
   if [ -z "${1}" ] || [ ! -f "${2}" ]; then
     echo '';
-    echo ' Usage: adbsiderom <device> <rom_zip> [boot_reboot] (adb sideload ROM with addons helper)';
+    echo ' Usage: adbsiderom <device> <rom_zip> [boot_no_reboot] (adb sideload ROM with addons helper)';
     echo '';
     return;
   fi;
@@ -355,7 +355,7 @@ function adbsiderom()
   done;
 
   # Reboot to Android if requested
-  if [ ! -z "${3}" ]; then
+  if [ -z "${3}" ]; then
     echo -e '\e[1;32madbsiderom: Rebooting to Android\e[0m';
     adb shell reboot;
     echo '';
