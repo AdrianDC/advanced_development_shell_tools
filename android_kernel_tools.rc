@@ -230,7 +230,6 @@ function fboot()
   local bootimage;
 
   # Initialize variables
-  adb=$(adbcmd);
   bootimage=${1:-boot.img};
   bootimage=${bootimage#file:/};
 
@@ -246,6 +245,7 @@ function fboot()
   sudo echo '';
   adbro;
   adbwait;
+  adb=$(adbcmd);
   ${adb} reboot bootloader;
 
   # Flash bootimage and reboot
@@ -312,13 +312,13 @@ function adbbootinfo()
   local adb_tmpdir;
   local partitiontarget;
 
-  # Initialize variables
-  adb=$(adbcmd);
-  partitiontarget=$(androiddevicestarget boot);
-
   # Give adb root permissions
   adbwait;
   adbro;
+
+  # Initialize variables
+  adb=$(adbcmd);
+  partitiontarget=$(androiddevicestarget boot);
 
   # Check if '/tmp' exists
   if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
@@ -355,13 +355,13 @@ function adbfotainfo()
   local adb_tmpdir;
   local partitiontarget;
 
-  # Initialize variables
-  adb=$(adbcmd);
-  partitiontarget=$(androiddevicestarget fota);
-
   # Give adb root permissions
   adbwait;
   adbro;
+
+  # Initialize variables
+  adb=$(adbcmd);
+  partitiontarget=$(androiddevicestarget fota);
 
   # Check if '/tmp' exists
   if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
@@ -398,9 +398,6 @@ function fbootk()
   local fota=${2};
   local dtimg='';
 
-  # Initialize variables
-  adb=$(adbcmd);
-
   # Detect zImage file
   if [ -z "${filepath}" ]; then
     if [ -f '.build/arch/arm64/boot/zImage' ]; then
@@ -436,6 +433,9 @@ function fbootk()
   # Give adb root permissions
   adbwait;
   adbro;
+
+  # Initialize variables
+  adb=$(adbcmd);
 
   # Check if '/tmp' exists
   if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
