@@ -243,6 +243,7 @@ function fboot()
   fi;
 
   # Reboot to bootloader
+  sudo echo '';
   adbro;
   adbwait;
   ${adb} reboot bootloader;
