@@ -68,6 +68,9 @@ function sepmsg()
     return;
   fi;
 
+  # Run the logs sepolicy analyzer
+  sepaud "${1}" "${2}:";
+
   # Logs sepolicy message extractor
   echo '';
   grep -a "avc.*denied.*scontext=u:r:${2}:s0" "${1}" \
