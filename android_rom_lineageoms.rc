@@ -35,4 +35,7 @@ function lineageomspatcher()
 
   # Launch script
   "${tmp_script}" "$(pwd)";
+
+  # Remove unnecessary local_manifests addition
+  rm -f .repo/local_manifests/substratum.xml;
 }
