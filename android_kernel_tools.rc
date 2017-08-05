@@ -82,12 +82,9 @@ function fboota()
     echo '';
   fi;
 
-  # Ramdisk files builder
+  # Disable build overlays for fast builds
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
-  if ls './device/'*"/${device}/rootdir/Android.mk" 1> /dev/null 2>&1; then
-    mmm './device/'*"/${device}/rootdir/";
-  fi;
 
   # Ramdisk common files builder
   device_common=$(cat './device/'*"/${device}/device.mk" \
