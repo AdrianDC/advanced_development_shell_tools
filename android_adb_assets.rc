@@ -50,9 +50,11 @@ function sepaud()
   fi;
 
   # Logs sepolicy analyzer
+  echo '';
   grep -a "avc.*denied .*${2}" "${1}";
   grep -a 'does not have a SELinux domain defined' "${1}";
   grep -a "avc.*denied .*${2}" "${1}" | audit2allow -p sepolicy;
+  echo '';
 }
 
 # === Sepolicies Message Extractor ===
