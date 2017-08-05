@@ -31,7 +31,7 @@ function fboota()
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] ||
       [ -z "${TARGET_PRODUCT}" ] || [ "${1}" = '-h' ]; then
     echo '';
-    echo ' Usage: fboota [fastupl,flash,full,init,inject,push,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
+    echo ' Usage: fboota [fastupl,flash,full,inject,push,recovery,unsecure,zip] (Advanced bootimage builder)';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -80,22 +80,6 @@ function fboota()
   if [[ "${params}" == *'unsecure'* ]]; then
     bootimagedebuggable "${device}" true;
     echo '';
-  fi;
-
-  # Force init rebuild
-  if [[ "${params}" == *'init'* ]]; then
-    rm -rf "./out/target/product/${device}/obj/EXECUTABLES/init_intermediates";
-    rm -f "./out/target/product/${device}/root/init.real";
-    rm -f "./out/target/product/${device}/root/init";
-  fi;
-
-  # Sepolicies builder
-  if [[ "${params}" == *'sep'* ]]; then
-    if [ -d ./system/sepolicy ]; then
-      mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./system/sepolicy/;
-    else
-      mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./external/sepolicy/;
-    fi;
   fi;
 
   # Ramdisk files builder

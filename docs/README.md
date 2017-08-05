@@ -528,7 +528,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_helpers.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_tools.rc)
   ```
-  * [**fboota** *<b>\[Advanced bootimage builder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *fboota [fastupl,flash,full,init,inject,push,recovery,sep,unsecure,zip]*
+  * [**fboota** *<b>\[Advanced bootimage builder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *fboota [fastupl,flash,full,inject,push,recovery,unsecure,zip]*
   * [**fboot** *<b>\[fastboot bootimage flashed\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *fboot &lt;bootimage&gt;*
   * [**fboots** *<b>\[fastboot systemimage flashed\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *fboots &lt;system_img&gt;*
   * [**fbootr** *<b>\[Fastboot reboot\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc)
