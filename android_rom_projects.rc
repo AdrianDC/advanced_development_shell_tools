@@ -170,6 +170,13 @@ function androidprojectpatcher()
   fi;
 
   # ==========================================================
+  # Detect 'sync' input
+  if [ "${project_specific_inputs[*]}" = 'sync' ]; then
+    androidprojectsync "${project_name}";
+    return;
+  fi;
+
+  # ==========================================================
   # Detect 'unshallow' input
   if [ "${project_specific_inputs[*]}" = 'unshallow' ]; then
     androidprojectunshallow "${project_name}";
@@ -585,6 +592,42 @@ function androidprojectforeach()
 
     # Run commands
     ${2};
+
+  done;
+
+  # Return to repo root
+  croot;
+  echo '';
+}
+
+# === Android Project Sync ===
+function androidprojectsync()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: androidprojectsync <project_name> (Android project paths repo syncer)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local path;
+
+  # Android project remote paths list
+  for path in $(androidprojectpaths "${1}"); do
+
+    # Access path
+    croot;
+    cd "${path}";
+
+    # Information
+    echo '';
+    echo " androidproject: Syncing '${path}' path...";
+
+    # Fetch and reset
+    git fetch "$(repogetremote)" "$(repogetbranch)" 2>&1;
+    git reset --hard FETCH_HEAD;
 
   done;
 

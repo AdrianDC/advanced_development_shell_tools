@@ -747,6 +747,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**androidprojectpatcher** *<b>\[Android project patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectpatcher &lt;project_name&gt; [specific_path]*
   * [**androidprojectrebaser** *<b>\[Android project rebaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectrebaser &lt;upstream_repository_if_not_origin&gt; &lt;project_branch&gt; &lt;"project_paths::name::branch"&gt; [specific_path]*
   * [**androidprojectforeach** *<b>\[Android project paths commands runner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectforeach &lt;project_name&gt; &lt;"commands"&gt;*
+  * [**androidprojectsync** *<b>\[Android project paths repo syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectsync &lt;project_name&gt;*
   * [**androidprojectunshallow** *<b>\[Android project paths unshallower\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectunshallow &lt;project_name&gt;*
 
 ---
