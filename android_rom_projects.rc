@@ -160,12 +160,13 @@ function androidprojectpatcher()
 
   # ==========================================================
   # Automated key shortcut
-  local key_automated=;
+  local key_input=;
+  local key_automated_patch=;
   local key_automated_push=;
   if [[ "${project_specific_inputs[*]}" == 'a' ]] || \
       [[ "${project_specific_inputs[*]}" == 'y' ]] || \
       [[ "${project_specific_inputs[*]}" == 'n' ]]; then
-    key_automated=${project_specific_inputs[*]};
+    key_input=${project_specific_inputs[*]};
     project_specific_inputs=();
   fi;
 
@@ -252,30 +253,39 @@ function androidprojectpatcher()
     if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
       echo '';
       echo -n '  > Recreate onto newest changes [Y/n/a/l/p] ? ';
-      if [ -z "${key_automated}" ]; then
+      if [ -z "${key_input}" ]; then
         read -r -t 20 key;
       else
-        key=${key_automated};
+        key=${key_input};
       fi;
       if [ -z "${key}" ]; then
-        key_automated=y;
+        key_input=;
+        key_automated_patch=y;
         key_automated_push=;
       elif [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
-        key_automated=y;
+        key_input=a;
+        key_automated_patch=y;
         key_automated_push=y;
       elif [ "${key}" = 'n' ] || [ "${key}" = 'N' ]; then
-        key_automated=n;
+        key_input=;
+        key_automated_patch=n;
         key_automated_push=n;
       elif [ "${key}" = 'l' ] || [ "${key}" = 'L' ]; then
-        key_automated=y;
+        key_input=l;
+        key_automated_patch=y;
         key_automated_push=n;
       elif [ "${key}" = 'p' ] || [ "${key}" = 'P' ]; then
-        key_automated=n;
+        key_input=;
+        key_automated_patch=n;
         key_automated_push=y;
+      elif [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
+        key_input=;
+        key_automated_patch=y;
+        key_automated_push=;
       fi;
 
       # Rebase the tree
-      if [ "${key_automated}" = 'y' ]; then
+      if [ "${key_automated_patch}" = 'y' ]; then
 
         # Abort last cherry-pick
         echo '';
@@ -312,7 +322,7 @@ function androidprojectpatcher()
             echo '  < Automatic update failed...';
             echo "     Tried to add following commits: ${sha1} ${commits_todo}";
             echo '  > Manually fix then push with :';
-            echo "     gitbranchpusher '${key_automated}' '${project_github}' '${path_branch}';";
+            echo "     gitbranchpusher '${key_automated_patch}' '${project_github}' '${path_branch}';";
             echo '';
             return 1;
           fi;
