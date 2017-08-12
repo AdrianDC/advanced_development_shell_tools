@@ -166,7 +166,7 @@ function adbil()
 # === ADB File Installer Helpers ===
 alias adbi='adbro; adbif';
 
-# === ADB Filer Pusher ===
+# === ADB File Pusher ===
 function adbpf()
 {
   # Usage
@@ -358,6 +358,57 @@ function adbsiderom()
   if [ -z "${3}" ]; then
     echo -e '\e[1;32madbsiderom: Rebooting to Android\e[0m';
     adb shell reboot;
+    echo '';
+  fi;
+}
+
+# === ADB File Pusher and Installer ===
+function adbpi()
+{
+  # Usage
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: adbpi <file_path> (Automated file pusher and installer)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local apkname;
+  local filepath;
+  local filetarget;
+
+  # Set variables
+  filepath=$(readlink -f "${1}");
+
+  # Acquire root access
+  sudo echo -n '';
+  adbro;
+
+  # Detect /system/ file
+  if [[ "${filepath}" == *'/system/'* ]]; then
+
+    # Push file to device
+    echo '';
+    filetarget=/system/${filepath#*/system/};
+    adbpushfile "${filepath}" "${filetarget}";
+
+    # Optimize .apk application
+    if [ "${filetarget: -4}" = '.apk' ]; then
+      apkname=$(aapt d xmltree "${filepath}" AndroidManifest.xml | grep -i 'package=');
+      apkname=${apkname#*$'"'};
+      apkname=${apkname%%$'"'*};
+      if [ ! -z "${apkname}" ]; then
+        adbu "${apkname}";
+      else
+        echo '';
+      fi;
+    fi;
+
+  # Failed detection
+  else
+    echo '';
+    echo " adbpi: '${filepath}' could not be handled";
     echo '';
   fi;
 }
