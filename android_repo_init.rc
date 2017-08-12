@@ -367,6 +367,8 @@ function repoinit()
   local line_usage;
   local list_functions=('');
   local options;
+  local options_list;
+  local options_prepend;
   local search_branch;
   local search_repo;
 
@@ -435,6 +437,12 @@ function repoinit()
   ${list_functions[${key}]};
   echo -en "\e[0m";
 
+  # Get options list
+  options_list=$(${list_functions[${key}]} \
+               | grep 'Usage:');
+  options_list=${options_list#*[};
+  options_list=${options_list%]*};
+
   # Request branch input
   echo -en " \e[1;37m> Branch to track :\e[0m ";
   if [ -z "${search_branch}" ]; then
@@ -443,13 +451,31 @@ function repoinit()
     branch=${search_branch};
     echo "${branch}";
   fi;
+  echo '';
+
+  # Request referenced repo option
+  if [[ "${options_list}" == *'referenced'* ]]; then
+    echo -en " \e[1;37m> Referenced repository [y/N] :\e[0m ";
+    read -r options_prepend;
+    if [[ 'yY' == *"${options_prepend}"* ]]; then
+      options_prepend='referenced';
+      options_list=${options_list/referenced/};
+    else
+      options_prepend='';
+    fi;
+  fi;
+
+  # Cleanup options list
+  options_list=${options_list#,};
+  options_list=${options_list%,};
 
   # Request options input
-  echo -en " \e[1;37m> Options to use :\e[0m ";
+  echo -en " \e[1;37m> Options to use [${options_list}] :\e[0m ";
   if [ -z "${search_branch}" ] || [ -z "${ANDROID_REPO_INIT_OPTIONS}" ]; then
     read -r options;
+    options="${options_prepend},${options}";
   else
-    options=${ANDROID_REPO_INIT_OPTIONS};
+    options="${options_prepend},${ANDROID_REPO_INIT_OPTIONS}";
     echo "${options}";
   fi;
 
