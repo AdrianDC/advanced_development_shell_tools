@@ -376,21 +376,24 @@ function adbu()
   # Variables
   local pid;
 
-  # Introduction
+  # Debug target file
   echo '';
-  echo " [ Launching '${1}' ]";
-  echo '';
+  echo -e "\e[1;36m # '${1}' optimization";
 
-  # Optimize
-  echo '    Optimizing...';
+  # Optimize application
+  echo -en '\e[1;33m | Package optimizing... ';
   sudo adb shell pm force-dex-opt "${1}";
+  echo -e '\e[1;32mDone';
 
-  # Force close
-  echo '    Killing...';
+  # Killing application
+  echo -en '\e[1;33m | Killing application... ';
   sudo adb shell pkill "${1}";
   pid=$(sudo adb shell ps | grep "${1}" | awk '{ print $2 }');
   sudo adb shell kill "${pid}" > /dev/null;
-  echo '';
+  echo -e '\e[1;32mDone';
+
+  # Restore colours
+  echo -e '\e[0m';
 }
 
 # === ADB Git Commit Pusher ===
