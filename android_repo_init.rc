@@ -332,6 +332,11 @@ function repoinitsafecleaner()
   echo '';
   echo " repoinitsafecleaner: Searching for nested projects...";
 
+  # Detect missing project.list
+  if [ ! -f .repo/project.list ]; then
+    reposy bionic;
+  fi;
+
   # Detect nested projects causing sync issues
   cp .repo/project.list "${temp_list_grep}";
   while IFS= read -r path; do
