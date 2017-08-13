@@ -517,7 +517,7 @@ function adbbootpush()
   boot=$(androiddevicestarget boot);
 
   # Installer
-  "${adb}" push "${1}" /sdcard/boot.img;
+  ${adb} push "${1}" /sdcard/boot.img;
   adbsu "dd if=/dev/zero of=${boot}";
   adbsu "dd if=/sdcard/boot.img of=${boot}";
   adbsu 'rm -f /sdcard/boot.img';
