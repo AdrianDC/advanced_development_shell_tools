@@ -207,7 +207,6 @@ function fboota()
 function fboot()
 {
   # Variables
-  local adb;
   local bootimage;
 
   # Initialize variables
@@ -224,10 +223,11 @@ function fboot()
 
   # Reboot to bootloader
   sudo echo '';
-  adbro;
-  adbwait;
-  adb=$(adbcmd);
-  ${adb} reboot bootloader;
+  if timeout 3 sh -c "$(adbcmd) devices | grep -q 'recovery$\|device$'" 2> /dev/null; then
+    adbro;
+    adbwait;
+    $(adbcmd) reboot bootloader;
+  fi;
 
   # Flash bootimage and reboot
   sudo fastboot flash boot "${bootimage}";
