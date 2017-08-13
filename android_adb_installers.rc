@@ -324,20 +324,37 @@ function adbside()
 function adbsiderom()
 {
   # Usage
-  if [ -z "${1}" ] || [ ! -f "${2}" ]; then
+  if [ ! -f "${1}" ]; then
     echo '';
-    echo ' Usage: adbsiderom <device> <rom_zip> [boot_no_reboot] (adb sideload ROM with addons helper)';
+    echo ' Usage: adbsiderom <rom_zip> <device> [boot_no_reboot] (adb sideload ROM with addons helper)';
     echo '';
     return;
   fi;
 
+  # Variables
+  local rom_zip=${1};
+  local device=${2};
+  local no_reboot=${3};
+  local name;
+
+  # Detect missing device input automatically
+  if [ -z "${device}" ]; then
+    file_input=$(readlink -f "${file_input}");
+    for name in $(cd ~/'.bash_android.rom.addons/'; echo ''*); do
+      if [[ "${rom_zip}" == *"${name}"* ]]; then
+        device=${name};
+        break;
+      fi;
+    done;
+  fi;
+
   # ROM addons folder
-  if [ ! -d ~/".bash_android.rom.addons/${1}" ]; then
+  if [ -z "${device}" ] || [ ! -d ~/".bash_android.rom.addons/${device}" ]; then
     mkdir ~/".bash_android.rom.addons";
-    mkdir ~/".bash_android.rom.addons/${1}";
+    mkdir ~/".bash_android.rom.addons/${device}";
     echo '';
-    echo -e "\e[1;33madbsiderom: Fill the '~/.bash_android.rom.addons/${1}/' folder with zip Addons to flash after the ROM zip\e[0m";
-    diropen ~/".bash_android.rom.addons/${1}";
+    echo -e "\e[1;33madbsiderom: Fill the '~/.bash_android.rom.addons/${device}/' folder with zip Addons to flash after the ROM zip\e[0m";
+    diropen ~/".bash_android.rom.addons/${device}";
     echo '';
     echo -n ' adbsiderom: Press [Enter] to continue... ';
     read -r;
@@ -345,17 +362,17 @@ function adbsiderom()
 
   # Launch adbside with ROM zip
   echo '';
-  echo -e "\e[1;32madbsiderom: Flashing '$(basename "${2}")'\e[0m";
-  adbside "${2}";
+  echo -e "\e[1;32madbsiderom: Flashing '$(basename "${rom_zip}")' [${device}]\e[0m";
+  adbside "${rom_zip}";
 
   # Launch adbside for addons zip files
-  for file in ~/".bash_android.rom.addons/${1}/"*'.zip'; do
-    echo -e "\e[1;32madbsiderom: Flashing '$(basename "${file}")'\e[0m";
+  for file in ~/".bash_android.rom.addons/${device}/"*'.zip'; do
+    echo -e "\e[1;32madbsiderom: Flashing '$(basename "${file}")' [${device}]\e[0m";
     adbside "${file}";
   done;
 
   # Reboot to Android if requested
-  if [ -z "${3}" ]; then
+  if [ -z "${no_reboot}" ]; then
     echo -e '\e[1;32madbsiderom: Rebooting to Android\e[0m';
     adb shell reboot;
     echo '';
