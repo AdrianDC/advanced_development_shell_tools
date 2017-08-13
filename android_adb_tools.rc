@@ -41,13 +41,13 @@ function adbr()
 
   # Get root access and rw system
   adb_timeout="timeout 5 $(adbcmd)";
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   ${adb_timeout} 'root';
   sleep 2;
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   ${adb_timeout} 'remount';
   sleep 1;
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
 }
 
 # === ADB Root Checked Mounter ===
@@ -87,20 +87,20 @@ function adbro()
   # Get root access
   rootaccess=$(${adb_timeout} shell whoami);
   if [ "${rootaccess:0:4}" != 'root' ] && [ "${rootaccess:16:5}" != 'uid 0' ]; then
-    ${adb_timeout} 'wait-for-device';
+    adbwait;
     ${adb_timeout} 'root';
     sleep 2;
-    ${adb_timeout} 'wait-for-device';
+    adbwait;
   fi;
 
   # Get rw system
   systemmount=$(${adb_timeout} shell mount | grep '/system ');
   systemaccess=$(echo "${systemmount}" | grep rw);
   if [ ! -z "${systemmount}" ] && [ -z "${systemaccess}" ]; then
-    ${adb_timeout} 'wait-for-device';
+    adbwait;
     ${adb_timeout} 'remount';
     sleep 1;
-    ${adb_timeout} 'wait-for-device';
+    adbwait;
   fi;
 }
 
@@ -224,18 +224,18 @@ function adbco()
   echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
   ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";
   echo -e '\e[1;36mConnected...\e[0m';
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   echo -e '\e[1;36mGetting root access...\e[0m';
   ${adb_timeout} root;
   sleep 2;
   echo -e '\e[1;36mReconnecting...\e[0m';
   ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";
   echo -e '\e[1;36mConnected...\e[0m';
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   echo -e '\e[1;36mMounting as root...\e[0m';
   ${adb_timeout} remount;
   sleep 1;
-  ${adb_timeout} 'wait-for-device';
+  adbwait;
   echo -e '\e[1;36mReady...\e[0m';
   echo '';
 }

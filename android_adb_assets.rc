@@ -110,7 +110,9 @@ function adbkp()
   fi;
 
   # Kill process by name
-  adb 'wait-for-device'; adb root; adb 'wait-for-device';
+  adbwait;
+  adb root;
+  adbwait;
   adb shell ps | grep "${1}";
   pid=$(adb shell ps | grep "${1}" | awk '{ print $2 }');
   adb shell kill "${pid}";
@@ -126,7 +128,8 @@ function adbpk()
 
   # Android mediaserver debug logger
   pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
-  adb root; adb 'wait-for-device';
+  adb root;
+  adbwait;
   adb logcat -c;
   adb shell kill "${pid}";
   adb shell ps | grep mediaserver;
@@ -139,7 +142,8 @@ function adbms()
 
   # Android mediaserver debug stracer
   pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');
-  adb root; adb 'wait-for-device';
+  adb root;
+  adbwait;
   adb logcat -c;
   adb shell kill "${pid}";
   pid=$(adb shell ps | grep mediaserver | awk '{ print $2 }');

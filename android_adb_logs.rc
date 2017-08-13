@@ -208,7 +208,7 @@ function adbbootchart()
 
   # Listen for device
   echo ' Waiting for the device to boot...';
-  adb 'wait-for-device';
+  adbwait;
 
   # Wait for timeout or break
   echo -n ' Export Logs now ? [Enter] ';
