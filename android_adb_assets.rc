@@ -60,8 +60,13 @@ function sepaud()
 # === Sepolicies Message Extractor ===
 function sepmsg()
 {
+  # Fallback to sepaud without a context
+  if [ -z "${2}" ]; then
+    sepaud "${1}";
+  fi;
+
   # Usage
-  if [ ! -f "${1}" ] || [ -z "${2}" ]; then
+  if [ ! -f "${1}" ]; then
     echo '';
     echo ' Usage: sepmsg <logs_file> <context> [grep] (Logs sepolicy message extractor)';
     echo '';
