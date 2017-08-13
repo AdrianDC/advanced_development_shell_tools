@@ -312,6 +312,51 @@ function haste()
   rm "${tmp}";
 }
 
+# === Pastebin ===
+function pbin()
+{
+  # Usage: pbin <file> or | pbin (Share Pastebin logs)
+
+  # Variables
+  local tmp;
+  local token;
+  local url;
+
+  # Get output
+  tmp=$(mktemp);
+  if [ ! -z "${1}" ] && [ -f "${1}" ]; then
+    tee "${tmp}" < "${1}";
+  else
+    cat | tee "${tmp}";
+  fi;
+  echo '';
+
+  # Acquire token from Pastebin
+  token=$(curl -s 'https://pastebin.com' \
+        | grep 'csrf_token_post' \
+        | sed 's/.*name="csrf_token_post" value="\(.*\)".*/\1/')
+
+  # Upload to Pastebin
+  url=$(timeout 10 curl -X POST -s 'https://pastebin.com/post.php' \
+        -D - \
+        -F "csrf_token_post=${token}" \
+        -F "paste_code=<${tmp};type=text/plain" \
+        -F 'paste_expire_date=1D' \
+        -F 'paste_format=8' \
+        -F 'paste_private=1' \
+        -F 'submit_hidden=submit_hidden' \
+      | grep 'location');
+  url="http://pastebin.com/raw${url##*: }";
+  echo " pastebin: ${url}";
+
+  # Open url and delete temp file
+  xdg-open "${url}" &
+  echo '' &
+  sleep 1;
+  echo '';
+  rm "${tmp}";
+}
+
 # === Overlay Compare ===
 function overlaycompare()
 {
