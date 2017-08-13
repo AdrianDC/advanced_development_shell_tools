@@ -63,17 +63,18 @@ function sepmsg()
   # Usage
   if [ ! -f "${1}" ] || [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: sepmsg <logs_file> <context> (Logs sepolicy message extractor)';
+    echo ' Usage: sepmsg <logs_file> <context> [grep] (Logs sepolicy message extractor)';
     echo '';
     return;
   fi;
 
   # Run the logs sepolicy analyzer
-  sepaud "${1}" "${2}:";
+  sepaud "${1}" "${2}:" | grep "${3}";
 
   # Logs sepolicy message extractor
   echo '';
   grep -a "avc.*denied.*scontext=u:r:${2}:s0" "${1}" \
+      | grep "${3}" \
       | sed 's/.*avc: /avc: /g' \
       | sed 's/ permissive=.*//g' \
       | sed 's/\(comm\|ino\|ioctlcmd\)=\("\|\)[^ ]*\("\|\) //g' \
