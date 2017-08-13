@@ -83,6 +83,8 @@ function sepmsg()
       | sed 's/.*avc: /avc: /g' \
       | sed 's/ permissive=.*//g' \
       | sed 's/\(comm\|ino\|ioctlcmd\)=\("\|\)[^ ]*\("\|\) //g' \
+      | sed 's/ path="socket:\[[^ ]*\]"//g' \
+      | sort \
       | uniq \
       | fold -w 70 -s \
       | sed 's/^/    /g' \
