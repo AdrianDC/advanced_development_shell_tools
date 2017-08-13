@@ -815,6 +815,96 @@ function makesep()
   cd "${cwd}/";
 }
 
+# === Ramdisk Files Injector ===
+function adbramdiskinject()
+{
+  # Variables
+  local adb_cmd;
+  local adb_tmpdir;
+  local file_name;
+  local file_path;
+  local files_paths=("${@}");
+
+  # Usage
+  if [ -z "${files_paths[*]}" ]; then
+    echo '';
+    echo '  Usage: adbramdiskinject <files_paths> (Ramdisk files to boot partition injector)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local partitiontarget=;
+  partitiontarget=$(androiddevicestarget boot);
+
+  # Give adb root permissions
+  adbwait;
+  adbro;
+
+  # Initialize variables
+  adb_cmd=$(adbcmd);
+
+  # Check if '/tmp' exists
+  if [ ! -z "$(${adb_cmd} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/tmp;
+
+  # Check if '/data/local/tmp' exists
+  elif [ ! -z "$(${adb_cmd} shell 'if [ -d /data/local/tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/data/local/tmp;
+  else
+    echo '';
+    echo '  adbramdiskinject: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Prepare temporary folder
+  adbsu "rm -rf ${adb_tmpdir}/inject";
+  adbsu "mkdir -p '${adb_tmpdir}/inject'";
+
+  # Push and fix permissions of 'bbootimg'
+  ${adb_cmd} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/inject/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/inject/bbootimg";
+
+  # Bootimage extraction
+  adbsu "cd ${adb_tmpdir}/inject/; ${adb_tmpdir}/inject/bbootimg -x ${partitiontarget}";
+
+  # Unpack gzip ramdisk
+  adbsu "mv ${adb_tmpdir}/inject/initrd.img ${adb_tmpdir}/inject/initrd.cpio.gz";
+  adbsu "gzip -d ${adb_tmpdir}/inject/initrd.cpio.gz";
+
+  # Unpack cpio ramdisk
+  adbsu "mkdir -p ${adb_tmpdir}/inject/ramdisk";
+  adbsu "cd ${adb_tmpdir}/inject/ramdisk/; cpio -i -F ../initrd.cpio; rm -f ../initrd.cpio";
+
+  # Push files to target
+  echo '';
+  for file_path in "${files_paths[@]}"; do
+    file_name=$(basename "${file_path}");
+    adbpushfile "${file_path}" "${adb_tmpdir}/inject/ramdisk/${file_name}";
+  done;
+
+  # Repack cpio ramdisk
+  adbsu "cd ${adb_tmpdir}/inject/ramdisk/; find . | cpio -o -H newc -F ../initrd.cpio";
+
+  # Repack gzip ramdisk
+  adbsu "gzip -9 ${adb_tmpdir}/inject/initrd.cpio";
+  adbsu "mv ${adb_tmpdir}/inject/initrd.cpio.gz ${adb_tmpdir}/inject/initrd.img";
+
+  # Bootimage information
+  adbsu "${adb_tmpdir}/inject/bbootimg -i ${partitiontarget}";
+
+  # Ramdisk injection
+  adbsu "${adb_tmpdir}/inject/bbootimg -u ${partitiontarget} -r ${adb_tmpdir}/inject/initrd.img";
+
+  # Cleanup temp folder
+  adbsu "rm -rf ${adb_tmpdir}/inject";
+
+  # Reboot the device
+  ${adb_cmd} reboot;
+  echo '';
+}
+
 # === Bootimage Debuggable ===
 function bootimagedebuggable()
 {
