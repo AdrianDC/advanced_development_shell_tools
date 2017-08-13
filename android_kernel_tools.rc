@@ -776,7 +776,7 @@ function bootzip()
 # === Make Sepolicy ===
 function makesep()
 {
-  # Usage: makesep (Compile sepolicies clean)
+  # Usage: makesep [bool_inject] (Compile sepolicies clean)
 
   # Variables
   local cwd;
@@ -785,6 +785,11 @@ function makesep()
   # Access repo root
   cwd=$(pwd);
   croot;
+
+  # Prepare optional sepolicies injection
+  if [ ! -z "${1}" ]; then
+    adbro;
+  fi;
 
   # Cleanup ramdisk files
   out_device_path=./out/target/product/$(repogetdevice);
@@ -807,6 +812,11 @@ function makesep()
     mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./system/sepolicy/;
   else
     mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./external/sepolicy/;
+  fi;
+
+  # Optionally inject sepolicies to device
+  if [ ! -z "${1}" ]; then
+    sepinject "${out_device_path}/root";
   fi;
 
   # Restore build environment and path
