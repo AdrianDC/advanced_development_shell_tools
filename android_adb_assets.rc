@@ -88,7 +88,7 @@ function sepmsg()
       | uniq \
       | fold -w 70 -s \
       | sed 's/^/    /g' \
-      | sed 's/.*avc: denied/ * denied/g';
+      | sed 's/.*avc:[ ]\{1,2\}denied[ ]\{1,2\}/ * denied /g';
   echo '';
 }
 
