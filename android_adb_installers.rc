@@ -269,19 +269,23 @@ function adbside()
     return;
   fi;
 
+  # Variables
+  local adb_cmd;
+
   # Initialize adb
   echo '';
-  adb devices;
+  adb_cmd=$(adbcmd);
+  ${adb_cmd} devices;
 
   # Reboot to recovery if needed
-  if ! timeout 2 sh -c "adb devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
+  if ! timeout 2 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
     echo -e '\e[1;33madbside: Rebooting to recovery\e[0m';
-    adb reboot recovery;
+    ${adb_cmd} reboot recovery;
   fi;
 
   # Wait for an adb recovery
   while true; do
-    if timeout .5 sh -c "adb devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
+    if timeout .5 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
       break;
     fi;
     echo -e '\e[1;33madbside: Waiting for recovery or sideload\e[0m';
@@ -290,22 +294,22 @@ function adbside()
 
   # Wait for an adb sideload
   while true; do
-    if timeout .5 sh -c "adb devices | grep -q 'sideload'" 2> /dev/null; then
+    if timeout .5 sh -c "${adb_cmd} devices | grep -q 'sideload'" 2> /dev/null; then
       break;
     fi;
 
     # Start twrp sideload
     echo -e '\e[1;33madbside: Waiting for sideload\e[0m';
-    adb shell twrp sideload;
+    ${adb_cmd} shell twrp sideload;
     sleep 2;
   done;
 
   # Sideload the file
-  adb sideload "${1}";
+  ${adb_cmd} sideload "${1}";
 
   # Wait for an adb recovery
   while true; do
-    if timeout .5 sh -c "adb devices | grep -q 'recovery'" 2> /dev/null; then
+    if timeout .5 sh -c "${adb_cmd} devices | grep -q 'recovery'" 2> /dev/null; then
       break;
     fi;
     echo -e '\e[1;33madbside: Waiting for recovery\e[0m';
@@ -315,7 +319,7 @@ function adbside()
   # Reboot to Android if requested
   if [ ! -z "${2}" ]; then
     echo -e '\e[1;33madbside: Rebooting to Android\e[0m';
-    adb shell reboot;
+    ${adb_cmd} shell reboot;
   fi;
   echo '';
 }
@@ -374,7 +378,7 @@ function adbsiderom()
   # Reboot to Android if requested
   if [ -z "${no_reboot}" ]; then
     echo -e '\e[1;32madbsiderom: Rebooting to Android\e[0m';
-    adb shell reboot;
+    $(adbcmd) shell reboot;
     echo '';
   fi;
 }
