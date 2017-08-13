@@ -164,7 +164,7 @@ function adbwait()
   local adb_timeout;
 
   # Get root access and rw system
-  adb_timeout="timeout 10 $(adbcmd)";
+  adb_timeout="timeout --signal=SIGKILL 10 $(adbcmd)";
   ${adb_timeout} 'wait-for-device';
 }
 
