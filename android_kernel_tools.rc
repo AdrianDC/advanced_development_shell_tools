@@ -815,6 +815,38 @@ function makesep()
   cd "${cwd}/";
 }
 
+# === Sepolicies Injector ===
+function sepinject()
+{
+  # Variables
+  local device;
+  local root_path=${1};
+
+  # Get device name
+  device=$(repogetdevice);
+
+  # Detect root files
+  if [ -z "${root_path}" ]; then
+    if [ -f "./out/target/product/${device}/root/sepolicy" ]; then
+      root_path=./out/target/product/${device}/root;
+    fi;
+  fi;
+
+  # Check if files exists
+  root_path=$(readlink -e "${root_path}");
+
+  # Usage
+  if [ -z "${root_path}" ] || [ ! -f "${root_path}/sepolicy" ]; then
+    echo '';
+    echo '  Usage: sepinject <root_path> (Sepolicies files to boot partition injector)';
+    echo '';
+    return;
+  fi;
+
+  # Injector ramdisk files
+  adbramdiskinject "${root_path}/file_contexts"* "${root_path}/"*'_contexts' "${root_path}/sepolicy";
+}
+
 # === Ramdisk Files Injector ===
 function adbramdiskinject()
 {
