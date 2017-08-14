@@ -593,6 +593,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_release_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc)&nbsp;]
   * [**outdevcl** *<b>\[Advanced ROM output cleaner for rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *outdevcl &lt;devicename&gt;*
   * [**outbootdevcl** *<b>\[ROM output cleaner for bootimage rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *outbootdevcl &lt;devicename&gt;*
+  * [**outsepdevcl** *<b>\[ROM output cleaner for sepolicies rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *outsepdevcl &lt;devicename&gt;*
   * [**noninja** *<b>\[Run command without ninja\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *noninja &lt;command...&gt;*
   * [**mmo** *<b>\[Build module without ninja\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *mmo &lt;command...&gt;*
   * [**mmi** *<b>\[Build & install module without ninja\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *mmi &lt;command...&gt;*

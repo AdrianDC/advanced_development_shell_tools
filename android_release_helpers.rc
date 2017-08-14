@@ -84,6 +84,32 @@ function outbootdevcl()
   rm -rfv "${out_device_path}/root";
 }
 
+# === ROM Output Sepolicies Cleaner ===
+function outsepdevcl()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: outsepdevcl <devicename> (ROM output cleaner for sepolicies rebuilds)';
+    echo '';
+    return;
+  fi;
+
+  # Out path
+  out_device_path=./out/target/product/${1};
+
+  # Cleanup ramdisk files
+  rm -fv "${out_device_path}/root/file_contexts"*;
+  rm -fv "${out_device_path}/root/"*"_contexts";
+  rm -fv "${out_device_path}/root/sepolicy";
+  rm -fv "${out_device_path}/combinedroot/file_contexts"*;
+  rm -fv "${out_device_path}/combinedroot/"*"_contexts";
+  rm -fv "${out_device_path}/combinedroot/sepolicy";
+  rm -fv "${out_device_path}/recovery/root/file_contexts"*;
+  rm -fv "${out_device_path}/recovery/root/"*"_contexts";
+  rm -fv "${out_device_path}/recovery/root/sepolicy";
+}
+
 # === Ninja Disabler ===
 function noninja()
 {
