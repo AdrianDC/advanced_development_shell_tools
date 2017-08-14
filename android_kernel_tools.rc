@@ -31,7 +31,7 @@ function fboota()
   if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] ||
       [ -z "${TARGET_PRODUCT}" ] || [ "${1}" = '-h' ]; then
     echo '';
-    echo ' Usage: fboota [fastupl,flash,full,inject,push,recovery,unsecure,zip] (Advanced bootimage builder)';
+    echo ' Usage: fboota [fastupl,flash,full,inject,push,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -73,7 +73,11 @@ function fboota()
   fi;
 
   # Output cleaner
-  outbootdevcl "${device}";
+  if [[ "${params}" == *'sep'* ]]; then
+    outsepdevcl "${device}";
+  else
+    outbootdevcl "${device}";
+  fi;
   echo '';
 
   # Unsecure adb changes
