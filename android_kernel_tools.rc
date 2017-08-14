@@ -87,13 +87,15 @@ function fboota()
   export USE_SOONG_UI=false;
 
   # Ramdisk common files builder
-  device_common=$(cat './device/'*"/${device}/device.mk" \
-                | grep 'inherit-product' \
-                | grep 'device' \
-                | grep -v 'gps' \
-                | sed 's/.*\(device.*\)\/[^\/]*)/\1/');
-  if [ ! -z "${device_common}" ]; then
-    mmm "./${device_common}/rootdir/";
+  if [[ "${params}" == *'full'* ]]; then
+    device_common=$(cat './device/'*"/${device}/device.mk" \
+                  | grep 'inherit-product' \
+                  | grep 'device' \
+                  | grep -v 'gps' \
+                  | sed 's/.*\(device.*\)\/[^\/]*)/\1/');
+    if [ ! -z "${device_common}" ]; then
+      mmm "./${device_common}/rootdir/";
+    fi;
   fi;
 
   # Recoveryimage builder
