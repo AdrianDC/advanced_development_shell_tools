@@ -780,6 +780,7 @@ function makesep()
 
   # Variables
   local cwd;
+  local device;
   local out_device_path;
 
   # Access repo root
@@ -791,17 +792,12 @@ function makesep()
     adbro;
   fi;
 
+  # Initialize variables
+  device=$(repogetdevice);
+  out_device_path=./out/target/product/${device};
+
   # Cleanup ramdisk files
-  out_device_path=./out/target/product/$(repogetdevice);
-  rm -f "${out_device_path}/root/file_contexts"*;
-  rm -f "${out_device_path}/root/"*"_contexts";
-  rm -f "${out_device_path}/root/sepolicy";
-  rm -f "${out_device_path}/combinedroot/file_contexts"*;
-  rm -f "${out_device_path}/combinedroot/"*"_contexts";
-  rm -f "${out_device_path}/combinedroot/sepolicy";
-  rm -f "${out_device_path}/recovery/root/file_contexts"*;
-  rm -f "${out_device_path}/recovery/root/"*"_contexts";
-  rm -f "${out_device_path}/recovery/root/sepolicy";
+  outsepdevcl "${device}";
 
   # Disable build environment
   export USE_NINJA=false;
