@@ -494,6 +494,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**fe** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *fileedit*
   * [**fen** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *FILEEDIT_TOUCH_NEW_FILE=true fileedit*
   * [**diropen** *<b>\[Directory opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *diropen &lt;path&gt;*
+  * [**dop** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *diropen .*
 
 ---
 ### [&nbsp;Documentation: [android_kernel_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)  - Standalone Import Ready&nbsp;]

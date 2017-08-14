@@ -110,3 +110,6 @@ function diropen()
     cd "${1}";
   fi;
 }
+
+# === Directory Opener Shortcut ===
+alias dop='diropen .';
