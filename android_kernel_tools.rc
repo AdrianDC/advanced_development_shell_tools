@@ -51,10 +51,15 @@ function fboota()
   local tmpfile;
 
   # Initialize variables
-  adbwait;
   cwd=$(pwd);
   device=$(repogetdevice);
   tmpfile=$(mktemp);
+
+  # If adb required, initialize adb
+  if [[ "${params}" == *'full'* ]] || [[ "${params}" == *'inject'* ]] || [[ "${params}" == *'push'* ]]; then
+    adbwait;
+    adbro;
+  fi;
 
   # Build environment
   croot;
