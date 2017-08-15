@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
 
 # === Grep Helpers ===
@@ -48,6 +49,36 @@ function grepbs()
   done;
 }
 alias gs='grepbs';
+
+# === Grep Binaries Editor ===
+function gce()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gce <inputs> (Grep and edit through sources and binaries)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local files=();
+  local strings_params;
+
+  # Grep through files
+  strings_params="strings $(stringsparams)";
+  for file in $(find . -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
+    if [ -f "${file}" ]; then
+      found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+      if [ ! -z "${found}" ]; then
+        files+=("${file}");
+      fi;
+    fi;
+  done;
+
+  # Edit found files
+  fileedit "${files[@]}";
+}
 
 # === Grep Kernel Configurations ===
 function gck()
