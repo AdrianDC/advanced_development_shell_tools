@@ -382,3 +382,30 @@ function overlaycompare()
 
   done < <(find "${@}" -type f);
 }
+
+# === Work In Progress Shortcuts ===
+function wip()
+{
+  # Usage
+  if [ -z "${*}" ] && [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WIP}" ]; then
+    echo '';
+    echo ' Usage: wip [commands to store] (Work in progress commands to store and use)';
+    echo '';
+    return;
+  fi;
+
+  # Input given, save commands
+  if [ ! -z "${*}" ]; then
+    ANDROID_DEVELOPMENT_SHELL_TOOLS_WIP=${*};
+    echo '';
+    echo -e " \e[1;33mwip: Stored\e[0m '${ANDROID_DEVELOPMENT_SHELL_TOOLS_WIP}'. \e[1;33mUse 'wip' to run the commands\e[0m";
+    echo '';
+
+  # No input, run commands
+  else
+    echo '';
+    echo -e " \e[1;33mwip: Running\e[0m '${ANDROID_DEVELOPMENT_SHELL_TOOLS_WIP}'...";
+    echo '';
+    ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WIP};
+  fi;
+}
