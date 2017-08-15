@@ -38,7 +38,7 @@ function fboota()
   fi;
 
   # Variables
-  local adb;
+  local adb_cmd;
   local bootimg;
   local cwd;
   local device;
@@ -51,7 +51,6 @@ function fboota()
   local tmpfile;
 
   # Initialize variables
-  adb=$(adbcmd);
   adbwait;
   cwd=$(pwd);
   device=$(repogetdevice);
@@ -173,12 +172,13 @@ function fboota()
       # Give adb root permissions
       adbwait;
       adbro;
+      adb_cmd=$(adbcmd);
 
       # Push the kernel modules
       adbsu "rm -rf '/system/lib/modules/'";
       for module in ${modules[*]}; do
         module_file=$(basename "${module}");
-        ${adb} push "${module}" "/system/lib/modules/${module_file}";
+        ${adb_cmd} push "${module}" "/system/lib/modules/${module_file}";
       done;
     fi;
 
@@ -190,9 +190,13 @@ function fboota()
     # Export to external usage
     export PACKAGE_RESULT=${bootimg};
 
-    # Reboot to bootloader
+    # Give adb root permissions
     adbwait;
-    ${adb} reboot bootloader;
+    adbro;
+    adb_cmd=$(adbcmd);
+
+    # Reboot to bootloader
+    ${adb_cmd} reboot bootloader;
 
     # Flash new boot
     timeout 20 sudo fastboot flash boot "${bootimg}";
