@@ -229,7 +229,7 @@ function romautorelease()
   if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
     echo '';
     echo ' romautorelease: Cleaning out product folder...';
-    rm -rfv out/target/product &> /dev/null;
+    rm -rfv "out/target/product/${rom_target}" &> /dev/null;
     echo '';
   fi;
 
