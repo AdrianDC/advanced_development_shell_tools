@@ -95,6 +95,7 @@ alias gitpan='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername
 alias gitpat='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) twrp';
 alias gitpo='gitremoteverify origin false && gitpu origin';
 alias gitpom='gitremoteverify origin false && gitpu origin master';
+alias gitpon='gitremoteverify next gitraon && gitpu next lineage-15.0_master';
 alias gitpp='gitremoteverify project gitrap && gitpu project';
 alias gitppm='gitremoteverify project gitrap && gitpu project master';
 alias gitppriv='gitremoteverify private false && gitpu private';
