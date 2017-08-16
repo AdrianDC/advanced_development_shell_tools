@@ -330,6 +330,7 @@ function shtools-()
   while [ ! "${key}" = '0' ] && [ ! "${key}" = 'q' ]; do
 
     # Function header
+    echo '';
     echo -e " \e[1;37m[ Android Development Shell Tools - Options ]\e[0m";
     echo '';
 
@@ -337,7 +338,7 @@ function shtools-()
     cnt=0;
     list_functions=('');
 
-    # Display shtools-* menu
+    # Display shtools-* active options
     for line_function in $(typeset -F | grep 'shtools-' | cut -d' ' -f 3 \
                          | grep -v '^shtools-$' \
                          | grep '\-enable$'); do
@@ -363,10 +364,10 @@ function shtools-()
     done;
 
     # Detected active options
-    if [ "${cnt}" -ne 1 ]; then
+    if [ "${cnt}" -ne 0 ]; then
       echo '';
-      cnt=0;
     fi;
+    cnt=0;
 
     # Display exit item
     echo -e "  \e[1;33m0: \e[1;37mKeep current options \e[1;32m[Exit the configuration]\e[0m";
