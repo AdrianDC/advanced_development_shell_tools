@@ -18,7 +18,7 @@
 # === LegacyXperia Automatic Releaser ===
 function autoreleaselegacyxperia()
 {
-  # Usage: autoreleaselegacyxperia [devices] [bool_unpatched] (Automated LegacyXperia 7x30 releaser)
+  # Usage: autoreleaselegacyxperia [devices] (Automated LegacyXperia 7x30 releaser)
 
   # AndroidDev
   cdand;
@@ -33,15 +33,13 @@ function autoreleaselegacyxperia()
   local devices=${1:-anzu haida coconut urushi smultron mango hallon iyokan satsuma zeus phoenix};
 
   # Access project repository and when option enabled, sync tree
-  if ! pathchanged cdlineage lx && ! shtools-builds-nosync-active && [ -z "${2}" ]; then
+  if ! pathchanged cdlineage lx && ! shtools-builds-nosync-active; then
     reposy;
   fi;
 
   # Patch project
-  if [ -z "${2}" ]; then
-    if ! lineagelxpatcher; then
-      return;
-    fi;
+  if ! lineagelxpatcher; then
+    return;
   fi;
 
   # Force clean option
