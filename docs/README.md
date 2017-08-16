@@ -441,6 +441,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitremoteverify** *<b>\[Git remote verifier\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteverify &lt;remote_name&gt; "command_to_run_if_missing"*
   * [**gitraa** *<b>\[Add GitHub Username remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)
   * [**gitrai** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteadaptset 'aicp' 'AICP' 'android_'*
+  * [**gitraon** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteadaptset 'next' 'lineage-next'*
   * [**gitraoo** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteadaptset 'origin' "${1}"*
   * [**gitraot** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteadaptset 'origin' 'TheMuppets'*
   * [**gitrat** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteadaptset 'twrp' 'TeamWin'*
