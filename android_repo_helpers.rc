@@ -453,7 +453,7 @@ function reposwitcher()
     # Generate symlink to local_manifests folder
     echo -n ' ';
     rm -fv .repo/local_manifests;
-    ln -fsv ${folder} .repo/local_manifests;
+    ln -fsv "${folder}" .repo/local_manifests;
     echo '';
 
     # Generate out specific folder
@@ -465,7 +465,7 @@ function reposwitcher()
     # Generate symlink to out folder
     echo -n ' ';
     rm -fv out;
-    ln -fsv ${out} out;
+    ln -fsv "${out}" out;
     echo '';
 
   # Delete otherwise
