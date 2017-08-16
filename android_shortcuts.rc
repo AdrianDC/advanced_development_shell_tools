@@ -288,3 +288,4 @@ function meldril()
 function cdmromboot()  { croot; cd ./system/extras/libbootimg/; }
 function cdmromcore()  { croot; cd ./system/extras/multirom/; }
 function cdrecovery()  { croot; cd ./bootable/recovery/; }
+function cdsepolicy()  { croot; cd ./system/sepolicy/; }

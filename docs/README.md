@@ -810,6 +810,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdmromboot** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/extras/libbootimg/*
   * [**cdmromcore** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/extras/multirom/*
   * [**cdrecovery** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./bootable/recovery/*
+  * [**cdsepolicy** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/sepolicy/*
 
 ---
 ### [&nbsp;Documentation: [android_ssh_remote.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_ssh_remote.rc)&nbsp;]
