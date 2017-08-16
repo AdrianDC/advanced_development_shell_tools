@@ -118,7 +118,7 @@ function romautorelease()
 
   # When option enabled, use debuggable bootimages
   if shtools-builds-debug-active; then
-    bootimagedebuggable "${rom_device}" true;
+    bootimagedebuggable "${rom_target}" true;
     export WITH_SU=true;
   fi;
 
@@ -135,7 +135,7 @@ function romautorelease()
 
   # Delete the devices relevant results
   elif [[ ! "${rom_params}" == *'nowipe'* ]]; then
-    outdevcl "${rom_device}";
+    outdevcl "${rom_target}";
   fi;
 
   # When option enabled, clean RAM before build
@@ -196,12 +196,12 @@ function romautorelease()
 
   # When option enabled, use debuggable bootimages
   if shtools-builds-debug-active; then
-    bootimagedebuggable "${rom_device}" false;
+    bootimagedebuggable "${rom_target}" false;
     export WITH_SU=;
   fi;
 
   # Notify build result
-  pushbrom "${rom_device}" "${rom_tag}";
+  pushbrom "${rom_target}" "${rom_tag}";
 
   # Upload ROM when not working locally
   if ! shtools-builds-local-active; then
