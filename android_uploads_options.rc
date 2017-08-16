@@ -19,16 +19,19 @@
 function shtools-uploads-basketbuild-enable()
 {
   # Usage: shtools-uploads-basketbuild-enable (Enable optional BasketBuild uploads)
+  __shtoolsoptions 'shtools-uploads-basketbuild-' 'enable';
   export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=true;
 }
 function shtools-uploads-basketbuild-disable()
 {
   # Usage: shtools-uploads-basketbuild-disable (Disable optional BasketBuild uploads)
+  __shtoolsoptions 'shtools-uploads-basketbuild-' 'disable';
   export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=;
 }
 function shtools-uploads-basketbuild-active()
 {
   # Usage: shtools-uploads-basketbuild-active (Get optional BasketBuild uploads)
+  __shtoolsoptions 'shtools-uploads-basketbuild-';
   [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD}" ];
 }
 
@@ -36,16 +39,19 @@ function shtools-uploads-basketbuild-active()
 function shtools-uploads-ftp-enable()
 {
   # Usage: shtools-uploads-ftp-enable (Enable optional FTP uploads)
+  __shtoolsoptions 'shtools-uploads-ftp-' 'enable';
   export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP=true;
 }
 function shtools-uploads-ftp-disable()
 {
   # Usage: shtools-uploads-ftp-disable (Disable optional FTP uploads)
+  __shtoolsoptions 'shtools-uploads-ftp-' 'disable';
   export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP=;
 }
 function shtools-uploads-ftp-active()
 {
   # Usage: shtools-uploads-ftp-active (Get optional FTP uploads)
+  __shtoolsoptions 'shtools-uploads-ftp-';
   [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP}" ];
 }
 
@@ -53,15 +59,18 @@ function shtools-uploads-ftp-active()
 function shtools-uploads-mega-enable()
 {
   # Usage: shtools-uploads-mega-enable (Enable optional Mega.nz uploads)
+  __shtoolsoptions 'shtools-uploads-mega-' 'enable';
   export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA=true;
 }
 function shtools-uploads-mega-disable()
 {
   # Usage: shtools-uploads-mega-disable (Disable optional Mega.nz uploads)
+  __shtoolsoptions 'shtools-uploads-mega-' 'disable';
   export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA=;
 }
 function shtools-uploads-mega-active()
 {
   # Usage: shtools-uploads-mega-active (Get optional Mega.nz uploads)
+  __shtoolsoptions 'shtools-uploads-mega-';
   [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA}" ];
 }
