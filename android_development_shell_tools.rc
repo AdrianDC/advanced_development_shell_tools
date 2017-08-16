@@ -417,6 +417,59 @@ function shtools-()
   done;
 }
 
+# === Android Development Shell Tools Options ===
+function __shtoolsoptions()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: __shtoolsoptions <option_prefix> [option_set] (Settings holder for android_development_shell_tools)';
+    echo '';
+    return;
+  fi;
+
+  # Filter iterative calls
+  if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD}" ]; then
+    return;
+  fi;
+
+  # Variables
+  local option_command;
+  local options_file=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android_development_shell_tools.rc;
+
+  # Store given input option
+  if [ ! -z "${2}" ]; then
+
+    # Create initial empty configuration
+    if [ ! -f "${options_file}" ]; then
+      { echo '#!/bin/bash';
+        echo '#';
+        echo '# Android Development Shell Tools - Options';
+        echo '#'; } > "${options_file}";
+    fi;
+
+    # Update existing option
+    if grep -q "${1}" "${options_file}"; then
+      sed -i "s/${1}.*/${1}${2}/" "${options_file}";
+
+    # Define new option
+    else
+      echo "${1}${2}" >> "${options_file}";
+    fi;
+
+  # Acquire current options
+  else
+    if [ -f "${options_file}" ]; then
+      option_command=$(grep "${1}" "${options_file}");
+      if [ ! -z "${option_command}" ]; then
+        export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=true;
+        ${option_command};
+        export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=;
+      fi;
+    fi;
+  fi;
+}
+
 # === Android Development Shell Tools Stats ===
 function shtoolsstats()
 {
