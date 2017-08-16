@@ -172,7 +172,7 @@ function autoreleasecafsony8960()
 function autoreleaseaospsony8960master()
 {
   # Usage
-  if [ -z "${1}" ]; then
+  if [ -z "${*}" ]; then
     echo '';
     echo ' Usage: autoreleaseaospsony8960master <devices> (Automated AOSP Master Sony 8960 releaser)';
     echo '';
@@ -180,14 +180,14 @@ function autoreleaseaospsony8960master()
   fi;
 
   # Launch internal releaser
-  __autoreleaseaospsony8960dev 'master' "${1}";
+  __autoreleaseaospsony8960dev 'master' "${@}";
 }
 
 # === AOSP 8960 O Automatic Releaser ===
 function autoreleaseaospsony8960o()
 {
   # Usage
-  if [ -z "${1}" ]; then
+  if [ -z "${*}" ]; then
     echo '';
     echo ' Usage: autoreleaseaospsony8960o <devices> (Automated AOSP O Sony 8960 releaser)';
     echo '';
@@ -195,14 +195,14 @@ function autoreleaseaospsony8960o()
   fi;
 
   # Launch internal releaser
-  __autoreleaseaospsony8960dev 'o' "${1}";
+  __autoreleaseaospsony8960dev 'o' "${@}";
 }
 
 # === AOSP 8960 Development Automatic Releaser ===
 function __autoreleaseaospsony8960dev()
 {
   # Usage
-  if [ -z "${1}" ] || [ -z "${2}" ]; then
+  if [ -z "${1}" ] || [ -z "${*:2}" ]; then
     echo '';
     echo ' Usage: __autoreleaseaospsony8960dev <branch_tag> <devices> (Automated AOSP Development Sony 8960 releaser)';
     echo '';
@@ -211,7 +211,7 @@ function __autoreleaseaospsony8960dev()
 
   # Variables
   local branch_tag=${1};
-  local devices=${2};
+  local devices=${*:2};
 
   # AndroidDev
   cdand;
