@@ -328,7 +328,7 @@ function adbside()
 function adbsiderom()
 {
   # Usage
-  if [ ! -f "${1}" ]; then
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
     echo '';
     echo ' Usage: adbsiderom <rom_zip_or_bootimage> <device> [boot_no_reboot] (adb sideload ROM with addons helper)';
     echo '';
@@ -352,8 +352,14 @@ function adbsiderom()
     done;
   fi;
 
+  # Device not identified, present usage
+  if [ -z "${device}" ]; then
+    adbsiderom '';
+    return;
+  fi;
+
   # ROM addons folder
-  if [ -z "${device}" ] || [ ! -d ~/".bash_android.rom.addons/${device}" ]; then
+  if [ ! -d ~/".bash_android.rom.addons/${device}" ]; then
     mkdir ~/".bash_android.rom.addons";
     mkdir ~/".bash_android.rom.addons/${device}";
     echo '';
