@@ -24,7 +24,7 @@ function autoreleaseaospsodp8996()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
+  if ! shtools-builds-nosync-active && [ -z "${*}" ]; then
     cdaosp;
     reposy;
   fi;
@@ -40,7 +40,7 @@ function autoreleaseaospsodp8996()
   fi;
 
   # Devices to build
-  local devices=${1:-dora};
+  local devices=${*:-dora};
 
   # Walk through devices
   for device in ${devices}; do

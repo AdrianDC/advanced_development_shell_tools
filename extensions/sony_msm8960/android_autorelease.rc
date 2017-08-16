@@ -24,13 +24,13 @@ function autoreleaseaospsony8960()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
+  if ! shtools-builds-nosync-active && [ -z "${*}" ]; then
     cdaosp;
     reposy;
   fi;
 
   # Devices to build
-  local devices=${1:-huashan mint hayabusa tsubasa};
+  local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Walk through devices
   for device in ${devices}; do
@@ -71,7 +71,7 @@ function autoreleaselineagesony8960()
   fi;
 
   # Devices to build
-  local devices=${1:-huashan mint hayabusa tsubasa};
+  local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Walk through devices
   for device in ${devices}; do
@@ -114,7 +114,7 @@ function autoreleaserrsony8960()
   fi;
 
   # Devices to build
-  local devices=${1:-huashan mint hayabusa tsubasa nicki};
+  local devices=${*:-huashan mint hayabusa tsubasa nicki};
 
   # Walk through devices
   for device in ${devices}; do
@@ -152,7 +152,7 @@ function autoreleasecafsony8960()
   fi;
 
   # Devices to build
-  local devices=${1:-huashan mint hayabusa tsubasa};
+  local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Walk through devices
   for device in ${devices}; do
