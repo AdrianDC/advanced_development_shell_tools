@@ -317,6 +317,7 @@ function shtools-()
   # Usage: shtools- (Options menu for android_development_shell_tools)
 
   # Variables
+  local active;
   local cnt;
   local key;
   local line_function;
@@ -335,6 +336,7 @@ function shtools-()
     echo '';
 
     # Reset containers
+    active=0;
     cnt=0;
     list_functions=('');
 
@@ -344,6 +346,7 @@ function shtools-()
                          | grep '\-enable$'); do
 
       # Verify if the option is active
+      cnt=$((cnt + 1));
       line_option=${line_function%-enable};
       line_option=${line_option#shtools-};
       if [ ! "${line_option}" = "${line_function}" ] && "shtools-${line_option}-active" 2> /dev/null; then
@@ -357,14 +360,14 @@ function shtools-()
         line_usage=${line_usage%\)*};
 
         # Present active option
-        cnt=$((cnt + 1));
-        echo -e "  \e[1;33mOption active: \e[1;37m${line_option} \e[1;32m[${line_usage}]\e[0m";
+        active=$((active + 1));
+        echo -e "  \e[1;33mOption ${cnt} active: \e[1;37m${line_option} \e[1;32m[${line_usage}]\e[0m";
 
       fi;
     done;
 
     # Detected active options
-    if [ "${cnt}" -ne 0 ]; then
+    if [ "${active}" -ne 0 ]; then
       echo '';
     fi;
     cnt=0;
