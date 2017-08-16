@@ -49,16 +49,7 @@ function gitbranchpusher()
   # Project target
   project_dir=${project_dir#${repo_dir}/};
   if [ -z "${project_branch}" ]; then
-    case "${project_dir}" in
-      'frameworks/base')
-        echo '';
-        echo ' gitbranchpusher: frameworks/base target branch needs to be explicitely passed';
-        echo '  Check the related *patcher command for further informations';
-        echo '';
-        return;;
-      *)
-        project_branch=${project_dir//\//_};;
-    esac;
+    project_branch=${project_dir//\//_};
   fi;
 
   # Status information
@@ -229,13 +220,7 @@ function androidprojectpatcher()
     cd "${path}/";
 
     # Targets selection
-    case "${path}" in
-      'frameworks/base')
-        project_github='https://github.com/AdrianDC/platform_frameworks_base.git';
-        path_branch=${project_name};;
-      *)
-        project_github="https://github.com/AdrianDC/${project_name}.git";;
-    esac;
+    project_github="https://github.com/AdrianDC/${project_name}.git";
 
     # Fetch
     if ! git fetch "${project_github}" "${path_branch}"; then

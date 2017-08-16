@@ -75,11 +75,7 @@ function gitrapaospsony8960n()
   # Usage: gitrapaospsony8960n (AOSP Sony 8960 Nougat development project remote)
 
   # AOSP 8960 Nougat development remote
-  if [[ "$(pwd)" == *"frameworks/base"* ]]; then
-    gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
-  else
-    gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_n.git;
-  fi;
+  gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_n.git;
 }
 
 # === Git Remotes AOSP (Sony 8960) O Project ===
@@ -88,11 +84,7 @@ function gitrapaospsony8960o()
   # Usage: gitrapaospsony8960o (AOSP Sony 8960 O development project remote)
 
   # AOSP Sony 8960 O development remote
-  if [[ "$(pwd)" == *"frameworks/base"* ]]; then
-    gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
-  else
-    gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_o.git;
-  fi;
+  gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_o.git;
 }
 
 # === Git Remotes AOSP (Sony 8960) Master Project ===
@@ -101,11 +93,7 @@ function gitrapaospsony8960master()
   # Usage: gitrapaospsony8960master (AOSP Sony 8960 Master development project remote)
 
   # AOSP Sony 8960 Master development remote
-  if [[ "$(pwd)" == *"frameworks/base"* ]]; then
-    gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
-  else
-    gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_master.git;
-  fi;
+  gitremoteset project https://github.com/AdrianDC/aosp_development_sony8960_master.git;
 }
 
 # === Git Remotes AOSP (Sony SODP) Project ===
@@ -123,11 +111,7 @@ function gitrapaospcaf()
   # Usage: gitrapaospcaf (AOSP-CAF development project remote)
 
   # AOSP-CAF development remote
-  if [[ "$(pwd)" == *"frameworks/base"* ]]; then
-    gitremoteset project https://github.com/AdrianDC/platform_frameworks_base.git;
-  else
-    gitremoteset project https://github.com/AdrianDC/aosp_development_aospcaf.git;
-  fi;
+  gitremoteset project https://github.com/AdrianDC/aosp_development_aospcaf.git;
 }
 
 # === Git Remotes LineageOS (Sony SODP) Project ===
