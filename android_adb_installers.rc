@@ -340,6 +340,7 @@ function adbsiderom()
   local device=${2};
   local no_reboot=${3};
   local name;
+  local target_old;
 
   # Detect missing device input automatically
   if [ -z "${device}" ]; then
@@ -380,7 +381,10 @@ function adbsiderom()
   elif [ "${file_input: -4}" = '.img' ]; then
     echo '';
     echo -e "\e[1;32madbsiderom: Pushing '$(basename "${file_input}")' bootimage [${device}]\e[0m";
+    target_old=${TARGET_PRODUCT};
+    export TARGET_PRODUCT=rom_${device};
     adbbootpush "${file_input}";
+    export TARGET_PRODUCT=${target_old};
     echo '';
   fi;
 
