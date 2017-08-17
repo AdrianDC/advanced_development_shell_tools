@@ -368,7 +368,7 @@ function repoinit()
   local list_functions=('');
   local options;
   local options_list;
-  local options_prepend;
+  local options_prepend='';
   local search_branch;
   local search_repo;
 
@@ -454,7 +454,7 @@ function repoinit()
   echo '';
 
   # Request referenced repo option
-  if [[ "${options_list}" == *'referenced'* ]]; then
+  if [[ "${options_list}" == *'referenced'* ]] && [ ! "${ANDROID_REPO_INIT_REFERENCED}" = 'n' ]; then
     echo -en " \e[1;37m> Referenced repository [y/N] :\e[0m ";
     read -r options_prepend;
     if [[ 'yY' == *"${options_prepend}"* ]]; then
