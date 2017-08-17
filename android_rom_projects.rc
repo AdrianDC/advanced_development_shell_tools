@@ -101,15 +101,15 @@ function gitbranchpusher()
 function androidprojectpaths()
 {
   # Usage
-  if [ -z "${1}" ]; then
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: androidprojectpaths <project_name> (Android project remote paths list)';
+    echo ' Usage: androidprojectpaths <owner> <project_name> (Android project remote paths list)';
     echo '';
     return;
   fi;
 
   # Android project remote paths list
-  git ls-remote --heads "https://github.com/AdrianDC/${1}.git" \
+  git ls-remote --heads "https://github.com/${1}/${2}.git" \
       2> /dev/null \
       | sed 's/.*refs\/heads\///' \
       | grep -v 'local_manifests' \
@@ -122,22 +122,20 @@ function androidprojectpatcher()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: androidprojectpatcher <project_name> [specific_path] (Android project patcher)';
+    echo ' Usage: androidprojectpatcher <owner> <project_name> <email> [specific_path] (Android project patcher)';
     echo '';
     return 1;
   fi;
 
   # Variables
-  local project_name=${1};
-  local project_specific_inputs=("${@:2}");
+  local project_owner=${1};
+  local project_name=${2};
+  local project_email=${3};
+  local project_specific_inputs=("${@:4}");
   local android_top;
   local project_paths;
   local projects_specific=;
   local currentdir=${PWD};
-
-  # GitHub Credentials
-  export GitEMail=;
-  githubusername >/dev/null;
 
   # ==========================================================
   # Load Android tools
@@ -164,14 +162,14 @@ function androidprojectpatcher()
   # ==========================================================
   # Detect 'sync' input
   if [ "${project_specific_inputs[*]}" = 'sync' ]; then
-    androidprojectsync "${project_name}";
+    androidprojectsync "${project_owner}" "${project_name}";
     return;
   fi;
 
   # ==========================================================
   # Detect 'unshallow' input
   if [ "${project_specific_inputs[*]}" = 'unshallow' ]; then
-    androidprojectunshallow "${project_name}";
+    androidprojectunshallow "${project_owner}" "${project_name}";
     return;
   fi;
 
@@ -186,7 +184,7 @@ function androidprojectpatcher()
   fi;
 
   # Automated remote changes list detection
-  project_paths=$(androidprojectpaths "${project_name}");
+  project_paths=$(androidprojectpaths "${project_owner}" "${project_name}");
 
   # ==========================================================
   # Repo root
@@ -201,6 +199,12 @@ function androidprojectpatcher()
   local git_revs_count_local;
   local path_branch;
   local project_github;
+  local user_is_owner='';
+
+  # Check current user rights
+  if [ "$(git config --global user.email)" = "${project_email}" ]; then
+    user_is_owner='true';
+  fi;
 
   # Projects loader
   for path in ${projects_specific:-${project_paths}}; do
@@ -220,7 +224,7 @@ function androidprojectpatcher()
     cd "${path}/";
 
     # Targets selection
-    project_github="https://github.com/AdrianDC/${project_name}.git";
+    project_github="https://github.com/${project_owner}/${project_name}.git";
 
     # Fetch
     if ! git fetch "${project_github}" "${path_branch}"; then
@@ -277,15 +281,15 @@ function androidprojectpatcher()
         git cherry-pick --abort &> /dev/null;
 
         # Detect commits to pick - Detect own updated project
-        readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --committer='marker.commit' --reverse --format=format:%H HEAD)";
+        readarray -t commits_list <<< "$(git log --committer="${project_email}" --committer='marker.commit' --reverse --format=format:%H HEAD)";
         if [ -z "${commits_list[*]}" ]; then
 
           # Detect commits to pick - Detect own cherry-picked commits
-          readarray -t commits_list <<< "$(git log --committer="${GitEMail}" --committer='marker.commit' --reverse --format=format:%H FETCH_HEAD)";
+          readarray -t commits_list <<< "$(git log --committer="${project_email}" --committer='marker.commit' --reverse --format=format:%H FETCH_HEAD)";
 
         # Detect commits to pick - Detect own cherry-picked additional commits in an own updated project
         else
-          readarray -t commits_list <<< "$(git log --format=format:'%H|%ce' FETCH_HEAD | sed "s/|${GitEMail}//g" | sed '/|/q' | sed 's/|marker.commit//' | sed 's/|.*//' | tac)";
+          readarray -t commits_list <<< "$(git log --format=format:'%H|%ce' FETCH_HEAD | sed "s/|${project_email}//g" | sed '/|/q' | sed 's/|marker.commit//' | sed 's/|.*//' | tac)";
           if [ -z "${commits_list[*]}" ] || [ "${#commits_list[@]}" -gt "${git_revs_count_remote}" ]; then
 
             # Detect commits to pick - Detect own cherry-picked commits based on commits delta
@@ -320,13 +324,17 @@ function androidprojectpatcher()
         done;
 
         # Automatic push
-        gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+        if [ ! -z "${user_is_owner}" ]; then
+          gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+        fi;
 
       # Only push the project
       elif [ "${key_automated_push}" = 'y' ]; then
 
         # Automatic push
-        gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+        if [ ! -z "${user_is_owner}" ]; then
+          gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+        fi;
 
       # Project is ready
       else
@@ -338,7 +346,9 @@ function androidprojectpatcher()
     elif [ "${git_revs_count_local}" -ne 0 ]; then
 
       # Automatic push
-      gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+      if [ ! -z "${user_is_owner}" ]; then
+        gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+      fi;
 
     # Project is ready
     else
@@ -564,9 +574,9 @@ function androidprojectrebaser()
 function androidprojectforeach()
 {
   # Usage
-  if [ -z "${2}" ]; then
+  if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: androidprojectforeach <project_name> <"commands"> (Android project paths commands runner)';
+    echo ' Usage: androidprojectforeach <owner> <project_name> <"commands"> (Android project paths commands runner)';
     echo '';
     return;
   fi;
@@ -575,7 +585,7 @@ function androidprojectforeach()
   local path;
 
   # Android project remote paths list
-  for path in $(androidprojectpaths "${1}"); do
+  for path in $(androidprojectpaths "${1}" "${2}"); do
 
     # Access path
     croot;
@@ -586,7 +596,7 @@ function androidprojectforeach()
     echo "[${path}]";
 
     # Run commands
-    ${2};
+    ${3};
 
   done;
 
@@ -599,9 +609,9 @@ function androidprojectforeach()
 function androidprojectsync()
 {
   # Usage
-  if [ -z "${1}" ]; then
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: androidprojectsync <project_name> (Android project paths repo syncer)';
+    echo ' Usage: androidprojectsync <owner> <project_name> (Android project paths repo syncer)';
     echo '';
     return;
   fi;
@@ -610,7 +620,7 @@ function androidprojectsync()
   local path;
 
   # Android project remote paths list
-  for path in $(androidprojectpaths "${1}"); do
+  for path in $(androidprojectpaths "${1}" "${2}"); do
 
     # Access path
     croot;
@@ -635,9 +645,9 @@ function androidprojectsync()
 function androidprojectunshallow()
 {
   # Usage
-  if [ -z "${1}" ]; then
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: androidprojectunshallow <project_name> (Android project paths unshallower)';
+    echo ' Usage: androidprojectunshallow <owner> <project_name> (Android project paths unshallower)';
     echo '';
     return;
   fi;
@@ -646,7 +656,7 @@ function androidprojectunshallow()
   local path;
 
   # Android project remote paths list
-  for path in $(androidprojectpaths "${1}"); do
+  for path in $(androidprojectpaths "${1}" "${2}"); do
 
     # Access path
     croot;

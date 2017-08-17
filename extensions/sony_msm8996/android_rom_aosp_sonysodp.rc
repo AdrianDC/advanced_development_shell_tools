@@ -16,8 +16,6 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)
 
@@ -27,7 +25,7 @@ function aospsonysodppatcher()
   # Usage: aospsonysodppatcher [specific_paths] (AOSP SONY SODP Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sonyaosp' "${@}";
+  androidprojectpatcher 'AdrianDC' 'aosp_development_sonyaosp' 'radian.dc@gmail.com' "${@}";
 }
 
 # === AOSP Sony SODP Rebaser ===

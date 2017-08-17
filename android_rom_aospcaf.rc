@@ -16,8 +16,6 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aosp_aospcaf.rc)
 
@@ -27,5 +25,5 @@ function aospcafpatcher()
   # Usage: aospcafpatcher [specific_paths] (AOSP-CAF Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_aospcaf' "${@}";
+  androidprojectpatcher 'AdrianDC' 'aosp_development_aospcaf' 'radian.dc@gmail.com' "${@}";
 }

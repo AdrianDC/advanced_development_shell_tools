@@ -16,8 +16,6 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc)
 
@@ -27,7 +25,7 @@ function aospsony8960npatcher()
   # Usage: aospsony8960npatcher [specific_paths] (AOSP 8960 Nougat Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_n' "${@}";
+  androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_n' 'radian.dc@gmail.com' "${@}";
 }
 
 # === AOSP Sony 8960 O Patcher ===
@@ -36,7 +34,7 @@ function aospsony8960opatcher()
   # Usage: aospsony8960opatcher [specific_paths] (AOSP 8960 O Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_o' "${@}";
+  androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_o' 'radian.dc@gmail.com' "${@}";
 }
 
 # === AOSP Sony 8960 Master Patcher ===
@@ -45,5 +43,5 @@ function aospsony8960masterpatcher()
   # Usage: aospsony8960masterpatcher [specific_paths] (AOSP 8960 Master Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'aosp_development_sony8960_master' "${@}";
+  androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_master' 'radian.dc@gmail.com' "${@}";
 }

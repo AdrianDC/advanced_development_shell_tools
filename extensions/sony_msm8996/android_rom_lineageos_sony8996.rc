@@ -16,8 +16,6 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_lineageos_sony8996.rc)
 
@@ -27,5 +25,5 @@ function lineagesony8996patcher()
   # Usage: lineagesony8996patcher [specific_paths] (LineageOS Sony 8996 Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'lineage_development_sony8996' "${@}";
+  androidprojectpatcher 'AdrianDC' 'lineage_development_sony8996' 'radian.dc@gmail.com' "${@}";
 }

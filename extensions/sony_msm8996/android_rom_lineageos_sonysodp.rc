@@ -16,8 +16,6 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc)
 
@@ -27,7 +25,7 @@ function lineagesonysodppatcher()
   # Usage: lineagesonysodppatcher [specific_paths] (LineageOS SONY SODP Patcher)
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'lineage_development_sonysodp' "${@}";
+  androidprojectpatcher 'AdrianDC' 'lineage_development_sonysodp' 'radian.dc@gmail.com' "${@}";
 }
 
 # === LineageOS Sony SODP Rebaser ===
