@@ -58,7 +58,7 @@ function aospsonysodprebaser()
     device/sony/dora::device-sony-dora::sonyxperiadev::${branch}
     device/sony/tone::device-sony-tone::sonyxperiadev::${branch}
     kernel/sony/msm::kernel-sony-msm::sonyxperiadev/kernel::${kernel}
-    " "${*:2}";
+    " "${@:2}";
 }
 
 # === Sony AOSP Kernel Updater ===

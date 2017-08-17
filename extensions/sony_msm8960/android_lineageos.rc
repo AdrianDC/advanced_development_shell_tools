@@ -30,5 +30,5 @@ function lineagesony8960rebaser()
     kernel/sony/msm8960t::android_kernel_sony_msm8960t::LineageOS::
     kernel/sony/msm8x60::android_kernel_sony_msm8x60::LineageOS::
     vendor/sony::proprietary_vendor_sony::TheMuppets::
-    ' "${1}";
+    ' "${@}";
 }

@@ -396,14 +396,26 @@ function androidprojectrebaser()
   local projects_owner=${1};
   local projects_branch=${2};
   local projects_paths=${3};
-  local projects_specific=${4};
+  local project_specific_inputs=("${@:4}");
+  local android_top;
   local currentdir=${PWD};
+  local projects_specific=;
 
   # Automated key shortcut
   local key_automated=;
   if [[ "${projects_specific}" == 'y' ]] || [[ "${projects_specific}" == 'n' ]]; then
     key_automated=${projects_specific};
     projects_specific=;
+  fi;
+
+  # ==========================================================
+  # Extract specific projects paths
+  if [ ! -z "${project_specific_inputs[*]}" ]; then
+    android_top=$(gettop);
+    for path in "${project_specific_inputs[@]}"; do
+      path=$(readlink -f "${path}");
+      projects_specific="${projects_specific} ${path#${android_top}/}";
+    done;
   fi;
 
   # Repo root
@@ -429,13 +441,6 @@ function androidprojectrebaser()
   # Projects loader
   for project in ${projects_paths}; do
 
-    # Jump to specific project
-    if [ ! -z "${projects_specific}" ]; then
-      if [[ ! "${project}" == *"${projects_specific%/}::"* ]]; then
-        continue;
-      fi;
-    fi;
-
     # Project string parsing
     project_path=${project%%::*};
     project_name=${project#*::};
@@ -443,6 +448,13 @@ function androidprojectrebaser()
     project_branch=${project_upstream#*::};
     project_name=${project_name%%::*};
     project_upstream=${project_upstream%%::*};
+
+    # Jump to specific project
+    if [ ! -z "${projects_specific}" ]; then
+      if [[ ! "${projects_specific}" == *"${project_path%/}"* ]]; then
+        continue;
+      fi;
+    fi;
 
     # Append upstream project name if needed
     if [[ ! "${project_upstream}" = *'/'* ]]; then
