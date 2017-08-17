@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# Copyright 2015-2017 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/lineage_next/android_rom_lineageos.rc)
+
+# === LineageOS Next Rebaser ===
+function lineagenextrebaser()
+{
+  # Usage: lineagenextrebaser [specific_paths] (LineageOS Next Rebaser)
+
+  # Use the androidprojectrebaser helper
+  androidprojectrebaser 'lineage-next' 'lineage-15.0_master' '
+    bionic::android_bionic::https://android.googlesource.com/platform/bionic::master
+    bootable/recovery::android_bootable_recovery::https://android.googlesource.com/platform/bootable/recovery::master
+    build/make::android_build_make::https://android.googlesource.com/platform/build::master
+    build/soong::android_build_soong::https://android.googlesource.com/platform/build/soong::master
+    external/libnfc-nxp::android_external_libnfc-nxp::https://android.googlesource.com/platform/external/libnfc-nxp::master
+    frameworks/av::android_frameworks_av::https://android.googlesource.com/platform/frameworks/av::master
+    frameworks/base::android_frameworks_base::https://android.googlesource.com/platform/frameworks/base::master
+    frameworks/native::android_frameworks_native::https://android.googlesource.com/platform/frameworks/native::master
+    hardware/interfaces::android_hardware_interfaces::https://android.googlesource.com/platform/hardware/interfaces::master
+    hardware/qcom/audio::android_hardware_qcom_audio::https://android.googlesource.com/platform/hardware/qcom/audio::master
+    hardware/qcom/display::android_hardware_qcom_display::https://android.googlesource.com/platform/hardware/qcom/display::master
+    hardware/qcom/media::android_hardware_qcom_media::https://android.googlesource.com/platform/hardware/qcom/media::master
+    hardware/ril::android_hardware_ril::https://android.googlesource.com/platform/hardware/ril::master
+    packages/apps/Nfc::android_packages_apps_Nfc::https://android.googlesource.com/platform/packages/apps/Nfc::master
+    system/bt::android_system_bt::https://android.googlesource.com/platform/system/bt::master
+    system/core::android_system_core::https://android.googlesource.com/platform/system/core::master
+    system/netd::android_system_netd::https://android.googlesource.com/platform/system/netd::master
+    system/sepolicy::android_system_sepolicy::https://android.googlesource.com/platform/system/sepolicy::master
+    system/vold::android_system_vold::https://android.googlesource.com/platform/system/vold::master
+    ' "${@}";
+}

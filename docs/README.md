@@ -897,6 +897,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**meganzreload** *<b>\[Reload Mega.nz account and keys\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc)
 
 ---
+### [&nbsp;Documentation: [extensions/lineage_next/android_rom_lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/android_rom_lineageos.rc)  - Standalone Import Ready&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/lineage_next/android_rom_lineageos.rc)
+  ```
+  * [**lineagenextrebaser** *<b>\[LineageOS Next Rebaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/android_rom_lineageos.rc) : *lineagenextrebaser [specific_paths]*
+
+---
 ### [&nbsp;Documentation: [extensions/semc_msm7x30/android_autorelease.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_msm7x30/android_autorelease.rc)&nbsp;]
   * [**autoreleaselegacyxperia** *<b>\[Automated LegacyXperia 7x30 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_msm7x30/android_autorelease.rc) : *autoreleaselegacyxperia [devices]*
 

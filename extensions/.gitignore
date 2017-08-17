@@ -1,5 +1,7 @@
 *
 !.gitignore
+!lineage_next
+!lineage_next/*
 !semc_msm7x30
 !semc_msm7x30/*
 !sony_msm8960
