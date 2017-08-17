@@ -52,11 +52,11 @@ function aospsonysodprebaser()
 
   # Use the androidprojectrebaser helper
   androidprojectrebaser 'AdrianDC' '' "
-    device/sony/common::device-sony-common::sonyxperiadev::${branch}
-    device/sony/common-init::device-sony-common-init::sonyxperiadev::${branch}
-    device/sony/common-kernel::vendor-sony-kernel::sonyxperiadev::${kernel}
-    device/sony/dora::device-sony-dora::sonyxperiadev::${branch}
-    device/sony/tone::device-sony-tone::sonyxperiadev::${branch}
+    device/sony/common::device-sony-common::sonyxperiadev/::${branch}
+    device/sony/common-init::device-sony-common-init::sonyxperiadev/::${branch}
+    device/sony/common-kernel::vendor-sony-kernel::sonyxperiadev/::${kernel}
+    device/sony/dora::device-sony-dora::sonyxperiadev/::${branch}
+    device/sony/tone::device-sony-tone::sonyxperiadev/::${branch}
     kernel/sony/msm::kernel-sony-msm::sonyxperiadev/kernel::${kernel}
     " "${@:2}";
 }

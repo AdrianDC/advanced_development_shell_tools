@@ -36,7 +36,7 @@ function lineagesonysodprebaser()
   # Use the androidprojectrebaser helper
   androidprojectrebaser 'AdrianDC' 'cm-14.1' '
     hardware/sony/camera::sony_hardware_qcom_camera::sonyxperiadev/camera::aosp/LA.UM.5.5.r1
-    hardware/sony/dataservices::vendor-qcom-opensource-dataservices::sonyxperiadev::master
+    hardware/sony/dataservices::vendor-qcom-opensource-dataservices::sonyxperiadev/::master
     kernel/sony/msm::kernel-sony-msm::sonyxperiadev/kernel::aosp/LA.UM.5.5.r1
     ' "${@}";
 }

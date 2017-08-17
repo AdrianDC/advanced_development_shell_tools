@@ -463,8 +463,8 @@ function androidprojectrebaser()
     fi;
 
     # Append upstream project name if needed
-    if [[ ! "${project_upstream}" = *'/'* ]]; then
-      project_upstream=${project_upstream}/${project_name};
+    if [ "${project_upstream: -1}" = '/' ]; then
+      project_upstream=${project_upstream}${project_name};
     fi;
 
     # Without a branch as input, align with upstream
