@@ -196,6 +196,7 @@ function androidprojectpatcher()
   local commits_todo;
   local git_revs_count;
   local git_revs_count_local;
+  local git_revs_count_remote;
   local path_branch;
   local project_github;
   local user_is_owner='';
@@ -237,7 +238,11 @@ function androidprojectpatcher()
     git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
     git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
     echo '';
-    echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
+    if [ ! -z "${git_revs_count_local}" ] && [ "${git_revs_count_local}" -eq 0 ]; then
+      echo -e "  \e[1;32m> Differences: ${git_revs_count:-Missing history}\e[0m";
+    else
+      echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
+    fi;
     echo '';
 
     # Handle unupdated projects
@@ -429,6 +434,7 @@ function androidprojectrebaser()
   # ==========================================================
   # Variables
   local git_revs_count;
+  local git_revs_count_remote;
   local project_branch;
   local project_name;
   local project_path;
@@ -487,7 +493,11 @@ function androidprojectrebaser()
     git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
     git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
     echo '';
-    echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
+    if [ "${git_revs_count_remote}" -eq 0 ]; then
+      echo -e "  \e[1;32m> Differences: ${git_revs_count:-Missing history}\e[0m";
+    else
+      echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
+    fi;
     echo '';
 
     # Handle unupdated projects
