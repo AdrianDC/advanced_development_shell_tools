@@ -512,15 +512,20 @@ function androidprojectrebaser()
       echo -e '  \e[1;37m> Commands: Y (Rebase on new changes)';
       echo -e '              n (Keep the current project sources)';
       echo -e '              a (Automatically rebase all projects)';
+      echo -e '              l (Only preview all differences)';
       echo '';
       echo -en '  \e[1;33m> Choice to rebase the project ? \e[0m';
       if [ -z "${key_automated}" ]; then
         read -r -t 20 key;
         if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then
           key_automated=y;
+        elif [ "${key}" = 'l' ] || [ "${key}" = 'L' ]; then
+          key=n;
+          key_automated=n;
         fi;
       else
         key=${key_automated};
+        echo "${key}";
       fi;
 
       # Rebase the tree
