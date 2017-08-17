@@ -490,8 +490,13 @@ function androidprojectrebaser()
     fi;
     cd "${project_path}/";
 
+    # Prepend GitHub is needed
+    if [[ ! "${project_upstream}" = *'://'* ]]; then
+      project_upstream="https://github.com/${project_upstream}";
+    fi;
+
     # Fetch and compare
-    git fetch "https://github.com/${project_upstream}" "${project_branch}";
+    git fetch "${project_upstream}" "${project_branch}";
     git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
     git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
     echo '';
