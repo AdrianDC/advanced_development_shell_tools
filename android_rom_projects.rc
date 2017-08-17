@@ -385,25 +385,25 @@ function androidprojectpatcher()
 function androidprojectrebaser()
 {
   # Usage
-  if [ -z "${3}" ]; then
+  if [ -z "${1}" ] || [ -z "${3}" ]; then
     echo '';
-    echo ' Usage: androidprojectrebaser <upstream_repository_if_not_origin> <project_branch> <"project_paths::name::branch"> [specific_path] (Android project rebaser)';
+    echo ' Usage: androidprojectrebaser <owner> <project_branch> <"project_paths::name::upstream::branch"> [specific_path] (Android project rebaser)';
     echo '';
     return;
   fi;
 
   # Variables
-  local upstream_repository=${1};
-  local project_branch=${2};
-  local project_paths=${3};
-  local project_specific=${4};
+  local projects_owner=${1};
+  local projects_branch=${2};
+  local projects_paths=${3};
+  local projects_specific=${4};
   local currentdir=${PWD};
 
   # Automated key shortcut
   local key_automated=;
-  if [[ "${project_specific}" == 'y' ]] || [[ "${project_specific}" == 'n' ]]; then
-    key_automated=${project_specific};
-    project_specific=;
+  if [[ "${projects_specific}" == 'y' ]] || [[ "${projects_specific}" == 'n' ]]; then
+    key_automated=${projects_specific};
+    projects_specific=;
   fi;
 
   # Repo root
@@ -418,107 +418,66 @@ function androidprojectrebaser()
   # ==========================================================
   # Variables
   local git_revs_count;
-  local git_revs_count_local;
-  local git_username;
-  local path;
-  local path_branch;
-  local path_name;
-  local path_temp;
-  local project_fetch;
-  local project_github;
+  local project_branch;
+  local project_name;
+  local project_path;
   local project_unfinished;
+  local project_upstream;
+  local push_branch=${projects_branch};
   local push_command;
-  local push_branch;
-  local upstream_branch;
-  local upstream_project;
-
-  # Username and fallback
-  git_username=$(githubusername 2> /dev/null);
-  git_username=${git_username:-AdrianDC};
 
   # Projects loader
-  for project in ${project_paths}; do
+  for project in ${projects_paths}; do
 
     # Jump to specific project
-    if [ ! -z "${project_specific}" ]; then
-      if [[ ! "${project}" == *"${project_specific%/}::"* ]]; then
+    if [ ! -z "${projects_specific}" ]; then
+      if [[ ! "${project}" == *"${projects_specific%/}::"* ]]; then
         continue;
       fi;
     fi;
 
-    # Project selection
-    path=${project%%::*};
-    path_temp=${project#*::};
-    path_name=${path_temp%::*};
-    project_fetch=;
-    upstream_project=${upstream_repository}/${path_name:-.};
-    upstream_branch=${path_temp#*::};
-    upstream_branch=${upstream_branch:-${project_branch}};
-    push_branch=${upstream_branch};
+    # Project string parsing
+    project_path=${project%%::*};
+    project_name=${project#*::};
+    project_upstream=${project_name#*::};
+    project_branch=${project_upstream#*::};
+    project_name=${project_name%%::*};
+    project_upstream=${project_upstream%%::*};
 
-    # Variables generic changes
-    if [ ! -z "${project_branch}" ]; then
-      push_branch=${project_branch};
+    # Append upstream project name if needed
+    if [[ ! "${project_upstream}" = *'/'* ]]; then
+      project_upstream=${project_upstream}/${project_name};
     fi;
-    if [ -z "${upstream_project}" ]; then
-      upstream_project=${upstream_repository};
+
+    # Without a branch as input, align with upstream
+    if [ -z "${projects_branch}" ]; then
+      push_branch=${project_branch};
+
+    # Without a branch on project, use branch input
+    elif [ -z "${project_branch}" ]; then
+      project_branch=${projects_branch};
+      push_branch=${projects_branch};
     fi;
 
     # Project introduction
     echo '';
-    echo " === ${path} [${upstream_project} @${upstream_branch}] ===";
+    echo " === ${project_path} [${project_upstream} @${project_branch}] ===";
     croot;
 
     # Ignore non-git projects
-    if [ ! -d "${path}/.git" ]; then
+    if [ ! -d "${project_path}/.git" ]; then
       echo '  .git project not found, ignoring...';
       continue;
     fi;
-    cd "${path}/";
+    cd "${project_path}/";
 
     # Loop until project ready
     project_unfinished=1;
     while [ ${project_unfinished} -eq 1 ]; do
 
-      # Standard origin repository
-      if [[ "${upstream_repository}" == 'origin' ]]; then
-        project_fetch=origin;
-        if ! git ls-remote --exit-code ${project_fetch} > /dev/null 2>&1; then
-          echo ' Branch origin was not found...';
-          gitrao;
-          continue;
-        fi;
-
-      # SonyXperiaDev origin repository
-      elif [[ "${upstream_repository}" == 'sodp' ]]; then
-        project_fetch=origin;
-        if ! git ls-remote --exit-code ${project_fetch} > /dev/null 2>&1; then
-          echo ' Branch origin was not found...';
-          gitraos;
-          continue;
-        fi;
-
-      # Custom upstream repository
-      else
-        project_fetch=upstream;
-        if ! git ls-remote --exit-code ${project_fetch} > /dev/null 2>&1; then
-          echo ' Branch upstream was not found...';
-          gitremoteset upstream "https://github.com/${upstream_project}";
-          continue;
-        fi;
-      fi;
-
-      # Check private remote
-      if ! git ls-remote --exit-code "${git_username}" > /dev/null 2>&1; then
-        echo " Branch ${git_username} was not found...";
-        gitraa;
-        continue;
-      fi;
-
       # Fetch and compare
-      git fetch "${project_fetch}" "${upstream_branch}";
+      git fetch "https://github.com/${project_upstream}" "${project_branch}";
       git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-      git_revs_count_local=$(echo "${git_revs_count}" | awk '{ print $1 }');
       git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
       echo " Differences: ${git_revs_count}";
 
@@ -540,10 +499,10 @@ function androidprojectrebaser()
           echo '';
           git rebase --abort;
           git rebase FETCH_HEAD;
-          push_command="git push -f ${git_username} HEAD:refs/heads/${push_branch}";
+          push_command="git push -f https://github.com/${projects_owner}/${project_name} HEAD:refs/heads/${push_branch}";
           echo '';
           echo -n "  > ${push_command} [y/a/N] ? ";
-          notify-send "androidprojectrebaser: Push ${path} ?" 2> /dev/null;
+          notify-send "androidprojectrebaser: Push ${project_path} ?" 2> /dev/null;
           if [ -z "${key_automated}" ]; then
             read -r -t 20 key;
             if [ "${key}" = 'a' ] || [ "${key}" = 'A' ]; then

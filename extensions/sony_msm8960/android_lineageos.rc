@@ -21,14 +21,14 @@ function lineagesony8960rebaser()
   # Usage: lineagesony8960rebaser [specific_paths] (LineageOS Devices Rebaser)
 
   # Use the androidprojectrebaser helper
-  androidprojectrebaser 'origin' 'cm-14.1' '
-    device/sony/huashan::::
-    device/sony/blue-common::::
-    device/sony/hayabusa::::
-    device/sony/mint::::
-    device/sony/tsubasa::::
-    kernel/sony/msm8960t::::
-    kernel/sony/msm8x60::::
-    vendor/sony::::
+  androidprojectrebaser 'AdrianDC' 'cm-14.1' '
+    device/sony/huashan::android_device_sony_huashan::LineageOS::
+    device/sony/blue-common::android_device_sony_blue-common::LineageOS::
+    device/sony/hayabusa::android_device_sony_hayabusa::LineageOS::
+    device/sony/mint::android_device_sony_mint::LineageOS::
+    device/sony/tsubasa::android_device_sony_tsubasa::LineageOS::
+    kernel/sony/msm8960t::android_kernel_sony_msm8960t::LineageOS::
+    kernel/sony/msm8x60::android_kernel_sony_msm8x60::LineageOS::
+    vendor/sony::proprietary_vendor_sony::TheMuppets::
     ' "${1}";
 }
