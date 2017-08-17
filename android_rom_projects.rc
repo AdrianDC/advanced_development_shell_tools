@@ -213,7 +213,8 @@ function androidprojectpatcher()
     path=${path%/};
     path_branch=${path//\//_};
     echo '';
-    echo " === ${path} [${path_branch}] ===";
+    echo -e " \e[1;37m=== ${path} [${path_branch}] ===\e[0m";
+    echo '';
     croot;
 
     # Ignore missing git projects
@@ -236,17 +237,32 @@ function androidprojectpatcher()
     git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
     git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
     git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
-    echo " Differences: ${git_revs_count:-Missing history}";
+    echo '';
+    echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
 
     # Handle unupdated projects
     if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
       echo '';
-      echo -n '  > Recreate onto newest changes [Y/n/a/l/p] ? ';
+      echo -e '  \e[1;37m> Commands: Y (Rebase on new changes)';
+      echo -e '              n (Use the old project sources)';
+      if [ ! -z "${user_is_owner}" ]; then
+      echo -e '              a (Automatically update all projects)';
+      fi;
+      echo -e '              l (Automatically patch all projects)';
+      if [ ! -z "${user_is_owner}" ]; then
+        echo -e '              p (Push local changes upstream)';
+      fi;
+      echo '';
+      echo -en '  \e[1;33m> Choice to patch and update the project ? \e[0m';
       if [ -z "${key_input}" ]; then
         read -r -t 20 key;
       else
         key=${key_input};
+        echo "${key}";
       fi;
+      echo '';
+
+      # Adapt patcher to key input
       if [ -z "${key}" ]; then
         key_input=;
         key_automated_patch=y;
