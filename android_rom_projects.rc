@@ -239,10 +239,10 @@ function androidprojectpatcher()
     git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
     echo '';
     echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
+    echo '';
 
     # Handle unupdated projects
     if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
-      echo '';
       echo -e '  \e[1;37m> Commands: Y (Rebase on new changes)';
       echo -e '              n (Use the old project sources)';
       if [ ! -z "${user_is_owner}" ]; then
