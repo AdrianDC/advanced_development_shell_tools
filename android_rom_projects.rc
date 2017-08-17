@@ -26,6 +26,7 @@ function gitbranchpusher()
   local param_send=${1};
   local remote=${2:-project};
   local project_branch=${3};
+  local push_command;
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -74,8 +75,8 @@ function gitbranchpusher()
   echo '';
 
   # Confirmation
-  command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
-  echo -en "  \e[1;33m> gitbranchpusher: ${command} [y/N] ?\e[0m ";
+  push_command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
+  echo -en "  \e[1;33m> gitbranchpusher: ${push_command} [y/N] ?\e[0m ";
   notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
   if [ -z "${param_send}" ]; then
     read -r -t 20 key;
@@ -87,7 +88,7 @@ function gitbranchpusher()
   # Upload to remote
   echo '';
   if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
-    ${command};
+    ${push_command};
   elif [ "${key}" = 'n' ] || [ "${key}" = 'N' ]; then
     echo '  < Upload ignored. Consider uploading later';
   else
@@ -328,9 +329,9 @@ function androidprojectpatcher()
             commits_todo=${commits_list[*]};
             commits_todo=${commits_todo#*${sha1}};
             echo '';
-            echo '  < Automatic update failed...';
+            echo -e '  \e[1;31m< Automatic update failed...';
             echo "     Tried to add following commits: ${sha1} ${commits_todo}";
-            echo '  > Manually fix then push with :';
+            echo -e '  \e[1;33m> Manually fix then push with :\e[0m';
             echo "     gitbranchpusher '${key_automated_patch}' '${project_github}' '${path_branch}';";
             echo '';
             return 1;
@@ -433,6 +434,7 @@ function androidprojectrebaser()
 
   # ==========================================================
   # Variables
+  local commits_result;
   local git_revs_count;
   local git_revs_count_remote;
   local project_branch;
@@ -521,9 +523,25 @@ function androidprojectrebaser()
         echo '';
         git rebase --abort;
         git rebase FETCH_HEAD;
+        commits_result=${?};
+
+        # Build push command
+        push_command="git push -f https://github.com/${projects_owner}/${project_name} HEAD:refs/heads/${push_branch}";
+
+        # Failed rebase
+        if [ ${commits_result} -ne 0 ] || ! git diff-index --quiet HEAD --; then
+          echo '';
+          echo -e '  \e[1;31m< Automatic rebase failed...';
+          echo -e '  \e[1;33m> Manually fix then push with :\e[0m';
+          echo "     ${push_command};";
+          echo '';
+          return 1;
+        fi;
+
+        # Push the tree
         push_command="git push -f https://github.com/${projects_owner}/${project_name} HEAD:refs/heads/${push_branch}";
         echo '';
-        echo -en "  \e[1;33m> androidprojectrebaser: ${command} [y/a/N] ?\e[0m ";
+        echo -en "  \e[1;33m> androidprojectrebaser: ${push_command} [y/a/N] ?\e[0m ";
         notify-send "androidprojectrebaser: Push ${project_path} ?" 2> /dev/null;
         if [ -z "${key_automated}" ]; then
           read -r -t 20 key;
