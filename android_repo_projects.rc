@@ -114,6 +114,15 @@ function gitrapaospcaf()
   gitremoteset project https://github.com/AdrianDC/aosp_development_aospcaf.git;
 }
 
+# === Git Remotes LineageOS (Sony 8960) Master Project ===
+function gitraplineagesony8960master()
+{
+  # Usage: gitraplineagesony8960master (LineageOS Sony 8960 Master development project remote)
+
+  # LineageOS Sony 8960 Master development remote
+  gitremoteset project https://github.com/AdrianDC/lineage_development_sony8960_master.git;
+}
+
 # === Git Remotes LineageOS (Sony SODP) Project ===
 function gitraplineagesonysodp()
 {

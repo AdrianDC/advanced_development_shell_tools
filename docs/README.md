@@ -700,6 +700,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitrapaospsony8960master** *<b>\[AOSP Sony 8960 Master development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
   * [**gitrapaospsonysodp** *<b>\[AOSP Sony SODP development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
   * [**gitrapaospcaf** *<b>\[AOSP-CAF development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
+  * [**gitraplineagesony8960master** *<b>\[LineageOS Sony 8960 Master development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
   * [**gitraplineagesonysodp** *<b>\[LineageOS Sony SODP development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
   * [**gitrapmultirom** *<b>\[MultiROM Sony development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
   * [**gitraptwrp** *<b>\[TWRP Sony development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
