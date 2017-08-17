@@ -577,10 +577,6 @@ function androidprojectrebaser()
       fi;
     fi;
 
-    # Cleanup
-    git reset --hard HEAD;
-    git stash -u;
-
   done;
 
   # ==========================================================
