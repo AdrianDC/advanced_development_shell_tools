@@ -82,7 +82,7 @@ function gitpurl()
   gitpu "${url}" "${branch}";
 }
 
-# === Git Push Helpers ===
+# === Git Push Validated Helpers ===
 alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';
 alias gitpa14='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1';
 alias gitpala='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) LA.UM.5.5_rb1.10';
@@ -100,3 +100,6 @@ alias gitpp='gitremoteverify project gitrap && gitpu project';
 alias gitppm='gitremoteverify project gitrap && gitpu project master';
 alias gitppriv='gitremoteverify private false && gitpu private';
 alias gitpprivm='gitremoteverify private false && gitpu private master';
+
+# === Git Push Automated Helper ===
+alias gitpoa='gitpu $(repogetremote) $(repogetbranch)';
