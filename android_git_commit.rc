@@ -60,6 +60,7 @@ function gitfcp()
 
 # === Git Commits Helpers ===
 alias gitc='git commit $(gitgpgparam)';
+alias gitce='git commit $(gitgpgparam) --allow-empty';
 alias gitcs='git commit $(gitgpgparam) -s';
 alias gitca='git commit $(gitgpgparam) --amend';
 alias gitcae='git commit $(gitgpgparam) --amend --no-edit';
