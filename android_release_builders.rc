@@ -20,7 +20,7 @@ function romautorelease()
 {
   # Usage
   local function_usage='Usage: romautorelease <device_name> <rom_tag> [nowipe,j1/j2] (Advanced automated ROM builder)';
-  local function_roms='ROM: <aosp> / <lineage> / <lx> / <master> / <sodp> / <caf> / <rr>';
+  local function_roms='ROM: <aosp> / <lineage> / <lx> / <master> / <next> / <sodp> / <caf> / <rr>';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
     echo " ${function_usage}";
@@ -85,6 +85,11 @@ function romautorelease()
   # AOSP Master
   elif [[ "${rom_name}" == 'master' ]]; then
     rom_tag=AOSPMASTER;
+    rom_upload=${rom_phone}/AOSP-Master;
+
+  # LineageOS Master
+  elif [[ "${rom_name}" == 'next' ]]; then
+    rom_tag=LINEAGEMASTER;
     rom_upload=${rom_phone}/AOSP-Master;
 
   # ResurrectionRemix Nougat
@@ -170,6 +175,12 @@ function romautorelease()
     source ./build/envsetup.sh;
     lunch "aospcaf_${rom_target}-userdebug";
     make -j"${build_cpu_count}" otapackage | tee "${rom_logs_output}";
+
+  # Build Android LineageOS Master
+  elif [[ "${rom_tag}" == *'LINEAGEMASTER'* ]]; then
+    source ./build/envsetup.sh;
+    lunch "aosp_${rom_target}-userdebug";
+    make -j"${build_cpu_count}" bacon | tee "${rom_logs_output}";
 
   # Build Android ResurrectionRemix
   elif [[ "${rom_tag}" == *'RR'* ]]; then
