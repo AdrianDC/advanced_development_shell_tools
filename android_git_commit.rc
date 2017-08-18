@@ -92,7 +92,7 @@ function gitcamarker()
   # Apply marker commit to author/committer
   export GIT_COMMITTER_NAME="Marker Commit";
   export GIT_COMMITTER_EMAIL="marker.commit";
-  git commit "$(gitgpgparam)" --amend --no-edit --author="${GIT_COMMITTER_NAME} <${GIT_COMMITTER_EMAIL}>";
+  git commit "$(gitgpgparam)" --allow-empty --amend --no-edit --author="${GIT_COMMITTER_NAME} <${GIT_COMMITTER_EMAIL}>";
   unset GIT_COMMITTER_NAME;
   unset GIT_COMMITTER_EMAIL;
 }
