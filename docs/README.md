@@ -691,7 +691,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**repoinittwrp** *<b>\[repo init for TWRP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinittwrp &lt;twrp-{X.X}&gt; [referenced,clean,light/shallow]*
   * [**repoinitcleaner** *<b>\[repo init cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitcleaner [clean]*
   * [**repoinitsafecleaner** *<b>\[repo init safety cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitsafecleaner [clean]*
-  * [**repoinit** *<b>\[repo init menu\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc)
+  * [**repoinit** *<b>\[repo init menu\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinit [bool_manually]*
 
 ---
 ### [&nbsp;Documentation: [android_repo_projects.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)&nbsp;]

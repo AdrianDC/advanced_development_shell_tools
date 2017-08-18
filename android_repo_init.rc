@@ -357,7 +357,7 @@ function repoinitsafecleaner()
 # === Repo Init Menu ===
 function repoinit()
 {
-  # Usage: repoinit (repo init menu)
+  # Usage: repoinit [bool_manually] (repo init menu)
 
   # Variables
   local branch;
@@ -378,7 +378,7 @@ function repoinit()
   search_repo='';
 
   # Detect the existence of roomservice.xml
-  if [ -f '.repo/local_manifests/roomservice.xml' ]; then
+  if [ -z "${1}" ] && [ -f '.repo/local_manifests/roomservice.xml' ]; then
     search_repo=$(grep "Repo Init: '" '.repo/local_manifests/roomservice.xml' | sed "s/.* '\(.*\)' .*/\1/");
     if [ ! -z "${search_repo}" ]; then
 
