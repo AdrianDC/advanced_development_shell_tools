@@ -34,10 +34,10 @@ function gitcpaicp()
   # Log branches
   echo '';
   echo -e "  \e[1;34m\e[4;34mBranch : origin/${branch_origin}\e[0m";
-  git log --pretty=oneline -n 6 origin/${branch_origin};
+  git log --pretty=oneline -n 16 origin/${branch_origin};
   echo '';
   echo -e "  \e[1;34m\e[4;34mBranch : aicp/${branch_target}\e[0m";
-  git log --pretty=oneline -n 6 aicp/${branch_target};
+  git log --pretty=oneline -n 16 aicp/${branch_target};
   echo '';
 
   # Process cherry-picks request
