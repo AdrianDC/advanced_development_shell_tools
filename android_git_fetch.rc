@@ -86,9 +86,24 @@ function gitunshallow()
 {
   # Usage: gitunshallow (Git fetch and unshallow project)
 
+  # Variables
+  local currentdir=${PWD};
+  local submodules;
+
   # Fetch and unshallow
   git fetch --unshallow "$(gitgetremote)" "$(repogetbranch)" 2>&1 \
     | grep -v 'on a complete repository does not make sense';
+
+  # Fetch and unshallow submodules
+  submodules=$(git submodule--helper list | cut -f 2);
+  for path in ${submodules}; do
+    cd "${currentdir}/${path}/";
+    git fetch --unshallow "$(gitgetremote)" "$(repogetbranch)" 2>&1 \
+      | grep -v 'on a complete repository does not make sense';
+  done;
+
+  # Restore current dir
+  cd "${currentdir}/";
 }
 
 # === Git Fetch Shortcuts ===
