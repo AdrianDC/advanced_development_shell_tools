@@ -17,6 +17,7 @@
 
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_build_helpers.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_helpers.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_tools.rc)
 
@@ -119,11 +120,11 @@ function fboota()
 
   # Image fast builder
   if [[ ! "${params}" == *'full'* ]] && mms -v > /dev/null 2>&1; then
-    mms ${image_name} | tee "${tmpfile}";
+    mms "${image_name}" | tee "${tmpfile}";
 
   # Image full builder
   else
-    make -j"$(grep -c ^processor /proc/cpuinfo)" ${image_name} | tee "${tmpfile}";
+    makes "${image_name}" | tee "${tmpfile}";
   fi;
 
   # Unsecure adb changes

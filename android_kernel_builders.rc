@@ -62,8 +62,8 @@ function makekernel()
 
   # Kernel build
   time_diff=$(date +%s);
-  make_parameters="make ${make_parameters}";
-  ${make_parameters} -j"$(grep -c ^processor /proc/cpuinfo)" O=./.build;
+  make_parameters="makes ${make_parameters}";
+  ${make_parameters} O=./.build;
 
   # Show compilation time
   time_diff=$(($(date +%s) - time_diff));

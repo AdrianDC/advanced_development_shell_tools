@@ -163,7 +163,7 @@ function mmmzip()
   elif mka -v > /dev/null 2>&1; then
     mka "${BuildParams}" | tee "${LogFile}";
   else
-    make -j"$(grep -c ^processor /proc/cpuinfo)" "${BuildParams}" | tee "${LogFile}";
+    makes "${BuildParams}" | tee "${LogFile}";
   fi;
 
   # Return to repo root
