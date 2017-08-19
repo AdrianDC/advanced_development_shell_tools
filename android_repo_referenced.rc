@@ -111,6 +111,7 @@ function reporefupdate()
     if cddevaosp "${project}" && git add -N ./* && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating AOSP ${project} references...";
+      git submodule update --remote;
       git add -Ap;
       if ! git diff --cached --quiet; then
         git commit --amend --no-edit;
@@ -124,6 +125,7 @@ function reporefupdate()
     if cddevlineage "${project}" && git add -N ./* && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
+      git submodule update --remote;
       git add -Ap;
       if ! git diff --cached --quiet; then
         git commit --amend --no-edit;
@@ -136,6 +138,7 @@ function reporefupdate()
   if cddev 'android_development_manifests' && git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating common manifests references...";
+    git submodule update --remote;
     git add -Ap;
     if ! git diff --cached --quiet; then
       git commit --amend --no-edit;
@@ -147,6 +150,7 @@ function reporefupdate()
   if cddevmrom && git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating MultiROM references...";
+    git submodule update --remote;
     git add -Ap;
     if ! git diff --cached --quiet; then
       git commit --amend --no-edit;
@@ -158,6 +162,7 @@ function reporefupdate()
   if cddevtwrp && git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating TWRP references...";
+    git submodule update --remote;
     git add -Ap;
     if ! git diff --cached --quiet; then
       git commit --amend --no-edit;
