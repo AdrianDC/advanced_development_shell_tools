@@ -330,7 +330,7 @@ function androidprojectpatcher()
           commits_result=${?};
 
           # Failed update
-          if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ] || ! git diff-index --quiet HEAD --; then
+          if [ ${commits_result} -ne 0 ] && [ ${commits_result} -ne 1 ] || ! git diff-index --ignore-submodules --quiet HEAD --; then
             commits_todo=${commits_list[*]};
             commits_todo=${commits_todo#*${sha1}};
             echo '';
@@ -549,7 +549,7 @@ function androidprojectrebaser()
         push_command="git push -f https://github.com/${projects_owner}/${project_name} HEAD:refs/heads/${push_branch}";
 
         # Failed rebase
-        if [ ${commits_result} -ne 0 ] || ! git diff-index --quiet HEAD --; then
+        if [ ${commits_result} -ne 0 ] || ! git diff-index --ignore-submodules --quiet HEAD --; then
           echo '';
           echo -e '  \e[1;31m< Automatic rebase failed...';
           echo -e '  \e[1;33m> Manually fix then push with :\e[0m';
