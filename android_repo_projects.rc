@@ -26,6 +26,32 @@ function gitrap()
   local line_function;
   local line_usage;
   local list_functions=('');
+  local project;
+
+  # Check remote existence
+  if ! git ls-remote --exit-code 'project' > /dev/null 2>&1; then
+
+    # Detect roomservice.xml provided project
+    if [ -f "$(gettop)/.repo/local_manifests/roomservice.xml" ]; then
+      project=$(grep "Project: '" "$(gettop)/.repo/local_manifests/roomservice.xml" | sed "s/.* '\(.*\)' .*/\1/");
+      if [ ! -z "${project}" ]; then
+
+        # Extract project tag
+        project=${project#* };
+        project=${project% *};
+
+        # Apply project target
+        gitremoteset project "${project}";
+
+        # Display selected project target
+        echo '';
+        echo -e " \e[1;33mgitrap: Default project remote set to \e[0m'${project}'";
+        echo '';
+        return;
+
+      fi;
+    fi;
+  fi;
 
   # Display shtools* menu
   echo '';
