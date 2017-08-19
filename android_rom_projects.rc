@@ -685,7 +685,7 @@ function androidprojectunshallow()
 
     # Access path
     croot;
-    cd "${path}";
+    cd "${path}" 2>/dev/null || continue;
 
     # Information
     echo '';
