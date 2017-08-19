@@ -96,4 +96,15 @@ function kernelcopyleftmerger()
   echo ' kernelcopyleftmerger: Adding all relevant changes';
   git -c core.fileMode=false add -Av;
   echo '';
+
+  # Commit the merge
+  echo '';
+  echo ' kernelcopyleftmerger: Commit the changes';
+  git commit -s;
+
+  # Clean unmerged files
+  echo '';
+  echo ' kernelcopyleftmerger: Cleaning unmerged files';
+  git reset HEAD --hard;
+  git stash -u;
 }
