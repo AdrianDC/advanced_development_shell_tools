@@ -211,7 +211,7 @@ function romautorelease()
   fi;
 
   # Notify build result
-  pushbrom "${rom_target}" "${rom_tag}";
+  pushbrom "${rom_device}" "${rom_tag}";
 
   # Upload ROM when not working locally
   if ! shtools-builds-local-active; then
