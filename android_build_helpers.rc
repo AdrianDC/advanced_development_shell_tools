@@ -21,3 +21,10 @@ function makej()
   # Usage: makej <parameters> (Helper to 'make -jPROCESSORS')
   make -j"$(grep -c ^processor /proc/cpuinfo)" "${@}";
 }
+
+# === Make with Jobs and SCHED_BATCH ===
+function makes()
+{
+  # Usage: makes <parameters> (Helper to 'make -jPROCESSORS' with SCHED_BATCH)
+  schedtool -B -n 10 -e ionice -n 7 make -j"$(grep -c ^processor /proc/cpuinfo)" "${@}";
+}

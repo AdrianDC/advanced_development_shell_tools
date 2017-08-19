@@ -228,6 +228,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_build_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_build_helpers.rc)&nbsp;]
   * [**makej** *<b>\[Helper to 'make -jPROCESSORS'\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_build_helpers.rc) : *makej &lt;parameters&gt;*
+  * [**makes** *<b>\[Helper to 'make -jPROCESSORS' with SCHED_BATCH\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_build_helpers.rc) : *makes &lt;parameters&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_changelog.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_changelog.rc)&nbsp;]
