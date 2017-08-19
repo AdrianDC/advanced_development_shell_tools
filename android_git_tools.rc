@@ -25,12 +25,19 @@ function gitgetremote()
 
   # Variables
   local remote;
+  local remotes;
 
-  # Remote detection
-  remote=$(git 'for-each-ref' \
+  # Remotes detection
+  remotes=$(git 'for-each-ref' \
          | grep -i 'remotes' \
-         | head -n 1 \
          | sed 's/.*\/remotes\/\([^\/]*\).*/\1/');
+
+  # Validate remotes
+  for remote in ${remotes}; do
+    if git remote -v | cut -f 1 | grep -q "${remote}"; then
+      break;
+    fi;
+  done;
 
   # Fix remote for AOSP
   if ! git ls-remote --exit-code "${remote}" > /dev/null 2>&1 &&
