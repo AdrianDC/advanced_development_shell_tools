@@ -102,4 +102,4 @@ alias gitppriv='gitremoteverify private false && gitpu private';
 alias gitpprivm='gitremoteverify private false && gitpu private master';
 
 # === Git Push Automated Helper ===
-alias gitpoa='gitpu $(repogetremote) $(repogetbranch)';
+alias gitpoa='gitpu $(gitgetremote) $(repogetbranch)';

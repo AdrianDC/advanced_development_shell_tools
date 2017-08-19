@@ -332,30 +332,6 @@ function repogetbranch()
   echo "${branch}";
 }
 
-# === Repo Project Remote ===
-function repogetremote()
-{
-  # Usage: repogetremote (Get repo project remote)
-
-  # Variables
-  local remote;
-
-  # Remote detection
-  remote=$(git 'for-each-ref' \
-         | grep -i 'remotes' \
-         | head -n 1 \
-         | sed 's/.*\/remotes\/\([^\/]*\).*/\1/');
-
-  # Fix remote for AOSP
-  if ! git ls-remote --exit-code "${remote}" > /dev/null 2>&1 &&
-      git ls-remote --exit-code "aosp" > /dev/null 2>&1; then
-    remote='aosp';
-  fi;
-
-  # Output result
-  echo "${remote}";
-}
-
 # === Repo List Exclude Search ===
 function repolistexclude()
 {
