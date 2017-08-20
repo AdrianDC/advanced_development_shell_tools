@@ -47,12 +47,12 @@ function adbst()
   fi;
 
   # Get process identifier
-  pid=$(adb shell ps -A | grep "${1}" | tail -n 1 | awk '{ print $2 }');
+  pid=$(adb shell ps -A | grep -a "${1}" | tail -n 1 | awk '{ print $2 }');
   if [ ! -z "${pid}" ]; then
-    adb shell ps -A | grep "${1}";
+    adb shell ps -A | grep -a "${1}";
   else
-    pid=$(adb shell ps | grep "${1}" | tail -n 1 | awk '{ print $2 }');
-    adb shell ps | grep "${1}";
+    pid=$(adb shell ps | grep -a "${1}" | tail -n 1 | awk '{ print $2 }');
+    adb shell ps | grep -a "${1}";
   fi;
   echo '';
 
