@@ -323,7 +323,12 @@ function repogetbranch()
            | sed 's/.*remotes\/[^\/]*\/\(.*\)/\1/');
   fi;
 
-  # Default failsafe
+  # Detect branch from refs
+  if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
+    branch=$(gitgetbranch);
+  fi;
+
+  # Default fallback
   if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
     branch=cm-14.1;
   fi;
