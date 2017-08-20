@@ -30,17 +30,18 @@ function adbst()
   local cmd;
   local pid;
   local strace_exists;
+  local target='/tmp';
 
   # Detect strace requirement
   strace_exists=$(adbsu 'if [ ! -e /system/bin/strace ]; then echo false; fi;');
   if [ ! -z "${strace_exists}" ]; then
     if [ ! -z "$(adbsu grep '64' /proc/cpuinfo)" ]; then
-      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64}" /sdcard/strace;
+      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64}" "${target}/strace";
     else
-      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" /sdcard/strace;
+      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" "${target}/strace";
     fi;
-    adbsu 'cp /sdcard/strace /system/bin/strace';
-    adbsu 'rm /sdcard/strace';
+    adbsu "cp '${target}/strace' /system/bin/strace";
+    adbsu "rm '${target}/strace'";
     adbsu 'chmod 777 /system/bin/strace';
     echo '';
   fi;
