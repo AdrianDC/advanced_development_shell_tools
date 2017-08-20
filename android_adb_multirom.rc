@@ -172,7 +172,7 @@ function adbmrombootimage()
   filedir=$(dirname "${filepath}");
 
   # Read all boot extracted files
-  boot_extracted_files=$(adb shell ls "${romdir}/boot");
+  boot_extracted_files=$(adbsu "ls '${romdir}/boot'");
 
   # Replace extracted files with new ones
   for file in ${boot_extracted_files}; do
