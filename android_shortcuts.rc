@@ -250,6 +250,7 @@ function cddevtwrp()    { cd "$(getand)/Development/twrp_development_sony" 2> /d
 function cdprojects()   { cd "$(getand)/Projects/${1}"; }
 function cdref()        { cd "$(getand)/References/${1}"; }
 function cdrefapk()     { cd "$(getand)/References/apk"; }
+function cdrefdev()     { cd "$(getand)/References/Devices"; }
 function cdserv()       { cd "$(getand)/Server"; }
 function adbapks()      { cdrefapk; adbapkinstall; }
 function cdandfiles()   { cd "${ANDROID_FILES_PATH}/"; }
