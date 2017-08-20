@@ -196,6 +196,7 @@ function reporefsync()
         git reset FETCH_HEAD;
         git stash -u;
       fi;
+      git submodule update --remote;
     fi;
   done;
 
@@ -210,6 +211,7 @@ function reporefsync()
         git reset FETCH_HEAD;
         git stash -u;
       fi;
+      git submodule update --remote;
     fi;
   done;
 
@@ -223,6 +225,7 @@ function reporefsync()
       git reset FETCH_HEAD;
       git stash -u;
     fi;
+    git submodule update --remote;
   fi;
 
   # Fetch and update MultiROM references
@@ -235,6 +238,7 @@ function reporefsync()
       git reset FETCH_HEAD;
       git stash -u;
     fi;
+    git submodule update --remote;
   fi;
 
   # Fetch and update TWRP references
@@ -247,6 +251,7 @@ function reporefsync()
       git reset FETCH_HEAD;
       git stash -u;
     fi;
+    git submodule update --remote;
   fi;
 
   # Path restore
