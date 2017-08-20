@@ -115,9 +115,18 @@ function gitcid()
 {
   # Usage: gitcid (Apply commit-msg hook to commit)
 
+  # Variables
+  local git_path='./.git';
+
+  # Detect submodules
+  if [ -f "${git_path}" ]; then
+    git_path=$(cat "${git_path}");
+    git_path=${git_path#*: };
+  fi;
+
   # Copy commit-msg
-  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_tools/commit-msg" '.git/hooks/commit-msg';
-  chmod u+x ./.git/hooks/commit-msg;
+  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_tools/commit-msg" "${git_path}/hooks/commit-msg";
+  chmod u+x "${git_path}/hooks/commit-msg";
 
   # Update commit with Change-ID
   git commit --amend --no-edit;
@@ -129,10 +138,19 @@ function gitcidupstream()
 {
   # Usage: gitcidupstream (Load commit-msg hook from upstream)
 
+  # Variables
+  local git_path='./.git';
+
+  # Detect submodules
+  if [ -f "${git_path}" ]; then
+    git_path=$(cat "${git_path}");
+    git_path=${git_path#*: };
+  fi;
+
   # Fetch commit-msg file
-  curl -Lo .git/hooks/commit-msg http://review.lineageos.org/tools/hooks/commit-msg;
-  cp -fv '.git/hooks/commit-msg' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_tools/commit-msg";
-  chmod u+x ./.git/hooks/commit-msg;
+  curl -Lo "${git_path}/hooks/commit-msg" http://review.lineageos.org/tools/hooks/commit-msg;
+  cp -fv "${git_path}/hooks/commit-msg" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_tools/commit-msg";
+  chmod u+x "${git_path}/hooks/commit-msg";
 }
 
 # === Git Commit Stable
