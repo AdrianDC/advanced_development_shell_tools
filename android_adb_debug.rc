@@ -32,6 +32,10 @@ function adbst()
   local strace_exists;
   local target='/tmp';
 
+  # Acquire root access
+  adbwait;
+  adbro;
+
   # Detect strace requirement
   strace_exists=$(adbsu 'if [ ! -e /system/bin/strace ]; then echo false; fi;');
   if [ ! -z "${strace_exists}" ]; then
