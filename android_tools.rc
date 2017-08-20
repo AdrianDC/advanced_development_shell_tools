@@ -375,8 +375,9 @@ function overlaycompare()
   while IFS= read -r overlay_path; do
 
     # Launch meld on both paths
-    source_path=$(echo "../../../${overlay_path}" \
-                | sed 's/radio\/overlay/overlay/' \
+    source_path=$(echo "$(gettop)/${overlay_path}" \
+                | sed 's/overlay\/common/overlay/' \
+                | sed 's/overlay\/dictionaries/overlay/' \
                 | sed 's/overlay[^\/]*\///');
     meld "${overlay_path}" "${source_path}";
 
