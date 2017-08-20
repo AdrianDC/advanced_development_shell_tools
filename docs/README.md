@@ -478,6 +478,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_tools.rc)
   ```
   * [**gitgetremote** *<b>\[Get git primary remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_tools.rc)
+  * [**gitgetbranch** *<b>\[Get git primary branch\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_tools.rc)
 
 ---
 ### [&nbsp;Documentation: [android_grep.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)  - Standalone Import Ready&nbsp;]

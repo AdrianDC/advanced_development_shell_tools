@@ -48,3 +48,31 @@ function gitgetremote()
   # Output result
   echo "${remote}";
 }
+
+# === Git Project Branch ===
+function gitgetbranch()
+{
+  # Usage: gitgetbranch (Get git primary branch)
+
+  # Variables
+  local branch;
+  local branches;
+
+  # Remotes detection
+  branches=$(git 'for-each-ref' \
+           | grep -i 'remotes' \
+           | grep -v 'HEAD' \
+           | sed 's/.*\/remotes\/\([^\/]*\/[^\/]*\).*/\1/');
+
+  # Validate remotes
+  for branch in ${branches}; do
+    if git remote -v | cut -f 1 | grep -q "${branch%/*}"; then
+      branch=${branch#*/};
+      break;
+    fi;
+    branch='';
+  done;
+
+  # Output result
+  echo "${branch}";
+}
