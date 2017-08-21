@@ -21,7 +21,7 @@
 # === Git Project Remote ===
 function gitgetremote()
 {
-  # Usage: gitgetremote (Get git primary remote)
+  # Usage: gitgetremote [branch_grep] (Get git primary remote)
 
   # Variables
   local remote;
@@ -30,6 +30,7 @@ function gitgetremote()
   # Remotes detection
   remotes=$(git 'for-each-ref' \
          | grep -i 'remotes' \
+         | grep -i "${1}" \
          | sed 's/.*\/remotes\/\([^\/]*\).*/\1/');
 
   # Validate remotes
