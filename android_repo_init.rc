@@ -24,7 +24,7 @@ function repoinitaosp()
     echo ' Usage: repoinitaosp <branch_id> [referenced,clean,light/shallow,example] (repo init for AOSP)';
     echo '';
     echo ' Branch identifications:';
-    echo '  - android-7.1.2_r<XX>';
+    echo '  - android-<X.X.X_rXX>';
     echo '  - android-<X-preview-X>';
     echo '  - master';
     echo '';
@@ -41,10 +41,8 @@ function repoinitaosp()
   # Branch selection
   if [ "${release}" = 'master' ]; then
     branch="${release}";
-  elif [[ "${release}" == *'-preview-'* ]]; then
-    branch="android-${release}";
   else
-    branch="android-7.1.2_r${release}";
+    branch="android-${release}";
   fi;
 
   # Repo shallow
