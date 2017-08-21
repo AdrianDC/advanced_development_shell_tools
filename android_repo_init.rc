@@ -455,7 +455,7 @@ function repoinit()
   if [[ "${options_list}" == *'referenced'* ]] && [ ! "${ANDROID_REPO_INIT_REFERENCED}" = 'n' ]; then
     echo -en " \e[1;37m> Referenced repository [y/N] :\e[0m ";
     read -r options_prepend;
-    if [[ 'yY' == *"${options_prepend}"* ]]; then
+    if [ ! -z "${options_prepend}" ] && [[ 'yY' == *"${options_prepend}"* ]]; then
       options_prepend='referenced';
       options_list=${options_list/referenced/};
     else
