@@ -178,6 +178,13 @@ function androidprojectpatcher()
   fi;
 
   # ==========================================================
+  # Detect 'ungraft' input
+  if [ "${project_specific_inputs[*]}" = 'ungraft' ]; then
+    androidprojectungraft "${project_owner}" "${project_name}";
+    return;
+  fi;
+
+  # ==========================================================
   # Detect 'unshallow' input
   if [ "${project_specific_inputs[*]}" = 'unshallow' ]; then
     androidprojectunshallow "${project_owner}" "${project_name}";
@@ -666,6 +673,43 @@ function androidprojectsync()
     branch=$(repogetbranch);
     git fetch "$(gitgetremote ${branch})" "${branch}" 2>&1;
     git reset --hard FETCH_HEAD;
+
+  done;
+
+  # Return to repo root
+  croot;
+  echo '';
+}
+
+# === Android Project Ungraft ===
+function androidprojectungraft()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: androidprojectungraft <owner> <project_name> (Android project paths ungrafter)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local branch;
+  local path;
+
+  # Android project remote paths list
+  for path in $(androidprojectpaths "${1}" "${2}"); do
+
+    # Access path
+    croot;
+    cd "${path}" 2>/dev/null || continue;
+
+    # Information
+    echo '';
+    echo " androidprojectungraft: Fetching '${path}' last 100 commits...";
+
+    # Fetch and ungraft
+    branch=$(repogetbranch);
+    git fetch --depth 100 "$(gitgetremote ${branch})" "${branch}";
 
   done;
 
