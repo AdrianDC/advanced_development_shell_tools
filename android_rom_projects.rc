@@ -75,13 +75,8 @@ function gitbranchpusher()
     fi;
   fi;
 
-  # Fetch and unshallow if needed
-  if ! git fetch --unshallow "${remote}" "${project_branch}" 2>&1 \
-      | grep -v 'on a complete repository does not make sense'; then
-    git fetch "${remote}" "${project_branch}";
-  fi;
-
   # Fetch upstream remote
+  git fetch "${remote}" "${project_branch}";
   git rev-list --left-right --count FETCH_HEAD...HEAD;
   echo '';
 
