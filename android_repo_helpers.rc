@@ -22,7 +22,6 @@ function gettop()
 
   # Variables
   local CURDIR;
-  local TOPFILE=build/core/envsetup.mk;
   local TOP;
 
   # Initialize variables
@@ -30,14 +29,14 @@ function gettop()
   TOP=${CURDIR};
 
   # Access parent until found or root
-  while [ ! -f "${TOPFILE}" ] && [ ! "${PWD}" = '/' ]; do
+  while [ ! -d '.repo' ] && [ ! "${PWD}" = '/' ]; do
     cd ../;
     TOP=$(PWD='' /bin/pwd -P);
   done;
 
   # Echo if path is valid
   cd "${CURDIR}";
-  if [ -f "${TOP}/${TOPFILE}" ]; then
+  if [ -d "${TOP}/.repo" ]; then
     echo "${TOP}";
   fi;
 }
