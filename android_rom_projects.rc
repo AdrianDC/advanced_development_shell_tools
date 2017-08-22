@@ -27,6 +27,7 @@ function gitbranchpusher()
   local remote=${2:-project};
   local project_branch=${3};
   local push_command;
+  local target_remote;
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -53,11 +54,16 @@ function gitbranchpusher()
     project_branch=${project_dir//\//_};
   fi;
 
+  # Target remote
+  target_remote=$(git config --get remote.project.url 2>/dev/null);
+  target_remote=${target_remote%.git};
+
   # Status information
   echo '';
   echo " Project directory: ${project_dir}";
   echo " Project branch: ${project_branch}";
   echo " Repository path: ${repo_dir}";
+  echo " Target remote: ${target_remote}";
   echo '';
 
   # Check 'project' remote existence
