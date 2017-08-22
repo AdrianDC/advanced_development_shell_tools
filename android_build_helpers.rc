@@ -25,6 +25,27 @@ function makej()
 # === Make with Jobs and SCHED_BATCH ===
 function makes()
 {
+  # Variables
+  local time_diff;
+  local time_hours;
+  local time_minutes;
+  local time_seconds;
+
+  # Store compilation start time
+  time_diff=$(date +%s);
+
   # Usage: makes <parameters> (Helper to 'make -jPROCESSORS' with SCHED_BATCH)
   schedtool -B -n 10 -e ionice -n 7 make -j"$(grep -c ^processor /proc/cpuinfo)" "${@}";
+
+  # Calculate compilation times
+  time_diff=$(($(date +%s) - time_diff));
+  time_seconds=$((time_diff % 60));
+  time_diff=$((time_diff / 60));
+  time_minutes=$((time_diff % 60));
+  time_hours=$((time_diff / 60));
+
+  # Show compilation time
+  echo '';
+  echo -e " \e[1;33m[ makes: Done in ${time_hours} hours ${time_minutes} minutes ${time_seconds} seconds ]\e[0m";
+  echo '';
 }
