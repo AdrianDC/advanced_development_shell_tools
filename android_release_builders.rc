@@ -148,15 +148,6 @@ function romautorelease()
     cleanrambuild;
   fi;
 
-  # CPU handling
-  if [[ "${rom_params}" == *'j1'* ]]; then
-    build_cpu_count=1;
-  elif [[ "${rom_params}" == *'j2'* ]]; then
-    build_cpu_count=2;
-  else
-    build_cpu_count=$(grep -c ^processor /proc/cpuinfo);
-  fi;
-
   # Compilation logs
   rom_logs_output=${rom_logs}/Build.${rom_device}.${rom_tag}.log;
 
