@@ -329,7 +329,7 @@ function repogetbranch()
 
   # Default fallback
   if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
-    branch=cm-14.1;
+    branch=lineage-15.0;
   fi;
 
   # Output result

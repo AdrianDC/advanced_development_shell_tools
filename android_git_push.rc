@@ -85,6 +85,7 @@ function gitpurl()
 # === Git Push Validated Helpers ===
 alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';
 alias gitpa14='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1';
+alias gitpa15='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) lineage-15.0';
 alias gitpala='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) LA.UM.5.5_rb1.10';
 alias gitpal='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests'
 alias gitpaman='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests'

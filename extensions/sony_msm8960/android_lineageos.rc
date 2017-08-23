@@ -34,7 +34,7 @@ function lineagesony8960rebaser()
   # Usage: lineagesony8960rebaser [specific_paths] (LineageOS Devices Rebaser)
 
   # Use the androidprojectrebaser helper
-  androidprojectrebaser 'AdrianDC' 'cm-14.1' '
+  androidprojectrebaser 'AdrianDC' 'lineage-15.0' '
     device/sony/huashan::android_device_sony_huashan::LineageOS/::
     device/sony/blue-common::android_device_sony_blue-common::LineageOS/::
     device/sony/hayabusa::android_device_sony_hayabusa::LineageOS/::
