@@ -666,7 +666,7 @@ function androidprojectsync()
 
     # Fetch and reset
     branch=$(repogetbranch);
-    git fetch "$(gitgetremote ${branch})" "${branch}" 2>&1;
+    git fetch "$(gitgetremote "${branch}")" "${branch}" 2>&1;
     git reset --hard FETCH_HEAD;
 
   done;
@@ -704,7 +704,7 @@ function androidprojectungraft()
 
     # Fetch and ungraft
     branch=$(repogetbranch);
-    git fetch --depth 100 "$(gitgetremote ${branch})" "${branch}";
+    git fetch --depth 100 "$(gitgetremote "${branch}")" "${branch}";
 
   done;
 
@@ -741,7 +741,7 @@ function androidprojectunshallow()
 
     # Fetch and unshallow
     branch=$(repogetbranch);
-    git fetch --unshallow "$(gitgetremote ${branch})" "${branch}" 2>&1 \
+    git fetch --unshallow "$(gitgetremote "${branch}")" "${branch}" 2>&1 \
 	    | grep -v 'on a complete repository does not make sense';
 
   done;
