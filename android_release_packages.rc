@@ -128,7 +128,7 @@ function mmmzip()
   # Initialize variables
   CurDir=$(pwd);
   TmpDir=$(mktemp -d);
-  BuildParams=${*:-.};
+  BuildParams=("${@:-.}");
   BuildPathFirst=${1:-.};
   LogFile=${TmpDir}/mmm_logs.txt;
   OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
@@ -159,11 +159,11 @@ function mmmzip()
 
   # Make the modules
   if [ -d "$(readlink -f "${path}")" ]; then
-    mmm "${BuildMode}" "${BuildParams}" | tee "${LogFile}";
+    mmm "${BuildMode}" "${BuildParams[@]}" | tee "${LogFile}";
   elif mka -v > /dev/null 2>&1; then
-    mka "${BuildParams}" | tee "${LogFile}";
+    mka "${BuildParams[@]}" | tee "${LogFile}";
   else
-    makes "${BuildParams}" | tee "${LogFile}";
+    makes "${BuildParams[@]}" | tee "${LogFile}";
   fi;
 
   # Return to repo root
