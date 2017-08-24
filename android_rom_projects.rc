@@ -356,6 +356,8 @@ function androidprojectpatcher()
             echo -e '  \e[1;33m> Manually fix then push with :\e[0m';
             echo "     gitbranchpusher '${key_automated_patch}' '${project_github}' '${path_branch}';";
             echo '';
+            commits_todo="git cherry-pick ${sha1} ${commits_todo}";
+            ${commits_todo} 2>/dev/null;
             return 1;
           fi;
 
