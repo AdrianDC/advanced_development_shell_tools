@@ -203,8 +203,8 @@ function gcmodules()
   strings_params="strings $(stringsparams)";
   for file in $(find "${1:-.}" \( -name '*.mk' -o -name '*.bp' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
     ${strings_params} "$(readlink -f "${file}")" \
-      | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=" \
-      | sed 's/.*:=[ \t]*//g';
+      | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
+      | sed 's/.*\(:=[ \t]*\|name: "\)\([^"]*\)\(".*\|\)/\2/g';
   done;
 }
 
