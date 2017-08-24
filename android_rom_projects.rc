@@ -60,10 +60,9 @@ function gitbranchpusher()
 
   # Status information
   echo '';
-  echo " Project directory: ${project_dir}";
-  echo " Project branch: ${project_branch}";
-  echo " Repository path: ${repo_dir}";
-  echo " Target remote: ${target_remote}";
+  echo -e " \e[1;32mProject directory:\e[0m ${project_dir}";
+  echo -e " \e[1;33mRepository path:\e[0m ${repo_dir}";
+  echo -e " \e[1;37mTarget remote:\e[0m ${target_remote}";
   echo '';
 
   # Check 'project' remote existence
@@ -77,8 +76,17 @@ function gitbranchpusher()
 
   # Fetch upstream remote
   git fetch "${remote}" "${project_branch}";
-  git rev-list --left-right --count FETCH_HEAD...HEAD;
+
+  # Present diff statistics
   echo '';
+  echo -e ' \e[1;31mSources content differences:\e[0m';
+  git diff --stat HEAD FETCH_HEAD;
+
+  # Present commits counts
+  echo '';
+  echo -en ' \e[1;32mNew changes - missing: ';
+  git rev-list --left-right --count FETCH_HEAD...HEAD;
+  echo -e '\e[0m';
 
   # Confirmation
   push_command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
@@ -94,6 +102,7 @@ function gitbranchpusher()
   # Upload to remote
   echo '';
   if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
+    echo '';
     ${push_command};
   elif [ "${key}" = 'n' ] || [ "${key}" = 'N' ]; then
     echo '  < Upload ignored. Consider uploading later';
