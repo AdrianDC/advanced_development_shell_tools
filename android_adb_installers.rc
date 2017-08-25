@@ -271,6 +271,7 @@ function adbside()
 
   # Variables
   local adb_cmd;
+  local rebooted=;
 
   # Initialize adb
   echo '';
@@ -281,6 +282,7 @@ function adbside()
   if ! timeout 2 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
     echo -e '\e[1;33madbside: Rebooting to recovery\e[0m';
     ${adb_cmd} reboot recovery;
+    rebooted=true;
   fi;
 
   # Wait for an adb recovery
@@ -316,8 +318,8 @@ function adbside()
     sleep 2;
   done;
 
-  # Reboot to Android if requested
-  if [ ! -z "${2}" ]; then
+  # Reboot to Android if requested or forced reboot to recovery
+  if [ ! -z "${2}" ] || [ ! -z "${rebooted}" ]; then
     echo -e '\e[1;33madbside: Rebooting to Android\e[0m';
     ${adb_cmd} shell reboot;
   fi;
