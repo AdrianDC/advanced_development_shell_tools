@@ -364,6 +364,10 @@ function reporeflinker()
       echo '';
       echo "   ${cnt}: ${options[${cnt}]}";
       for target in ${dev_path}/${project}/*.xml; do
+        if [[ "${file}" == 'roomservice.xml' && "${target##*/}" == 'untracked-'* ]] ||
+            [[ "${file}" == 'untracked.xml' && ! "${target##*/}" == 'untracked-'* ]]; then
+          continue;
+        fi;
         cnt=$((cnt + 1));
         options[${cnt}]=${target##*/};
         if [ "${options[${cnt}]}" = "${search_file}.xml" ]; then
