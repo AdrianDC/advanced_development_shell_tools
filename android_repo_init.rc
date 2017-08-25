@@ -104,7 +104,7 @@ function repoinitlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineage <13.0/14.1> [referenced,clean,light/shallow,example] (repo init for LineageOS)';
+    echo ' Usage: repoinitlineage <13.0/14.1/15.0> [referenced,clean,light/shallow,example] (repo init for LineageOS)';
     echo '';
     return;
   fi;
@@ -112,9 +112,17 @@ function repoinitlineage()
   # Variables
   local release=${1};
   local params=${2};
-  local branch=cm-${release};
+  local branch;
   local init_command;
   local depth=;
+
+  # Handle branches
+  case ${release} in
+    13.0) branch='cm-13.0';;
+    14.1) branch='cm-14.1';;
+    15.0) branch='lineage-15.0';;
+    *)    branch='';;
+  esac;
 
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
