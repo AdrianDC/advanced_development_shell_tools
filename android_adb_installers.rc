@@ -302,7 +302,7 @@ function adbside()
 
     # Start twrp sideload
     echo -e '\e[1;33madbside: Waiting for sideload\e[0m';
-    ${adb_cmd} shell twrp sideload;
+    ${adb_cmd} shell twrp sideload 2> /dev/null;
     sleep 2;
   done;
 
@@ -321,7 +321,7 @@ function adbside()
   # Reboot to Android if requested or forced reboot to recovery
   if [ ! -z "${2}" ] || [ ! -z "${rebooted}" ]; then
     echo -e '\e[1;33madbside: Rebooting to Android\e[0m';
-    ${adb_cmd} shell reboot;
+    ${adb_cmd} reboot;
   fi;
   echo '';
 }
