@@ -461,27 +461,35 @@ function adbu()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbu <package_name> (Force optimization of a package)';
+    echo ' Usage: adbu <package_name_or_file> (Force optimization of a package)';
     echo '';
     return;
   fi;
 
   # Variables
+  local package=${1};
   local pid;
+
+  # Parse input .apk file
+  if [ -f "${package}" ] && [ "${package: -4}" = '.apk' ]; then
+    package=$(aapt d xmltree "${package}" AndroidManifest.xml | grep -i 'package=');
+    package=${package#*$'"'};
+    package=${package%%$'"'*};
+  fi;
 
   # Debug target file
   echo '';
-  echo -e "\e[1;36m # '${1}' optimization";
+  echo -e "\e[1;36m # '${package}' optimization";
 
   # Optimize application
   echo -en '\e[1;33m | Package optimizing... ';
-  sudo adb shell pm force-dex-opt "${1}";
+  sudo adb shell pm force-dex-opt "${package}";
   echo -e '\e[1;32mDone';
 
   # Killing application
   echo -en '\e[1;33m | Killing application... ';
-  sudo adb shell pkill "${1}";
-  pid=$(sudo adb shell ps | grep "${1}" | awk '{ print $2 }');
+  sudo adb shell pkill "${package}";
+  pid=$(sudo adb shell ps | grep "${package}" | awk '{ print $2 }');
   sudo adb shell kill "${pid}" > /dev/null;
   echo -e '\e[1;32mDone';
 
