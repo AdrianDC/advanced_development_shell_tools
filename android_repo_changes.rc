@@ -21,13 +21,10 @@
 # === Repo Changes Logger ===
 function repochanges()
 {
-  # Usage: repochanges ["ignored_projects"] (Detect all repo projects differences)
+  # Usage: repochanges ["filter_projects"] (Detect all repo projects differences)
 
   # Variables
-  local ignored_projects=external/;
-  if [ ! -z "${1}" ]; then
-    ignored_projects=${1};
-  fi;
+  local filter_projects=${1};
 
   # Diff execution
   echo '';
@@ -35,7 +32,7 @@ function repochanges()
   repo forall -j"$(grep -c ^processor /proc/cpuinfo)" -c "
 
      # Filter out projects
-     if [ ! -z \$(echo \"\${REPO_PATH}\" | grep -i \"${ignored_projects}\") ]; then
+     if [ ! -z \"${filter_projects}\" ] && ! echo \"\${REPO_PATH}\" | grep -iq \"${filter_projects}\"; then
        echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
 
      # Study projects

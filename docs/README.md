@@ -669,7 +669,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_changes.rc)
   ```
-  * [**repochanges** *<b>\[Detect all repo projects differences\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changes.rc) : *repochanges ["ignored_projects"]*
+  * [**repochanges** *<b>\[Detect all repo projects differences\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changes.rc) : *repochanges ["filter_projects"]*
 
 ---
 ### [&nbsp;Documentation: [android_repo_cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)&nbsp;]
