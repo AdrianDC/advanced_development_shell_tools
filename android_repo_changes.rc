@@ -37,40 +37,44 @@ function repochanges()
      # Filter out projects
      if [ ! -z \$(echo \"\${REPO_PATH}\" | grep -i \"${ignored_projects}\") ]; then
        echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
-       return;
-     fi;
 
-     # Show and fetch projects
-     echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
-     git fetch --quiet \${REPO_REMOTE} \${REPO_RREV##*/};
+     # Study projects
+     else
 
-     # Detect new remote commits
-     changescount=\$(git rev-list --right-only --count HEAD...FETCH_HEAD);
-     if [ \${changescount} -ne 0 ]; then
-       echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
-       echo '';
-       git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
-       echo '';
-     fi;
+       # Show and fetch projects
+       echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       git fetch --quiet \${REPO_REMOTE} \${REPO_RREV##*/};
 
-     # Detect local commits
-     changescount=\$(git rev-list --left-only --count HEAD...FETCH_HEAD);
-     if [ \${changescount} -ne 0 ]; then
-       echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} local changes\";
-       echo '';
-       git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
-       echo '';
-     fi;
+       # Detect new remote commits
+       changescount=\$(git rev-list --right-only --count HEAD...FETCH_HEAD);
+       if [ \${changescount} -ne 0 ]; then
+         echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
+         echo '';
+         git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
+         echo '';
+       fi;
 
-     # Detect local differences
-     if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
-       echo -en  \"\r\033[K Project \${REPO_PROJECT}: Unmerged differences\";
-       echo '';
-       git --no-pager diff;
-       echo '';
+       # Detect local commits
+       changescount=\$(git rev-list --left-only --count HEAD...FETCH_HEAD);
+       if [ \${changescount} -ne 0 ]; then
+         echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} local changes\";
+         echo '';
+         git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
+         echo '';
+       fi;
+
+       # Detect local differences
+       if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
+         echo -en  \"\r\033[K Project \${REPO_PROJECT}: Unmerged differences\";
+         echo '';
+         git --no-pager diff;
+         echo '';
+       fi;
+
      fi;
     " 2> /dev/null;
 
   # Done
+  echo '';
   echo '';
 }
