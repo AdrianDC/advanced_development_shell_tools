@@ -273,6 +273,15 @@ function adbedit()
   rm "${name}";
 }
 
+# === ADB Manifest.xml Editor ===
+function adbeditmanifest()
+{
+  # Usage: adbeditmanifest (Edit adb /system/vendor/manifest.xml file)
+
+  # Edit adb /system/vendor/manifest.xml file
+  adbedit /system/vendor/manifest.xml;
+}
+
 # === ADB Inputs Reader ===
 function adbinputs()
 {
