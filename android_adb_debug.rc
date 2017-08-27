@@ -86,3 +86,29 @@ function adbstf()
   # Use ADB Strace helper
   adbst "${1}" '-f';
 }
+
+# === ADB Stack Tombstone Debugger ===
+function adbstacktombstone()
+{
+  # Usage
+  if stack -v > /dev/null 2>&1; then
+    echo '';
+    echo ' Usage: adbstacktombstone (ADB tombstone debugger with stack)';
+    echo ' Information: "stack" has to be provided by AOSP envsetup';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local tombstone_last;
+
+  # Acquire adb root access
+  adbro;
+
+  # Acquire last tombstone file
+  tombstone_last=$(adb shell ls -t1 '/data/tombstones/tombstone*' \
+                 | head -n 1);
+
+  # Run slack wiht input
+  stack <(adb shell cat "${tombstone_last}");
+}
