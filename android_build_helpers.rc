@@ -36,6 +36,7 @@ function makes()
   local time_hours;
   local time_minutes;
   local time_seconds;
+  local time_string;
 
   # Store compilation start time
   time_diff=$(date +%s);
@@ -54,21 +55,26 @@ function makes()
   # Build success or failure log
   echo '';
   if [ $ret -eq 0 ] ; then
-    echo -en ' \e[1;32m#### make completed successfully ';
+    echo -en ' \e[1;32m';
+    time_string='makes: Completed in';
   else
-    echo -en ' \e[1;31m#### make failed to build some targets ';
+    echo -en ' \e[1;31m';
+    time_string='makes: Failed after';
   fi;
 
   # Build time log
   if [ ${time_hours} -gt 0 ]; then
-    printf "(%02g:%02g:%02g (hh:mm:ss))" ${time_hours} ${time_minutes} ${time_seconds};
+    time_string=$(printf "${time_string} %02g:%02g:%02g (hh:mm:ss)" ${time_hours} ${time_minutes} ${time_seconds});
   elif [ ${time_minutes} -gt 0 ] ; then
-    printf "(%02g:%02g (mm:ss))" ${time_minutes} ${time_seconds};
+    time_string=$(printf "${time_string} %02g:%02g (mm:ss)" ${time_minutes} ${time_seconds});
   elif [ ${time_seconds} -gt 0 ] ; then
-    printf "(%s seconds)" ${time_seconds};
+    time_string=$(printf "${time_string} %s seconds" ${time_seconds});
   fi;
 
   # Finish build log
-  echo -e ' ####\e[0m';
+  echo -e " #### ${time_string} ####\e[0m";
   echo '';
+
+  # Export result as BUILD_RESULT
+  export BUILD_RESULT=${time_string};
 }
