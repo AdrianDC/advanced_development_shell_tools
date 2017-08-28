@@ -149,3 +149,21 @@ function pushbrom()
   # Restore ROM path
   cd "${cwd}";
 }
+
+# === Pushbullet Wrapped Makes ===
+function makep()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: makep <parameters> (Use "makes" with Pushbullet notification)';
+    echo '';
+    return;
+  fi;
+
+  # Launch makes directly
+  makes "${@}";
+
+  # Notify the build through Pushbullet
+  pushb "${BUILD_RESULT}\n\n$(date)" 2>/dev/null;
+}

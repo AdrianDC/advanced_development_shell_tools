@@ -887,6 +887,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**devuplboot** *<b>\[Upload ROM bootimage\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *devuplboot &lt;device&gt;*
   * [**devuplrom** *<b>\[Upload ROM build\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *devuplrom &lt;device&gt; [folder_path]*
   * [**pushbrom** *<b>\[Notify build success\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *pushbrom &lt;device_name&gt; [rom_name]*
+  * [**makep** *<b>\[Use "makes" with Pushbullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *makep &lt;parameters&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_uploads_local.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)&nbsp;]
