@@ -676,6 +676,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_repo_cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)&nbsp;]
   * [**repoclean** *<b>\[Delete contents from 'out' folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)
+  * [**repodevclean** *<b>\[Delete contents from 'out/target/product' folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)
   * [**repoprojectscleaner** *<b>\[Run inside an Android repo root\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)
   * [**repotagscleaner** *<b>\[Run inside an Android repo root\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)
   * [**repoheadscleaner** *<b>\[Cleanup repo projects refs/ contents\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)

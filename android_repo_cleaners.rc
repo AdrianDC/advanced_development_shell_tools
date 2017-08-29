@@ -27,6 +27,18 @@ function repoclean()
   echo '';
 }
 
+# === Repo Out Device Cleaner ===
+function repodevclean()
+{
+  # Usage: repodevclean (Delete contents from 'out/target/product' folder)
+
+  # Delete contents from 'out/target/product' folder
+  echo '';
+  echo ' repodevclean: Cleaning out/target/product folder...';
+  find out/target/product/ -mindepth 1 -delete;
+  echo '';
+}
+
 # === Repo Projects Cleaner ===
 function repoprojectscleaner()
 {
