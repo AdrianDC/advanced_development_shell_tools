@@ -125,6 +125,7 @@ function adbil()
   fi;
 
   # Variables
+  local packages='';
   local tmp_file;
   local tmp_installs;
 
@@ -138,9 +139,6 @@ function adbil()
                | sort \
                | uniq);
 
-  # Prepare public PACKAGES_RESULTS
-  export PACKAGES_RESULTS=();
-
   # List new files
   for file_path in ${tmp_installs[*]}; do
     if [[ "${file_path}" == *'/system'* ]] && [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
@@ -153,10 +151,13 @@ function adbil()
       if [ -f "${file_path}" ]; then
         echo '';
         echo -e " \e[1;36m${file_path}\e[0m";
-        PACKAGES_RESULTS+=("${file_path}");
+        packages+="${file_path} ";
       fi;
     fi;
   done;
+
+  # Prepare public PACKAGES_RESULTS
+  export PACKAGES_RESULTS="${packages}";
 
   # End of process
   rm -f "${tmp_file}";
@@ -254,8 +255,17 @@ function adbppr()
 {
   # Usage: adbppr (adb automated PACKAGES_RESULTS files pusher)
 
+  # Variables
+  local result;
+  local results=();
+
+  # Parse PACKAGES_RESULTS string to array
+  for result in ${PACKAGES_RESULTS}; do
+    results+=("${result}");
+  done;
+
   # adb automated PACKAGES_RESULTS files pusher
-  adbp "${PACKAGES_RESULTS[@]}";
+  adbp "${results[@]}";
 }
 
 # === ADB Sideload Helper ===
