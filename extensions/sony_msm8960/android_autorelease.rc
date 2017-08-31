@@ -15,10 +15,10 @@
 # limitations under the License.
 #
 
-# === AOSP 8960 Automatic Releaser ===
-function autoreleaseaospsony8960()
+# === AOSP 8960 Oreo Automatic Releaser ===
+function autoreleaseaospsony8960o()
 {
-  # Usage: autoreleaseaospsony8960 [devices] (Automated AOSP Sony 8960 releaser)
+  # Usage: autoreleaseaospsony8960o [devices] (Automated AOSP Oreo Sony 8960 releaser)
 
   # AndroidDev
   cdand;
@@ -37,13 +37,13 @@ function autoreleaseaospsony8960()
     reposy;
   fi;
 
+  # ROM patcher
+  if ! aospsony8960opatcher 'a'; then
+    return;
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
-
-    # ROM patcher
-    if ! aospsony8960npatcher 'a'; then
-      continue;
-    fi;
 
     # ROM build and release
     romautorelease "${device}" aosp;
@@ -222,21 +222,6 @@ function autoreleaseaospsony8960master()
 
   # Launch internal releaser
   __autoreleaseaospsony8960dev 'master' "${@}";
-}
-
-# === AOSP 8960 O Automatic Releaser ===
-function autoreleaseaospsony8960o()
-{
-  # Usage
-  if [ -z "${*}" ]; then
-    echo '';
-    echo ' Usage: autoreleaseaospsony8960o <devices> (Automated AOSP O Sony 8960 releaser)';
-    echo '';
-    return;
-  fi;
-
-  # Launch internal releaser
-  __autoreleaseaospsony8960dev 'o' "${@}";
 }
 
 # === AOSP 8960 Development Automatic Releaser ===
