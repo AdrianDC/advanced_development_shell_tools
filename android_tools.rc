@@ -299,6 +299,10 @@ function haste()
   fi;
   echo '';
 
+  # Trim line rewrites
+  sed -i 's/\r[^\n]*\r/\r/g' "${tmp}";
+  sed -i 's/\(\r\|'$'\033''\[K\)//g' "${tmp}";
+
   # Upload to hastebin
   url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" https://hastebin.com/documents \
       | awk -F '"' '{ print "http://hastebin.com/"$4; }');
@@ -330,6 +334,10 @@ function pbin()
     cat | tee "${tmp}";
   fi;
   echo '';
+
+  # Trim line rewrites
+  sed -i 's/\r[^\n]*\r/\r/g' "${tmp}";
+  sed -i 's/\(\r\|'$'\033''\[K\)//g' "${tmp}";
 
   # Acquire token from Pastebin
   token=$(curl -s 'https://pastebin.com' \
