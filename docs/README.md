@@ -777,7 +777,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_lineageos.rc)
   ```
-  * [**lineagepatcher** *<b>\[LineageOS WiP Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc) : *lineagepatcher [specific_paths]*
   * [**lineagewebjekyll** *<b>\[Jekyll web helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc) : *lineagewebjekyll [bool_install]*
   * [**lineagecvetracker** *<b>\[CVE tracker instance helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc) : *lineagecvetracker [bool_install]*
 

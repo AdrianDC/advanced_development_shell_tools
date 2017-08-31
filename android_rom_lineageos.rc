@@ -20,21 +20,6 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_lineageos.rc)
 
-# === LineageOS Commits Patcher ===
-function lineagepatcher()
-{
-  # Usage: lineagepatcher [specific_paths] (LineageOS WiP Patcher)
-
-  # Build environment
-  while [ ! -e './build/envsetup.sh' ]; do
-    cd ../;
-  done;
-  source ./build/envsetup.sh;
-
-  # Import commits from topic "network-traffic"
-  repopick -i -t network-traffic;
-}
-
 # === LineageOS Web Jekyll ===
 function lineagewebjekyll()
 {
