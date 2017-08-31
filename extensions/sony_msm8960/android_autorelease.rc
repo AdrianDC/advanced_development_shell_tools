@@ -32,13 +32,13 @@ function autoreleaseaospsony8960()
   # Devices to build
   local devices=${*:-huashan mint hayabusa tsubasa};
 
+  # Access device repository and when option enabled, sync tree
+  if ! pathchanged cdaosp 8960 && ! shtools-builds-nosync-active; then
+    reposy;
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
-
-    # Access device repository and when option enabled, sync tree
-    if ! pathchanged cdaosp 8960 && ! shtools-builds-nosync-active; then
-      reposy;
-    fi;
 
     # ROM patcher
     if ! aospsony8960npatcher 'a'; then
@@ -73,18 +73,13 @@ function autoreleaselineagesony8960()
   # Devices to build
   local devices=${*:-huashan mint hayabusa tsubasa};
 
+  # Access device repository and when option enabled, sync tree
+  if ! pathchanged cdlineage 8960 && ! shtools-builds-nosync-active; then
+    reposy;
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
-
-    # Access device repository and when option enabled, sync tree
-    if ! pathchanged cdlineage "${device}" && ! shtools-builds-nosync-active; then
-      reposy;
-    fi;
-
-    # Import pending reviews
-    if ! lineagepatcher; then
-      continue;
-    fi;
 
     # ROM build and release
     romautorelease "${device}" lineage;
@@ -222,18 +217,18 @@ function __autoreleaseaospsony8960dev()
     reposy;
   fi;
 
+  # Access device repository and when option enabled, sync tree
+  if ! pathchanged cdaosp "${branch_tag}" && ! shtools-builds-nosync-active; then
+    reposy;
+  fi;
+
+  # ROM patcher
+  if ! "aospsony8960${branch_tag}patcher" 'a'; then
+    return;
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
-
-    # Access device repository and when option enabled, sync tree
-    if ! pathchanged cdaosp "${branch_tag}" && ! shtools-builds-nosync-active; then
-      reposy;
-    fi;
-
-    # ROM patcher
-    if ! "aospsony8960${branch_tag}patcher" 'a'; then
-      continue;
-    fi;
 
     # ROM build and release
     romautorelease "${device}" master;
@@ -263,21 +258,21 @@ function autoreleaselineagesony8960master()
   # AndroidDev
   cdand;
 
+  # Access device repository and when option enabled, sync tree
+  if ! pathchanged cdaosp 'master' && ! shtools-builds-nosync-active; then
+    cd .repo/local_manifests/;
+    git submodule update --remote;
+    cd ../../;
+    reposy;
+  fi;
+
+  # ROM patcher
+  if ! lineagesony8960masterpatcher 'a'; then
+    return;
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
-
-    # Access device repository and when option enabled, sync tree
-    if ! pathchanged cdaosp 'master' && ! shtools-builds-nosync-active; then
-      cd .repo/local_manifests/;
-      git submodule update --remote;
-      cd ../../;
-      reposy;
-    fi;
-
-    # ROM patcher
-    if ! lineagesony8960masterpatcher 'a'; then
-      continue;
-    fi;
 
     # ROM build and release
     romautorelease "${device}" next;
