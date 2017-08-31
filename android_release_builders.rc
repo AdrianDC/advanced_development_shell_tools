@@ -135,10 +135,7 @@ function romautorelease()
 
   # When option enabled, not local and not bringup, clean device out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
-    echo '';
-    echo ' romautorelease: Cleaning out product folder...';
-    rm -rfv out/target/product &> /dev/null;
-    echo '';
+    repodevclean;
 
   # Delete the devices relevant results
   elif [[ ! "${rom_params}" == *'nowipe'* ]]; then
@@ -222,10 +219,7 @@ function romautorelease()
   # ==========================================================
   # When option enabled, not local and not bringup, clean device out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
-    echo '';
-    echo ' romautorelease: Cleaning out product folder...';
-    rm -rfv "out/target/product/${rom_target}" &> /dev/null;
-    echo '';
+    repodevclean;
   fi;
 
   # When option enabled, clean RAM after build
