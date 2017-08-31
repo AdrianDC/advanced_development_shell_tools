@@ -55,6 +55,26 @@ function shtools-builds-clean-active()
   [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN}" ];
 }
 
+# === Options - Builds - cleandevices ===
+function shtools-builds-cleandevices-enable()
+{
+  # Usage: shtools-builds-cleandevices-enable (Enable cleandevices builds option)
+  __shtoolsoptions 'shtools-builds-cleandevices-' 'enable';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES=true;
+}
+function shtools-builds-cleandevices-disable()
+{
+  # Usage: shtools-builds-cleandevices-disable (Disable cleandevices builds option)
+  __shtoolsoptions 'shtools-builds-cleandevices-' 'disable';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES=;
+}
+function shtools-builds-cleandevices-active()
+{
+  # Usage: shtools-builds-cleandevices-active (Get cleandevices builds option)
+  __shtoolsoptions 'shtools-builds-cleandevices-';
+  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES}" ];
+}
+
 # === Options - Builds - cleanram ===
 function shtools-builds-cleanram-enable()
 {
