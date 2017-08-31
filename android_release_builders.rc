@@ -196,23 +196,9 @@ function romautorelease()
   # ==========================================================
   # Upload ROM when not working locally
   if ! shtools-builds-local-active; then
-
-    # Upload in multitasking when possible and allowed
-    if ! shtools-builds-clean-active && \
-       [ "$(type -t gnome-terminal 2> /dev/null)" = 'file' ]; then
-      gnome-terminal -x bash -c "\
-        source $(shtoolsget)/android_development_shell_tools.rc;\
-        devuplrom \"${rom_device}\" \"${rom_upload}\"; \
-        if [ ! -z \"\${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}\" ]; then \
-          pushb \"$(hostname): ${rom_tag} for ${rom_device} uploaded\"; \
-        fi";
-
-    # Upload inline
-    else
-      devuplrom "${rom_device}" "${rom_upload}";
-      if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}" ]; then
-        pushb "$(hostname): ${rom_tag} for ${rom_device} uploaded";
-      fi;
+    devuplrom "${rom_device}" "${rom_upload}";
+    if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}" ]; then
+      pushb "$(hostname): ${rom_tag} for ${rom_device} uploaded";
     fi;
   fi;
 
