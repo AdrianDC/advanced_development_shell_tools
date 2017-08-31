@@ -44,7 +44,6 @@ function romautorelease()
   local rom_params=${3};
   local cwd;
   local rom_logs;
-  local rom_logs_output;
   local rom_phone;
   local rom_target;
   local rom_tag;
@@ -54,6 +53,7 @@ function romautorelease()
   rom_logs=${ANDROID_DEV_DRIVE}/Logs;
   mkdir -p "${rom_logs}";
 
+  # ==========================================================
   # Access ROM root
   cwd=$(pwd);
   croot;
@@ -62,60 +62,66 @@ function romautorelease()
   rom_phone=${rom_device^};
   rom_target=${rom_device};
 
-  # AOSP 7.1
-  if [[ "${rom_name}" == 'aosp' ]]; then
-    rom_tag=AOSP71;
-    rom_upload=${rom_phone}/AOSP-7.x;
+  # ==========================================================
+  # Select ROM target
+  case "${rom_name}" in
 
-  # LineageOS 14.1
-  elif [[ "${rom_name}" == 'lineage' ]]; then
-    rom_tag=LINEAGE141;
-    rom_upload=${rom_phone}/LineageOS-14.x;
+    # AOSP 8.x
+    aosp)
+      rom_tag='AOSP-8.x';
+      rom_upload="${rom_phone}/${rom_tag}";;
 
-  # AOSP-CAF 7.x
-  elif [[ "${rom_name}" == 'caf' ]]; then
-    rom_tag=CAF71;
-    rom_upload=${rom_phone}/AOSP-CAF-7.x;
+    # LineageOS 15.0
+    lineage)
+      rom_tag='LineageOS-15.x';
+      rom_upload="${rom_phone}/${rom_tag}";;
 
-  # LegacyXperia 14.1
-  elif [[ "${rom_name}" == 'lx' ]]; then
-    rom_tag=LX141;
-    rom_upload=LegacyXperia/${rom_device}/LineageOS-14.x;
+    # AOSP-CAF 8.x
+    caf)
+      rom_tag='AOSP-CAF-8.x';
+      rom_upload="${rom_phone}/${rom_tag}";;
 
-  # AOSP Master
-  elif [[ "${rom_name}" == 'master' ]]; then
-    rom_tag=AOSPMASTER;
-    rom_upload=${rom_phone}/AOSP-Master;
+    # LegacyXperia 15.0
+    lx)
+      rom_tag='LineageOS-15.x';
+      rom_upload="LegacyXperia/${rom_device}/${rom_tag}";;
 
-  # LineageOS Master
-  elif [[ "${rom_name}" == 'next' ]]; then
-    rom_tag=LINEAGEMASTER;
-    rom_upload=${rom_phone}/AOSP-Master;
+    # AOSP Master
+    master)
+      rom_tag='AOSP-Master';
+      rom_upload='Development';;
 
-  # ResurrectionRemix Nougat
-  elif [[ "${rom_name}" == 'rr' ]]; then
-    rom_tag=RR71;
-    rom_upload=${rom_phone}/ResurrectionRemix-N;
+    # LineageOS Next
+    next)
+      rom_tag='LineageNext-Master';
+      rom_upload='Development';;
 
-  # Sony AOSP 7.1
-  elif [[ "${rom_name}" == 'sodp' ]]; then
-    rom_tag=AOSP71;
-    rom_target=$(codenametotarget "${rom_device}");
-    rom_upload=${rom_phone}/AOSP-7.x;
+    # ResurrectionRemix Oreo
+    rr)
+      rom_tag='ResurrectionRemix-O';
+      rom_upload="${rom_phone}/${rom_tag}";;
 
-    # Handle Sony AOSP kernel build
-    sonyaospkernelupdate "${rom_device}";
+    # Sony AOSP 8.0
+    sodp)
+      rom_tag='AOSP-8.x';
+      rom_target=$(codenametotarget "${rom_device}");
+      rom_upload=${rom_phone}/AOSP-7.x;
 
-  # Automatic per-device selection
-  else
-    echo '';
-    echo ' Error: ROM target has not been found...';
-    echo " ${function_usage}";
-    echo "   ${function_roms}";
-    echo '';
-    return;
-  fi;
+      # Handle Sony AOSP kernel build
+      sonyaospkernelupdate "${rom_device}";;
 
+    # Unknown ROM
+    *)
+      echo '';
+      echo ' Error: ROM target has not been found...';
+      echo " ${function_usage}";
+      echo "   ${function_roms}";
+      echo '';
+      return;;
+
+  esac;
+
+  # ==========================================================
   # When option enabled, use private upload for bringups
   if shtools-builds-bringup-active; then
     rom_upload='private';
@@ -127,12 +133,8 @@ function romautorelease()
     export WITH_SU=true;
   fi;
 
-  # Ignore the build
-  if [[ "${rom_params}" == *'nobuild'* ]]; then
-    echo ' Cleaning skipped...';
-
   # When option enabled, not local and not bringup, clean device out folder
-  elif shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
+  if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
     echo '';
     echo ' romautorelease: Cleaning out product folder...';
     rm -rfv out/target/product &> /dev/null;
@@ -151,50 +153,40 @@ function romautorelease()
   # Compilation logs
   rom_logs_output=${rom_logs}/Build.${rom_device}.${rom_tag}.log;
 
-  # Ignore the build
-  if [[ "${rom_params}" == *'nobuild'* ]]; then
-    echo ' Build skipped...';
+  # ==========================================================
+  # Build Android
+  case "${rom_name}" in
 
-  # Build Android AOSP
-  elif [[ "${rom_tag}" == *'AOSP71'* ]] || [[ "${rom_tag}" == *'AOSPMASTER'* ]]; then
-    source ./build/envsetup.sh;
-    lunch "aosp_${rom_target}-userdebug";
-    makes otapackage | tee "${rom_logs_output}";
+    # AOSP Release | AOSP Master | Sony SODP
+    aosp|master|sodp)
+      source ./build/envsetup.sh;
+      lunch "aosp_${rom_target}-userdebug";
+      makes otapackage | tee "${rom_logs_output}";;
 
-  # Build Android AOSP-CAF
-  elif [[ "${rom_tag}" == *'CAF'* ]]; then
-    source ./build/envsetup.sh;
-    lunch "aospcaf_${rom_target}-userdebug";
-    makes otapackage | tee "${rom_logs_output}";
+    # LineageOS Release | Lineage Next | LegacyXperia
+    lineage|next|lx)
+      repos "${rom_target}";
+      brunch "${rom_target}" | tee "${rom_logs_output}";;
 
-  # Build Android LineageOS Master
-  elif [[ "${rom_tag}" == *'LINEAGEMASTER'* ]]; then
-    repos "${rom_target}";
-    brunch "${rom_target}" | tee "${rom_logs_output}";
+    # AOSP-CAF Release
+    caf)
+      source ./build/envsetup.sh;
+      lunch "aospcaf_${rom_target}-userdebug";
+      makes otapackage | tee "${rom_logs_output}";;
 
-  # Build Android ResurrectionRemix
-  elif [[ "${rom_tag}" == *'RR'* ]]; then
-    export RR_BUILDTYPE=OFFICIAL;
-    repos "${rom_target}";
-    brunch "${rom_target}" | tee "${rom_logs_output}";
+    # ResurrectionRemix Release
+    rr)
+      export RR_BUILDTYPE=OFFICIAL;
+      repos "${rom_target}";
+      brunch "${rom_target}" | tee "${rom_logs_output}";;
 
-  # Build Android Sony AOSP
-  elif [[ "${rom_tag}" == *'SONY'* ]]; then
-    source ./build/envsetup.sh;
-    lunch "aosp_${rom_target}-userdebug";
-    makes otapackage | tee "${rom_logs_output}";
+    # Unknown ROM
+    *)
+      ;;
 
-  # Build Android LegacyXperia
-  elif [[ "${rom_tag}" == *'LX'* ]]; then
-    repos "${rom_target}";
-    brunch "${rom_target}" | tee "${rom_logs_output}";
+  esac;
 
-  # Build Android LineageOS
-  else
-    repos "${rom_target}";
-    brunch "${rom_target}" | tee "${rom_logs_output}";
-  fi;
-
+  # ==========================================================
   # When option enabled, use debuggable bootimages
   if shtools-builds-debug-active; then
     bootimagedebuggable "${rom_target}" false;
@@ -204,6 +196,7 @@ function romautorelease()
   # Notify build result
   pushbrom "${rom_device}" "${rom_tag}";
 
+  # ==========================================================
   # Upload ROM when not working locally
   if ! shtools-builds-local-active; then
 
@@ -226,6 +219,7 @@ function romautorelease()
     fi;
   fi;
 
+  # ==========================================================
   # When option enabled, not local and not bringup, clean device out folder
   if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
     echo '';
