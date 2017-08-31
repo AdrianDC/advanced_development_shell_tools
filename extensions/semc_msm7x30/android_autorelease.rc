@@ -43,7 +43,7 @@ function autoreleaselegacyxperia()
   fi;
 
   # Force clean option
-  shtools-builds-clean-enable;
+  shtools-builds-cleandevices-enable;
 
   # Walk through devices
   for device in ${devices}; do
