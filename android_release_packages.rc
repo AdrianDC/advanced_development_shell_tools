@@ -286,7 +286,7 @@ function systozip()
     fi;
 
     # Target copy
-    FilePath=$(readlink -f "${BuildParams}/${FilePath}");
+    FilePath=$(readlink -f "${FilePath}");
     if [ -f "${FilePath}" ]; then
       cp "${FilePath}" "${TmpDir}/${FileTarget}";
       FilesList+=("./${FileTarget}");
