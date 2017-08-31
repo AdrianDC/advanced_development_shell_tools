@@ -134,7 +134,8 @@ function romautorelease()
   fi;
 
   # When option enabled, not local and not bringup, clean device out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
+  if (shtools-builds-clean-active || shtools-builds-cleandevices-active) &&
+      ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
     repodevclean;
 
   # Delete the devices relevant results
@@ -204,7 +205,8 @@ function romautorelease()
 
   # ==========================================================
   # When option enabled, not local and not bringup, clean device out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
+  if (shtools-builds-clean-active || shtools-builds-cleandevices-active) &&
+      ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
     repodevclean;
   fi;
 
