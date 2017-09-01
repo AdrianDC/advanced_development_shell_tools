@@ -871,6 +871,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**haste** *<b>\[Share hastebin logs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *haste &lt;file&gt; or \| haste*
   * [**pbin** *<b>\[Share Pastebin logs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *pbin &lt;file&gt; or \| pbin*
   * [**overlaycompare** *<b>\[Compare device overlays against sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *overlaycompare &lt;overlay_file_path&gt;*
+  * [**remotescript** *<b>\[Remote script launcher with confirmations\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *remotescript &lt;url&gt; [bool_automated]*
   * [**wip** *<b>\[Work in progress commands to store and use\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *wip [commands to store]*
 
 ---

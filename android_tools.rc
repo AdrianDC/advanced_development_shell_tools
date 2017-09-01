@@ -392,6 +392,62 @@ function overlaycompare()
   done < <(find "${@}" -type f);
 }
 
+# === Remote Script Launcher ===
+function remotescript()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: remotescript <url> [bool_automated] (Remote script launcher with confirmations)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local script=${1};
+  local line;
+  local tmpfile;
+
+  # Header
+  echo '';
+  echo -e " \e[1;33mremotescript: Importing ${script}...\e[0m";
+  echo '';
+
+  # Retrieve script
+  tmpfile=$(mktemp);
+  curl -Ls "${script}" > "${tmpfile}";
+
+  # Open descriptor 3 on input
+  exec 3<"${tmpfile}";
+
+  # Loop through script
+  while IFS= read -r -u 3 line; do
+
+    # Handle comment lines
+    if echo "${line}" | grep -q '^[ ]*\(#.*\|\)$'; then
+      echo -e "\e[1;36m${line}\e[0m";
+
+    # Handle commands lines
+    else
+      if [ ! -z "${2}" ]; then
+        echo -e "\e[1;32m${line}\e[0m";
+      else
+        echo -en "\e[1;32m${line} \e[1;33m[Enter]\e[0m";
+        read -r;
+      fi;
+      # shellcheck disable=SC2001
+      line=$(echo "${line}" | sed 's/;[ ]*$//g');
+      ${line};
+    fi;
+
+  done;
+
+  # Finish process
+  echo '';
+  rm -f "${tmpfile}";
+  exec 3<&-;
+}
+
 # === Work In Progress Shortcuts ===
 function wip()
 {
