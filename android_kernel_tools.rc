@@ -18,6 +18,7 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_build_helpers.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_helpers.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_tools.rc)
 
@@ -623,7 +624,7 @@ function kernelinjectorzip()
   KernelFile=$(readlink -f "${2}");
   KernelSources=$(readlink -f "${3}");
   OutFile=kernel-injector-${PhoneName}-$(date +'%Y%m%d');
-  TargetFile=${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/${OutFile};
+  TargetFile="$(desktoppath)/${OutFile}";
   TmpDir=$(mktemp -d);
 
   # Partitions
@@ -715,7 +716,7 @@ function bootzip()
   BootFile=$(readlink -f "${2}");
   CurDir=$(pwd);
   OutFile=boot-${PhoneName}-$(date +'%Y%m%d');
-  TargetFile=${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/${OutFile};
+  TargetFile="$(desktoppath)/${OutFile}";
   TmpDir=$(mktemp -d);
 
   # Partitions

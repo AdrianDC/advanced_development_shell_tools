@@ -31,6 +31,7 @@ function repotwrp()
   local BuildParams=${2};
   local CurDir;
   local RootDir;
+  local TargetDir;
 
   # Access repo root
   CurDir=${PWD};
@@ -81,7 +82,7 @@ function repotwrp()
   local OutFOTAZip=twrp-${TWRPVersion}-${DateTag}-fota-${PhoneName}.zip;
   local OutMultiROMZip=twrp-${TWRPVersion}-${DateTag}-secondary-multirom-${PhoneName}.zip;
   local OutTWRP=twrp.img;
-  local TargetDir=${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/TWRP-Android;
+  TargetDir="$(desktoppath)/TWRP-Android";
   mkdir -p "${TargetDir}/";
 
   # Partitions
@@ -215,6 +216,7 @@ function repomrom()
   local BuildParams=${2};
   local CurDir;
   local RootDir;
+  local TargetDir;
 
   # Access repo root
   CurDir=${PWD};
@@ -276,7 +278,7 @@ function repomrom()
   local TWRPImg=./out/target/product/${PhoneName}/recovery.img;
   local DateTag;
   DateTag=$(date +'%Y%m%d');
-  local TargetDir=${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)};
+  TargetDir=$(desktoppath);
   local BuildDir=./out/target/product/${PhoneName};
   cp "${BuildDir}/obj/ETC/system_build_prop_intermediates/build.prop" "${BuildDir}/system/build.prop";
 

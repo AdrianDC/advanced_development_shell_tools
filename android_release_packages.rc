@@ -133,7 +133,7 @@ function mmmzip()
   LogFile=${TmpDir}/mmm_logs.txt;
   OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
   path=$(readlink -f "${BuildPathFirst}");
-  TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
+  TargetFile="$(desktoppath)/Builds/${OutFile}";
 
   # Handle paths
   mkdir -p "$(dirname "${TargetFile}")";
@@ -261,7 +261,7 @@ function systozip()
   LogFile=${TmpDir}/mmm_logs.txt;
   OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
   path=$(readlink -f "${BuildPathFirst}");
-  TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
+  TargetFile="$(desktoppath)/Builds/${OutFile}";
 
   # Handle paths
   mkdir -p "$(dirname "${TargetFile}")";
@@ -352,7 +352,7 @@ function packzip()
   CurDir=$(pwd);
   TmpDir=$(mktemp -d);
   OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${1}")")-$(date +'%Y%m%d-%H%M').zip";
-  TargetFile="${ANDROID_DESKTOP:-$(xdg-user-dir DESKTOP)}/Builds/${OutFile}";
+  TargetFile="$(desktoppath)/Builds/${OutFile}";
 
   # Handle paths
   mkdir -p "$(dirname "${TargetFile}")";
