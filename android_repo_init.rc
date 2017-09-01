@@ -310,7 +310,7 @@ function repoinitcleaner()
   rm -rfv .repo/repo;
 
   # Cleanup project files and history if requested
-  if [[ "${params}" == *'clean'* ]]; then
+  if [[ "${1}" == *'clean'* ]]; then
     rm -rfv .repo/project.list;
     rm -rfv .repo/projects;
     rm -rfv .repo/project-objects;
