@@ -113,3 +113,35 @@ function diropen()
 
 # === Directory Opener Shortcut ===
 alias dop='diropen .';
+
+# === Desktop Path ===
+function desktoppath()
+{
+  # Usage: desktoppath (Acquire desktop path for most environments)
+
+  # Variables
+  local path;
+
+  # Environment ANDROID_DESKTOP override
+  path="${ANDROID_DESKTOP}";
+
+  # Fallback to GUI xdg path
+  if [ -z "${path}" ]; then
+    path=$(xdg-user-dir DESKTOP 2>/dev/null);
+  fi;
+
+  # Fallback to environment ANDROID_DEV_DRIVE path
+  if [ -z "${path}" ] && [ ! -z "${ANDROID_DEV_DRIVE}" ]; then
+    path="${ANDROID_DEV_DRIVE}/Desktop";
+    mkdir -p "${path}/";
+  fi;
+
+  # Fallback to home path
+  if [ -z "${path}" ]; then
+    path=~/Desktop;
+    mkdir -p "${path}/";
+  fi;
+
+  # Return path
+  echo "${path}";
+}
