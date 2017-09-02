@@ -30,7 +30,7 @@ function bashe()
   # Usage: bashe (Edit ~/.bashrc)
 
   # Edit ~/.bashrc
-  nano ~/.bashrc;
+  fen ~/.bashrc;
 }
 
 # === Clear Screen ===
