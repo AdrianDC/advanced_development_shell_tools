@@ -117,3 +117,12 @@ function gitfindsha1()
     | head -n 1 \
     | cut -f 1 -d ' ';
 }
+
+# === Git Unfiltered Helper ===
+function gitnofilter()
+{
+  # Usage: gitnofilter <parameters> (Use git commands without filters)
+
+  # Use git commands without filters
+  git -c core.fileMode=true -c core.autocrlf=false "${@}";
+}
