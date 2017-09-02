@@ -495,10 +495,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
   ```
-  * [**grepb** *<b>\[Grep through sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepb [inputs]*
-  * [**g** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepb*
-  * [**grepbs** *<b>\[Grep through sources and binaries\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepbs [inputs]*
-  * [**gs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grepbs*
+  * [**g** *<b>\[Grep through sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *g [inputs]*
+  * [**gs** *<b>\[Grep through sources and binaries\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gs [inputs]*
   * [**gce** *<b>\[Grep and edit through sources and binaries\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gce &lt;inputs&gt;*
   * [**gck** *<b>\[Grep through kernel configurations\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gck [inputs]*
   * [**gca** *<b>\[Grep through Android makefiles\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gca [inputs]*

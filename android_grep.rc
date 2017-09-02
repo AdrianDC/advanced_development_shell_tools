@@ -20,19 +20,18 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
 
 # === Grep Helpers ===
-function grepb()
+function g()
 {
-  # Usage: grepb [inputs] (Grep through sources)
+  # Usage: g [inputs] (Grep through sources)
 
   # Grep through files
   GREP_COLORS='fn=1;1' grep -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
 }
-alias g='grepb';
 
 # === Grep Binaries Helpers ===
-function grepbs()
+function gs()
 {
-  # Usage: grepbs [inputs] (Grep through sources and binaries)
+  # Usage: gs [inputs] (Grep through sources and binaries)
 
   # Variables
   local strings_params;
@@ -48,7 +47,6 @@ function grepbs()
     fi;
   done;
 }
-alias gs='grepbs';
 
 # === Grep Binaries Editor ===
 function gce()
