@@ -25,9 +25,9 @@ function pushb()
   export PushBulletUser='user';
   export PushBulletNoteUrl='url';
 
-  # Create  ~/.bash_android.pushbullet.rc with the exports to override the credentials
-  if [ -f ~/.bash_android.pushbullet.rc ]; then
-    source ~/.bash_android.pushbullet.rc;
+  # Create  .bash_android.pushbullet.rc with the exports to override the credentials
+  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.pushbullet.rc" ]; then
+    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.pushbullet.rc";
   fi;
 
   # Ignore missing credentials

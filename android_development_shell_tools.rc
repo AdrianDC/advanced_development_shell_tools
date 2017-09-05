@@ -37,7 +37,7 @@ ANDROID_DEVELOPMENT_SHELL_TOOLS_URL='https://github.com/AdrianDC/android_develop
 
 # === Android Development Shell Tools Workspace ===
 if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}" ]; then
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE=~/;
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE=~;
 fi;
 
 # === Android Development Shell Tools Update ===

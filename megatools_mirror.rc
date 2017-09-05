@@ -30,9 +30,9 @@ function megamirror()
   fi;
 
   # Ignore missing credentials
-  if [ ! -f ~/.megarc ]; then
+  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" ]; then
     echo '';
-    echo ' megatools: ~/.megarc is missing, please read megatools documentation';
+    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc is missing, please read megatools documentation";
     echo '';
     return;
   fi;

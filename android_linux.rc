@@ -287,7 +287,7 @@ function buildlock()
   fi;
 
   # Variables
-  local file_lock=~/.tmp_runlock.tag;
+  local file_lock=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.tmp_runlock.tag;
 
   # Lock Detected
   if [ -f "${file_lock}" ]; then
