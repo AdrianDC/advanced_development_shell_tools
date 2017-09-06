@@ -98,13 +98,21 @@ function reporeferencedlineage()
 # === Repo References Updater ===
 function reporefupdate()
 {
-  # Usage: reporefupdate (Upload new projects manifests)
+  # Usage: reporefupdate [bool_automated] (Upload new projects manifests)
 
   # Variables
   local current_dir;
+  local params;
 
   # Path backup
   current_dir=$(pwd);
+
+  # Prepare git add parameters
+  if [ ! -z "${1}" ]; then
+    params='-Av';
+  else
+    params='-Ap';
+  fi;
 
   # Detect and update AOSP references
   for project in sony8960_n sony8960_o sony8960_master sonysodp aospcaf; do
@@ -113,7 +121,7 @@ function reporefupdate()
         git add -N ./* && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating AOSP ${project} references...";
-      git add -Ap;
+      git add "${params}";
       if ! git diff --cached --quiet; then
         git commit --amend --no-edit;
         gitpu origin local_manifests y;
@@ -128,7 +136,7 @@ function reporefupdate()
         git add -N ./* && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
-      git add -Ap;
+      git add "${params}";
       if ! git diff --cached --quiet; then
         git commit --amend --no-edit;
         gitpu origin local_manifests y;
@@ -142,7 +150,7 @@ function reporefupdate()
       git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating common manifests references...";
-    git add -Ap;
+    git add "${params}";
     if ! git diff --cached --quiet; then
       git commit --amend --no-edit;
       gitpu origin local_manifests y;
@@ -155,7 +163,7 @@ function reporefupdate()
       git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating MultiROM references...";
-    git add -Ap;
+    git add "${params}";
     if ! git diff --cached --quiet; then
       git commit --amend --no-edit;
       gitpu origin local_manifests y;
@@ -168,7 +176,7 @@ function reporefupdate()
       git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating TWRP references...";
-    git add -Ap;
+    git add "${params}";
     if ! git diff --cached --quiet; then
       git commit --amend --no-edit;
       gitpu origin local_manifests y;
