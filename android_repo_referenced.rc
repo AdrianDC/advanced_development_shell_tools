@@ -109,6 +109,7 @@ function reporefupdate()
   # Detect and update AOSP references
   for project in sony8960_n sony8960_o sony8960_master sonysodp aospcaf; do
     if cddevaosp "${project}" && git submodule update --remote &&
+        git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
         git add -N ./* && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating AOSP ${project} references...";
@@ -123,6 +124,7 @@ function reporefupdate()
   # Detect and update LineageOS references
   for project in sony8960 sony8960_master sony8996 sonysodp; do
     if cddevlineage "${project}" && git submodule update --remote &&
+        git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
         git add -N ./* && ! git diff-index --quiet HEAD --; then
       echo '';
       echo " Updating LineageOS ${project} references...";
@@ -136,6 +138,7 @@ function reporefupdate()
 
   # Detect and update common manifests references
   if cddev 'android_development_manifests' && git submodule update --remote &&
+      git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
       git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating common manifests references...";
@@ -148,6 +151,7 @@ function reporefupdate()
 
   # Detect and update MultiROM references
   if cddevmrom && git submodule update --remote &&
+      git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
       git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating MultiROM references...";
@@ -160,6 +164,7 @@ function reporefupdate()
 
   # Detect and update TWRP references
   if cddevtwrp && git submodule update --remote &&
+      git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
       git add -N ./* && ! git diff-index --quiet HEAD --; then
     echo '';
     echo " Updating TWRP references...";
