@@ -272,6 +272,16 @@ function reporefsync()
   echo '';
 }
 
+# === Repo References Refresher ===
+function reporefrefresh()
+{
+  # Usage: reporefrefresh (Download and upload new projects manifests)
+
+  # Download and upload new projects manifests
+  reporefsync;
+  reporefupdate true;
+}
+
 # === Repo Referenced Linker ===
 function reporeflinker()
 {
