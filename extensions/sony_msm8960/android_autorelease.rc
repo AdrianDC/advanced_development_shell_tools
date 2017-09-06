@@ -115,9 +115,7 @@ function autoreleaselineagesony8960o()
   local devices=${*:-huashan mint};
 
   # Import pending reviews
-  echo '';
-  source <(curl -Ls https://github.com/AdrianDC/lineage_development_sony8960_master/raw/local_manifests/repopick-lineage-15.0.md);
-  echo '';
+  lineagesony8960oreopatcher;
 
   # Apply Sony Huashan and Blue changes
   if ! aospsony8960opatcher 'device/sony/*'; then

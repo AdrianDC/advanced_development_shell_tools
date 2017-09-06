@@ -28,6 +28,25 @@ function lineagesony8960masterpatcher()
   androidprojectpatcher 'AdrianDC' 'lineage_development_sony8960_master' 'radian.dc@gmail.com' "${@}";
 }
 
+# === LineageOS Sony 8960 Oreo Patcher ===
+function lineagesony8960oreopatcher()
+{
+  # Usage: lineagesony8960oreopatcher (LineageOS 8960 Oreo Patcher)
+
+  # Variables
+  local buffer=$(mktemp);
+
+  # Launch repopicks script
+  echo '';
+  source <(curl -Ls https://github.com/AdrianDC/lineage_development_sony8960_master/raw/local_manifests/repopick-lineage-15.0.md) | tee "${buffer}";
+
+  # Validate repopicks statuses
+  echo -e '\e[1;31m';
+  grep -ai 'MERGED\|ABANDONED' "${buffer}";
+  rm -f "${buffer}";
+  echo -e '\e[0m';
+}
+
 # === LineageOS Rebaser ===
 function lineagesony8960rebaser()
 {
