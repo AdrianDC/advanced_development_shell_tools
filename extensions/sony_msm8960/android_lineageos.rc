@@ -42,7 +42,7 @@ function lineagesony8960oreopatcher()
 
   # Validate repopicks statuses
   echo -e '\e[1;31m';
-  grep -ai 'MERGED\|ABANDONED' "${buffer}";
+  grep -ai -B1 'MERGED\|ABANDONED' "${buffer}";
   rm -f "${buffer}";
   echo -e '\e[0m';
 }
