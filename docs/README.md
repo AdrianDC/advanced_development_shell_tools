@@ -132,7 +132,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbkcln** *<b>\[Kernel logs output cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbkcln [file_kmsg]*
   * [**adbstcln** *<b>\[strace output cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbstcln [file_adb.log]*
   * [**adbld** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *cls; echo -n '' &gt; adb.data; adbsu cat /data/logcat.txt \| tee -a adb.data*
-  * [**adblr** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbl radio*
   * [**adblb** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *while true; do cls; echo -n "" &gt; adb.log; adb logcat -v audit2allow *:V \| tee -a adb.log*
   * [**adblc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adb logcat -c; adbl*
   * [**adbk** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *echo -n '' &gt; kmsg; adbsu cat /proc/kmsg \| tee -a kmsg*

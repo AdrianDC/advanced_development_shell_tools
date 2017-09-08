@@ -150,7 +150,6 @@ function adbstcln()
 
 # === ADB Loggers Helpers ===
 alias adbld='cls; echo -n '' > adb.data; adbsu cat /data/logcat.txt | tee -a adb.data';
-alias adblr='adbl radio';
 alias adblb='while true; do cls; echo -n "" > adb.log; adb logcat -v audit2allow *:V | tee -a adb.log;
              echo ""; echo -n "Press Enter to continue... "; read -r; done';
 alias adblc='adb logcat -c; adbl';
