@@ -84,6 +84,15 @@ function adbl()
   done;
 }
 
+# === ADB Logcat Relevant Reader ===
+function adblr()
+{
+  # Usage: adblr (Logcat output relevant reader)
+
+  # Logcat output relevant reader
+  adbl | grep -v 'Diag_Lib:';
+}
+
 # === ADB Logcat Public Cleaner ===
 function adblpcln()
 {
