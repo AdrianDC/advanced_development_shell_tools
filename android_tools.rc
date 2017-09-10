@@ -302,6 +302,7 @@ function haste()
   # Trim line rewrites
   sed -i 's/\r[^\n]*\r/\r/g' "${tmp}";
   sed -i 's/\(\r\|'$'\033''\[K\)//g' "${tmp}";
+  sed -Ei 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' "${tmp}";
 
   # Upload to hastebin
   url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" https://hastebin.com/documents \
@@ -338,6 +339,7 @@ function pbin()
   # Trim line rewrites
   sed -i 's/\r[^\n]*\r/\r/g' "${tmp}";
   sed -i 's/\(\r\|'$'\033''\[K\)//g' "${tmp}";
+  sed -Ei 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' "${tmp}";
 
   # Acquire token from Pastebin
   token=$(curl -s 'https://pastebin.com' \
