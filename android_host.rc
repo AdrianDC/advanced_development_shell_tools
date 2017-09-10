@@ -115,6 +115,37 @@ function diropen()
 # === Directory Opener Shortcut ===
 alias dop='diropen .';
 
+# === URL Opener ===
+function urlopen()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: urlopen <url> (URL opener for most environments)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local opened;
+
+  # GUI xdg url viewer
+  xdg-open "${1}" 2> /dev/null;
+  opened=${?};
+  if [ ${opened} -eq 0 ]; then
+    echo '';
+    sleep 1;
+    echo '';
+  fi;
+
+  # Unknown environment
+  if [ ${opened} -ne 0 ]; then
+    echo '';
+    echo " Url: ${1}";
+    echo '';
+  fi;
+}
+
 # === Desktop Path ===
 function desktoppath()
 {
