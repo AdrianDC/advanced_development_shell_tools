@@ -37,6 +37,7 @@ function fileedit()
 
     # If option enabled, create missing files
     if [ ! -z "${FILEEDIT_TOUCH_NEW_FILE}" ] && [ ! -f "${file}" ]; then
+      mkdir -p "${file%/*}";
       touch "${file}";
 
     # Filter only files
