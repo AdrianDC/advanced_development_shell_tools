@@ -17,6 +17,7 @@
 
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_lineageos.rc)
 
@@ -35,7 +36,7 @@ function lineagewebjekyll()
   fi;
 
   # Open webviewer
-  xdg-open "http://127.0.0.1:4001" &
+  urlopen "http://127.0.0.1:4001" &
 
   # Launch Jekyll
   bundle exec jekyll serve --incremental --port 4001;
@@ -72,7 +73,7 @@ function lineagecvetracker()
 
   # Open webviewer
   echo '';
-  xdg-open "http://127.0.0.1:5000" &
+  urlopen "http://127.0.0.1:5000" &
 
   # Launch cve_tracker
   echo '';

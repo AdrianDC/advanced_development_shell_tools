@@ -17,6 +17,7 @@
 
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
 
 # === Binary Editor ===
@@ -310,10 +311,7 @@ function haste()
   echo " haste: ${url}";
 
   # Open url and delete temp file
-  xdg-open "${url}" &
-  echo '' &
-  sleep 1;
-  echo '';
+  urlopen "${url}";
   rm "${tmp}";
 }
 
@@ -360,10 +358,7 @@ function pbin()
   echo " pastebin: ${url}";
 
   # Open url and delete temp file
-  xdg-open "${url}" &
-  echo '' &
-  sleep 1;
-  echo '';
+  urlopen "${url}";
   rm "${tmp}";
 }
 
