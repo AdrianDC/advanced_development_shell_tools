@@ -329,7 +329,9 @@ function adbside()
   done;
 
   # Reboot to Android if requested or forced reboot to recovery
-  if [ ! -z "${2}" ] || [ ! -z "${rebooted}" ]; then
+  if [ -z "${2}" ] && [ -z "${rebooted}" ] || [ "${2}" = 'false' ]; then
+    echo -e '\e[1;33madbside: Staying in recovery\e[0m';
+  else
     echo -e '\e[1;33madbside: Rebooting to Android\e[0m';
     ${adb_cmd} reboot;
   fi;
@@ -388,7 +390,7 @@ function adbsiderom()
   if [ "${file_input: -4}" = '.zip' ]; then
     echo '';
     echo -e "\e[1;32madbsiderom: Flashing '$(basename "${file_input}")' [${device}]\e[0m";
-    adbside "${file_input}";
+    adbside "${file_input}" false;
 
   # Launch adbbootpush with bootimage img
   elif [ "${file_input: -4}" = '.img' ]; then
@@ -404,7 +406,7 @@ function adbsiderom()
   # Launch adbside for addons zip files
   for file in "${path}/${device}/"*'.zip'; do
     echo -e "\e[1;32madbsiderom: Flashing '$(basename "${file}")' [${device}]\e[0m";
-    adbside "${file}";
+    adbside "${file}" false;
   done;
 
   # Reboot to Android if requested
