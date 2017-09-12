@@ -52,6 +52,73 @@ function cdd()
   cd "${path}";
 }
 
+# === Project Access ===
+function cdp()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: cdp [project_name] (Access repo project sources)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cnt=0;
+  local key;
+  local path;
+  local list_paths=('');
+  local top;
+
+  # Acquire repo path
+  top=$(gettop);
+
+  # Parse projects list to find first match
+  while IFS= read -r path; do
+    path=${path%/};
+    if [[ "${path##*/}" == *"${1}"* ]]; then
+      cnt=$((cnt + 1));
+      list_paths+=("${path}");
+    fi;
+  done < "${top}/.repo/project.list";
+
+  # Single input available
+  if [ "${cnt}" -eq 0 ]; then
+    echo '';
+    echo -e " \e[1;37m[ Android Development Shell Tools - No project found ]\e[0m";
+    echo '';
+
+  # Single input available
+  elif [ "${cnt}" -eq 1 ]; then
+    cd "${top}/${list_paths[1]}";
+
+  # Multiple inputs available
+  else
+    echo '';
+    echo -e " \e[1;37m[ Android Development Shell Tools - Available project paths ]\e[0m";
+    echo '';
+
+    # Display paths menu
+    cnt=0;
+    for path in "${list_paths[@]}"; do
+      if [ -z "${path}" ]; then
+        continue;
+      fi;
+      cnt=$((cnt + 1));
+      echo -e "  \e[1;33m${cnt}: \e[1;37m${path}\e[0m";
+    done;
+    echo '';
+
+    # Request user input
+    echo -n " > Path to select [1-${cnt}] : ";
+    read -r key;
+    echo '';
+
+    # Access requested path
+    cd "${top}/${list_paths[${key}]}";
+  fi;
+}
+
 # === Repo Manifests ===
 function cdman()
 {
