@@ -278,7 +278,7 @@ function reporefrefresh()
   # Usage: reporefrefresh (Download and upload new projects manifests)
 
   # Download and upload new projects manifests
-  reporefsync;
+  reporefsync '';
   reporefupdate true;
 }
 
