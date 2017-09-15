@@ -76,7 +76,7 @@ function adbro()
   fi;
 
   # Verify sudo requirements
-  if ${adb_cmd} shell 'echo -n "";' 2>&1 | grep -q 'insufficient permissions'; then
+  if ${adb_cmd} shell 'echo -n "";' 2>&1 | grep -q 'insufficient permissions\|no permissions'; then
 
     # Run adbsudo if permission denied
     adbsudo;
