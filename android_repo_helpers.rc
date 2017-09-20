@@ -359,7 +359,7 @@ function repolistexclude()
 # === Repo Switcher ===
 function reposwitcher()
 {
-  # Usage: reposwitcher (Helper to switch between local_manifests_* folders)
+  # Usage: reposwitcher [bool_init] (Helper to switch between local_manifests_* folders)
 
   # Variables
   local cnt;
@@ -374,6 +374,39 @@ function reposwitcher()
   # Access Android root
   path=$(pwd);
   croot;
+
+  # Initialization mode
+  if [ ! -z "${1}" ]; then
+
+    # Remove leftover symlinks or regular folders
+    if [ -L '.repo/local_manifests' ]; then
+      rm .repo/local_manifests;
+    else
+      rm -rf .repo/local_manifests;
+    fi;
+    if [ -L 'out' ]; then
+      rm out;
+    else
+      rm -rf out;
+    fi;
+
+    # Request user input for local_manifests_<name>
+    echo '';
+    echo -en  " \e[1;33mreposwitcher: Name for local_manifests_<name> :\e[0m ";
+    read -r key;
+    echo '';
+
+    # Create folder, generate symlink to local_manifests folder
+    folder="local_manifests_${key}";
+    mkdir -p "${folder}";
+    echo -n ' ';
+    rm -fv .repo/local_manifests;
+    ln -fsv "${folder}" .repo/local_manifests;
+
+    # Populate local_manifests linkages
+    reporeflinker;
+
+  fi;
 
   # Abort if local_manifests is not a symlink
   if [ -e '.repo/local_manifests' ] && [ ! -L '.repo/local_manifests' ]; then

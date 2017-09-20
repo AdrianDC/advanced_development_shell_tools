@@ -716,7 +716,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**repocache** *<b>\[CCache watcher and configuration\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *repocache [cache_maximum_size]*
   * [**repogetbranch** *<b>\[Get repo project branch\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
   * [**repolistexclude** *<b>\[Get repo list fields to exclude with search\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *repolistexclude [word_to_search]*
-  * [**reposwitcher** *<b>\[Helper to switch between local_manifests_* folders\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
+  * [**reposwitcher** *<b>\[Helper to switch between local_manifests_* folders\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *reposwitcher [bool_init]*
 
 ---
 ### [&nbsp;Documentation: [android_repo_init.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc)&nbsp;]
