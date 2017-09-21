@@ -920,6 +920,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**downloadmega** *<b>\[Download from MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *downloadmega &lt;remote_path&gt; [boot_remove_remote]*
   * [**uploadprivatemega** *<b>\[Upload to private MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *uploadprivatemega &lt;device_name&gt;*
   * [**syncmega** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *megamirror*
+  * [**listmega** *<b>\[List remote files on MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *listmega [options]*
 
 ---
 ### [&nbsp;Documentation: [android_uploads_options.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)&nbsp;]

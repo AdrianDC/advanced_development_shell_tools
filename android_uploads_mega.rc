@@ -183,3 +183,20 @@ function uploadprivatemega()
 
 # === Folder Syncer Mega.nz ===
 alias syncmega='megamirror';
+
+# === Files Lister Mega.nz ===
+function listmega()
+{
+  # Usage: listmega [options] (List remote files on MEGA.nz)';
+
+  # Ignore missing credentials
+  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" ]; then
+    echo '';
+    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc is missing, please read megatools documentation";
+    echo '';
+    return;
+  fi;
+
+  megals --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+      "${@}";
+}
