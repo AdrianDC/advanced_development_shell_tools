@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# === File Uploader Mega.nz ===
+# === File Uploader Wrapper ===
 function fileupl()
 {
   # Usage
@@ -38,7 +38,7 @@ function fileupl()
   fi;
 }
 
-# === File Downloader Mega.nz ===
+# === File Downloader Wrapper ===
 function fileget()
 {
   # Usage
