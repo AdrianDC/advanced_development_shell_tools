@@ -85,7 +85,8 @@ function megamirror()
 
   # Retrieve files informations
   find "${local_folder}" -mindepth 1 -printf '%s\t%P#\n' > "${tmp_local_ls}";
-  megals -lR "${remote_folder}" > "${tmp_remote_ls}";
+  megals --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+      -lR "${remote_folder}" > "${tmp_remote_ls}";
 
   # =======================================================
   # Upload mode
@@ -160,7 +161,8 @@ function megamirror()
           echo '';
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
-          megarm "${file_path}";
+          megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+              "${file_path}";
           echo -e " \e[1;32mmegamirror: Removed remote '${file_path}'\e[0m";
 
           # Remove folder elements
@@ -177,7 +179,8 @@ function megamirror()
     if [[ "${option_params}" == *'--copy'* ]]; then
       echo -e " \e[1;33mmegamirror: megacopy starting...\e[0m";
       rm -rf /tmp/*.megatools.cache;
-      megacopy --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
+      megacopy --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+          --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
         | grep -v 'ERROR: File already exists at';
 
     # Upload with megaput to remote
@@ -197,16 +200,19 @@ function megamirror()
 
         # Create remote folder
         if [ -d "${file_local}" ]; then
-          megamkdir "${file_path}";
+          megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+              "${file_path}";
           echo -e " \e[1;33mmegamirror: Created remote folder '${file_path}/'\e[0m";
 
         # Upload file to target
         else
           file_path=$(dirname "${file_path}");
           echo -e " \e[1;33mmegamirror: Uploading to the server - Path '${file_path}'\e[0m";
-          megamkdir "${file_path}" 2>&1 \
+          megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+              "${file_path}" 2>&1 \
             | grep -v 'Directory already exists:';
-          megaput --path "${file_path}" "${file_local}";
+          megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+              --path "${file_path}" "${file_local}";
 
           # Show upload time
           time_span=$(($(date +%s) - time_start));
@@ -308,7 +314,8 @@ function megamirror()
     if [[ "${option_params}" == *'--copy'* ]]; then
       echo -e " \e[1;33mmegamirror: megacopy starting...\e[0m";
       rm -rf /tmp/*.megatools.cache;
-      megacopy --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
+      megacopy --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+          --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
         | grep -v 'ERROR: File already exists at';
 
     # Download with megaget to local
@@ -350,7 +357,8 @@ function megamirror()
 
           # Download file to local
           mkdir -p "${file_local}";
-          megaget --path "${file_local}" "${file_path}";
+          megaget --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+              --path "${file_local}" "${file_path}";
 
           # Show download time
           time_span=$(($(date +%s) - time_start));

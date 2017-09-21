@@ -72,9 +72,12 @@ function uploadmega()
 
   # Upload file to target
   echo '';
-  megarm "${target}/$(basename "${path}")" 2> /dev/null;
-  megamkdir "${target}" 2> /dev/null;
-  megaput --path "${target}" "${path}";
+  megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+      "${target}/$(basename "${path}")" 2> /dev/null;
+  megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+      "${target}" 2> /dev/null;
+  megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+      --path "${target}" "${path}";
 
   # Reload mega.nz account
   meganzreload;
@@ -135,11 +138,13 @@ function downloadmega()
 
   # Download file from target
   echo '';
-  megaget --path ./ "${path}";
+  megaget --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+      --path ./ "${path}";
 
   # Delete remote file
   if [ "${remove_remote}" = 'true' ] && [ -f "${file_name}" ]; then
-    megarm "${path}";
+    megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+        "${path}";
   fi;
 
   # Clean saved file
