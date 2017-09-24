@@ -270,7 +270,7 @@ function torompaths()
   fi;
 
   # Return target
-  echo "${target}/";
+  readlink -f "${target}/";
 }
 
 # === Check Command for Path Changes ===
