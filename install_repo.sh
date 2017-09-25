@@ -43,15 +43,11 @@ sudo apt-get install --yes openjdk-8-jdk;
 java -version;
 
 # Install generic required packages
-sudo apt-get install --yes bison g++-multilib git gperf libxml2-utils make zlib1g-dev:i386 zip;
-sudo apt-get -o Dpkg::Options::='--force-overwrite' install --yes zlib1g-dev:i386;
+sudo apt-get install --yes bc bison build-essential curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libesd0-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev;
 
 # Install additional required packages
-sudo apt-get install --yes curl git schedtool libxml2-utils gperf maven liblz4-dev liblz4-tool;
 sudo apt-get install --yes android-tools-adb android-tools-fastboot policycoreutils;
-sudo apt-get install --yes ncurses-dev;
-sudo apt-get install --yes ccache lzop;
-sudo apt-get install --yes gedit;
+sudo apt-get install --yes ccache gedit liblz4-dev liblz4-tool maven ncurses-dev;
 
 # Install repo binary
 if [ ! -d ~/bin ]; then
