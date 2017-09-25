@@ -197,7 +197,7 @@ function kerneltoolchains()
 
     # Failed Cross-Compiler search
     if [ -z "${cross_compiler}" ] || [ -z "${CROSS_COMPILE}" ]; then
-      echo '  kerneltoolchains: No cross compiler found!';
+      echo "  kerneltoolchains: No ${ARCH} cross compiler found!";
       echo '';
       return;
     fi;
@@ -250,7 +250,7 @@ function kerneltoolchains()
 
     # Failed Cross-Compiler search
     if [ -z "${cross_compiler}" ] || [ -z "${CROSS_COMPILE}" ]; then
-      echo '  kerneltoolchains: No cross compiler found!';
+      echo "  kerneltoolchains: No ${ARCH} cross compiler found!";
       echo '';
       return;
     fi;
