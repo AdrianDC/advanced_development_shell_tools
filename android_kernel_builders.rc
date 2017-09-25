@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_helpers.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_builders.rc)
 
 # === Kernel Builder ===
@@ -163,8 +164,11 @@ function kerneltoolchains()
   # Architecture environment
   export CROSS_COMPILE=;
   local cross_compiler=;
-  local dir_cross_compiler='../../../prebuilts/gcc/linux-x86';
+  local dir_cross_compiler;
   echo '';
+
+  # Prepare toolchains environment
+  dir_cross_compiler="$(gettop)/prebuilts/gcc/linux-x86";
 
   # CCache environment
   local ccache=;
