@@ -26,6 +26,14 @@ function uploadmega()
     return;
   fi;
 
+  # Verify megatools is installed
+  if ! type megals >/dev/null 2>&1; then
+    echo '';
+    echo ' megatools: Please install megatools before using tools like "megals"';
+    echo '';
+    return;
+  fi;
+
   # Ignore missing credentials
   if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" ]; then
     echo '';
@@ -95,6 +103,14 @@ function downloadmega()
   if [ -z "${1}" ]; then
     echo '';
     echo ' Usage: downloadmega <remote_path> [boot_remove_remote] (Download from MEGA.nz)';
+    echo '';
+    return;
+  fi;
+
+  # Verify megatools is installed
+  if ! type megals >/dev/null 2>&1; then
+    echo '';
+    echo ' megatools: Please install megatools before using tools like "megals"';
     echo '';
     return;
   fi;
@@ -188,6 +204,14 @@ alias syncmega='megamirror';
 function listmega()
 {
   # Usage: listmega [options] (List remote files on MEGA.nz)';
+
+  # Verify megatools is installed
+  if ! type megals >/dev/null 2>&1; then
+    echo '';
+    echo ' megatools: Please install megatools before using tools like "megals"';
+    echo '';
+    return;
+  fi;
 
   # Ignore missing credentials
   if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" ]; then

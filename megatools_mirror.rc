@@ -29,6 +29,14 @@ function megamirror()
     return;
   fi;
 
+  # Verify megatools is installed
+  if ! type megals >/dev/null 2>&1; then
+    echo '';
+    echo ' megatools: Please install megatools before using tools like "megals"';
+    echo '';
+    return;
+  fi;
+
   # Ignore missing credentials
   if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" ]; then
     echo '';
