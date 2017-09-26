@@ -82,7 +82,7 @@ function sepmsg()
       | grep "${3}" \
       | sed 's/.*avc: /avc: /g' \
       | sed 's/ permissive=.*//g' \
-      | sed 's/\(comm\|ino\|ioctlcmd\)=\("\|\)[^ ]*\("\|\) //g' \
+      | sed 's/\(comm\|ino\|ioctlcmd\|pid\)=\("\|\)[^ ]*\("\|\) //g' \
       | sed 's/ path="socket:\[[^ ]*\]"//g' \
       | sort \
       | uniq \
