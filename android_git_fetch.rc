@@ -74,8 +74,10 @@ function gitfurl()
   branch=${url};
   url=${url%/commits/*};
   url=${url%/tree/*};
+  url=${url%/+/*};
   branch=${branch#*/commits/};
   branch=${branch#*/tree/};
+  branch=${branch#*/+/};
 
   # Git fetch from full url
   git fetch "${url}" "${branch}";
