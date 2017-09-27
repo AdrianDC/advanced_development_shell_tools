@@ -145,6 +145,14 @@ function adbmrombootimage()
   romdir=$(adbmromselect "${preselect}");
   romtarget=${romdir}/boot.img;
 
+  # Abort on missing ROM directory
+  if [ -z "${romdir}" ]; then
+    echo '';
+    echo '  adbmrombootimage: Improper ROM path selection';
+    echo '';
+    return;
+  fi;
+
   # Load ROM bootimage to partition
   echo " Injecting '${romtarget}' to '${partitiontarget}'";
   echo '';
@@ -221,6 +229,14 @@ function adbmrominjector()
   partitiontarget=$(androiddevicestarget boot);
   romtarget=$(adbmromselect "${preselect}")/boot.img;
 
+  # Abort on missing ROM directory
+  if [ -z "${partitiontarget}" ]; then
+    echo '';
+    echo '  adbmrominjector: Improper ROM path selection';
+    echo '';
+    return;
+  fi;
+
   # Load ROM bootimage to partition
   echo " Injecting '${romtarget}' to '${partitiontarget}'";
   echo '';
@@ -263,6 +279,14 @@ function adbmromautoboot()
 
   # Get ROM
   romtarget=$(adbmromselect "${preselect}");
+
+  # Abort on missing ROM directory
+  if [ -z "${romtarget}" ]; then
+    echo '';
+    echo '  adbmromautoboot: Improper ROM path selection';
+    echo '';
+    return;
+  fi;
 
   # Modify multirom.ini
   adbsu "sed -i 's#auto_boot_rom=.*#auto_boot_rom=${romtarget##*/}#' /data/media/0/multirom/multirom.ini";
