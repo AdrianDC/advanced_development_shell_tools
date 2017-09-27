@@ -90,6 +90,10 @@ function androiddevicestarget()
     fota)
       partition=FOTAKernel;;
 
+    # OEM partition
+    oem)
+      partition=oem;;
+
     # Recovery partition
     recovery)
       case "${device}" in
