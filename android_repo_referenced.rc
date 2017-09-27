@@ -291,6 +291,8 @@ function reporeflinker()
   local cnt;
   local dev_path;
   local key;
+  local local_manifests_file;
+  local local_manifests_folder='';
   local options;
   local path;
   local project;
@@ -421,8 +423,24 @@ function reporeflinker()
         ln -fsv "${dev_path}/${project}/${target}" "./${file}";
         echo '';
 
-        # Detect untracked tags from roomservice
+        # Handle roomservice custom configurations
         if [ "${file}" = 'roomservice.xml' ]; then
+
+          # Detect local_manifests projects from roomservice
+          local_manifests_folder=$(grep "Local Manifests: '" "${file}" | sed "s/.* '\(.*\)' .*/\1/");
+          if [ ! -z "${local_manifests_folder}" ] && [ -d "${dev_path}/${project}/${local_manifests_folder}" ]; then
+
+            # Link local_manifests projects
+            echo '';
+            echo -e  " \e[1;32mDetected local_manifests to use : '${local_manifests_folder}' in '${project}'\e[0m ";
+            echo '';
+            for local_manifests_file in "${dev_path}/${project}/${local_manifests_folder}/"*; do
+              ln -fsv "${local_manifests_file}" "./${local_manifests_file##*/}";
+            done;
+
+          fi;
+
+          # Detect untracked tags from roomservice
           untracked_file=$(grep "Untracked: '" "${file}" | sed "s/.* '\(.*\)' .*/\1/");
           if grep -q "Untracked: '" "${file}"; then
 
@@ -439,6 +457,7 @@ function reporeflinker()
             fi;
 
           fi;
+
         fi;
 
       fi;
