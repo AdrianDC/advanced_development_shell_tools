@@ -80,7 +80,7 @@ function gitbranchpusher()
   # Present diff statistics
   echo '';
   echo -e ' \e[1;31mSources content differences:\e[0m';
-  git diff --stat HEAD FETCH_HEAD;
+  git --no-pager diff --stat HEAD FETCH_HEAD;
 
   # Present commits counts
   echo '';
