@@ -29,11 +29,6 @@ function autoreleaseaospsodp8996()
     reposy;
   fi;
 
-  # Access project repository and when option enabled, sync tree
-  if ! pathchanged cdaosp sodp && ! shtools-builds-nosync-active; then
-    reposy;
-  fi;
-
   # Patch the project
   if ! aospsonysodppatcher 'a'; then
     return;
