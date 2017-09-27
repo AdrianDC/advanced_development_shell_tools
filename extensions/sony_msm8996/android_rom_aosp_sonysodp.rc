@@ -31,7 +31,7 @@ function aospsonysodppatcher()
   fi;
 
   # Use the androidprojectpatcher helper
-  androidprojectpatcher 'AdrianDC' 'aosp_development_sonyaosp' 'radian.dc@gmail.com' "${@}";
+  androidprojectpatcher 'AdrianDC' 'aosp_development_sonysodp' 'radian.dc@gmail.com' "${@}";
 }
 
 # === AOSP Sony SODP Rebaser ===

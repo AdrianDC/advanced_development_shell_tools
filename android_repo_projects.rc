@@ -128,7 +128,7 @@ function gitrapaospsonysodp()
   # Usage: gitrapaospsonysodp (AOSP Sony SODP development project remote)
 
   # AOSP Sony SODP development remote
-  gitremoteset project https://github.com/AdrianDC/aosp_development_sonyaosp.git;
+  gitremoteset project https://github.com/AdrianDC/aosp_development_sonysodp.git;
 }
 
 # === Git Remotes AOSP-CAF Project ===
