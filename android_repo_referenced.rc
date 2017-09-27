@@ -116,7 +116,7 @@ function reporefupdate()
 
   # Detect and update AOSP references
   for project in sony8960_n sony8960_o sony8960_master sonysodp aospcaf; do
-    if cddevaosp "${project}" && git submodule update --remote &&
+    if cddevaosp "${project}" && git submodule update --init --remote &&
         git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
         git add -N ./ && ! git diff-index --quiet HEAD --; then
       echo '';
@@ -131,7 +131,7 @@ function reporefupdate()
 
   # Detect and update LineageOS references
   for project in sony8960 sony8960_master sony8996 sonysodp; do
-    if cddevlineage "${project}" && git submodule update --remote &&
+    if cddevlineage "${project}" && git submodule update --init --remote &&
         git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
         git add -N ./ && ! git diff-index --quiet HEAD --; then
       echo '';
@@ -145,7 +145,7 @@ function reporefupdate()
   done;
 
   # Detect and update common manifests references
-  if cddev 'android_development_manifests' && git submodule update --remote &&
+  if cddev 'android_development_manifests' && git submodule update --init --remote &&
       git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
       git add -N ./ && ! git diff-index --quiet HEAD --; then
     echo '';
@@ -158,7 +158,7 @@ function reporefupdate()
   fi;
 
   # Detect and update MultiROM references
-  if cddevmrom && git submodule update --remote &&
+  if cddevmrom && git submodule update --init --remote &&
       git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
       git add -N ./ && ! git diff-index --quiet HEAD --; then
     echo '';
@@ -171,7 +171,7 @@ function reporefupdate()
   fi;
 
   # Detect and update TWRP references
-  if cddevtwrp && git submodule update --remote &&
+  if cddevtwrp && git submodule update --init --remote &&
       git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
       git add -N ./ && ! git diff-index --quiet HEAD --; then
     echo '';
@@ -209,7 +209,7 @@ function reporefsync()
         git reset FETCH_HEAD;
         git stash -u;
       fi;
-      git submodule update --remote;
+      git submodule update --init --remote;
     fi;
   done;
 
@@ -224,7 +224,7 @@ function reporefsync()
         git reset FETCH_HEAD;
         git stash -u;
       fi;
-      git submodule update --remote;
+      git submodule update --init --remote;
     fi;
   done;
 
@@ -238,7 +238,7 @@ function reporefsync()
       git reset FETCH_HEAD;
       git stash -u;
     fi;
-    git submodule update --remote;
+    git submodule update --init --remote;
   fi;
 
   # Fetch and update MultiROM references
@@ -251,7 +251,7 @@ function reporefsync()
       git reset FETCH_HEAD;
       git stash -u;
     fi;
-    git submodule update --remote;
+    git submodule update --init --remote;
   fi;
 
   # Fetch and update TWRP references
@@ -264,7 +264,7 @@ function reporefsync()
       git reset FETCH_HEAD;
       git stash -u;
     fi;
-    git submodule update --remote;
+    git submodule update --init --remote;
   fi;
 
   # Path restore
