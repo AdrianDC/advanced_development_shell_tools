@@ -63,8 +63,8 @@ function adbl()
     cls;
     echo -n '' > "${adb_log}";
 
-    # Logs output
-    if [[ "${3}" == *'clean'* ]]; then
+    # Logs clean output
+    if [ ! -z "${3}" ]; then
       ${logcat} -v threadtime '*:V' \
         | cut -c 32- \
         | sed -E "s/[0-9]{8}/00000000/g" \
@@ -72,6 +72,8 @@ function adbl()
         | sed -E "s/@[0-9a-f]{6,8}/@......./g" \
         | sed -E "s/\{[0-9a-f]{6,8}\}/{.......}/g" \
         | tee -a "${adb_log}";
+
+    # Logs clean output
     else
       ${logcat} -v threadtime '*:V' \
         | tee -a "${adb_log}";
