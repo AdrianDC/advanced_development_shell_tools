@@ -308,7 +308,7 @@ function reporeflinker()
 
   # Access local_manifests
   croot;
-  cdlocman;
+  cd ./.repo/local_manifests/;
   echo '';
 
   # Handle local_manifests files to link
