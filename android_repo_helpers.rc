@@ -398,7 +398,7 @@ function reposwitcher()
 
     # Create folder, generate symlink to local_manifests folder
     folder="local_manifests_${key}";
-    mkdir -p "${folder}";
+    mkdir -p ".repo/${folder}";
     echo -n ' ';
     rm -fv .repo/local_manifests;
     ln -fsv "${folder}" .repo/local_manifests;
