@@ -460,3 +460,112 @@ function gitzip()
   packzip "${files_list}";
   rm -f "${tmpfile}";
 }
+
+# === OEM Partition Injector ===
+function oeminjectorzip()
+{
+  # Usage
+  if [ -z "${1}" ] || [ ! -d "${1}" ]; then
+    echo '';
+    echo ' Usage: oeminjectorzip <oem_folder> (OEM files to flashable injector zip)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cur_dir;
+  local oem_file;
+  local oem_files;
+  local oem_files_list=();
+  local oem_folder=${1%/};
+  local oem_name;
+  local oem_partition;
+  local oem_target_file;
+  local oem_target_dir;
+  local target_file;
+  local target_name;
+  local tmp_dir;
+
+  # Fix folder path input if necessary
+  if [ -d "${oem_folder}/proprietary" ]; then
+    oem_folder="${oem_folder}/proprietary";
+  fi;
+  if [ -d "${oem_folder}/vendor" ]; then
+    oem_folder="${oem_folder}/vendor";
+  fi;
+  oem_folder=$(readlink -f "${oem_folder}");
+
+  # Extract OEM name
+  oem_name=${oem_folder//\/proprietary};
+  oem_name=${oem_name//\/vendor};
+  oem_name=${oem_name##*/};
+
+  # Initialize variables
+  cur_dir=$(pwd);
+  tmp_dir=$(mktemp -d);
+  target_name="oem-${oem_name}-$(date +'%Y%m%d-%H%M').zip";
+  target_file="$(desktoppath)/Builds/${target_name}";
+
+  # Handle paths
+  mkdir -p "$(dirname "${target_file}")";
+
+  # Header
+  echo '';
+  echo -e ' \e[1;37m[ OEM Injector Zip by Adrian DC - 2017 ]\e[0m';
+  echo '';
+
+  # Files handling
+  oem_files=$(find "${oem_folder}/" -type f -printf '%P\n');
+  for oem_file in ${oem_files[*]}; do
+
+    # Target selection
+    oem_file=$(echo -n "${oem_file}" | tail -1 \
+             | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
+             | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
+    oem_target_file=oem/${oem_file};
+    oem_target_dir=$(dirname "${oem_target_file}");
+    if [ ! -d "${tmp_dir}/${oem_target_dir}" ]; then
+      mkdir -p "${tmp_dir}/${oem_target_dir}";
+    fi;
+
+    # Target copy
+    oem_file=$(readlink -f "${oem_folder}/${oem_file}");
+    if [ -f "${oem_file}" ]; then
+      cp "${oem_file}" "${tmp_dir}/${oem_target_file}";
+      oem_files_list+=("./${oem_target_file}");
+    fi;
+  done;
+
+  # Pack zip output
+  cd "${tmp_dir}/";
+  if [ ! -z "${oem_files_list[*]}" ]; then
+
+    # Partitions
+    oem_partition=$(androiddevicestarget oem);
+
+    # Generate zip, updater-script and include files
+    mkdir -p ./META-INF/com/google/android/;
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${target_name}.unsigned.zip";
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_OEM}" ./META-INF/com/google/android/updater-script;
+    sed -i "s/ANDROID_OEM_PARTITION/${oem_partition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
+    zip -g "${tmp_dir}/${target_name}.unsigned.zip" ./META-INF/com/google/android/updater-script;
+    zip -g "${tmp_dir}/${target_name}.unsigned.zip" "${oem_files_list[@]}";
+    rm -rf ./META-INF;
+
+    # Zip signature
+    signzip "${tmp_dir}/${target_name}.unsigned.zip" "${tmp_dir}/${target_name}";
+    cp "${tmp_dir}/${target_name}" "${target_file}";
+    export PACKAGE_RESULT=${target_file};
+
+    # Package result
+    echo '';
+    echo -e " \e[1;37mPackage File:\e[0m ${target_file}";
+  else
+    export PACKAGE_RESULT=;
+  fi;
+  echo '';
+
+  # End of work
+  rm -rf "${tmp_dir}";
+  cd "${cur_dir}";
+}

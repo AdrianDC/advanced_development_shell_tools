@@ -1,0 +1,20 @@
+ui_print(" ");
+ui_print(" ");
+ui_print(" ==================================");
+ui_print(" | Adrian DC - OEM Injection ZIPs |");
+ui_print(" ==================================");
+ui_print(" ");
+
+ifelse(is_mounted("/oem_partition"), unmount("/oem_partition"));
+mount("ext4", "EMMC", "ANDROID_OEM_PARTITION", "/oem_partition", "");
+
+show_progress(1.000000, 0);
+ui_print("  - Injecting the oem partition...");
+package_extract_dir("oem", "/oem_partition");
+ui_print("     Done.");
+ui_print(" ");
+
+unmount("/oem_partition");
+ui_print("  Update Completed.");
+ui_print(" ");
+set_progress(1.000000);
