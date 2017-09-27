@@ -24,6 +24,12 @@ function aospsonysodppatcher()
 {
   # Usage: aospsonysodppatcher [specific_paths] (AOSP SONY SODP Patcher)
 
+  # Pull repo_update patches
+  if [ ! -d "${1}" ]; then
+    croot;
+    ./repo_update.sh;
+  fi;
+
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'AdrianDC' 'aosp_development_sonyaosp' 'radian.dc@gmail.com' "${@}";
 }
