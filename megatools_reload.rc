@@ -28,6 +28,14 @@ function meganzreload()
     return;
   fi;
 
+  # Verify megacmd is installed
+  if ! type mega-login >/dev/null 2>&1; then
+    echo '';
+    echo ' meganzreload: Please install https://mega.nz/cmd';
+    echo '';
+    return;
+  fi;
+
   # Variables
   local username;
   local password;
