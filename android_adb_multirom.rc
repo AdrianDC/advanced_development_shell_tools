@@ -297,3 +297,39 @@ function adbmromautoboot()
   adb reboot;
   echo '';
 }
+
+# === ADB MultiROM File Editor ===
+function adbmromedit()
+{
+  # Variables
+  local filepath=${1};
+  local preselect=${2};
+
+  # Usage
+  if [ -z "${filepath}" ]; then
+    echo '';
+    echo '  Usage: adbmromedit <relative_path> [preselect] (MultiROM secondary ROM file editor)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local romtarget;
+
+  # Get ROM path
+  romtarget=$(adbmromselect "${preselect}");
+
+  # Abort on missing ROM directory
+  if [ -z "${romtarget}" ]; then
+    echo '';
+    echo '  adbmromedit: Improper ROM path selection';
+    echo '';
+    return;
+  fi;
+
+  # Edit given file path
+  echo -e " \e[1;37madbmromedit: Editing '${romtarget}/${filepath#/}'\e[0m";
+  echo '';
+  adbedit "${romtarget}/${filepath#/}";
+  echo '';
+}

@@ -155,6 +155,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbmrombootimage** *<b>\[MultiROM bootimage installer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmrombootimage &lt;bootimage_path&gt; [preselect]*
   * [**adbmrominjector** *<b>\[MultiROM kernel image injector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmrominjector &lt;kernel_path&gt;*
   * [**adbmromautoboot** *<b>\[MultiROM autoboot selection\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)
+  * [**adbmromedit** *<b>\[MultiROM secondary ROM file editor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmromedit &lt;relative_path&gt; [preselect]*
 
 ---
 ### [&nbsp;Documentation: [android_adb_shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)&nbsp;]
