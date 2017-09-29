@@ -181,9 +181,9 @@ function adbsu()
 {
   # Usage
   if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: adbsu <command...> (Run on root adb shell without remounts)';
-    echo '';
+    >&2 echo '';
+    >&2 echo ' Usage: adbsu <command...> (Run on root adb shell without remounts)';
+    >&2 echo '';
     return;
   fi;
 
@@ -191,10 +191,10 @@ function adbsu()
   local cmd=${*};
 
   # Run as adb root shell
-  if adb shell type su | grep -q 'not found' ||
-      adb shell 'su -c echo "";' | grep -q 'su: invalid'; then
-    adb root | grep -v 'adbd is already running as root';
-    adbwait;
+  if adb shell type su 2>&1 | grep -q 'not found' ||
+      adb shell 'su -c echo "";' 2>&1 | grep -q 'su: invalid'; then
+    adb root >/dev/null 2>&1;
+    >&2 adbwait;
     adb shell "${cmd}";
 
   # Run on root adb shell
@@ -218,16 +218,16 @@ function adbsur()
   local cmd=${*};
 
   # Run as adb root shell
-  adb shell 'echo -n "";';
-  if adb shell type su | grep -q 'not found' ||
-      adb shell 'su -c echo "";' | grep -q 'su: invalid'; then
-    adbro;
+  >&2 adb shell 'echo -n "";';
+  if adb shell type su 2>&1 | grep -q 'not found' ||
+      adb shell 'su -c echo "";' 2>&1 | grep -q 'su: invalid'; then
+    >&2 adbro;
     adb shell "${cmd}";
 
   # Run on root adb shell
   else
-    if ! adb shell 'su -c mount' | grep '/system ' | grep -q rw; then
-      adb shell "su -c 'mount -o rw,remount /system'";
+    if ! adb shell 'su -c mount' 2>&1 | grep '/system ' | grep -q rw; then
+      >&2 adb shell "su -c 'mount -o rw,remount /system'";
     fi;
     adb shell "su -c '${cmd}'";
   fi;
