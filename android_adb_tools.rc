@@ -290,6 +290,7 @@ function adbedit()
 
   # Pull file as root
   adbro;
+  rm -f "${name}";
   adb pull "${path}";
 
   # Check local file permissions
