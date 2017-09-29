@@ -32,9 +32,8 @@ function adbst()
   local strace_exists;
   local target='/tmp';
 
-  # Acquire root access
+  # Wait for the device
   adbwait;
-  adbro;
 
   # Detect strace requirement
   strace_exists=$(adbsu 'if [ ! -e /system/bin/strace ]; then echo false; fi;');
@@ -44,9 +43,9 @@ function adbst()
     else
       adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" "${target}/strace";
     fi;
-    adbsu "cp '${target}/strace' /system/bin/strace;
-           rm '${target}/strace';
-           chmod 777 /system/bin/strace";
+    adbsur "cp '${target}/strace' /system/bin/strace;
+            rm '${target}/strace';
+            chmod 777 /system/bin/strace";
     echo '';
   fi;
 

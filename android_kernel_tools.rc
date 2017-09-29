@@ -182,7 +182,7 @@ function fboota()
       adb_cmd=$(adbcmd);
 
       # Push the kernel modules
-      adbsu "rm -rf '/system/lib/modules/'";
+      adbsur "rm -rf '/system/lib/modules/'";
       for module in ${modules[*]}; do
         module_file=$(basename "${module}");
         ${adb_cmd} push "${module}" "/system/lib/modules/${module_file}";
