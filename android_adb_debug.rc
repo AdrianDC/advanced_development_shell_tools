@@ -33,7 +33,7 @@ function adbst()
   local target='/tmp';
 
   # Wait for the device
-  adbwait;
+  adbwait 120;
 
   # Detect strace requirement
   strace_exists=$(adbsu 'if [ ! -e /system/bin/strace ]; then echo false; fi;');
