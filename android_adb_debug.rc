@@ -21,14 +21,14 @@ function adbst()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbst <process_name> [parameters] (strace)';
+    echo ' Usage: adbst <process_name> [parameters] [bool_wait] (strace)';
     echo '';
     return;
   fi;
 
   # Variables
   local cmd;
-  local pid;
+  local pid='';
   local strace_exists;
   local target='/tmp';
 
@@ -50,26 +50,20 @@ function adbst()
     echo '';
   fi;
 
-  # Get process identifier
-  pid=$(adb shell ps -A | grep -a "${1}" | tail -n 1 | awk '{ print $2 }');
-  if [ ! -z "${pid}" ]; then
-    adb shell ps -A | grep -a "${1}";
+  # Process identifier command
+  if [ -z "${3}" ]; then
+    cmd="pid=\$(pgrep '${1}' | head -n1)";
   else
-    pid=$(adb shell ps | grep -a "${1}" | tail -n 1 | awk '{ print $2 }');
-    adb shell ps | grep -a "${1}";
+    cmd="echo 'adbst: Waiting for ${1}'; pid=''; while [ -z \"\${pid}\" ]; do pid=\$(pgrep '${1}' | head -n1); done";
   fi;
+
+  # Append strace command
+  cmd="${cmd}; if [ ! -z \"\${pid}\" ]; then /system/bin/strace -y ${2} -s 4096 -p \"\${pid}\"; else echo 'adbst: No matching process found...'; fi;";
+
+  # Run command as root
   echo '';
-
-  # Abort if no process found
-  if [ -z "${pid}" ]; then
-    echo " Error: *${1}* process could not be found...";
-    echo '';
-    return;
-  fi;
-
-  # Strace the process
-  cmd="adbsu /system/bin/strace -y ${2}";
-  ${cmd} -s 4096 -p "${pid}";
+  adbsu "${cmd}";
+  echo '';
 }
 
 # === ADB Strace Followed Helper ===
