@@ -168,13 +168,40 @@ function adbwait()
   ${adb_timeout} 'wait-for-device';
 }
 
-# === ADB Shell Root ===
+# === ADB Shell Root Without Remounts ===
 function adbsu()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbsu <command...> (Run on root adb shell)';
+    echo ' Usage: adbsu <command...> (Run on root adb shell without remounts)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cmd=${*};
+
+  # Run as adb root shell
+  if adb shell type su | grep -q 'not found' ||
+      adb shell 'su -c echo "";' | grep -q 'su: invalid'; then
+    adb root | grep -v 'adbd is already running as root';
+    adbwait;
+    adb shell "${cmd}";
+
+  # Run on root adb shell
+  else
+    adb shell "su -c '${cmd}'";
+  fi;
+}
+
+# === ADB Shell Root With Remounts ===
+function adbsur()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbsur <command...> (Run on root adb shell with remounts)';
     echo '';
     return;
   fi;
