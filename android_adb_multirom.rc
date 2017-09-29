@@ -163,7 +163,7 @@ function adbmrombootimage()
   adb push "${filepath}" '/sdcard/boot.mrom';
 
   # Bootimage injection
-  adbsu "dd if=/dev/zero of=\"${partitiontarget}\"";
+  adbsu "dd if=/dev/zero of=\"${partitiontarget}\"" | grep -v 'No space left on device';
   adbsu "dd if=/sdcard/boot.mrom of=\"${partitiontarget}\"";
   adbsu 'rm -f /sdcard/boot.mrom';
 
