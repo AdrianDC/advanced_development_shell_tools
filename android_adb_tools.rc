@@ -192,7 +192,7 @@ function adbsu()
 
   # Run as adb root shell
   if adb shell type su 2>&1 | grep -q 'not found' ||
-      adb shell 'su -c echo "";' 2>&1 | grep -q 'su: invalid'; then
+      adb shell 'su -c echo "" || echo "su: invalid";' 2>&1 | grep -q 'su: invalid'; then
     adb root >/dev/null 2>&1;
     >&2 adbwait;
     adb shell "${cmd}";
