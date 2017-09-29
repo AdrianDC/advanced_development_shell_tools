@@ -158,13 +158,13 @@ function adbrstock()
 # === ADB Wait For Device ===
 function adbwait()
 {
-  # Usage: adbwait (adb wait for device)
+  # Usage: adbwait [delay_secs] (adb wait for device)
 
   # Variables
   local adb_timeout;
 
   # Get root access and rw system
-  adb_timeout="timeout --signal=SIGKILL 10 $(adbcmd)";
+  adb_timeout="timeout --signal=SIGKILL ${1:-10} $(adbcmd)";
   ${adb_timeout} 'wait-for-device';
 }
 
