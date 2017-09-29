@@ -246,12 +246,12 @@ function adbtinymix()
   tinymix_exists=$(adbsu 'if [ ! -e /system/bin/tinymix ]; then echo false; fi;');
   if [ ! -z "${tinymix_exists}" ]; then
     adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_TINYMIX}" /sdcard/tinymix;
-    adbsu 'cp /sdcard/tinymix /system/bin/tinymix';
-    adbsu 'rm /sdcard/tinymix';
-    adbsu 'chmod 777 /system/bin/tinymix';
+    adbsu 'cp /sdcard/tinymix /system/bin/tinymix;
+           rm /sdcard/tinymix;
+           chmod 777 /system/bin/tinymix';
     echo '';
   fi;
 
   # Launch tinymix
-  adbsu /system/bin/tinymix;
+  adbsu '/system/bin/tinymix';
 }

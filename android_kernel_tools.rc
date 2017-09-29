@@ -332,15 +332,11 @@ function adbbootinfo()
     return;
   fi;
 
-  # Push and fix permissions of 'bbootimg'
+  # Push and fix permissions of 'bbootimg' then kernel informations and cleanup
   ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
-  adbsu "chmod 755 ${adb_tmpdir}/bbootimg";
-
-  # Kernel informations
-  adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
-
-  # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/bbootimg;
+         ${adb_tmpdir}/bbootimg -i ${partitiontarget};
+         rm -f ${adb_tmpdir}/bbootimg";
 }
 
 # === FOTA Informations ===
@@ -375,15 +371,11 @@ function adbfotainfo()
     return;
   fi;
 
-  # Push and fix permissions of 'bbootimg'
+  # Push, fix permissions of 'bbootimg' then get FOTA informations
   ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
-  adbsu "chmod 755 ${adb_tmpdir}/bbootimg";
-
-  # FOTA informations
-  adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
-
-  # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/bbootimg;
+         ${adb_tmpdir}/bbootimg -i ${partitiontarget};
+         rm -f ${adb_tmpdir}/bbootimg";
 }
 
 # === Kernel Injector ===
@@ -462,18 +454,12 @@ function fbootk()
   ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
   adbsu "chmod 755 ${adb_tmpdir}/bbootimg";
 
-  # Kernel informations
-  adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget}";
-
-  # Kernel injection
-  adbsu "${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel ${dtimg}";
-
-  # Cleanup
-  adbsu "rm -f ${adb_tmpdir}/bbootimg";
-  adbsu "rm -f ${adb_tmpdir}/tmpkernel";
-  if [ ! -z "${dtimg}" ]; then
-    adbsu "rm -f ${adb_tmpdir}/dt.img";
-  fi
+  # Kernel informations and injection, then clenaup
+  adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget};
+         ${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel ${dtimg};
+         rm -f ${adb_tmpdir}/bbootimg;
+         rm -f ${adb_tmpdir}/tmpkernel;
+         rm -f ${adb_tmpdir}/dt.img";
 
   # Reboot the device
   if [ -z "${fota}" ]; then
@@ -538,9 +524,10 @@ function adbbootpush()
 
   # Installer
   ${adb} push "${1}" /sdcard/boot.img;
-  adbsu "dd if=/dev/zero of=${boot}" | grep -v 'No space left on device';
-  adbsu "dd if=/sdcard/boot.img of=${boot}";
-  adbsu 'rm -f /sdcard/boot.img';
+  adbsu "dd if=/dev/zero of=${boot};
+         dd if=/sdcard/boot.img of=${boot};
+         rm -f /sdcard/boot.img" \
+      | grep -v 'No space left on device';
 }
 
 # === ADB FOTA Pusher ===
@@ -564,10 +551,10 @@ function adbfotapush()
 
   # Installer
   ${adb} push "${1}" /sdcard/fota.img;
-  adbsu "dd if=/dev/zero of=${fota}" | grep -v 'No space left on device';
-  adbsu "dd if=/sdcard/fota.img of=${fota}";
-  adbsu 'rm -f /sdcard/fota.img';
-  #${adb} reboot recovery;
+  adbsu "dd if=/dev/zero of=${fota};
+         dd if=/sdcard/fota.img of=${fota};
+         rm -f /sdcard/fota.img" \
+      | grep -v 'No space left on device';
 }
 
 # === ADB Recovery Pusher ===
@@ -591,10 +578,10 @@ function adbrecoverypush()
 
   # Installer
   ${adb} push "${1}" /sdcard/recovery.img;
-  adbsu "dd if=/dev/zero of=${recovery}" | grep -v 'No space left on device';
-  adbsu "dd if=/sdcard/recovery.img of=${recovery}";
-  adbsu 'rm -f /sdcard/recovery.img';
-  #${adb} reboot recovery;
+  adbsu "dd if=/dev/zero of=${recovery};
+         dd if=/sdcard/recovery.img of=${recovery};
+         rm -f /sdcard/recovery.img" \
+      | grep -v 'No space left on device';
 }
 
 # === Kernel Injector Zip ===
@@ -917,23 +904,22 @@ function adbramdiskinject()
   fi;
 
   # Prepare temporary folder
-  adbsu "rm -rf ${adb_tmpdir}/inject";
-  adbsu "mkdir -p '${adb_tmpdir}/inject'";
+  adbsu "rm -rf ${adb_tmpdir}/inject;
+         mkdir -p '${adb_tmpdir}/inject'";
 
   # Push and fix permissions of 'bbootimg'
   ${adb_cmd} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/inject/bbootimg";
   adbsu "chmod 755 ${adb_tmpdir}/inject/bbootimg";
 
-  # Bootimage extraction
-  adbsu "cd ${adb_tmpdir}/inject/; ${adb_tmpdir}/inject/bbootimg -x ${partitiontarget}";
-
-  # Unpack gzip ramdisk
-  adbsu "mv ${adb_tmpdir}/inject/initrd.img ${adb_tmpdir}/inject/initrd.cpio.gz";
-  adbsu "gzip -d ${adb_tmpdir}/inject/initrd.cpio.gz";
-
-  # Unpack cpio ramdisk
-  adbsu "mkdir -p ${adb_tmpdir}/inject/ramdisk";
-  adbsu "cd ${adb_tmpdir}/inject/ramdisk/; cpio -i -F ../initrd.cpio; rm -f ../initrd.cpio";
+  # Bootimage extraction, then unpack gzip and cpio ramdisk
+  adbsu "cd ${adb_tmpdir}/inject/;
+         ${adb_tmpdir}/inject/bbootimg -x ${partitiontarget};
+         mv ${adb_tmpdir}/inject/initrd.img ${adb_tmpdir}/inject/initrd.cpio.gz;
+         gzip -d ${adb_tmpdir}/inject/initrd.cpio.gz;
+         mkdir -p ${adb_tmpdir}/inject/ramdisk;
+         cd ${adb_tmpdir}/inject/ramdisk/;
+         cpio -i -F ../initrd.cpio;
+         rm -f ../initrd.cpio";
 
   # Push files to target
   echo '';
@@ -942,21 +928,14 @@ function adbramdiskinject()
     adbpushfile "${file_path}" "${adb_tmpdir}/inject/ramdisk/${file_name}";
   done;
 
-  # Repack cpio ramdisk
-  adbsu "cd ${adb_tmpdir}/inject/ramdisk/; find . | cpio -o -H newc -F ../initrd.cpio";
-
-  # Repack gzip ramdisk
-  adbsu "gzip -9 ${adb_tmpdir}/inject/initrd.cpio";
-  adbsu "mv ${adb_tmpdir}/inject/initrd.cpio.gz ${adb_tmpdir}/inject/initrd.img";
-
-  # Bootimage information
-  adbsu "${adb_tmpdir}/inject/bbootimg -i ${partitiontarget}";
-
-  # Ramdisk injection
-  adbsu "${adb_tmpdir}/inject/bbootimg -u ${partitiontarget} -r ${adb_tmpdir}/inject/initrd.img";
-
-  # Cleanup temp folder
-  adbsu "rm -rf ${adb_tmpdir}/inject";
+  # Repack cpio and gzip ramdisk, then bootimage information and injection
+  adbsu "cd ${adb_tmpdir}/inject/ramdisk/;
+         find . | cpio -o -H newc -F ../initrd.cpio;
+         gzip -9 ${adb_tmpdir}/inject/initrd.cpio;
+         mv ${adb_tmpdir}/inject/initrd.cpio.gz ${adb_tmpdir}/inject/initrd.img;
+         ${adb_tmpdir}/inject/bbootimg -i ${partitiontarget};
+         ${adb_tmpdir}/inject/bbootimg -u ${partitiontarget} -r ${adb_tmpdir}/inject/initrd.img;
+         rm -rf ${adb_tmpdir}/inject";
 
   # Reboot the device
   ${adb_cmd} reboot;

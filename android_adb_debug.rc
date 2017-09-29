@@ -44,9 +44,9 @@ function adbst()
     else
       adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" "${target}/strace";
     fi;
-    adbsu "cp '${target}/strace' /system/bin/strace";
-    adbsu "rm '${target}/strace'";
-    adbsu 'chmod 777 /system/bin/strace';
+    adbsu "cp '${target}/strace' /system/bin/strace;
+           rm '${target}/strace';
+           chmod 777 /system/bin/strace";
     echo '';
   fi;
 
