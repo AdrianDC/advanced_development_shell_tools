@@ -161,11 +161,19 @@ function adbwait()
   # Usage: adbwait [delay_secs] (adb wait for device)
 
   # Variables
-  local adb_timeout;
+  local adb_cmd;
+  local delay=${1:-10};
+  local time_start;
 
-  # Get root access and rw system
-  adb_timeout="timeout --signal=SIGKILL ${1:-10} $(adbcmd)";
-  ${adb_timeout} 'wait-for-device';
+  # Initialize variables
+  adb_cmd=$(adbcmd);
+  time_start=$(date +%s);
+
+  # Wait for device until available
+  while [ $(($(date +%s) - time_start)) -le "${delay}" ] &&
+      ! ${adb_cmd} devices | grep -v 'List of devices attached' | grep -q 'device\|recovery\|sideload'; do
+    true;
+  done;
 }
 
 # === ADB Shell Root Without Remounts ===
