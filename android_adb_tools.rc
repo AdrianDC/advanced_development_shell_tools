@@ -251,18 +251,18 @@ function adbco()
   echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
   ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";
   echo -e '\e[1;36mConnected...\e[0m';
-  adbwait;
+  adbwait 20;
   echo -e '\e[1;36mGetting root access...\e[0m';
   ${adb_timeout} root;
   sleep 2;
   echo -e '\e[1;36mReconnecting...\e[0m';
   ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";
   echo -e '\e[1;36mConnected...\e[0m';
-  adbwait;
+  adbwait 20;
   echo -e '\e[1;36mMounting as root...\e[0m';
   ${adb_timeout} remount;
   sleep 1;
-  adbwait;
+  adbwait 20;
   echo -e '\e[1;36mReady...\e[0m';
   echo '';
 }
