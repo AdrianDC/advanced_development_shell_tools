@@ -86,6 +86,7 @@
 ### [&nbsp;Documentation: [android_adb_debug.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc)&nbsp;]
   * [**adbst** *<b>\[strace\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc) : *adbst &lt;process_name&gt; [parameters] [bool_wait]*
   * [**adbstf** *<b>\[Followed strace\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc) : *adbstf &lt;process_name&gt;*
+  * [**adbstw** *<b>\[Waiting strace\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc) : *adbstw &lt;process_name&gt;*
   * [**adbstacktombstone** *<b>\[ADB tombstone debugger with stack\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc)
 
 ---

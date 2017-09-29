@@ -81,6 +81,21 @@ function adbstf()
   adbst "${1}" '-f';
 }
 
+# === ADB Strace Waiting Helper ===
+function adbstw()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbstw <process_name> (Waiting strace)';
+    echo '';
+    return;
+  fi;
+
+  # Use ADB Strace helper
+  adbst "${1}" '-f' 'true';
+}
+
 # === ADB Stack Tombstone Debugger ===
 function adbstacktombstone()
 {
