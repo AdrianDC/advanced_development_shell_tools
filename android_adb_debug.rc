@@ -28,7 +28,6 @@ function adbst()
 
   # Variables
   local cmd;
-  local pid='';
   local strace_exists;
   local target='/tmp';
 
