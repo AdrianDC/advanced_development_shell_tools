@@ -258,3 +258,38 @@ function autorelease()
   # Execute requested function
   ${list_functions[${key}]} "${@}";
 }
+
+# === ROM Automated Builder Helper ===
+function autobuild()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: autobuild <device> (Development automated ROM builder)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local time_start;
+
+  # Cleanup device outputs
+  outdevcl "${1}";
+
+  # Prepare device and 'brunch' environment
+  repos "${1}";
+
+  # Build device for Lineage
+  if type brunch >/dev/null 2>&1; then
+    time_start=$(date +%s);
+    brunch "${1}";
+    __maketimestring 'brunch' "${?}" "${time_start}";
+
+  # Build device for AOSP
+  else
+    makes otapackage;
+  fi;
+
+  # Notify the build through Pushbullet
+  pushb "${BUILD_RESULT}\n\n$(date)" 2>/dev/null;
+}

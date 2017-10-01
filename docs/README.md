@@ -621,6 +621,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_release_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc)&nbsp;]
   * [**romautorelease** *<b>\[Advanced automated ROM builder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romautorelease &lt;device_name&gt; &lt;rom_tag&gt; [nowipe,j1/j2]*
   * [**autorelease** *<b>\[Helper menu access to autorelease* functions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc)
+  * [**autobuild** *<b>\[Development automated ROM builder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *autobuild &lt;device&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_release_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc)&nbsp;]
