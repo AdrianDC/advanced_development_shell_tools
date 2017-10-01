@@ -107,36 +107,6 @@ function repos()
   cd "${currentdir}";
 }
 
-# === Repo Environment Starter for AOSP ===
-function reposaosp()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: reposaosp <device_name> (Prepare AOSP device environment)';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  local currentdir;
-  local device;
-  local target;
-
-  # Prepare AOSP device environment
-  currentdir=${PWD};
-  croot;
-  if [ -f ./build/envsetup.sh ]; then
-    device=${1};
-    target=$(codenametotarget "${device}");
-    source ./build/envsetup.sh; croot;
-    lunch "aosp_${target}-userdebug";
-  else
-    echo "Android Repo not found...";
-  fi;
-  cd "${currentdir}";
-}
-
 # === Roomservice Manifest ===
 function reporoomserv()
 {

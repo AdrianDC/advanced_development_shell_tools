@@ -711,7 +711,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gettop** *<b>\[Get repo root path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
   * [**croot** *<b>\[Access repo root path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
   * [**repos** *<b>\[Prepare LineageOS device environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *repos &lt;device_name&gt;*
-  * [**reposaosp** *<b>\[Prepare AOSP device environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *reposaosp &lt;device_name&gt;*
   * [**reporoomserv** *<b>\[Manifest and local_manifests editor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
   * [**reposy** *<b>\[Optimized relevant repo sync\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
   * [**reposysafe** *<b>\[Safeguarded repo projects sync\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
@@ -946,6 +945,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [megatools_reload.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc)&nbsp;]
   * [**meganzreload** *<b>\[Reload Mega.nz account and keys\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc)
+
+---
+### [&nbsp;Documentation: [extensions/deprecated/android_repo_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/deprecated/android_repo_helpers.rc)&nbsp;]
+  * [**reposaosp** *<b>\[Prepare AOSP device environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/deprecated/android_repo_helpers.rc) : *reposaosp &lt;device_name&gt;*
 
 ---
 ### [&nbsp;Documentation: [extensions/lineage_next/android_rom_lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/android_rom_lineageos.rc)&nbsp;]
