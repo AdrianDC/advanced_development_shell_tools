@@ -74,15 +74,33 @@ function repos()
   # Variables
   local currentdir=${PWD};
   local device=${1};
+  local target;
 
-  # Repo root, sources and breakfast
-  croot;
-  if [ -f ./build/envsetup.sh ]; then
-    source ./build/envsetup.sh;
-    croot;
+  # Access repo root path
+  croot >/dev/null;
+
+  # Validate envsetup exists
+  if [ ! -f ./build/envsetup.sh ]; then
+    echo '';
+    echo -e ' \e[1;31mError: Android Repo not found...\e[0m';
+    echo '';
+    cd "${currentdir}";
+    return;
+  fi;
+
+  # Unset CM/Lineage functions and load envsetup
+  unset -f breakfast;
+  unset -f brunch;
+  source ./build/envsetup.sh; croot;
+
+  # Prepare device environment for LineageOS
+  if type breakfast >/dev/null 2>&1; then
     breakfast "${device}";
+
+  # Prepare device environment for AOSP
   else
-    echo "Android Repo not found...";
+    target=$(codenametotarget "${device}");
+    lunch "aosp_${target}-userdebug";
   fi;
 
   # Return to current folder
