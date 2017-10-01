@@ -123,12 +123,23 @@ function androidprojectpaths()
     return;
   fi;
 
+  # Variables
+  local paths_regex;
+
   # Android project remote paths list
-  git ls-remote --heads "https://github.com/${1}/${2}.git" \
-      2> /dev/null \
-      | sed 's/.*refs\/heads\///' \
-      | grep -v 'local_manifests' \
-      | sed 's/_/\//g';
+  paths_regex=$(git ls-remote --heads "https://github.com/${1}/${2}.git" \
+                  2> /dev/null \
+              | sed 's/.*refs\/heads\///' \
+              | grep -v 'local_manifests' \
+              | sed 's/^\(.*\)$/\^\1\$\\\|/g' \
+              | sed 's/_/[\/_]/g' \
+              | tr -d '\n');
+  paths_regex=${paths_regex%\\\|};
+
+  # Detect available project paths
+  if [ ! -z "${paths_regex}" ]; then
+    grep --color=never "${paths_regex}" "$(gettop)/.repo/project.list";
+  fi;
 }
 
 # === Android Project Patcher ===
