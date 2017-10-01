@@ -32,34 +32,58 @@ function makes()
 
   # Variables
   local ret;
+  local time_start;
+
+  # Store compilation start time
+  time_start=$(date +%s);
+
+  # Makes with SCHED_BATCH and all processors
+  schedtool -B -n 10 -e ionice -n 7 make -j"$(grep -c ^processor /proc/cpuinfo)" "${@}";
+  ret=${?};
+
+  # Acquire build time result
+  __maketimestring 'makes' "${ret}" "${time_start}";
+
+  # Present build log
+  echo '';
+  if [ ${ret} -eq 0 ]; then
+    echo -e "  \e[1;32m#### ${BUILD_RESULT} ####\e[0m";
+  else
+    echo -e " \e[1;31m#### ${BUILD_RESULT} ####\e[0m";
+  fi;
+  echo '';
+}
+
+# === Internal make time string builder ===
+function __maketimestring()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ] || [ -z "${3}" ]; then
+    echo '';
+    echo ' Usage: __maketimestring <tag> <return_value> <time_start> (Internal make time string builder)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
   local time_diff;
   local time_hours;
   local time_minutes;
   local time_seconds;
   local time_string;
 
-  # Store compilation start time
-  time_diff=$(date +%s);
-
-  # Makes with SCHED_BATCH and all processors
-  schedtool -B -n 10 -e ionice -n 7 make -j"$(grep -c ^processor /proc/cpuinfo)" "${@}";
-  ret=${?};
-
   # Calculate compilation times
-  time_diff=$(($(date +%s) - time_diff));
+  time_diff=$(($(date +%s) - ${3}));
   time_seconds=$((time_diff % 60));
   time_diff=$((time_diff / 60));
   time_minutes=$((time_diff % 60));
   time_hours=$((time_diff / 60));
 
   # Build success or failure log
-  echo '';
-  if [ $ret -eq 0 ] ; then
-    echo -en ' \e[1;32m';
-    time_string='makes: Completed in';
+  if [ "${2}" -eq 0 ] ; then
+    time_string="${1}: Completed in";
   else
-    echo -en ' \e[1;31m';
-    time_string='makes: Failed after';
+    time_string="${1}: Failed after";
   fi;
 
   # Build time log
@@ -70,10 +94,6 @@ function makes()
   elif [ ${time_seconds} -gt 0 ] ; then
     time_string=$(printf "${time_string} %s seconds" ${time_seconds});
   fi;
-
-  # Finish build log
-  echo -e " #### ${time_string} ####\e[0m";
-  echo '';
 
   # Export result as BUILD_RESULT
   export BUILD_RESULT=${time_string};
