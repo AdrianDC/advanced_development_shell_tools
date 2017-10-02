@@ -62,11 +62,13 @@ function __adbserver()
   adb_timeout="timeout 5 $(adbcmd)";
 
   # Verify faulty adb server
-  if ${adb_timeout} shell 'echo -n "";' 2>&1 | grep -q 'protocol fault'; then
+  if [ -z "$(${adb_timeout} devices | grep -v 'List of devices attached')" ] \
+      || ${adb_timeout} shell 'echo -n "";' 2>&1 | grep -q 'protocol fault'; then
 
     # Kill current running adb server
     ${adb_timeout} kill-server;
-    sudo killall 'adb' 2>/dev/null;
+    killall 'adb' 2>/dev/null;
+    timeout 20 sudo killall 'adb' 2>/dev/null;
 
   fi;
 }
