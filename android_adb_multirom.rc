@@ -54,6 +54,9 @@ function adbmromlist()
     echo "   ${path}";
   done < "${roms}";
   echo '';
+
+  # Cleanup temporary files
+  rm -f "${roms}";
 }
 
 # === ADB MultiROM Selector ===
@@ -117,6 +120,9 @@ function adbmromselect()
   if [ "${key}" -gt 0 ] && [ "${key}" -le "${cnt}" ]; then
     echo -n "${options[${key}]}" | tr -d '\r';
   fi;
+
+  # Cleanup temporary files
+  rm -f "${roms}";
 }
 
 # === ADB MultiROM Bootimage Installer ===
