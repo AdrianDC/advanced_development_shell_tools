@@ -16,7 +16,7 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
 
 # === Grep Helpers ===

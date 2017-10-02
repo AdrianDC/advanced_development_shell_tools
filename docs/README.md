@@ -207,7 +207,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_adb_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)&nbsp;]
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
   ```
   * [**adbscr** *<b>\[Take a screenshot from connected device\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
@@ -496,7 +496,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_grep.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)&nbsp;]
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
   ```
   * [**g** *<b>\[Grep through sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *g [inputs]*
@@ -514,17 +514,48 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**stringsparams** *<b>\[Get the strings command parameters for variants\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)
 
 ---
-### [&nbsp;Documentation: [android_host.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc)&nbsp;]
+### [&nbsp;Documentation: [android_host_common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc)&nbsp;]
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
   ```
-  * [**fileedit** *<b>\[Files editor for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *fileedit &lt;paths&gt;*
-  * [**fe** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *fileedit*
-  * [**fen** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *FILEEDIT_TOUCH_NEW_FILE=true fileedit*
-  * [**diropen** *<b>\[Directory opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *diropen &lt;path&gt;*
-  * [**dop** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *diropen .*
-  * [**urlopen** *<b>\[URL opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc) : *urlopen &lt;url&gt;*
-  * [**desktoppath** *<b>\[Acquire desktop path for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host.rc)
+  * [**fileedit** *<b>\[Files editor for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *fileedit &lt;paths&gt;*
+  * [**fe** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *fileedit*
+  * [**fen** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *FILEEDIT_TOUCH_NEW_FILE=true fileedit*
+  * [**diropen** *<b>\[Directory opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *diropen &lt;path&gt;*
+  * [**dop** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *diropen .*
+  * [**urlopen** *<b>\[URL opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *urlopen &lt;url&gt;*
+  * [**desktoppath** *<b>\[Acquire desktop path for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc)
+
+---
+### [&nbsp;Documentation: [android_host_linux.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)&nbsp;]
+  * [**bashup** *<b>\[Reload ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**bashe** *<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**cls** *<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**toclip** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *xclip -selection c*
+  * [**findn** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *find -name*
+  * [**rsynca** *<b>\[Mirror a path to another\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *rsynca &lt;path1&gt; &lt;path2&gt;*
+  * [**rsyncf** *<b>\[Mirror a path to another based on size only\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *rsyncf &lt;path1&gt; &lt;path2&gt;*
+  * [**pcinfo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *inxi -Fxz*
+  * [**findnewer** *<b>\[Search files newer than a date\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *findnewer &lt;20160123&gt;*
+  * [**cpioext** *<b>\[Extract cpio file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *cpioext &lt;cpio_file_to_extract&gt;*
+  * [**videoresize** *<b>\[Resize video dimensions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *videoresize &lt;video_file&gt;*
+  * [**disableautomount** *<b>\[Linux USB automount disabler\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**diffbin** *<b>\[Compare binary files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *diffbin &lt;binary_left&gt; &lt;binary_right&gt; [first_n_lines]*
+  * [**netspeed** *<b>\[Display network speeds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**netspeedtest** *<b>\[Run SpeedTest client\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**drivespeedtest** *<b>\[Run drive write speed test\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *drivespeedtest &lt;test_file_path&gt;*
+  * [**trimtrees** *<b>\[Hardlink duplicated files with trimtrees from cpansearch.perl.org\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *trimtrees &lt;paths&gt;*
+  * [**buildlock** *<b>\[Mutex-locked command execution\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *buildlock &lt;command...&gt;*
+  * [**fileschemesorter** *<b>\[Sort file against scheme file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *fileschemesorter &lt;file_to_sort&gt; &lt;file_reference&gt;*
+  * [**mtpmountdisable** *<b>\[Disable MTP automount\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**cleanram** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**cleanrambuild** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**cleanramkill** *<b>\[Complete RAM cleanup including "java"\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**networkrestart** *<b>\[Restart network manager\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
+  * [**pushbsizes** *<b>\[Path sizes in PushBullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *pushbsizes &lt;paths&gt;*
+  * [**isdone** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *notify-send "Process execution finished !*
+  * [**topcpu** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *top -o %CPU*
+  * [**topmem** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *top -o %MEM*
 
 ---
 ### [&nbsp;Documentation: [android_kernel_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)&nbsp;]
@@ -560,7 +591,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_build_helpers.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_helpers.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_tools.rc)
   ```
@@ -582,37 +613,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**sepinject** *<b>\[Sepolicies files to boot partition injector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *sepinject &lt;root_path&gt;*
   * [**adbramdiskinject** *<b>\[Ramdisk files to boot partition injector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *adbramdiskinject &lt;files_paths&gt;*
   * [**bootimagedebuggable** *<b>\[Bootimage build unsecured patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *bootimagedebuggable &lt;device_product&gt; &lt;true/false&gt;*
-
----
-### [&nbsp;Documentation: [android_linux.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)&nbsp;]
-  * [**bashup** *<b>\[Reload ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**bashe** *<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**cls** *<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**toclip** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *xclip -selection c*
-  * [**findn** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *find -name*
-  * [**rsynca** *<b>\[Mirror a path to another\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *rsynca &lt;path1&gt; &lt;path2&gt;*
-  * [**rsyncf** *<b>\[Mirror a path to another based on size only\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *rsyncf &lt;path1&gt; &lt;path2&gt;*
-  * [**pcinfo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *inxi -Fxz*
-  * [**findnewer** *<b>\[Search files newer than a date\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *findnewer &lt;20160123&gt;*
-  * [**cpioext** *<b>\[Extract cpio file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *cpioext &lt;cpio_file_to_extract&gt;*
-  * [**videoresize** *<b>\[Resize video dimensions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *videoresize &lt;video_file&gt;*
-  * [**disableautomount** *<b>\[Linux USB automount disabler\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**diffbin** *<b>\[Compare binary files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *diffbin &lt;binary_left&gt; &lt;binary_right&gt; [first_n_lines]*
-  * [**netspeed** *<b>\[Display network speeds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**netspeedtest** *<b>\[Run SpeedTest client\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**drivespeedtest** *<b>\[Run drive write speed test\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *drivespeedtest &lt;test_file_path&gt;*
-  * [**trimtrees** *<b>\[Hardlink duplicated files with trimtrees from cpansearch.perl.org\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *trimtrees &lt;paths&gt;*
-  * [**buildlock** *<b>\[Mutex-locked command execution\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *buildlock &lt;command...&gt;*
-  * [**fileschemesorter** *<b>\[Sort file against scheme file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *fileschemesorter &lt;file_to_sort&gt; &lt;file_reference&gt;*
-  * [**mtpmountdisable** *<b>\[Disable MTP automount\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**cleanram** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**cleanrambuild** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**cleanramkill** *<b>\[Complete RAM cleanup including "java"\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**networkrestart** *<b>\[Restart network manager\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc)
-  * [**pushbsizes** *<b>\[Path sizes in PushBullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *pushbsizes &lt;paths&gt;*
-  * [**isdone** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *notify-send "Process execution finished !*
-  * [**topcpu** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *top -o %CPU*
-  * [**topmem** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_linux.rc) : *top -o %MEM*
 
 ---
 ### [&nbsp;Documentation: [android_pushbullet.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_pushbullet.rc)&nbsp;]
@@ -711,7 +711,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_repo_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)&nbsp;]
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_cleaners.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_helpers.rc)
   ```
@@ -791,7 +791,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_rom_lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_lineageos.rc)
   ```
@@ -876,7 +876,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
   ```
   * [**binaryeditor** *<b>\[Binary files parser and editor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *binaryeditor &lt;patternsearch&gt; [binariespath] [replacement]*
