@@ -946,14 +946,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**shtools-uploads-mega-active** *<b>\[Get optional Mega.nz uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
 
 ---
-### [&nbsp;Documentation: [megatools_mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_mirror.rc)&nbsp;]
-  * [**megamirror** *<b>\[MEGA mirror syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_mirror.rc) : *megamirror &lt;local_folder&gt; &lt;remote_folder&gt; &lt;--upload/--download&gt; [--copy,-y/-n]*
-
----
-### [&nbsp;Documentation: [megatools_reload.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc)&nbsp;]
-  * [**meganzreload** *<b>\[Reload Mega.nz account and keys\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/megatools_reload.rc)
-
----
 ### [&nbsp;Documentation: [extensions/deprecated/android_repo_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/deprecated/android_repo_helpers.rc)&nbsp;]
   * [**reposaosp** *<b>\[Prepare AOSP device environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/deprecated/android_repo_helpers.rc) : *reposaosp &lt;device_name&gt;*
 
@@ -964,6 +956,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/lineage_next/android_rom_lineageos.rc)
   ```
   * [**lineagenextrebaser** *<b>\[LineageOS Next Rebaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/android_rom_lineageos.rc) : *lineagenextrebaser [specific_paths]*
+
+---
+### [&nbsp;Documentation: [extensions/megatools/megatools_mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_mirror.rc)&nbsp;]
+  * [**megamirror** *<b>\[MEGA mirror syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_mirror.rc) : *megamirror &lt;local_folder&gt; &lt;remote_folder&gt; &lt;--upload/--download&gt; [--copy,-y/-n]*
+
+---
+### [&nbsp;Documentation: [extensions/megatools/megatools_reload.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_reload.rc)&nbsp;]
+  * [**meganzreload** *<b>\[Reload Mega.nz account and keys\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_reload.rc)
 
 ---
 ### [&nbsp;Documentation: [extensions/semc_msm7x30/android_autorelease.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_msm7x30/android_autorelease.rc)&nbsp;]
