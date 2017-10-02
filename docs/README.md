@@ -246,14 +246,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**repogetdevice** *<b>\[Detect device name from repo environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc)
 
 ---
-### [&nbsp;Documentation: [android_edit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_edit.rc)&nbsp;]
-  * [**editreplacematch** *<b>\[Edit by replacing matches\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_edit.rc) : *editreplacematch &lt;"match_line"&gt; &lt;"to_write"&gt; &lt;"files"&gt;*
-  * [**editremovematch** *<b>\[Edit by removing matches\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_edit.rc) : *editremovematch &lt;"match_line"&gt; &lt;"files"&gt;*
-  * [**editinsertabove** *<b>\[Edit by inserting above\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_edit.rc) : *editinsertabove &lt;"match_line"&gt; &lt;"to_insert"&gt; &lt;"files"&gt;*
-  * [**editinsertbelow** *<b>\[Edit by inserting below\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_edit.rc) : *editinsertbelow &lt;"match_line"&gt; &lt;"to_insert"&gt; &lt;"files"&gt;*
-  * [**editreplacemultiline** *<b>\[Edit by replacing multiple lines\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_edit.rc) : *editreplacemultiline &lt;"match_first"&gt; &lt;"match_last"&gt; &lt;"replace"&gt; &lt;"files"&gt;*
-
----
 ### [&nbsp;Documentation: [android_gerrit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerrit.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_gerrit.rc)
@@ -501,6 +493,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**dop** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *diropen .*
   * [**urlopen** *<b>\[URL opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *urlopen &lt;url&gt;*
   * [**desktoppath** *<b>\[Acquire desktop path for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc)
+
+---
+### [&nbsp;Documentation: [android_host_edit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc)&nbsp;]
+  * [**editreplacematch** *<b>\[Edit by replacing matches\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *editreplacematch &lt;"match_line"&gt; &lt;"to_write"&gt; &lt;"files"&gt;*
+  * [**editremovematch** *<b>\[Edit by removing matches\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *editremovematch &lt;"match_line"&gt; &lt;"files"&gt;*
+  * [**editinsertabove** *<b>\[Edit by inserting above\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *editinsertabove &lt;"match_line"&gt; &lt;"to_insert"&gt; &lt;"files"&gt;*
+  * [**editinsertbelow** *<b>\[Edit by inserting below\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *editinsertbelow &lt;"match_line"&gt; &lt;"to_insert"&gt; &lt;"files"&gt;*
+  * [**editreplacemultiline** *<b>\[Edit by replacing multiple lines\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *editreplacemultiline &lt;"match_first"&gt; &lt;"match_last"&gt; &lt;"replace"&gt; &lt;"files"&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_host_grep.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)&nbsp;]
