@@ -177,6 +177,9 @@ function adbwait()
   local delay=${1:-10};
   local time_start;
 
+  # Verify adb is ready
+  adbready;
+
   # Initialize variables
   adb_cmd=$(adbcmd);
   time_start=$(date +%s);
@@ -201,6 +204,9 @@ function adbsu()
 
   # Variables
   local cmd=${*};
+
+  # Verify adb is ready
+  adbready;
 
   # Run as adb root shell
   if adb shell type su 2>&1 | grep -q 'not found' ||
@@ -228,6 +234,9 @@ function adbsur()
 
   # Variables
   local cmd=${*};
+
+  # Verify adb is ready
+  adbready;
 
   # Run as adb root shell
   >&2 adb shell 'echo -n "";';
