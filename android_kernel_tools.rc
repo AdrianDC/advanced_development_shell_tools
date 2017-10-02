@@ -630,7 +630,8 @@ function kernelinjectorzip()
   cd "${TmpDir}/";
   cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_KERNEL_INJECTOR}" './META-INF/com/google/android/updater-script';
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" './META-INF/com/google/android/updater-script';
-  cp -rfv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR}/"* './scripts/';
+  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR}" './scripts/';
+  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR_SH}" './scripts/';
   sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" './scripts/kernel_inject.sh';
 
   # Update 'updater-script', 'scripts' and 'kernel'
