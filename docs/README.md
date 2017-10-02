@@ -490,26 +490,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitgetbranch** *<b>\[Get git primary branch\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_tools.rc)
 
 ---
-### [&nbsp;Documentation: [android_grep.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)&nbsp;]
-  ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
-  ```
-  * [**g** *<b>\[Grep through sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *g [inputs]*
-  * [**gs** *<b>\[Grep through sources and binaries\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gs [inputs]*
-  * [**gce** *<b>\[Grep and edit through sources and binaries\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gce &lt;inputs&gt;*
-  * [**gck** *<b>\[Grep through kernel configurations\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gck [inputs]*
-  * [**gca** *<b>\[Grep through Android makefiles\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gca [inputs]*
-  * [**gcmanifest** *<b>\[Grep through Android Manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gcmanifest [inputs]*
-  * [**gcrc** *<b>\[Grep through Android .rc files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gcrc [inputs]*
-  * [**gcsep** *<b>\[Grep through Android sepolicies\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gcsep [inputs]*
-  * [**gccontexts** *<b>\[Grep through Android sepolicies contexts\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gccontexts [inputs]*
-  * [**grepi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *grep -ai*
-  * [**gcmodules** *<b>\[List all LOCAL_MODULE elements\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc) : *gcmodules [path]*
-  * [**gcphony** *<b>\[List all PHONY rules\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)
-  * [**stringsparams** *<b>\[Get the strings command parameters for variants\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_grep.rc)
-
----
 ### [&nbsp;Documentation: [android_host_common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
@@ -521,6 +501,26 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**dop** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *diropen .*
   * [**urlopen** *<b>\[URL opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *urlopen &lt;url&gt;*
   * [**desktoppath** *<b>\[Acquire desktop path for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc)
+
+---
+### [&nbsp;Documentation: [android_host_grep.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
+  ```
+  * [**g** *<b>\[Grep through sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *g [inputs]*
+  * [**gs** *<b>\[Grep through sources and binaries\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gs [inputs]*
+  * [**gce** *<b>\[Grep and edit through sources and binaries\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gce &lt;inputs&gt;*
+  * [**gck** *<b>\[Grep through kernel configurations\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gck [inputs]*
+  * [**gca** *<b>\[Grep through Android makefiles\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gca [inputs]*
+  * [**gcmanifest** *<b>\[Grep through Android Manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcmanifest [inputs]*
+  * [**gcrc** *<b>\[Grep through Android .rc files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcrc [inputs]*
+  * [**gcsep** *<b>\[Grep through Android sepolicies\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcsep [inputs]*
+  * [**gccontexts** *<b>\[Grep through Android sepolicies contexts\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gccontexts [inputs]*
+  * [**grepi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *grep -ai*
+  * [**gcmodules** *<b>\[List all LOCAL_MODULE elements\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcmodules [path]*
+  * [**gcphony** *<b>\[List all PHONY rules\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)
+  * [**stringsparams** *<b>\[Get the strings command parameters for variants\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)
 
 ---
 ### [&nbsp;Documentation: [android_host_linux.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)&nbsp;]
@@ -875,7 +875,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc)&nbsp;]
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_grep.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
   ```
