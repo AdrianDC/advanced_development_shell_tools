@@ -23,8 +23,8 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_tools.rc)
 
 # === Build paths ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_tools/bbootimg;
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_host=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_tools/bbootimg_host;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg_host;
 
 # === Fast Bootimage Builder ===
 function fboota()
@@ -297,7 +297,7 @@ function bootinfo()
   fi;
 
   # Run bbootimg on the kernel input
-  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_host}" -i "${1}";
+  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST}" -i "${1}";
 }
 
 # === Kernel Informations ===
