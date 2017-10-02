@@ -554,6 +554,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**topmem** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *top -o %MEM*
 
 ---
+### [&nbsp;Documentation: [android_host_pushbullet.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc)&nbsp;]
+  * [**pushb** *<b>\[PushBullet notification helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc) : *pushb [message]*
+
+---
 ### [&nbsp;Documentation: [android_kernel_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_helpers.rc)
@@ -609,10 +613,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**sepinject** *<b>\[Sepolicies files to boot partition injector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *sepinject &lt;root_path&gt;*
   * [**adbramdiskinject** *<b>\[Ramdisk files to boot partition injector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *adbramdiskinject &lt;files_paths&gt;*
   * [**bootimagedebuggable** *<b>\[Bootimage build unsecured patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *bootimagedebuggable &lt;device_product&gt; &lt;true/false&gt;*
-
----
-### [&nbsp;Documentation: [android_pushbullet.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_pushbullet.rc)&nbsp;]
-  * [**pushb** *<b>\[PushBullet notification helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_pushbullet.rc) : *pushb [message]*
 
 ---
 ### [&nbsp;Documentation: [android_release_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc)&nbsp;]

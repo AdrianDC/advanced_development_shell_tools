@@ -33,7 +33,7 @@ function pushb()
   # Ignore missing credentials
   if [ "${PushBulletToken}" = 'token' ]; then
     echo '';
-    echo ' pushb: Open android_pushbullet.rc to see how to set your logins';
+    echo ' pushb: Open android_host_pushbullet.rc to see how to set your logins';
     echo '';
     return;
   fi;
