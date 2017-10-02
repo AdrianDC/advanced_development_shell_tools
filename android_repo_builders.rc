@@ -224,14 +224,24 @@ function repomrom()
   RootDir=$(pwd);
 
   # Handle boot types
-  local MultiROMBootableTWRP=true;
-  local MultiROMRecoveryInjector=;
-  local MultiROMUninstaller=;
+  local MultiROMBootableTWRP;
+  local MultiROMRecoveryInjector;
+  local MultiROMUninstaller;
+
+  # Configure devices
   case "${PhoneName}" in
+    huashan|mint|hayabusa|tsubasa)
+      MultiROMBootableTWRP=true;
+      MultiROMRecoveryInjector=;
+      MultiROMUninstaller=;;
     dora|kagura)
-        MultiROMBootableTWRP=;
-        MultiROMRecoveryInjector=true;
-        MultiROMUninstaller=true;;
+      MultiROMBootableTWRP=;
+      MultiROMRecoveryInjector=true;
+      MultiROMUninstaller=true;;
+    *)
+      MultiROMBootableTWRP=true;
+      MultiROMRecoveryInjector=;
+      MultiROMUninstaller=true;;
   esac;
 
   # Sources Sync
