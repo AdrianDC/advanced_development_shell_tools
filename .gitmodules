@@ -1,3 +1,4 @@
-[submodule "android_mkboot"]
-	path = android_mkboot
-	url = https://github.com/xiaolu/mkbootimg_tools.git
+[submodule "addons/mkbootimg_tools"]
+	path = addons/mkbootimg_tools
+	url = https://github.com/xiaolu/mkbootimg_tools
+	branch = master

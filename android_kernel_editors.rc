@@ -16,7 +16,7 @@
 #
 
 # === Build paths ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_mkboot;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/mkbootimg_tools;
 export android_development_shell_tools_mkelf=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/mkelf.py;
 
 # === Boot Tools ===
