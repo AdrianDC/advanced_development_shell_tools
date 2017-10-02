@@ -240,10 +240,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**makes** *<b>\[Helper to 'make -jPROCESSORS' with SCHED_BATCH\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_build_helpers.rc) : *makes &lt;parameters&gt;*
 
 ---
-### [&nbsp;Documentation: [android_changelog.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_changelog.rc)&nbsp;]
-  * [**repochangelog** *<b>\[Generate ROM changelogs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_changelog.rc) : *repochangelog &lt;days_count&gt; [project1_path,project2_path,...]*
-
----
 ### [&nbsp;Documentation: [android_devices.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc)&nbsp;]
   * [**androiddevicestarget** *<b>\[Devices targets mapper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc) : *androiddevicestarget [boot/system/...] [device]*
   * [**codenametotarget** *<b>\[Codename to build target\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc) : *codenametotarget &lt;codename&gt;*
@@ -683,6 +679,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_repo_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_builders.rc)&nbsp;]
   * [**repotwrp** *<b>\[Advanced builder for TWRP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_builders.rc) : *repotwrp {device} [nosync,nowipe,outcl,fota,local +fotareboot]*
   * [**repomrom** *<b>\[Advanced builder for MultiROM\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_builders.rc) : *repomrom {device} [nosync,nowipe,outcl,fota,local +fotareboot]*
+
+---
+### [&nbsp;Documentation: [android_repo_changelog.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changelog.rc)&nbsp;]
+  * [**repochangelog** *<b>\[Generate ROM changelogs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changelog.rc) : *repochangelog &lt;days_count&gt; [project1_path,project2_path,...]*
 
 ---
 ### [&nbsp;Documentation: [android_repo_changes.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changes.rc)&nbsp;]
