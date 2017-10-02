@@ -81,6 +81,9 @@
   * [**adbpropradiolog** *<b>\[Radio debug property overrider\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adbpropradiolog &lt;value&gt;*
   * [**adbalsa** *<b>\[Audio cards advanced study\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
   * [**adbtinymix** *<b>\[Run tinymix on the device\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
+  * [**adbeditmanifest** *<b>\[Edit adb /system/vendor/manifest.xml file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
+  * [**adbinputs** *<b>\[Dump all input devices\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)
+  * [**adbreadevents** *<b>\[Read input events\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adbreadevents &lt;event_number&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_adb_debug.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc)&nbsp;]
@@ -220,9 +223,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbsur** *<b>\[Run on root adb shell with remounts\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbsur &lt;command...&gt;*
   * [**adbco** *<b>\[Helper for adb network access\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbco [ipaddress_once]*
   * [**adbedit** *<b>\[Edit adb file, default on /system/build.prop\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbedit [file_path]*
-  * [**adbeditmanifest** *<b>\[Edit adb /system/vendor/manifest.xml file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
-  * [**adbinputs** *<b>\[Dump all input devices\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
-  * [**adbreadevents** *<b>\[Read input events\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbreadevents &lt;event_number&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_adb_updater.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_updater.rc)&nbsp;]

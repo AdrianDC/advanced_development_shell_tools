@@ -255,3 +255,42 @@ function adbtinymix()
   # Launch tinymix
   adbsu '/system/bin/tinymix';
 }
+
+# === ADB Manifest.xml Editor ===
+function adbeditmanifest()
+{
+  # Usage: adbeditmanifest (Edit adb /system/vendor/manifest.xml file)
+
+  # Edit adb /system/vendor/manifest.xml file
+  adbedit /system/vendor/manifest.xml;
+}
+
+# === ADB Inputs Reader ===
+function adbinputs()
+{
+  # Usage: adbinputs (Dump all input devices)
+
+  #grep . /sys/class/input/event*/device/name
+  #adbs hexdump -C /dev/input/event7
+  command='cat /proc/bus/input/devices';
+  echo '';
+  echo "adb shell ${command}";
+  echo '';
+  adb shell "${command}";
+}
+
+# === ADB Events Reader ===
+function adbreadevents()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbreadevents <event_number> (Read input events)';
+    echo '';
+    return;
+  fi;
+
+  # Read input events
+  adb shell od -x "/dev/input/${1}" \
+   | awk -Wposix '{ if ($7) printf(" Key %4d - State %4d\n", "0x" $7, "0x" $8) }';
+}
