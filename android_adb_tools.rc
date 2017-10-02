@@ -50,10 +50,34 @@ function adbr()
   adbwait;
 }
 
+# === ADB Server Checker ===
+function __adbserver()
+{
+  # Usage: __adbserver (ADB server checker)
+
+  # Variables
+  local adb_timeout;
+
+  # Prepare adb access
+  adb_timeout="timeout 5 $(adbcmd)";
+
+  # Verify faulty adb server
+  if ${adb_timeout} shell 'echo -n "";' 2>&1 | grep -q 'protocol fault'; then
+
+    # Kill current running adb server
+    ${adb_timeout} kill-server;
+    sudo killall 'adb' 2>/dev/null;
+
+  fi;
+}
+
 # === ADB Ready Checker ===
 function adbready()
 {
   # Usage: adbready (ADB ready checker)
+
+  # Verify faulty adb server
+  __adbserver;
 
   # Verify sudo requirements
   if adb shell shell 'echo -n "";' 2>&1 \
@@ -71,24 +95,10 @@ function adbro()
   # Usage: adbro (Verified adb root and remount rw system)
 
   # Variables
-  local adb_cmd;
   local adb_timeout;
   local rootaccess;
   local systemaccess;
   local systemmount;
-
-  # Prepare adb access
-  adb_cmd=$(adbcmd);
-  adb_timeout="timeout 5 ${adb_cmd}";
-
-  # Verify faulty adb server
-  if ${adb_cmd} shell 'echo -n "";' 2>&1 | grep -q 'protocol fault'; then
-
-    # Kill current running adb server
-    ${adb_timeout} kill-server;
-    sudo killall 'adb' 2>/dev/null;
-
-  fi;
 
   # Verify adb is ready
   adbready;
