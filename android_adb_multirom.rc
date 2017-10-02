@@ -21,9 +21,9 @@ function adbmromlist()
   # Usage: adbmromlist (List available MultiROM installations)
 
   # Variables
+  local cnt;
   local enforced;
-  local path;
-  local roms;
+  local roms=('');
 
   # Prepare selinux access
   enforced=$(adb shell getenforce);
@@ -32,25 +32,42 @@ function adbmromlist()
   fi;
 
   # List all MultiROM installations
-  roms=$(mktemp);
-  adbsu 'find /sdcard/multirom/roms/* /sdcard1/multirom-*/* /external_sd/multirom-*/* /data/media/0/external_multirom/multirom-*/* -maxdepth 0 -type d 2> /dev/null' \
-    | grep -v '/sdcard/multirom/roms/Internal' \
-    > "${roms}";
-
-  # Create ROMs list
-  path=;
-  echo '';
-  echo -e " \e[1;37m[ MultiROM installations ]\e[0m";
-  echo '';
-  while read -r path; do
-    echo "   ${path}";
-  done < "${roms}";
-  echo '';
+  roms=($(adbsu 'find /sdcard/multirom/roms/* /sdcard1/multirom-*/* /external_sd/multirom-*/* /data/media/0/external_multirom/multirom-*/* -maxdepth 0 -type d 2> /dev/null' \
+    | grep -v '/sdcard/multirom/roms/Internal'));
 
   # Restore selinux access
   if [ "${enforced}" = 'Enforcing' ]; then
     adbsu 'setenforce 1';
   fi;
+
+  # Store number of ROMs
+  roms_cnt=${#roms[@]}
+
+  # Abort on missing ROM directory
+  if [ "${roms_cnt}" = '0' ]; then
+    echo '';
+    echo '  adbmromlist: No ROM path found';
+    echo '';
+    return;
+  fi;
+
+  # Create ROMs list
+  cnt=0;
+  echo '';
+  echo -e " \e[1;37m[ MultiROM installations ]\e[0m";
+  echo '';
+  while true; do
+    # Show current path
+    echo "   ${roms[${cnt}]}";
+
+    # Loop check
+    if [ "${cnt}" = "$((roms_cnt - 1))" ]; then
+      break;
+    else
+      cnt=$((cnt + 1));
+    fi;
+  done;
+  echo '';
 }
 
 # === ADB MultiROM Selector ===
@@ -79,6 +96,11 @@ function adbmromselect()
       | grep -v '/sdcard/multirom/roms/Internal' \
       > "${roms}";
 
+  # Restore selinux access
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 1';
+  fi;
+
   # Create ROMs selector list
   cnt=0;
   options=('None');
@@ -101,11 +123,6 @@ function adbmromselect()
     key=${preselect};
   fi;
   >&2 echo '';
-
-  # Restore selinux access
-  if [ "${enforced}" = 'Enforcing' ]; then
-    >&2 adbsu 'setenforce 1';
-  fi;
 
   # Return selected ROM path
   if [ "${key}" -gt 0 ] && [ "${key}" -le "${cnt}" ]; then

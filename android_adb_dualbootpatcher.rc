@@ -1,0 +1,203 @@
+#!/bin/bash
+#
+# Copyright 2015-2017 Adrian DC
+# Copyright 2017 Caio99BR
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === ADB DualBootPatcher Selector ===
+function adbdbpselect()
+{
+  # Usage
+  if [[ "${@}" == *'-h'* ]]; then
+    echo '';
+    echo '  Usage: adbdbpselect [all,list,name] (Select DualBootPatcher installation)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local adb=$(adbcmd);
+  local cnt;
+  local enforced;
+  local hide;
+  local key;
+  local name=('');
+  local params=${@};
+  local roms=('');
+  local roms_cnt;
+
+  # Convert space to commas
+  params=${params// /,};
+
+  # Check if MultiBoot is installed
+  if [ -z "$(${adb} shell 'ls /sdcard/MultiBoot/ 2> /dev/null')" ]; then
+    return;
+  fi;
+
+  # Show hide images
+  if [[ "${params}" == *'all'* ]]; then
+    hide='do-not-hide'
+  else
+    hide='before-ramdisk-update';
+  fi
+
+  # Prepare selinux access
+  enforced=$(adb shell getenforce);
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 0';
+  fi;
+
+  # List all DualBootPatcher installations
+  roms=($(adbsu 'find /sdcard/MultiBoot/* -maxdepth 1 2> /dev/null' \
+          | grep 'boot.img' \
+          | grep -v "${hide}" \
+          | tr -d '\r'));
+
+  # Restore selinux access
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 1';
+  fi;
+
+  # Store number of ROMs
+  roms_cnt=${#roms[@]}
+
+  # Check if a MultiBoot install is on device
+  if [ "${roms_cnt}" = '0' ]; then
+    return;
+  fi;
+
+  # ROMs list
+  cnt=0;
+  echo '';
+  echo -e " \e[1;37m[ DualBootPatcher installations ]\e[0m ";
+  echo '';
+  while true; do
+
+    # Get name of ROM
+    name[${cnt}]=${roms[${cnt}]#/sdcard/MultiBoot/};
+    name[${cnt}]=${name[${cnt}]%/boot.img*};
+
+    # Show current name and path
+    echo "   ${cnt}: ${name[${cnt}]^} [${roms[${cnt}]}] ";
+
+    # Loop check
+    if [ "${cnt}" = "$((roms_cnt - 1))" ]; then
+      break;
+    else
+      cnt=$((cnt + 1));
+    fi;
+  done;
+  echo '';
+
+  # Select ROM
+  if [[ "${params}" != *'list'* ]]; then
+    echo -en " \e[1;33mSelect ROM to use [0 to ${cnt}] :\e[0m ";
+    read -r key;
+    echo '';
+
+    # Return selected ROM name or path
+    if [ "${key}" -ge 0 ] && [ "${key}" -le "${cnt}" ]; then
+      if [[ "${params}" == *'name'* ]]; then
+        echo "${name[${key}]}" | tr -d '\r';
+      else
+        echo "${roms[${key}]}" | tr -d '\r';
+      fi;
+    fi;
+  fi;
+}
+
+# === ADB DualBootPatcher AutoBoot ===
+function adbdbpautoboot()
+{
+  # Usage
+  if [[ "${@}" == *'-h'* ]]; then
+    echo '';
+    echo '  Usage: adbdbpautoboot [noreboot] (DualBootPatcher autoboot selection)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local romtarget=$(adbdbpselect);
+  local params=${@};
+
+  # Convert space to commas
+  params=${params// /,};
+
+  # Check if ROM was selected
+  if [ -z "${romtarget}" ]; then
+    return;
+  fi;
+
+  # Get device from ... device
+  device=$(adb shell 'getprop ro.build.product' | tr -d '\r');
+
+  # Fallback to 'androiddevicestarget' way to get boot partition
+  partitiontarget=$(androiddevicestarget boot ${device});
+
+  echo '  adbdbpautoboot:';
+  echo "    Flashing from : ${romtarget}";
+  echo "               to : ${partitiontarget}";
+
+  # Flash the boot.img of ROM select
+  adbsu "dd if=\"${romtarget}\" of=\"${partitiontarget}\"";
+
+  # Don't Reboot to Android if requested
+  if [ "${params}" = *'noreboot'* ]; then
+    adb reboot;
+  fi;
+  echo '';
+}
+
+# === ADB DualBootPatcher AutoBoot ===
+function adbdbpupdateboot()
+{
+  # Usage
+  if [[ "${@}" == *'-h'* ]]; then
+    echo '';
+    echo '  Usage: adbdbpupdateboot (DualBootPatcher update current boot)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local device;
+  local slot;
+  local partitiontarget;
+
+  # Give adb root permissions
+  adbwait;
+  adbro;
+
+  # Get current slot ID
+  slot=$(adb shell 'getprop ro.multiboot.romid' | tr -d '\r');
+
+  # Check if ROM was found
+  if [ -z "${slot}" ]; then
+    return;
+  fi;
+
+  # Get device from ... device
+  device=$(adb shell 'getprop ro.build.product' | tr -d '\r');
+
+  # Fallback to 'androiddevicestarget' way to get boot partition
+  partitiontarget=$(androiddevicestarget boot ${device});
+
+  echo '  adbdbpupdateboot:';
+  echo "    Updating from : ${partitiontarget}";
+  echo "               to : /sdcard/MultiBoot/${slot}/boot.img";
+
+  adbsu "dd if=\"${partitiontarget}\" of=\"/sdcard/MultiBoot/${slot}/boot.img\"";
+}
