@@ -209,6 +209,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * [**adbscr** *<b>\[Take a screenshot from connected device\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbr** *<b>\[adb root and remount rw system\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
+  * [**adbready** *<b>\[ADB ready checker\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbro** *<b>\[Verified adb root and remount rw system\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)
   * [**adbroot** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adb kill-server; sudo adb start-server; sudo adb root; sudo adb wait-for-device; sudo adb remount*
   * [**adbsudo** *<b>\[ADB sudo toggle helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)

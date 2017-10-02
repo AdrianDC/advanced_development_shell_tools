@@ -50,6 +50,21 @@ function adbr()
   adbwait;
 }
 
+# === ADB Ready Checker ===
+function adbready()
+{
+  # Usage: adbready (ADB ready checker)
+
+  # Verify sudo requirements
+  if adb shell shell 'echo -n "";' 2>&1 \
+      | grep -q 'insufficient permissions\|no permissions'; then
+
+    # Run adbsudo if permission denied
+    adbsudo;
+
+  fi;
+}
+
 # === ADB Root Checked Mounter ===
 function adbro()
 {
@@ -75,14 +90,11 @@ function adbro()
 
   fi;
 
-  # Verify sudo requirements
-  if ${adb_cmd} shell 'echo -n "";' 2>&1 | grep -q 'insufficient permissions\|no permissions'; then
+  # Verify adb is ready
+  adbready;
 
-    # Run adbsudo if permission denied
-    adbsudo;
-    adb_timeout="timeout 5 $(adbcmd)";
-
-  fi;
+  # Refresh adb timeout command
+  adb_timeout="timeout 5 $(adbcmd)";
 
   # Get root access
   rootaccess=$(${adb_timeout} shell whoami);
