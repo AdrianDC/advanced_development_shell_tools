@@ -17,7 +17,7 @@
 
 # === Build paths ===
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/mkbootimg_tools;
-export android_development_shell_tools_mkelf=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/android_files/mkelf.py;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_MKELF=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/mkelf/mkelf.py;
 
 # === Boot Tools ===
 function boottools()
@@ -208,7 +208,7 @@ function bootelf()
     echo '';
     echo ' [ Compiling the boot.img ]';
     echo '';
-    cp "${android_development_shell_tools_mkelf}" ./mkelf.py;
+    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_MKELF}" ./mkelf.py;
     python ./mkelf.py -o boot-new.elf kernel@0x80208000 ramdisk.img@0x81900000,ramdisk RPM.bin@0x00020000,rpm cmdline.txt@0x00000000,cmdline;
 
     # Replace input bootimage
