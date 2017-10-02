@@ -2,6 +2,8 @@
 
  * Project created by [Adrian DC](https://github.com/AdrianDC) - 2015-2017
 
+ * GitHub description of the project: [About the project...](project.md)
+
  * XDA-Developers thread for this project : [Android Development Shell Tools](http://forum.xda-developers.com/-/-/-t3622382)
 
  * The 'android_development_shell_tools' is a project meant to provide

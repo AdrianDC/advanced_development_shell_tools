@@ -661,6 +661,9 @@ function shtoolsreadme()
   echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README.md documentation\e[0m';
   echo -n '  ...';
 
+  # Refresh project's README.md
+  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/project.md";
+
   # Read all sources
   for file in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" \
               "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" \
