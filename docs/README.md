@@ -42,6 +42,19 @@
 
 <br />
 
+### [ How to find command here ]
+ * Obviously 'android_development_shell_tools' is a massive project
+   <br />
+   and this fully automated and updated documentation contains
+   <br />
+   quite an extensive list of functions you may or not need.
+
+ * To find something you are interested in, for example 'Gerrit',
+   <br />
+   you can easily search *(Ctrl + F)* to find related functions
+
+<br />
+
 <!-- Functions Start -->
 ### [&nbsp;Documentation: [android_development_shell_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)&nbsp;]
   * [**shtoolsup** *<b>\[Reloads android_development_shell_tools scripts\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
