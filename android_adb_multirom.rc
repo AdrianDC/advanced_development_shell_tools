@@ -40,6 +40,11 @@ function adbmromlist()
     | grep -v '/sdcard/multirom/roms/Internal' \
     > "${roms}";
 
+  # Restore selinux access
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 1';
+  fi;
+
   # Create ROMs list
   path=;
   echo '';
@@ -49,11 +54,6 @@ function adbmromlist()
     echo "   ${path}";
   done < "${roms}";
   echo '';
-
-  # Restore selinux access
-  if [ "${enforced}" = 'Enforcing' ]; then
-    adbsu 'setenforce 1';
-  fi;
 }
 
 # === ADB MultiROM Selector ===
@@ -85,6 +85,11 @@ function adbmromselect()
       | grep -v '/sdcard/multirom/roms/Internal' \
       > "${roms}";
 
+  # Restore selinux access
+  if [ "${enforced}" = 'Enforcing' ]; then
+    adbsu 'setenforce 1';
+  fi;
+
   # Create ROMs selector list
   cnt=0;
   options=('None');
@@ -107,11 +112,6 @@ function adbmromselect()
     key=${preselect};
   fi;
   >&2 echo '';
-
-  # Restore selinux access
-  if [ "${enforced}" = 'Enforcing' ]; then
-    >&2 adbsu 'setenforce 1';
-  fi;
 
   # Return selected ROM path
   if [ "${key}" -gt 0 ] && [ "${key}" -le "${cnt}" ]; then
