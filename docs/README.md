@@ -390,8 +390,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_git_history.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc)&nbsp;]
-  * [**gitlo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log --pretty=oneline*
-  * [**gitlod** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log --pretty=oneline --*
+  * [**gitlo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log --pretty=oneline --abbrev-commit*
+  * [**gitlod** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log --pretty=oneline --abbrev-commit --*
   * [**gitloo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --*
   * [**gitlos** *<b>\[Search string in git history\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *gitlos &lt;path_or_.&gt; ["search string input"] [search_max_count]*
   * [**gitdi** *<b>\[Show git differences status\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc)

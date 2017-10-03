@@ -16,8 +16,8 @@
 #
 
 # === Git Log Helpers ===
-alias gitlo='git log --pretty=oneline';
-alias gitlod='git log --pretty=oneline --';
+alias gitlo='git log --pretty=oneline --abbrev-commit';
+alias gitlod='git log --pretty=oneline --abbrev-commit --';
 alias gitloo='git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --';
 
 # === Git Log Searcher ===
