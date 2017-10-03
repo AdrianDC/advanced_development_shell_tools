@@ -531,6 +531,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gcmanifest** *<b>\[Grep through Android Manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcmanifest [inputs]*
   * [**gcrc** *<b>\[Grep through Android .rc files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcrc [inputs]*
   * [**gcsep** *<b>\[Grep through Android sepolicies\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcsep [inputs]*
+  * [**gcxml** *<b>\[Grep through Android .xml files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcxml [inputs]*
   * [**gccontexts** *<b>\[Grep through Android sepolicies contexts\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gccontexts [inputs]*
   * [**grepi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *grep -ai*
   * [**gcmodules** *<b>\[List all LOCAL_MODULE elements\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcmodules [path]*

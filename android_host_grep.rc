@@ -168,6 +168,24 @@ function gcsep()
   done;
 }
 
+# === Grep Android .xml Files ===
+function gcxml()
+{
+  # Usage: gcxml [inputs] (Grep through Android .xml files)
+
+  # Variables
+  local strings_params;
+
+  # Grep through files
+  strings_params="strings $(stringsparams)";
+  for file in $(find . -name '*.xml' -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
+    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done;
+}
+
 # === Grep Android Sepolicies Contexts ===
 function gccontexts()
 {
