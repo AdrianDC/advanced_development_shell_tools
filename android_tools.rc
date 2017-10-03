@@ -349,7 +349,7 @@ function pbin()
         -D - \
         -F "csrf_token_post=${token}" \
         -F "paste_code=<${tmp};type=text/plain" \
-        -F 'paste_expire_date=1D' \
+        -F "paste_expire_date=${PASTEBIN_EXPIRE:-1D}" \
         -F 'paste_format=8' \
         -F 'paste_private=1' \
         -F 'submit_hidden=submit_hidden' \
@@ -361,6 +361,9 @@ function pbin()
   urlopen "${url}";
   rm "${tmp}";
 }
+
+# === Pastebin Permanent ===
+alias pbinperm='PASTEBIN_EXPIRE=N pbin';
 
 # === Overlay Compare ===
 function overlaycompare()
