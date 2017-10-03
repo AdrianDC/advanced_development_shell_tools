@@ -17,7 +17,7 @@
 
 # === Git Show Helpers ===
 alias gitshow='git show -M --name-status';
-alias gitshf='git show -M --pretty=full';
+alias gitshf='git show -M --pretty=fuller';
 function gitshl() { git show --oneline --name-only "${1}" | tail -n +2 | cut -c $((1+${2:-0}))-; }
 
 # === Git Add Helpers ===
