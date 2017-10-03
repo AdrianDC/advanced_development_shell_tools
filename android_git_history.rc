@@ -53,8 +53,8 @@ function gitlos()
   echo '';
   for sha1 in $(git log --max-count="${cnt}" --format=format:%H -- "${path}"); do
     if git show "${sha1}" | grep -iq "${input}"; then
-      git --no-pager show --name-only --oneline "${sha1}";
-      git --no-pager show "${sha1}" | grep -i "${input}";
+      git --no-pager show -M --name-only --oneline "${sha1}";
+      git --no-pager show -M "${sha1}" | grep -i "${input}";
       echo '';
     fi;
   done;

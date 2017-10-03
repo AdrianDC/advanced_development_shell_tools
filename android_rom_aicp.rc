@@ -60,7 +60,7 @@ function gitcpaicp()
     echo -e " \e[1;34m\e[4;34m===[ ${headsha1}~${i} ]===\e[0m";
     echo '';
     git reset --hard "${headsha1}~${i}";
-    git show --stat HEAD;
+    git show -M --stat HEAD;
     gitstat aicp "${branch_target}";
     gitpraicp;
     gitpgaicp;

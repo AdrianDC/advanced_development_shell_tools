@@ -49,7 +49,7 @@ function gitcpu()
   # Fetch and pick
   git fetch "${project}" "${branch}";
   echo '';
-  git show --oneline --stat "${commit}";
+  git show -M --oneline --stat "${commit}";
   echo '';
   git cherry-pick "${commit}";
 }
