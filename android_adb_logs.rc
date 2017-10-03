@@ -92,7 +92,7 @@ function adblr()
   # Usage: adblr (Logcat output relevant reader)
 
   # Logcat output relevant reader
-  adbl | grep -v 'Diag_Lib:';
+  adbl | grep -av 'Diag_Lib:';
 }
 
 # === ADB Logcat Public Cleaner ===
