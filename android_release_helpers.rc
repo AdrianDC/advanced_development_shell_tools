@@ -32,6 +32,10 @@ function outdevcl()
     return;
   fi;
 
+  # Header
+  echo '';
+  echo -en " \e[1;33moutdevcl:\e[0;33m Cleaning up ROM outputs for '${1}'\e[0m";
+
   # Out path
   out_device_path=./out/target/product/${1};
 
@@ -67,6 +71,11 @@ function outbootdevcl()
     return;
   fi;
 
+  # Header
+  echo '';
+  echo -e " \e[1;33moutbootdevcl:\e[0;33m Cleaning up bootimage outputs for '${1}'\e[0m";
+  echo '';
+
   # Out path
   out_device_path=./out/target/product/${1};
 
@@ -100,6 +109,11 @@ function outsepdevcl()
     echo '';
     return;
   fi;
+
+  # Header
+  echo '';
+  echo -e " \e[1;33moutbootdevcl:\e[0;33m Cleaning up sepolicy outputs for '${1}'\e[0m";
+  echo '';
 
   # Out path
   out_device_path=./out/target/product/${1};
