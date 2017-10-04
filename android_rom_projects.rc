@@ -159,8 +159,9 @@ function androidprojectpatcher()
   local project_email=${3};
   local project_specific_inputs=("${@:4}");
   local android_top;
-  local project_paths;
-  local projects_specific=;
+  local project_count;
+  local project_index;
+  local project_paths=();
   local currentdir=${PWD};
 
   # ==========================================================
@@ -212,12 +213,18 @@ function androidprojectpatcher()
     android_top=$(gettop);
     for path in "${project_specific_inputs[@]}"; do
       path=$(readlink -f "${path}");
-      projects_specific="${projects_specific} ${path#${android_top}/}";
+      project_paths+=("${path#${android_top}/}");
     done;
   fi;
 
   # Automated remote changes list detection
-  project_paths=$(androidprojectpaths "${project_owner}" "${project_name}");
+  if [ -z "${project_paths[*]}" ]; then
+    mapfile -t project_paths < <(androidprojectpaths "${project_owner}" "${project_name}");
+  fi;
+
+  # Array dimensions
+  project_count=${#project_paths[@]};
+  project_index=0;
 
   # ==========================================================
   # Repo root
@@ -241,13 +248,14 @@ function androidprojectpatcher()
   fi;
 
   # Projects loader
-  for path in ${projects_specific:-${project_paths}}; do
+  for path in "${project_paths[@]}"; do
 
     # Project selection
     path=${path%/};
     path_branch=${path//\//_};
+    project_index=$((project_index + 1));
     echo '';
-    echo -e " \e[1;37m=== ${path} [${path_branch}] ===\e[0m";
+    echo -e " \e[1;37m=== [${project_index}/${project_count}] ${path} [${path_branch}] ===\e[0m";
     echo '';
     croot;
 
