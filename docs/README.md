@@ -608,7 +608,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_build_helpers.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_helpers.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_cleaners.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_tools.rc)
   ```
   * [**fboota** *<b>\[Advanced bootimage builder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *fboota [fastupl,flash,full,inject,push,recovery,sep,unsecure,zip]*
@@ -637,6 +637,15 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**autobuild** *<b>\[Development automated ROM builder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *autobuild &lt;device&gt;*
 
 ---
+### [&nbsp;Documentation: [android_release_cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_cleaners.rc)
+  ```
+  * [**outdevcl** *<b>\[Advanced ROM output cleaner for rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc) : *outdevcl &lt;devicename&gt;*
+  * [**outbootdevcl** *<b>\[ROM output cleaner for bootimage rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc) : *outbootdevcl &lt;devicename&gt;*
+  * [**outsepdevcl** *<b>\[ROM output cleaner for sepolicies rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc) : *outsepdevcl &lt;devicename&gt;*
+
+---
 ### [&nbsp;Documentation: [android_release_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_host.rc)
@@ -644,9 +653,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_installers.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_helpers.rc)
   ```
-  * [**outdevcl** *<b>\[Advanced ROM output cleaner for rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *outdevcl &lt;devicename&gt;*
-  * [**outbootdevcl** *<b>\[ROM output cleaner for bootimage rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *outbootdevcl &lt;devicename&gt;*
-  * [**outsepdevcl** *<b>\[ROM output cleaner for sepolicies rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *outsepdevcl &lt;devicename&gt;*
   * [**noninja** *<b>\[Run command without ninja\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *noninja &lt;command...&gt;*
   * [**mmo** *<b>\[Build module without ninja\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *mmo &lt;command...&gt;*
   * [**mmi** *<b>\[Build & install module without ninja\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *mmi &lt;command...&gt;*
