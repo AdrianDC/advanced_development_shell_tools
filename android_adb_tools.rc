@@ -140,10 +140,16 @@ function adbsudo()
   if ! alias adb &> /dev/null; then
     alias adb='sudo adb';
     sudo echo -n '';
+    echo '';
+    echo -e " \e[1;33madbsudo:\e[1;37m Configured adb usage as root\e[0m";
+    echo '';
 
   # Disable adb sudo
   else
     unalias adb;
+    echo '';
+    echo -e " \e[1;33madbsudo:\e[1;37m Restored adb usage as user\e[0m";
+    echo '';
   fi;
 
   # Kill adb server
