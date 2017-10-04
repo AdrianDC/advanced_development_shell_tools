@@ -38,6 +38,9 @@ function adbl()
       return;;
   esac;
 
+  # Verify adb is ready
+  adbready;
+
   # Check buffer available
   logcat=$(adb shell "if [ -d /dev/log ] && [ ! -e /dev/log/${buffer} ]; then echo false; fi;");
   if [ ! -z "${logcat}" ]; then
@@ -90,6 +93,9 @@ function adbl()
 function adblr()
 {
   # Usage: adblr (Logcat output relevant reader)
+
+  # Verify adb is ready
+  adbready;
 
   # Logcat output relevant reader
   adbl | grep -av 'Diag_Lib:';
