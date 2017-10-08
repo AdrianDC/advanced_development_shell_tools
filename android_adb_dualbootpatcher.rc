@@ -117,8 +117,10 @@ function adbdbpselect()
     # Return selected ROM name or path
     if [ "${key}" -ge '0' ] && [ "${key}" -le "${cnt}" ]; then
       if [[ "${params}" == *'name'* ]]; then
+        export __ADBDBPSELECT="${name[${key}]}";
         echo "${name[${key}]}" | tr -d '\r';
       else
+        export __ADBDBPSELECT="${roms[${key}]}";
         echo "${roms[${key}]}" | tr -d '\r';
       fi;
     else
@@ -139,8 +141,9 @@ function adbdbpautoboot()
   fi;
 
   # Variables
+  unset __ADBDBPSELECT;
   local adb=$(adbcmd);
-  local romtarget=$(adbdbpselect "$@");
+  local romtarget;
   local params=${*};
 
   # Give adb root permissions
@@ -150,6 +153,10 @@ function adbdbpautoboot()
 
   # Convert space to commas
   params=${params// /,};
+
+  # Select the ROM desired
+  adbdbpselect;
+  romtarget=${__ADBDBPSELECT};
 
   # Check if ROM was selected
   if [ -z "${romtarget}" ]; then
