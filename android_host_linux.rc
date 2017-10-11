@@ -391,7 +391,7 @@ function cleanrambuild()
 # === CleanRAM with Kills ===
 function cleanramkill()
 {
-  # Usage: cleanramkill (Complete RAM cleanup including "java")
+  # Usage: cleanramkill [bool_cleanram] (Complete RAM cleanup including "java")
 
   # Kill relevant RAM eating processes
   killall adb;
@@ -399,7 +399,9 @@ function cleanramkill()
   killall mega-cmd;
 
   # Run cleanram script
-  cleanram;
+  if [ ! -z "${1}" ]; then
+    cleanram;
+  fi;
 }
 
 # === Network Manager Restart ===
