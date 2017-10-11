@@ -394,7 +394,9 @@ function cleanramkill()
   # Usage: cleanramkill (Complete RAM cleanup including "java")
 
   # Kill relevant RAM eating processes
+  killall adb;
   killall java;
+  killall mega-cmd;
 
   # Run cleanram script
   cleanram;
