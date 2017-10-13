@@ -37,6 +37,7 @@ function adbdbpselect()
   local params=${*};
   local roms=('');
   local roms_cnt;
+  local slot;
 
   # Convert space to commas
   params=${params// /,};
@@ -74,6 +75,9 @@ function adbdbpselect()
           | grep -v "${hide}" \
           | tr -d '\r'));
 
+  # Get current slot ID
+  slot=$(${adb} shell 'getprop ro.multiboot.romid' | tr -d '\r');
+
   # Restore selinux access
   if [ "${enforced}" = 'Enforcing' ]; then
     ${adb} shell 'setenforce 1';
@@ -104,12 +108,16 @@ function adbdbpselect()
     name[${cnt}]=${name[${cnt}]%/boot.img*};
 
     # Show current name and path
-    echo "   ${cnt}: ${name[${cnt}]^} [${roms[${cnt}]}] ";
+    echo -n "   ${cnt}: ${name[${cnt}]^} [${roms[${cnt}]}] ";
+    if [ "${slot}" = "${name[${cnt}]}" ]; then
+      echo -ne '\e[1;33m(current)\e[0m ';
+    fi;
+    echo '';
   done;
-  echo '';
 
   # Select ROM
   if [[ "${params}" != *'list'* ]]; then
+    echo '';
     echo -en " \e[1;33mSelect ROM to use [0 to ${cnt}] :\e[0m ";
     read -r key;
     echo '';
