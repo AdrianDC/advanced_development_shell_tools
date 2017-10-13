@@ -202,7 +202,7 @@ function adbdbpupdateboot()
   # Usage
   if [[ "${*}" == *'-h'* ]]; then
     echo '';
-    echo '  Usage: adbdbpupdateboot (DualBootPatcher update current boot)';
+    echo '  Usage: adbdbpupdateboot [force] (DualBootPatcher update current boot)';
     echo '';
     return;
   fi;
@@ -210,8 +210,14 @@ function adbdbpupdateboot()
   # Variables
   local adb=$(adbcmd);
   local device;
+  local md5sum_partition;
+  local md5sum_dbp;
   local slot;
+  local params=${*};
   local partitiontarget;
+
+  # Convert space to commas
+  params=${params// /,};
 
   # Give adb root permissions
   #   BUG: adbsu[r] is getting more time than expected, wait for future updates
@@ -235,11 +241,22 @@ function adbdbpupdateboot()
   # Fallback to 'androiddevicestarget' way to get boot partition
   partitiontarget=$(androiddevicestarget boot "${device}");
 
-  echo '';
-  echo '  adbdbpupdateboot:';
-  echo "    Updating from : ${partitiontarget}";
-  echo "               to : /sdcard/MultiBoot/${slot}/boot.img";
+  # Get md5sum from boot partition and dbp
+  md5sum_partition=$(${adb} shell "md5sum -b ${partitiontarget}");
+  md5sum_dbp=$(${adb} shell "md5sum -b /sdcard/MultiBoot/${slot}/boot.img");
 
-  ${adb} shell "dd if=\"${partitiontarget}\" of=\"/sdcard/MultiBoot/${slot}/boot.img\"";
+  # Check md5sum to prevent useless update
+  if [ "${md5sum_partition}" = "${md5sum_dbp}" ] && [[ "${params}" != *'force'* ]]; then
+    echo '';
+    echo '  adbdbpupdateboot: Current boot is already updated! Skipping...';
+    echo "                    Use 'force' to update anyway"
+  else
+    echo '';
+    echo '  adbdbpupdateboot:';
+    echo "    Updating from : ${partitiontarget}";
+    echo "               to : /sdcard/MultiBoot/${slot}/boot.img";
+
+    ${adb} shell "dd if=\"${partitiontarget}\" of=\"/sdcard/MultiBoot/${slot}/boot.img\"";
+  fi;
   echo '';
 }
