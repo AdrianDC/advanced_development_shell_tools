@@ -19,15 +19,6 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8960/android_lineageos.rc)
 
-# === LineageOS Sony 8960 Master Patcher ===
-function lineagesony8960masterpatcher()
-{
-  # Usage: lineagesony8960masterpatcher [specific_paths] (LineageOS 8960 Master Patcher)
-
-  # Use the androidprojectpatcher helper
-  androidprojectpatcher 'AdrianDC' 'lineage_development_sony8960_master' 'radian.dc@gmail.com' "${@}";
-}
-
 # === LineageOS Sony 8960 Oreo Patcher ===
 function lineagesony8960oreopatcher()
 {

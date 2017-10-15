@@ -1018,7 +1018,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8960/android_lineageos.rc)
   ```
-  * [**lineagesony8960masterpatcher** *<b>\[LineageOS 8960 Master Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_lineageos.rc) : *lineagesony8960masterpatcher [specific_paths]*
   * [**lineagesony8960oreopatcher** *<b>\[LineageOS 8960 Oreo Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_lineageos.rc)
   * [**lineagesony8960rebaser** *<b>\[LineageOS Devices Rebaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_lineageos.rc) : *lineagesony8960rebaser [specific_paths]*
 
