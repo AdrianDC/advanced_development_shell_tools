@@ -162,19 +162,22 @@ function shtoolsf()
 # === Android Development Shell Tools Syntax Checker ===
 function shtoolscheck()
 {
-  # Usage: shtoolscheck [bool_all] (Run ShellCheck on the project)
+  # Usage: shtoolscheck [bool_ignore] (Run ShellCheck on the project)
 
   # Variables
   local file_source;
 
   # Study all script files
+  echo -e '\e[1;37m';
   for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
+
+    # Parsing header
+    echo -en "\r\033[K shtoolscheck: Checking ${file_source}...";
 
     # Launch ShellCheck
     if ! shellcheck "${file_source}" \
         -e SC1090,SC1091,SC2164 \
         && [ -z "${1}" ]; then
-      echo '';
       echo -e " \e[1;33mERROR: ${file_source} contains syntax errors or warnings\e[0m";
       echo '';
       return;
@@ -182,8 +185,7 @@ function shtoolscheck()
   done;
 
   # Successfull syntax check
-  echo '';
-  echo -e " \e[1;32mshtoolscheck: Syntax checked successfully\e[0m";
+  echo -e '\r\033[K \e[1;32mshtoolscheck: Syntax checked successfully\e[0m';
   echo '';
 }
 
