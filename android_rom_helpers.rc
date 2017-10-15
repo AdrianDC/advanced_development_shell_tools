@@ -26,6 +26,23 @@ function rompatcher()
   local line_function;
   local line_usage;
   local list_functions=('');
+  local search_patcher;
+
+  # Reset inputs
+  key='';
+  search_patcher='';
+
+  # Detect the existence of roomservice.xml
+  if [ -z "${1}" ] && [ -f '.repo/local_manifests/roomservice.xml' ]; then
+    search_patcher=$(grep "ROM Patcher: '" '.repo/local_manifests/roomservice.xml' \
+                   | sed "s/.* '\(.*\)' .*/\1/");
+
+    # Notify found rompatcher function
+    if [ ! -z "${search_patcher}" ]; then
+      echo '';
+      echo -e  " \e[1;32mDetected rompatcher to use : '${search_patcher}'\e[0m ";
+    fi;
+  fi;
 
   # Function header
   echo '';
@@ -48,6 +65,9 @@ function rompatcher()
 
     # Item choice
     cnt=$((cnt + 1));
+    if [ "${line_function}" = "${search_patcher}" ]; then
+      key=${cnt};
+    fi;
     echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
 
   done;
@@ -55,7 +75,11 @@ function rompatcher()
 
   # Request user input
   echo -n " > Command to run [1-${cnt}] : ";
-  read -r key;
+  if [ -z "${key}" ]; then
+    read -r key;
+  else
+    echo "${key}";
+  fi;
   echo '';
 
   # Execute requested function
