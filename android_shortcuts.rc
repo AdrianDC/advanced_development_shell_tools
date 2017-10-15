@@ -355,5 +355,6 @@ function meldril()
 # === Repository Shortcuts ===
 function cdmromboot()  { croot; cd ./system/extras/libbootimg/; }
 function cdmromcore()  { croot; cd ./system/extras/multirom/; }
+function cdlsdk()      { croot; cd ./lineage-sdk/; }
 function cdrecovery()  { croot; cd ./bootable/recovery/; }
 function cdsepolicy()  { croot; cd ./system/sepolicy/; }

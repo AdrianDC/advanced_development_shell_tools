@@ -885,6 +885,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**meldril** *<b>\[Compare device to hardware/{ril\|ril-caf}\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meldril [bool_caf]*
   * [**cdmromboot** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/extras/libbootimg/*
   * [**cdmromcore** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/extras/multirom/*
+  * [**cdlsdk** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./lineage-sdk/*
   * [**cdrecovery** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./bootable/recovery/*
   * [**cdsepolicy** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/sepolicy/*
 
