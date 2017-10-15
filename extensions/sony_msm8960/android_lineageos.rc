@@ -27,6 +27,12 @@ function lineagesony8960oreopatcher()
   # Variables
   local buffer;
 
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'AdrianDC' 'lineage_development_sony8960' 'radian.dc@gmail.com' "${@}";
+
+  # Access Android root
+  croot;
+
   # Launch repopicks script
   echo '';
   buffer=$(mktemp);
