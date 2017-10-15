@@ -97,6 +97,23 @@ function romrebaser()
   local line_function;
   local line_usage;
   local list_functions=('');
+  local search_rebaser;
+
+  # Reset inputs
+  key='';
+  search_rebaser='';
+
+  # Detect the existence of roomservice.xml
+  if [ -z "${1}" ] && [ -f '.repo/local_manifests/roomservice.xml' ]; then
+    search_rebaser=$(grep "ROM Rebaser: '" '.repo/local_manifests/roomservice.xml' \
+                   | sed "s/.* '\(.*\)' .*/\1/");
+
+    # Notify found romrebaser function
+    if [ ! -z "${search_rebaser}" ]; then
+      echo '';
+      echo -e  " \e[1;32mDetected romrebaser to use : '${search_rebaser}'\e[0m ";
+    fi;
+  fi;
 
   # Function header
   echo '';
@@ -119,6 +136,9 @@ function romrebaser()
 
     # Item choice
     cnt=$((cnt + 1));
+    if [ "${line_function}" = "${search_rebaser}" ]; then
+      key=${cnt};
+    fi;
     echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
 
   done;
@@ -126,7 +146,11 @@ function romrebaser()
 
   # Request user input
   echo -n " > Command to run [1-${cnt}] : ";
-  read -r key;
+  if [ -z "${key}" ]; then
+    read -r key;
+  else
+    echo "${key}";
+  fi;
   echo '';
 
   # Execute requested function
