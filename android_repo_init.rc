@@ -380,6 +380,7 @@ function repoinit()
   local options;
   local options_list;
   local options_prepend='';
+  local options_referenced;
   local search_branch;
   local search_repo;
 
@@ -464,15 +465,22 @@ function repoinit()
   fi;
   echo '';
 
-  # Request referenced repo option
+  # Request or retrieve referenced repo option
   if [[ "${options_list}" == *'referenced'* ]] && [ ! "${ANDROID_REPO_INIT_REFERENCED}" = 'n' ]; then
     echo -en " \e[1;37m> Referenced repository [y/N] :\e[0m ";
-    read -r options_prepend;
-    if [ ! -z "${options_prepend}" ] && [[ 'yY' == *"${options_prepend}"* ]]; then
+    if [ -s '.repo/local_manifests/.repoinit.referenced' ]; then
+      options_referenced=$(cat '.repo/local_manifests/.repoinit.referenced');
+      echo "${options_referenced}";
+    else
+      read -r options_referenced;
+    fi;
+    if [ ! -z "${options_referenced}" ] && [[ 'yY' == *"${options_referenced}"* ]]; then
       options_prepend='referenced';
       options_list=${options_list/referenced/};
+      echo -n 'y' > '.repo/local_manifests/.repoinit.referenced';
     else
       options_prepend='';
+      echo -n 'n' > '.repo/local_manifests/.repoinit.referenced';
     fi;
   fi;
 
@@ -480,10 +488,16 @@ function repoinit()
   options_list=${options_list#,};
   options_list=${options_list%,};
 
-  # Request options input
+  # Request or retrieve repo options
   echo -en " \e[1;37m> Options to use [${options_list}] :\e[0m ";
   if [ -z "${search_branch}" ] || [ -z "${ANDROID_REPO_INIT_OPTIONS}" ]; then
-    read -r options;
+    if [ -f '.repo/local_manifests/.repoinit.options' ]; then
+      options=$(cat '.repo/local_manifests/.repoinit.options');
+      echo "${options}";
+    else
+      read -r options;
+    fi;
+    echo -n "${options}" > '.repo/local_manifests/.repoinit.options';
     options="${options_prepend},${options}";
   else
     options="${options_prepend},${ANDROID_REPO_INIT_OPTIONS}";
