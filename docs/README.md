@@ -695,7 +695,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**systozip** *<b>\[System files to flashable zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *systozip &lt;files&gt;*
   * [**packzip** *<b>\[Files to flashable zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *packzip &lt;files&gt;*
   * [**gitzip** *<b>\[Git commit files to flashable zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *gitzip &lt;commit_sha1&gt;*
-  * [**oeminjectorzip** *<b>\[OEM files to flashable injector zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *oeminjectorzip &lt;oem_folder&gt;*
+  * [**oeminjectorzip** *<b>\[OEM files to flashable injector zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *oeminjectorzip &lt;oem_image&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_repo_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_builders.rc)&nbsp;]

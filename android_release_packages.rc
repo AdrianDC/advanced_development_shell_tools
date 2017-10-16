@@ -465,9 +465,9 @@ function gitzip()
 function oeminjectorzip()
 {
   # Usage
-  if [ -z "${1}" ] || [ ! -d "${1}" ]; then
+  if [ -z "${1}" ] || [ ! -f "${1}" ]; then
     echo '';
-    echo ' Usage: oeminjectorzip <oem_folder> (OEM files to flashable injector zip)';
+    echo ' Usage: oeminjectorzip <oem_image> (OEM files to flashable injector zip)';
     echo '';
     return;
   fi;
@@ -477,7 +477,8 @@ function oeminjectorzip()
   local oem_file;
   local oem_files;
   local oem_files_list=();
-  local oem_folder=${1%/};
+  local oem_folder;
+  local oem_image=${1};
   local oem_name;
   local oem_partition;
   local oem_target_file;
@@ -485,20 +486,25 @@ function oeminjectorzip()
   local target_file;
   local target_name;
   local tmp_dir;
+  local tmp_file;
 
-  # Fix folder path input if necessary
-  if [ -d "${oem_folder}/proprietary" ]; then
-    oem_folder="${oem_folder}/proprietary";
+  # Verify simg2img is installed
+  if ! type simg2img >/dev/null 2>&1; then
+    echo '';
+    echo ' oeminjectorzip: Please install android-tools-fsutils';
+    echo '';
+    return;
   fi;
-  if [ -d "${oem_folder}/vendor" ]; then
-    oem_folder="${oem_folder}/vendor";
-  fi;
-  oem_folder=$(readlink -f "${oem_folder}");
+
+  # Mount and prepare the ext4 OEM image
+  oem_folder=$(mktemp -d);
+  tmp_file=$(mktemp);
+  simg2img "${oem_image}" "${tmp_file}";
+  sudo mount -t ext4 "${tmp_file}" "${oem_folder}";
 
   # Extract OEM name
-  oem_name=${oem_folder//\/proprietary};
-  oem_name=${oem_name//\/vendor};
-  oem_name=${oem_name##*/};
+  oem_name=$(basename "${oem_image}");
+  oem_name=${oem_name%.*};
 
   # Initialize variables
   cur_dir=$(pwd);
@@ -566,6 +572,8 @@ function oeminjectorzip()
   echo '';
 
   # End of work
+  sudo umount "${oem_folder}";
   rm -rf "${tmp_dir}";
+  rm -rf "${tmp_file}";
   cd "${cur_dir}";
 }
