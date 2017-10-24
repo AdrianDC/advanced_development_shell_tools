@@ -36,7 +36,7 @@ function lineagesony8960oreopatcher()
   # Launch repopicks script
   echo '';
   buffer=$(mktemp);
-  source <(curl -Ls "https://github.com/AdrianDC/lineage_development_sony8960_master/raw/local_manifests/repopick-lineage-15.0.md?date=$(date '+%s')") | tee "${buffer}";
+  source <(curl -Ls "https://github.com/AdrianDC/lineage_development_sony8960_master/raw/local_manifests/repopick-lineage-15.0.md?date=$(date '+%s')") 2>&1 | tee "${buffer}";
 
   # Validate repopicks statuses
   echo -e '\e[1;31m';
