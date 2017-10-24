@@ -978,8 +978,8 @@ function bootimagedebuggable()
     sed -i 's/val = val + ",adb"/val = val + ",mtp,adb"/' "${file_path}";
     sed -i 's/"persist.sys.usb.config", "none"/"persist.sys.usb.config", "mtp,adb"/' "${file_path}";
 
-    # Apply changes vendor/cm/config/common.mk
-    file_path=./vendor/cm/config/common.mk;
+    # Apply changes vendor/lineage/config/common.mk
+    file_path=./vendor/lineage/config/common.mk;
     echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
     sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' "${file_path}";
 
@@ -1013,8 +1013,8 @@ function bootimagedebuggable()
     sed -i 's/val = val + ",mtp,adb"/val = val + ",adb"/' "${file_path}";
     sed -i 's/"persist.sys.usb.config", "mtp,adb"/"persist.sys.usb.config", "none"/' "${file_path}";
 
-    # Restore changes vendor/cm/config/common.mk
-    file_path=./vendor/cm/config/common.mk;
+    # Restore changes vendor/lineage/config/common.mk
+    file_path=./vendor/lineage/config/common.mk;
     echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
     sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' "${file_path}";
 
