@@ -26,6 +26,7 @@ function rompatcher()
   local line_function;
   local line_usage;
   local list_functions=('');
+  local roomservice_xml;
   local search_patcher;
 
   # Reset inputs
@@ -33,8 +34,9 @@ function rompatcher()
   search_patcher='';
 
   # Detect the existence of roomservice.xml
-  if [ -z "${1}" ] && [ -f '.repo/local_manifests/roomservice.xml' ]; then
-    search_patcher=$(grep "ROM Patcher: '" '.repo/local_manifests/roomservice.xml' \
+  roomservice_xml=$(gettop)/.repo/local_manifests/roomservice.xml;
+  if [ -z "${1}" ] && [ -f "${roomservice_xml}" ]; then
+    search_patcher=$(grep "ROM Patcher: '" "${roomservice_xml}" \
                    | sed "s/.* '\(.*\)' .*/\1/");
 
     # Notify found rompatcher function
