@@ -45,3 +45,12 @@ function aospsony8960masterpatcher()
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_master' 'radian.dc@gmail.com' "${@}";
 }
+
+# === AOSP Sony 8960 Staging Patcher ===
+function aospsony8960stagingpatcher()
+{
+  # Usage: aospsony8960stagingpatcher [specific_paths] (AOSP 8960 Staging Patcher)
+
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_staging' 'radian.dc@gmail.com' "${@}";
+}
