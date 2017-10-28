@@ -35,8 +35,8 @@ function gerritssh()
   fi;
 
   # Create .bash_android.gerrit.rc with the exports to override the credentials
-  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-~}/.bash_android.gerrit.rc" ]; then
-    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-~}/.bash_android.gerrit.rc";
+  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc" ]; then
+    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc";
   fi;
 
   # Manual user login if credentials missing
@@ -46,7 +46,7 @@ function gerritssh()
     echo '';
     echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2017\e[0m';
     echo '';
-    echo -e "      \e[1;33mError: No configuration in ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-~}/.bash_android.gerrit.rc found";
+    echo -e "      \e[1;33mError: No configuration in ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc found";
     echo -e '             Read android_gerritssh.rc script for more details\e[0m';
     echo '';
     echo -e '      \e[1;32mInfo: Gerrit SSH credentials will be used to login and review';

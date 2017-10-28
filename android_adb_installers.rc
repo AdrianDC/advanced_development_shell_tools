@@ -354,7 +354,7 @@ function adbsiderom()
   local device=${2};
   local no_reboot=${3};
   local name;
-  local path=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-~}/.bash_android.rom.addons;
+  local path=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.rom.addons;
   local target_old;
 
   # Detect missing device input automatically

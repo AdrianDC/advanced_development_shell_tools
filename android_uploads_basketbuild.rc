@@ -27,7 +27,7 @@ function __shtools_credentials_basketbuild()
   export FTPUploadPath=;
 
   # Create  .bash_android.uploadftp.basketbuild.rc with the exports to override the credentials
-  source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.uploadftp.basketbuild.rc";
+  source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.uploadftp.basketbuild.rc";
 
   # Check missing credentials
   [ ! "${FTPUploadUserName}" = 'username.basketbuild.com' ];

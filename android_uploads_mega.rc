@@ -35,9 +35,9 @@ function uploadmega()
   fi;
 
   # Ignore missing credentials
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" ]; then
+  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
     echo '';
-    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc is missing, please read megatools documentation";
+    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
     echo '';
     return;
   fi;
@@ -80,11 +80,11 @@ function uploadmega()
 
   # Upload file to target
   echo '';
-  megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+  megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       "${target}/$(basename "${path}")" 2> /dev/null;
-  megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+  megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       "${target}" 2> /dev/null;
-  megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+  megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       --path "${target}" "${path}";
 
   # Reload mega.nz account
@@ -116,9 +116,9 @@ function downloadmega()
   fi;
 
   # Ignore missing credentials
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" ]; then
+  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
     echo '';
-    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc is missing, please read megatools documentation";
+    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
     echo '';
     return;
   fi;
@@ -154,12 +154,12 @@ function downloadmega()
 
   # Download file from target
   echo '';
-  megaget --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+  megaget --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       --path ./ "${path}";
 
   # Delete remote file
   if [ "${remove_remote}" = 'true' ] && [ -f "${file_name}" ]; then
-    megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+    megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
         "${path}";
   fi;
 
@@ -214,13 +214,13 @@ function listmega()
   fi;
 
   # Ignore missing credentials
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" ]; then
+  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
     echo '';
-    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc is missing, please read megatools documentation";
+    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
     echo '';
     return;
   fi;
 
-  megals --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.megarc" \
+  megals --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       "${@}";
 }

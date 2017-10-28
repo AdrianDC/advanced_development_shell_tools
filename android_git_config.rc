@@ -26,8 +26,8 @@ function githubusername()
   export GitUserName='Username';
 
   # Create .bash_android.github.rc with the exports to override the credentials
-  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.github.rc" ]; then
-    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.github.rc";
+  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.github.rc" ]; then
+    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.github.rc";
   fi;
 
   # Return username

@@ -36,7 +36,7 @@ ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES=();
 ANDROID_DEVELOPMENT_SHELL_TOOLS_URL='https://github.com/AdrianDC/android_development_shell_tools';
 
 # === Android Development Shell Tools Workspace ===
-if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}" ]; then
+if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}" ]; then
   export ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE=~;
 fi;
 
@@ -443,7 +443,7 @@ function __shtoolsoptions()
 
   # Variables
   local option_command;
-  local options_file=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android_development_shell_tools.rc;
+  local options_file=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android_development_shell_tools.rc;
 
   # Store given input option
   if [ ! -z "${2}" ]; then

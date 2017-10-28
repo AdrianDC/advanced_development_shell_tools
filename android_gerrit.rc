@@ -138,8 +138,8 @@ function gerritusername()
   export GerritHTTPPassword='abcdefgh12345678';
 
   # Create .bash_android.gerrit.rc with the exports to override the credentials
-  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.gerrit.rc" ]; then
-    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.gerrit.rc";
+  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc" ]; then
+    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc";
   fi;
 
   # Warn about missing credentials

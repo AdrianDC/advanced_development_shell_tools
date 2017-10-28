@@ -25,8 +25,8 @@ function sshremote()
   export SSHRemoteUser='user';
 
   # Create  .bash_android.sshremote.rc with the exports to override the credentials
-  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.sshremote.rc" ]; then
-    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}/.bash_android.sshremote.rc";
+  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.sshremote.rc" ]; then
+    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.sshremote.rc";
   fi;
 
   # Ignore missing credentials
