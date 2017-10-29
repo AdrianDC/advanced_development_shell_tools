@@ -35,7 +35,7 @@ function rompatcher()
 
   # Detect the existence of roomservice.xml
   roomservice_xml=$(gettop)/.repo/local_manifests/roomservice.xml;
-  if [ -z "${1}" ] && [ -f "${roomservice_xml}" ]; then
+  if [ -f "${roomservice_xml}" ]; then
     search_patcher=$(grep "ROM Patcher: '" "${roomservice_xml}" \
                    | sed "s/.* '\(.*\)' .*/\1/");
 
