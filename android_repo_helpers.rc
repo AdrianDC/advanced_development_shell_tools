@@ -93,6 +93,13 @@ function repos()
     return;
   fi;
 
+  # Override OUT for symlinks
+  if [ -L './out' ]; then
+    export OUT_DIR=$(readlink -f './out');
+  else
+    export OUT_DIR='';
+  fi;
+
   # Unset CM/Lineage functions and load envsetup
   unset -f breakfast;
   unset -f brunch;
