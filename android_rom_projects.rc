@@ -24,10 +24,9 @@ function gitbranchpusher()
   local project_dir=${PWD};
   local repo_dir=${PWD};
   local param_send=${1};
-  local remote=${2:-project};
+  local remote=${2};
   local project_branch=${3};
   local push_command;
-  local target_remote;
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -55,24 +54,28 @@ function gitbranchpusher()
   fi;
 
   # Target remote
-  target_remote=$(git config --get remote.project.url 2>/dev/null);
-  target_remote=${target_remote%.git};
+  if [ -z "${remote}" ] && [ -f "$(gettop)/.repo/local_manifests/roomservice.xml" ]; then
+    remote=$(grep "Project: '" "$(gettop)/.repo/local_manifests/roomservice.xml" | sed "s/.* '\(.*\)' .*/\1/");
+    if [ ! -z "${project}" ]; then
+      remote=${project#* };
+      remotet=${project% *};
+    fi;
+  fi;
+
+  # Failed to detect target remote
+  if [ -z "${remote}" ]; then
+    echo '';
+    echo -e " \e[1;31mgitbranchpusher: \e[1;37mProject url not provided by roomservice.xml\e[0m";
+    echo '';
+    return;
+  fi;
 
   # Status information
   echo '';
   echo -e " \e[1;32mProject directory:\e[0m ${project_dir}";
   echo -e " \e[1;33mRepository path:\e[0m ${repo_dir}";
-  echo -e " \e[1;37mTarget remote:\e[0m ${target_remote}";
+  echo -e " \e[1;37mTarget remote:\e[0m ${remote}";
   echo '';
-
-  # Check 'project' remote existence
-  if [ "${remote}" = 'project' ]; then
-    if ! git ls-remote --exit-code 'project' > /dev/null 2>&1; then
-      echo -e " \e[1;33mInformation:\e[0m Remote 'project' not found. Launching 'gitrap'...";
-      gitrap;
-      echo '';
-    fi;
-  fi;
 
   # Fetch upstream remote
   git fetch "${remote}" "${project_branch}";
