@@ -1030,8 +1030,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * [**aospsony8960npatcher** *<b>\[AOSP 8960 Nougat Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc) : *aospsony8960npatcher [specific_paths]*
   * [**aospsony8960opatcher** *<b>\[AOSP 8960 O Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc) : *aospsony8960opatcher [specific_paths]*
+  * [**aospsony8960omr1patcher** *<b>\[AOSP 8960 O MR1 Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc) : *aospsony8960omr1patcher [specific_paths]*
   * [**aospsony8960masterpatcher** *<b>\[AOSP 8960 Master Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc) : *aospsony8960masterpatcher [specific_paths]*
-  * [**aospsony8960stagingpatcher** *<b>\[AOSP 8960 Staging Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc) : *aospsony8960stagingpatcher [specific_paths]*
 
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8960/android_shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc)&nbsp;]
