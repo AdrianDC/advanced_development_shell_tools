@@ -178,7 +178,7 @@ function repocomparetags()
      if [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${ignore_account}\") ] || \
              [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_filtered_projects}\") ]; then
        echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
-       return;
+       exit;
      fi;
 
      # Create the AOSP path
@@ -190,8 +190,12 @@ function repocomparetags()
 
      # Show and fetch projects
      echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
-     git fetch -v \${project_upstream} ${upstream_branch};
-     git fetch -v \${project_upstream} ${upstream_to_compare};
+     if ! git fetch -v \${project_upstream} ${upstream_branch}; then
+       exit;
+     fi;
+     if ! git fetch -v \${project_upstream} ${upstream_to_compare}; then
+       exit;
+     fi;
 
      # Detect local differences
      if [ \$(git diff --quiet ${upstream_branch} ${upstream_to_compare}; echo \${?}) -ne 0 ]; then
