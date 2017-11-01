@@ -146,7 +146,7 @@ function repocomparetags()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repocomparetags <tag_to_compare_to_android_branch> [ignore_account_LineageOS] [full_diff] (Helper to compare with tags)';
+    echo ' Usage: repocomparetags <tag_to_compare_to_android_branch> [ignore_account_LineageOS] (Helper to compare with tags)';
     echo ' Information: Need to be started from the repo root';
     echo '';
     return;
@@ -168,7 +168,6 @@ function repocomparetags()
   # Variables
   local upstream_to_compare=${1};
   local ignore_account=${2:-${default_ignore_account}};
-  local full_diff=${3:-};
 
   # Diff execution
   echo '';
