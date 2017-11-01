@@ -193,15 +193,17 @@ function repocomparetags()
      if ! git fetch -v \${project_upstream} ${upstream_branch}; then
        exit;
      fi;
+     upstream_head_current=\$(git rev-parse FETCH_HEAD);
      if ! git fetch -v \${project_upstream} ${upstream_to_compare}; then
        exit;
      fi;
+     upstream_head_compare=\$(git rev-parse FETCH_HEAD);
 
      # Detect local differences
-     if [ \$(git diff --quiet ${upstream_branch} ${upstream_to_compare}; echo \${?}) -ne 0 ]; then
+     if [ \$(git diff --quiet ${upstream_head_current} ${upstream_head_compare}; echo \${?}) -ne 0 ]; then
        echo -e  \"\r\033[K==========================================================\";
        echo \"Project \${REPO_PROJECT} / ${upstream_branch} & ${upstream_to_compare}\";
-       git --no-pager diff ${upstream_branch} ${upstream_to_compare};
+       git --no-pager diff ${upstream_head_current} ${upstream_head_compare};
        echo '';
      fi;
 
