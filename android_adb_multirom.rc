@@ -40,7 +40,8 @@ function adbmromselect()
 
   # List all MultiROM installations
   roms=$(mktemp);
-  adbsu 'find /sdcard/multirom/roms/* /sdcard1/multirom-*/* /external_sd/multirom-*/* /data/media/0/external_multirom/multirom-*/* -maxdepth 0 -type d 2> /dev/null' \
+  adbsu 'find /sdcard/MultiROM/multirom/roms/* /sdcard/multirom/roms/* /sdcard1/multirom-*/* /external_sd/multirom-*/* /data/media/0/external_multirom/multirom-*/* -maxdepth 0 -type d 2> /dev/null' \
+      | grep -v '/sdcard/MultiROM/multirom/roms/Internal' \
       | grep -v '/sdcard/multirom/roms/Internal' \
       > "${roms}";
 
