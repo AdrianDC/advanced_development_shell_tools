@@ -214,16 +214,16 @@ function adbpf()
       if [ "${filepathext}" = 'mk' ] || [ "${filepathext}" = 'py' ]; then
         continue;
       fi;
-      if [[ "${filepathtest}" == *'proprietary'* ]]; then
-        filetarget=$(echo -n "${filepathtest}" | sed "s/.*proprietary\(.*\)/\/system\1/g");
+      if [[ "${filepathtest}" == *'proprietary/'* ]]; then
+        filetarget=$(echo -n "${filepathtest}" | sed "s/.*proprietary\/\(.*\)/\/system\/\1/g");
         filepathtest=${filetarget};
       fi;
       if [[ "${filepathtest}" == *'vendor/'* ]]; then
         filetarget=$(echo -n "${filepathtest}" | sed "s/.*vendor\/\(.*\)/\/system\/vendor\/\1/g");
         filepathtest=${filetarget};
       fi;
-      if [[ "${filepathtest}" == *'configs'* ]]; then
-        filetarget=$(echo -n "${filepathtest}" | sed "s/.*configs\(.*\)/\/system\/etc\1/g");
+      if [[ "${filepathtest}" == *'configs/'* ]]; then
+        filetarget=$(echo -n "${filepathtest}" | sed "s/.*configs\/\(.*\)/\/system\/etc\/\1/g");
         filepathtest=${filetarget};
       fi;
       if [[ "${filepathtest}" == *'system/'* ]]; then
