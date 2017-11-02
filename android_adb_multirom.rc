@@ -15,50 +15,6 @@
 # limitations under the License.
 #
 
-# === ADB MultiROM List ===
-function adbmromlist()
-{
-  # Usage: adbmromlist (List available MultiROM installations)
-
-  # Variables
-  local enforced;
-  local path;
-  local roms;
-
-  # Verify adb is ready
-  adbready;
-
-  # Prepare selinux access
-  enforced=$(adbsu 'getenforce');
-  if [ "${enforced}" = 'Enforcing' ]; then
-    adbsu 'setenforce 0';
-  fi;
-
-  # List all MultiROM installations
-  roms=$(mktemp);
-  adbsu 'find /sdcard/multirom/roms/* /sdcard1/multirom-*/* /external_sd/multirom-*/* /data/media/0/external_multirom/multirom-*/* -maxdepth 0 -type d 2> /dev/null' \
-    | grep -v '/sdcard/multirom/roms/Internal' \
-    > "${roms}";
-
-  # Restore selinux access
-  if [ "${enforced}" = 'Enforcing' ]; then
-    adbsu 'setenforce 1';
-  fi;
-
-  # Create ROMs list
-  path=;
-  echo '';
-  echo -e " \e[1;37m[ MultiROM installations ]\e[0m";
-  echo '';
-  while read -r path; do
-    echo "   ${path}";
-  done < "${roms}";
-  echo '';
-
-  # Cleanup temporary files
-  rm -f "${roms}";
-}
-
 # === ADB MultiROM Selector ===
 function adbmromselect()
 {
