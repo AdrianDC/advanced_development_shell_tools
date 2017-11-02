@@ -56,9 +56,9 @@ function gitbranchpusher()
   # Target remote
   if [ -z "${remote}" ] && [ -f "$(gettop)/.repo/local_manifests/roomservice.xml" ]; then
     remote=$(grep "Project: '" "$(gettop)/.repo/local_manifests/roomservice.xml" | sed "s/.* '\(.*\)' .*/\1/");
-    if [ ! -z "${project}" ]; then
-      remote=${project#* };
-      remotet=${project% *};
+    if [ ! -z "${remote}" ]; then
+      remote=${remote#* };
+      remote=${remote% *};
     fi;
   fi;
 
