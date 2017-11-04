@@ -648,6 +648,9 @@ function shtoolsreadme()
   local line_usage;
   local path;
   local readme_functions=;
+  local stats_aliases=0;
+  local stats_functions=0;
+  local stats_sources=0;
 
   # Initialize variables
   command_file=$(mktemp);
@@ -673,6 +676,7 @@ function shtoolsreadme()
 
     # Handle file path
     path=${file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+    stats_sources=$((stats_sources + 1));
 
     # Parsing header
     echo -en "\r\033[K  Parsing ${path}";
@@ -768,6 +772,7 @@ function shtoolsreadme()
           line_usage=${line_usage% \}*};
           line_usage=${line_usage%;};
           line_usage=${line_usage// 2>*\/dev\/null/};
+          stats_functions=$((stats_functions + 1));
 
         # Parse function usage
         else
@@ -776,6 +781,7 @@ function shtoolsreadme()
           line_usage=${line_usage%;};
           line_usage=${line_usage%$"'"};
           line_usage=${line_usage%$'"'};
+          stats_functions=$((stats_functions + 1));
 
           # Mark function summary field
           if [[ "${line_usage}" == *"("*")"* ]]; then
@@ -797,6 +803,7 @@ function shtoolsreadme()
         line_usage=${line_usage#$'"'};
         line_usage=${line_usage%$"'"};
         line_usage=${line_usage%$'"'};
+        stats_aliases=$((stats_aliases + 1));
       fi;
 
       # Apply usage formattings
@@ -861,6 +868,6 @@ function shtoolsreadme()
   LC_ALL=${lc_all};
 
   # Parsed header
-  echo -e '\r\033[K  README.md successfully rebuilt';
+  echo -e "\r\033[K  \e[1;37mREADME.md successfully rebuilt:\e[0m ${stats_functions} functions and ${stats_aliases} aliases in ${stats_sources} sources";
   echo '';
 }
