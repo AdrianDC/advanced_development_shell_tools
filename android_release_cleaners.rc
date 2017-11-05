@@ -44,6 +44,10 @@ function outdevcl()
   # Run bootimage output cleaner
   outbootdevcl "${1}";
 
+  # Delete build temporary outputs
+  rm -rf './out/soong/.bootstrap';
+  rm -rf './out/soong/.minibootstrap';
+
   # Delete relevant outputs
   rm -rf "${out_device_path}/"*"${1}"*".zip";
   rm -rf "${out_device_path}/"*"${1}"*".zip.md5sum";
