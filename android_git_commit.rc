@@ -54,7 +54,7 @@ function gitfcp()
 
   # Git cherry-pick from path
   git fetch "${1}";
-  git cherry-pick --abort;
+  git cherry-pick --abort > /dev/null 2>&1;
   git cherry-pick "FETCH_HEAD~${2:-1}..FETCH_HEAD";
 }
 
