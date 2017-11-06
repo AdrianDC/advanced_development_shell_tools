@@ -100,7 +100,7 @@
    `gitsl`
 <!-- /List -->
 
-#### [ Samples ] Search through files ([grep](http://adriandc.github.io/android_development_shell_tools/#documentation-android_greprc), [tools](http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc))
+#### [ Samples ] Search through files ([host_grep](http://adriandc.github.io/android_development_shell_tools/#documentation-android_host_greprc), [tools](http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc))
 
 <!-- List -->
  * Search directory for a word or multiple words
