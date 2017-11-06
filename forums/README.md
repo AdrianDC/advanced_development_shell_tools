@@ -1,4 +1,4 @@
-[CENTER][IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1498833636[/IMG][/CENTER]
+[CENTER][IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1497647814[/IMG][/CENTER]
 
 
 [SIZE=5][B][U]Disclaimer[/U][/B][/SIZE]

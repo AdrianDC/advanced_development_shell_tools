@@ -77,7 +77,7 @@
    [FONT="Courier New"][I]`gitsl`[/I][/FONT]
 [/LIST]
 
-[SIZE=4][B][ Samples ] Search through files ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_host_greprc----standalone-import-ready]grep[/URL]), [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc----standalone-import-ready]tools[/URL])[/B][/SIZE]
+[SIZE=4][B][ Samples ] Search through files ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_host_greprc]host_grep[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc]tools[/URL])[/B][/SIZE]
 
 [LIST]
 [*]Search directory for a word or multiple words
@@ -95,7 +95,7 @@
    [FONT="Courier New"][I]`binaryeditor word new_word`[/I][/FONT]
 [/LIST]
 
-[SIZE=4][B][ Samples ] Android devices and ROM helpers ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_repo_helpersrc]repo_helpers[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc----standalone-import-ready]tools[/URL])[/B][/SIZE]
+[SIZE=4][B][ Samples ] Android devices and ROM helpers ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_repo_helpersrc]repo_helpers[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc]tools[/URL])[/B][/SIZE]
 
 [LIST]
 [*]Return to repository root
