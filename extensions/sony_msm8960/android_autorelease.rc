@@ -38,7 +38,7 @@ function autoreleaseaospsony8960o()
   fi;
 
   # ROM patcher
-  if ! aospsony8960opatcher 'a'; then
+  if ! aospsony8960omr1patcher 'a'; then
     return;
   fi;
 
