@@ -73,5 +73,5 @@
 #### [ Previews ] binarysearch,binaryeditor : Binary files parser and searcher/editor
 
 <!-- Indent -->
-![gitstat](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/gitstat.png)
+![gitstat](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/binarysearch.png)
 <!-- /Indent -->
