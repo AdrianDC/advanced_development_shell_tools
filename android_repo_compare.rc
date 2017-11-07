@@ -160,7 +160,7 @@ function repocomparetags()
   local upstream_branch;
 
   # Upstream branch
-  upstream_branch=$(grep revision .repo/manifest.xml 2> /dev/null \
+  upstream_branch=$(grep revision $(gettop)/.repo/manifest.xml 2> /dev/null \
                   | grep android- \
                   | head -n 1 \
                   | sed 's/.*"\(refs.*\)".*/\1/');
