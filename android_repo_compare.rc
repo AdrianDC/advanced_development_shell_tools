@@ -157,15 +157,6 @@ function repocomparetags()
   local default_filtered_projects=chromium-webview;
 
   # Variables
-  local upstream_branch;
-
-  # Upstream branch
-  upstream_branch=$(grep revision $(gettop)/.repo/manifest.xml 2> /dev/null \
-                  | grep android- \
-                  | head -n 1 \
-                  | sed 's/.*"\(refs.*\)".*/\1/');
-
-  # Variables
   local upstream_to_compare=${1};
   local ignore_account=${2:-${default_ignore_account}};
 
@@ -183,7 +174,7 @@ function repocomparetags()
 
      # Create the AOSP path
      project_upstream=https://android.googlesource.com;
-     if (echo \${REPO_PATH} | grep -qv '^device'); then
+     if [ ! \"\${REPO_PATH%%/*}\" = 'device' ]; then
          project_upstream=\${project_upstream}/platform;
      fi
      project_upstream=\${project_upstream}/\${REPO_PATH};
@@ -193,9 +184,6 @@ function repocomparetags()
 
      # Show and fetch projects
      echo -en \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
-     if ! git fetch -v \${project_upstream} ${upstream_branch}; then
-       exit;
-     fi;
      if ! git fetch -v \${project_upstream} ${upstream_to_compare}; then
        exit;
      fi;
@@ -205,7 +193,7 @@ function repocomparetags()
      if ! git diff --quiet \${REPO_LREV} \${upstream_head_compare}; then
        echo -e '\r\033[K\e[1;31m';
        echo '=========================================================================================';
-       echo \"Project \${REPO_PROJECT}: Local '${upstream_branch}' - Remote '${upstream_to_compare}'\";
+       echo \"Project \${REPO_PROJECT}: Local '\${REPO_RREV}' - Remote '${upstream_to_compare}'\";
        echo -e '\e[0m';
        git --no-pager diff \${REPO_LREV} \${upstream_head_compare};
        echo '';
