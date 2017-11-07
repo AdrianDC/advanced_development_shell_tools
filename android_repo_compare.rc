@@ -187,6 +187,9 @@ function repocomparetags()
          project_upstream=\${project_upstream}/platform;
      fi
      project_upstream=\${project_upstream}/\${REPO_PATH};
+     if [ \"\${REPO_PATH}\" = 'build/make' ]; then
+         project_upstream=\${project_upstream%\/make};
+     fi
 
      # Show and fetch projects
      echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
