@@ -261,6 +261,7 @@ function androidprojectpatcher()
   local git_revs_count_remote;
   local path_branch;
   local project_github;
+  local shallow_count;
   local user_is_owner='';
 
   # Check current user rights
@@ -294,6 +295,21 @@ function androidprojectpatcher()
     if ! git fetch "${project_github}" "${path_branch}"; then
       echo 'Remote project branch not found, ignoring...';
       continue;
+    fi;
+
+    # Fetch until history base match
+    if ! git merge-base HEAD FETCH_HEAD >/dev/null; then
+      echo '';
+      shallow_count=0;
+      remote_branch=$(repogetbranch);
+      remote_name=$(gitgetremote "${remote_branch}");
+      while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
+        shallow_count=$((shallow_count + 10));
+        echo -en "\r\033[K  \e[1;33m> Searching common history with depth ${shallow_count}...\e[0m";
+        git fetch --depth "${shallow_count}" "${remote_name}" "${remote_branch}" >/dev/null 2>&1;
+        git fetch --depth "${shallow_count}" "${project_github}" "${path_branch}" >/dev/null 2>&1;
+      done;
+      echo '';
     fi;
 
     # Compare
