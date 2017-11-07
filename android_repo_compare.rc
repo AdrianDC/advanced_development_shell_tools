@@ -177,7 +177,7 @@ function repocomparetags()
      # Filter out projects
      if [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${ignore_account}\") ] || \
              [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_filtered_projects}\") ]; then
-       echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       echo -en \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
        exit;
      fi;
 
@@ -192,27 +192,28 @@ function repocomparetags()
      fi
 
      # Show and fetch projects
-     echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+     echo -en \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
      if ! git fetch -v \${project_upstream} ${upstream_branch}; then
        exit;
      fi;
-     upstream_head_current=\$(git rev-parse FETCH_HEAD);
      if ! git fetch -v \${project_upstream} ${upstream_to_compare}; then
        exit;
      fi;
      upstream_head_compare=\$(git rev-parse FETCH_HEAD);
 
      # Detect local differences
-     if [ \$(git diff --quiet ${upstream_head_current} ${upstream_head_compare}; echo \${?}) -ne 0 ]; then
-       echo -e  \"\r\033[K==========================================================\";
-       echo \"Project \${REPO_PROJECT} / ${upstream_branch} & ${upstream_to_compare}\";
-       git --no-pager diff ${upstream_head_current} ${upstream_head_compare};
+     if ! git diff --quiet \${REPO_LREV} \${upstream_head_compare}; then
+       echo -e '\r\033[K\e[1;31m';
+       echo '=========================================================================================';
+       echo \"Project \${REPO_PROJECT}: Local '${upstream_branch}' - Remote '${upstream_to_compare}'\";
+       echo -e '\e[0m';
+       git --no-pager diff \${REPO_LREV} \${upstream_head_compare};
        echo '';
      fi;
 
     " 2> /dev/null;
 
   # Done
-  echo -en  '\r\033[K Done searching';
+  echo -e  '\r\033[K Done searching';
   echo '';
 }
