@@ -27,6 +27,9 @@ function gitbranchpusher()
   local remote=${2};
   local project_branch=${3};
   local push_command;
+  local remote_branch;
+  local remote_name;
+  local shallow_count;
 
   # Check project
   if [ ! -d "${project_dir}/.git" ]; then
@@ -84,6 +87,21 @@ function gitbranchpusher()
   echo '';
   echo -e ' \e[1;31mSources content differences:\e[0m';
   git --no-pager diff --stat HEAD FETCH_HEAD;
+
+  # Fetch until history base match
+  if ! git merge-base HEAD FETCH_HEAD >/dev/null; then
+    echo '';
+    shallow_count=0;
+    remote_branch=$(repogetbranch);
+    remote_name=$(gitgetremote "${remote_branch}");
+    while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
+      shallow_count=$((shallow_count + 10));
+      echo -en "\r\033[K \e[1;33mSearching common history with depth ${shallow_count}...\e[0m";
+      git fetch --depth "${shallow_count}" "${remote}" "${project_branch}" >/dev/null 2>&1;
+      git fetch --depth "${shallow_count}" "${remote_name}" "${remote_branch}" >/dev/null 2>&1;
+    done;
+    echo '';
+  fi;
 
   # Present commits counts
   echo '';
