@@ -496,18 +496,18 @@ function adbu()
 
   # Optimize application
   echo -en '\e[1;33m | Package optimizing... ';
-  sudo adb shell pm force-dex-opt "${package}";
+  adbsu "pm force-dex-opt '${package}'";
   echo -e '\e[1;32mDone';
 
   # Killing application
   echo -en '\e[1;33m | Killing application... ';
-  sudo adb shell pkill "${package}";
-  pid=$(sudo adb shell ps | grep "${package}" | awk '{ print $2 }');
+  adbsu "pkill '${package}'";
+  pid=$(adbsu 'ps' | grep "${package}" | awk '{ print $2 }');
   if [ -z "${pid}" ]; then
-    pid=$(sudo adb shell ps -A | grep "${package}" | awk '{ print $2 }');
+    pid=$(adbsu 'ps -A' | grep "${package}" | awk '{ print $2 }');
   fi;
   if [ ! -z "${pid}" ]; then
-    sudo adb shell kill "${pid}" > /dev/null;
+    adbsu "kill '${pid}'" > /dev/null;
   fi;
   echo -e '\e[1;32mDone';
 
