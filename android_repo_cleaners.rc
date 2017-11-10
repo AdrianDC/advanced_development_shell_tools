@@ -37,6 +37,9 @@ function repodevclean()
   echo ' repodevclean: Cleaning out/target/product folder...';
   find out/target/product/ -mindepth 1 -delete;
   echo '';
+
+  # Delete build common outputs
+  outcommoncl;
 }
 
 # === Repo Projects Cleaner ===
