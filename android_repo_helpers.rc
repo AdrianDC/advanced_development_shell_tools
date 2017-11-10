@@ -94,10 +94,11 @@ function repos()
   fi;
 
   # Override OUT for symlinks
+  export OUT_DIR;
   if [ -L './out' ]; then
-    export OUT_DIR=$(readlink -f './out');
+    OUT_DIR=$(readlink -f './out');
   else
-    export OUT_DIR='';
+    OUT_DIR='';
   fi;
 
   # Unset CM/Lineage functions and load envsetup
