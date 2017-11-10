@@ -44,9 +44,8 @@ function outdevcl()
   # Run bootimage output cleaner
   outbootdevcl "${1}";
 
-  # Delete build temporary outputs
-  rm -rf './out/soong/.bootstrap';
-  rm -rf './out/soong/.minibootstrap';
+  # Delete build common outputs
+  outcommoncl;
 
   # Delete relevant outputs
   rm -rf "${out_device_path}/"*"${1}"*".zip";
@@ -129,4 +128,19 @@ function outsepdevcl()
   rm -f "${out_device_path}/recovery/root/file_contexts"*;
   rm -f "${out_device_path}/recovery/root/"*"_contexts";
   rm -f "${out_device_path}/recovery/root/sepolicy";
+}
+
+# === ROM Output Sepolicies Cleaner ===
+function outcommoncl()
+{
+  # Usage: outcommoncl (ROM output cleaner for common rebuilds)
+
+  # Header
+  echo '';
+  echo -e " \e[1;33moutbootdevcl:\e[0;33m Cleaning up common outputs\e[0m";
+  echo '';
+
+  # Delete build temporary outputs
+  rm -rf './out/soong/.bootstrap';
+  rm -rf './out/soong/.minibootstrap';
 }
