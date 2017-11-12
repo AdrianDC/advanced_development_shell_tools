@@ -38,7 +38,7 @@ function repocomparetags()
   # Diff execution
   echo '';
   echo -n ' Scanning...';
-  repo forall -c "
+  repo forall -j1 -c "
 
      # Filter out projects
      if [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${ignore_account}\") ] || \
@@ -51,11 +51,11 @@ function repocomparetags()
      project_upstream=https://android.googlesource.com;
      if [ ! \"\${REPO_PATH%%/*}\" = 'device' ]; then
          project_upstream=\${project_upstream}/platform;
-     fi
+     fi;
      project_upstream=\${project_upstream}/\${REPO_PATH};
      if [ \"\${REPO_PATH}\" = 'build/make' ]; then
          project_upstream=\${project_upstream%\/make};
-     fi
+     fi;
 
      # Show and fetch projects
      echo -en \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
