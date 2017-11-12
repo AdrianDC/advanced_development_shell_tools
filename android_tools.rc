@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_edit.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
@@ -301,9 +302,7 @@ function haste()
   echo '';
 
   # Trim line rewrites
-  sed -i 's/\r[^\n]*\r/\r/g' "${tmp}";
-  sed -i 's/\(\r\|'$'\033''\[K\)//g' "${tmp}";
-  sed -Ei 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' "${tmp}";
+  edittrimoutput "${tmp}";
 
   # Upload to hastebin
   url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" https://hastebin.com/documents \
@@ -335,9 +334,7 @@ function pbin()
   echo '';
 
   # Trim line rewrites
-  sed -i 's/\r[^\n]*\r/\r/g' "${tmp}";
-  sed -i 's/\(\r\|'$'\033''\[K\)//g' "${tmp}";
-  sed -Ei 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' "${tmp}";
+  edittrimoutput "${tmp}";
 
   # Acquire token from Pastebin
   token=$(curl -s 'https://pastebin.com' \

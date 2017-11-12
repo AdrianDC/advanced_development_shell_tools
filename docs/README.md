@@ -897,6 +897,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc)&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_edit.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
