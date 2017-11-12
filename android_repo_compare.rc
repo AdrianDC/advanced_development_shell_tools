@@ -15,67 +15,6 @@
 # limitations under the License.
 #
 
-# === Repo Compare Upstream ===
-function repocompareupstream()
-{
-  # Usage: repocompareupstream [github_account_LineageOS] [full_diff] (Helper to compare with upstream branch)';
-
-  # Default variables
-  local default_github_account=LineageOS;
-  local default_filtered_projects=chromium-webview;
-
-  # Variables
-  local upstream_branch;
-
-  # Upstream branch
-  upstream_branch=$(grep revision .repo/manifest.xml 2> /dev/null \
-                  | grep android- \
-                  | head -n 1 \
-                  | sed 's/.*"\(refs.*\)".*/\1/');
-
-  # Variables
-  local github_account=${1:-${default_github_account}};
-  local full_diff=${2:-};
-
-  # Diff execution
-  echo '';
-  echo -n ' Scanning...';
-  repo forall -c "
-
-     # Filter out projects
-     if [ -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${github_account}\") ] || \
-             [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_filtered_projects}\") ]; then
-       echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
-       return;
-     fi;
-
-     # Create the AOSP path
-     project_upstream=https://android.googlesource.com;
-     if (echo \${REPO_PATH} | grep -qv '^device'); then
-         project_upstream=\${project_upstream}/platform;
-     fi
-     project_upstream=\${project_upstream}/\${REPO_PATH};
-
-     # Show and fetch projects
-     echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
-     git fetch -v \${project_upstream} ${upstream_branch};
-
-     # Detect new remote commits
-     changescount=\$(git rev-list --right-only --count HEAD...FETCH_HEAD);
-     if [ \${changescount} -ne 0 ]; then
-       echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
-       echo '';
-       git log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
-       echo '';
-     fi;
-
-    " 2> /dev/null;
-
-  # Done
-  echo -en  '\r\033[K Done searching';
-  echo '';
-}
-
 # === Repo Compare Tags ===
 function repocomparetags()
 {
