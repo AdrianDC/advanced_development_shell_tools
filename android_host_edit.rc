@@ -114,3 +114,20 @@ function editreplacemultiline()
   # Replace section from first to last
   sed -i "/${match_first}/{:a; N; /${match_last}/!ba; s/${match_first}.*${match_last}/${replace}/; };" "${files[@]}";
 }
+
+# === Edit Trim Output ===
+function edittrimoutput()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: edittrimoutput <"files"> (Edit by triming output line rewrites)';
+    echo '';
+    return;
+  fi;
+
+  # Trim output line rewrites
+  sed -i 's/\r[^\n]*\r/\r/g' "${@}";
+  sed -i 's/\(\r\|'$'\033''\[K\)//g' "${@}";
+  sed -Ei 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' "${@}";
+}
