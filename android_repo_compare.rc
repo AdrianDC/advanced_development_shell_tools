@@ -30,7 +30,7 @@ function repocomparetags()
   # Variables
   local base_tag=${1};
   local compare_tag=${2};
-  local default_filtered_projects='chromium-webview';
+  local default_filtered_projects='chromium-webview\|libnetfilter_conntrack\|libnfnetlink';
 
   # Diff execution
   echo '';
