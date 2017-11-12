@@ -18,12 +18,12 @@
 # === Repo Out Cleaner ===
 function repoclean()
 {
-  # Usage: repoclean (Delete contents from 'out' folder)
+  # Usage: repoclean [out_folder] (Delete contents from 'out' folder)
 
   # Delete contents from 'out' folder
   echo '';
   echo ' repoclean: Cleaning out folder...';
-  find out/ -mindepth 1 -delete;
+  find "${1:-out}/" -mindepth 1 -delete;
   echo '';
 }
 
