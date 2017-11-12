@@ -28,6 +28,7 @@ function gitbranchpusher()
   local project_branch=${3};
   local push_command;
   local remote_branch;
+  local remote_head;
   local remote_name;
   local shallow_count;
 
@@ -82,6 +83,7 @@ function gitbranchpusher()
 
   # Fetch upstream remote
   git fetch "${remote}" "${project_branch}";
+  remote_head=$(cut -f1 .git/FETCH_HEAD);
 
   # Present diff statistics
   echo '';
@@ -89,7 +91,7 @@ function gitbranchpusher()
   git --no-pager diff --stat HEAD FETCH_HEAD;
 
   # Fetch until history base match
-  if ! git merge-base HEAD FETCH_HEAD >/dev/null; then
+  if [ ! -z "${remote_head}" ] && ! git merge-base HEAD FETCH_HEAD >/dev/null; then
     echo '';
     shallow_count=0;
     remote_branch=$(repogetbranch);
