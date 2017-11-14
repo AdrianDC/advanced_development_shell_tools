@@ -157,8 +157,7 @@ function romautorelease()
 
     # AOSP Release | AOSP Master | Sony SODP
     aosp|master|sodp)
-      source ./build/envsetup.sh;
-      lunch "aosp_${rom_target}-userdebug";
+      repos "${rom_target}";
       makes otapackage | tee "${rom_logs_output}";;
 
     # LineageOS Release | Lineage Next | LegacyXperia
@@ -176,7 +175,8 @@ function romautorelease()
     rr)
       export RR_BUILDTYPE=OFFICIAL;
       repos "${rom_target}";
-      brunch "${rom_target}" | tee "${rom_logs_output}";;
+      brunch "${rom_target}" | tee "${rom_logs_output}";
+      export RR_BUILDTYPE='';;
 
     # Unknown ROM
     *)
