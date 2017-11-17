@@ -57,6 +57,7 @@ function __shtoolssources()
 {
   # Variables
   local LC_ALL_HOST;
+  local path;
 
   # Locale override
   LC_ALL_HOST=${LC_ALL};
@@ -80,8 +81,8 @@ function __shtoolssources()
   done;
 
   # Android Development Shell Tools Inclusion
-  for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
-    source "${file_source}";
+  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
+    source "${path}";
   done;
 
   # Locale restore
@@ -130,7 +131,9 @@ function shtoolse()
   # Usage: shtoolse <words> <to> <search> (Direct access to related sources)
 
   # Variables
+  local file_source;
   local files=();
+  local word;
 
   # Study all script files
   for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
@@ -570,6 +573,7 @@ function shtoolsforum()
   # Usage: shtoolsforum (Refresh README.forum project presentation)
 
   # Variables
+  local ext;
   local preview_file;
   local preview_files;
   local preview_timestamp;
@@ -647,10 +651,12 @@ function shtoolsreadme()
   local line_type;
   local line_usage;
   local path;
+  local path_file;
   local readme_functions=;
   local stats_aliases=0;
   local stats_functions=0;
   local stats_sources=0;
+  local url;
 
   # Initialize variables
   command_file=$(mktemp);
@@ -670,12 +676,12 @@ function shtoolsreadme()
   cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/project.md";
 
   # Read all sources
-  for file in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" \
-              "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" \
-              "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
+  for path_file in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" \
+                   "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" \
+                   "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
 
     # Handle file path
-    path=${file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+    path=${path_file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
     stats_sources=$((stats_sources + 1));
 
     # Parsing header
@@ -685,7 +691,7 @@ function shtoolsreadme()
     path=${path//\//\\\/};
 
     # Detect standalone ready scripts
-    line_standalone=$(grep -a '^# source <(curl -Ls' "${file}");
+    line_standalone=$(grep -a '^# source <(curl -Ls' "${path_file}");
 
     # Detect .sh executable scripts
     if [ "${path: -3}" = '.sh' ]; then
@@ -712,7 +718,7 @@ function shtoolsreadme()
       # Parse shell script usage
       line_function=${path#*\/};
       line_function=${line_function%.sh};
-      line_usage=$(grep -a "Usage: ${line_function}" "${file}");
+      line_usage=$(grep -a "Usage: ${line_function}" "${path_file}");
 
       # Warning about missing usages
       if [ -z "${line_usage}" ]; then
@@ -776,7 +782,7 @@ function shtoolsreadme()
 
         # Parse function usage
         else
-          line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${file}");
+          line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${path_file}");
           line_usage=${line_usage#*Usage: };
           line_usage=${line_usage%;};
           line_usage=${line_usage%$"'"};
@@ -848,7 +854,7 @@ function shtoolsreadme()
       # Append function details
       readme_functions+="  * [**${line_function}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path})${line_usage}\n";
 
-    done < <(grep -a "^alias.*=\|^function .*()" "${file}");
+    done < <(grep -a "^alias.*=\|^function .*()" "${path_file}");
 
     # Sections separation
     readme_functions+="\n---\n";
