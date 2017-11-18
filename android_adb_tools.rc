@@ -82,7 +82,7 @@ function adbready()
   __adbserver;
 
   # Verify sudo requirements
-  if adb shell shell 'echo -n "";' 2>&1 \
+  if adb shell 'echo -n "";' 2>&1 \
       | grep -q 'insufficient permissions\|no permissions'; then
 
     # Run adbsudo if permission denied
