@@ -106,8 +106,9 @@ function romrebaser()
   search_rebaser='';
 
   # Detect the existence of roomservice.xml
-  if [ -z "${1}" ] && [ -f '.repo/local_manifests/roomservice.xml' ]; then
-    search_rebaser=$(grep "ROM Rebaser: '" '.repo/local_manifests/roomservice.xml' \
+  roomservice_xml=$(gettop)/.repo/local_manifests/roomservice.xml;
+  if [ -f "${roomservice_xml}" ]; then
+    search_rebaser=$(grep "ROM Rebaser: '" "${roomservice_xml}" \
                    | sed "s/.* '\(.*\)' .*/\1/");
 
     # Notify found romrebaser function
