@@ -645,6 +645,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**outbootdevcl** *<b>\[ROM output cleaner for bootimage rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc) : *outbootdevcl &lt;devicename&gt;*
   * [**outotadevcl** *<b>\[ROM output cleaner for OTA rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc) : *outotadevcl &lt;devicename&gt;*
   * [**outsepdevcl** *<b>\[ROM output cleaner for sepolicies rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc) : *outsepdevcl &lt;devicename&gt;*
+  * [**outsystemdevcl** *<b>\[ROM output cleaner for system rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc) : *outsystemdevcl &lt;devicename&gt; [bool_minimal]*
   * [**outcommoncl** *<b>\[ROM output cleaner for common rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc)
 
 ---

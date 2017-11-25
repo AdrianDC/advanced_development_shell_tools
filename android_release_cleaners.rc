@@ -149,6 +149,37 @@ function outsepdevcl()
   rm -f "${out_device_path}/recovery/root/sepolicy";
 }
 
+# === ROM Output System Cleaner ===
+function outsystemdevcl()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: outsystemdevcl <devicename> [bool_minimal] (ROM output cleaner for system rebuilds)';
+    echo '';
+    return;
+  fi;
+
+  # Header
+  echo '';
+  echo -e " \e[1;33moutsystemdevcl:\e[0;33m Cleaning up system outputs for '${1}'\e[0m";
+  echo '';
+
+  # Out path
+  out_device_path=./out/target/product/${1};
+
+  # Delete relevant outputs
+  if [ -z "${2}" ]; then
+    rm -rf "${out_device_path}/system";
+
+  # Delete relevant outputs while keeping heavy ones
+  elif [ -d "${out_device_path}/system" ]; then
+    find "${out_device_path}/system" -type f \
+        -not -iname '*.apk' -and -not -iname '*.jar' \
+        -delete;
+  fi;
+}
+
 # === ROM Output Sepolicies Cleaner ===
 function outcommoncl()
 {
