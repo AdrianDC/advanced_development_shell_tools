@@ -112,13 +112,13 @@ function outsepdevcl()
 
   # Header
   echo '';
-  echo -e " \e[1;33moutbootdevcl:\e[0;33m Cleaning up sepolicy outputs for '${1}'\e[0m";
+  echo -e " \e[1;33moutsepdevcl:\e[0;33m Cleaning up sepolicy outputs for '${1}'\e[0m";
   echo '';
 
   # Out path
   out_device_path=./out/target/product/${1};
 
-  # Cleanup ramdisk files
+  # Delete relevant outputs
   rm -f "${out_device_path}/root/file_contexts"*;
   rm -f "${out_device_path}/root/"*"_contexts";
   rm -f "${out_device_path}/root/sepolicy";
