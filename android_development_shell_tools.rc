@@ -448,6 +448,14 @@ function __shtoolsoptions()
   local option_command;
   local options_file=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android_development_shell_tools.rc;
 
+  # Upgrade options functions syntax
+  if [ -f "${options_file}" ] && grep -q "^${1#__}" "${options_file}"; then
+    echo '';
+    echo -e " \e[1;33mshtools-: \e[0;33mUpgrading ${1} syntax\e[0m";
+    echo '';
+    sed -i "s/^${1#__}/${1}/g" "${options_file}";
+  fi;
+
   # Store given input option
   if [ ! -z "${2}" ]; then
 
@@ -469,14 +477,12 @@ function __shtoolsoptions()
     fi;
 
   # Acquire current options
-  else
-    if [ -f "${options_file}" ]; then
-      option_command=$(grep "${1}" "${options_file}");
-      if [ ! -z "${option_command}" ]; then
-        export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=true;
-        ${option_command};
-        export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=;
-      fi;
+  elif [ -f "${options_file}" ]; then
+    option_command=$(grep "${1}" "${options_file}");
+    if [ ! -z "${option_command}" ]; then
+      export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=true;
+      ${option_command};
+      export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=;
     fi;
   fi;
 }
