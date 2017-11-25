@@ -362,7 +362,9 @@ function shtools-()
       if [ ! "${line_option}" = "${line_function}" ] && "__shtools-${line_option}-active" 2> /dev/null; then
 
         # Parse usage
-        line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
+        line_usage=$(grep -a "Usage: ${line_function} " \
+                     "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" \
+                     "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
         if [ -z "${line_usage}" ]; then
           continue;
         fi;
@@ -403,7 +405,9 @@ function shtools-()
       fi;
 
       # Parse usage
-      line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
+      line_usage=$(grep -a "Usage: ${line_function} " \
+                   "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" \
+                   "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
       if [ -z "${line_usage}" ]; then
         continue;
       fi;
