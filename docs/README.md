@@ -667,30 +667,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**romlogs** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_logs.rc) : *romlogs &lt;device&gt; &lt;rom&gt; [logs_count_(default_200-SUMMARY-*
 
 ---
-### [&nbsp;Documentation: [android_release_options.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)&nbsp;]
-  * [**shtools-builds-bringup-enable** *<b>\[Enable bringup builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-bringup-disable** *<b>\[Disable bringup builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-bringup-active** *<b>\[Get bringup builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-clean-enable** *<b>\[Enable clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-clean-disable** *<b>\[Disable clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-clean-active** *<b>\[Get clean builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-cleandevices-enable** *<b>\[Enable cleandevices builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-cleandevices-disable** *<b>\[Disable cleandevices builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-cleandevices-active** *<b>\[Get cleandevices builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-cleanram-enable** *<b>\[Enable cleanram builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-cleanram-disable** *<b>\[Disable cleanram builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-cleanram-active** *<b>\[Get cleanram builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-debug-enable** *<b>\[Enable debug builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-debug-disable** *<b>\[Disable debug builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-debug-active** *<b>\[Get debug builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-local-enable** *<b>\[Enable local builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-local-disable** *<b>\[Disable local builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-local-active** *<b>\[Get local builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-nosync-enable** *<b>\[Enable nosync builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-nosync-disable** *<b>\[Disable nosync builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-  * [**shtools-builds-nosync-active** *<b>\[Get nosync builds option\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_options.rc)
-
----
 ### [&nbsp;Documentation: [android_release_packages.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc)&nbsp;]
   * [**signzip** *<b>\[Sign flashable zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *signzip &lt;zip_to_sign&gt; [signed_output_zip]*
   * [**signapk** *<b>\[Sign apk files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *signapk &lt;apk_to_sign&gt; [signed_output_apk]*
@@ -958,18 +934,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**uploadprivatemega** *<b>\[Upload to private MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *uploadprivatemega &lt;device_name&gt;*
   * [**syncmega** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *megamirror*
   * [**listmega** *<b>\[List remote files on MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *listmega [options]*
-
----
-### [&nbsp;Documentation: [android_uploads_options.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)&nbsp;]
-  * [**shtools-uploads-basketbuild-enable** *<b>\[Enable optional BasketBuild uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
-  * [**shtools-uploads-basketbuild-disable** *<b>\[Disable optional BasketBuild uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
-  * [**shtools-uploads-basketbuild-active** *<b>\[Get optional BasketBuild uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
-  * [**shtools-uploads-ftp-enable** *<b>\[Enable optional FTP uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
-  * [**shtools-uploads-ftp-disable** *<b>\[Disable optional FTP uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
-  * [**shtools-uploads-ftp-active** *<b>\[Get optional FTP uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
-  * [**shtools-uploads-mega-enable** *<b>\[Enable optional Mega.nz uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
-  * [**shtools-uploads-mega-disable** *<b>\[Disable optional Mega.nz uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
-  * [**shtools-uploads-mega-active** *<b>\[Get optional Mega.nz uploads\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_options.rc)
 
 ---
 ### [&nbsp;Documentation: [extensions/deprecated/android_repo_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/deprecated/android_repo_helpers.rc)&nbsp;]

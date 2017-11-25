@@ -24,7 +24,7 @@ function autoreleaseaospsony8960o()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${*}" ]; then
+  if ! __shtools-builds-nosync-active && [ -z "${*}" ]; then
     cdaosp;
     reposy;
   fi;
@@ -33,7 +33,7 @@ function autoreleaseaospsony8960o()
   local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdaosp 8960 && ! shtools-builds-nosync-active; then
+  if ! pathchanged cdaosp 8960 && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -51,7 +51,7 @@ function autoreleaseaospsony8960o()
   done;
 
   # When option enabled and not local, clean out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active; then
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
     repoclean;
   fi;
 }
@@ -65,7 +65,7 @@ function autoreleaselineagesony8960()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
+  if ! __shtools-builds-nosync-active && [ -z "${1}" ]; then
     cdlineage;
     reposy;
   fi;
@@ -74,7 +74,7 @@ function autoreleaselineagesony8960()
   local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdlineage 8960 && ! shtools-builds-nosync-active; then
+  if ! pathchanged cdlineage 8960 && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -87,7 +87,7 @@ function autoreleaselineagesony8960()
   done;
 
   # When option enabled and not local, clean out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active; then
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
     repoclean;
   fi;
 }
@@ -101,13 +101,13 @@ function autoreleaselineagesony8960o()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${1}" ]; then
+  if ! __shtools-builds-nosync-active && [ -z "${1}" ]; then
     cdlineage;
     reposy;
   fi;
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdlineage 8960 && ! shtools-builds-nosync-active; then
+  if ! pathchanged cdlineage 8960 && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -131,7 +131,7 @@ function autoreleaselineagesony8960o()
   done;
 
   # When option enabled and not local, clean out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active; then
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
     repoclean;
   fi;
 }
@@ -145,7 +145,7 @@ function autoreleaserrsony8960()
   cdand;
 
   # When option enabled, sync tree
-  if ! shtools-builds-nosync-active; then
+  if ! __shtools-builds-nosync-active; then
     cdlineage;
     reposy;
     cdrr;
@@ -164,7 +164,7 @@ function autoreleaserrsony8960()
   done;
 
   # When option enabled and not local, clean out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active; then
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
     repoclean;
   fi;
 }
@@ -181,7 +181,7 @@ function autoreleasecafsony8960()
   cdaospcaf;
 
   # When option enabled, sync tree
-  if ! shtools-builds-nosync-active; then
+  if ! __shtools-builds-nosync-active; then
     reposycl;
   fi;
 
@@ -202,7 +202,7 @@ function autoreleasecafsony8960()
   done;
 
   # When option enabled and not local, clean out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active; then
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
     repoclean;
   fi;
 }
@@ -241,13 +241,13 @@ function __autoreleaseaospsony8960dev()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${devices}" ]; then
+  if ! __shtools-builds-nosync-active && [ -z "${devices}" ]; then
     cdaosp;
     reposy;
   fi;
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdaosp "${branch_tag}" && ! shtools-builds-nosync-active; then
+  if ! pathchanged cdaosp "${branch_tag}" && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -265,7 +265,7 @@ function __autoreleaseaospsony8960dev()
   done;
 
   # When option enabled, not local and not bringup, clean device out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active && ! shtools-builds-bringup-active; then
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active && ! __shtools-builds-bringup-active; then
     repoclean;
   fi;
 }
@@ -288,7 +288,7 @@ function autoreleaselineagesony8960master()
   cdand;
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdaosp 'master' && ! shtools-builds-nosync-active; then
+  if ! pathchanged cdaosp 'master' && ! __shtools-builds-nosync-active; then
     cd .repo/local_manifests/;
     git submodule update --remote;
     cd ../../;
@@ -309,7 +309,7 @@ function autoreleaselineagesony8960master()
   done;
 
   # When option enabled and not local, clean out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active; then
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
     repoclean;
   fi;
 }

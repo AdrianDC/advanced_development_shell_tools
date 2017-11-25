@@ -24,7 +24,7 @@ function autoreleaselegacyxperia()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${*}" ]; then
+  if ! __shtools-builds-nosync-active && [ -z "${*}" ]; then
     cdlineage;
     reposy;
   fi;
@@ -33,7 +33,7 @@ function autoreleaselegacyxperia()
   local devices=${*:-anzu haida coconut urushi smultron mango hallon iyokan satsuma zeus phoenix};
 
   # Access project repository and when option enabled, sync tree
-  if ! pathchanged cdlineage lx && ! shtools-builds-nosync-active; then
+  if ! pathchanged cdlineage lx && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -43,7 +43,7 @@ function autoreleaselegacyxperia()
   fi;
 
   # Force clean option
-  shtools-builds-cleandevices-enable;
+  __shtools-builds-cleandevices-enable;
 
   # Walk through devices
   for device in ${devices}; do

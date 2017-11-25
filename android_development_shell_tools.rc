@@ -347,16 +347,16 @@ function shtools-()
     cnt=0;
     list_functions=('');
 
-    # Display shtools-* active options
-    for line_function in $(typeset -F | grep 'shtools-' | cut -d' ' -f 3 \
-                         | grep -v '^shtools-$' \
+    # Display __shtools-* active options
+    for line_function in $(typeset -F | grep '__shtools-' | cut -d' ' -f 3 \
+                         | grep -v '^__shtools-$' \
                          | grep '\-enable$'); do
 
       # Verify if the option is active
       cnt=$((cnt + 1));
       line_option=${line_function%-enable};
-      line_option=${line_option#shtools-};
-      if [ ! "${line_option}" = "${line_function}" ] && "shtools-${line_option}-active" 2> /dev/null; then
+      line_option=${line_option#__shtools-};
+      if [ ! "${line_option}" = "${line_function}" ] && "__shtools-${line_option}-active" 2> /dev/null; then
 
         # Parse usage
         line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
@@ -382,9 +382,9 @@ function shtools-()
     # Display exit item
     echo -e "  \e[1;33m0: \e[1;37mKeep current options \e[1;32m[Exit the configuration]\e[0m";
 
-    # Display shtools-* menu
-    for line_function in $(typeset -F | grep 'shtools-' | cut -d' ' -f 3 \
-                         | grep -v '^shtools-$' \
+    # Display __shtools-* menu
+    for line_function in $(typeset -F | grep '__shtools-' | cut -d' ' -f 3 \
+                         | grep -v '^__shtools-$' \
                          | grep -v '\-active$'); do
 
       # Verify if the option is active
@@ -410,7 +410,7 @@ function shtools-()
 
       # Item choice
       cnt=$((cnt + 1));
-      echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
+      echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function#__shtools-} \e[1;32m[${line_usage}]\e[0m";
 
     done;
     echo '';

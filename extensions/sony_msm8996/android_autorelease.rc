@@ -24,7 +24,7 @@ function autoreleaseaospsodp8996()
   cdand;
 
   # When option enabled, sync repository tree
-  if ! shtools-builds-nosync-active && [ -z "${*}" ]; then
+  if ! __shtools-builds-nosync-active && [ -z "${*}" ]; then
     cdaosp;
     reposy;
   fi;
@@ -46,7 +46,7 @@ function autoreleaseaospsodp8996()
   done;
 
   # When option enabled and not local, clean out folder
-  if shtools-builds-clean-active && ! shtools-builds-local-active; then
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
     repoclean;
   fi;
 }

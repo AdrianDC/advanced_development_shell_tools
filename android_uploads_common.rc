@@ -27,13 +27,13 @@ function fileupl()
   fi;
 
   # Launch file uploader
-  if shtools-uploads-ftp-active; then
+  if __shtools-uploads-ftp-active; then
     uploadftp "${1}" "${2}";
   fi;
-  if shtools-uploads-mega-active; then
+  if __shtools-uploads-mega-active; then
     uploadmega "${1}" "${2}";
   fi;
-  if shtools-uploads-basketbuild-active; then
+  if __shtools-uploads-basketbuild-active; then
     uploadbasketbuild "${1}" "${2}";
   fi;
 }
@@ -50,13 +50,13 @@ function fileget()
   fi;
 
   # Launch file downloader
-  if shtools-uploads-ftp-active; then
+  if __shtools-uploads-ftp-active; then
     downloadftp "${1}" "${2}";
   fi;
-  if shtools-uploads-mega-active; then
+  if __shtools-uploads-mega-active; then
     downloadmega "${1}" "${2}";
   fi;
-  if shtools-uploads-basketbuild-active; then
+  if __shtools-uploads-basketbuild-active; then
     downloadbasketbuild "${1}" "${2}";
   fi;
 }
@@ -82,10 +82,10 @@ function fastupl()
   filename=$(basename "${1}");
 
   # Launch file private uploader
-  if shtools-uploads-mega-active; then
+  if __shtools-uploads-mega-active; then
     uploadprivatemega "${1}" "${2}";
     cmd="downloadmega '/Root/Private/${filename}';";
-  elif shtools-uploads-basketbuild-active; then
+  elif __shtools-uploads-basketbuild-active; then
     uploadprivatebasketbuild "${1}" "${2}";
     cmd="downloadbasketbuild '/Root/Private/${filename}';";
   fi;
