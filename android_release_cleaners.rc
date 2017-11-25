@@ -24,7 +24,7 @@ function outdevcl()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: outdevcl <devicename> (Advanced ROM output cleaner for rebuilds)';
+    echo ' Usage: outdevcl <devicename> [bool_minimal] (Advanced ROM output cleaner for rebuilds)';
     echo '';
     return;
   fi;
@@ -33,20 +33,17 @@ function outdevcl()
   echo '';
   echo -en " \e[1;33moutdevcl:\e[0;33m Cleaning up ROM outputs for '${1}'\e[0m";
 
-  # Out path
-  out_device_path=./out/target/product/${1};
-
   # Run bootimage output cleaner
   outbootdevcl "${1}";
 
   # Run OTA output cleaner
   outotadevcl "${1}";
 
-  # Delete build common outputs
-  outcommoncl;
+  # Run system output cleaner
+  outsystemdevcl "${1}" "${2}";
 
-  # Delete relevant outputs
-  rm -rf "${out_device_path}/system";
+  # Run common output cleaner
+  outcommoncl;
 }
 
 # === ROM Output Boot Cleaner ===
