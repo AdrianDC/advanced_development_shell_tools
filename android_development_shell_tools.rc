@@ -600,6 +600,76 @@ function __shtools-config-news-active()
   [ ! "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIG_NEWS}" = 'false' ];
 }
 
+# === Android Development Shell Tools News ===
+function shtoolsnews()
+{
+  # Usage: shtoolsnews (Display android_development_shell_tools news notifications)
+
+  # Variables
+  local commits_count;
+  local currentdir=${PWD};
+  local timestamp_current;
+  local timestamp_last;
+
+  # Ignore automated news based on timestamp
+  if [ ! -z "${1}" ]; then
+
+    # Validate timestamp from configuration
+    timestamp_current=$(date +%Y-%m-%d);
+    timestamp_last=$(grep '^# News timestamp: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
+    timestamp_last=${timestamp_last##*: };
+    if [ -z "${timestamp_last}" ]; then
+      echo "# News timestamp: ${timestamp_current}" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+    elif [ "${timestamp_last}" = "${timestamp_current}" ]; then
+      return;
+    fi;
+
+    # Update new timestamp configuration
+    sed -i "s/\(# News timestamp: \).*/\1${timestamp_current}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+  fi;
+
+  # Access Android Development Shell Tools folder
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+
+  # Fetch remote project and ignore if unchanged
+  echo -en '\e[1;33mshtoolsnews: \e[1;33mChecking remote upgrades...\e[0m';
+  git fetch --quiet origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  if git diff --quiet HEAD FETCH_HEAD; then
+    echo -en "\r\033[K";
+    return;
+  fi;
+
+  # Header
+  echo -e "\r\033[K";
+  echo -e ' \e[1;33m===[ android_development_shell_tools by AdrianDC ]===\e[0m';
+  echo '';
+
+  # Present commits count
+  commits_count=$(git rev-list --right-only --count HEAD...FETCH_HEAD);
+  echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_count} new commits available upstream\e[0m";
+  echo '';
+
+  # Present commits log
+  git log --abbrev-commit --color=always --pretty=oneline -n "${commits_count}" FETCH_HEAD \
+      | nl -n rn -s '  ' -w 3;
+
+  # Present upgrade hint
+  echo '';
+  echo -e ' \e[1;33mshtoolsnews: \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project\e[0m';
+  echo '';
+
+  # Restore current path
+  cd "${currentdir}/";
+}
+
+# === Android Development Shell Tools Automated News ===
+if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+  __shtools-config-news-enable;
+fi;
+if __shtools-config-news-active; then
+  shtoolsnews true;
+fi;
+
 # === Android Development Shell Tools README.forum Updater ===
 function shtoolsforum()
 {
