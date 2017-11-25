@@ -576,6 +576,26 @@ function shtoolsstaging()
   echo '';
 }
 
+# === Android Development Shell Tools News Options ===
+function __shtools-config-news-enable()
+{
+  # Usage: __shtools-config-news-enable (Enable optional project news)
+  __shtoolsoptions '__shtools-config-news-' 'enable';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIG_NEWS=true;
+}
+function __shtools-config-news-disable()
+{
+  # Usage: __shtools-config-news-disable (Disable optional project news)
+  __shtoolsoptions '__shtools-config-news-' 'disable';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIG_NEWS=false;
+}
+function __shtools-config-news-active()
+{
+  # Usage: __shtools-config-news-active (Get optional project news)
+  __shtoolsoptions '__shtools-config-news-';
+  [ ! "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIG_NEWS}" = 'false' ];
+}
+
 # === Android Development Shell Tools README.forum Updater ===
 function shtoolsforum()
 {
