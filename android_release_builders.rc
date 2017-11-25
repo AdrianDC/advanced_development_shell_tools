@@ -274,7 +274,7 @@ function autobuild()
   local time_start;
 
   # Cleanup device outputs
-  outdevcl "${1}";
+  outdevcl "${1}" 'minimal';
 
   # Prepare device and 'brunch' environment
   repos "${1}";
