@@ -21,7 +21,7 @@ function romlogs()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: romlogs <device> <rom> [logs_count_(default_200)]';
+    echo ' Usage: romlogs <device> <rom> [logs_count_default_200] (View ROMs build logs from romautorelease)';
     echo '';
     return;
   fi;

@@ -664,7 +664,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_release_logs.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_logs.rc)&nbsp;]
-  * [**romlogs** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_logs.rc) : *romlogs &lt;device&gt; &lt;rom&gt; [logs_count_(default_200-SUMMARY-*
+  * [**romlogs** *<b>\[View ROMs build logs from romautorelease\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_logs.rc) : *romlogs &lt;device&gt; &lt;rom&gt; [logs_count_default_200]*
 
 ---
 ### [&nbsp;Documentation: [android_release_packages.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc)&nbsp;]
