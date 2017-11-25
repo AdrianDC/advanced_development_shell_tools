@@ -656,6 +656,7 @@ function shtoolsreadme()
   local readme_output=;
   local stats_aliases=0;
   local stats_functions=0;
+  local stats_hidden=0;
   local stats_sources=0;
   local url;
 
@@ -771,6 +772,7 @@ function shtoolsreadme()
 
       # Hide internal functions starting by __
       if [ "${line_function:0:2}" = '__' ]; then
+        stats_hidden=$((stats_hidden + 1));
         continue;
       fi;
 
@@ -885,6 +887,6 @@ function shtoolsreadme()
   LC_ALL=${lc_all};
 
   # Parsed header
-  echo -e "\r\033[K  \e[1;37mREADME.md successfully rebuilt:\e[0m ${stats_functions} functions and ${stats_aliases} aliases in ${stats_sources} sources";
+  echo -e "\r\033[K  \e[1;37mREADME.md successfully rebuilt:\e[0m ${stats_functions} functions, ${stats_aliases} aliases and ${stats_hidden} internal functions in ${stats_sources} sources";
   echo '';
 }
