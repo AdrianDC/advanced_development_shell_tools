@@ -18,12 +18,12 @@
 # === Notifications ===
 function pushb()
 {
-  # Usage: pushb [message] (PushBullet notification helper)
+  # Usage: pushb [message] (Pushbullet notification helper)
 
-  # PushBullet API Credentials
-  export PushBulletToken='token';
-  export PushBulletUser='user';
-  export PushBulletNoteUrl='url';
+  # Pushbullet API Credentials
+  export PushbulletToken='token';
+  export PushbulletUser='user';
+  export PushbulletNoteUrl='url';
 
   # Create  .bash_android.pushbullet.rc with the exports to override the credentials
   if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.pushbullet.rc" ]; then
@@ -31,26 +31,26 @@ function pushb()
   fi;
 
   # Ignore missing credentials
-  if [ "${PushBulletToken}" = 'token' ]; then
+  if [ "${PushbulletToken}" = 'token' ]; then
     echo '';
     echo ' pushb: Open android_host_pushbullet.rc to see how to set your logins';
     echo '';
     return;
   fi;
 
-  # PushBullet notification message
+  # Pushbullet notification message
   if [ ! -z "${*}" ]; then
-    PushBulletComment=${*};
-    PushBulletNoteUrl=;
+    PushbulletComment=${*};
+    PushbulletNoteUrl=;
   else
-    PushBulletComment='Done';
+    PushbulletComment='Done';
   fi;
 
-  # PushBullet notification upload
-  curl --header "Access-Token: ${PushBulletToken}" \
+  # Pushbullet notification upload
+  curl --header "Access-Token: ${PushbulletToken}" \
        --header "Content-Type: application/json" \
-       --data-binary "{\"body\":\"${PushBulletComment}\",\"title\":\"\",\"type\":\"note\", \
-                       \"url\":\"${PushBulletNoteUrl}\",\"created\":\"$(date +%s)\", \
-                       \"active\":\"true\",\"sender_name\":\"${PushBulletUser}\"}" \
+       --data-binary "{\"body\":\"${PushbulletComment}\",\"title\":\"\",\"type\":\"note\", \
+                       \"url\":\"${PushbulletNoteUrl}\",\"created\":\"$(date +%s)\", \
+                       \"active\":\"true\",\"sender_name\":\"${PushbulletUser}\"}" \
        --request POST https://api.pushbullet.com/v2/pushes > /dev/null;
 }

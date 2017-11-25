@@ -419,7 +419,7 @@ function pushbsizes()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: pushbsizes <paths> (Path sizes in PushBullet notification)';
+    echo ' Usage: pushbsizes <paths> (Path sizes in Pushbullet notification)';
     echo '';
     return;
   fi;
