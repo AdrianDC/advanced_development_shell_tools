@@ -56,8 +56,6 @@ function outdevcl()
   rm -rf "${out_device_path}/ota_temp/RECOVERY/RAMDISK";
   rm -rf "${out_device_path}/"*"ota"*".zip";
   rm -rf "${out_device_path}/system";
-  rm -rf "${out_device_path}/utilities";
-  rm -rf "${out_device_path}/system"*;
 }
 
 # === ROM Output Boot Cleaner ===
@@ -97,6 +95,7 @@ function outbootdevcl()
   rm -rf "${out_device_path}/recovery";
   rm -rf "${out_device_path}/recovery"*;
   rm -rf "${out_device_path}/root";
+  rm -rf "${out_device_path}/utilities";
 }
 
 # === ROM Output Sepolicies Cleaner ===
