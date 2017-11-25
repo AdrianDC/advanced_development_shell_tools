@@ -62,6 +62,9 @@ function __shtoolssources()
   local LC_ALL_HOST;
   local path;
 
+  # Loading header
+  echo -en '\e[1;33mshtools: \e[1;33mLoading android_development_shell_tools...\e[0m';
+
   # Locale override
   LC_ALL_HOST=${LC_ALL};
   export LC_ALL=C;
@@ -90,6 +93,9 @@ function __shtoolssources()
 
   # Locale restore
   export LC_ALL=${LC_ALL_HOST};
+
+  # Loading footer
+  echo -en "\r\033[K";
 }
 
 # === Android Development Shell Tools Sources Inclusion ===
