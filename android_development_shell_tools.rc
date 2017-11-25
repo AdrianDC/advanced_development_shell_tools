@@ -40,6 +40,9 @@ if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}" ]; then
   export ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE=~;
 fi;
 
+# === Android Development Shell Tools Configuration ===
+ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android_development_shell_tools.rc;
+
 # === Android Development Shell Tools Update ===
 function shtoolsup()
 {
@@ -446,39 +449,39 @@ function __shtoolsoptions()
 
   # Variables
   local option_command;
-  local options_file=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android_development_shell_tools.rc;
 
   # Upgrade options functions syntax
-  if [ -f "${options_file}" ] && grep -q "^${1#__}" "${options_file}"; then
+  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ] &&
+      grep -q "^${1#__}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
     echo '';
     echo -e " \e[1;33mshtools-: \e[0;33mUpgrading ${1} syntax\e[0m";
     echo '';
-    sed -i "s/^${1#__}/${1}/g" "${options_file}";
+    sed -i "s/^${1#__}/${1}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
   fi;
 
   # Store given input option
   if [ ! -z "${2}" ]; then
 
     # Create initial empty configuration
-    if [ ! -f "${options_file}" ]; then
+    if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
       { echo '#!/bin/bash';
         echo '#';
         echo '# Android Development Shell Tools - Options';
-        echo '#'; } > "${options_file}";
+        echo '#'; } > "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
     fi;
 
     # Update existing option
-    if grep -q "${1}" "${options_file}"; then
-      sed -i "s/${1}.*/${1}${2}/" "${options_file}";
+    if grep -q "${1}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
+      sed -i "s/${1}.*/${1}${2}/" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
 
     # Define new option
     else
-      echo "${1}${2}" >> "${options_file}";
+      echo "${1}${2}" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
     fi;
 
   # Acquire current options
-  elif [ -f "${options_file}" ]; then
-    option_command=$(grep "${1}" "${options_file}");
+  elif [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+    option_command=$(grep "${1}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
     if [ ! -z "${option_command}" ]; then
       export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=true;
       ${option_command};
