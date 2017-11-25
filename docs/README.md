@@ -564,7 +564,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cleanrambuild** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
   * [**cleanramkill** *<b>\[Complete RAM cleanup including "java"\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *cleanramkill [bool_cleanram]*
   * [**networkrestart** *<b>\[Restart network manager\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
-  * [**pushbsizes** *<b>\[Path sizes in Pushbullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *pushbsizes &lt;paths&gt;*
   * [**isdone** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *notify-send "Process execution finished !*
   * [**topcpu** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *top -o %CPU*
   * [**topmem** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *top -o %MEM*
@@ -572,6 +571,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_host_pushbullet.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc)&nbsp;]
   * [**pushb** *<b>\[Pushbullet notification helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc) : *pushb [message]*
+  * [**pushbsizes** *<b>\[Path sizes in Pushbullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc) : *pushbsizes &lt;paths&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_kernel_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)&nbsp;]

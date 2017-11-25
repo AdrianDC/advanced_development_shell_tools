@@ -413,28 +413,6 @@ function networkrestart()
   sudo service network-manager restart;
 }
 
-# === Pushbullet Folder Sizes ===
-function pushbsizes()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: pushbsizes <paths> (Path sizes in Pushbullet notification)';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  local message;
-
-  # Notify all input sizes
-  echo '';
-  echo " Studying sizes of inputs: ${*}";
-  echo '';
-  message=$(du -csh "${@}" | tee /dev/stderr | tr '\t' ' ');
-  pushb "${message//$'\n'/\\\n}";
-}
-
 # === Done Notification Sender ===
 alias isdone='notify-send "Process execution finished !"';
 
