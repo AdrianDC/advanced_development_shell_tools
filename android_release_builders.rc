@@ -191,14 +191,19 @@ function romautorelease()
     export WITH_SU=;
   fi;
 
-  # Notify build result
-  pushbrom "${rom_device}" "${rom_tag}";
+  # When option enabled, notify build result
+  if __shtools-host-pushbullet-active; then
+    pushbrom "${rom_device}" "${rom_tag}";
+  fi;
 
   # ==========================================================
   # Upload ROM when not working locally
   if ! __shtools-builds-local-active; then
     devuplrom "${rom_device}" "${rom_upload}";
-    if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}" ]; then
+
+    # When option enabled, notify uploaded build
+    if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}" ] &&
+        __shtools-host-pushbullet-active; then
       pushb "$(hostname): ${rom_tag} for ${rom_device} uploaded";
     fi;
   fi;
@@ -290,6 +295,8 @@ function autobuild()
     makes otapackage;
   fi;
 
-  # Notify the build through Pushbullet
-  pushb "${BUILD_RESULT}\n\n$(date)" 2>/dev/null;
+  # When option enabled, notify build result
+  if __shtools-host-pushbullet-active; then
+    pushb "${BUILD_RESULT}\n\n$(date)" 2>/dev/null;
+  fi;
 }
