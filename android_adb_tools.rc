@@ -146,37 +146,24 @@ function adbsudo()
 {
   # Usage: adbsudo (ADB sudo toggle helper)
 
-  # Variables
-  local adb_owned='';
-
   # Enable adb sudo
   if ! alias adb &> /dev/null; then
     alias adb='sudo adb';
-    if ps -eo cmd,uname:20 | grep '^adb' | grep -q 'root'; then
-      adb_owned='true';
-    else
-      sudo echo -n '';
-    fi;
     echo '';
     echo -e " \e[1;33madbsudo:\e[1;37m Configured adb usage as root\e[0m";
     echo '';
+    sudo echo -n '';
 
   # Disable adb sudo
   else
     unalias adb;
-    if ps -eo cmd,uname:20 | grep '^adb' | grep -q "$(whoami)"; then
-      adb_owned='true';
-    fi;
     echo '';
     echo -e " \e[1;33madbsudo:\e[1;37m Restored adb usage as user\e[0m";
     echo '';
   fi;
 
-  # Kill adb server if not running or not properly owned
-  if [ -z "${adb_owned}" ]; then
-    timeout 5 sudo adb kill-server;
-    sudo killall 'adb' 2>/dev/null;
-  fi;
+  # Refresh adb server ownership
+  __adbserver;
 
   # Reload scripts
   shtoolsup &> /dev/null;
