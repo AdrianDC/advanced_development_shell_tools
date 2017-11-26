@@ -66,11 +66,13 @@ function __adbserver()
     return;
   fi;
 
-  # Verify faulty adb server
-  if ! ${adb_timeout} devices | grep -qv '^$\|List of devices attached' \
+  # Verify wrongly owned or faulty adb server
+  if alias adb &> /dev/null && ! processownercheck 'adb' 'root' \
+      || ! alias adb &> /dev/null && ! processownercheck 'adb' "$(whoami)" \
+      || ! ${adb_timeout} devices | grep -qv '^$\|List of devices attached' \
       || ${adb_timeout} shell 'echo -n "";' 2>&1 | grep -q 'protocol fault'; then
 
-    # Kill current running adb server
+    # Kill currently running adb server
     ${adb_timeout} kill-server;
     killall 'adb' 2>/dev/null;
     timeout 20 sudo killall 'adb' 2>/dev/null;
