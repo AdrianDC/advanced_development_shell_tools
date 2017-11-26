@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# === Notifications ===
+# === Notifications through Pushbullet ===
 function pushb()
 {
   # Usage: pushb [message] (Pushbullet notification helper)
@@ -24,6 +24,11 @@ function pushb()
   export PushbulletToken='token';
   export PushbulletUser='user';
   export PushbulletNoteUrl='url';
+
+  # Upgrade Pushbullet syntax
+  if grep -q 'PushBullet' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.pushbullet.rc"; then
+    sed -i 's/PushBullet/Pushbullet/g' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.pushbullet.rc";
+  fi;
 
   # Create  .bash_android.pushbullet.rc with the exports to override the credentials
   if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.pushbullet.rc" ]; then
