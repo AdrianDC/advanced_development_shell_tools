@@ -508,6 +508,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**dop** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *diropen .*
   * [**urlopen** *<b>\[URL opener for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *urlopen &lt;url&gt;*
   * [**desktoppath** *<b>\[Acquire desktop path for most environments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc)
+  * [**processownercheck** *<b>\[Returns if a process is owned by someone\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *processownercheck &lt;process_name&gt; &lt;owner&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_host_edit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc)&nbsp;]

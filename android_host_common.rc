@@ -177,3 +177,21 @@ function desktoppath()
   # Return path
   echo "${path}";
 }
+
+# === Process Owner Check ===
+function processownercheck()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: processownercheck <process_name> <owner> (Returns if a process is owned by someone)';
+    echo '';
+    return;
+  fi;
+
+  # Search for process and validate owner exists
+  #shellcheck disable=SC2009
+  ps -eo cmd,uname:20 \
+      | grep "^${1}" \
+      | grep -q "${2}";
+}
