@@ -77,7 +77,14 @@ function makekernelcopyleft()
 # === Sony Copyleft Kernel Merger ===
 function kernelcopyleftmerger()
 {
-  # Usage: kernelcopyleftmerger (Sony Copyleft kernel archive merge helper)
+  # Usage
+  if [ ! -f './README_Xperia' ]; then
+    echo '';
+    echo ' Usage: kernelcopyleftmerger (Sony Copyleft kernel archive merge helper)';
+    echo '   Details: You need to be inside the copyleft kernel folder'
+    echo '';
+    return;
+  fi;
 
   # Stash all lost .gitignore files
   echo '';
