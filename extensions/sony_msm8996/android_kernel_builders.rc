@@ -91,7 +91,7 @@ function kernelcopyleftmerger()
   echo '';
   echo -n ' kernelcopyleftmerger: Delete all the current kernel files? [ENTER] ';
   read -r;
-  rm -rf * .build;
+  rm -rf ./* ./.build;
 
   # Open current folder to extract new kernel
   echo '';
