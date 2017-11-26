@@ -61,6 +61,11 @@ function __adbserver()
   # Prepare adb access
   adb_timeout="timeout 5 $(adbcmd)";
 
+  # Exit if adb not running
+  if ! pgrep adb >/dev/null; then
+    return;
+  fi;
+
   # Verify faulty adb server
   if ! ${adb_timeout} devices | grep -qv '^$\|List of devices attached' \
       || ${adb_timeout} shell 'echo -n "";' 2>&1 | grep -q 'protocol fault'; then
