@@ -27,14 +27,11 @@ function signzip()
   fi;
 
   # Variables
+  local java_version;
+  local javac_version;
+  local validated_java='';
   local zip_input=${1};
   local zip_output=${2};
-  local check_java;
-  local check_javac;
-
-  # Initialize variables
-  check_java=$(java -version 2>&1 | grep 'version.*1\.' | cut -d"\"" -f 2 | cut -d'.' -f 2);
-  check_javac=$(javac -version 2>&1 | grep '1\.' | cut -d' ' -f 2 | cut -d'.' -f 2);
 
   # Direct ZIP signature
   if [ -z "${zip_output}" ]; then
@@ -62,12 +59,35 @@ function signzip()
   # Remove output file
   rm -f "${zip_output}";
 
+  # Detect java versions
+  java_version=$(java -version 2>&1 | grep 'version ' | cut -d"\"" -f 2);
+  javac_version=$(javac -version 2>&1 | cut -d' ' -f 2);
+
+  # Handle OpenJDK and Oracle
+  case "${java_version%%.*}" in
+
+    # OpenJDK Java
+    1)
+      java_version=${java_version#1.};
+      java_version=${java_version%%.*};
+      javac_version=${javac_version#1.};
+      javac_version=${javac_version%%.*};
+      if [ "${java_version}" -ge 7 ] && [ "${javac_version}" -ge 7 ]; then
+        validated_java='true';
+      fi;;
+
+    # Oracle Java
+    9)
+      if [ "${javac_version%%.*}" -eq 9 ]; then
+        validated_java='true';
+      fi;;
+
+  esac;
+
   # Check Java installed version
-  if [ -z "${check_java}" ] || [ -z "${check_javac}" ] ||
-     [ "${check_java}" -lt 7 ] || [ "${check_javac}" -lt 7 ]; then
+  if [ -z "${validated_java}" ]; then
     echo '';
-    echo "  signzip: Current java version: '1.${check_java}' - javac: '1.${check_javac}'";
-    echo '           Please install java[c] 1.7[1.7] or newer to use this command';
+    echo '  signzip: Please install java[c] from OpenJDK (at least 1.7) or Oracle (at least 9.0)';
     echo '';
     return;
   fi;
