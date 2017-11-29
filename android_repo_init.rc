@@ -389,6 +389,9 @@ function repoinit()
   search_branch='';
   search_repo='';
 
+  # Ensure local_manifests exists
+  mkdir -p .repo/local_manifests;
+
   # Detect the existence of roomservice.xml
   if [ -z "${1}" ] && [ -f '.repo/local_manifests/roomservice.xml' ]; then
     search_repo=$(grep "Repo Init: '" '.repo/local_manifests/roomservice.xml' | sed "s/.* '\(.*\)' .*/\1/");
