@@ -271,6 +271,27 @@ function reposycl()
   repo sync -j"$(grep -c ^processor /proc/cpuinfo)" --current-branch --detach -f --force-broken --force-sync -c --no-clone-bundle --no-tags;
 }
 
+# === Repo Foreach ===
+function repoforeach()
+{
+  # Usage: repoforeach (Run commands for each project)
+
+  # Variables
+  local path;
+  local repo_top;
+
+  # Get repo root
+  repo_top=$(gettop);
+
+  # Run commands for each project
+  for path in $(cat "${repo_top}/.repo/project.list"); do
+    echo '';
+    echo " === ${path} ===";
+    cd "${repo_top}/${path}";
+    "${@}";
+  done;
+}
+
 # === Repo CCache Status/Setter ===
 function repocache()
 {
