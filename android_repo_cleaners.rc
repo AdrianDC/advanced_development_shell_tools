@@ -173,15 +173,30 @@ function reposyrm()
     return;
   fi;
 
-  # Perform actions
+  # Variables
+  local current_path=${PWD};
   local project_path;
-  for project_paths in "${@}"; do
-    project_path=${project_paths%/};
+  local repo_top;
+
+  # Store repo root
+  repo_top=$(gettop);
+
+  # Perform actions
+  for project_path in "${@}"; do
+    if [ -d "${project_path}" ]; then
+      project_path=$(readlink -f "${project_path}");
+    else
+      project_path=$(readlink -f '.')/${project_path};
+    fi;
+    project_path=${project_path#${repo_top}/};
+    rm -rfv "${repo_top}/.repo/projects/${project_path}.git";
     rm -rfv "${project_path}";
-    rm -rfv ".repo/projects/${project_path}.git";
-    reposy "${project_path}";
+    reposy "${repo_top}/${project_path}";
     echo '';
   done;
+
+  # Restore path
+  cd "${current_path}/";
 }
 
 # === Repo Forced Sync Project ===
@@ -195,16 +210,31 @@ function reposyrmf()
     return;
   fi;
 
-  # Perform actions
+  # Variables
+  local current_path=${PWD};
   local project_path;
-  for project_paths in "${@}"; do
-    project_path=${project_paths%/};
+  local repo_top;
+
+  # Store repo root
+  repo_top=$(gettop);
+
+  # Perform actions
+  for project_path in "${@}"; do
+    if [ -d "${project_path}" ]; then
+      project_path=$(readlink -f "${project_path}");
+    else
+      project_path=$(readlink -f '.')/${project_path};
+    fi;
+    project_path=${project_path#${repo_top}/};
+    sudo rm -rfv "${repo_top}/.repo/projects/${project_path}.git";
+    sudo rm -rfv "${repo_top}/.repo/project-objects/${project_path}.git";
     sudo rm -rfv "${project_path}";
-    sudo rm -rfv ".repo/projects/${project_path}.git";
-    sudo rm -rfv ".repo/project-objects/${project_path}.git";
-    reposy "${project_path}";
+    reposy "${repo_top}/${project_path}";
     echo '';
   done;
+
+  # Restore path
+  cd "${current_path}/";
 }
 
 # === Repo CCache Cleaner ===
