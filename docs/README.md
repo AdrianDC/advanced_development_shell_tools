@@ -704,6 +704,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**repoheadscleaner** *<b>\[Cleanup repo projects refs/ contents\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)
   * [**reposyrm** *<b>\[Project repo sync with removal\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc) : *reposyrm &lt;project/relative/path&gt;*
   * [**reposyrmf** *<b>\[Project repo sync with forced removal\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc) : *reposyrmf &lt;project/relative/path&gt;*
+  * [**repopathsizes** *<b>\[Repo project paths sizes\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc) : *repopathsizes &lt;project/relative/path&gt;*
   * [**repocleancache** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc) : *if [ ! -z "${CCACHE_DIR}" ]; then rm -rfv "${CCACHE_DIR}/"*; fi*
 
 ---

@@ -257,5 +257,41 @@ function reposyrmf()
   cd "${current_path}/";
 }
 
+# === Repo Project Path Sizes ===
+function repopathsizes()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: repopathsizes <project/relative/path> (Repo project paths sizes)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local project_path;
+  local repo_top;
+
+  # Store repo root
+  repo_top=$(gettop);
+
+  # Perform actions
+  for project_path in "${@}"; do
+    if [ -d "${project_path}" ]; then
+      project_path=$(readlink -f "${project_path}");
+    else
+      project_path=$(readlink -f '.')/${project_path};
+    fi;
+    project_path=${project_path#${repo_top}/};
+    project_path=${project_path#platform/};
+    echo '';
+    du -hs "${repo_top}/.repo/projects/${project_path}.git";
+    du -hs "${repo_top}/.repo/project-objects/${project_path}.git" 2>/dev/null;
+    du -hs "${repo_top}/.repo/project-objects/platform/${project_path}.git" 2>/dev/null;
+    du -hs "${project_path}";
+    echo '';
+  done;
+}
+
 # === Repo CCache Cleaner ===
 alias repocleancache='if [ ! -z "${CCACHE_DIR}" ]; then rm -rfv "${CCACHE_DIR}/"*; fi';
