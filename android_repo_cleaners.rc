@@ -248,6 +248,7 @@ function reposyrmf()
     project_path=${project_path#${repo_top}/};
     sudo rm -rfv "${repo_top}/.repo/projects/${project_path}.git";
     sudo rm -rfv "${repo_top}/.repo/project-objects/${project_path}.git";
+    sudo rm -rfv "${repo_top}/.repo/project-objects/platform/${project_path}.git";
     sudo rm -rfv "${project_path}";
     reposy "${repo_top}/${project_path}";
     echo '';
