@@ -27,6 +27,26 @@ function repoclean()
   echo '';
 }
 
+# === Repo Destroy ===
+function repodestroy()
+{
+  # Usage: repodestroy (Delete complete repo apart from local_manifests)
+
+  # Delete complete repo apart from local_manifests
+  echo '';
+  echo -n ' repodestroy: Destroying repo apart from local_manifests ? [ENTER] ';
+  read -r;
+  rm -rfv ./*;
+  rm -rfv ./.repo/manifests;
+  rm -rfv ./.repo/manifests.git;
+  rm -rfv ./.repo/manifest.xml;
+  rm -fv ./.repo/project.list;
+  rm -rfv ./.repo/project-objects;
+  rm -rfv ./.repo/projects;
+  rm -rfv ./.repo/repo;
+  echo '';
+}
+
 # === Repo Out Device Cleaner ===
 function repodevclean()
 {
