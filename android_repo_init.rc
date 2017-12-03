@@ -356,7 +356,7 @@ function repoinitsafecleaner()
   done < '.repo/project.list';
 
   # Detect symlinked repo files causing leftovers
-  grep 'copyfile\|linkfile' .repo/manifests/*.xml .repo/manifests/*/*.xml \
+  grep 'copyfile\|linkfile' .repo/manifests/*.xml .repo/manifests/*/*.xml 2>/dev/null \
       | sed 's/.*dest="\([^\"]*\)".*/\1/g' \
       | xargs -n1 rm -fv;
 
