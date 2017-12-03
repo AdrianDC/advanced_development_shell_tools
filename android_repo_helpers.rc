@@ -101,6 +101,10 @@ function repos()
     OUT_DIR='';
   fi;
 
+  # Unset Lineage variables
+  unset LINEAGE_BUILD;
+  unset LINEAGE_DEVICES_ONLY;
+
   # Unset CM/Lineage functions and load envsetup
   unset -f breakfast;
   unset -f brunch;
