@@ -354,6 +354,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitrl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git revert HEAD -n; git commit -m "Revert"; git reset HEAD^; git add -p*
   * [**gitri** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset HEAD^*
   * [**gitrt** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset --hard*
+  * [**gitsquashes** *<b>\[Get formatted squash message\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *gitsquashes &lt;commits_count&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_git_config.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)&nbsp;]

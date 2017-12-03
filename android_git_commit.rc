@@ -196,3 +196,24 @@ alias gitsl='git reset HEAD^; gitap; gitcae';
 alias gitrl='git revert HEAD -n; git commit -m "Revert"; git reset HEAD^; git add -p';
 alias gitri='git reset HEAD^';
 alias gitrt='git reset --hard';
+
+# === Git Squash Messages ===
+function gitsquashes()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitsquashes <commits_count> (Get formatted squash message)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cnt=${1};
+
+  # Present squash message from all commits
+  echo '';
+  for i in $(seq "$((cnt - 1))" -1 0); do
+    git show -s --pretty='tformat:Author: %aN <%aE>%nDate:   %ad%n%n%w(0,4,4)%s%n%n%b' "HEAD~${i}";
+  done;
+}
