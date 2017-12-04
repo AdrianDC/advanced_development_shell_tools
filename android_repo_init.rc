@@ -193,6 +193,7 @@ function repoinitrr()
   local params=${2};
   local branch=${release};
   local depth=;
+  local init_command;
 
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
@@ -201,25 +202,29 @@ function repoinitrr()
     depth="--depth ${ANDROID_REPO_INIT_LIGHT:-100}";
   fi;
 
+  # Repo init
+  if [[ "${params}" == *'referenced'* ]]; then
+    init_command="repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch} ${depth} --reference=$(readlink -f "$(getand)/LineageOS")";
+  else
+    init_command="repo init -u http://github.com/ResurrectionRemix/platform_manifest.git -b ${branch} ${depth}";
+  fi;
+
+  # Output init command
+  echo '';
+  echo " ${init_command}";
+  echo '';
+
   # Prepare synced objects for migrations
   if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
+    ${init_command};
     reposy;
   fi;
 
   # Clean repo manifest
   repoinitcleaner "${params}";
 
-  # Repo init
-  if [[ "${params}" == *'referenced'* ]]; then
-    repo init -u http://github.com/ResurrectionRemix/platform_manifest.git \
-              -b "${branch}" \
-              "${depth}" \
-              --reference="$(readlink -f "$(getand)/LineageOS")";
-  else
-    repo init -u http://github.com/ResurrectionRemix/platform_manifest.git \
-              -b "${branch}" \
-              "${depth}";
-  fi;
+  # Launch init command
+  ${init_command};
 
   # Exit on repo init failure
   if [ ! -d .repo/manifests ]; then
@@ -253,6 +258,7 @@ function repoinittwrp()
   local params=${2};
   local branch=twrp-${release};
   local depth=;
+  local init_command;
 
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
@@ -261,23 +267,26 @@ function repoinittwrp()
     depth="--depth ${ANDROID_REPO_INIT_LIGHT:-100}";
   fi;
 
+  # Repo init
+  if [[ "${params}" == *'referenced'* ]]; then
+    init_command="repo init -u https://github.com/AdrianDC/platform_manifest_twrp_omni.git -b ${branch} ${depth} --reference=$(readlink -f "$(getand)/TWRP")";
+  else
+    init_command="repo init -u https://github.com/AdrianDC/platform_manifest_twrp_omni.git -b ${branch} ${depth}";
+  fi;
+
+  # Output init command
+  echo '';
+  echo " ${init_command}";
+  echo '';
+
   # Wipe the out folder
   repoclean;
 
   # Clean repo manifest
   repoinitcleaner "${params}";
 
-  # Repo init
-  if [[ "${params}" == *'referenced'* ]]; then
-    repo init -u https://github.com/AdrianDC/platform_manifest_twrp_omni.git \
-              -b "${branch}" \
-              "${depth}" \
-              --reference="$(readlink -f "$(getand)/TWRP")";
-  else
-    repo init -u https://github.com/AdrianDC/platform_manifest_twrp_omni.git \
-              -b "${branch}" \
-              "${depth}";
-  fi;
+  # Launch init command
+  ${init_command};
 
   # Exit on repo init failure
   if [ ! -d .repo/manifests ]; then
