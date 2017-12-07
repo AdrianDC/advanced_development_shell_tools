@@ -188,7 +188,7 @@ function shtoolscheck()
 
     # Launch ShellCheck
     if ! shellcheck "${file_source}" \
-        -e SC1090,SC1091,SC2164 \
+        -e SC1090,SC1091,SC1117,SC2164 \
         && [ -z "${1}" ]; then
       echo -e " \e[1;33mERROR: ${file_source} contains syntax errors or warnings\e[0m";
       echo '';
