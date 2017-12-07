@@ -19,7 +19,7 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
 
-# === Grep Helpers ===
+# === Grep Helper ===
 function g()
 {
   # Usage: g [inputs] (Grep through sources)
@@ -28,7 +28,7 @@ function g()
   GREP_COLORS='fn=1;1' grep -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
 }
 
-# === Grep Binaries Helpers ===
+# === Grep Strings ===
 function gs()
 {
   # Usage: gs [inputs] (Grep through sources and binaries)
@@ -38,17 +38,15 @@ function gs()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    if [ -f "${file}" ]; then
-      found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
-      if [ ! -z "${found}" ]; then
-        echo -e "\e[1;31m${file} :\e[0m ${found}";
-      fi;
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done;
+  done < <(find . -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
-# === Grep Binaries Editor ===
+# === Grep Strings Editor ===
 function gce()
 {
   # Usage
@@ -65,14 +63,12 @@ function gce()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    if [ -f "${file}" ]; then
-      found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
-      if [ ! -z "${found}" ]; then
-        files+=("${file}");
-      fi;
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      files+=("${file}");
     fi;
-  done;
+  done < <(find . -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 
   # Edit found files
   fileedit "${files[@]}";
@@ -88,12 +84,12 @@ function gck()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . \( -name 'Kconfig' -o -name 'Makefile' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done;
+  done < <(find . \( -name 'Kconfig' -o -name 'Makefile' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Grep Android Makefiles ===
@@ -106,12 +102,12 @@ function gca()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done;
+  done < <(find . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Grep Android Manifests ===
@@ -124,12 +120,12 @@ function gcmanifest()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . \( -name 'AndroidManifest.xml' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done;
+  done < <(find . \( -name 'AndroidManifest.xml' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Grep Android .rc Files ===
@@ -142,12 +138,12 @@ function gcrc()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . -name '*.rc' -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done;
+  done < <(find . \( -name '*.rc' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Grep Android Sepolicies ===
@@ -160,12 +156,12 @@ function gcsep()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . \( -name '*.te' -o -name '*_contexts' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done;
+  done < <(find . \( -name '*.te' -o -name '*_contexts' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Grep Android .xml Files ===
@@ -178,12 +174,12 @@ function gcxml()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . -name '*.xml' -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done;
+  done < <(find . \( -name '*.xml' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Grep Android Sepolicies Contexts ===
@@ -196,12 +192,12 @@ function gccontexts()
 
   # Grep through files
   strings_params="strings $(stringsparams)";
-  for file in $(find . -name '*_contexts' -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
-    found=$(${strings_params} "$(readlink -f "${file}")" | grep -ai "${*}");
+  while read -r file; do
+    found=$(${strings_params} "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done;
+  done < <(find . \( -name '*_contexts' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Grep Search Helpers ===
@@ -217,11 +213,11 @@ function gcmodules()
 
   # Search all build definitions
   strings_params="strings $(stringsparams)";
-  for file in $(find "${1:-.}" \( -name '*.mk' -o -name '*.bp' \) -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
+  while read -r file; do
     ${strings_params} "$(readlink -f "${file}")" \
       | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
       | sed 's/.*\(:=[ \t]*\|name: "\)\([^"]*\)\(".*\|\)/\2/g';
-  done;
+  done < <(find "${1:-.}" \( -name '*.mk' -o -name '*.bp' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Grep Android Phony ===
@@ -234,11 +230,11 @@ function gcphony()
 
   # Search all build definitions
   strings_params="strings $(stringsparams)";
-  for file in $(find . -name '*.mk' -not -path '*.git/*' -not -path '*.repo/*' -not -path './out/*' | sort); do
+  while read -r file; do
     ${strings_params} "$(readlink -f "${file}")" \
       | grep -ai ".PHONY:" \
       | sed 's/.PHONY: //g';
-  done;
+  done < <(find . \( -name '*.mk' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
 }
 
 # === Strings Parameters ===
