@@ -288,12 +288,13 @@ function repoforeach()
   repo_top=$(gettop);
 
   # Run commands for each project
-  for path in $(cat "${repo_top}/.repo/project.list"); do
+  while read -r path; do
     echo '';
     echo " === ${path} ===";
     cd "${repo_top}/${path}";
     "${@}";
-  done;
+  done < <(cat "${repo_top}/.repo/project.list");
+  echo '';
 }
 
 # === Repo CCache Status/Setter ===
