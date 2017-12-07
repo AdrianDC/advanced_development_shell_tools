@@ -24,6 +24,9 @@ function adbscr()
 {
   # Usage: adbscr (Take a screenshot from connected device)
 
+  # Verify adb is ready
+  adbready;
+
   # Take a screenshot from connected device
   mkdir -p ./screenshots;
   adb shell screencap /sdcard/screenshot.png;
