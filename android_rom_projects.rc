@@ -325,6 +325,12 @@ function androidprojectpatcher()
     fi;
     echo '';
 
+    # List patcher commits
+    if [ "${git_revs_count_remote}" -ne 0 ]; then
+      git log --pretty=oneline --abbrev-commit -n "${git_revs_count_remote}" FETCH_HEAD;
+      echo '';
+    fi;
+
     # Handle unupdated projects
     if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
       echo -e '  \e[1;37m> Commands: Y (Rebase on new changes)';
