@@ -548,6 +548,18 @@ function shtoolslog()
   cd "${currentdir}/";
 }
 
+# === Android Development Shell Tools Show Commit ===
+function shtoolsshow()
+{
+  # Usage: shtoolsshow [offset_count] (Display android_development_shell_tools commit)
+
+  # Display project history
+  local currentdir=${PWD};
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git show "HEAD~${1:-0}";
+  cd "${currentdir}/";
+}
+
 # === Android Development Shell Tools Reset ===
 function shtoolsreset()
 {
