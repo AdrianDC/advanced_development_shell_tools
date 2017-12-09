@@ -21,8 +21,8 @@ function gitbranchpusher()
   # Usage: gitbranchpusher [y/n] [remote_url] [branch] (Push to project specific branch)
 
   # Variables
-  local project_dir=${PWD};
-  local repo_dir=${PWD};
+  local project_dir;
+  local repo_dir;
   local param_send=${1};
   local remote=${2};
   local project_branch=${3};
@@ -32,21 +32,20 @@ function gitbranchpusher()
   local remote_name;
   local shallow_count;
 
-  # Check project
-  if [ ! -d "${project_dir}/.git" ]; then
+  # Get project path
+  project_dir=$(git rev-parse --show-toplevel 2>/dev/null);
+  if [ -z "${project_dir}" ] || [ ! -d "${project_dir}" ]; then
     echo '';
-    echo ' Current project was not found...';
+    echo ' gitbranchpusher: Current project was not found...';
     echo '';
     return;
   fi;
 
-  # Find repository
-  while [[ "${repo_dir}" != '/' && ! -d "${repo_dir}/.repo" ]]; do
-    repo_dir=$(readlink -f "${repo_dir}/..");
-  done;
-  if [ ! -d "${repo_dir}/.repo" ]; then
+  # Get repository path
+  repo_dir=$(gettop);
+  if [ -z "${repo_dir}" ] || [ ! -d "${repo_dir}" ]; then
     echo '';
-    echo ' Repository was not found';
+    echo ' gitbranchpusher: Repository was not found';
     echo '';
     return;
   fi;
