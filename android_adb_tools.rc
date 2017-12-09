@@ -152,17 +152,17 @@ function adbsudo()
   # Enable adb sudo
   if ! alias adb &> /dev/null; then
     alias adb='sudo adb';
-    echo '';
-    echo -e " \e[1;33madbsudo:\e[1;37m Configured adb usage as root\e[0m";
-    echo '';
-    sudo echo -n '';
+    >&2 echo '';
+    >&2 echo -e " \e[1;33madbsudo:\e[1;37m Configured adb usage as root\e[0m";
+    >&2 echo '';
+    >&2 sudo echo -n '';
 
   # Disable adb sudo
   else
     unalias adb;
-    echo '';
-    echo -e " \e[1;33madbsudo:\e[1;37m Restored adb usage as user\e[0m";
-    echo '';
+    >&2 echo '';
+    >&2 echo -e " \e[1;33madbsudo:\e[1;37m Restored adb usage as user\e[0m";
+    >&2 echo '';
   fi;
 
   # Refresh adb server ownership
