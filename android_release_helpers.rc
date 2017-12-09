@@ -53,10 +53,8 @@ function mmo()
 
   # Build module without ninja
   export USE_NINJA=false;
-  export USE_SOONG_UI=false;
   mmm "${@}";
   export USE_NINJA=;
-  export USE_SOONG_UI=;
 }
 
 # === Build & Install Without Ninja ===
@@ -72,10 +70,8 @@ function mmi()
 
   # Build & install module without ninja
   export USE_NINJA=false;
-  export USE_SOONG_UI=false;
   adbi mmm "${@}";
   export USE_NINJA=;
-  export USE_SOONG_UI=;
 }
 
 # === Build & Listen Without Ninja ===
@@ -91,10 +87,8 @@ function mmil()
 
   # Build & list module without ninja
   export USE_NINJA=false;
-  export USE_SOONG_UI=false;
   adbil mmm "${@}";
   export USE_NINJA=;
-  export USE_SOONG_UI=;
 }
 
 # === CCache Disabler ===
