@@ -32,9 +32,9 @@ function adbl()
     radio)  buffer='radio';;
     system) buffer='system';;
     help|*)
-      echo '';
-      echo ' Usage: adbl [all/crash/events/main/radio/system] [file_output] [bool_clean] (adb Logcat helper)';
-      echo '';
+      >&2 echo '';
+      >&2 echo ' Usage: adbl [all/crash/events/main/radio/system] [file_output] [bool_clean] (adb Logcat helper)';
+      >&2 echo '';
       return;;
   esac;
 
@@ -52,9 +52,9 @@ function adbl()
     fi;
 
     # Abort on missing buffer
-    echo '';
-    echo " adbl: Buffer '${buffer}' is not available. Use 'adbl help' to list possible buffers";
-    echo '';
+    >&2 echo '';
+    >&2 echo " adbl: Buffer '${buffer}' is not available. Use 'adbl help' to list possible buffers";
+    >&2 echo '';
     return;
   fi;
 
@@ -83,8 +83,8 @@ function adbl()
     fi;
 
     # End of logs
-    echo '';
-    echo -n 'Press Enter to continue... ';
+    >&2 echo '';
+    >&2 echo -n 'Press Enter to continue... ';
     read -r;
   done;
 }
