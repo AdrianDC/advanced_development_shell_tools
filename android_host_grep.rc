@@ -19,6 +19,21 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
 
+# === Internal find for Android ===
+function __find_android()
+{
+  # Usage: __find_android [path] [params] (Internal find for Android)
+
+  # Internal find for Android
+  find "${1:-.}" \
+      -type f \
+      "${@:2}" \
+      -not -path '*.git/*' \
+      -not -path '*.repo/*' \
+      -not -path './out*' \
+      | sort;
+}
+
 # === Grep Helper ===
 function g()
 {
@@ -43,7 +58,7 @@ function gs()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(find . -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android .);
 }
 
 # === Grep Strings Editor ===
@@ -68,7 +83,7 @@ function gce()
     if [ ! -z "${found}" ]; then
       files+=("${file}");
     fi;
-  done < <(find . -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android .);
 
   # Edit found files
   fileedit "${files[@]}";
@@ -89,7 +104,7 @@ function gck()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(find . \( -name 'Kconfig' -o -name 'Makefile' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android . \( -name 'Kconfig' -o -name 'Makefile' \));
 }
 
 # === Grep Android Makefiles ===
@@ -107,7 +122,7 @@ function gca()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(find . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' \));
 }
 
 # === Grep Android Manifests ===
@@ -125,7 +140,7 @@ function gcmanifest()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(find . \( -name 'AndroidManifest.xml' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android . \( -name 'AndroidManifest.xml' \));
 }
 
 # === Grep Android .rc Files ===
@@ -143,7 +158,7 @@ function gcrc()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(find . \( -name '*.rc' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android . \( -name '*.rc' \));
 }
 
 # === Grep Android Sepolicies ===
@@ -161,7 +176,7 @@ function gcsep()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(find . \( -name '*.te' -o -name '*_contexts' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android . \( -name '*.te' -o -name '*_contexts' \));
 }
 
 # === Grep Android .xml Files ===
@@ -179,7 +194,7 @@ function gcxml()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(find . \( -name '*.xml' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android . \( -name '*.xml' \));
 }
 
 # === Grep Android Sepolicies Contexts ===
@@ -197,7 +212,7 @@ function gccontexts()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(find . \( -name '*_contexts' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android . \( -name '*_contexts' \));
 }
 
 # === Grep Search Helpers ===
@@ -217,7 +232,7 @@ function gcmodules()
     ${strings_params} "$(readlink -f "${file}")" \
       | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
       | sed 's/.*\(:=[ \t]*\|name: "\)\([^"]*\)\(".*\|\)/\2/g';
-  done < <(find "${1:-.}" \( -name '*.mk' -o -name '*.bp' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android "${1:-.}" \( -name '*.mk' -o -name '*.bp' \));
 }
 
 # === Grep Android Phony ===
@@ -234,7 +249,7 @@ function gcphony()
     ${strings_params} "$(readlink -f "${file}")" \
       | grep -ai ".PHONY:" \
       | sed 's/.PHONY: //g';
-  done < <(find . \( -name '*.mk' \) -type f -not -path '*.git/*' -not -path '*.repo/*' -not -path './out*' | sort);
+  done < <(__find_android . \( -name '*.mk' \));
 }
 
 # === Strings Parameters ===
