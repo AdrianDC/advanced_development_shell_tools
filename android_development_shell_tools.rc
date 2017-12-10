@@ -676,6 +676,13 @@ function shtoolsnews()
   echo -e ' \e[1;33mshtoolsnews: \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project\e[0m';
   echo '';
 
+  # Delay input on automatic notifications
+  if [ ! -z "${1}" ]; then
+    echo -en '\r\033[K \e[1;37m> Resuming input in 3 seconds...\e[0m';
+    sleep 3;
+    echo -en '\r\033[K';
+  fi;
+
   # Restore current path
   cd "${currentdir}/";
 }
