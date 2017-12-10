@@ -151,7 +151,7 @@ function mmmzip()
   BuildParams=("${@:-.}");
   BuildPathFirst=${1:-.};
   LogFile=${TmpDir}/mmm_logs.txt;
-  OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
+  OutFile="${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
   path=$(readlink -f "${BuildPathFirst}");
   TargetFile="$(desktoppath)/Builds/${OutFile}";
 
@@ -279,7 +279,7 @@ function systozip()
   CurDir=$(pwd);
   TmpDir=$(mktemp -d);
   LogFile=${TmpDir}/mmm_logs.txt;
-  OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
+  OutFile="${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
   path=$(readlink -f "${BuildPathFirst}");
   TargetFile="$(desktoppath)/Builds/${OutFile}";
 
@@ -371,7 +371,7 @@ function packzip()
   # Variables
   CurDir=$(pwd);
   TmpDir=$(mktemp -d);
-  OutFile="pack-${TARGET_PRODUCT}-$(basename "$(readlink -f "${1}")")-$(date +'%Y%m%d-%H%M').zip";
+  OutFile="${TARGET_PRODUCT}-$(basename "$(readlink -f "${1}")")-$(date +'%Y%m%d-%H%M').zip";
   TargetFile="$(desktoppath)/Builds/${OutFile}";
 
   # Handle paths
