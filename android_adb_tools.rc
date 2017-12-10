@@ -43,7 +43,7 @@ function adbr()
   local adb_timeout;
 
   # Get root access and rw system
-  adb_timeout="timeout 5 $(adbcmd)";
+  adb_timeout="timeout -k 5 5 $(adbcmd)";
   adbwait;
   ${adb_timeout} 'root';
   sleep 2;
@@ -63,7 +63,7 @@ function __adbserver()
   local adb_timeout;
 
   # Prepare adb access
-  adb_timeout="timeout 5 $(adbcmd)";
+  adb_timeout="timeout -k 5 5 $(adbcmd)";
 
   # Exit if adb not running
   if ! pgrep adb >/dev/null; then
@@ -81,7 +81,7 @@ function __adbserver()
     # Kill currently running adb server
     ${adb_timeout} kill-server;
     killall 'adb' 2>/dev/null;
-    timeout 20 sudo killall 'adb' 2>/dev/null;
+    timeout -k 20 20 sudo killall 'adb' 2>/dev/null;
 
   fi;
 }
@@ -119,7 +119,7 @@ function adbro()
   adbready;
 
   # Refresh adb timeout command
-  adb_timeout="timeout 5 $(adbcmd)";
+  adb_timeout="timeout -k 5 5 $(adbcmd)";
 
   # Get root access
   rootaccess=$(${adb_timeout} shell whoami);
@@ -305,7 +305,7 @@ function adbco()
   local adb_timeout;
 
   # Connect and acquire adb root access
-  adb_timeout="timeout 5 $(adbcmd)";
+  adb_timeout="timeout -k 5 5 $(adbcmd)";
   export ADB_IP_PORT=5555;
   echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
   ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";

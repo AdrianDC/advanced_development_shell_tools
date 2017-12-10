@@ -289,7 +289,7 @@ function adbside()
   ${adb_cmd} devices;
 
   # Reboot to recovery if needed
-  if ! timeout 2 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
+  if ! timeout -k 2 2 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
     echo -e '\e[1;33madbside: Rebooting to recovery\e[0m';
     ${adb_cmd} reboot recovery;
     rebooted=true;
@@ -297,7 +297,7 @@ function adbside()
 
   # Wait for an adb recovery
   while true; do
-    if timeout .5 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
+    if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
       break;
     fi;
     echo -e '\e[1;33madbside: Waiting for recovery or sideload\e[0m';
@@ -306,7 +306,7 @@ function adbside()
 
   # Wait for an adb sideload
   while true; do
-    if timeout .5 sh -c "${adb_cmd} devices | grep -q 'sideload'" 2> /dev/null; then
+    if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'sideload'" 2> /dev/null; then
       break;
     fi;
 
@@ -321,7 +321,7 @@ function adbside()
 
   # Wait for an adb recovery
   while true; do
-    if timeout .5 sh -c "${adb_cmd} devices | grep -q 'recovery'" 2> /dev/null; then
+    if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'recovery'" 2> /dev/null; then
       break;
     fi;
     echo -e '\e[1;33madbside: Waiting for recovery\e[0m';

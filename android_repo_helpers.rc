@@ -203,7 +203,7 @@ function reposysafe()
           false;
           while [ \${?} -ne 0 ]; do
             echo -e \"\n \e[1;33mFetch: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
-            timeout 20 git fetch --progress \"\${REPO_REMOTE}\" \"\${REPO_RREV##*/}\";
+            timeout -k 20 20 git fetch --progress \"\${REPO_REMOTE}\" \"\${REPO_RREV##*/}\";
           done;
           if git add -N ./* && ! git diff-index --quiet HEAD -- || git am --abort >/dev/null 2>&1; then
             echo -e \"\n \e[1;32mCleaning: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";

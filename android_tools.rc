@@ -305,7 +305,7 @@ function haste()
   edittrimoutput "${tmp}";
 
   # Upload to hastebin
-  url=$(timeout 10 curl -X POST -s --data-binary @"${tmp}" https://hastebin.com/documents \
+  url=$(timeout -k 10 10 curl -X POST -s --data-binary @"${tmp}" https://hastebin.com/documents \
       | awk -F '"' '{ print "http://hastebin.com/"$4; }');
   echo " haste: ${url}";
 
@@ -342,7 +342,7 @@ function pbin()
         | sed 's/.*name="csrf_token_post" value="\(.*\)".*/\1/')
 
   # Upload to Pastebin
-  url=$(timeout 10 curl -X POST -s 'https://pastebin.com/post.php' \
+  url=$(timeout -k 10 10 curl -X POST -s 'https://pastebin.com/post.php' \
         -D - \
         -F "csrf_token_post=${token}" \
         -F "paste_code=<${tmp};type=text/plain" \

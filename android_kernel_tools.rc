@@ -206,8 +206,8 @@ function fboota()
     ${adb_cmd} reboot bootloader;
 
     # Flash new boot
-    timeout 20 sudo fastboot flash boot "${bootimg}";
-    timeout 5 sudo fastboot reboot;
+    timeout -k 20 20 sudo fastboot flash boot "${bootimg}";
+    timeout -k 5 5 sudo fastboot reboot;
     echo '';
 
   fi;
@@ -240,7 +240,7 @@ function fboot()
 
   # Reboot to bootloader
   sudo echo '';
-  if timeout 3 sh -c "$(adbcmd) devices | grep -q 'recovery$\|device$'" 2> /dev/null; then
+  if timeout -k 3 3 sh -c "$(adbcmd) devices | grep -q 'recovery$\|device$'" 2> /dev/null; then
     adbro;
     adbwait;
     $(adbcmd) reboot bootloader;
