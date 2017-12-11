@@ -591,6 +591,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_kernel_defconfig.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_defconfig.rc)&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_defconfig.rc)
   ```
   * [**makedefconf** *<b>\[Advanced defconfig helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_defconfig.rc) : *makedefconf &lt;device_name&gt; [bool_full_config] [diff_config] [force_config=value]*
@@ -858,12 +859,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**implineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *rsync -arv --delete --delete-after "$(tolineage "${1}")" "./${1}"*
   * [**cpaosp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cp -fv "./${1}" "$(toaosp "${2}")/${1}"*
   * [**cplineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cp -fv "./${1}" "$(tolineage "${2}")/${1}"*
-  * [**meldaosp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld "./${1}" "$(toaosp "${2}")/${1}"*
-  * [**meldaospsony** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld "./${1}" "$(toaosp sony)/${1}"*
-  * [**meldaospcaf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld "./${1}" "$(toaospcaf)/${1}"*
-  * [**meldlineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld "./${1}" "$(tolineage "${2}")/${1}"*
-  * [**meldmrom** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld "./${1}" "$(tomultirom)/${1}"*
-  * [**meldtwrp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *meld "./${1}" "$(totwrp)/${1}"*
+  * [**meldaosp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *pathscompare "./${1}" "$(toaosp "${2}")/${1}"*
+  * [**meldaospsony** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *pathscompare "./${1}" "$(toaosp sony)/${1}"*
+  * [**meldaospcaf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *pathscompare "./${1}" "$(toaospcaf)/${1}"*
+  * [**meldlineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *pathscompare "./${1}" "$(tolineage "${2}")/${1}"*
+  * [**meldmrom** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *pathscompare "./${1}" "$(tomultirom)/${1}"*
+  * [**meldtwrp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *pathscompare "./${1}" "$(totwrp)/${1}"*
   * [**nout** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *diropen "$(toout "${1}")"*
   * [**aospsyncall** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *reporeferencedaosp "reposy"*
   * [**lineagesyncall** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *reporeferencedlineage "reposy"*
@@ -1013,7 +1014,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdspker** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8960t/g')"*
   * [**cdblueker** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8x60/g')"*
   * [**cdvendsony** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/vendor/sony/g')"*
-  * [**meldblue** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *meld "./${1}" "../blue-common/${1}"*
+  * [**meldblue** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *pathscompare "./${1}" "../blue-common/${1}"*
 
 ---
 ### [&nbsp;Documentation: [extensions/sony_msm8960/android_tools_release.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_tools_release.rc)&nbsp;]

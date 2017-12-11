@@ -340,8 +340,8 @@ function fileschemesorter()
   # Final comparison
   sort "${file_to_sort}" -o "${file_temp_2}";
   sort "${file_temp_1}" -o "${file_temp_3}";
-  meld "${file_temp_2}" "${file_temp_3}";
-  meld "${file_to_sort}" "${file_temp_1}";
+  pathscompare "${file_temp_2}" "${file_temp_3}";
+  pathscompare "${file_to_sort}" "${file_temp_1}";
   echo '';
   echo ' Press [ENTER] to continue...';
   echo '';

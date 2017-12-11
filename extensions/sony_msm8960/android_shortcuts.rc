@@ -20,4 +20,4 @@ function cdspdev()     { cd "$(pwd | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1An
 function cdspker()     { cd "$(pwd | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8960t/g')"; }
 function cdblueker()   { cd "$(pwd | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8x60/g')"; }
 function cdvendsony()  { cd "$(pwd | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/vendor\/sony/g')"; }
-function meldblue()    { meld "./${1}" "../blue-common/${1}"; }
+function meldblue()    { pathscompare "./${1}" "../blue-common/${1}"; }

@@ -379,12 +379,12 @@ function overlaycompare()
   # Loop through files
   while IFS= read -r overlay_path; do
 
-    # Launch meld on both paths
+    # Launch paths compare on both paths
     source_path=$(echo "$(gettop)/${overlay_path}" \
                 | sed 's/overlay\/common/overlay/' \
                 | sed 's/overlay\/dictionaries/overlay/' \
                 | sed 's/overlay[^\/]*\///');
-    meld "${overlay_path}" "${source_path}";
+    pathscompare "${overlay_path}" "${source_path}";
 
   done < <(find "${@}" -type f);
 }

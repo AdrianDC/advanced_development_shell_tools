@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_defconfig.rc)
 
 # === Kernel DefConfig Editor ===
@@ -122,7 +123,7 @@ function makedefconf()
     if [ ! -z "${forceconfig}" ]; then
       kernelconfigupdater "${forceconfig}";
     fi;
-    meld ./.config ./.config_android;
+    pathscompare ./.config ./.config_android;
     rm ./.config_android;
 
   # Make full defconfig
@@ -133,15 +134,15 @@ function makedefconf()
     fi;
     if [ -f "${diffconfig}" ]; then
       if [ -f "${diffcommon}" ]; then
-        meld ./.config "${diffconfig}" &
-          meld ./.config "${diffcommon}" &
-          meld ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
+        pathscompare ./.config "${diffconfig}" &
+          pathscompare ./.config "${diffcommon}" &
+          pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
       else
-        meld ./.config "${diffconfig}" &
-          meld ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
+        pathscompare ./.config "${diffconfig}" &
+          pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
       fi;
     else
-      meld ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
+      pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
     fi;
 
   # Make minimal defconfig
@@ -151,7 +152,7 @@ function makedefconf()
       kernelconfigupdater "${forceconfig}";
     fi;
     make savedefconfig;
-    meld ./defconfig "${DEFCONFIG_PATH}/${defconfig_file}";
+    pathscompare ./defconfig "${DEFCONFIG_PATH}/${defconfig_file}";
     rm ./defconfig;
   fi;
 

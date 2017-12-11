@@ -325,12 +325,12 @@ function impaospcaf()   { rsync -arv --delete --delete-after "$(toaospcaf "${1}"
 function implineage()   { rsync -arv --delete --delete-after "$(tolineage "${1}")" "./${1}"; }
 function cpaosp()       { cp -fv "./${1}" "$(toaosp "${2}")/${1}"; }
 function cplineage()    { cp -fv "./${1}" "$(tolineage "${2}")/${1}"; }
-function meldaosp()     { meld "./${1}" "$(toaosp "${2}")/${1}"; }
-function meldaospsony() { meld "./${1}" "$(toaosp sony)/${1}"; }
-function meldaospcaf()  { meld "./${1}" "$(toaospcaf)/${1}"; }
-function meldlineage()  { meld "./${1}" "$(tolineage "${2}")/${1}"; }
-function meldmrom()     { meld "./${1}" "$(tomultirom)/${1}"; }
-function meldtwrp()     { meld "./${1}" "$(totwrp)/${1}"; }
+function meldaosp()     { pathscompare "./${1}" "$(toaosp "${2}")/${1}"; }
+function meldaospsony() { pathscompare "./${1}" "$(toaosp sony)/${1}"; }
+function meldaospcaf()  { pathscompare "./${1}" "$(toaospcaf)/${1}"; }
+function meldlineage()  { pathscompare "./${1}" "$(tolineage "${2}")/${1}"; }
+function meldmrom()     { pathscompare "./${1}" "$(tomultirom)/${1}"; }
+function meldtwrp()     { pathscompare "./${1}" "$(totwrp)/${1}"; }
 function nout()         { diropen "$(toout "${1}")"; }
 
 # === Syncer Shortcuts ===
@@ -344,11 +344,11 @@ function meldril()
 
   # Compare device to hardware/ril or hardware/ril-caf with a parameter given
   if [ ! -z "${1}" ]; then
-    meld include/telephony/ril.h ../../../hardware/ril-caf/include/telephony/ril.h &
-    meld libril ../../../hardware/ril-caf/libril;
+    pathscompare include/telephony/ril.h ../../../hardware/ril-caf/include/telephony/ril.h &
+    pathscompare libril ../../../hardware/ril-caf/libril;
   else
-    meld include/telephony/ril.h ../../../hardware/ril/include/telephony/ril.h &
-    meld libril ../../../hardware/ril/libril;
+    pathscompare include/telephony/ril.h ../../../hardware/ril/include/telephony/ril.h &
+    pathscompare libril ../../../hardware/ril/libril;
   fi;
 }
 
