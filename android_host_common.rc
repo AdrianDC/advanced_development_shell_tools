@@ -31,6 +31,7 @@ function fileedit()
 
   # Variables
   local opened;
+  local pid;
 
   # Files editor for most environments
   for file in "${@}"; do
@@ -55,7 +56,8 @@ function fileedit()
 
     # GUI notepad++ editor
     if [ ${opened} -ne 0 ] && [ ! -z "$(type -t notepad++ 2> /dev/null)" ]; then
-      [ "$(nohup notepad++ -nosession "${file}" > /dev/null 2>&1 & echo ${?})" -eq 0 ] && opened=0;
+      pid=$(nohup notepad++ -nosession "${file}" >/dev/null 2>&1 & echo "${!}");
+      ps -p "${pid}" >/dev/null 2>&1 && opened=0;
     fi;
 
     # Terminal nano editor
