@@ -32,6 +32,9 @@ function gitcpu()
   local project;
   local commit;
 
+  # Remote additional informations
+  link=${link%%#*};
+
   # Input handling
   project=$(echo "${link}" \
           | sed 's/.*\(github.com\/.*\)\/commit\/.*/http:\/\/\1/');
