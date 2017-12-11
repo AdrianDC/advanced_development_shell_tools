@@ -115,6 +115,35 @@ function diropen()
 # === Directory Opener Shortcut ===
 alias dop='diropen .';
 
+# === Path Comparison ===
+function pathscompare()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: pathscompare <path_left> <path_right> (Paths comparison for most environments)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local opened=1;
+  local pid;
+
+  # Meld path comparison
+  if [ ! -z "$(type -t meld 2> /dev/null)" ]; then
+    pid=$(nohup meld "${1}" "${2}" >/dev/null 2>&1 & echo "${!}");
+    ps -p "${pid}" >/dev/null 2>&1 && opened=0;
+  fi;
+
+  # Unknown environment
+  if [ ${opened} -ne 0 ]; then
+    echo '';
+    echo " pathscompare: Nothing to compare '${1}' and '${2}'";
+    echo '';
+  fi;
+}
+
 # === URL Opener ===
 function urlopen()
 {
