@@ -629,8 +629,12 @@ function shtoolsnews()
   local timestamp_current;
   local timestamp_last;
 
+  # Direct call output
+  if [ -z "${1}" ]; then
+    echo '';
+
   # Ignore automated news based on timestamp
-  if [ ! -z "${1}" ]; then
+  else
 
     # Validate timestamp from configuration
     timestamp_current=$(date +%Y-%m-%d);
@@ -650,9 +654,15 @@ function shtoolsnews()
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
   # Fetch remote project and ignore if unchanged
-  echo -en '\e[1;33mshtoolsnews: \e[1;33mChecking remote upgrades...\e[0m';
-  git fetch --quiet origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
-  if git diff --quiet HEAD FETCH_HEAD; then
+  echo -en ' \e[1;33mshtoolsnews: \e[1;33mChecking remote upgrades...\e[0m';
+  if ! git fetch --quiet origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" >/dev/null 2>&1 ||
+      git diff --quiet HEAD FETCH_HEAD; then
+    echo -en '\r\033[K \e[1;33mshtoolsnews: \e[1;31mInternet access not available...\e[0m';
+    if [ -z "${1}" ]; then
+      echo '';
+    else
+      sleep 3;
+    fi;
     echo -en "\r\033[K";
     return;
   fi;
