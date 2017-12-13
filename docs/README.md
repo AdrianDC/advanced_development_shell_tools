@@ -3,6 +3,10 @@
  * Project created by [Adrian DC](https://github.com/AdrianDC) - 2015-2017
 
  * GitHub description of the project: [About the project...](project.md)
+   <br />
+   Previews of a few regular functions: [Project previews...](previews.md)
+   <br />
+   Samples of commands usage per context: [Project samples...](samples.md)
 
  * XDA-Developers thread for this project : [Android Development Shell Tools](http://forum.xda-developers.com/-/-/-t3622382)
 
