@@ -33,19 +33,19 @@ function repochanges()
 
      # Filter out projects
      if [ ! -z \"${filter_projects}\" ] && ! echo \"\${REPO_PATH}\" | grep -iq \"${filter_projects}\"; then
-       echo -en  \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
 
      # Study projects
      else
 
        # Show and fetch projects
-       echo -en  \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       printf \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
        git fetch --quiet \${REPO_REMOTE} \${REPO_RREV##*/};
 
        # Detect new remote commits
        changescount=\$(git rev-list --right-only --count HEAD...FETCH_HEAD);
        if [ \${changescount} -ne 0 ]; then
-         echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} remote updates\";
+         printf \"\r\033[K [Project \${REPO_PROJECT}] \${changescount} remote updates\";
          echo '';
          git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
          echo '';
@@ -54,7 +54,7 @@ function repochanges()
        # Detect local commits
        changescount=\$(git rev-list --left-only --count HEAD...FETCH_HEAD);
        if [ \${changescount} -ne 0 ]; then
-         echo -en  \"\r\033[K Project \${REPO_PROJECT}: \${changescount} local changes\";
+         printf \"\r\033[K [Project \${REPO_PROJECT}] \${changescount} local changes\";
          echo '';
          git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
          echo '';
@@ -62,7 +62,7 @@ function repochanges()
 
        # Detect local differences
        if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
-         echo -en  \"\r\033[K Project \${REPO_PROJECT}: Unmerged differences\";
+         printf \"\r\033[K [Project \${REPO_PROJECT}] Unmerged differences\";
          echo '';
          git --no-pager diff;
          echo '';
