@@ -57,14 +57,14 @@ function repocomparetags()
      base_tag_name=${base_tag};
      if [ \"\${base_tag_name}\" = 'HEAD' ]; then
        base_tag_name=\${REPO_RREV};
-       base_tag_head=\${REPO_LREV};
+       base_tag_head=\$(cut -f1 .git/HEAD);
      fi;
 
      # Store compare tag data
      compare_tag_name=${compare_tag};
      if [ \"\${compare_tag_name}\" = 'HEAD' ]; then
        compare_tag_name=\${REPO_RREV};
-       compare_tag_head=\${REPO_LREV};
+       compare_tag_head=\$(cut -f1 .git/HEAD);
      fi;
 
      # Show project header
