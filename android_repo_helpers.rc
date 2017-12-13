@@ -281,10 +281,12 @@ function repoforeach()
   # Usage: repoforeach (Run commands for each project)
 
   # Variables
+  local currentdir;
   local path;
   local repo_top;
 
   # Get repo root
+  currentdir=$(pwd);
   repo_top=$(gettop);
 
   # Run commands for each project
@@ -294,6 +296,9 @@ function repoforeach()
     cd "${repo_top}/${path}";
     "${@}";
   done < <(cat "${repo_top}/.repo/project.list");
+
+  # Restore path
+  cd "${currentdir}/";
   echo '';
 }
 
