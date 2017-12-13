@@ -64,6 +64,7 @@ alias gitce='git commit $(gitgpgparam) --allow-empty';
 alias gitcs='git commit $(gitgpgparam) -s';
 alias gitca='git commit $(gitgpgparam) --amend';
 alias gitcae='git commit $(gitgpgparam) --amend --no-edit';
+alias gitcad='git commit $(gitgpgparam) --amend --no-edit --date="$(date -R)"';
 alias gitrevert='git revert $(gitgpgparam) --no-edit';
 
 # === Git Commit Fixer ===

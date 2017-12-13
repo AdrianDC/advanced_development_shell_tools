@@ -341,6 +341,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitcs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) -s*
   * [**gitca** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend*
   * [**gitcae** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend --no-edit*
+  * [**gitcad** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend --no-edit --date="$(date -R)*
   * [**gitrevert** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git revert $(gitgpgparam) --no-edit*
   * [**gitfix** *<b>\[Fix git commit issues\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
   * [**gitcauthor** *<b>\[Apply own author to commit\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
