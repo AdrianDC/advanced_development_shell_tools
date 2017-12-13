@@ -39,7 +39,7 @@ function repocomparetags()
 
      # Filter out projects
      if [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_filtered_projects}\") ]; then
-       echo -en \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
        exit;
      fi;
 
@@ -68,12 +68,12 @@ function repocomparetags()
      fi;
 
      # Show project header
-     echo -en \"\r\033[K Scanning \${REPO_PROJECT} [\${base_tag_name} // \${compare_tag_name}] \";
+     printf \"\r\033[K Scanning \${REPO_PROJECT} [\${base_tag_name} // \${compare_tag_name}] \";
 
      # Fetch compare tag if needed
      if [ ! \"${compare_tag}\" = 'HEAD' ]; then
        if ! git fetch -v \"\${project_upstream}\" \"\${compare_tag_name}\"; then
-         echo -en \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+         printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
          exit;
        fi;
        compare_tag_head=\$(cut -f1 .git/FETCH_HEAD);
@@ -82,7 +82,7 @@ function repocomparetags()
      # Fetch base tag if needed
      if [ ! \"${base_tag}\" = 'HEAD' ]; then
        if ! git fetch -v \"\${project_upstream}\" \"\${base_tag_name}\"; then
-         echo -en \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+         printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
          exit;
        fi;
        base_tag_head=\$(cut -f1 .git/FETCH_HEAD);
@@ -90,10 +90,11 @@ function repocomparetags()
 
      # Detect local differences
      if ! git diff --quiet \${base_tag_head} \${compare_tag_head}; then
-       echo -e '\r\033[K\e[1;32m';
+       printf '\r\033[K';
+       echo '';
        echo '=======================================================================================================================';
        echo \"repocomparetags: Project \${REPO_PROJECT}: Base '\${base_tag_name}' // Compare '\${compare_tag_name}'\";
-       echo -e '\e[0m';
+       echo '';
        git --no-pager diff \${base_tag_head} \${compare_tag_head};
        echo '';
      fi;
