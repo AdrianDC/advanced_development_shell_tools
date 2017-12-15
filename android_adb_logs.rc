@@ -98,7 +98,7 @@ function adblr()
   adbready;
 
   # Logcat output relevant reader
-  adbl | grep -av 'Diag_Lib:';
+  adbl | grep -av 'Diag_Lib:\|MediaScanner: Error opening\|MediaProvider: object removed';
 }
 
 # === ADB Logcat Public Cleaner ===
