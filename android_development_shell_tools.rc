@@ -653,16 +653,22 @@ function shtoolsnews()
   # Access Android Development Shell Tools folder
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
-  # Fetch remote project and ignore if unchanged
+  # Fetch remote project and ignore if unavailable
   echo -en ' \e[1;33mshtoolsnews: \e[1;33mChecking remote upgrades...\e[0m';
-  if ! git fetch --quiet origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" >/dev/null 2>&1 ||
-      git diff --quiet HEAD FETCH_HEAD; then
+  if ! git fetch --quiet origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" >/dev/null 2>&1; then
     echo -en '\r\033[K \e[1;33mshtoolsnews: \e[1;31mInternet access not available...\e[0m';
     if [ -z "${1}" ]; then
       echo '';
     else
       sleep 3;
     fi;
+    echo -en "\r\033[K";
+    cd "${currentdir}/";
+    return;
+  fi;
+
+  # Ignore if unchanged
+  if git diff --quiet HEAD FETCH_HEAD; then
     echo -en "\r\033[K";
     cd "${currentdir}/";
     return;
