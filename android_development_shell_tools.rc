@@ -664,6 +664,7 @@ function shtoolsnews()
       sleep 3;
     fi;
     echo -en "\r\033[K";
+    cd "${currentdir}/";
     return;
   fi;
 
