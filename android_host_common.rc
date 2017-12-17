@@ -88,7 +88,7 @@ alias fen='FILEEDIT_TOUCH_NEW_FILE=true fileedit';
 function diropen()
 {
   # Usage
-  if [ ! -d "${1}" ]; then
+  if [ ! -d "${1}" ] && [ ! -f "${1}" ]; then
     echo '';
     echo ' Usage: diropen <path> (Directory opener for most environments)';
     echo '';
@@ -97,20 +97,26 @@ function diropen()
 
   # Variables
   local opened;
+  local path=${1};
+
+  # Get directory from file path
+  if [ -f "${path}" ]; then
+    path=$(dirname "${path}");
+  fi;
 
   # GUI xdg directory viewer
-  xdg-open "${1}" 2> /dev/null;
+  xdg-open "${path}" 2> /dev/null;
   opened=${?};
 
   # GUI explorer directory viewer
   if [ ${opened} -ne 0 ] && [ ! -z "$(type -t explorer 2> /dev/null)" ]; then
-    explorer "${1//\//\\}";
+    explorer "${path//\//\\}";
     opened=0;
   fi;
 
   # Unknown environment
   if [ ${opened} -ne 0 ]; then
-    cd "${1}";
+    cd "${path}";
   fi;
 }
 
