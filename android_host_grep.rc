@@ -125,7 +125,7 @@ function gca()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' \));
+  done < <(__find_android . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' \));
 }
 
 # === Grep Android Manifests ===
