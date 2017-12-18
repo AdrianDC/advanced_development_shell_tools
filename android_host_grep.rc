@@ -31,6 +31,7 @@ function __find_android()
       -not -path '*.git/*' \
       -not -path '*.repo/*' \
       -not -path './out*' \
+      -not -path './build-*' \
       -not -path '*/drawable-*/*' \
       -not -path '*/values-*/*' \
       | sort;
