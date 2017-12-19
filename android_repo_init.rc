@@ -104,7 +104,7 @@ function repoinitlineage()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repoinitlineage <13.0/14.1/15.0> [referenced,clean,light/shallow,example] (repo init for LineageOS)';
+    echo ' Usage: repoinitlineage <13.0/14.1/15.0/15.1> [referenced,clean,light/shallow,example] (repo init for LineageOS)';
     echo '';
     return;
   fi;
@@ -121,6 +121,7 @@ function repoinitlineage()
     13.0) branch='cm-13.0';;
     14.1) branch='cm-14.1';;
     15.0) branch='lineage-15.0';;
+    15.1) branch='staging/lineage-15.1';;
     *)    branch='';;
   esac;
 
