@@ -79,9 +79,9 @@ function makekernelcopyleft()
 function kernelcopyleftmerger()
 {
   # Usage
-  if [ ! -f './README_Xperia' ]; then
+  if [ ! -f './README_Xperia' ] || [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: kernelcopyleftmerger (Sony Copyleft kernel archive merge helper)';
+    echo ' Usage: kernelcopyleftmerger <archive_tar_bz2> (Sony Copyleft kernel archive merge helper)';
     echo '   Details: You need to be inside the copyleft kernel folder'
     echo '';
     return;
@@ -93,11 +93,14 @@ function kernelcopyleftmerger()
   read -r;
   rm -rf ./* ./.build;
 
-  # Open current folder to extract new kernel
+  # Extract archive kernel contents
   echo '';
-  echo -n ' kernelcopyleftmerger: Extract the kernel files in the folder [ENTER] ';
-  diropen ./;
-  read -r;
+  echo ' kernelcopyleftmerger: Extracting the kernel files from the archive';
+  tar -xvf "${1}" kernel;
+  mv ./kernel ./kernel_tmp;
+  mv -f ./kernel_tmp/msm-*.*/* ./;
+  mv -f ./kernel_tmp/msm-*.*/.* ./;
+  rm -rf ./kernel_tmp;
 
   # Stash all lost .gitignore files
   echo '';
