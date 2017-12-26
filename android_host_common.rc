@@ -227,8 +227,13 @@ function processownercheck()
   fi;
 
   # Search for process and validate owner exists
-  #shellcheck disable=SC2009
-  ps -eo cmd,uname:20 \
-      | grep "^${1}" \
-      | grep -q "${2}";
+  if uname -a | grep -q 'Linux'; then
+    #shellcheck disable=SC2009
+    ps -eo cmd,uname:20 2>/dev/null \
+        | grep "^${1}" \
+        | grep -q "${2}";
+  else
+    ps -W \
+        | grep -q "${1}.exe";
+  fi;
 }
