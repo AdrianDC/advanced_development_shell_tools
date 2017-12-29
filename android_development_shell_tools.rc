@@ -539,12 +539,12 @@ function shtoolsdiff()
 # === Android Development Shell Tools Log ===
 function shtoolslog()
 {
-  # Usage: shtoolslog (Display android_development_shell_tools history)
+  # Usage: shtoolslog [commits_count] (Display android_development_shell_tools history)
 
   # Display project history
   local currentdir=${PWD};
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
-  git log --pretty=oneline -n 10;
+  git log --pretty=oneline -n "${1:-10}";
   cd "${currentdir}/";
 }
 
