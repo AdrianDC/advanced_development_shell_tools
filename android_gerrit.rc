@@ -61,6 +61,9 @@ function gerritreview()
   if [ -z "${gerrit_remote}" ]; then
     gerrit_remote=$(git remote -v | grep "${gerrit_organisation}.*//" | tail -n 1);
   fi;
+  if [ -z "${gerrit_remote}" ] && [ ! "${gerrit_organisation}" = 'aosp' ]; then
+    gerrit_remote=$(git remote -v | grep github$'\t' | tail -n 1);
+  fi;
 
   # Project detection for AOSP
   if [ "${gerrit_organisation}" = 'aosp' ]; then
