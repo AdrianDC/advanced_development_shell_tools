@@ -100,10 +100,15 @@ function gerritreview()
     fi;
   fi;
 
+  # Header information
+  echo '';
+  echo -e " \e[1;32m=== gerritreview - Review commits for branch '${gerrit_branch}' ===\e[0m";
+  echo '';
+
   # Check review statistics
   git fetch "${gerrit_fetch}" "refs/heads/${gerrit_branch}";
   echo '';
-  echo -n ' [Gerrit branch] New changes - missing : ';
+  echo -en " \e[1;33mNew changes - missing : \e[0m";
   git rev-list --left-right --count HEAD...FETCH_HEAD;
 
   # Command creation
@@ -112,7 +117,8 @@ function gerritreview()
   # Command confirmation
   echo '';
   echo " ${command}";
-  echo -n '  > Proceed with review upload (y/N/t) ? ';
+  echo '';
+  echo -en " \e[1;37m> Proceed with review upload (y/N/t) ? \e[0m";
   read -r key;
 
   # Set a topic
