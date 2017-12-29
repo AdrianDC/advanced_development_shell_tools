@@ -27,7 +27,8 @@ function gitstat()
   fi;
 
   # Informations
-  echo "git fetch ${1} ${2}; git rev-list --left-right --count HEAD...FETCH_HEAD;";
+  echo -e " \e[1;33mgitstat:\e[0m git fetch ${1} ${2}; git rev-list --left-right --count HEAD...FETCH_HEAD;";
+  echo '';
 
   # Request
   git fetch "${1}" "${2}";
@@ -39,7 +40,7 @@ function gitstat()
 
   # Comparison
   echo '';
-  echo -n ' New changes - missing : ';
+  echo -en " \e[1;33mNew changes - missing : \e[0m";
   git rev-list --left-right --count HEAD...FETCH_HEAD;
 }
 
