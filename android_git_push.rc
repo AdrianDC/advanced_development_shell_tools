@@ -29,14 +29,22 @@ function gitpu()
   local input=${3};
   local cmd;
 
-  # Get remote stats
+  # Header information
   echo '';
+  echo -e " \e[1;32m=== gitpu - Pushing to branch '${branch}' ===\e[0m";
+  echo '';
+
+  # Get remote stats
   gitstat "${remote}" "${branch}" true;
 
-  # Introduction
+  # Push command
+  cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
+
+  # Push validation
   echo '';
-  local cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
-  echo -n "  ${cmd} [Y/n] ? ";
+  echo -e " \e[1;33mgitpu:\e[0m ${cmd}";
+  echo '';
+  echo -en " \e[1;37m> Proceed with git push (Y/n) ? \e[0m";
   if [ -z "${input}" ]; then
     read -r key;
   else
