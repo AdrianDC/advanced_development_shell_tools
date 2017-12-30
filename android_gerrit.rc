@@ -67,6 +67,12 @@ function gerritreview()
   if [ -z "${gerrit_remote}" ] && [ ! "${gerrit_organisation}" = 'aosp' ]; then
     gerrit_remote=$(git remote -v | grep github$'\t' | tail -n 1);
   fi;
+  if [ -z "${gerrit_remote}" ]; then
+    gerrit_remote=$(git rev-parse --show-toplevel \
+                  | sed "s#$(gettop)/##"\
+                  | sed "s#/#_#");
+    gerrit_remote="android_${gerrit_remote}";
+  fi;
 
   # Project detection for AOSP
   if [ "${gerrit_organisation}" = 'aosp' ]; then
