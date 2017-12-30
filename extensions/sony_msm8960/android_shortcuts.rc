@@ -16,7 +16,6 @@
 #
 
 # === Device Shortcuts ===
-function cdspdev()     { cd "$(pwd | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/sony\/huashan/g')"; }
 function cdspker()     { cd "$(pwd | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8960t/g')"; }
 function cdblueker()   { cd "$(pwd | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/kernel\/sony\/msm8x60/g')"; }
 function cdvendsony()  { cd "$(pwd | sed 's/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/vendor\/sony/g')"; }
