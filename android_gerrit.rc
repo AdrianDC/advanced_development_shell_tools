@@ -58,7 +58,7 @@ function gerritreview()
   if [ -z "${gerrit_remote}" ] && [ ! "${gerrit_organisation}" = 'aosp' ]; then
     gerrit_remote=$(git remote -v | grep origin$'\t' | tail -n 1);
   fi;
-  if [ -z "${gerrit_remote}" ]; then
+  if [ -z "${gerrit_remote}" ] && [ "${gerrit_organisation}" = 'aosp' ]; then
     gerrit_remote=$(git remote -v | grep aosp$'\t' | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ]; then
