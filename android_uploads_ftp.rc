@@ -241,7 +241,7 @@ function syncftp()
     # Sync through FTP
     if ! lftp \
         "ftp://${FTPUploadUserName}:${FTPUploadPassword}@${FTPUploadUserUrl}" \
-         -e "mirror -e -R '${local_path}' '${remote_path}'; quit;"; then
+         -e "mirror -e -R --scan-all-first --verbose=1 '${local_path}' '${remote_path}'; quit;"; then
 
       # Failed FTP sync
       notify-send 'Failed syncing through FTP...' 2> /dev/null;
@@ -259,7 +259,7 @@ function syncftp()
     # Sync through FTP
     if ! lftp \
          "ftp://${FTPUploadUserName}:${FTPUploadPassword}@${FTPUploadUserUrl}" \
-         -e "mirror -e '${remote_path}' '${local_path}'; quit;"; then
+         -e "mirror -e --scan-all-first --verbose=1 '${remote_path}' '${local_path}'; quit;"; then
 
       # Failed FTP sync
       notify-send 'Failed syncing through FTP...' 2> /dev/null;
@@ -271,6 +271,7 @@ function syncftp()
 
   # Show sync time
   time_span=$(($(date +%s) - time_start));
+  echo '';
   echo -e " \e[1;37m[ Syncing done in ${time_span} secs ]\e[0m";
   echo '';
 }
