@@ -54,6 +54,25 @@ function editremovematch()
   sed -i "/^.*${match_line}.*/d" "${files[@]}";
 }
 
+# === Edit Remove Up To Match ===
+function editremoveupto()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: editremoveupto <"match_line"> <"files"> (Edit by removing lines up to first match)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local match_line=${1};
+  local files=("${@:2}");
+
+  # Remove up to match
+  sed -i "/^.*${match_line}.*/,\$!d" "${files[@]}";
+}
+
 # === Edit Insert Above ===
 function editinsertabove()
 {
