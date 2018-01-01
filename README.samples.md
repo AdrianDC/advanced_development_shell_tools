@@ -137,13 +137,9 @@
    <br />
    `reposy`
 
- * Initiate device environments based on LineageOS
+ * Initiate device environments based on AOSP or LineageOS
    <br />
    `repos device_codename`
-
- * Initiate device environments based on AOSP
-   <br />
-   `reposaosp device_codename`
 
  * Switch between multiple local_manifests_* folders
    <br />

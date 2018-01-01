@@ -107,11 +107,8 @@
 [*]Sync repository with optimized flags
    [FONT="Courier New"][I]`reposy`[/I][/FONT]
 
-[*]Initiate device environments based on LineageOS
+[*]Initiate device environments based on AOSP or LineageOS
    [FONT="Courier New"][I]`repos device_codename`[/I][/FONT]
-
-[*]Initiate device environments based on AOSP
-   [FONT="Courier New"][I]`reposaosp device_codename`[/I][/FONT]
 
 [*]Switch between multiple local_manifests_* folders
    [FONT="Courier New"][I]`reposwitcher`[/I][/FONT]
