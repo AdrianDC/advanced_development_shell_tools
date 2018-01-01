@@ -42,6 +42,18 @@ function adbre()
   adb reboot;
 }
 
+# === ADB Hot Reboot ===
+function adbrh()
+{
+  # Usage: adbrh (Hot-reboot device through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Hot-reboot device through adb
+  adb shell setprop ctl.restart zygote;
+}
+
 # === ADB Reboot Bootloader ===
 function adbrb()
 {
@@ -57,7 +69,6 @@ function adbrb()
 # === ADB Regular Shortcuts ===
 function adbs() { adb shell "${@}"; }
 function adbdf() { adb shell df -H "${@}"; }
-function adbrh() { adb shell setprop ctl.restart zygote; }
 function adbrr() { adb reboot recovery; }
 function adbsl() { adb shell ls -l "${@}"; }
 function adbslz() { adb shell ls -lZ "${@}"; }
