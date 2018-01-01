@@ -912,7 +912,7 @@ function shtoolsreadme()
         echo '';
         echo " ${path}: ERROR: '${line_function}.sh' has no usage";
         echo '';
-       return;
+        return;
       fi;
 
       # Parse usage and summary details
@@ -1000,6 +1000,11 @@ function shtoolsreadme()
         line_usage=${line_usage%$"'"};
         line_usage=${line_usage%$'"'};
         stats_aliases=$((stats_aliases + 1));
+      fi;
+
+      # Ignore deprecated functions
+      if [[ "${line_usage}" == *'@Deprecated'* ]]; then
+        continue;
       fi;
 
       # Apply usage formattings

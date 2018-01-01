@@ -952,10 +952,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**listmega** *<b>\[List remote files on MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *listmega [options]*
 
 ---
-### [&nbsp;Documentation: [extensions/deprecated/android_repo_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/deprecated/android_repo_helpers.rc)&nbsp;]
-  * [**reposaosp** *<b>\[Prepare AOSP device environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/deprecated/android_repo_helpers.rc) : *reposaosp &lt;device_name&gt;*
-
----
 ### [&nbsp;Documentation: [extensions/lineage_next/android_rom_lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/android_rom_lineageos.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)

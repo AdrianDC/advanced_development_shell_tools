@@ -21,7 +21,7 @@ function reposaosp()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: reposaosp <device_name> (Prepare AOSP device environment)';
+    echo ' Usage: reposaosp <device_name> (Prepare AOSP device environment @Deprecated)';
     echo '';
     return;
   fi;
