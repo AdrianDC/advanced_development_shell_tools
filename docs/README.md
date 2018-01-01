@@ -730,7 +730,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * [**gettop** *<b>\[Get repo root path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
   * [**croot** *<b>\[Access repo root path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
-  * [**repos** *<b>\[Prepare LineageOS device environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *repos &lt;device_name&gt;*
+  * [**repos** *<b>\[Prepare Android device environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *repos &lt;device_name&gt;*
   * [**reporoomserv** *<b>\[Manifest and local_manifests editor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
   * [**reposy** *<b>\[Optimized relevant repo sync\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)
   * [**reposysafe** *<b>\[Safeguarded repo projects sync\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)

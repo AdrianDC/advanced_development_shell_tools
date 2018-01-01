@@ -65,13 +65,13 @@ function croot()
   fi;
 }
 
-# === Repo Environment Starter for LineageOS ===
+# === Android Repo Environment Starter ===
 function repos()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: repos <device_name> (Prepare LineageOS device environment)';
+    echo ' Usage: repos <device_name> (Prepare Android device environment)';
     echo '';
     return;
   fi;
