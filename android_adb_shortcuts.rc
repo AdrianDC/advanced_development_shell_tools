@@ -19,18 +19,18 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_shortcuts.rc)
 
 # === ADB Regular Shortcuts ===
-alias adbs='adb shell';
-alias adbdf='adb shell df -H';
-alias adbpo='adb shell reboot -p';
-alias adbrb='adb reboot bootloader';
-alias adbre='adb reboot';
+function adbs() { adb shell "${@}"; }
+function adbdf() { adb shell df -H "${@}"; }
+function adbpo() { adb shell reboot -p; }
+function adbrb() { adb reboot bootloader; }
+function adbre() { adb reboot; }
 function adbrh() { adb shell setprop ctl.restart zygote; }
-alias adbrr='adb reboot recovery';
-alias adbsl='adb shell ls -l';
-alias adbslz='adb shell ls -lZ';
-alias adbsc='adb shell cat';
-alias adbsg='adb shell getprop';
-alias adbw='adb wait-for-device';
+function adbrr() { adb reboot recovery; }
+function adbsl() { adb shell ls -l "${@}"; }
+function adbslz() { adb shell ls -lZ "${@}"; }
+function adbsc() { adb shell cat "${@}"; }
+function adbsg() { adb shell getprop "${@}"; }
+function adbw() { adb 'wait-for-device'; }
 
 # === ADB File Writer ===
 function adbsw()
@@ -43,22 +43,22 @@ function adbsw()
 }
 
 # === ADB Partitions Shortcuts ===
-alias adbblkp='adb shell ls -l /dev/block/bootdevice/by-name/';
-alias adbfotarandom='adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel';
-alias adbfotazero='adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel';
-alias adbmountcache='adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache';
-alias adbmountdata='adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data';
-alias adbmountmicrosd='adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext';
-alias adbsgdisk='adb shell sgdisk --print /dev/block/mmcblk0';
-alias adbumountcache='adb shell umount /cache';
-alias adbumountdata='adb shell umount /data';
-alias adbumountmicrosd='adb shell umount /storage/ext';
-alias adbmount='adbmountcache; adbmountdata; adbmountmicrosd';
-alias adbumount='adbumountcache; adbumountdata; adbumountmicrosd';
+function adbblkp() { adb shell ls -l /dev/block/bootdevice/by-name/; }
+function adbfotarandom() { adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel; }
+function adbfotazero() { adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel; }
+function adbmountcache() { adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache; }
+function adbmountdata() { adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data; }
+function adbmountmicrosd() { adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext; }
+function adbsgdisk() { adb shell sgdisk --print /dev/block/mmcblk0; }
+function adbumountcache() { adb shell umount /cache; }
+function adbumountdata() { adb shell umount /data; }
+function adbumountmicrosd() { adb shell umount /storage/ext; }
+function adbmount() { adbmountcache; adbmountdata; adbmountmicrosd; }
+function adbumount() { adbumountcache; adbumountdata; adbumountmicrosd; }
 
 # === ADB Advanced Shortcuts ===
-alias adbinfomem='adb shell dumpsys meminfo';
-alias adbrcbin='adb shell restorecon -R /sbin';
-alias adbemergencycalls='adb shell setprop ril.ecclist';
-alias adbemergencylist='adb shell getprop ril.ecclist';
-alias adbservices='adb shell service list';
+function adbinfomem() { adb shell dumpsys meminfo; }
+function adbrcbin() { adb shell restorecon -R /sbin; }
+function adbemergencycalls() { adb shell setprop ril.ecclist "${@}"; }
+function adbemergencylist() { adb shell getprop ril.ecclist; }
+function adbservices() { adb shell service list; }

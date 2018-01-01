@@ -93,7 +93,7 @@ function sepmsg()
 }
 
 # === ADB Intents ===
-alias adbintents='adb shell dumpsys package r > intents.txt';
+function adbintents() { adb shell 'dumpsys package r' > intents.txt; }
 
 # === ADB Camera Enabled / Launcher ===
 function adbcamera()
@@ -159,7 +159,7 @@ function adbms()
 }
 
 function adblibs() { adb shell grep -air "${1}" "${2:-/system/lib/}"; }
-alias ndkstack='ndk-stack -sym "${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols" -dump';
+function ndkstack() { ndk-stack -sym "${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols" -dump; }
 function adbwtch() { adbr; while true; do adb shell cat "${1}"; done; }
 
 function adbdu()

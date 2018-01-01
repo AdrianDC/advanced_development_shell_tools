@@ -165,7 +165,7 @@ function adbil()
 }
 
 # === ADB File Installer Helpers ===
-alias adbi='adbro; adbif';
+function adbi() { adbro; adbif "${@}"; }
 
 # === ADB File Pusher ===
 function adbpf()
@@ -247,8 +247,8 @@ function adbpf()
 }
 
 # === ADB Pushes ===
-alias adbp='adbro; adbpf';
-alias adbpu='adbro; adbpushfile';
+function adbp() { adbro; adbpf "${@}"; }
+function adbpu() { adbro; adbpushfile "${@}"; }
 
 # === ADB Packages Results Pusher ===
 function adbppr()
