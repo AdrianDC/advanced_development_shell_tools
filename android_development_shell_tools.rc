@@ -572,6 +572,38 @@ function shtoolsreset()
   git diff --stat HEAD;
 }
 
+# === Android Development Shell Tools Docs ===
+function shtoolsdocs()
+{
+  # Usage: shtoolsdocs [bool_install] (Instantiate android_development_shell_tools documentation)
+
+  # Variables
+  local currentdir=${PWD};
+
+  # Access documentation path
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/";
+
+  # Installation mode
+  if [ ! -z "${1}" ]; then
+    sudo apt-get install ruby-dev;
+    sudo gem install bundler;
+    sudo bundle install;
+    bundle;
+  fi;
+
+  # Open webviewer
+  sleep 2 && urlopen "http://127.0.0.1:4002" &
+
+  # Launch Jekyll
+  bundle exec jekyll serve --incremental --port 4002;
+
+  # Cleanup server files
+  rm -rf ./_site ./.jekyll-metadata ./Gemfile.lock;
+
+  # Restore current path
+  cd "${currentdir}/";
+}
+
 # === Android Development Shell Tools Master ===
 function shtoolsmaster()
 {

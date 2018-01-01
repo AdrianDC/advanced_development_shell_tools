@@ -79,6 +79,7 @@
   * [**shtoolslog** *<b>\[Display android_development_shell_tools history\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) : *shtoolslog [commits_count]*
   * [**shtoolsshow** *<b>\[Display android_development_shell_tools commit\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) : *shtoolsshow [offset_count]*
   * [**shtoolsreset** *<b>\[Reset project to remote HEAD\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
+  * [**shtoolsdocs** *<b>\[Instantiate android_development_shell_tools documentation\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) : *shtoolsdocs [bool_install]*
   * [**shtoolsmaster** *<b>\[Switch android_development_shell_tools to master branch\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsstaging** *<b>\[Switch android_development_shell_tools to staging branch\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsnews** *<b>\[Display android_development_shell_tools news notifications\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
