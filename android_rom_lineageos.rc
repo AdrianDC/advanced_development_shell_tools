@@ -36,7 +36,7 @@ function lineagewebjekyll()
   fi;
 
   # Open webviewer
-  urlopen "http://127.0.0.1:4001" &
+  sleep 2 && urlopen "http://127.0.0.1:4001" &
 
   # Launch Jekyll
   bundle exec jekyll serve --incremental --port 4001;
@@ -73,7 +73,7 @@ function lineagecvetracker()
 
   # Open webviewer
   echo '';
-  urlopen "http://127.0.0.1:5000" &
+  sleep 2 && urlopen "http://127.0.0.1:5000" &
 
   # Launch cve_tracker
   echo '';
