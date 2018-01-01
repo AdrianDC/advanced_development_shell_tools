@@ -42,10 +42,21 @@ function adbre()
   adb reboot;
 }
 
+# === ADB Reboot Bootloader ===
+function adbrb()
+{
+  # Usage: adbrb (Reboot device to bootloader through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Reboot device to bootloader through adb
+  adb reboot bootloader;
+}
+
 # === ADB Regular Shortcuts ===
 function adbs() { adb shell "${@}"; }
 function adbdf() { adb shell df -H "${@}"; }
-function adbrb() { adb reboot bootloader; }
 function adbrh() { adb shell setprop ctl.restart zygote; }
 function adbrr() { adb reboot recovery; }
 function adbsl() { adb shell ls -l "${@}"; }
