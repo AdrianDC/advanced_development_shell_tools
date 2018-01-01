@@ -18,6 +18,18 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_shortcuts.rc)
 
+# === ADB Power-off ===
+function adbpo()
+{
+  # Usage: adbpo (Power-off device through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Power-off device through adb
+  adb shell 'reboot -p';
+}
+
 # === ADB Reboot ===
 function adbre()
 {
@@ -33,7 +45,6 @@ function adbre()
 # === ADB Regular Shortcuts ===
 function adbs() { adb shell "${@}"; }
 function adbdf() { adb shell df -H "${@}"; }
-function adbpo() { adb shell reboot -p; }
 function adbrb() { adb reboot bootloader; }
 function adbrh() { adb shell setprop ctl.restart zygote; }
 function adbrr() { adb reboot recovery; }
