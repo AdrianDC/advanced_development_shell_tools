@@ -51,9 +51,9 @@ function adbst()
 
   # Process identifier command
   if [ -z "${3}" ]; then
-    cmd="pid=\$(pgrep '${1}' | head -n1)";
+    cmd="pid=\$(pgrep -f '${1}' | head -n1)";
   else
-    cmd="echo 'adbst: Waiting for ${1}'; pid=''; while [ -z \"\${pid}\" ]; do pid=\$(pgrep '${1}' | head -n1); done";
+    cmd="echo 'adbst: Waiting for ${1}'; pid=''; while [ -z \"\${pid}\" ]; do pid=\$(pgrep -f '${1}' | head -n1); done";
   fi;
 
   # Append strace command
