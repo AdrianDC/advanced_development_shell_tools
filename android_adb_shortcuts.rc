@@ -78,6 +78,18 @@ function adbrb()
   adb reboot bootloader;
 }
 
+# === ADB Wait For Device ===
+function adbw()
+{
+  # Usage: adbw (Wait for device through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Wait for device through adb
+  adb 'wait-for-device';
+}
+
 # === ADB Regular Shortcuts ===
 function adbs() { adb shell "${@}"; }
 function adbdf() { adb shell df -H "${@}"; }
@@ -85,7 +97,6 @@ function adbsl() { adb shell ls -l "${@}"; }
 function adbslz() { adb shell ls -lZ "${@}"; }
 function adbsc() { adb shell cat "${@}"; }
 function adbsg() { adb shell getprop "${@}"; }
-function adbw() { adb 'wait-for-device'; }
 
 # === ADB File Writer ===
 function adbsw()

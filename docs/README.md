@@ -191,13 +191,13 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbrh** *<b>\[Hot-reboot device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
   * [**adbrr** *<b>\[Reboot device to recovery through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
   * [**adbrb** *<b>\[Reboot device to bootloader through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
+  * [**adbw** *<b>\[Wait for device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
   * [**adbs** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell "${@}"*
   * [**adbdf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell df -H "${@}"*
   * [**adbsl** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell ls -l "${@}"*
   * [**adbslz** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell ls -lZ "${@}"*
   * [**adbsc** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell cat "${@}"*
   * [**adbsg** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell getprop "${@}"*
-  * [**adbw** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb 'wait-for-device'*
   * [**adbsw** *<b>\[Write a string to path through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adbsw &lt;"data"&gt; &lt;path&gt;*
   * [**adbblkp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell ls -l /dev/block/bootdevice/by-name/*
   * [**adbfotarandom** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel*
