@@ -18,12 +18,23 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_shortcuts.rc)
 
+# === ADB Reboot ===
+function adbre()
+{
+  # Usage: adbre (Reboot device through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Reboot device through adb
+  adb reboot;
+}
+
 # === ADB Regular Shortcuts ===
 function adbs() { adb shell "${@}"; }
 function adbdf() { adb shell df -H "${@}"; }
 function adbpo() { adb shell reboot -p; }
 function adbrb() { adb reboot bootloader; }
-function adbre() { adb reboot; }
 function adbrh() { adb shell setprop ctl.restart zygote; }
 function adbrr() { adb reboot recovery; }
 function adbsl() { adb shell ls -l "${@}"; }
