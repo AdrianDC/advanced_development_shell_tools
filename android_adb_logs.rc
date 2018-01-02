@@ -166,8 +166,6 @@ function adbstcln()
 }
 
 # === ADB Loggers Helpers ===
-function adbld() { cls; echo -n '' > adb.data; adbsu cat /data/logcat.txt | tee -a adb.data; }
-function adblb() { while true; do cls; echo -n '' > adb.log; adb logcat -v audit2allow '*:V' | tee -a adb.log; echo ''; echo -n 'Press Enter to continue... '; read -r; done; }
 function adblc() { adb logcat -c; adbl; }
 function adbk() { echo -n '' > kmsg; adbsu cat /proc/kmsg | tee -a kmsg; }
 function adbdm() { echo -n '' > dmesg; adbsu dmesg | tee -a dmesg; }
@@ -176,8 +174,6 @@ function adbkl() { cls; echo -n '' > last_kmsg; adbsu cat /proc/last_kmsg | tee 
 function adbpl() { cls; echo -n '' > last_kmsg; adbsu cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg; }
 function adbrl() { cls; echo -n '' > recovery_log; adbsu cat /tmp/recovery.log | tee -a recovery_log; }
 function adbdumpsensors() { adbsu dumpsys sensorservice; }
-function adblf() { adb logcat -v audit2allow; }
-function adblh() { adb logcat -b events -b main -b radio | highlight; }
 function adbtrampoline() { adbsu 'dmesg | grep -i trampoline'; }
 
 # === ADB Ramoops Compressed Logger ===
