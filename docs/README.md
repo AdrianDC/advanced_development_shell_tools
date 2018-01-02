@@ -115,6 +115,19 @@
   * [**adbbootchart** *<b>\[Bootchart debug helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc)
 
 ---
+### [&nbsp;Documentation: [android_adb_device.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_device.rc)
+  ```
+  * [**adbpo** *<b>\[Power-off device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)
+  * [**adbre** *<b>\[Reboot device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)
+  * [**adbrh** *<b>\[Hot-reboot device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)
+  * [**adbrr** *<b>\[Reboot device to recovery through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)
+  * [**adbrb** *<b>\[Reboot device to bootloader through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)
+  * [**adbw** *<b>\[Wait for device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)
+
+---
 ### [&nbsp;Documentation: [android_adb_flash.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_flash.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
@@ -180,15 +193,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_adb_shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)&nbsp;]
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_shortcuts.rc)
   ```
-  * [**adbpo** *<b>\[Power-off device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
-  * [**adbre** *<b>\[Reboot device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
-  * [**adbrh** *<b>\[Hot-reboot device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
-  * [**adbrr** *<b>\[Reboot device to recovery through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
-  * [**adbrb** *<b>\[Reboot device to bootloader through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
-  * [**adbw** *<b>\[Wait for device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)
   * [**adbs** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell "${@}"*
   * [**adbdf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell df -H "${@}"*
   * [**adbsl** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell ls -l "${@}"*
