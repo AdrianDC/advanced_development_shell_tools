@@ -158,7 +158,6 @@ function adbms()
   adb shell "strace -p '${pid}'";
 }
 
-function adblibs() { adb shell "grep -air '${1}' '${2:-/system/lib/}'"; }
 function ndkstack() { ndk-stack -sym "${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols" -dump; }
 function adbwtch() { adbr; while true; do adb shell "cat '${1}'"; done; }
 
