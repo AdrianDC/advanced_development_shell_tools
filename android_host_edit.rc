@@ -15,6 +15,9 @@
 # limitations under the License.
 #
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_edit.rc)
+
 # === Edit Replace Match ===
 function editreplacematch()
 {

@@ -521,6 +521,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_host_edit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_edit.rc)
+  ```
   * [**editreplacematch** *<b>\[Edit by replacing matches\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *editreplacematch &lt;"match_line"&gt; &lt;"to_write"&gt; &lt;"files"&gt;*
   * [**editremovematch** *<b>\[Edit by removing matches\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *editremovematch &lt;"match_line"&gt; &lt;"files"&gt;*
   * [**editremoveupto** *<b>\[Edit by removing lines up to first match\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *editremoveupto &lt;"match_line"&gt; &lt;"files"&gt;*
