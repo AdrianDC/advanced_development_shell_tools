@@ -456,6 +456,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_git_remotes.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
+  ```
   * [**gitrv** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *git remote -v*
   * [**gitremoteset** *<b>\[Git remote setter\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteset &lt;remote_name&gt; &lt;remote_url&gt;*
   * [**gitremoteadaptset** *<b>\[Git remote adapter\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc) : *gitremoteadaptset &lt;remote_name&gt; &lt;remote_github&gt; [prefix_removal] [bool_prefix_android] [bool_underscore_to_dash]*
