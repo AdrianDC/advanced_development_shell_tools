@@ -162,9 +162,9 @@ function repotwrp()
     adbwait;
     adb push "${TWRPImg}" /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
-      adb shell /system/bin/dd if=/tmp/twrp.img of="${FOTAPartition}";
+      adb shell "/system/bin/dd if=/tmp/twrp.img of='${FOTAPartition}'";
     else
-      adb shell /sbin/dd if=/tmp/twrp.img of="${FOTAPartition}";
+      adb shell "/sbin/dd if=/tmp/twrp.img of='${FOTAPartition}'";
     fi;
     if [[ "${BuildParams}" == *'fotareboot'* ]]; then
       adb reboot recovery;
@@ -415,9 +415,9 @@ function repomrom()
     adbwait;
     adb push "${TWRPImg}" /tmp/twrp.img;
     if [ ! -z "$(adb shell 'ls /system/bin/dd 2> /dev/null')" ]; then
-      adb shell /system/bin/dd if=/tmp/twrp.img of="${FOTAPartition}";
+      adb shell "/system/bin/dd if=/tmp/twrp.img of='${FOTAPartition}'";
     else
-      adb shell /sbin/dd if=/tmp/twrp.img of="${FOTAPartition}";
+      adb shell "/sbin/dd if=/tmp/twrp.img of='${FOTAPartition}'";
     fi;
     if [[ "${BuildParams}" == *'fotareboot'* ]]; then
       adb reboot recovery;

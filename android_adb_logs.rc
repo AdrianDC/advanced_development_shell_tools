@@ -214,7 +214,7 @@ function adbbootchart()
   fi;
 
   # Set bootchart timeout
-  adb shell "echo ${timeinput} > /data/bootchart/start";
+  adb shell "echo '${timeinput}' > /data/bootchart/start";
 
   # Reboot
   echo -n ' Reboot Android ? [Enter] ';

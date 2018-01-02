@@ -32,9 +32,9 @@ function adbbootdump()
 
   # Dump bootimage from device
   kernel=$(androiddevicestarget boot);
-  cmdaddr=$(adb shell od -j 152 -N 4 -tx4 -An "${kernel}" \
+  cmdaddr=$(adb shell "od -j 152 -N 4 -tx4 -An '${kernel}'" \
           | tr -d ' ' | cut -c 2-9);
-  cmdsize=$(adb shell od -j 164 -N 4 -tx4 -An "${kernel}" \
+  cmdsize=$(adb shell "od -j 164 -N 4 -tx4 -An '${kernel}'" \
           | tr -d ' ' | cut -c 2-9);
   if [ ! -z "${cmdaddr}" ] && [ "$(echo "${cmdaddr}" | wc -l)" -eq 1 ] && \
      [ ! -z "${cmdsize}" ] && [ "$(echo "${cmdsize}" | wc -l)" -eq 1 ]; then
@@ -92,7 +92,7 @@ function adbrecoveryinstall()
   # Inject and reboot recovery
   filename=$(basename "${1}");
   adbro;
-  adb shell mkdir -p /sdcard/;
+  adb shell 'mkdir -p /sdcard/';
   adb push "${1}" "/sdcard/${filename}";
   adb shell 'mkdir -p /cache/recovery';
   adb shell "echo 'install /sdcard/${filename}' > /cache/recovery/command";
