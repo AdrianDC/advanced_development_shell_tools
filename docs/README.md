@@ -208,7 +208,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbmountcache** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache*
   * [**adbmountdata** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data*
   * [**adbmountmicrosd** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext*
-  * [**adbsgdisk** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell sgdisk --print /dev/block/mmcblk0*
+  * [**adbsgdisk** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell sgdisk &#8208;&#8208;print /dev/block/mmcblk0*
   * [**adbumountcache** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell umount /cache*
   * [**adbumountdata** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell umount /data*
   * [**adbumountmicrosd** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell umount /storage/ext*
@@ -325,60 +325,60 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_git_commit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)&nbsp;]
-  * [**gitshow** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show -M --name-status*
-  * [**gitshf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show -M --pretty=fuller*
-  * [**gitshl** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show --oneline --name-only "${1}" \| tail -n +2 \| cut -c $((1+${2:-0}))-*
+  * [**gitshow** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show -M &#8208;&#8208;name-status*
+  * [**gitshf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show -M &#8208;&#8208;pretty=fuller*
+  * [**gitshl** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show &#8208;&#8208;oneline &#8208;&#8208;name-only "${1}" \| tail -n +2 \| cut -c $((1+${2:-0}))-*
   * [**gitap** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git add -p*
   * [**gitaa** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git add . -Afv*
   * [**gitan** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git add . -Afn*
-  * [**gitanp** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git config core.fileMode false; git add -p; git config --unset core.fileMode*
+  * [**gitanp** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git config core.fileMode false; git add -p; git config &#8208;&#8208;unset core.fileMode*
   * [**gite** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *fileedit "${1}"; echo -n ' Done ? [Enter] '; read -r; git add "${1}"*
   * [**gitbd** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git branch -D*
-  * [**gitbv** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git fetch ${gitreviewdefault} $(git rev-parse --abbrev-ref HEAD); git branch -vv*
+  * [**gitbv** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git fetch ${gitreviewdefault} $(git rev-parse &#8208;&#8208;abbrev-ref HEAD); git branch -vv*
   * [**gitch** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git checkout*
   * [**gitcp** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git cherry-pick*
-  * [**gitcpc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset; git cherry-pick --continue*
+  * [**gitcpc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset; git cherry-pick &#8208;&#8208;continue*
   * [**gitcpa** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *for sha1 in "${@}"; do echo ''; echo "${sha1}"; git cherry-pick "${sha1}"; done*
   * [**gitcpf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git fetch "${1}" "${2}"; git cherry-pick FETCH_HEAD*
-  * [**gitcpr** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show "${1}" --no-color \| sed "s/${2}/${3}/g" \| patch*
+  * [**gitcpr** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show "${1}" &#8208;&#8208;no-color \| sed "s/${2}/${3}/g" \| patch*
   * [**gitfcp** *<b>\[Git cherry-pick from path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *gitfcp &lt;path&gt; [amount_of_commits]*
   * [**gitc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam)*
-  * [**gitce** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --allow-empty*
+  * [**gitce** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) &#8208;&#8208;allow-empty*
   * [**gitcs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) -s*
-  * [**gitca** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend*
-  * [**gitcae** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend --no-edit*
-  * [**gitcad** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) --amend --no-edit --date="$(date -R)*
-  * [**gitrevert** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git revert $(gitgpgparam) --no-edit*
+  * [**gitca** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) &#8208;&#8208;amend*
+  * [**gitcae** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) &#8208;&#8208;amend &#8208;&#8208;no-edit*
+  * [**gitcad** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git commit $(gitgpgparam) &#8208;&#8208;amend &#8208;&#8208;no-edit &#8208;&#8208;date="$(date -R)*
+  * [**gitrevert** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git revert $(gitgpgparam) &#8208;&#8208;no-edit*
   * [**gitfix** *<b>\[Fix git commit issues\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
   * [**gitcauthor** *<b>\[Apply own author to commit\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
   * [**gitcamarker** *<b>\[Apply marker commit to author/committer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
   * [**gitcid** *<b>\[Apply commit-msg hook to commit\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
   * [**gitcidupstream** *<b>\[Load commit-msg hook from upstream\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)
-  * [**gitrh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset FETCH_HEAD --hard*
-  * [**githd** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset HEAD --hard*
-  * [**gitcl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git cherry-pick --abort 2&gt;/dev/null; git am --abort 2&gt;/dev/null; git reset HEAD --hard; git stash -u*
-  * [**gitro** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset HEAD^ --hard*
+  * [**gitrh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset FETCH_HEAD &#8208;&#8208;hard*
+  * [**githd** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset HEAD &#8208;&#8208;hard*
+  * [**gitcl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git cherry-pick &#8208;&#8208;abort 2&gt;/dev/null; git am &#8208;&#8208;abort 2&gt;/dev/null; git reset HEAD &#8208;&#8208;hard; git stash -u*
+  * [**gitro** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset HEAD^ &#8208;&#8208;hard*
   * [**gitsl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset HEAD^; gitap; gitcae*
   * [**gitrl** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git revert HEAD -n; git commit -m "Revert"; git reset HEAD^; git add -p*
   * [**gitri** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset HEAD^*
-  * [**gitrt** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset --hard*
+  * [**gitrt** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git reset &#8208;&#8208;hard*
   * [**gitsquashes** *<b>\[Get formatted squash message\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *gitsquashes &lt;commits_count&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_git_config.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)&nbsp;]
   * [**githubusername** *<b>\[GitHub username getter\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)
-  * [**gitrerere** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config --global rerere.enabled*
+  * [**gitrerere** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global rerere.enabled*
   * [**gitdiffpermhide** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config core.filemode false*
   * [**gitdiffpermshow** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config core.filemode true*
-  * [**gpglist** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gpg --list-secret-keys --keyid-format LONG*
+  * [**gpglist** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gpg &#8208;&#8208;list-secret-keys &#8208;&#8208;keyid-format LONG*
   * [**gpgsilent** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *echo "no-tty" &gt;&gt; ~/.gnupg/gpg.conf*
-  * [**gpgenable** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config --global commit.gpgsign true*
-  * [**gpgdisable** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config --global commit.gpgsign false*
-  * [**gpgsigning** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config --global user.signingkey*
-  * [**gitshowsg** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config --global alias.logs "log --show-signature*
-  * [**gitpwstore** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config --global credential.helper store*
-  * [**githi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index --assume-unchanged*
-  * [**gitsh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index --no-assume-unchanged*
+  * [**gpgenable** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global commit.gpgsign true*
+  * [**gpgdisable** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global commit.gpgsign false*
+  * [**gpgsigning** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global user.signingkey*
+  * [**gitshowsg** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global alias.logs "log &#8208;&#8208;show-signature*
+  * [**gitpwstore** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global credential.helper store*
+  * [**githi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index &#8208;&#8208;assume-unchanged*
+  * [**gitsh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index &#8208;&#8208;no-assume-unchanged*
   * [**gitgpgparam** *<b>\[Returns the GPG signature flag if enabled\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)
   * [**gitnofilter** *<b>\[Use git commands without filters\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitnofilter &lt;parameters&gt;*
 
@@ -390,8 +390,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitunshallow** *<b>\[Git fetch and unshallow project\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc)
   * [**gitf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch*
   * [**gitfmr** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch origin; git reset origin/master*
-  * [**gitfs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash*
-  * [**gitfsu** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash -p*
+  * [**gitfs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch origin; git reset origin/$(git rev-parse &#8208;&#8208;abbrev-ref HEAD); git stash*
+  * [**gitfsu** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *git fetch origin; git reset origin/$(git rev-parse &#8208;&#8208;abbrev-ref HEAD); git stash -p*
   * [**gitfgr** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfetchtreset github*
   * [**gitfor** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitremoteverify origin gitrao; gitfetchtreset origin*
   * [**gitfar** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitremoteverify $(githubusername) gitraa; gitfetchtreset $(githubusername)*
@@ -399,9 +399,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_git_history.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc)&nbsp;]
-  * [**gitlo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log --pretty=oneline --abbrev-commit*
-  * [**gitlod** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log --pretty=oneline --abbrev-commit --*
-  * [**gitloo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --*
+  * [**gitlo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=oneline &#8208;&#8208;abbrev-commit*
+  * [**gitlod** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=oneline &#8208;&#8208;abbrev-commit &#8208;&#8208;*
+  * [**gitloo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" &#8208;&#8208;date=short &#8208;&#8208;all &#8208;&#8208;*
   * [**gitlos** *<b>\[Search string in git history\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *gitlos &lt;path_or_.&gt; ["search string input"] [search_max_count]*
   * [**gitdi** *<b>\[Show git differences status\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc)
   * [**gitdfs** *<b>\[git diff status of an SHA1\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *gitdfs &lt;sha1commit&gt;*
@@ -443,13 +443,13 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_git_rebase.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc)&nbsp;]
-  * [**gitra** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase --abort*
-  * [**gitrc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase --continue*
-  * [**gitre** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase --edit-todo*
-  * [**gitrs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase --skip*
+  * [**gitra** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase &#8208;&#8208;abort*
+  * [**gitrc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase &#8208;&#8208;continue*
+  * [**gitre** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase &#8208;&#8208;edit-todo*
+  * [**gitrs** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase &#8208;&#8208;skip*
   * [**gitrf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase "${1}^" -i*
   * [**gitr** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase "HEAD~${1:-5}" -i*
-  * [**gitrall** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase -i HEAD~$(($(git rev-list --count HEAD) - 1))*
+  * [**gitrall** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase -i HEAD~$(($(git rev-list &#8208;&#8208;count HEAD) - 1))*
   * [**gitrfedit** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "${1}" -i*
   * [**gitredit** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "HEAD~${1:-5}" -i*
   * [**gitrb** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *branch=${1:-$(repogetbranch)}; git fetch github "${branch}"; git rebase "github/${branch}"*
@@ -480,7 +480,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_git_stats.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc)&nbsp;]
   * [**gitstat** *<b>\[Git history with remote comparator\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitstat &lt;remote&gt; &lt;branch&gt; [stats_only]*
   * [**gitst** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify origin gitrao && gitstat origin lineage-15.0*
-  * [**gitsto** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify origin gitrao && gitstat origin $(git rev-parse --abbrev-ref HEAD)*
+  * [**gitsto** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify origin gitrao && gitstat origin $(git rev-parse &#8208;&#8208;abbrev-ref HEAD)*
   * [**gitstom** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify origin gitrao && gitstat origin master*
   * [**gitsta** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) lineage-15.0*
   * [**gitstam** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master*
@@ -856,8 +856,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdserv** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "$(getand)/Server"*
   * [**adbapks** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cdrefapk; adbapkinstall*
   * [**cdandfiles** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cd "${ANDROID_FILES_PATH}/"*
-  * [**impaospcaf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *rsync -arv --delete --delete-after "$(toaospcaf "${1}")" "./${1}"*
-  * [**implineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *rsync -arv --delete --delete-after "$(tolineage "${1}")" "./${1}"*
+  * [**impaospcaf** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *rsync -arv &#8208;&#8208;delete &#8208;&#8208;delete-after "$(toaospcaf "${1}")" "./${1}"*
+  * [**implineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *rsync -arv &#8208;&#8208;delete &#8208;&#8208;delete-after "$(tolineage "${1}")" "./${1}"*
   * [**cpaosp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cp -fv "./${1}" "$(toaosp "${2}")/${1}"*
   * [**cplineage** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cp -fv "./${1}" "$(tolineage "${2}")/${1}"*
   * [**meldaosp** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *pathscompare "./${1}" "$(toaosp "${2}")/${1}"*
@@ -932,8 +932,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_uploads_local.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)&nbsp;]
   * [**androidfilesadd** *<b>\[Add file to AndroidFiles\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilesadd &lt;file_path&gt; &lt;target_folder&gt;*
   * [**androidfilessync** *<b>\[Sync AndroidFiles folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync &lt;--upload/--download&gt;*
-  * [**androidfilesdownload** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync --download*
-  * [**androidfilesupload** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync --upload*
+  * [**androidfilesdownload** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync &#8208;&#8208;download*
+  * [**androidfilesupload** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync &#8208;&#8208;upload*
   * [**androidfilescd** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *cd "${ANDROID_FILES_PATH}/*
   * [**androidfilesopen** *<b>\[Open AndroidFiles folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)
 

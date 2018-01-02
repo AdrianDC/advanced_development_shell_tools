@@ -979,6 +979,7 @@ function shtoolsreadme()
           line_usage=${line_usage% \}*};
           line_usage=${line_usage%;};
           line_usage=${line_usage// 2>*\/dev\/null/};
+          line_usage=${line_usage//--/&#8208;&#8208;};
           stats_functions=$((stats_functions + 1));
 
         # Parse function usage
@@ -1010,6 +1011,7 @@ function shtoolsreadme()
         line_usage=${line_usage#$'"'};
         line_usage=${line_usage%$"'"};
         line_usage=${line_usage%$'"'};
+        line_usage=${line_usage//--/&#8208;&#8208;};
         stats_aliases=$((stats_aliases + 1));
       fi;
 
