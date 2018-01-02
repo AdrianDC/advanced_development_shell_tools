@@ -909,8 +909,7 @@ function shtoolsreadme()
 
       # Warning about missing usages
       if [ -z "${line_usage}" ]; then
-        echo '';
-        echo " ${path}: ERROR: '${line_function}.sh' has no usage";
+        echo -e "\r\033[K  \e[1;37m${path}: \e[1;31mERROR: '${line_function}.sh' has no usage";
         echo '';
         return;
       fi;
@@ -1040,8 +1039,7 @@ function shtoolsreadme()
 
       # Warning about missing usages
       else
-        echo '';
-        echo " ${path}: ERROR: ${line_type} '${line_function}' has no usage";
+        echo -e "\r\033[K  \e[1;37m${path}: \e[1;31mERROR: ${line_type} '${line_function}' has no usage";
         echo '';
         return;
       fi;
