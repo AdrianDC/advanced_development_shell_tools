@@ -786,7 +786,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ### [&nbsp;Documentation: [android_rom_aospcaf.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aosp_aospcaf.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aospcaf.rc)
   ```
   * [**aospcafpatcher** *<b>\[AOSP-CAF Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc) : *aospcafpatcher [specific_paths]*
 
