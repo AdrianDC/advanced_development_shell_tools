@@ -537,7 +537,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_find.rc)
   ```
+  * [**findn** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_find.rc) : *find -name*
   * [**findfilteredprojectfiles** *<b>\[Find filtered project files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_find.rc) : *findfilteredprojectfiles [path] [params]*
+  * [**findnewer** *<b>\[Search files newer than a date\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_find.rc) : *findnewer &lt;20160123&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_host_grep.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)&nbsp;]
@@ -567,11 +569,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**bashe** *<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
   * [**cls** *<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
   * [**toclip** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *xclip -selection c*
-  * [**findn** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *find -name*
   * [**rsynca** *<b>\[Mirror a path to another\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *rsynca &lt;path1&gt; &lt;path2&gt;*
   * [**rsyncf** *<b>\[Mirror a path to another based on size only\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *rsyncf &lt;path1&gt; &lt;path2&gt;*
   * [**pcinfo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *inxi -Fxz*
-  * [**findnewer** *<b>\[Search files newer than a date\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *findnewer &lt;20160123&gt;*
   * [**cpioext** *<b>\[Extract cpio file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *cpioext &lt;cpio_file_to_extract&gt;*
   * [**videoresize** *<b>\[Resize video dimensions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *videoresize &lt;video_file&gt;*
   * [**disableautomount** *<b>\[Linux USB automount disabler\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)

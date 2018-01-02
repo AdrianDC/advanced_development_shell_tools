@@ -18,6 +18,9 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_find.rc)
 
+# === Find Name ===
+alias findn='find -name';
+
 # === Find Filtered Project Files ===
 function findfilteredprojectfiles()
 {
@@ -34,4 +37,21 @@ function findfilteredprojectfiles()
       -not -path '*/drawable-*/*' \
       -not -path '*/values-*/*' \
       | sort;
+}
+
+# === Find Newer Files ===
+function findnewer()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: findnewer <20160123> (Search files newer than a date)';
+    echo '';
+    return;
+  fi;
+
+  # Search for newer files
+  touch -t "${1}0000.01" /tmp/filetimeref;
+  find . -type f -newer /tmp/filetimeref -print;
+  rm -f /tmp/filetimeref;
 }

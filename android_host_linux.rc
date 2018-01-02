@@ -46,9 +46,6 @@ function cls()
 # === Clipboard ===
 function toclip() { xclip -selection c; }
 
-# === Find Name ===
-alias findn='find -name';
-
 # === Folders Syncer ===
 function rsynca()
 {
@@ -80,23 +77,6 @@ function rsyncf()
 }
 
 alias pcinfo='inxi -Fxz';
-
-# === Newer Files Finder ===
-function findnewer()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: findnewer <20160123> (Search files newer than a date)';
-    echo '';
-    return;
-  fi;
-
-  # Search for newer files
-  touch -t "${1}0000.01" /tmp/filetimeref;
-  find . -type f -newer /tmp/filetimeref -print;
-  rm -f /tmp/filetimeref;
-}
 
 # === CPIO Extractor ===
 function cpioext()
