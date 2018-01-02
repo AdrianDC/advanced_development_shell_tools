@@ -888,8 +888,19 @@ function shtoolsreadme()
 
     # Inject standalone import script
     if [ ! -z "${line_standalone}" ]; then
+
+      # Warning about missing linkage
+      if ! echo "${line_standalone}" | grep -q "${path}"; then
+        echo -e "\r\033[K  \e[1;37m${path}: \e[1;31mERROR: Standalone import links have no linkage to this file";
+        echo '';
+        return;
+      fi;
+
+      # Parse standalone import lines
       line_standalone=${line_standalone//# source <\(curl -Ls/};
       line_standalone=${line_standalone//)/};
+
+      # Build standalone import outputs
       readme_output+="${readme_buffer}";
       readme_buffer='';
       readme_output+="  \`\`\`Shell\n";
@@ -897,6 +908,7 @@ function shtoolsreadme()
         readme_output+="source \<\(curl -Ls ${url//\//\\\/}\)\n";
       done;
       readme_output+="  \`\`\`\n";
+
     fi;
 
     # Handle shell scripts content
