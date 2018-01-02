@@ -149,7 +149,7 @@ function shtoolse()
     for word in "${@}"; do
 
       # List found files
-      if grep -aiq "${word}" "${file_source}"; then
+      if grep -aiq -- "${word}" "${file_source}"; then
         files+=("${file_source}");
         continue;
       fi;
