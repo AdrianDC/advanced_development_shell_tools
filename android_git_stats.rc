@@ -52,5 +52,3 @@ alias gitsta='gitremoteverify $(githubusername) gitraa && gitstat $(githubuserna
 alias gitstam='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master';
 alias gitstg='gitremoteverify github false && gitstat github';
 alias gitstaosp='gitremoteverify aosp false && gitstat aosp master';
-alias gitstsony='gitremoteverify origin gitraos && gitstat origin aosp/LA.UM.5.5.r1';
-alias gitstfa='gitrao; gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) lineage-15.0 true';

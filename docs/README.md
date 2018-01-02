@@ -485,8 +485,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitstam** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master*
   * [**gitstg** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify github false && gitstat github*
   * [**gitstaosp** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify aosp false && gitstat aosp master*
-  * [**gitstsony** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify origin gitraos && gitstat origin aosp/LA.UM.5.5.r1*
-  * [**gitstfa** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitrao; gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) lineage-15.0 true*
 
 ---
 ### [&nbsp;Documentation: [android_git_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_tools.rc)&nbsp;]
