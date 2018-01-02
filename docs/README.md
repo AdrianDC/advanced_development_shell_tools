@@ -421,7 +421,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitcpo** *<b>\[GitHub origin cherry-picker\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpo &lt;branch&gt; &lt;amount_of_commits&gt;*
   * [**gitcpup** *<b>\[Git URL patch applier\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup [url]*
   * [**gitcpur** *<b>\[Git URL retargeted patch applier\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpur &lt;url&gt; &lt;search_text&gt; &lt;replace_text&gt;*
-  * [**gitcpupprima** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpup "${1}" CORE drivers/staging/prima/CORE*
 
 ---
 ### [&nbsp;Documentation: [android_git_push.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc)&nbsp;]
@@ -613,6 +612,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 ### [&nbsp;Documentation: [android_kernel_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc)&nbsp;]
   * [**makekernelinjector** *<b>\[Helper to makekernel with injector zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makekernelinjector &lt;device_names&gt;*
+  * [**gitcpupprima** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *gitcpup "${1}" 'CORE' 'drivers/staging/prima/CORE'*
 
 ---
 ### [&nbsp;Documentation: [android_kernel_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc)&nbsp;]

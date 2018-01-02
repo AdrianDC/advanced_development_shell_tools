@@ -35,3 +35,6 @@ function makekernelinjector()
 
   done;
 }
+
+# === GitHub Url Cherry-pick Prima Helper ===
+function gitcpupprima() { gitcpup "${1}" 'CORE' 'drivers/staging/prima/CORE'; }

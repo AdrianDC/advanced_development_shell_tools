@@ -239,6 +239,3 @@ function gitcpur()
   # End of process
   rm -f "${tmpfile}";
 }
-
-# === GitHub Url Cherry-pick Helpers ===
-function gitcpupprima() { gitcpup "${1}" CORE drivers/staging/prima/CORE; }
