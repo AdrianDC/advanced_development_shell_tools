@@ -15,6 +15,12 @@
 # limitations under the License.
 #
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_tools.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_stats.rc)
+
 # === Git Projects Statistics ===
 function gitstat()
 {
