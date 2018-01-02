@@ -16,26 +16,9 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_find.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
-
-# === Internal find for Android ===
-function __find_android()
-{
-  # Usage: __find_android [path] [params] (Internal find for Android)
-
-  # Internal find for Android
-  find "${1:-.}" \
-      -type f \
-      "${@:2}" \
-      -not -path '*.git/*' \
-      -not -path '*.repo/*' \
-      -not -path './out*' \
-      -not -path './build-*' \
-      -not -path '*/drawable-*/*' \
-      -not -path '*/values-*/*' \
-      | sort;
-}
 
 # === Grep Helper ===
 function g()
@@ -61,7 +44,7 @@ function gs()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android .);
+  done < <(findfilteredprojectfiles .);
 }
 
 # === Grep Strings Editor ===
@@ -86,7 +69,7 @@ function gce()
     if [ ! -z "${found}" ]; then
       files+=("${file}");
     fi;
-  done < <(__find_android .);
+  done < <(findfilteredprojectfiles .);
 
   # Edit found files
   fileedit "${files[@]}";
@@ -107,7 +90,7 @@ function gck()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android . \( -name 'Kconfig' -o -name 'Makefile' \));
+  done < <(findfilteredprojectfiles . \( -name 'Kconfig' -o -name 'Makefile' \));
 }
 
 # === Grep Android Makefiles ===
@@ -125,7 +108,7 @@ function gca()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' \));
+  done < <(findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' \));
 }
 
 # === Grep Android Manifests ===
@@ -143,7 +126,7 @@ function gcmanifest()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android . \( -name 'AndroidManifest.xml' \));
+  done < <(findfilteredprojectfiles . \( -name 'AndroidManifest.xml' \));
 }
 
 # === Grep Android .rc Files ===
@@ -161,7 +144,7 @@ function gcrc()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android . \( -name '*.rc' \));
+  done < <(findfilteredprojectfiles . \( -name '*.rc' \));
 }
 
 # === Grep Android Sepolicies ===
@@ -179,7 +162,7 @@ function gcsep()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android . \( -name '*.te' -o -name '*_contexts' \));
+  done < <(findfilteredprojectfiles . \( -name '*.te' -o -name '*_contexts' \));
 }
 
 # === Grep Android .xml Files ===
@@ -197,7 +180,7 @@ function gcxml()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android . \( -name '*.xml' \));
+  done < <(findfilteredprojectfiles . \( -name '*.xml' \));
 }
 
 # === Grep Android Sepolicies Contexts ===
@@ -215,7 +198,7 @@ function gccontexts()
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(__find_android . \( -name '*_contexts' \));
+  done < <(findfilteredprojectfiles . \( -name '*_contexts' \));
 }
 
 # === Grep Search Helpers ===
@@ -235,7 +218,7 @@ function gcmodules()
     ${strings_params} "$(readlink -f "${file}")" \
       | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
       | sed 's/.*\(:=[ \t]*\|name: "\)\([^"]*\)\(".*\|\)/\2/g';
-  done < <(__find_android "${1:-.}" \( -name '*.mk' -o -name '*.bp' \));
+  done < <(findfilteredprojectfiles "${1:-.}" \( -name '*.mk' -o -name '*.bp' \));
 }
 
 # === Grep Android Phony ===
@@ -252,7 +235,7 @@ function gcphony()
     ${strings_params} "$(readlink -f "${file}")" \
       | grep -ai ".PHONY:" \
       | sed 's/.PHONY: //g';
-  done < <(__find_android . \( -name '*.mk' \));
+  done < <(findfilteredprojectfiles . \( -name '*.mk' \));
 }
 
 # === Strings Parameters ===

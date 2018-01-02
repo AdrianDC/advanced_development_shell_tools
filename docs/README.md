@@ -533,8 +533,16 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**edittrimoutput** *<b>\[Edit by triming output line rewrites\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *edittrimoutput &lt;"files"&gt;*
 
 ---
+### [&nbsp;Documentation: [android_host_find.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_find.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_find.rc)
+  ```
+  * [**findfilteredprojectfiles** *<b>\[Find filtered project files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_find.rc) : *findfilteredprojectfiles [path] [params]*
+
+---
 ### [&nbsp;Documentation: [android_host_grep.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)&nbsp;]
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_find.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
   ```
