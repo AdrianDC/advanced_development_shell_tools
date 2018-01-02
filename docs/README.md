@@ -1078,10 +1078,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**autoreleasetwrpsony8996** *<b>\[Automated TWRP Sony 8996 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_tools_release.rc) : *autoreleasetwrpsony8996 [devices]*
 
 ---
-### [&nbsp;Documentation: [extensions/template/android_template.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/template/android_template.rc)&nbsp;]
-  * [**_templateaddonfunction** *<b>\[Base template for addons\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/template/android_template.rc) : *_templateaddonfunction &lt;required&gt; [optional]*
-
----
 ### [&nbsp;Documentation: [install_repo.sh](https://github.com/AdrianDC/android_development_shell_tools/blob/master/install_repo.sh)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/install_repo.sh)
