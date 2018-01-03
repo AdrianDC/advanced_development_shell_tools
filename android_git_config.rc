@@ -162,6 +162,35 @@ function gitconfcolors()
   echo '';
 }
 
+# === Git Config Pager ===
+function gitconfpager()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitconfpager <less/more/false> (Configure Git pager handling)';
+    echo '';
+    return;
+  fi;
+
+  # Select option
+  case "${1}" in
+    false)
+      git config --global core.pager '';;
+    less|more)
+      git config --global core.pager "${1}";;
+    *)
+      echo '';
+      echo " Error: Option '${1}' not recognized";
+  esac;
+
+  # Display option
+  echo '';
+  echo -n ' gitconfpager: core.pager = ';
+  git config --global --get core.pager;
+  echo '';
+}
+
 # === Git Config Credentials ===
 function gitconfcredentials()
 {
