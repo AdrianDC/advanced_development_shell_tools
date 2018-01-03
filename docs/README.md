@@ -705,6 +705,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_repo_changelog.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changelog.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_changelog.rc)
+  ```
   * [**repochangelog** *<b>\[Generate ROM changelogs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changelog.rc) : *repochangelog &lt;days_count&gt; [project1_path,project2_path,...]*
 
 ---
