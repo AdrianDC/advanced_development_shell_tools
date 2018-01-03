@@ -366,6 +366,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_git_config.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
+  ```
   * [**githubusername** *<b>\[GitHub username getter\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)
   * [**gitconfeditor** *<b>\[Configure Git editor application\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfeditor &lt;app_name&gt;*
   * [**gitconfmergetool** *<b>\[Configure Git merge tool handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfmergetool &lt;app_name&gt;*
