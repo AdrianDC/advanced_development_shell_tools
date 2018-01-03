@@ -87,6 +87,33 @@ function gitconffileperms()
   echo '';
 }
 
+# === Git Config Colors ===
+function gitconfcolors()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitconfcolors <true/false/always> (Configure Git colors handling)';
+    echo '';
+    return;
+  fi;
+
+  # Select option
+  case "${1}" in
+    always|false|true)
+      git config --global color.ui "${1}";;
+    *)
+      echo '';
+      echo " Error: Option '${1}' not recognized";
+  esac;
+
+  # Display option
+  echo '';
+  echo -n ' gitconfcolors: color.ui = ';
+  git config --global --get color.ui;
+  echo '';
+}
+
 # === Git Config Credentials ===
 function gitconfcredentials()
 {
