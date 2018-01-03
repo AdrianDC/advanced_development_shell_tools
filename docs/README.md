@@ -600,6 +600,18 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**pushbsizes** *<b>\[Path sizes in Pushbullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc) : *pushbsizes &lt;paths&gt;*
 
 ---
+### [&nbsp;Documentation: [android_host_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_tools.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_edit.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_tools.rc)
+  ```
+  * [**haste** *<b>\[Share hastebin logs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_tools.rc) : *haste &lt;file&gt; or \| haste*
+  * [**pbin** *<b>\[Share Pastebin logs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_tools.rc) : *pbin &lt;file&gt; or \| pbin*
+  * [**pbinperm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_tools.rc) : *PASTEBIN_EXPIRE=N pbin*
+  * [**remotescript** *<b>\[Remote script launcher with confirmations\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_tools.rc) : *remotescript &lt;url&gt; [bool_automated]*
+  * [**wip** *<b>\[Work in progress commands to store and use\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_tools.rc) : *wip [commands to store]*
+
+---
 ### [&nbsp;Documentation: [android_kernel_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_helpers.rc)
@@ -915,12 +927,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**binarysearch** *<b>\[Binary files parser and searcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *binarysearch &lt;patternsearch&gt; [binariespath]*
   * [**librarieshunter** *<b>\[Libraries linkage analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *librarieshunter &lt;binariespath&gt;*
   * [**librarieschecker** *<b>\[Unreferenced libraries analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *librarieschecker &lt;prebuilts_path&gt;*
-  * [**haste** *<b>\[Share hastebin logs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *haste &lt;file&gt; or \| haste*
-  * [**pbin** *<b>\[Share Pastebin logs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *pbin &lt;file&gt; or \| pbin*
-  * [**pbinperm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *PASTEBIN_EXPIRE=N pbin*
   * [**overlaycompare** *<b>\[Compare device overlays against sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *overlaycompare &lt;overlay_file_path&gt;*
-  * [**remotescript** *<b>\[Remote script launcher with confirmations\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *remotescript &lt;url&gt; [bool_automated]*
-  * [**wip** *<b>\[Work in progress commands to store and use\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *wip [commands to store]*
 
 ---
 ### [&nbsp;Documentation: [android_uploads_basketbuild.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc)&nbsp;]
