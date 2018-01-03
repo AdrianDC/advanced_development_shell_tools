@@ -165,6 +165,47 @@ function gitconfcolors()
   echo '';
 }
 
+# === Git Config Commit Stats ===
+function gitconfcommitstats()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitconfcommitstats <yes/quick/no> (Configure Git commits stats visibility)';
+    echo '';
+    return;
+  fi;
+
+  # Select option
+  case "${1}" in
+    false)
+      git config --global commit.status 'false';
+      git config --global merge.stat 'false';
+      git config --global status.showUntrackedFiles 'no';;
+    quick)
+      git config --global commit.status 'true';
+      git config --global merge.stat 'true';
+      git config --global status.showUntrackedFiles 'no';;
+    true)
+      git config --global commit.status 'true';
+      git config --global merge.stat 'true';
+      git config --global status.showUntrackedFiles 'normal';;
+    *)
+      echo '';
+      echo " Error: Option '${1}' not recognized";
+  esac;
+
+  # Display option
+  echo '';
+  echo -n ' gitconfcommitstats: commit.status = ';
+  git config --global --get commit.status;
+  echo -n ' gitconfcommitstats: merge.stat = ';
+  git config --global --get merge.stat;
+  echo -n ' gitconfcommitstats: status.showUntrackedFiles = ';
+  git config --global --get status.showUntrackedFiles;
+  echo '';
+}
+
 # === Git Config Pager ===
 function gitconfpager()
 {

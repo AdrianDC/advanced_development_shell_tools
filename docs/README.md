@@ -375,6 +375,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitconffilecrlf** *<b>\[Configure Git file CR/LF EOL handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconffilecrlf &lt;true/false/input&gt;*
   * [**gitconffileperms** *<b>\[Configure Git file permissions handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconffileperms &lt;true/false&gt;*
   * [**gitconfcolors** *<b>\[Configure Git colors handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfcolors &lt;true/false/always&gt;*
+  * [**gitconfcommitstats** *<b>\[Configure Git commits stats visibility\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfcommitstats &lt;yes/quick/no&gt;*
   * [**gitconfpager** *<b>\[Configure Git pager handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfpager &lt;less/more/false&gt;*
   * [**gitconfcredentials** *<b>\[Configure Git credentials handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfcredentials &lt;cache/store/wincred&gt;*
   * [**gitconfgpgkey** *<b>\[Configure Git GPG signing key\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfgpgkey &lt;gpg_key_id&gt;*
