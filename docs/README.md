@@ -829,6 +829,17 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**aospcafpatcher** *<b>\[AOSP-CAF Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc) : *aospcafpatcher [specific_paths]*
 
 ---
+### [&nbsp;Documentation: [android_rom_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_helpers.rc)
+  ```
+  * [**librarieshunter** *<b>\[Libraries linkage analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc) : *librarieshunter &lt;binariespath&gt;*
+  * [**librarieschecker** *<b>\[Unreferenced libraries analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc) : *librarieschecker &lt;prebuilts_path&gt;*
+  * [**overlaycompare** *<b>\[Compare device overlays against sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc) : *overlaycompare &lt;overlay_file_path&gt;*
+
+---
 ### [&nbsp;Documentation: [android_rom_images.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_images.rc)&nbsp;]
   * [**androidextractimage** *<b>\[Android filesystem.img extractor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_images.rc) : *androidextractimage &lt;file.img&gt; &lt;output_path&gt;*
 
@@ -923,18 +934,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**sshremote** *<b>\[Get the configured SSH target\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_ssh_remote.rc)
   * [**sshserv** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_ssh_remote.rc) : *ssh $(sshremote)*
   * [**sshsync** *<b>\[Mirror remote server folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_ssh_remote.rc) : *sshsync &lt;up/down&gt; &lt;local_path&gt; &lt;remote_path&gt; [params]*
-
----
-### [&nbsp;Documentation: [android_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc)&nbsp;]
-  ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_edit.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_tools.rc)
-  ```
-  * [**librarieshunter** *<b>\[Libraries linkage analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *librarieshunter &lt;binariespath&gt;*
-  * [**librarieschecker** *<b>\[Unreferenced libraries analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *librarieschecker &lt;prebuilts_path&gt;*
-  * [**overlaycompare** *<b>\[Compare device overlays against sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_tools.rc) : *overlaycompare &lt;overlay_file_path&gt;*
 
 ---
 ### [&nbsp;Documentation: [android_uploads_basketbuild.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc)&nbsp;]
