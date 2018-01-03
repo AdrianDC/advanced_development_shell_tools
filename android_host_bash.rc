@@ -34,7 +34,7 @@ function bashe()
   # Usage: bashe (Edit ~/.bashrc)
 
   # Edit ~/.bashrc
-  fen ~/.bashrc;
+  FILEEDIT_TOUCH_NEW_FILE=true fileedit ~/.bashrc;
 }
 
 # === Clear Screen ===
