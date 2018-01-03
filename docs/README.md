@@ -732,6 +732,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_repo_compare.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_compare.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_compare.rc)
+  ```
   * [**repocomparetags** *<b>\[Helper to compare release tags\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_compare.rc) : *repocomparetags &lt;base_tag_or_HEAD&gt; &lt;compare_tag_or_HEAD&gt;*
 
 ---
