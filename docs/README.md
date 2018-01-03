@@ -579,7 +579,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**netspeed** *<b>\[Display network speeds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
   * [**netspeedtest** *<b>\[Run SpeedTest client\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
   * [**drivespeedtest** *<b>\[Run drive write speed test\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *drivespeedtest &lt;test_file_path&gt;*
-  * [**trimtrees** *<b>\[Hardlink duplicated files with trimtrees from cpansearch.perl.org\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *trimtrees &lt;paths&gt;*
   * [**buildlock** *<b>\[Mutex-locked command execution\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *buildlock &lt;command...&gt;*
   * [**fileschemesorter** *<b>\[Sort file against scheme file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *fileschemesorter &lt;file_to_sort&gt; &lt;file_reference&gt;*
   * [**mtpmountdisable** *<b>\[Disable MTP automount\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
