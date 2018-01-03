@@ -34,6 +34,32 @@ function githubusername()
   echo "${GitUserName}";
 }
 
+# === Git Config Editor ===
+function gitconfeditor()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitconfeditor <app_name> (Configure Git editor application)';
+    echo '';
+    return;
+  fi;
+
+  # Select option
+  case "${1}" in
+    notepad++)
+      git config --global core.editor 'notepad++ -multiInst -notabbar -nosession -noPlugin';;
+    nano|vim|*)
+      git config --global core.editor "${1}";;
+  esac;
+
+  # Display option
+  echo '';
+  echo -n ' gitconfeditor: core.editor = ';
+  git config --global --get core.editor;
+  echo '';
+}
+
 # === Git Config Helpers ===
 alias gitrerere='git config --global rerere.enabled';
 alias gitdiffpermhide='git config core.filemode false';
