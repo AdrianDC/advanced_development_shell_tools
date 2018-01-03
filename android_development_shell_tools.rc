@@ -137,7 +137,13 @@ function shtoolscd()
 # === Android Development Shell Tools Functions Editor ===
 function shtoolse()
 {
-  # Usage: shtoolse <words> <to> <search> (Direct access to related sources)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: shtoolse <words> <to> <search> (Direct access to related sources)';
+    echo '';
+    return;
+  fi;
 
   # Variables
   local file_source;
@@ -165,7 +171,13 @@ function shtoolse()
 # === Android Development Shell Tools Functions Editor ===
 function shtoolsf()
 {
-  # Usage: shtoolsf <function_or_alias> (Direct access to related function or alias sources)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: shtoolsf <function_or_alias> (Direct access to related function or alias sources)';
+    echo '';
+    return;
+  fi;
 
   # Launch shtoolse with function or alias syntax
   shtoolse "${1}()" "${1}=";
