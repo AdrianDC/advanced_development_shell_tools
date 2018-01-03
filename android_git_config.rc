@@ -269,6 +269,33 @@ function gitconfconflictsrepeat()
   echo '';
 }
 
+# === Git Config Diff Renames ===
+function gitconfdiffrenames()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitconfdiffrenames <true/false/copies> (Configure Git diff renames handling)';
+    echo '';
+    return;
+  fi;
+
+  # Select option
+  case "${1}" in
+    copies|false|true)
+      git config --global diff.renames "${1}";;
+    *)
+      echo '';
+      echo " Error: Option '${1}' not recognized";
+  esac;
+
+  # Display option
+  echo '';
+  echo -n ' gitconfdiffrenames: diff.renames = ';
+  git config --global --get diff.renames;
+  echo '';
+}
+
 # === Git Config GPG Signature ===
 function gitconfgpgsignature()
 {
