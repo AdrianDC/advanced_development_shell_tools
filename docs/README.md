@@ -808,11 +808,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**aospcafpatcher** *<b>\[AOSP-CAF Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc) : *aospcafpatcher [specific_paths]*
 
 ---
-### [&nbsp;Documentation: [android_rom_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc)&nbsp;]
-  * [**rompatcher** *<b>\[Helper menu access to *patcher functions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc)
-  * [**romrebaser** *<b>\[Helper menu access to *rebaser functions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc)
-
----
 ### [&nbsp;Documentation: [android_rom_images.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_images.rc)&nbsp;]
   * [**androidextractimage** *<b>\[Android filesystem.img extractor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_images.rc) : *androidextractimage &lt;file.img&gt; &lt;output_path&gt;*
 
@@ -841,6 +836,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**androidprojectsync** *<b>\[Android project paths repo syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectsync &lt;owner&gt; &lt;project_name&gt;*
   * [**androidprojectungraft** *<b>\[Android project paths ungrafter\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectungraft &lt;owner&gt; &lt;project_name&gt;*
   * [**androidprojectunshallow** *<b>\[Android project paths unshallower\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectunshallow &lt;owner&gt; &lt;project_name&gt;*
+  * [**rompatcher** *<b>\[Helper menu access to *patcher functions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc)
+  * [**romrebaser** *<b>\[Helper menu access to *rebaser functions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc)
 
 ---
 ### [&nbsp;Documentation: [android_shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc)&nbsp;]
