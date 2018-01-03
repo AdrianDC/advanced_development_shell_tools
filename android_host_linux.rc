@@ -313,40 +313,6 @@ function mtpmountdisable()
   gsettings set org.cinnamon.desktop.media-handling automount false;
 }
 
-# === CleanRAM ===
-function cleanram()
-{
-  # Usage: cleanram (RAM caches cleanup)
-
-  # Run cleanram script
-  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/extensions/linux/run_cleanram.sh";
-}
-
-# === CleanRAM after builds ===
-function cleanrambuild()
-{
-  # Usage: cleanrambuild (RAM caches cleanup)
-
-  # Run cleanram script
-  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/extensions/linux/run_cleanrambuild.sh";
-}
-
-# === CleanRAM with Kills ===
-function cleanramkill()
-{
-  # Usage: cleanramkill [bool_cleanram] (Complete RAM cleanup including "java")
-
-  # Kill relevant RAM eating processes
-  killall adb;
-  killall java;
-  killall mega-cmd;
-
-  # Run cleanram script
-  if [ ! -z "${1}" ]; then
-    cleanram;
-  fi;
-}
-
 # === Network Manager Restart ===
 function networkrestart()
 {

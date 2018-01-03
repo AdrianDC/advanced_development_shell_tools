@@ -589,9 +589,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**buildlock** *<b>\[Mutex-locked command execution\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *buildlock &lt;command...&gt;*
   * [**fileschemesorter** *<b>\[Sort file against scheme file\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *fileschemesorter &lt;file_to_sort&gt; &lt;file_reference&gt;*
   * [**mtpmountdisable** *<b>\[Disable MTP automount\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
-  * [**cleanram** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
-  * [**cleanrambuild** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
-  * [**cleanramkill** *<b>\[Complete RAM cleanup including "java"\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *cleanramkill [bool_cleanram]*
   * [**networkrestart** *<b>\[Restart network manager\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
   * [**isdone** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *notify-send "Process execution finished !*
   * [**topcpu** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *top -o %CPU*
@@ -979,6 +976,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/lineage_next/android_rom_lineageos.rc)
   ```
   * [**lineagenextrebaser** *<b>\[LineageOS Next Rebaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/android_rom_lineageos.rc) : *lineagenextrebaser [specific_paths]*
+
+---
+### [&nbsp;Documentation: [extensions/linux/android_host_linux.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/android_host_linux.rc)&nbsp;]
+  * [**cleanram** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/android_host_linux.rc)
+  * [**cleanrambuild** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/android_host_linux.rc)
+  * [**cleanramkill** *<b>\[Complete RAM cleanup including "java"\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/android_host_linux.rc) : *cleanramkill [bool_cleanram]*
 
 ---
 ### [&nbsp;Documentation: [extensions/megatools/megatools_mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_mirror.rc)&nbsp;]
