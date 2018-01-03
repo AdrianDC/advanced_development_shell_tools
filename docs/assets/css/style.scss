@@ -51,3 +51,37 @@ footer {
 .anchor-item:hover > a:last-child {
   visibility: visible !important;
 }
+
+.groupheader {
+  font-weight: bold;
+}
+
+.grouplabel {
+  color: #267CB9;
+}
+
+details {
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+details > summary > h4 {
+  cursor: help;
+  display: inline;
+}
+
+details > blockquote {
+  font-style: inherit;
+}
+
+details > pre, details > blockquote > pre {
+  margin-left: 10px;
+}
+
+details > pre, details > ul {
+  margin-top: 10px;
+}
+
+details > blockquote {
+  margin-top: 20px;
+}

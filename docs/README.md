@@ -1,4 +1,4 @@
-# Android Development Shell Tools
+# Android Development Shell Tools #
 
  * Project created by [Adrian DC](https://github.com/AdrianDC) - 2015-2018
 
@@ -7,8 +7,8 @@
    Previews of a few regular functions: [Project previews...](previews.md)
    <br />
    Samples of commands usage per context: [Project samples...](samples.md)
-
- * XDA-Developers thread for this project : [Android Development Shell Tools](http://forum.xda-developers.com/-/-/-t3622382)
+   <br />
+   XDA-Developers thread for this project : [Android Development Shell Tools](http://forum.xda-developers.com/-/-/-t3622382)
 
  * The 'android_development_shell_tools' is a project meant to provide
    <br />
@@ -36,33 +36,25 @@
    <br />
    *(Keeping a copy or symlinking extensions scripts is recommended for safety)*
 
-<br />
+---
 
-### [ Permanent installation for terminals ]
- * Open the `~/.bashrc` file
- * Adapt and add the following lines:
+### [ Permanent installation for terminals ] ###
+ * Open the `~/.bashrc` file, then adapt and add the following lines:
    ```Shell
    export ANDROID_DEV_DRIVE=/media/../AndroidDev;
    source "/.../android_development_shell_tools.rc";
    ```
 
-<br />
+---
 
-### [ How to find command here ]
- * Obviously 'android_development_shell_tools' is a massive project
-   <br />
-   and this fully automated and updated documentation contains
-   <br />
-   quite an extensive list of functions you may or not need.
-
- * To find something you are interested in, for example 'Gerrit',
-   <br />
-   you can easily search *(Ctrl + F)* to find related functions
-
-<br />
+### [ Functions detailed documentation ] ###
 
 <!-- Functions Start -->
-### [&nbsp;Documentation: [android_development_shell_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)&nbsp;]
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">android_development_shell_tools.rc</span> ####
+</summary>
+
   * [**shtoolsup** *<b>\[Reloads android_development_shell_tools scripts\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolsget** *<b>\[Get android_development_shell_tools path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
   * [**shtoolscd** *<b>\[Access android_development_shell_tools path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
@@ -87,7 +79,15 @@
   * [**shtoolsreadme** *<b>\[Refresh README.md functions usages\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc)
 
 ---
-### [&nbsp;Documentation: [android_adb_assets.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_adb</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_adb_assets.rc</span> ###
+>
   * [**adbdatabase** *<b>\[Android sqlite3 database opener\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adbdatabase &lt;/data/.../sqlite.db&gt;*
   * [**sepaud** *<b>\[Logs sepolicy analyzer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *sepaud &lt;logs_file&gt; [context_search]*
   * [**sepmsg** *<b>\[Logs sepolicy message extractor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *sepmsg &lt;logs_file&gt; &lt;context&gt; [grep]*
@@ -107,7 +107,8 @@
   * [**adbreadevents** *<b>\[Read input events\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_assets.rc) : *adbreadevents &lt;event_number&gt;*
 
 ---
-### [&nbsp;Documentation: [android_adb_debug.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_debug.rc</span> ###
+>
   * [**adbst** *<b>\[strace\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc) : *adbst &lt;process_name&gt; [parameters] [bool_wait]*
   * [**adbstf** *<b>\[Followed strace\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc) : *adbstf &lt;process_name&gt;*
   * [**adbstw** *<b>\[Waiting strace\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc) : *adbstw &lt;process_name&gt;*
@@ -115,7 +116,8 @@
   * [**adbbootchart** *<b>\[Bootchart debug helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_debug.rc)
 
 ---
-### [&nbsp;Documentation: [android_adb_device.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_device.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_device.rc)
@@ -128,7 +130,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbw** *<b>\[Wait for device through adb\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_device.rc)
 
 ---
-### [&nbsp;Documentation: [android_adb_flash.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_flash.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_flash.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
@@ -139,7 +142,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbrecoveryinstall** *<b>\[Inject and reboot recovery\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_flash.rc) : *adbrecoveryinstall &lt;file_path&gt;*
 
 ---
-### [&nbsp;Documentation: [android_adb_installers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_installers.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_host.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
@@ -163,7 +167,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbapkinstall** *<b>\[Install available apk files from current path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_installers.rc)
 
 ---
-### [&nbsp;Documentation: [android_adb_logs.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_logs.rc</span> ###
+>
   * [**adbl** *<b>\[adb Logcat helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adbl [all/crash/events/main/radio/system] [file_output] [bool_clean]*
   * [**adblr** *<b>\[Logcat output relevant reader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc)
   * [**adblpcln** *<b>\[Logcat output public cleaner\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc) : *adblpcln [file_adb.log]*
@@ -183,7 +188,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbple** *<b>\[ADB Ramoops Compressed Logger\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_logs.rc)
 
 ---
-### [&nbsp;Documentation: [android_adb_multirom.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_multirom.rc</span> ###
+>
   * [**adbmromselect** *<b>\[Select MultiROM installation for path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmromselect [preselect]*
   * [**adbmrombootimage** *<b>\[MultiROM bootimage installer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmrombootimage &lt;bootimage_path&gt; [preselect]*
   * [**adbmrominjector** *<b>\[MultiROM kernel image injector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmrominjector &lt;kernel_path&gt;*
@@ -191,7 +197,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbmromedit** *<b>\[MultiROM secondary ROM file editor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_multirom.rc) : *adbmromedit &lt;relative_path&gt; [preselect]*
 
 ---
-### [&nbsp;Documentation: [android_adb_shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_shortcuts.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_shortcuts.rc)
   ```
@@ -221,14 +228,16 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbservices** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_shortcuts.rc) : *adb shell service list*
 
 ---
-### [&nbsp;Documentation: [android_adb_syncer.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_syncer.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_syncer.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_syncer.rc)
   ```
   * [**adbpushsync** *<b>\[Folders adb push syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_syncer.rc) : *adbpushsync &lt;local_path&gt; &lt;target_path&gt;*
 
 ---
-### [&nbsp;Documentation: [android_adb_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_tools.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
@@ -247,14 +256,21 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**adbedit** *<b>\[Edit adb file, default on /system/build.prop\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_tools.rc) : *adbedit [file_path]*
 
 ---
-### [&nbsp;Documentation: [android_adb_updater.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_updater.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_adb_updater.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_updater.rc)
   ```
   * [**adbupdate** *<b>\[adb binary update from upstream\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_adb_updater.rc)
 
 ---
-### [&nbsp;Documentation: [android_build_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_build_helpers.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">android_build_helpers.rc</span> ####
+</summary>
+
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_build_helpers.rc)
   ```
@@ -262,13 +278,27 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**makes** *<b>\[Helper to 'make -jPROCESSORS' with SCHED_BATCH\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_build_helpers.rc) : *makes &lt;parameters&gt;*
 
 ---
-### [&nbsp;Documentation: [android_devices.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">android_devices.rc</span> ####
+</summary>
+
   * [**androiddevicestarget** *<b>\[Devices targets mapper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc) : *androiddevicestarget [boot/system/...] [device]*
   * [**codenametotarget** *<b>\[Codename to build target\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc) : *codenametotarget &lt;codename&gt;*
   * [**repogetdevice** *<b>\[Detect device name from repo environment\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_devices.rc)
 
 ---
-### [&nbsp;Documentation: [android_gerrit_review.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerrit_review.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_gerrit</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_gerrit_review.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_gerrit_review.rc)
   ```
@@ -308,14 +338,23 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitprdtwrp** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerrit_review.rc) : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0*
 
 ---
-### [&nbsp;Documentation: [android_gerrit_ssh.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerrit_ssh.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_gerrit_ssh.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_gerrit_ssh.rc)
   ```
   * [**gerritssh** *<b>\[Advanced Gerrit SSH interface\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_gerrit_ssh.rc) : *gerritssh [branch] [change_id_reverser]*
 
 ---
-### [&nbsp;Documentation: [android_git_cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_cleaners.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_git</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_git_cleaners.rc</span> ###
+>
   * [**gits** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_cleaners.rc) : *git stash*
   * [**gitsp** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_cleaners.rc) : *git stash -p*
   * [**gitsu** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_cleaners.rc) : *git stash -u*
@@ -324,7 +363,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitonebranch** *<b>\[Git remove non-default remote branches\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_cleaners.rc)
 
 ---
-### [&nbsp;Documentation: [android_git_commit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_commit.rc</span> ###
+>
   * [**gitshow** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show -M &#8208;&#8208;name-status*
   * [**gitshf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show -M &#8208;&#8208;pretty=fuller*
   * [**gitshl** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *git show &#8208;&#8208;oneline &#8208;&#8208;name-only "${1}" \| tail -n +2 \| cut -c $((1+${2:-0}))-*
@@ -365,7 +405,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitsquashes** *<b>\[Get formatted squash message\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_commit.rc) : *gitsquashes &lt;commits_count&gt;*
 
 ---
-### [&nbsp;Documentation: [android_git_config.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_config.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
   ```
@@ -391,7 +432,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitnofilter** *<b>\[Use git commands without filters\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitnofilter &lt;parameters&gt;*
 
 ---
-### [&nbsp;Documentation: [android_git_fetch.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_fetch.rc</span> ###
+>
   * [**gitfetchtreset** *<b>\[Git fetch and reset hard\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfetchtreset [remote] [branch]*
   * [**gitfcu** *<b>\[Git fetch url and reset\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfcu &lt;url&gt; [branch]*
   * [**gitfurl** *<b>\[Git fetch from full url\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfurl &lt;url&gt;*
@@ -406,7 +448,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitfprivr** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_fetch.rc) : *gitfetchtreset private*
 
 ---
-### [&nbsp;Documentation: [android_git_history.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_history.rc</span> ###
+>
   * [**gitlo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=oneline &#8208;&#8208;abbrev-commit*
   * [**gitlod** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=oneline &#8208;&#8208;abbrev-commit &#8208;&#8208;*
   * [**gitloo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" &#8208;&#8208;date=short &#8208;&#8208;all &#8208;&#8208;*
@@ -418,13 +461,15 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitfindsha1** *<b>\[git search commit by title contents\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *gitfindsha1 &lt;remote/branch&gt; &lt;"title text to search"&gt;*
 
 ---
-### [&nbsp;Documentation: [android_git_merge.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_merge.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_merge.rc</span> ###
+>
   * [**gitmt** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_merge.rc) : *git mergetool*
   * [**gitmte** *<b>\[Merge tool with manual conflicts resolution\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_merge.rc)
   * [**gitmtr** *<b>\[Merge tool with reference project sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_merge.rc) : *gitmtr &lt;referenced_path&gt;*
 
 ---
-### [&nbsp;Documentation: [android_git_pick.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_pick.rc</span> ###
+>
   * [**gitcpu** *<b>\[Git URL commit cherry-picker\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpu &lt;githuburltocommit&gt; [branch]*
   * [**gitmerges** *<b>\[Attempt to merge commit history\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitmerges &lt;commit_sha1&gt; [count]*
   * [**gitcpo** *<b>\[GitHub origin cherry-picker\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpo &lt;branch&gt; &lt;amount_of_commits&gt;*
@@ -432,7 +477,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitcpur** *<b>\[Git URL retargeted patch applier\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_pick.rc) : *gitcpur &lt;url&gt; &lt;search_text&gt; &lt;replace_text&gt;*
 
 ---
-### [&nbsp;Documentation: [android_git_push.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_push.rc</span> ###
+>
   * [**gitpf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *git push -f*
   * [**gitpu** *<b>\[Git push to validated remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitpu [remote] [branch] [input]*
   * [**gitpurl** *<b>\[Git pull to full url\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitpurl &lt;url&gt;*
@@ -450,7 +496,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitpprivm** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_push.rc) : *gitremoteverify private false && gitpu private master*
 
 ---
-### [&nbsp;Documentation: [android_git_rebase.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_rebase.rc</span> ###
+>
   * [**gitra** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase &#8208;&#8208;abort*
   * [**gitrc** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase &#8208;&#8208;continue*
   * [**gitre** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *git rebase &#8208;&#8208;edit-todo*
@@ -464,7 +511,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitrbo** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_rebase.rc) : *branch=${1:-$(repogetbranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}"; git rebase "origin/${branch}"*
 
 ---
-### [&nbsp;Documentation: [android_git_remotes.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_remotes.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
@@ -489,7 +537,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitraos** *<b>\[Add sonyxperiadev origin remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_remotes.rc)
 
 ---
-### [&nbsp;Documentation: [android_git_stats.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_stats.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_config.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
@@ -506,7 +555,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitstaosp** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_stats.rc) : *gitremoteverify aosp false && gitstat aosp master*
 
 ---
-### [&nbsp;Documentation: [android_git_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_tools.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_git_tools.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_tools.rc)
   ```
@@ -514,7 +564,15 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitgetbranch** *<b>\[Get git primary branch\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_tools.rc)
 
 ---
-### [&nbsp;Documentation: [android_host_bash.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_bash.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_host</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_host_bash.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_bash.rc)
@@ -524,7 +582,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cls** *<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_bash.rc)
 
 ---
-### [&nbsp;Documentation: [android_host_binary.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_binary.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_host_binary.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_binary.rc)
@@ -533,7 +592,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**binarysearch** *<b>\[Binary files parser and searcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_binary.rc) : *binarysearch &lt;patternsearch&gt; [binariespath]*
 
 ---
-### [&nbsp;Documentation: [android_host_common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_host_common.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
   ```
@@ -548,7 +608,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**processownercheck** *<b>\[Returns if a process is owned by someone\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc) : *processownercheck &lt;process_name&gt; &lt;owner&gt;*
 
 ---
-### [&nbsp;Documentation: [android_host_edit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_host_edit.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_edit.rc)
   ```
@@ -561,7 +622,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**edittrimoutput** *<b>\[Edit by triming output line rewrites\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_edit.rc) : *edittrimoutput &lt;"files"&gt;*
 
 ---
-### [&nbsp;Documentation: [android_host_find.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_find.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_host_find.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_find.rc)
   ```
@@ -570,7 +632,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**findnewer** *<b>\[Search files newer than a date\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_find.rc) : *findnewer &lt;20160123&gt;*
 
 ---
-### [&nbsp;Documentation: [android_host_grep.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_host_grep.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_find.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
@@ -592,7 +655,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**stringsgetall** *<b>\[Run strings command based on host variants\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *stringsgetall [params]*
 
 ---
-### [&nbsp;Documentation: [android_host_linux.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_host_linux.rc</span> ###
+>
   * [**toclip** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *xclip -selection c*
   * [**rsynca** *<b>\[Mirror a path to another\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *rsynca &lt;path1&gt; &lt;path2&gt;*
   * [**rsyncf** *<b>\[Mirror a path to another based on size only\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *rsyncf &lt;path1&gt; &lt;path2&gt;*
@@ -613,12 +677,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**topmem** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *top -o %MEM*
 
 ---
-### [&nbsp;Documentation: [android_host_pushbullet.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_host_pushbullet.rc</span> ###
+>
   * [**pushb** *<b>\[Pushbullet notification helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc) : *pushb [message]*
   * [**pushbsizes** *<b>\[Path sizes in Pushbullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_pushbullet.rc) : *pushbsizes &lt;paths&gt;*
 
 ---
-### [&nbsp;Documentation: [android_host_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_tools.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_host_tools.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_edit.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_tools.rc)
@@ -630,7 +696,15 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**wip** *<b>\[Work in progress commands to store and use\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_tools.rc) : *wip [commands to store]*
 
 ---
-### [&nbsp;Documentation: [android_kernel_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_kernel</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_kernel_builders.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_helpers.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_builders.rc)
@@ -640,7 +714,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**kerneltoolchains** *<b>\[Select toolchains based on ARCH in Android build tree\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_builders.rc) : *kerneltoolchains [version]*
 
 ---
-### [&nbsp;Documentation: [android_kernel_defconfig.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_defconfig.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_kernel_defconfig.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_defconfig.rc)
@@ -650,17 +725,20 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**makedefconfset** *<b>\[Kernel defconfig configuration setter\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_defconfig.rc) : *makedefconfset &lt;device_name&gt; [force_config=value]*
 
 ---
-### [&nbsp;Documentation: [android_kernel_editors.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_editors.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_kernel_editors.rc</span> ###
+>
   * [**boottools** *<b>\[Android bootimage editor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_editors.rc) : *boottools &lt;boot.img&gt;*
   * [**bootelf** *<b>\[Sony ELF 8960 bootimage editor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_editors.rc) : *bootelf &lt;boot.img&gt;*
 
 ---
-### [&nbsp;Documentation: [android_kernel_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_kernel_helpers.rc</span> ###
+>
   * [**makekernelinjector** *<b>\[Helper to makekernel with injector zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *makekernelinjector &lt;device_names&gt;*
   * [**gitcpupprima** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_helpers.rc) : *gitcpup "${1}" 'CORE' 'drivers/staging/prima/CORE'*
 
 ---
-### [&nbsp;Documentation: [android_kernel_tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_kernel_tools.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_devices.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
@@ -689,14 +767,23 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**bootimagedebuggable** *<b>\[Bootimage build unsecured patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_kernel_tools.rc) : *bootimagedebuggable &lt;device_product&gt; &lt;true/false&gt;*
 
 ---
-### [&nbsp;Documentation: [android_release_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_release</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_release_builders.rc</span> ###
+>
   * [**romautorelease** *<b>\[Advanced automated ROM builder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romautorelease &lt;device_name&gt; &lt;rom_tag&gt; [nowipe,j1/j2]*
   * [**autorelease** *<b>\[Helper menu access to autorelease* functions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc)
   * [**romlogs** *<b>\[View ROMs build logs from romautorelease\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *romlogs &lt;device&gt; &lt;rom&gt; [logs_count_default_200]*
   * [**autobuild** *<b>\[Development automated ROM builder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_builders.rc) : *autobuild &lt;device&gt;*
 
 ---
-### [&nbsp;Documentation: [android_release_cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_release_cleaners.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_release_cleaners.rc)
   ```
@@ -708,7 +795,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**outcommoncl** *<b>\[ROM output cleaner for common rebuilds\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_cleaners.rc)
 
 ---
-### [&nbsp;Documentation: [android_release_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_release_helpers.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_host.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_adb_tools.rc)
@@ -722,7 +810,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**noccache** *<b>\[Run command without CCache\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_helpers.rc) : *noccache &lt;command...&gt;*
 
 ---
-### [&nbsp;Documentation: [android_release_packages.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_release_packages.rc</span> ###
+>
   * [**signzip** *<b>\[Sign flashable zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *signzip &lt;zip_to_sign&gt; [signed_output_zip]*
   * [**signapk** *<b>\[Sign apk files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *signapk &lt;apk_to_sign&gt; [signed_output_apk]*
   * [**mmmzip** *<b>\[Build module to flashable zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *mmmzip &lt;paths_or_modules&gt;*
@@ -732,26 +821,37 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**oeminjectorzip** *<b>\[OEM files to flashable injector zip\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_release_packages.rc) : *oeminjectorzip &lt;oem_image&gt;*
 
 ---
-### [&nbsp;Documentation: [android_repo_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_builders.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_repo</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_repo_builders.rc</span> ###
+>
   * [**repotwrp** *<b>\[Advanced builder for TWRP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_builders.rc) : *repotwrp {device} [nosync,nowipe,outcl,fota,local +fotareboot]*
   * [**repomrom** *<b>\[Advanced builder for MultiROM\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_builders.rc) : *repomrom {device} [nosync,nowipe,outcl,fota,local +fotareboot]*
 
 ---
-### [&nbsp;Documentation: [android_repo_changelog.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changelog.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_repo_changelog.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_changelog.rc)
   ```
   * [**repochangelog** *<b>\[Generate ROM changelogs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changelog.rc) : *repochangelog &lt;days_count&gt; [project1_path,project2_path,...]*
 
 ---
-### [&nbsp;Documentation: [android_repo_changes.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changes.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_repo_changes.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_changes.rc)
   ```
   * [**repochanges** *<b>\[Detect all repo projects differences\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_changes.rc) : *repochanges ["filter_projects"]*
 
 ---
-### [&nbsp;Documentation: [android_repo_cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_repo_cleaners.rc</span> ###
+>
   * [**repoclean** *<b>\[Delete contents from 'out' folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc) : *repoclean [out_folder]*
   * [**repodestroy** *<b>\[Delete complete repo apart from local_manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)
   * [**repodevclean** *<b>\[Delete contents from 'out/target/product' folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc)
@@ -764,14 +864,16 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**repocleancache** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_cleaners.rc) : *if [ ! -z "${CCACHE_DIR}" ]; then rm -rfv "${CCACHE_DIR}/"*; fi*
 
 ---
-### [&nbsp;Documentation: [android_repo_compare.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_compare.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_repo_compare.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_compare.rc)
   ```
   * [**repocomparetags** *<b>\[Helper to compare release tags\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_compare.rc) : *repocomparetags &lt;base_tag_or_HEAD&gt; &lt;compare_tag_or_HEAD&gt;*
 
 ---
-### [&nbsp;Documentation: [android_repo_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_repo_helpers.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_repo_cleaners.rc)
@@ -793,7 +895,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**reposwitcher** *<b>\[Helper to switch between local_manifests_* folders\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_helpers.rc) : *reposwitcher [bool_init]*
 
 ---
-### [&nbsp;Documentation: [android_repo_init.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_repo_init.rc</span> ###
+>
   * [**repoinitaosp** *<b>\[repo init for AOSP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitaosp &lt;branch_id&gt; [referenced,clean,light/shallow,example]*
   * [**repoinitlineage** *<b>\[repo init for LineageOS\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitlineage &lt;13.0/14.1/15.0/15.1&gt; [referenced,clean,light/shallow,example]*
   * [**repoinitrr** *<b>\[repo init for ResurrectionRemix\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinitrr &lt;nougat&gt; [referenced,clean,light/shallow]*
@@ -803,7 +906,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**repoinit** *<b>\[repo init menu\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_init.rc) : *repoinit [bool_manually]*
 
 ---
-### [&nbsp;Documentation: [android_repo_projects.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_repo_projects.rc</span> ###
+>
   * [**gitrap** *<b>\[Development projects selector\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
   * [**gitraplineagesony8996** *<b>\[LineageOS Sony 8996 development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
   * [**gitrapaospsony8960n** *<b>\[AOSP Sony 8960 Nougat development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
@@ -817,7 +921,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitraptwrp** *<b>\[TWRP Sony development project remote\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_projects.rc)
 
 ---
-### [&nbsp;Documentation: [android_repo_referenced.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_repo_referenced.rc</span> ###
+>
   * [**reporeferencedaosp** *<b>\[AOSP referenced repo commands launcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc) : *reporeferencedaosp &lt;"command_to_run"&gt; &lt;"device1 device2 ..."&gt;*
   * [**reporeferencedlineage** *<b>\[LineageOS referenced repo commands launcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc) : *reporeferencedlineage &lt;"command_to_run"&gt; &lt;"device1 device2 ..."&gt;*
   * [**reporefupdate** *<b>\[Upload new projects manifests\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc) : *reporefupdate [bool_automated]*
@@ -826,11 +931,20 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**reporeflinker** *<b>\[Helper to symlink local_manifests to Developments\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_repo_referenced.rc)
 
 ---
-### [&nbsp;Documentation: [android_rom_aicp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aicp.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_rom</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_rom_aicp.rc</span> ###
+>
   * [**gitcpaicp** *<b>\[Automated upstream to AICP device merger\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aicp.rc)
 
 ---
-### [&nbsp;Documentation: [android_rom_aospcaf.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_rom_aospcaf.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_aospcaf.rc)
@@ -838,7 +952,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**aospcafpatcher** *<b>\[AOSP-CAF Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_aospcaf.rc) : *aospcafpatcher [specific_paths]*
 
 ---
-### [&nbsp;Documentation: [android_rom_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_rom_helpers.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_grep.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
@@ -849,15 +964,18 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**overlaycompare** *<b>\[Compare device overlays against sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_helpers.rc) : *overlaycompare &lt;overlay_file_path&gt;*
 
 ---
-### [&nbsp;Documentation: [android_rom_images.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_images.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_rom_images.rc</span> ###
+>
   * [**androidextractimage** *<b>\[Android filesystem.img extractor\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_images.rc) : *androidextractimage &lt;file.img&gt; &lt;output_path&gt;*
 
 ---
-### [&nbsp;Documentation: [android_rom_lineageoms.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageoms.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_rom_lineageoms.rc</span> ###
+>
   * [**lineageomspatcher** *<b>\[LineageOMS Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageoms.rc)
 
 ---
-### [&nbsp;Documentation: [android_rom_lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_rom_lineageos.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_git_remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
@@ -868,7 +986,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lineagecvetracker** *<b>\[CVE tracker instance helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_lineageos.rc) : *lineagecvetracker [bool_install]*
 
 ---
-### [&nbsp;Documentation: [android_rom_projects.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_rom_projects.rc</span> ###
+>
   * [**gitbranchpusher** *<b>\[Push to project specific branch\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *gitbranchpusher [y/n] [remote_url] [branch]*
   * [**androidprojectpaths** *<b>\[Android project remote paths list\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectpaths &lt;owner&gt; &lt;project_name&gt;*
   * [**androidprojectpatcher** *<b>\[Android project patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc) : *androidprojectpatcher &lt;owner&gt; &lt;project_name&gt; &lt;email&gt; [specific_path]*
@@ -881,7 +1000,13 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**romrebaser** *<b>\[Helper menu access to *rebaser functions\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_rom_projects.rc)
 
 ---
-### [&nbsp;Documentation: [android_shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">android_shortcuts.rc</span> ####
+</summary>
+
   * [**cdd** *<b>\[Access device sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cdd &lt;device_name&gt;*
   * [**cdp** *<b>\[Access repo project sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *cdp [project_name]*
   * [**cdman** *<b>\[Access manifests path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc)
@@ -939,32 +1064,49 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**cdsepolicy** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_shortcuts.rc) : *croot; cd ./system/sepolicy/*
 
 ---
-### [&nbsp;Documentation: [android_ssh_remote.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_ssh_remote.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">android_ssh_remote.rc</span> ####
+</summary>
+
   * [**sshremote** *<b>\[Get the configured SSH target\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_ssh_remote.rc)
   * [**sshserv** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_ssh_remote.rc) : *ssh $(sshremote)*
   * [**sshsync** *<b>\[Mirror remote server folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_ssh_remote.rc) : *sshsync &lt;up/down&gt; &lt;local_path&gt; &lt;remote_path&gt; [params]*
 
 ---
-### [&nbsp;Documentation: [android_uploads_basketbuild.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">android_uploads</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">android_uploads_basketbuild.rc</span> ###
+>
   * [**uploadbasketbuild** *<b>\[File to BasketBuild server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *uploadbasketbuild &lt;file_path&gt; [target_folder]*
   * [**downloadbasketbuild** *<b>\[Download from BasketBuild\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *downloadbasketbuild &lt;remote_path&gt;*
   * [**uploadprivatebasketbuild** *<b>\[Upload to private BasketBuild\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *uploadprivatebasketbuild &lt;device_name&gt;*
   * [**syncbasketbuild** *<b>\[Folder with BasketBuild server syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_basketbuild.rc) : *syncbasketbuild &lt;local_path&gt; &lt;remote_path&gt; &lt;--download/--upload&gt;*
 
 ---
-### [&nbsp;Documentation: [android_uploads_common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_uploads_common.rc</span> ###
+>
   * [**fileupl** *<b>\[File to release server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc) : *fileupl &lt;file_path&gt; [target_folder]*
   * [**fileget** *<b>\[File from release server downloader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc) : *fileget &lt;remote_path&gt; [boot_remove_remote]*
   * [**fastupl** *<b>\[Fast private file to server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_common.rc) : *fastupl &lt;file_path&gt; [none/zip/bootimage]*
 
 ---
-### [&nbsp;Documentation: [android_uploads_ftp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_uploads_ftp.rc</span> ###
+>
   * [**uploadftp** *<b>\[File to FTP server uploader\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc) : *uploadftp &lt;file_path&gt; [target_folder] [uploadftp_variant]*
   * [**downloadftp** *<b>\[Download from FTP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc) : *downloadftp &lt;remote_path&gt; [uploadftp_variant]*
   * [**syncftp** *<b>\[Folder with FTP server syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_ftp.rc) : *syncftp &lt;local_path&gt; &lt;remote_path&gt; &lt;--download/--upload&gt; [uploadftp_variant]*
 
 ---
-### [&nbsp;Documentation: [android_uploads_helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_uploads_helpers.rc</span> ###
+>
   * [**mmmupl** *<b>\[Make zip and upload\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *mmmupl &lt;package_or_path&gt; [bool_partial_build]*
   * [**devuplboot** *<b>\[Upload ROM bootimage\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *devuplboot &lt;device&gt;*
   * [**devuplrom** *<b>\[Upload ROM build\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *devuplrom &lt;device&gt; [folder_path]*
@@ -972,7 +1114,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**makep** *<b>\[Use "makes" with Pushbullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_helpers.rc) : *makep &lt;parameters&gt;*
 
 ---
-### [&nbsp;Documentation: [android_uploads_local.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_uploads_local.rc</span> ###
+>
   * [**androidfilesadd** *<b>\[Add file to AndroidFiles\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilesadd &lt;file_path&gt; &lt;target_folder&gt;*
   * [**androidfilessync** *<b>\[Sync AndroidFiles folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync &lt;--upload/--download&gt;*
   * [**androidfilesdownload** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc) : *androidfilessync &#8208;&#8208;download*
@@ -981,7 +1124,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**androidfilesopen** *<b>\[Open AndroidFiles folder\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_local.rc)
 
 ---
-### [&nbsp;Documentation: [android_uploads_mega.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">android_uploads_mega.rc</span> ###
+>
   * [**uploadmega** *<b>\[Upload to MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *uploadmega &lt;file_path&gt; [target_folder]*
   * [**downloadmega** *<b>\[Download from MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *downloadmega &lt;remote_path&gt; [boot_remove_remote]*
   * [**uploadprivatemega** *<b>\[Upload to private MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *uploadprivatemega &lt;device_name&gt;*
@@ -989,7 +1133,22 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**listmega** *<b>\[List remote files on MEGA.nz\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_uploads_mega.rc) : *listmega [options]*
 
 ---
-### [&nbsp;Documentation: [extensions/lineage_next/android_rom_lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/android_rom_lineageos.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">extensions/deprecated/android_repo_helpers.rc</span> ####
+</summary>
+
+
+---
+</details>
+
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">extensions/lineage_next/android_rom_lineageos.rc</span> ####
+</summary>
+
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/lineage_next/android_rom_lineageos.rc)
@@ -997,25 +1156,51 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lineagenextrebaser** *<b>\[LineageOS Next Rebaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/android_rom_lineageos.rc) : *lineagenextrebaser [specific_paths]*
 
 ---
-### [&nbsp;Documentation: [extensions/linux/android_host_linux.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/android_host_linux.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">extensions/linux/</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">extensions/linux/android_host_linux.rc</span> ###
+>
   * [**cleanram** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/android_host_linux.rc)
   * [**cleanrambuild** *<b>\[RAM caches cleanup\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/android_host_linux.rc)
   * [**cleanramkill** *<b>\[Complete RAM cleanup including "java"\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/android_host_linux.rc) : *cleanramkill [bool_cleanram]*
 
 ---
-### [&nbsp;Documentation: [extensions/megatools/megatools_mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_mirror.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">extensions/megatools/</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">extensions/megatools/megatools_mirror.rc</span> ###
+>
   * [**megamirror** *<b>\[MEGA mirror syncer\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_mirror.rc) : *megamirror &lt;local_folder&gt; &lt;remote_folder&gt; &lt;--upload/--download&gt; [--copy,-y/-n]*
 
 ---
-### [&nbsp;Documentation: [extensions/megatools/megatools_reload.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_reload.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/megatools/megatools_reload.rc</span> ###
+>
   * [**meganzreload** *<b>\[Reload Mega.nz account and keys\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/megatools_reload.rc)
 
 ---
-### [&nbsp;Documentation: [extensions/semc_msm7x30/android_autorelease.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_msm7x30/android_autorelease.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">extensions/semc_msm7x30/</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">extensions/semc_msm7x30/android_autorelease.rc</span> ###
+>
   * [**autoreleaselegacyxperia** *<b>\[Automated LegacyXperia 7x30 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_msm7x30/android_autorelease.rc) : *autoreleaselegacyxperia [devices]*
 
 ---
-### [&nbsp;Documentation: [extensions/semc_msm7x30/android_rom_legacyxperia.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_msm7x30/android_rom_legacyxperia.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/semc_msm7x30/android_rom_legacyxperia.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_defconfig.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/semc_msm7x30/android_rom_legacyxperia.rc)
@@ -1025,7 +1210,15 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lxdefconfig** *<b>\[Edit all lx defconfigs\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/semc_msm7x30/android_rom_legacyxperia.rc)
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8960/android_autorelease.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_autorelease.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">extensions/sony_msm8960/</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8960/android_autorelease.rc</span> ###
+>
   * [**autoreleaseaospsony8960o** *<b>\[Automated AOSP Oreo Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_autorelease.rc) : *autoreleaseaospsony8960o [devices]*
   * [**autoreleaselineagesony8960** *<b>\[Automated LineageOS Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_autorelease.rc) : *autoreleaselineagesony8960 [devices]*
   * [**autoreleaselineagesony8960o** *<b>\[Automated LineageOS 15.0 Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_autorelease.rc) : *autoreleaselineagesony8960o [devices]*
@@ -1035,7 +1228,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**autoreleaselineagesony8960master** *<b>\[Automated LineageOS Sony 8960 Master releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_autorelease.rc) : *autoreleaselineagesony8960master &lt;devices&gt;*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8960/android_lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_lineageos.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8960/android_lineageos.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8960/android_lineageos.rc)
@@ -1044,7 +1238,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lineagesony8960rebaser** *<b>\[LineageOS Devices Rebaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_lineageos.rc) : *lineagesony8960rebaser [specific_paths]*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8960/android_rom_aosp_sony8960.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8960/android_rom_aosp_sony8960.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc)
@@ -1055,23 +1250,34 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**aospsony8960masterpatcher** *<b>\[AOSP 8960 Master Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_rom_aosp_sony8960.rc) : *aospsony8960masterpatcher [specific_paths]*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8960/android_shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8960/android_shortcuts.rc</span> ###
+>
   * [**cdspker** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8960t/g')"*
   * [**cdblueker** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8x60/g')"*
   * [**cdvendsony** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/vendor/sony/g')"*
   * [**meldblue** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_shortcuts.rc) : *pathscompare "./${1}" "../blue-common/${1}"*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8960/android_tools_release.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_tools_release.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8960/android_tools_release.rc</span> ###
+>
   * [**autoreleasemultiromsony8960** *<b>\[Automated MultiROM Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_tools_release.rc) : *autoreleasemultiromsony8960 [devices]*
   * [**autoreleasetwrpsony8960** *<b>\[Automated TWRP Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/android_tools_release.rc) : *autoreleasetwrpsony8960 [devices]*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8996/android_autorelease.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_autorelease.rc)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Group: <span class="grouplabel">extensions/sony_msm8996/</span> ####
+</summary>
+
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8996/android_autorelease.rc</span> ###
+>
   * [**autoreleaseaospsodp8996** *<b>\[Automated AOSP Sony SODP 8996 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_autorelease.rc) : *autoreleaseaospsodp8996 [devices]*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8996/android_kernel_builders.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_kernel_builders.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8996/android_kernel_builders.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_kernel_builders.rc)
@@ -1081,7 +1287,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**kernelcopyleftmerger** *<b>\[Sony Copyleft kernel archive merge helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_kernel_builders.rc) : *kernelcopyleftmerger &lt;archive_tar_bz2&gt;*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_aosp_sonysodp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8996/android_rom_aosp_sonysodp.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc)
@@ -1091,7 +1298,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**sonyaospkernelupdate** *<b>\[Automated Sony SODP kernel updater for AOSP\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_aosp_sonysodp.rc) : *sonyaospkernelupdate &lt;device_name&gt;*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_lineageos_sony8996.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sony8996.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8996/android_rom_lineageos_sony8996.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_lineageos_sony8996.rc)
@@ -1099,7 +1307,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lineagesony8996patcher** *<b>\[LineageOS Sony 8996 Patcher\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sony8996.rc) : *lineagesony8996patcher [specific_paths]*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc</span> ###
+>
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_rom_projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc)
@@ -1108,24 +1317,46 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**lineagesonysodprebaser** *<b>\[LineageOS SONY SODP Rebaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_rom_lineageos_sonysodp.rc) : *lineagesonysodprebaser [specific_paths]*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8996/android_shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8996/android_shortcuts.rc</span> ###
+>
   * [**sonysodpkernelrebase** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa*
   * [**doradefconf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *makedefconf msm-perf dora common*
   * [**dorazipkernel** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .*
   * [**kaguradefconf** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_shortcuts.rc) : *makedefconf msm-perf kagura common*
 
 ---
-### [&nbsp;Documentation: [extensions/sony_msm8996/android_tools_release.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_tools_release.rc)&nbsp;]
+> ### Documentation: <span class="grouplabel">extensions/sony_msm8996/android_tools_release.rc</span> ###
+>
   * [**autoreleasemultiromsony8996** *<b>\[Automated MultiROM Sony 8996 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_tools_release.rc) : *autoreleasemultiromsony8996 [devices]*
   * [**autoreleasetwrpsony8996** *<b>\[Automated TWRP Sony 8996 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8996/android_tools_release.rc) : *autoreleasetwrpsony8996 [devices]*
 
 ---
-### [&nbsp;Documentation: [install_repo.sh](https://github.com/AdrianDC/android_development_shell_tools/blob/master/install_repo.sh)&nbsp;]
+</details>
+
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">extensions/template/android_template.rc</span> ####
+</summary>
+
+
+---
+</details>
+
+<details>
+<summary class="groupheader">
+#### Documentation: <span class="grouplabel">install_repo.sh</span> ####
+</summary>
+
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/install_repo.sh)
   ```
   * [**\./install_repo.sh** *<b>\[Automated install of Android repo requirements\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/install_repo.sh)
 
 ---
-* #### Automatically generated by [shtoolsreadme](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) for [android_development_shell_tools](https://github.com/AdrianDC/android_development_shell_tools)
+</details>
+
+
+<br />
+---
+* #### Automatically generated by [shtoolsreadme](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_development_shell_tools.rc) for [android_development_shell_tools](https://github.com/AdrianDC/android_development_shell_tools) ####
 <!-- Functions End -->
