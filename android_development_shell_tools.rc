@@ -597,7 +597,9 @@ function shtoolsdocs()
 
   # Installation mode
   if [ ! -z "${1}" ]; then
-    sudo apt-get install ruby-dev;
+    sudo apt install build-essential curl libcurl4-openssl-dev libffi-dev ruby-dev zlib1g-dev;
+    sudo gem install rubygems-update;
+    sudo update_rubygems;
     sudo gem install bundler;
     sudo bundle install;
     bundle;
