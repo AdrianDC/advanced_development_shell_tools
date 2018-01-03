@@ -15,34 +15,6 @@
 # limitations under the License.
 #
 
-# === .bashrc Update ===
-function bashup()
-{
-  # Usage: bashup (Reload ~/.bashrc)
-
-  # Reload ~/.bashrc
-  source ~/.bashrc;
-}
-
-# === .bashrc Edit ===
-function bashe()
-{
-  # Usage: bashe (Edit ~/.bashrc)
-
-  # Edit ~/.bashrc
-  fen ~/.bashrc;
-}
-
-# === Clear Screen ===
-function cls()
-{
-  # Usage: cls (Clean terminal screen)
-
-  # Clean terminal screen
-  echo -e \\033c;
-  clear;
-}
-
 # === Clipboard ===
 function toclip() { xclip -selection c; }
 

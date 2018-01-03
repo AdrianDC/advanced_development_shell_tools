@@ -505,6 +505,16 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitgetbranch** *<b>\[Get git primary branch\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_tools.rc)
 
 ---
+### [&nbsp;Documentation: [android_host_bash.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_bash.rc)&nbsp;]
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_bash.rc)
+  ```
+  * [**bashup** *<b>\[Reload ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_bash.rc)
+  * [**bashe** *<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_bash.rc)
+  * [**cls** *<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_bash.rc)
+
+---
 ### [&nbsp;Documentation: [android_host_common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_common.rc)&nbsp;]
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/android_host_common.rc)
@@ -565,9 +575,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 ---
 ### [&nbsp;Documentation: [android_host_linux.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)&nbsp;]
-  * [**bashup** *<b>\[Reload ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
-  * [**bashe** *<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
-  * [**cls** *<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)
   * [**toclip** *(Function)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *xclip -selection c*
   * [**rsynca** *<b>\[Mirror a path to another\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *rsynca &lt;path1&gt; &lt;path2&gt;*
   * [**rsyncf** *<b>\[Mirror a path to another based on size only\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc) : *rsyncf &lt;path1&gt; &lt;path2&gt;*
