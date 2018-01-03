@@ -218,6 +218,27 @@ function gitconfcredentials()
   echo '';
 }
 
+# === Git Config GPG Key ===
+function gitconfgpgkey()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitconfgpgkey <gpg_key_id> (Configure Git GPG signing key)';
+    echo '';
+    return;
+  fi;
+
+  # Set option
+  git config --global user.signingkey "${1}";
+
+  # Display option
+  echo '';
+  echo -n ' gitconfgpgkey: user.signingkey = ';
+  git config --global --get user.signingkey;
+  echo '';
+}
+
 # === Git Config Conflicts Repeat ===
 function gitconfconflictsrepeat()
 {
@@ -275,7 +296,6 @@ function gitconfgpgsignature()
 # === Git Config Helpers ===
 alias gpglist='gpg --list-secret-keys --keyid-format LONG';
 alias gpgsilent='echo "no-tty" >> ~/.gnupg/gpg.conf';
-alias gpgsigning='git config --global user.signingkey';
 alias githi='git update-index --assume-unchanged';
 alias gitsh='git update-index --no-assume-unchanged';
 

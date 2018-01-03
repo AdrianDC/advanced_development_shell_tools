@@ -374,11 +374,11 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitconfcolors** *<b>\[Configure Git colors handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfcolors &lt;true/false/always&gt;*
   * [**gitconfpager** *<b>\[Configure Git pager handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfpager &lt;less/more/false&gt;*
   * [**gitconfcredentials** *<b>\[Configure Git credentials handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfcredentials &lt;cache/store/wincred&gt;*
+  * [**gitconfgpgkey** *<b>\[Configure Git GPG signing key\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfgpgkey &lt;gpg_key_id&gt;*
   * [**gitconfconflictsrepeat** *<b>\[Configure Git conflicts repeated handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfconflictsrepeat &lt;true/false&gt;*
   * [**gitconfgpgsignature** *<b>\[Configure Git GPG signature usage\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitconfgpgsignature &lt;true/false&gt;*
   * [**gpglist** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gpg &#8208;&#8208;list-secret-keys &#8208;&#8208;keyid-format LONG*
   * [**gpgsilent** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *echo "no-tty" &gt;&gt; ~/.gnupg/gpg.conf*
-  * [**gpgsigning** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global user.signingkey*
   * [**githi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index &#8208;&#8208;assume-unchanged*
   * [**gitsh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index &#8208;&#8208;no-assume-unchanged*
   * [**gitgpgparam** *<b>\[Returns the GPG signature flag if enabled\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)
