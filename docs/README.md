@@ -375,7 +375,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gpglist** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gpg &#8208;&#8208;list-secret-keys &#8208;&#8208;keyid-format LONG*
   * [**gpgsilent** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *echo "no-tty" &gt;&gt; ~/.gnupg/gpg.conf*
   * [**gpgsigning** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global user.signingkey*
-  * [**gitshowsg** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git config &#8208;&#8208;global alias.logs "log &#8208;&#8208;show-signature*
   * [**githi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index &#8208;&#8208;assume-unchanged*
   * [**gitsh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index &#8208;&#8208;no-assume-unchanged*
   * [**gitgpgparam** *<b>\[Returns the GPG signature flag if enabled\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)
@@ -402,6 +401,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitlo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=oneline &#8208;&#8208;abbrev-commit*
   * [**gitlod** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=oneline &#8208;&#8208;abbrev-commit &#8208;&#8208;*
   * [**gitloo** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" &#8208;&#8208;date=short &#8208;&#8208;all &#8208;&#8208;*
+  * [**gitlosign** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *git log &#8208;&#8208;show-signature*
   * [**gitlos** *<b>\[Search string in git history\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *gitlos &lt;path_or_.&gt; ["search string input"] [search_max_count]*
   * [**gitdi** *<b>\[Show git differences status\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc)
   * [**gitdfs** *<b>\[git diff status of an SHA1\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_history.rc) : *gitdfs &lt;sha1commit&gt;*

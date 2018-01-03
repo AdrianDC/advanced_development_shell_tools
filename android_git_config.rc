@@ -172,7 +172,6 @@ function gitconfgpgsignature()
 alias gpglist='gpg --list-secret-keys --keyid-format LONG';
 alias gpgsilent='echo "no-tty" >> ~/.gnupg/gpg.conf';
 alias gpgsigning='git config --global user.signingkey';
-alias gitshowsg='git config --global alias.logs "log --show-signature"';
 alias githi='git update-index --assume-unchanged';
 alias gitsh='git update-index --no-assume-unchanged';
 
