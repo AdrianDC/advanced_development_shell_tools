@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2015-2017 Adrian DC
+# Copyright 2015-2018 Adrian DC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -537,7 +537,7 @@ function oeminjectorzip()
 
   # Header
   echo '';
-  echo -e ' \e[1;37m[ OEM Injector Zip by Adrian DC - 2017 ]\e[0m';
+  echo -e ' \e[1;37m[ OEM Injector Zip by Adrian DC - 2015-2018 ]\e[0m';
   echo '';
 
   # Files handling

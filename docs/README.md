@@ -1,6 +1,6 @@
 # Android Development Shell Tools
 
- * Project created by [Adrian DC](https://github.com/AdrianDC) - 2015-2017
+ * Project created by [Adrian DC](https://github.com/AdrianDC) - 2015-2018
 
  * GitHub description of the project: [About the project...](project.md)
    <br />

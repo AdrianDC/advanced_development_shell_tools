@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2015-2017 Adrian DC
+# Copyright 2015-2018 Adrian DC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ function gerritssh()
 
     # Header data
     echo '';
-    echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2017\e[0m';
+    echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2018\e[0m';
     echo '';
     echo -e "      \e[1;33mError: No configuration in ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc found";
     echo -e '             Read android_gerritssh.rc script for more details\e[0m';
@@ -251,7 +251,7 @@ function gerritssh()
   echo '';
   echo -e " \e[1;31m\e[4;31mConnected to Gerrit - ${GerritReview}/${projectname} - ${projectbranch}\e[0m";
   echo '';
-  echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2017\e[0m';
+  echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2018\e[0m';
   echo -e '      \e[1;37mCommands : y (Yes) / n (No) / q (Quit)';
   echo -e '                 p (Publish, +1+2 only)';
   echo -e '                 s (+1+2 Submit commit)';
