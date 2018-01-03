@@ -60,6 +60,27 @@ function gitconfeditor()
   echo '';
 }
 
+# === Git Config Merge Tool ===
+function gitconfmergetool()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitconfmergetool <app_name> (Configure Git merge tool handling)';
+    echo '';
+    return;
+  fi;
+
+  # Set option
+  git config --global merge.tool "${1}";
+
+  # Display option
+  echo '';
+  echo -n ' gitconfmergetool: merge.tool = ';
+  git config --global --get merge.tool;
+  echo '';
+}
+
 # === Git Config File Permissions ===
 function gitconffileperms()
 {
