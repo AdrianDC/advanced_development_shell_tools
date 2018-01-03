@@ -380,6 +380,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**githi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index &#8208;&#8208;assume-unchanged*
   * [**gitsh** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *git update-index &#8208;&#8208;no-assume-unchanged*
   * [**gitgpgparam** *<b>\[Returns the GPG signature flag if enabled\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc)
+  * [**gitfilter** *<b>\[Use git commands with filters\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitfilter &lt;parameters&gt;*
   * [**gitnofilter** *<b>\[Use git commands without filters\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_git_config.rc) : *gitnofilter &lt;parameters&gt;*
 
 ---

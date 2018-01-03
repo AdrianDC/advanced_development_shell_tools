@@ -59,6 +59,21 @@ function gitgpgparam()
   fi;
 }
 
+# === Git Filtered Helper ===
+function gitfilter()
+{
+  # Usage: gitfilter <parameters> (Use git commands with filters)
+
+  # Use git commands with filters
+  function git() { "$(which 'git')" -c core.fileMode=false -c core.autocrlf=true "${@}"; };
+  if [ "${1:0:3}" = 'git' ]; then
+    "${@}";
+  else
+    git "${@}";
+  fi;
+  unset -f git;
+}
+
 # === Git Unfiltered Helper ===
 function gitnofilter()
 {
