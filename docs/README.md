@@ -589,7 +589,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**grepi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *grep -ai*
   * [**gcmodules** *<b>\[List all LOCAL_MODULE elements\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *gcmodules [path]*
   * [**gcphony** *<b>\[List all PHONY rules\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)
-  * [**stringsparams** *<b>\[Get the strings command parameters for variants\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc)
+  * [**stringsgetall** *<b>\[Run strings command based on host variants\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_grep.rc) : *stringsgetall [params]*
 
 ---
 ### [&nbsp;Documentation: [android_host_linux.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/android_host_linux.rc)&nbsp;]

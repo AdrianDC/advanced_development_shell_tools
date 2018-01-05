@@ -34,13 +34,9 @@ function gs()
 {
   # Usage: gs [inputs] (Grep through sources and binaries)
 
-  # Variables
-  local strings_params;
-
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -60,12 +56,10 @@ function gce()
 
   # Variables
   local files=();
-  local strings_params;
 
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       files+=("${file}");
     fi;
@@ -80,13 +74,9 @@ function gck()
 {
   # Usage: gck [inputs] (Grep through kernel configurations)
 
-  # Variables
-  local strings_params;
-
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -98,13 +88,9 @@ function gca()
 {
   # Usage: gca [inputs] (Grep through Android makefiles)
 
-  # Variables
-  local strings_params;
-
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -116,13 +102,9 @@ function gcmanifest()
 {
   # Usage: gcmanifest [inputs] (Grep through Android Manifests)
 
-  # Variables
-  local strings_params;
-
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -134,13 +116,9 @@ function gcrc()
 {
   # Usage: gcrc [inputs] (Grep through Android .rc files)
 
-  # Variables
-  local strings_params;
-
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -152,13 +130,9 @@ function gcsep()
 {
   # Usage: gcsep [inputs] (Grep through Android sepolicies)
 
-  # Variables
-  local strings_params;
-
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -170,13 +144,9 @@ function gcxml()
 {
   # Usage: gcxml [inputs] (Grep through Android .xml files)
 
-  # Variables
-  local strings_params;
-
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -188,13 +158,9 @@ function gccontexts()
 {
   # Usage: gccontexts [inputs] (Grep through Android sepolicies contexts)
 
-  # Variables
-  local strings_params;
-
   # Grep through files
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    found=$(${strings_params} "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -209,13 +175,9 @@ function gcmodules()
 {
   # Usage: gcmodules [path] (List all LOCAL_MODULE elements)
 
-  # Variables
-  local strings_params;
-
   # Search all build definitions
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    ${strings_params} "$(readlink -f "${file}")" \
+    stringsgetall "$(readlink -f "${file}")" \
       | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
       | sed 's/.*\(:=[ \t]*\|name: "\)\([^"]*\)\(".*\|\)/\2/g';
   done < <(findfilteredprojectfiles "${1:-.}" \( -name '*.mk' -o -name '*.bp' \));
@@ -226,29 +188,25 @@ function gcphony()
 {
   # Usage: gcphony (List all PHONY rules)
 
-  # Variables
-  local strings_params;
-
   # Search all build definitions
-  strings_params="strings $(stringsparams)";
   while read -r file; do
-    ${strings_params} "$(readlink -f "${file}")" \
+    stringsgetall "$(readlink -f "${file}")" \
       | grep -ai ".PHONY:" \
       | sed 's/.PHONY: //g';
   done < <(findfilteredprojectfiles . \( -name '*.mk' \));
 }
 
-# === Strings Parameters ===
-function stringsparams()
+# === Strings Get All ===
+function stringsgetall()
 {
-  # Usage: stringsparams (Get the strings command parameters for variants)
+  # Usage: stringsgetall [params] (Run strings command based on host variants)
 
   # Handle Sysinternals strings variant
   if strings -accepteula 2> /dev/null | grep -q 'sysinternals'; then
-    echo '-accepteula -nobanner';
-    return;
-  fi;
+    strings -a -accepteula -nobanner "${@}";
 
   # Handle generic strings variant
-  echo '-a';
+  else
+    strings -a "${@}";
+  fi;
 }

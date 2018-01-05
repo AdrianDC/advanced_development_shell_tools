@@ -36,12 +36,8 @@ function binaryeditor()
   local REPLACEMENT=${3};
   local REPLACE=;
   local STRINGS=;
-  local strings_param;
   PATTERN=${PATTERN//\*/.\*};
   PATTERN=${PATTERN//./.};
-
-  # Handle strings variants
-  strings_param="strings $(stringsparams)";
 
   # Headers
   echo '';
@@ -63,7 +59,7 @@ function binaryeditor()
 
     # Replacement mode
     if [ ! -z "${REPLACEMENT}" ]; then
-      STRINGS=$(${strings_param} "${FILE}" \
+      STRINGS=$(stringsgetall "${FILE}" \
               | grep "${PATTERN}" \
               | sort -u -r);
 
@@ -106,7 +102,7 @@ function binaryeditor()
 
       # Information not found
       else
-        STRINGS=$(${strings_param} "${FILE}" \
+        STRINGS=$(stringsgetall "${FILE}" \
                 | grep "${REPLACEMENT}" \
                 | sort -u -r);
         if [ ! -z "${STRINGS}" ]; then
@@ -116,7 +112,7 @@ function binaryeditor()
 
     # Search mode
     else
-      STRINGS=$(${strings_param} "${FILE}" \
+      STRINGS=$(stringsgetall "${FILE}" \
               | grep "${PATTERN}" \
               | sort -u -r \
               | tr '\n' ',');

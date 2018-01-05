@@ -41,10 +41,6 @@ function librarieshunter()
   local DIR_NAMES=;
   local DIR_COMMON_NAMES=;
   local DIR_VENDOR_NAMES=;
-  local strings_param;
-
-  # Handle strings variants
-  strings_param="strings $(stringsparams)";
 
   # Scan the libraries
   echo '';
@@ -58,7 +54,7 @@ function librarieshunter()
     fi;
 
     # Internal references
-    STRINGS=$(${strings_param} "${FILE}" \
+    STRINGS=$(stringsgetall "${FILE}" \
             | grep "\\.so" \
             | sort -u -r \
             | tr '\n' ',');
@@ -92,7 +88,7 @@ function librarieshunter()
       do
         FILE_SUB=$(readlink -f "${FILE_SUB}");
         if [ -d "${FILE_SUB}" ] || [ "${FILE}" = "${FILE_SUB}" ]; then continue; fi;
-        STRINGS_SUB=$(${strings_param} "${FILE_SUB}" \
+        STRINGS_SUB=$(stringsgetall "${FILE_SUB}" \
                     | grep "${FILE_NAME}" \
                     | sort -u -r \
                     | tr '\n' ',');
@@ -123,10 +119,6 @@ function librarieschecker()
   # Variables
   local FILES_PATH=${1};
   local FILE_NAME=;
-  local strings_param;
-
-  # Handle strings variants
-  strings_param="strings $(stringsparams)";
 
   # Scan the libraries
   echo '';
