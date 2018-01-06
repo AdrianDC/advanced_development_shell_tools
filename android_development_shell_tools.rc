@@ -714,7 +714,7 @@ function shtoolsnews()
   fi;
 
   # Ignore if unchanged
-  if git diff --quiet HEAD FETCH_HEAD; then
+  if [ -z "${1}" ] && git diff --quiet HEAD FETCH_HEAD; then
     echo -en "\r\033[K";
     cd "${currentdir}/";
     return;
@@ -731,13 +731,15 @@ function shtoolsnews()
   echo '';
 
   # Present commits log
-  git log --abbrev-commit --color=always --pretty=oneline -n "${commits_count}" FETCH_HEAD \
-      | nl -n rn -s '  ' -w 3;
+  if [ "${commits_count}" -ne 0 ]; then
+    git log --abbrev-commit --color=always --pretty=oneline -n "${commits_count}" FETCH_HEAD \
+        | nl -n rn -s '  ' -w 3;
 
-  # Present upgrade hint
-  echo '';
-  echo -e ' \e[1;33mshtoolsnews: \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project\e[0m';
-  echo '';
+    # Present upgrade hint
+    echo '';
+    echo -e ' \e[1;33mshtoolsnews: \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project\e[0m';
+    echo '';
+  fi;
 
   # Delay input on automatic notifications
   if [ ! -z "${1}" ]; then
