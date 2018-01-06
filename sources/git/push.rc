@@ -24,11 +24,17 @@ function gitpu()
   # Usage: gitpu [remote] [branch] [input] (Git push to validated remote)
 
   # Variables
-  local getbranch=$(repogetbranch);
-  local remote=${1:-$(gitgetremote "${getbranch}")};
-  local branch=${2:-${getbranch}};
-  local input=${3};
+  local getbranch;
+  local remote;
+  local branch;
+  local input;
   local cmd;
+
+  # Initialize variables
+  getbranch=$(repogetbranch);
+  remote=${1:-$(gitgetremote "${getbranch}")};
+  branch=${2:-${getbranch}};
+  input=${3};
 
   # Header information
   echo '';
