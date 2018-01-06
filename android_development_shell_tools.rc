@@ -46,12 +46,19 @@ fi;
 # === Android Development Shell Tools Configuration ===
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android_development_shell_tools.rc;
 
+# === Android Development Shell Tools Toolkits ===
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID='|sources/android_adb|sources/android_build|sources/android_devices|sources/android_kernel|sources/android_release|sources/android_repo|sources/android_rom|sources/gerrit|sources/git|sources/host|sources/ssh|sources/uploads|extensions/linux|';
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST='|sources/host|extensions/linux|';
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT='|sources/git|sources/host|sources/ssh|extensions/linux|';
+
 # === Android Development Shell Tools Sources ===
 function __shtoolssources()
 {
   # Variables
+  local group;
   local LC_ALL_HOST;
   local path;
+  local toolkits;
 
   # Loading header
   echo -en '\e[1;33mshtools: \e[1;33mLoading android_development_shell_tools...\e[0m';
@@ -59,6 +66,9 @@ function __shtoolssources()
   # Locale override
   LC_ALL_HOST=${LC_ALL};
   export LC_ALL=C;
+
+  # Get current toolkits
+  toolkits=$(grep '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
 
   # Android Development Shell Tools Project
   ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES=();
@@ -92,7 +102,11 @@ function __shtoolssources()
 
   # Android Development Shell Tools Inclusion
   for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
-    source "${path}";
+    group=${path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+    group=${group%/*};
+    if [ "${group}" = 'project' ] || [[ "${toolkits}" == *"|${group}|"* ]]; then
+      source "${path}";
+    fi;
   done;
 
   # Locale restore
@@ -111,6 +125,11 @@ if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
 fi;
 if __shtools-config-news-active; then
   shtoolsnews true;
+fi;
+
+# === Android Development Shell Tools Automated Toolkits ===
+if ! grep -q '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
+  shtoolskits;
 fi;
 
 # === Android Development Shell Tools Prebuilt Files ===

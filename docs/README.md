@@ -92,6 +92,7 @@
 >
   * [**shtools** *<b>\[Entrypoint menu to android_development_shell_tools\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
   * [**shtools-** *<b>\[Options menu for android_development_shell_tools\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
+  * [**shtoolskits** *<b>\[Toolkits selection for android_development_shell_tools\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc) : *shtoolskits [init]*
   * [**shtoolsnews** *<b>\[Display android_development_shell_tools news notifications\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
 
 ---
