@@ -917,6 +917,7 @@ function shtoolsreadme()
     readme_buffer='';
 
     # Add file item header
+    #shellcheck disable=SC2010
     if ! ls -1 "${group_current}"* | grep -qv "${path_relative}"; then
       readme_output+="${group_buffer}\<details\>\n\<summary class=\"group_header\"\>\n#### ${header_buffer} ####\n\<\/summary\>\n\n";
       group_last=${group_current};
