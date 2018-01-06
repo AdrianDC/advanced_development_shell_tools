@@ -1137,15 +1137,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="groupheader">
-#### Documentation: <span class="grouplabel">extensions/deprecated/android_repo_helpers.rc</span> ####
-</summary>
-
-
----
-</details>
-
-<details>
-<summary class="groupheader">
 #### Documentation: <span class="grouplabel">extensions/lineage_next/android_rom_lineageos.rc</span> ####
 </summary>
 
