@@ -852,6 +852,8 @@ function shtoolsreadme()
   local path_file;
   local path_name;
   local path_relative;
+  local path_standalone;
+  local paths_standalone;
   local readme_buffer=;
   local readme_output=;
   local stats_aliases=0;
@@ -935,13 +937,18 @@ function shtoolsreadme()
 
     # Inject standalone import script
     if [ ! -z "${line_standalone}" ]; then
+      paths_standalone=${line_standalone#*${github_raw_path}\/};
+      paths_standalone=${paths_standalone//\)*${github_raw_path}\// };
+      paths_standalone=${paths_standalone%\)*};
 
-      # Warning about missing linkage
-      if ! echo "${line_standalone}" | grep -q "${path_relative}"; then
-        echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: Standalone import links have no linkage to this file";
-        echo '';
-        return;
-      fi;
+      # Warning about missing linkages
+      for path_standalone in ${paths_standalone}; do
+        if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/${path_standalone}" ]; then
+          echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: Standalone import link not found (${path_standalone})";
+          echo '';
+          return;
+        fi;
+      done;
 
       # Parse standalone import lines
       line_standalone=${line_standalone//# source <\(curl -Ls/};
