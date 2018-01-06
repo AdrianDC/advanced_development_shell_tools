@@ -237,6 +237,14 @@ function shtoolsnews()
   echo -e ' \e[1;33m===[ android_development_shell_tools by AdrianDC ]===\e[0m';
   echo '';
 
+  # Present local diffs
+  if git diff --cached --quiet; then
+    echo -e " \e[1;33mshtoolsnews: \e[1;37mLocal differences detected\e[0m";
+    echo '';
+    git diff --stat;
+    echo '';
+  fi;
+
   # Present commits count
   commits_count=$(git rev-list --right-only --count HEAD...FETCH_HEAD);
   echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_count} new commits available upstream\e[0m";
