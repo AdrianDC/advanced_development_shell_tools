@@ -849,8 +849,9 @@ function shtoolsreadme()
   local line_summary;
   local line_type;
   local line_usage;
-  local path;
   local path_file;
+  local path_name;
+  local path_relative;
   local readme_buffer=;
   local readme_output=;
   local stats_aliases=0;
@@ -890,31 +891,31 @@ function shtoolsreadme()
                    "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
 
     # Handle file path
-    path=${path_file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
-
+    path_relative=${path_file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+    path_name=${path_relative//\//\\\/};
     stats_sources=$((stats_sources + 1));
 
     # Parsing header
-    echo -en "\r\033[K  Parsing ${path}";
+    echo -en "\r\033[K  Parsing ${path_relative}";
 
     # Detect standalone ready scripts
     line_standalone=$(grep -a '^# source <(curl -Ls' "${path_file}");
 
     # Detect .sh executable scripts
-    if [ "${path: -3}" = '.sh' ]; then
-      line_standalone=${github_project_url//\\\//\/}/${github_raw_path//\\\//\/}/${path//\//\\\/};
+    if [ "${path_relative: -3}" = '.sh' ]; then
+      line_standalone=${github_project_url//\\\//\/}/${github_raw_path//\\\//\/}/${path_relative};
     fi;
 
     # Extract file group
-    group_current=$(echo "${path}" \
+    group_current=$(echo "${path_relative}" \
                   | sed 's/\([^_\/]*_[^_\.\/]*\|[^\/]*\/[^\/]*\/\)\(.*\..*\)/\1/');
 
     # Create header section
-    header_buffer="Documentation: \<span class=\"grouplabel\"\>${path//\//\\\/}\<\/span\>";
+    header_buffer="Documentation: \<span class=\"grouplabel\"\>${path_relative//\//\\\/}\<\/span\>";
     readme_buffer='';
 
     # Add file item header
-    if ! ls -1 "${group_current}"* | grep -qv "${path}"; then
+    if ! ls -1 "${group_current}"* | grep -qv "${path_relative}"; then
       readme_output+="${group_buffer}\<details\>\n\<summary class=\"groupheader\"\>\n#### ${header_buffer} ####\n\<\/summary\>\n\n";
       group_last=${group_current};
       group_buffer='\<\/details\>\n\n';
@@ -932,15 +933,12 @@ function shtoolsreadme()
       readme_buffer="\> ### ${header_buffer} ###\n>\n";
     fi;
 
-    # Escape path
-    path=${path//\//\\\/};
-
     # Inject standalone import script
     if [ ! -z "${line_standalone}" ]; then
 
       # Warning about missing linkage
-      if ! echo "${line_standalone}" | grep -q "${path}"; then
-        echo -e "\r\033[K  \e[1;37m${path}: \e[1;31mERROR: Standalone import links have no linkage to this file";
+      if ! echo "${line_standalone}" | grep -q "${path_relative}"; then
+        echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: Standalone import links have no linkage to this file";
         echo '';
         return;
       fi;
@@ -961,16 +959,15 @@ function shtoolsreadme()
     fi;
 
     # Handle shell scripts content
-    if [ "${path: -3}" = '.sh' ]; then
+    if [ "${path_name: -3}" = '.sh' ]; then
 
       # Parse shell script usage
-      line_function=${path#*\/};
-      line_function=${line_function%.sh};
+      line_function=${path_relative##*\/};
       line_usage=$(grep -a "Usage: ${line_function}" "${path_file}");
 
       # Warning about missing usages
       if [ -z "${line_usage}" ]; then
-        echo -e "\r\033[K  \e[1;37m${path}: \e[1;31mERROR: '${line_function}.sh' has no usage";
+        echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: '${line_function}' has no usage";
         echo '';
         return;
       fi;
@@ -987,7 +984,7 @@ function shtoolsreadme()
       # Append function details
       readme_output+="${readme_buffer}";
       readme_buffer='';
-      readme_output+="  * [**\\\.\/${line_usage}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path//./\\\.})\n";
+      readme_output+="  * [**\\\.\/${line_usage}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path_name//./\\\.})\n";
 
       # Sections separation
       readme_output+="\n---\n";
@@ -1047,7 +1044,7 @@ function shtoolsreadme()
 
           # Warning about missing description
           else
-            echo " ${path}: ${line_type} '${line_function}' has no description";
+            echo " ${path_relative}: ${line_type} '${line_function}' has no description";
           fi;
         fi;
 
@@ -1102,7 +1099,7 @@ function shtoolsreadme()
 
       # Warning about missing usages
       else
-        echo -e "\r\033[K  \e[1;37m${path}: \e[1;31mERROR: ${line_type} '${line_function}' has no usage";
+        echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: ${line_type} '${line_function}' has no usage";
         echo '';
         return;
       fi;
@@ -1110,7 +1107,7 @@ function shtoolsreadme()
       # Append function details
       readme_output+="${readme_buffer}";
       readme_buffer='';
-      readme_output+="  * [**${line_function}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path})${line_usage}\n";
+      readme_output+="  * [**${line_function}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path_name})${line_usage}\n";
 
     done < <(grep -a "^alias.*=\|^function .*()" "${path_file}");
 
