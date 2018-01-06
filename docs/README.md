@@ -52,7 +52,7 @@
 <!-- Functions Start -->
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">project</span> ####
+#### <span class="group_label">Android Development Shell Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">project/access.rc</span> ###
@@ -105,7 +105,7 @@
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/android_adb</span> ####
+#### <span class="group_label">Android ADB Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/android_adb/assets.rc</span> ###
@@ -290,7 +290,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/android_build</span> ####
+#### <span class="group_label">Android Build Wrappers</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/android_build/make.rc</span> ###
@@ -306,7 +306,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/android_devices</span> ####
+#### <span class="group_label">Android Devices Definitions</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/android_devices/target.rc</span> ###
@@ -320,7 +320,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/android_kernel</span> ####
+#### <span class="group_label">Android Kernel Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/android_kernel/builders.rc</span> ###
@@ -391,7 +391,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/android_release</span> ####
+#### <span class="group_label">Android Release Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/android_release/builders.rc</span> ###
@@ -444,7 +444,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/android_repo</span> ####
+#### <span class="group_label">Android Repository Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/android_repo/builders.rc</span> ###
@@ -613,7 +613,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/android_rom</span> ####
+#### <span class="group_label">Android ROM Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/android_rom/aicp.rc</span> ###
@@ -682,7 +682,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/gerrit</span> ####
+#### <span class="group_label">Git Gerrit Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/gerrit/review.rc</span> ###
@@ -747,7 +747,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/git</span> ####
+#### <span class="group_label">Git Development Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/git/cleaners.rc</span> ###
@@ -965,7 +965,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/host</span> ####
+#### <span class="group_label">Host Development Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/host/bash.rc</span> ###
@@ -1097,7 +1097,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/ssh</span> ####
+#### <span class="group_label">SSH Server Tools</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/ssh/remote.rc</span> ###
@@ -1111,7 +1111,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">sources/uploads</span> ####
+#### <span class="group_label">File Uploads Helpers</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">sources/uploads/basketbuild.rc</span> ###
@@ -1168,7 +1168,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">extensions/lineage_next</span> ####
+#### <span class="group_label">LineageOS Next Extensions</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">extensions/lineage_next/lineageos.rc</span> ###
@@ -1184,7 +1184,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">extensions/linux</span> ####
+#### <span class="group_label">Linux Host Extensions</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">extensions/linux/cleaners.rc</span> ###
@@ -1198,7 +1198,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">extensions/megatools</span> ####
+#### <span class="group_label">MEGA Storage Extensions</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">extensions/megatools/mirror.rc</span> ###
@@ -1215,7 +1215,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">extensions/semc_msm7x30</span> ####
+#### <span class="group_label">LegacyXperia MSM7x30 Extensions</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">extensions/semc_msm7x30/autorelease.rc</span> ###
@@ -1238,7 +1238,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">extensions/sony_msm8960</span> ####
+#### <span class="group_label">Sony MSM8960 Extensions</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">extensions/sony_msm8960/aosp_sony8960.rc</span> ###
@@ -1292,7 +1292,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">extensions/sony_msm8996</span> ####
+#### <span class="group_label">Sony MSM8996 Extensions</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">extensions/sony_msm8996/aosp_sonysodp.rc</span> ###
@@ -1359,14 +1359,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">extensions/template</span> ####
+#### <span class="group_label">Template Example Extensions</span> ####
 </summary>
 
 </details>
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">scripts/android_repo</span> ####
+#### <span class="group_label">Android Repository Scripts</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">scripts/android_repo/install.sh</span> ###
@@ -1381,7 +1381,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### Group: <span class="group_label">scripts/linux</span> ####
+#### <span class="group_label">Linux Host Scripts</span> ####
 </summary>
 
 > ### Documentation: <span class="group_label">scripts/linux/cleanram.sh</span> ###

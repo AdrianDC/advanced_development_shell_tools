@@ -129,6 +129,7 @@ function shtoolsreadme()
   local group_buffer;
   local group_current;
   local group_last;
+  local group_name;
   local header_buffer;
   local line;
   local line_function;
@@ -203,7 +204,17 @@ function shtoolsreadme()
 
     # Add file group header
     if [ ! "${group_current}" = "${group_last}" ]; then
-      readme_output+="${group_buffer}\<details\>\n\<summary class=\"group_header\"\>\n#### Group: \<span class=\"group_label\"\>${group_current//\//\\\/}\<\/span\> ####\n\<\/summary\>\n\n";
+      group_name=$(cat "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/${group_current}/.name" 2>/dev/null);
+
+      # Warning about missing group names
+      if [ -z "${group_name}" ]; then
+        echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: '${path_relative}' has no group '.name'";
+        echo '';
+        return;
+      fi;
+
+      # Build group header output
+      readme_output+="${group_buffer}\<details\>\n\<summary class=\"group_header\"\>\n#### \<span class=\"group_label\"\>${group_name}\<\/span\> ####\n\<\/summary\>\n\n";
       group_last=${group_current};
       group_buffer='\<\/details\>\n\n';
     fi;
