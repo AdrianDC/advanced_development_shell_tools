@@ -1,3 +1,6 @@
+// Variables
+var expand_documentation = false;
+
 // Function: Anchor links creations
 function anchorizejekyll()
 {
@@ -22,6 +25,17 @@ function anchorizejekyll()
     node.appendChild(link);
   });
 
+}
+
+// Function: Toggle all documentation details
+function toggle_documentation(button)
+{
+  var details = document.querySelectorAll('details');
+  expand_documentation = !expand_documentation;
+
+  Array.from(details).forEach(function(obj, idx) {
+    obj.open = expand_documentation;
+  });
 }
 
 // Page loaded event

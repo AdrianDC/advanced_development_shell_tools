@@ -47,7 +47,7 @@
 
 ---
 
-### [ Functions detailed documentation ] ###
+### [ Functions detailed documentation ] ([+/-](javascript:toggle_documentation())) ###
 
 <!-- Functions Start -->
 <details>
