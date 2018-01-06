@@ -16,9 +16,9 @@
 #
 
 # === Template addon function ===
-function __templateaddonfunction()
+function templateaddonfunction()
 {
-  # Usage: __templateaddonfunction <required> [optional] (Base template for addons)
+  # Usage: templateaddonfunction <required> [optional] (Base template for addons @Hide)
 
   # Code
   echo '';

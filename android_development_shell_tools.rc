@@ -1061,8 +1061,8 @@ function shtoolsreadme()
         stats_aliases=$((stats_aliases + 1));
       fi;
 
-      # Ignore deprecated functions
-      if [[ "${line_usage}" == *'@Deprecated'* ]]; then
+      # Ignore deprecated or hidden functions
+      if [[ "${line_usage}" == *'@Deprecated'* ]] || [[ "${line_usage}" == *'@Hide'* ]]; then
         continue;
       fi;
 
