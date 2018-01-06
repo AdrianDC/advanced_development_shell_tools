@@ -1,0 +1,92 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/device.rc)
+
+# === ADB Power-off ===
+function adbpo()
+{
+  # Usage: adbpo (Power-off device through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Power-off device through adb
+  adb shell 'reboot -p';
+}
+
+# === ADB Reboot ===
+function adbre()
+{
+  # Usage: adbre (Reboot device through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Reboot device through adb
+  adb reboot;
+}
+
+# === ADB Hot Reboot ===
+function adbrh()
+{
+  # Usage: adbrh (Hot-reboot device through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Hot-reboot device through adb
+  adb shell setprop ctl.restart zygote;
+}
+
+# === ADB Reboot Recovery ===
+function adbrr()
+{
+  # Usage: adbrr (Reboot device to recovery through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Reboot device to recovery through adb
+  adb reboot recovery;
+}
+
+# === ADB Reboot Bootloader ===
+function adbrb()
+{
+  # Usage: adbrb (Reboot device to bootloader through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Reboot device to bootloader through adb
+  adb reboot bootloader;
+}
+
+# === ADB Wait For Device ===
+function adbw()
+{
+  # Usage: adbw (Wait for device through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Wait for device through adb
+  adb 'wait-for-device';
+}

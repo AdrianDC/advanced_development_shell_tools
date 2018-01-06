@@ -1,0 +1,240 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+
+# === File Editor ===
+function fileedit()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: fileedit <paths> (Files editor for most environments)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local opened;
+  local pid;
+
+  # Files editor for most environments
+  for file in "${@}"; do
+
+    # If option enabled, create missing files
+    if [ ! -z "${FILEEDIT_TOUCH_NEW_FILE}" ] && [ ! -f "${file}" ]; then
+      mkdir -p "${file%/*}";
+      touch "${file}";
+
+    # Filter only files
+    elif [ ! -f "${file}" ]; then
+      echo " fileedit: '${file}' not found";
+      continue;
+    fi;
+
+    # Resolve symlink paths
+    file=$(readlink -f "${file}");
+
+    # GUI xdg editor
+    xdg-open "${file}" 2> /dev/null;
+    opened=${?};
+
+    # GUI notepad++ editor
+    if [ ${opened} -ne 0 ] && [ ! -z "$(type -t notepad++ 2> /dev/null)" ]; then
+      pid=$(nohup notepad++ -nosession "${file}" >/dev/null 2>&1 & echo "${!}");
+      ps -p "${pid}" >/dev/null 2>&1 && opened=0;
+    fi;
+
+    # Terminal nano editor
+    if [ ${opened} -ne 0 ] && [ ! -z "$(type -t nano 2> /dev/null)" ]; then
+      nano "${file}";
+      opened=${?};
+    fi;
+
+    # Terminal vim editor
+    if [ ${opened} -ne 0 ] && [ ! -z "$(type -t vim 2> /dev/null)" ]; then
+      vim "${file}";
+      opened=${?};
+    fi;
+
+    # Unknown environment
+    if [ ${opened} -ne 0 ]; then
+      echo " Found in ${file}";
+    fi;
+
+  done;
+}
+
+# === File Editor Shortcut ===
+alias fe='fileedit';
+alias fen='FILEEDIT_TOUCH_NEW_FILE=true fileedit';
+
+# === Director Opener ===
+function diropen()
+{
+  # Usage
+  if [ ! -d "${1}" ] && [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: diropen <path> (Directory opener for most environments)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local opened;
+  local path=${1};
+
+  # Get directory from file path
+  if [ -f "${path}" ]; then
+    path=$(dirname "${path}");
+  fi;
+
+  # GUI xdg directory viewer
+  xdg-open "${path}" 2> /dev/null;
+  opened=${?};
+
+  # GUI explorer directory viewer
+  if [ ${opened} -ne 0 ] && [ ! -z "$(type -t explorer 2> /dev/null)" ]; then
+    explorer "${path//\//\\}";
+    opened=0;
+  fi;
+
+  # Unknown environment
+  if [ ${opened} -ne 0 ]; then
+    cd "${path}";
+  fi;
+}
+
+# === Directory Opener Shortcut ===
+alias dop='diropen .';
+
+# === Path Comparison ===
+function pathscompare()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: pathscompare <path_left> <path_right> (Paths comparison for most environments)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local opened=1;
+  local pid;
+
+  # Meld path comparison
+  if [ ! -z "$(type -t meld 2> /dev/null)" ]; then
+    pid=$(nohup meld "${1}" "${2}" >/dev/null 2>&1 & echo "${!}");
+    ps -p "${pid}" >/dev/null 2>&1 && opened=0;
+  fi;
+
+  # Unknown environment
+  if [ ${opened} -ne 0 ]; then
+    echo '';
+    echo " pathscompare: Nothing to compare '${1}' and '${2}'";
+    echo '';
+  fi;
+}
+
+# === URL Opener ===
+function urlopen()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: urlopen <url> (URL opener for most environments)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local opened;
+
+  # GUI xdg url viewer
+  xdg-open "${1}" 2> /dev/null;
+  opened=${?};
+  if [ ${opened} -eq 0 ]; then
+    echo '';
+    sleep 1;
+    echo '';
+  fi;
+
+  # Unknown environment
+  if [ ${opened} -ne 0 ]; then
+    echo '';
+    echo " Url: ${1}";
+    echo '';
+  fi;
+}
+
+# === Desktop Path ===
+function desktoppath()
+{
+  # Usage: desktoppath (Acquire desktop path for most environments)
+
+  # Variables
+  local path;
+
+  # Environment ANDROID_DESKTOP override
+  path="${ANDROID_DESKTOP}";
+
+  # Fallback to GUI xdg path
+  if [ -z "${path}" ]; then
+    path=$(xdg-user-dir DESKTOP 2>/dev/null);
+  fi;
+
+  # Fallback to environment ANDROID_DEV_DRIVE path
+  if [ -z "${path}" ] && [ ! -z "${ANDROID_DEV_DRIVE}" ]; then
+    path="${ANDROID_DEV_DRIVE}/Desktop";
+    mkdir -p "${path}/";
+  fi;
+
+  # Fallback to home path
+  if [ -z "${path}" ]; then
+    path=~/Desktop;
+    mkdir -p "${path}/";
+  fi;
+
+  # Return path
+  echo "${path}";
+}
+
+# === Process Owner Check ===
+function processownercheck()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: processownercheck <process_name> <owner> (Returns if a process is owned by someone)';
+    echo '';
+    return;
+  fi;
+
+  # Search for process and validate owner exists
+  if uname -a | grep -q 'Linux'; then
+    #shellcheck disable=SC2009
+    ps -eo cmd,uname:20,state 2>/dev/null \
+        | grep "^${1}" \
+        | grep -v '\(T\|Z\)$' \
+        | grep -q "${2}";
+  else
+    ps -W \
+        | grep -q "${1}.exe";
+  fi;
+}

@@ -1,0 +1,87 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/lineageos.rc)
+
+# === LineageOS Web Jekyll ===
+function lineagewebjekyll()
+{
+  # Usage: lineagewebjekyll [bool_install] (Jekyll web helper)
+
+  # Load all gem elements
+  sudo gem install bundler;
+
+  # Installation mode
+  if [ ! -z "${1}" ]; then
+    sudo apt-get install ruby-dev;
+    bundle;
+  fi;
+
+  # Open webviewer
+  sleep 2 && urlopen "http://127.0.0.1:4001" &
+
+  # Launch Jekyll
+  bundle exec jekyll serve --incremental --port 4001;
+}
+
+# === LineageOS CVE Tracker ===
+function lineagecvetracker()
+{
+  # Usage: lineagecvetracker [bool_install] (CVE tracker instance helper)
+
+  # Installation mode
+  if [ ! -z "${1}" ]; then
+    sudo apt remove -y python3-pip;
+    sudo rm -rfv /usr/local/lib/python3*;
+    sudo apt install -y python3-pip;
+  fi;
+
+  # Update pip3
+  echo '';
+  sudo -H pip3 install --upgrade pip;
+
+  # Load all pip3 dependencies
+  sudo -H pip3 install --upgrade setuptools;
+  sudo -H pip3 install --upgrade -r requirements.txt;
+
+  # Start MongoDB
+  echo '';
+  sudo service mongod start;
+  sleep 2;
+
+  # Seed database
+  echo '';
+  python3 seed.py;
+
+  # Open webviewer
+  echo '';
+  sleep 2 && urlopen "http://127.0.0.1:5000" &
+
+  # Launch cve_tracker
+  echo '';
+  echo ' lineagecvetracker: Use Ctrl+C to stop';
+  echo '';
+  ./run;
+
+  # Stop MongoDB
+  sudo service mongod stop;
+  echo '';
+}

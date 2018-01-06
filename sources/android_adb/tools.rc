@@ -1,0 +1,360 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+
+# === ADB Screenshot ===
+function adbscr()
+{
+  # Usage: adbscr (Take a screenshot from connected device)
+
+  # Verify adb is ready
+  adbready;
+
+  # Take a screenshot from connected device
+  mkdir -p ./screenshots;
+  adb shell 'screencap /sdcard/screenshot.png';
+  adb pull /sdcard/screenshot.png "./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png";
+  adb shell 'rm -f /sdcard/screenshot.png';
+}
+
+# === ADB Root Mounter ===
+function adbr()
+{
+  # Usage: adbr (adb root and remount rw system)
+
+  # Variables
+  local adb_timeout;
+
+  # Get root access and rw system
+  adb_timeout="timeout -k 5 5 $(adbcmd)";
+  adbwait;
+  ${adb_timeout} 'root';
+  sleep 2;
+  adbwait;
+  ${adb_timeout} 'remount';
+  sleep 1;
+  adbwait;
+}
+
+# === ADB Server Checker ===
+function __adbserver()
+{
+  # Usage: __adbserver (ADB server checker)
+
+  # Variables
+  local adb_owner;
+  local adb_timeout;
+
+  # Prepare adb access
+  adb_timeout="timeout -k 5 5 $(adbcmd)";
+
+  # Exit if adb not running
+  if ! pgrep adb >/dev/null 2>&1 &&
+      ! ps -W | grep -q adb.exe >/dev/null 2>&1; then
+    return;
+  fi;
+
+  # Select adb server owner
+  alias adb &> /dev/null && adb_owner='root' || adb_owner=$(whoami);
+
+  # Verify wrongly owned or faulty adb server
+  if ! processownercheck 'adb' "${adb_owner}" \
+      || ! ${adb_timeout} devices | grep -qv '^$\|List of devices attached' \
+      || ${adb_timeout} shell 'echo -n "";' 2>&1 | grep -q 'protocol fault'; then
+
+    # Kill currently running adb server
+    ${adb_timeout} kill-server;
+    killall 'adb' 2>/dev/null;
+    timeout -k 20 20 sudo killall 'adb' 2>/dev/null;
+
+  fi;
+}
+
+# === ADB Ready Checker ===
+function adbready()
+{
+  # Usage: adbready (ADB ready checker)
+
+  # Verify faulty adb server
+  __adbserver;
+
+  # Verify sudo requirements
+  if adb shell 'echo -n "";' 2>&1 \
+      | grep -q 'insufficient permissions\|no permissions'; then
+
+    # Run adbsudo if permission denied
+    adbsudo;
+
+  fi;
+}
+
+# === ADB Root Checked Mounter ===
+function adbro()
+{
+  # Usage: adbro (Verified adb root and remount rw system)
+
+  # Variables
+  local adb_timeout;
+  local rootaccess;
+  local systemaccess;
+  local systemmount;
+
+  # Verify adb is ready
+  adbready;
+
+  # Refresh adb timeout command
+  adb_timeout="timeout -k 5 5 $(adbcmd)";
+
+  # Get root access
+  rootaccess=$(${adb_timeout} shell whoami);
+  if [ "${rootaccess:0:4}" != 'root' ] && [ "${rootaccess:16:5}" != 'uid 0' ]; then
+    adbwait;
+    ${adb_timeout} 'root';
+    sleep 2;
+    adbwait;
+  fi;
+
+  # Get rw system
+  systemmount=$(${adb_timeout} shell mount | grep '/system ');
+  systemaccess=$(echo "${systemmount}" | grep rw);
+  if [ ! -z "${systemmount}" ] && [ -z "${systemaccess}" ]; then
+    adbwait;
+    ${adb_timeout} 'remount';
+    sleep 1;
+    adbwait;
+  fi;
+}
+
+# === ADB Sudo Switcher ===
+function adbsudo()
+{
+  # Usage: adbsudo (ADB sudo toggle helper)
+
+  # Enable adb sudo
+  if ! alias adb &> /dev/null; then
+    #shellcheck disable=SC2032
+    alias adb='sudo adb';
+    >&2 echo '';
+    >&2 echo -e " \e[1;33madbsudo:\e[1;37m Configured adb usage as root\e[0m";
+    >&2 echo '';
+    >&2 sudo echo -n '';
+
+  # Disable adb sudo
+  else
+    unalias adb;
+    >&2 echo '';
+    >&2 echo -e " \e[1;33madbsudo:\e[1;37m Restored adb usage as user\e[0m";
+    >&2 echo '';
+  fi;
+
+  # Refresh adb server ownership
+  __adbserver;
+
+  # Reload scripts
+  shtoolsup &> /dev/null;
+}
+
+# === ADB Command ===
+function adbcmd()
+{
+  # Usage: adbcmd (Return adb command based on alias)
+
+  # Use regular adb
+  if ! alias adb &> /dev/null; then
+    echo 'adb';
+
+  # Use aliased adb
+  else
+    alias adb | sed "s/^alias adb='\(.*\)'$/\1/";
+  fi;
+}
+
+# === ADB Root Stock ===
+function adbrstock()
+{
+  # Usage: adbrstock (Stock ROM adb root access)
+
+  # Stock ROM adb root access
+  adb shell 'su -c "setprop ro.secure 0; setprop ro.debuggable 1; setprop persist.service.adb.enable 1"';
+  adb shell 'getprop ro.secure';
+}
+
+# === ADB Wait For Device ===
+function adbwait()
+{
+  # Usage: adbwait [delay_secs] (adb wait for device)
+
+  # Variables
+  local adb_cmd;
+  local delay=${1:-10};
+  local time_start;
+
+  # Verify adb is ready
+  adbready;
+
+  # Initialize variables
+  adb_cmd=$(adbcmd);
+  time_start=$(date +%s);
+
+  # Wait for device until available
+  while [ $(($(date +%s) - time_start)) -le "${delay}" ] &&
+      ! ${adb_cmd} devices | grep -v 'List of devices attached' | grep -q 'device\|recovery\|sideload'; do
+    true;
+  done;
+}
+
+# === ADB Shell Root Without Remounts ===
+function adbsu()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    >&2 echo '';
+    >&2 echo ' Usage: adbsu <command...> (Run on root adb shell without remounts)';
+    >&2 echo '';
+    return;
+  fi;
+
+  # Variables
+  local cmd=${*};
+
+  # Verify adb is ready
+  adbready;
+
+  # Run as adb root shell
+  if adb shell 'type su' 2>&1 | grep -q 'not found' ||
+      adb shell 'su -c echo "" || echo "su: invalid";' 2>&1 | grep -q 'su: invalid'; then
+    adb root >/dev/null 2>&1;
+    >&2 adbwait;
+    adb shell "${cmd}";
+
+  # Run on root adb shell
+  else
+    adb shell "su -c '${cmd}'";
+  fi;
+}
+
+# === ADB Shell Root With Remounts ===
+function adbsur()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbsur <command...> (Run on root adb shell with remounts)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cmd=${*};
+
+  # Verify adb is ready
+  adbready;
+
+  # Run as adb root shell
+  >&2 adb shell 'echo -n "";';
+  if adb shell 'type su' 2>&1 | grep -q 'not found' ||
+      adb shell 'su -c echo "";' 2>&1 | grep -q 'su: invalid'; then
+    >&2 adbro;
+    adb shell "${cmd}";
+
+  # Run on root adb shell
+  else
+    if ! adb shell 'su -c mount' 2>&1 | grep '/system ' | grep -q rw; then
+      >&2 adb shell "su -c 'mount -o rw,remount /system'";
+    fi;
+    adb shell "su -c '${cmd}'";
+  fi;
+}
+
+# === ADB IP Connector ===
+function adbco()
+{
+  # Relaunch handling
+  echo '';
+  if [ ! -z "${1}" ]; then
+    export ADB_IP_ADDRESS=${1};
+  fi;
+
+  # Usage
+  if [ -z "${ADB_IP_ADDRESS}" ]; then
+    echo '';
+    echo ' Usage: adbco [ipaddress_once] (Helper for adb network access)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local adb_timeout;
+
+  # Connect and acquire adb root access
+  adb_timeout="timeout -k 5 5 $(adbcmd)";
+  export ADB_IP_PORT=5555;
+  echo -e "\e[1;36mConnecting to ${ADB_IP_ADDRESS}:${ADB_IP_PORT}...\e[0m";
+  ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";
+  echo -e '\e[1;36mConnected...\e[0m';
+  adbwait 20;
+  echo -e '\e[1;36mGetting root access...\e[0m';
+  ${adb_timeout} root;
+  sleep 2;
+  echo -e '\e[1;36mReconnecting...\e[0m';
+  ${adb_timeout} connect "${ADB_IP_ADDRESS}:${ADB_IP_PORT}";
+  echo -e '\e[1;36mConnected...\e[0m';
+  adbwait 20;
+  echo -e '\e[1;36mMounting as root...\e[0m';
+  ${adb_timeout} remount;
+  sleep 1;
+  adbwait 20;
+  echo -e '\e[1;36mReady...\e[0m';
+  echo '';
+}
+
+# === ADB File Editor ===
+function adbedit()
+{
+  # Usage: adbedit [file_path] (Edit adb file, default on /system/build.prop)
+
+  # Variables
+  local name;
+  local path;
+
+  # Initialize variables
+  path=${1:-/system/build.prop};
+  name=$(basename "${path}");
+
+  # Pull file as root
+  adbro;
+  rm -f "${name}";
+  adb pull "${path}";
+
+  # Check local file permissions
+  if [ ! -r "${name}" ] || [ ! -w "${name}" ]; then
+    sudo chown "$(whoami):$(whoami)" "${name}";
+    chmod 666 "${name}";
+  fi;
+
+  # Edit local file
+  fileedit "${name}";
+  echo -n ' Ok ? [ENTER] ';
+  read -r;
+
+  # Push back file to device
+  adb push "${name}" "${path}";
+  rm "${name}";
+}

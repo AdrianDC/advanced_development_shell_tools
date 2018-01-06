@@ -1,0 +1,160 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/review.rc)
+
+# === Gerrit Review Uploader ===
+function gerritreview()
+{
+  # Variables
+  local gerrit_url=${1};
+  local gerrit_organisation=${2};
+  local gerrit_github=${3};
+  local gerrit_type=${4};
+  local gerrit_branch=${5:-$(repogetbranch)};
+  local gerrit_confirm_twice=;
+  local gerrit_fetch=;
+  local gerrit_project=;
+  local gerrit_remote=;
+
+  # Handle gerrit commit types
+  case "${gerrit_type}" in
+    drafts)
+      ;;
+    for|heads)
+      gerrit_confirm_twice=true;;
+    *)
+      gerrit_type=;;
+  esac;
+
+  # Usage
+  if [ -z "${gerrit_url}" ] || [ -z "${gerrit_organisation}" ] || [ -z "${gerrit_github}" ] ||
+      [ -z "${gerrit_type}" ] || [ -z "${gerrit_branch}" ]; then
+    echo '';
+    echo ' Usage: gerritreview <gerrit_ssh_or_http> <project_name_or_.> <github_name_or_.> <drafts/for/heads> [branch] (Gerrit review uploader)';
+    echo '';
+    return;
+  fi;
+
+  # Remote detection
+  if [ ! "${gerrit_organisation}" = '.' ]; then
+    gerrit_remote=$(git remote -v | grep "/${gerrit_organisation}/" | tail -n 1);
+  fi;
+  if [ -z "${gerrit_remote}" ] && [ ! "${gerrit_organisation}" = 'aosp' ]; then
+    gerrit_remote=$(git remote -v | grep origin$'\t' | tail -n 1);
+  fi;
+  if [ -z "${gerrit_remote}" ] && [ "${gerrit_organisation}" = 'aosp' ]; then
+    gerrit_remote=$(git remote -v | grep aosp$'\t' | tail -n 1);
+  fi;
+  if [ -z "${gerrit_remote}" ]; then
+    gerrit_remote=$(git remote -v | grep "${gerrit_organisation}.*//" | tail -n 1);
+  fi;
+  if [ -z "${gerrit_remote}" ] && [ ! "${gerrit_organisation}" = 'aosp' ]; then
+    gerrit_remote=$(git remote -v | grep github$'\t' | tail -n 1);
+  fi;
+  if [ -z "${gerrit_remote}" ]; then
+    gerrit_remote=$(git rev-parse --show-toplevel \
+                  | sed "s#$(gettop)/##"\
+                  | sed "s#/#_#");
+    gerrit_remote="android_${gerrit_remote}";
+  fi;
+
+  # Project detection for AOSP
+  if [ "${gerrit_organisation}" = 'aosp' ]; then
+    gerrit_project=$(echo "${gerrit_remote}" \
+                   | cut -f 2 \
+                   | cut -d' ' -f 1 \
+                   | cut -f 2 \
+                   | sed 's/.*\(android\.googlesource\.com\/\)//');
+
+    # Project fetch url
+    gerrit_fetch="${gerrit_url}/${gerrit_project}";
+
+  # Project detection
+  else
+    gerrit_project=$(echo "${gerrit_remote}" \
+                   | cut -f 2 \
+                   | sed 's/.*\/\([^.]*\).* .*/\1/');
+
+    # Project fetch url
+    if [ ! "${gerrit_github}" = '.' ]; then
+      gerrit_fetch="https://github.com/${gerrit_github}/${gerrit_project}";
+    elif [ ! "${gerrit_organisation}" = '.' ]; then
+      gerrit_fetch="https://github.com/${gerrit_organisation}/${gerrit_project}";
+    else
+      gerrit_fetch="${gerrit_url}/${gerrit_project}";
+    fi;
+
+    # Organisation prepend
+    if [ ! "${gerrit_organisation}" = '.' ]; then
+      gerrit_project=${gerrit_organisation}/${gerrit_project};
+    fi;
+  fi;
+
+  # Header information
+  echo '';
+  echo -e " \e[1;32m=== gerritreview - Review commits for branch '${gerrit_branch}' ===\e[0m";
+  echo '';
+
+  # Check review statistics
+  git fetch "${gerrit_fetch}" "refs/heads/${gerrit_branch}";
+  echo '';
+  echo -en " \e[1;33mNew changes - missing : \e[0m";
+  git rev-list --left-right --count HEAD...FETCH_HEAD;
+
+  # Command creation
+  local command="git push ${gerrit_url}/${gerrit_project} HEAD:refs/${gerrit_type}/${gerrit_branch}";
+
+  # Command confirmation
+  echo '';
+  echo " ${command}";
+  echo '';
+  echo -en " \e[1;37m> Proceed with review upload (y/N/t) ? \e[0m";
+  read -r key;
+
+  # Set a topic
+  if [ "${key}" = 't' ] || [ "${key}" = 'T' ]; then
+    echo -n '  > Topic to set on gerrit : ';
+    read -r key;
+    command=${command}/${key};
+    key=y;
+  fi;
+
+  # Abort if denied
+  if [ ! "${key}" = 'y' ] && [ ! "${key}" = 'Y' ]; then
+    echo '';
+    return;
+  fi;
+
+  # Command second confirmation
+  if [ ! -z "${gerrit_confirm_twice}" ]; then
+    echo -n '  > Are you sure (y/N) ? ';
+    read -r key;
+    echo '';
+
+    # Abort if denied
+    if [ ! "${key}" = 'y' ] && [ ! "${key}" = 'Y' ]; then
+      echo '';
+      return;
+    fi;
+  fi;
+
+  # Command execution
+  ${command};
+  echo '';
+}

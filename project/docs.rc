@@ -1,0 +1,436 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Android Development Shell Tools Docs ===
+function shtoolsdocs()
+{
+  # Usage: shtoolsdocs [bool_install] (Instantiate android_development_shell_tools documentation)
+
+  # Variables
+  local currentdir=${PWD};
+
+  # Access documentation path
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/";
+
+  # Installation mode
+  if [ ! -z "${1}" ]; then
+    sudo apt install build-essential curl libcurl4-openssl-dev libffi-dev ruby-dev zlib1g-dev;
+    sudo gem install rubygems-update;
+    sudo update_rubygems;
+    sudo gem install bundler;
+    sudo bundle install;
+    bundle;
+  fi;
+
+  # Open webviewer
+  sleep 2 && urlopen "http://127.0.0.1:4002" &
+
+  # Launch Jekyll
+  bundle exec jekyll serve --incremental --port 4002;
+
+  # Cleanup server files
+  rm -rf ./_site ./.jekyll-metadata ./Gemfile.lock;
+
+  # Restore current path
+  cd "${currentdir}/";
+}
+
+# === Android Development Shell Tools README.forum Updater ===
+function shtoolsforum()
+{
+  # Usage: shtoolsforum (Refresh README.forum project presentation)
+
+  # Variables
+  local ext;
+  local preview_file;
+  local preview_files;
+  local preview_timestamp;
+  local readme_forum=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/forums/README;
+  local readme_md=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README;
+
+  # Header
+  echo '';
+  echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README forum documentations\e[0m';
+  echo '';
+
+  # Handle multiple README files
+  for ext in md previews.md samples.md; do
+
+    # Prepare README.forum
+    rm -f "${readme_forum}.${ext}";
+    cp -v "${readme_md}.${ext}" "${readme_forum}.${ext}";
+
+    # Convert from markdown to bbcode
+    sed -i 's#!\[.*\](\(.*\))#[IMG]\1[/IMG]#g' "${readme_forum}.${ext}";
+    sed -i 's#\[\([^]]*\)\](\([^)]*\))#[URL=\2]\1[/URL]#g' "${readme_forum}.${ext}";
+    sed -i '/^[ ]*<br \/>$/d' "${readme_forum}.${ext}";
+    sed -i "s#\`\`\`\(cpp\|Shell\)#[CODE]#g" "${readme_forum}.${ext}";
+    sed -i "s#\`\`\`#[/CODE]#g" "${readme_forum}.${ext}";
+    sed -i "s#\(\`.*\`\)#[FONT=\"Courier New\"][I]\1[/I][/FONT]#g" "${readme_forum}.${ext}";
+    sed -i 's#^\#\#\# \(.*\)$#[SIZE=5][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
+    sed -i 's#^\#\#\#\# \(.*\)$#[SIZE=4][B]\1[/B][/SIZE]#g' "${readme_forum}.${ext}";
+    sed -i ':a;N;$!ba;s#<!-- Center -->\n#[CENTER]#g;s#\n<!-- /Center -->#[/CENTER]#g' "${readme_forum}.${ext}";
+    sed -i ':a;N;$!ba;s#<!-- Indent -->\n#[INDENT]#g;s#\n<!-- /Indent -->#[/INDENT]#g' "${readme_forum}.${ext}";
+    sed -i 's#<!-- \(\|/\)List -->#[\1LIST]#g' "${readme_forum}.${ext}";
+    sed -i 's#^ \* #[*]#g' "${readme_forum}.${ext}";
+    sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}.${ext}";
+    sed -i 's#\*\([^]]\{1\}[^*]*\)\*#[I]\1[/I]#g' "${readme_forum}.${ext}";
+    sed -i 's#__\([^*]*\)__#[U]\1[/U]#g' "${readme_forum}.${ext}";
+
+    # Get all previews png files
+    preview_files=$(grep 'docs/assets.*\.png' "${readme_forum}.${ext}" \
+                  | sed "s/.*${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/}\/raw\/master\/\(.*\.png\).*/\1/g");
+    for preview_file in ${preview_files}; do
+
+      # Filter out wrong outputs
+      if [ ! -f "${preview_file}" ]; then
+        continue;
+      fi;
+
+      # Get file timestamp and replace text
+      preview_timestamp=$(stat -c %Y "${preview_file}");
+      sed -i "s#${preview_file}#${preview_file}?timestamp=${preview_timestamp}#g" "${readme_forum}.${ext}";
+    done;
+
+  done;
+
+  # Parsed header
+  echo '';
+  echo '  README forum files successfully rebuilt';
+  echo '';
+}
+
+# === Android Development Shell Tools README.md Updater ===
+function shtoolsreadme()
+{
+  # Usage: shtoolsreadme (Refresh README.md functions usages)
+
+  # Variables
+  local command_file;
+  local delimiter_start='<!-- Functions Start -->';
+  local delimiter_end='<!-- Functions End -->';
+  local github_project_url=${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/};
+  local github_file_path='blob\/master';
+  local github_raw_path='raw\/master';
+  local group_buffer;
+  local group_current;
+  local group_last;
+  local header_buffer;
+  local line;
+  local line_function;
+  local line_standalone;
+  local line_summary;
+  local line_type;
+  local line_usage;
+  local path_file;
+  local path_name;
+  local path_relative;
+  local path_standalone;
+  local paths_standalone;
+  local readme_buffer=;
+  local readme_output=;
+  local stats_aliases=0;
+  local stats_functions=0;
+  local stats_hidden=0;
+  local stats_sources=0;
+  local url;
+
+  # Initialize variables
+  command_file=$(mktemp);
+  group_buffer='';
+  group_last='';
+
+  # Unify locale for sorting
+  local lc_all=${LC_ALL};
+  LC_ALL=C;
+
+  # Refresh files list
+  shtoolsup;
+
+  # Header
+  echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README.md documentation\e[0m';
+  echo -n '  ...';
+
+  # Refresh project README.md
+  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/project.md";
+
+  # Refresh previews README.md
+  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.previews.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/previews.md";
+
+  # Refresh samples README.md
+  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.samples.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/samples.md";
+
+  # Read all sources
+  for path_file in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" \
+                   "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
+
+    # Handle file path
+    path_relative=${path_file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+    path_name=${path_relative//\//\\\/};
+    stats_sources=$((stats_sources + 1));
+
+    # Parsing header
+    echo -en "\r\033[K  Parsing ${path_relative}";
+
+    # Detect standalone ready scripts
+    line_standalone=$(grep -a '^# source <(curl -Ls' "${path_file}");
+
+    # Detect .sh executable scripts
+    if [ "${path_relative: -3}" = '.sh' ]; then
+      line_standalone=${github_project_url//\\\//\/}/${github_raw_path//\\\//\/}/${path_relative};
+    fi;
+
+    # Extract file group
+    group_current=$(echo "${path_relative}" \
+                  | sed 's/\([^_\/]*_[^_\.\/]*\|[^\/]*\/[^\/]*\/\|[^\/]*\/\)\(.*\..*\)/\1/');
+    group_current=${group_current%/};
+
+    # Create header section
+    header_buffer="Documentation: \<span class=\"group_label\"\>${path_relative//\//\\\/}\<\/span\>";
+    readme_buffer='';
+
+    # Add file item header
+    #shellcheck disable=SC2010
+    if ! ls -1 "${group_current}"* | grep -qv "${path_relative}"; then
+      readme_output+="${group_buffer}\<details\>\n\<summary class=\"group_header\"\>\n#### ${header_buffer} ####\n\<\/summary\>\n\n";
+      group_last=${group_current};
+      group_buffer='\<\/details\>\n\n';
+      readme_buffer='';
+
+    # Add file group header
+    elif [ ! "${group_current}" = "${group_last}" ]; then
+      readme_output+="${group_buffer}\<details\>\n\<summary class=\"group_header\"\>\n#### Group: \<span class=\"group_label\"\>${group_current//\//\\\/}\<\/span\> ####\n\<\/summary\>\n\n";
+      group_last=${group_current};
+      group_buffer='\<\/details\>\n\n';
+      readme_buffer="\> ### ${header_buffer} ###\n>\n";
+
+    # Prepend documentation arrow
+    else
+      readme_buffer="\> ### ${header_buffer} ###\n>\n";
+    fi;
+
+    # Inject standalone import script
+    if [ ! -z "${line_standalone}" ]; then
+      paths_standalone=${line_standalone#*${github_raw_path}\/};
+      paths_standalone=${paths_standalone//\)*${github_raw_path}\// };
+      paths_standalone=${paths_standalone%\)*};
+
+      # Warning about missing linkages
+      for path_standalone in ${paths_standalone}; do
+        if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/${path_standalone}" ]; then
+          echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: Standalone import link not found (${path_standalone})";
+          echo '';
+          return;
+        fi;
+      done;
+
+      # Parse standalone import lines
+      line_standalone=${line_standalone//# source <\(curl -Ls/};
+      line_standalone=${line_standalone//)/};
+
+      # Build standalone import outputs
+      readme_output+="${readme_buffer}";
+      readme_buffer='';
+      readme_output+="  \`\`\`Shell\n";
+      for url in ${line_standalone}; do
+        readme_output+="source \<\(curl -Ls ${url//\//\\\/}\)\n";
+      done;
+      readme_output+="  \`\`\`\n";
+
+    fi;
+
+    # Handle shell scripts content
+    if [ "${path_name: -3}" = '.sh' ]; then
+
+      # Parse shell script usage
+      line_function=${path_relative##*\/};
+      line_usage=$(grep -a "Usage: ${line_function}" "${path_file}");
+
+      # Warning about missing usages
+      if [ -z "${line_usage}" ]; then
+        echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: '${line_function}' has no usage";
+        echo '';
+        return;
+      fi;
+
+      # Parse usage and summary details
+      line_summary=${line_usage#*\(};
+      line_summary=${line_summary%\)*};
+      line_usage=${line_usage/ \(*\)/};
+      line_usage=${line_usage#\# Usage: };
+
+      # Apply summary styling
+      line_summary="<b>\\\[${line_summary}\\\]<\\/b>";
+
+      # Append function details
+      readme_output+="${readme_buffer}";
+      readme_buffer='';
+      readme_output+="  * [**\\\.\/${line_usage}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path_name//./\\\.})\n";
+
+      # Sections separation
+      readme_output+="\n---\n";
+
+      # Continue with the next file
+      continue;
+
+    fi;
+
+    # Handle source contents
+    # shellcheck disable=SC2162
+    while read line; do
+
+      # Parse source functions
+      line_function=${line};
+      line_function=${line_function#function };
+      line_function=${line_function#alias };
+      line_function=${line_function%%()*};
+      line_function=${line_function%%=*};
+      line_type=${line};
+      line_type=${line_type//*alias*/Alias};
+      line_type=${line_type//*function*/Function};
+      line_summary="\(${line_type}\)";
+      line_usage=;
+
+      # Hide internal functions starting by __
+      if [ "${line_function:0:2}" = '__' ]; then
+        stats_hidden=$((stats_hidden + 1));
+        continue;
+      fi;
+
+      # Parse function content
+      if [ "${line_type}" = 'Function' ]; then
+
+        # Parse single line function
+        if [[ "${line}" == *"${line_function}()"*"{"*"}" ]]; then
+          line_usage=${line#*\{ };
+          line_usage=${line_usage% \}*};
+          line_usage=${line_usage%;};
+          line_usage=${line_usage// 2>*\/dev\/null/};
+          line_usage=${line_usage//--/&#8208;&#8208;};
+          stats_functions=$((stats_functions + 1));
+
+        # Parse function usage
+        else
+          line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${path_file}");
+          line_usage=${line_usage#*Usage: };
+          line_usage=${line_usage%;};
+          line_usage=${line_usage%$"'"};
+          line_usage=${line_usage%$'"'};
+          stats_functions=$((stats_functions + 1));
+
+          # Mark function summary field
+          if [[ "${line_usage}" == *"("*")"* ]]; then
+            line_usage=${line_usage/ \(/-SUMMARY-};
+            line_usage=${line_usage/\)*/-SUMMARY-};
+
+          # Warning about missing description
+          else
+            echo " ${path_relative}: ${line_type} '${line_function}' has no description";
+          fi;
+        fi;
+
+      # Parse alias content
+      elif [ "${line_type}" = 'Alias' ]; then
+        line_usage=${line};
+        line_usage=${line_usage#*=};
+        line_usage=${line_usage%;};
+        line_usage=${line_usage#$"'"};
+        line_usage=${line_usage#$'"'};
+        line_usage=${line_usage%$"'"};
+        line_usage=${line_usage%$'"'};
+        line_usage=${line_usage//--/&#8208;&#8208;};
+        stats_aliases=$((stats_aliases + 1));
+      fi;
+
+      # Ignore deprecated or hidden functions
+      if [[ "${line_usage}" == *'@Deprecated'* ]] || [[ "${line_usage}" == *'@Hide'* ]]; then
+        continue;
+      fi;
+
+      # Apply usage formattings
+      if [ ! -z "${line_usage}" ]; then
+        line_usage=${line_usage//\</&lt;};
+        line_usage=${line_usage//\>/&gt;};
+        line_usage=${line_usage//\//\\\/};
+        line_usage=${line_usage//\|/\\\\\|};
+        line_usage=${line_usage//\&/\\\&};
+        line_usage=${line_usage//$"'"/\\$"'"};
+        line_usage=${line_usage//$'"'/\\$'"'};
+        line_usage=${line_usage//\$/\\\$};
+        line_usage=${line_usage% };
+
+        # Parse summary out
+        if [[ "${line_usage}" == *"-SUMMARY-"*"-SUMMARY-"* ]]; then
+          line_summary=${line_usage#*-SUMMARY-};
+          line_summary=${line_summary%-SUMMARY-*};
+          line_usage=${line_usage/-SUMMARY-*-SUMMARY-/};
+
+          # Apply summary styling
+          line_summary="<b>\\\[${line_summary}\\\]<\/b>";
+        fi;
+
+        # Apply usage styling
+        if [ ! "${line_usage}" = "${line_function}" ]; then
+          line_usage=" : *${line_usage}*";
+
+        # Ignore function usage
+        else
+          line_usage=;
+        fi;
+
+      # Warning about missing usages
+      else
+        echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: ${line_type} '${line_function}' has no usage";
+        echo '';
+        return;
+      fi;
+
+      # Append function details
+      readme_output+="${readme_buffer}";
+      readme_buffer='';
+      readme_output+="  * [**${line_function}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path_name})${line_usage}\n";
+
+    done < <(grep -a "^alias.*=\|^function .*()" "${path_file}");
+
+    # Sections separation
+    if [ -z "${readme_buffer}" ]; then
+      readme_output+="\n---\n";
+    else
+      readme_buffer='';
+    fi;
+
+  done;
+
+  # Append last file group buffer
+  readme_output+="${group_buffer}\<div class=\"group_footer\"\>\n\<br \/\>\n\n---\n";
+
+  # Generation information
+  readme_output+="* _Automatically generated by [shtoolsreadme](${github_project_url}\/${github_file_path}\/project\/docs.rc) for [android_development_shell_tools](${github_project_url})_\n\<\/div\>\n";
+
+  # Inject README.md changes
+  # shellcheck disable=SC2028
+  echo "/${delimiter_start}/{p; :a; N; /${delimiter_end}/!ba; s/.*\n/${readme_output}/; };" > "${command_file}";
+  sed -i -f "${command_file}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
+  rm "${command_file}";
+
+  # Restore locale
+  LC_ALL=${lc_all};
+
+  # Parsed header
+  echo -e "\r\033[K  \e[1;37mREADME.md successfully rebuilt:\e[0m ${stats_functions} functions, ${stats_aliases} aliases and ${stats_hidden} internal functions in ${stats_sources} sources";
+  echo '';
+}

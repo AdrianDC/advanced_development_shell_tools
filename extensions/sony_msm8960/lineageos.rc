@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8960/lineageos.rc)
+
+# === LineageOS Sony 8960 Oreo Patcher ===
+function lineagesony8960oreopatcher()
+{
+  # Usage: lineagesony8960oreopatcher [version=15.0] (LineageOS 8960 Oreo Patcher)
+
+  # Variables
+  local buffer;
+
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'AdrianDC' 'lineage_development_sony8960' 'radian.dc@gmail.com' "${@}";
+
+  # Access Android root
+  croot;
+
+  # Launch repopicks script
+  echo '';
+  buffer=$(mktemp);
+  source <(curl -Ls "https://github.com/AdrianDC/lineage_development_sony8960_master/raw/local_manifests/repopick-lineage-${1:-15.0}.md?date=$(date '+%s')") 2>&1 | tee "${buffer}";
+
+  # Validate repopicks statuses
+  echo -e '\e[1;31m';
+  grep -ai -B1 'MERGED\|ABANDONED\|ERROR:' "${buffer}" | sed 's/\.\.\.//g';
+  rm -f "${buffer}";
+  echo -e '\e[0m';
+}
+
+# === LineageOS Rebaser ===
+function lineagesony8960rebaser()
+{
+  # Usage: lineagesony8960rebaser [specific_paths] (LineageOS Devices Rebaser)
+
+  # Use the androidprojectrebaser helper
+  androidprojectrebaser 'AdrianDC' 'lineage-15.0' '
+    device/sony/huashan::android_device_sony_huashan::LineageOS/::
+    device/sony/blue-common::android_device_sony_blue-common::LineageOS/::
+    device/sony/hayabusa::android_device_sony_hayabusa::LineageOS/::
+    device/sony/mint::android_device_sony_mint::LineageOS/::
+    device/sony/tsubasa::android_device_sony_tsubasa::LineageOS/::
+    kernel/sony/msm8960t::android_kernel_sony_msm8960t::LineageOS/::
+    kernel/sony/msm8x60::android_kernel_sony_msm8x60::LineageOS/::
+    vendor/sony::proprietary_vendor_sony::TheMuppets/::
+    ' "${@}";
+}

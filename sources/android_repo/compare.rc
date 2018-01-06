@@ -1,0 +1,110 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/compare.rc)
+
+# === Repo Compare Tags ===
+function repocomparetags()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: repocomparetags <base_tag_or_HEAD> <compare_tag_or_HEAD> (Helper to compare release tags)';
+    echo ' Information: Need to be started from the repo root';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local base_tag=${1};
+  local compare_tag=${2};
+  local default_filtered_projects='chromium-webview\|libnetfilter_conntrack\|libnfnetlink';
+
+  # Diff execution
+  echo '';
+  echo -n ' Scanning...';
+  repo forall -j1 -c "
+
+     # Filter out projects
+     if [ ! -z \$(echo \"\${REPO_PROJECT}\" | grep -i \"${default_filtered_projects}\") ]; then
+       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       exit;
+     fi;
+
+     # Create AOSP project url
+     project_upstream=https://android.googlesource.com;
+     if [ ! \"\${REPO_PATH%%/*}\" = 'device' ]; then
+         project_upstream=\${project_upstream}/platform;
+     fi;
+     project_upstream=\${project_upstream}/\${REPO_PATH};
+     if [ \"\${REPO_PATH}\" = 'build/make' ]; then
+         project_upstream=\${project_upstream%\/make};
+     fi;
+
+     # Store base tag data
+     base_tag_name=${base_tag};
+     if [ \"\${base_tag_name}\" = 'HEAD' ]; then
+       base_tag_name=\${REPO_RREV};
+       base_tag_head=\$(cut -f1 .git/HEAD);
+     fi;
+
+     # Store compare tag data
+     compare_tag_name=${compare_tag};
+     if [ \"\${compare_tag_name}\" = 'HEAD' ]; then
+       compare_tag_name=\${REPO_RREV};
+       compare_tag_head=\$(cut -f1 .git/HEAD);
+     fi;
+
+     # Show project header
+     printf \"\r\033[K Scanning \${REPO_PROJECT} [\${base_tag_name} // \${compare_tag_name}] \";
+
+     # Fetch compare tag if needed
+     if [ ! \"${compare_tag}\" = 'HEAD' ]; then
+       if ! git fetch -v \"\${project_upstream}\" \"\${compare_tag_name}\"; then
+         printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+         exit;
+       fi;
+       compare_tag_head=\$(cut -f1 .git/FETCH_HEAD);
+     fi;
+
+     # Fetch base tag if needed
+     if [ ! \"${base_tag}\" = 'HEAD' ]; then
+       if ! git fetch -v \"\${project_upstream}\" \"\${base_tag_name}\"; then
+         printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+         exit;
+       fi;
+       base_tag_head=\$(cut -f1 .git/FETCH_HEAD);
+     fi;
+
+     # Detect local differences
+     if ! git diff --quiet \${base_tag_head} \${compare_tag_head}; then
+       printf '\r\033[K';
+       echo '';
+       echo '=======================================================================================================================';
+       echo \"repocomparetags: Project \${REPO_PROJECT}: Base '\${base_tag_name}' // Compare '\${compare_tag_name}'\";
+       echo '';
+       git --no-pager diff \${base_tag_head} \${compare_tag_head};
+       echo '';
+     fi;
+
+    " 2> /dev/null;
+
+  # Done
+  echo -e  '\r\033[K repocomparetags: Done searching';
+  echo '';
+}

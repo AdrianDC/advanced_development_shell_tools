@@ -1,0 +1,212 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/find.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/grep.rc)
+
+# === Grep Helper ===
+function g()
+{
+  # Usage: g [inputs] (Grep through sources)
+
+  # Grep through files
+  GREP_COLORS='fn=1;1' grep -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
+}
+
+# === Grep Strings ===
+function gs()
+{
+  # Usage: gs [inputs] (Grep through sources and binaries)
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < <(findfilteredprojectfiles .);
+}
+
+# === Grep Strings Editor ===
+function gce()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gce <inputs> (Grep and edit through sources and binaries)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local files=();
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      files+=("${file}");
+    fi;
+  done < <(findfilteredprojectfiles .);
+
+  # Edit found files
+  fileedit "${files[@]}";
+}
+
+# === Grep Kernel Configurations ===
+function gck()
+{
+  # Usage: gck [inputs] (Grep through kernel configurations)
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < <(findfilteredprojectfiles . \( -name 'Kconfig' -o -name 'Makefile' \));
+}
+
+# === Grep Android Makefiles ===
+function gca()
+{
+  # Usage: gca [inputs] (Grep through Android makefiles)
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < <(findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' \));
+}
+
+# === Grep Android Manifests ===
+function gcmanifest()
+{
+  # Usage: gcmanifest [inputs] (Grep through Android Manifests)
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < <(findfilteredprojectfiles . \( -name 'AndroidManifest.xml' \));
+}
+
+# === Grep Android .rc Files ===
+function gcrc()
+{
+  # Usage: gcrc [inputs] (Grep through Android .rc files)
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < <(findfilteredprojectfiles . \( -name '*.rc' \));
+}
+
+# === Grep Android Sepolicies ===
+function gcsep()
+{
+  # Usage: gcsep [inputs] (Grep through Android sepolicies)
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < <(findfilteredprojectfiles . \( -name '*.te' -o -name '*_contexts' \));
+}
+
+# === Grep Android .xml Files ===
+function gcxml()
+{
+  # Usage: gcxml [inputs] (Grep through Android .xml files)
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < <(findfilteredprojectfiles . \( -name '*.xml' \));
+}
+
+# === Grep Android Sepolicies Contexts ===
+function gccontexts()
+{
+  # Usage: gccontexts [inputs] (Grep through Android sepolicies contexts)
+
+  # Grep through files
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < <(findfilteredprojectfiles . \( -name '*_contexts' \));
+}
+
+# === Grep Search Helpers ===
+alias grepi='grep -ai';
+
+# === Grep Android Modules ===
+function gcmodules()
+{
+  # Usage: gcmodules [path] (List all LOCAL_MODULE elements)
+
+  # Search all build definitions
+  while read -r file; do
+    stringsgetall "$(readlink -f "${file}")" \
+      | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
+      | sed 's/.*\(:=[ \t]*\|name: "\)\([^"]*\)\(".*\|\)/\2/g';
+  done < <(findfilteredprojectfiles "${1:-.}" \( -name '*.mk' -o -name '*.bp' \));
+}
+
+# === Grep Android Phony ===
+function gcphony()
+{
+  # Usage: gcphony (List all PHONY rules)
+
+  # Search all build definitions
+  while read -r file; do
+    stringsgetall "$(readlink -f "${file}")" \
+      | grep -ai ".PHONY:" \
+      | sed 's/.PHONY: //g';
+  done < <(findfilteredprojectfiles . \( -name '*.mk' \));
+}
+
+# === Strings Get All ===
+function stringsgetall()
+{
+  # Usage: stringsgetall [params] (Run strings command based on host variants)
+
+  # Handle Sysinternals strings variant
+  if strings -accepteula 2> /dev/null | grep -q 'sysinternals'; then
+    strings -a -accepteula -nobanner "${@}";
+
+  # Handle generic strings variant
+  else
+    strings -a "${@}";
+  fi;
+}

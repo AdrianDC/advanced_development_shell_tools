@@ -1,0 +1,136 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Android Development Shell Tools Syntax Checker ===
+function shtoolscheck()
+{
+  # Usage: shtoolscheck [bool_ignore] (Run ShellCheck on the project)
+
+  # Variables
+  local file_source;
+
+  # Study all script files
+  echo -e '\e[1;37m';
+  for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
+
+    # Parsing header
+    echo -en "\r\033[K shtoolscheck: Checking ${file_source}...";
+
+    # Launch ShellCheck
+    if ! shellcheck "${file_source}" \
+        -e SC1090,SC1091,SC1117,SC2164 \
+        && [ -z "${1}" ]; then
+      echo -e " \e[1;33mERROR: ${file_source} contains syntax errors or warnings\e[0m";
+      echo '';
+      return;
+    fi;
+  done;
+
+  # Successfull syntax check
+  echo -e '\r\033[K \e[1;32mshtoolscheck: Syntax checked successfully\e[0m';
+  echo '';
+}
+
+# === Android Development Shell Tools Pusher ===
+function shtoolspush()
+{
+  # Usage: shtoolspush [bool_ignore_readme] (Commit new changes to android_development_shell_tools)
+
+  # Update README.md
+  if [ -z "${1}" ]; then
+    shtoolsreadme;
+  fi;
+
+  # Commit changes
+  local currentdir=${PWD};
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git add -N ./*;
+  git add . -Ap;
+  git commit -s;
+
+  # Commits stats with upstream
+  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  echo '';
+  echo -n ' New changes - missing : ';
+  git rev-list --left-right --count HEAD...FETCH_HEAD;
+  echo '';
+
+  # Push to upstream
+  git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  cd "${currentdir}/";
+  shtoolsup;
+}
+
+# === Android Development Shell Tools Amend ===
+function shtoolsamend()
+{
+  # Usage: shtoolsamend [bool_ignore_readme] [bool_ignore_message] (Amend new changes to android_development_shell_tools)
+
+  # Update README.md
+  if [ -z "${1}" ]; then
+    shtoolsreadme;
+  fi;
+
+  # Commit changes
+  local currentdir=${PWD};
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git add -N ./*;
+  git add . -Ap;
+  if [ -z "${2}" ]; then
+    git commit -s --amend;
+  else
+    git commit -s --amend --no-edit;
+  fi;
+
+  # Commits stats with upstream
+  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  echo '';
+  echo -n ' New changes - missing : ';
+  git rev-list --left-right --count HEAD...FETCH_HEAD;
+  echo '';
+
+  # Push to upstream
+  git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  cd "${currentdir}/";
+  shtoolsup;
+}
+
+# === Android Development Shell Tools Master ===
+function shtoolsmaster()
+{
+  # Usage: shtoolsmaster (Switch android_development_shell_tools to master branch)
+
+  # Switch android_development_shell_tools to master branch
+  local branch=${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH};
+  ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH=master;
+  echo '';
+  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}' branch\e[0m";
+  echo '';
+}
+
+# === Android Development Shell Tools Staging ===
+function shtoolsstaging()
+{
+  # Usage: shtoolsstaging (Switch android_development_shell_tools to staging branch)
+
+  # Switch android_development_shell_tools to staging branch
+  local branch=${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH};
+  ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH=staging;
+  echo '';
+  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}' branch\e[0m";
+  echo '';
+}

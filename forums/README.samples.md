@@ -1,4 +1,4 @@
-[SIZE=4][B][ Samples ] Committing modifications with git ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_commitrc]git_commit[/URL])[/B][/SIZE]
+[SIZE=4][B][ Samples ] Committing modifications with git ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesgitcommitrc]git_commit[/URL])[/B][/SIZE]
 
 [LIST]
 [*]Add new code changes with confirmation (y: Yes / n: No / d: Skip file / q: Stop)
@@ -24,7 +24,7 @@
 [/LIST]
 
 
-[SIZE=4][B][ Samples ] Cherry-pick and fix conflicts ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_fetchrc]git_fetch[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_mergerc]git_merge[/URL])[/B][/SIZE]
+[SIZE=4][B][ Samples ] Cherry-pick and fix conflicts ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesgitfetchrc]git_fetch[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesgitmergerc]git_merge[/URL])[/B][/SIZE]
 
 [LIST]
 [*]Cherry-pick a commit SHA1 reference (already fetched)
@@ -43,7 +43,7 @@
    [FONT="Courier New"][I]`gitc`[/I][/FONT]
 [/LIST]
 
-[SIZE=4][B][ Samples ] Rebase commits and cleanup ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_commitrc]git_commit[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_git_rebaserc]git_rebase[/URL])[/B][/SIZE]
+[SIZE=4][B][ Samples ] Rebase commits and cleanup ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesgitcommitrc]git_commit[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesgitrebaserc]git_rebase[/URL])[/B][/SIZE]
 
 [LIST]
 [*]Reorder the last 8 commits (interactively)
@@ -77,7 +77,7 @@
    [FONT="Courier New"][I]`gitsl`[/I][/FONT]
 [/LIST]
 
-[SIZE=4][B][ Samples ] Search through files ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_host_greprc]host_grep[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc]tools[/URL])[/B][/SIZE]
+[SIZE=4][B][ Samples ] Search through files ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourceshostgreprc]host_grep[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourceshostbinaryrc]tools[/URL])[/B][/SIZE]
 
 [LIST]
 [*]Search directory for a word or multiple words
@@ -95,7 +95,7 @@
    [FONT="Courier New"][I]`binaryeditor word new_word`[/I][/FONT]
 [/LIST]
 
-[SIZE=4][B][ Samples ] Android devices and ROM helpers ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_repo_helpersrc]repo_helpers[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_toolsrc]tools[/URL])[/B][/SIZE]
+[SIZE=4][B][ Samples ] Android devices and ROM helpers ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesandroidrepohelpersrc]repo_helpers[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesandroidromhelpersrc]tools[/URL])[/B][/SIZE]
 
 [LIST]
 [*]Return to repository root
@@ -120,7 +120,7 @@
    [FONT="Courier New"][I]`overlaycompare path/to/overlay.xml`[/I][/FONT]
 [/LIST]
 
-[SIZE=4][B][ Samples ] Packages and ROM compilations helpers ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_release_helpersrc]release_helpers[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-android_release_packagesrc]release_packages[/URL])[/B][/SIZE]
+[SIZE=4][B][ Samples ] Packages and ROM compilations helpers ([URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesandroidrepohelpersrc]release_helpers[/URL], [URL=http://adriandc.github.io/android_development_shell_tools/#documentation-sourcesandroidreleasepackagesrc]release_packages[/URL])[/B][/SIZE]
 
 [LIST]
 [*]Properly cleanup necessary outputs for rebuilds

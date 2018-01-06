@@ -1,0 +1,269 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/helpers.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_kernel/builders.rc)
+
+# === Kernel Builder ===
+function makekernel()
+{
+  # Out path handling
+  if [ ! -d ./.build ]; then
+    mkdir ./.build;
+  fi;
+
+  # Mode: make clean / make mrproper
+  if [ "${1}" = 'clean' ] || [ "${1}" = 'mrproper' ]; then
+
+    # Launch make mode
+    make "${1}" O=./.build;
+    return;
+  fi;
+
+  # Environment
+  if [ -z "${DEFCONFIG_NAME}" ] || [ ! -z "${1}" ]; then
+
+    # Usage
+    if [ -z "${1}" ] || ! ls arch/arm*/configs/*"${1}"*_defconfig 1> /dev/null 2>&1; then
+      echo '';
+      echo ' Usage: makekernel [platform_device_to_init / clean / mrproper] [toolchain_version] [make_parameters] (Kernel inline compiler)';
+      echo '   Details: The kernel needs to be under an Android build tree to select toolchains'
+      echo '';
+      return;
+    fi;
+
+    # Kernel defconfig
+    kerneldefconfig "${1}";
+
+    # Kernel toolchains selection
+    kerneltoolchains "${2}";
+
+    # Kernel configuration
+    make "${DEFCONFIG_NAME}" O=./.build;
+  fi;
+
+  # Variables
+  local time_diff;
+  local make_parameters=${*:3};
+
+  # Kernel build
+  time_diff=$(date +%s);
+  make_parameters="makes ${make_parameters}";
+  ${make_parameters} O=./.build;
+
+  # Show compilation time
+  time_diff=$(($(date +%s) - time_diff));
+  echo '';
+  echo -e " \e[1;37m[ Done compiling in ${time_diff} secs ]\e[0m";
+  echo '';
+}
+
+# === Kernel Defconfig Selection ===
+function kerneldefconfig()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: kerneldefconfig [platform_device] (Select defconfig easily)';
+    echo '';
+    return;
+  fi;
+
+  # Detect arm / arm64
+  export ARCH=arm;
+  local DEFCONFIG_CHECKS;
+  for arch_check in arm arm64; do
+    DEFCONFIG_CHECKS=("./arch/${arch_check}/configs/"*"${1}"*);
+    if [ ${#DEFCONFIG_CHECKS[@]} -eq 1 ] && [ -f "${DEFCONFIG_CHECKS[*]}" ]; then
+      export ARCH=${arch_check};
+      break;
+    fi;
+  done;
+
+  # Defconfig detection
+  local DEFCONFIG_PATH=./arch/${ARCH}/configs;
+  local DEFCONFIG_INPUTS=("${DEFCONFIG_PATH}/"*"${1}"*);
+  local DEFCONFIG_INPUT="${DEFCONFIG_INPUTS[*]}";
+
+  # Defconfig multiple files handling
+  if [ ${#DEFCONFIG_INPUTS[@]} -ne 1 ] || [ ! -f "${DEFCONFIG_INPUTS[*]}" ]; then
+    if [ ${#DEFCONFIG_INPUTS[@]} -eq 1 ]; then
+      echo '';
+      echo '  Error: makedefconf found no defconfigs';
+      echo '';
+      return;
+    fi;
+
+    # Create defconfig selector list
+    local cnt=0;
+    echo '';
+    echo '  Warning: makedefconf found '${#DEFCONFIG_INPUTS[@]}' defconfigs';
+    echo '';
+    for defconfig_path in "${DEFCONFIG_INPUTS[@]}"; do
+      cnt=$((cnt + 1));
+      echo "   ${cnt}: ${defconfig_path}";
+    done;
+    echo '';
+    echo -n "  Defconfig to use [1 to ${cnt}] : ";
+    read -r key;
+    key=$((key - 1));
+    if [ "${key}" -ge 0 ] && [ "${key}" -lt "${cnt}" ]; then
+      DEFCONFIG_INPUT=${DEFCONFIG_INPUTS[${key}]};
+    else
+      DEFCONFIG_INPUT=;
+    fi;
+
+    # Validate user choice
+    if [ ! -f "${DEFCONFIG_INPUT}" ]; then
+      echo '';
+      echo '  Error: makedefconf found no defconfigs';
+      echo '';
+      return;
+    fi;
+  fi;
+
+  # Kernel defconfig
+  export DEFCONFIG_NAME;
+  DEFCONFIG_NAME=$(basename "${DEFCONFIG_INPUT}");
+}
+
+# === Kernel Toolchains Selection ===
+function kerneltoolchains()
+{
+  # Usage
+  if [ -z "${ARCH}" ]; then
+    echo '';
+    echo ' Usage: kerneltoolchains [version] (Select toolchains based on ARCH in Android build tree)';
+    echo '';
+    echo ' Versions:';
+    echo '  - default: Automatic';
+    echo '  - Android: <4.9>, <4.8>, <4.7>';
+    echo '  - gcc: <gcc-4.8>, <gcc-4.7>';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local version=${1};
+
+  # Architecture environment
+  export CROSS_COMPILE=;
+  local cross_compiler=;
+  local dir_cross_compiler;
+  echo '';
+
+  # Prepare toolchains environment
+  dir_cross_compiler="$(gettop)/prebuilts/gcc/linux-x86";
+
+  # CCache environment
+  local ccache=;
+  if [ ! -z "${USE_CCACHE}" ] && [ "${USE_CCACHE}" -eq 1 ]; then
+    ccache=$(which ccache);
+  fi;
+
+  # Architecture ARM-64
+  if [ "${ARCH}" = 'arm64' ]; then
+
+    # Android 4.9 toolchain
+    cross_compiler=$([ "${version:-4.9}" = '4.9' ] && readlink -f "${dir_cross_compiler}/aarch64/aarch64-linux-android-4.9/bin");
+    if [ ! -z "${cross_compiler}" ]; then
+      echo '  kerneltoolchains: Using Android 4.9 toolchain';
+    else
+
+      # Android 4.8 toolchain
+      cross_compiler=$([ "${version:-4.8}" = '4.8' ] && readlink -f "${dir_cross_compiler}/aarch64/aarch64-linux-android-4.8/bin");
+      if [ ! -z "${cross_compiler}" ]; then
+        echo '  kerneltoolchains: Falling back to Android 4.8 toolchain';
+      fi;
+    fi;
+
+    # Cross-Compiler environment variable
+    if [ -e "${cross_compiler}/aarch64-linux-androidkernel-ld" ]; then
+      export CROSS_COMPILE="${ccache} aarch64-linux-androidkernel-";
+    elif [ -e "${cross_compiler}/aarch64-linux-android-ld" ]; then
+      export CROSS_COMPILE="${ccache} aarch64-linux-android-";
+    fi;
+
+    # Failed Cross-Compiler search
+    if [ -z "${cross_compiler}" ] || [ -z "${CROSS_COMPILE}" ]; then
+      echo "  kerneltoolchains: No ${ARCH} cross compiler found!";
+      echo '';
+      return;
+    fi;
+
+  # Architecture ARM-32
+  else
+
+    # Android 4.9 toolchain
+    cross_compiler=$([ "${version:-4.9}" = '4.9' ] && readlink -f "${dir_cross_compiler}/arm/arm-linux-androideabi-4.9/bin");
+    if [ ! -z "${cross_compiler}" ]; then
+      echo '  kerneltoolchains: Using Android 4.9 toolchain';
+    else
+
+      # Android 4.8 toolchain
+      cross_compiler=$([ "${version:-4.8}" = '4.8' ] && readlink -f "${dir_cross_compiler}/arm/arm-linux-androideabi-4.8/bin");
+      if [ ! -z "${cross_compiler}" ]; then
+        echo '  kerneltoolchains: Falling back to Android 4.8 toolchain';
+      else
+
+        # GCC 4.8 toolchain
+        cross_compiler=$([ "${version:-gcc-4.8}" = 'gcc-4.8' ] && readlink -f "${dir_cross_compiler}/arm/arm-eabi-4.8/bin");
+        if [ ! -z "${cross_compiler}" ]; then
+          echo '  kerneltoolchains: Falling back to GCC 4.8 toolchain';
+        else
+
+          # Android 4.7 toolchain
+          cross_compiler=$([ "${version:-4.7}" = '4.7' ] && readlink -f "${dir_cross_compiler}/arm/arm-linux-androideabi-4.7/bin");
+          if [ ! -z "${cross_compiler}" ]; then
+            echo '  kerneltoolchains: Falling back to Android 4.7 toolchain';
+          else
+
+            # GCC 4.7 toolchain
+            cross_compiler=$([ "${version:-gcc-4.7}" = 'gcc-4.7' ] && readlink -f "${dir_cross_compiler}/arm/arm-eabi-4.7/bin");
+            if [ ! -z "${cross_compiler}" ]; then
+              echo '  kerneltoolchains: Falling back to GCC 4.7 toolchain';
+            fi;
+          fi;
+        fi;
+      fi;
+    fi;
+
+    # Cross-Compiler environment variable
+    if [ -e "${cross_compiler}/arm-linux-androidkernel-ld" ]; then
+      export CROSS_COMPILE="${ccache} arm-linux-androidkernel-";
+    elif [ -e "${cross_compiler}/arm-linux-androideabi-ld" ]; then
+      export CROSS_COMPILE="${ccache} arm-linux-androideabi-";
+    elif [ -e "${cross_compiler}/arm-eabi-ld" ]; then
+      export CROSS_COMPILE="${ccache} arm-eabi-";
+    fi;
+
+    # Failed Cross-Compiler search
+    if [ -z "${cross_compiler}" ] || [ -z "${CROSS_COMPILE}" ]; then
+      echo "  kerneltoolchains: No ${ARCH} cross compiler found!";
+      echo '';
+      return;
+    fi;
+
+  fi;
+  echo '';
+
+  # Path environment variable
+  if [[ ! "${PATH}" == *"${cross_compiler}"* ]]; then
+    export PATH=${cross_compiler}:${PATH};
+  fi;
+}

@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Android Development Shell Tools Path Getter ===
+function shtoolsget()
+{
+  # Usage: shtoolsget (Get android_development_shell_tools path)
+
+  # Get android_development_shell_tools path
+  echo "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}";
+}
+
+# === Android Development Shell Tools Path Access ===
+function shtoolscd()
+{
+  # Usage: shtoolscd (Access android_development_shell_tools path)
+
+  # Access android_development_shell_tools path
+  cd "$(shtoolsget)";
+}
+
+# === Android Development Shell Tools Syncer ===
+function shtoolssync()
+{
+  # Usage: shtoolssync (Download new android_development_shell_tools changes)
+
+  # Download upstream changes
+  local currentdir=${PWD};
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git fetch origin;
+  git reset "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  git stash -u;
+  git submodule init;
+  git submodule update;
+  cd "${currentdir}/";
+  shtoolsup;
+}
+
+# === Android Development Shell Tools Update ===
+function shtoolsup()
+{
+  # Usage: shtoolsup (Reloads android_development_shell_tools scripts)
+
+  # Reload sources
+  source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
+  echo '';
+  echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[0;33mFunctions loaded properly\e[0m';
+  echo '';
+}

@@ -1,0 +1,95 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Android Development Shell Tools Options ===
+function __shtoolsoptions()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: __shtoolsoptions <option_prefix> [option_set] (Settings holder for android_development_shell_tools)';
+    echo '';
+    return;
+  fi;
+
+  # Filter iterative calls
+  if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD}" ]; then
+    return;
+  fi;
+
+  # Variables
+  local option_command;
+
+  # Upgrade options functions syntax
+  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ] &&
+      grep -q "^${1#__}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
+    echo '';
+    echo -e " \e[1;33mshtools-: \e[0;33mUpgrading ${1} syntax\e[0m";
+    echo '';
+    sed -i "s/^${1#__}/${1}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+  fi;
+
+  # Store given input option
+  if [ ! -z "${2}" ]; then
+
+    # Create initial empty configuration
+    if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+      { echo '#!/bin/bash';
+        echo '#';
+        echo '# Android Development Shell Tools - Options';
+        echo '#'; } > "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+    fi;
+
+    # Update existing option
+    if grep -q "${1}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
+      sed -i "s/${1}.*/${1}${2}/" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+
+    # Define new option
+    else
+      echo "${1}${2}" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+    fi;
+
+  # Acquire current options
+  elif [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+    option_command=$(grep "${1}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
+    if [ ! -z "${option_command}" ]; then
+      export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=true;
+      ${option_command};
+      export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=;
+    fi;
+  fi;
+}
+
+# === Android Development Shell Tools News Options ===
+function __shtools-config-news-enable()
+{
+  # Usage: __shtools-config-news-enable (Enable optional project news)
+  __shtoolsoptions '__shtools-config-news-' 'enable';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIG_NEWS=true;
+}
+function __shtools-config-news-disable()
+{
+  # Usage: __shtools-config-news-disable (Disable optional project news)
+  __shtoolsoptions '__shtools-config-news-' 'disable';
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIG_NEWS=false;
+}
+function __shtools-config-news-active()
+{
+  # Usage: __shtools-config-news-active (Get optional project news)
+  __shtoolsoptions '__shtools-config-news-';
+  [ ! "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIG_NEWS}" = 'false' ];
+}

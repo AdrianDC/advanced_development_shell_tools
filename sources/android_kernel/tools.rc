@@ -1,0 +1,1049 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_build/helpers.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_devices/target.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_release/cleaners.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_kernel/tools.rc)
+
+# === Build paths ===
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg_host;
+
+# === Fast Bootimage Builder ===
+function fboota()
+{
+  # Usage
+  if [ ! "$(type -t croot 2> /dev/null)" = 'function' ] ||
+      [ -z "${TARGET_PRODUCT}" ] || [ "${1}" = '-h' ]; then
+    echo '';
+    echo ' Usage: fboota [fastupl,flash,full,inject,push,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
+    echo '  Details: fboota needs the envbuild and lunch variables';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local adb_cmd;
+  local bootimg;
+  local cwd;
+  local device;
+  local device_common=;
+  local image_file;
+  local image_name;
+  local modules;
+  local module_file;
+  local params=${1};
+  local tmpfile;
+
+  # Initialize variables
+  cwd=$(pwd);
+  device=$(repogetdevice);
+  tmpfile=$(mktemp);
+
+  # If adb required, initialize adb
+  if [[ "${params}" == *'full'* ]] || [[ "${params}" == *'inject'* ]] || [[ "${params}" == *'push'* ]]; then
+    adbwait;
+    adbro;
+  fi;
+
+  # Build environment
+  croot;
+  export USE_NINJA=false;
+  export USE_SOONG_UI=false;
+
+  # Header
+  echo '';
+  echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016-2018 ]\e[0m';
+  echo '';
+
+  # Root holder for fastboot flash
+  if [[ "${params}" == *'flash'* ]]; then
+    sudo echo -n '';
+  fi;
+
+  # Output cleaner
+  if [[ "${params}" == *'sep'* ]]; then
+    outsepdevcl "${device}";
+  else
+    outbootdevcl "${device}";
+  fi;
+  echo '';
+
+  # Unsecure adb changes
+  if [[ "${params}" == *'unsecure'* ]]; then
+    bootimagedebuggable "${device}" true;
+    echo '';
+  fi;
+
+  # Disable build overlays for fast builds
+  export USE_NINJA=false;
+  export USE_SOONG_UI=false;
+
+  # Ramdisk common files builder
+  if [[ "${params}" == *'full'* ]]; then
+    device_common=$(cat './device/'*"/${device}/device.mk" \
+                  | grep 'inherit-product' \
+                  | grep 'device' \
+                  | grep -v 'gps' \
+                  | sed 's/.*\(device.*\)\/[^\/]*)/\1/');
+    if [ ! -z "${device_common}" ]; then
+      mmm "./${device_common}/rootdir/";
+    fi;
+  fi;
+
+  # Recoveryimage builder
+  if [[ "${params}" == *'recovery'* ]]; then
+    image_file=recovery;
+    image_name=recoveryimage;
+
+  # Bootimage builder
+  else
+    image_file=boot;
+    image_name=bootimage;
+  fi
+
+  # Image fast builder
+  if [[ ! "${params}" == *'full'* ]] && mms -v > /dev/null 2>&1; then
+    mms "${image_name}" | tee "${tmpfile}";
+
+  # Image full builder
+  else
+    makes "${image_name}" | tee "${tmpfile}";
+  fi;
+
+  # Unsecure adb changes
+  if [[ "${params}" == *'unsecure'* ]]; then
+    bootimagedebuggable "${device}" false;
+  fi;
+
+  # Bootimage file path
+  bootimg=$(grep -a ".*image.*${image_file}\.img" "${tmpfile}" \
+            | head -1 \
+            | sed "s/.*: \(.*${image_file}\.img\).*/\1/g");
+
+  # Detect failed build
+  if [ -z "${bootimg}" ] || [ ! -f "${bootimg}" ]; then
+    echo '';
+    echo ' fboota: Bootimage build failed';
+    echo '';
+
+  # Inject kernel inside bootimage
+  elif [[ "${params}" == *'inject'* ]]; then
+
+    # Use the fbootk function
+    fbootk "$(dirname "${bootimg}")/kernel";
+
+  # Zip the bootimage
+  elif [[ "${params}" == *'zip'* ]]; then
+
+    # Push zip to device
+    if [[ "${params}" == *'push'* ]]; then
+      bootzip "${device}" "${bootimg}" 'true';
+    else
+      bootzip "${device}" "${bootimg}";
+    fi;
+
+  # Upload the bootimage
+  elif [[ "${params}" == *'fastupl'* ]]; then
+    fastupl "${bootimg}" 'bootimage';
+
+  # Flash the bootimage to the device
+  elif [[ "${params}" == *'flash'* ]]; then
+
+    # Detect modules
+    modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
+
+    # Handle kernel modules
+    if [ ! -z "${modules}" ]; then
+      echo '';
+      echo -e '  \e[1;37m[ fboota: Kernel modules... ]\e[0m';
+      echo '';
+
+      # Give adb root permissions
+      adbwait;
+      adbro;
+      adb_cmd=$(adbcmd);
+
+      # Push the kernel modules
+      adbsur "rm -rf '/system/lib/modules/'";
+      for module in ${modules[*]}; do
+        module_file=$(basename "${module}");
+        ${adb_cmd} push "${module}" "/system/lib/modules/${module_file}";
+      done;
+    fi;
+
+    # Flash new bootimage
+    echo '';
+    echo -e "  \e[1;37m[ fboota: Bootloader ${bootimg}... ]\e[0m";
+    echo '';
+
+    # Export to external usage
+    export PACKAGE_RESULT=${bootimg};
+
+    # Give adb root permissions
+    adbwait;
+    adbro;
+    adb_cmd=$(adbcmd);
+
+    # Reboot to bootloader
+    ${adb_cmd} reboot bootloader;
+
+    # Flash new boot
+    timeout -k 20 20 sudo fastboot flash boot "${bootimg}";
+    timeout -k 5 5 sudo fastboot reboot;
+    echo '';
+
+  fi;
+
+  # End of process
+  export USE_NINJA=;
+  export USE_SOONG_UI=;
+  rm -f "${tmpfile}";
+  cd "${cwd}";
+  echo '';
+}
+
+# === Kernel Flasher ===
+function fboot()
+{
+  # Variables
+  local bootimage;
+
+  # Initialize variables
+  bootimage=${1:-boot.img};
+  bootimage=${bootimage#file:/};
+
+  # Usage
+  if [ ! -f "${bootimage}" ]; then
+    echo '';
+    echo ' Usage: fboot <bootimage> (fastboot bootimage flashed)';
+    echo '';
+    return;
+  fi;
+
+  # Reboot to bootloader
+  sudo echo '';
+  if timeout -k 3 3 sh -c "$(adbcmd) devices | grep -q 'recovery$\|device$'" 2> /dev/null; then
+    adbro;
+    adbwait;
+    $(adbcmd) reboot bootloader;
+  fi;
+
+  # Flash bootimage and reboot
+  sudo fastboot flash boot "${bootimage}";
+  sudo fastboot reboot;
+}
+
+# === System Flasher ===
+function fboots()
+{
+  # Usage: fboots <system_img> (fastboot systemimage flashed)
+
+  # Variables
+  local adb;
+  local file;
+
+  # Initialize variables
+  adb=$(adbcmd);
+
+  # Reboot to bootloader
+  adbwait;
+  ${adb} reboot bootloader;
+
+  # Flash system
+  if [ ! -z "${1}" ]; then
+    file=$(echo "${1}" | sed 's/file:\/\/\(.*\)/\1/');
+    sudo fastboot flash system "${file}";
+  else
+    sudo fastboot flash system system.img;
+  fi;
+}
+
+# === Fastboot Reboot ===
+function fbootr()
+{
+  # Usage: fbootr (Fastboot reboot)
+
+  # Fastboot reboot
+  sudo fastboot reboot;
+}
+
+# === Host Kernel Informations ===
+function bootinfo()
+{
+  # Usage
+  if [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: bootinfo <boot_img_file> (Bootimage structure and information parser)';
+    echo '';
+    return;
+  fi;
+
+  # Run bbootimg on the kernel input
+  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST}" -i "${1}";
+}
+
+# === Kernel Informations ===
+function adbbootinfo()
+{
+  # Usage: adbbootinfo (Kernel bbootimg analyzer)
+
+  # Variables
+  local adb;
+  local adb_tmpdir;
+  local partitiontarget;
+
+  # Give adb root permissions
+  adbwait;
+  adbro;
+
+  # Initialize variables
+  adb=$(adbcmd);
+  partitiontarget=$(androiddevicestarget boot);
+
+  # Check if '/tmp' exists
+  if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/tmp;
+
+  # Check if '/data/local/tmp' exists
+  elif [ ! -z "$(${adb} shell 'if [ -d /data/local/tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/data/local/tmp;
+  else
+    echo '';
+    echo '  adbbootinfo: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push and fix permissions of 'bbootimg' then kernel informations and cleanup
+  ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/bbootimg;
+         ${adb_tmpdir}/bbootimg -i ${partitiontarget};
+         rm -f ${adb_tmpdir}/bbootimg";
+}
+
+# === FOTA Informations ===
+function adbfotainfo()
+{
+  # Usage: adbfotainfo (FOTA bbootimg analyzer)
+
+  # Variables
+  local adb;
+  local adb_tmpdir;
+  local partitiontarget;
+
+  # Give adb root permissions
+  adbwait;
+  adbro;
+
+  # Initialize variables
+  adb=$(adbcmd);
+  partitiontarget=$(androiddevicestarget fota);
+
+  # Check if '/tmp' exists
+  if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/tmp;
+
+  # Check if '/data/local/tmp' exists
+  elif [ ! -z "$(${adb} shell 'if [ -d /data/local/tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/data/local/tmp;
+  else
+    echo '';
+    echo '  adbfotainfo: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push, fix permissions of 'bbootimg' then get FOTA informations
+  ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/bbootimg;
+         ${adb_tmpdir}/bbootimg -i ${partitiontarget};
+         rm -f ${adb_tmpdir}/bbootimg";
+}
+
+# === Kernel Injector ===
+function fbootk()
+{
+  # Variables
+  local adb;
+  local adb_tmpdir;
+  local filepath=${1};
+  local fota=${2};
+  local dtimg='';
+
+  # Detect zImage file
+  if [ -z "${filepath}" ]; then
+    if [ -f '.build/arch/arm64/boot/zImage' ]; then
+      filepath=.build/arch/arm64/boot/zImage;
+    elif [ -f '.build/arch/arm/boot/zImage' ]; then
+      filepath=.build/arch/arm/boot/zImage;
+    elif [ -f 'arch/arm64/boot/zImage' ]; then
+      filepath=arch/arm64/boot/zImage;
+    elif [ -f 'arch/arm/boot/zImage' ]; then
+      filepath=arch/arm/boot/zImage;
+    fi;
+  fi;
+
+  # Check if file exists
+  filepath=$(readlink -e "${filepath}");
+
+  # Usage
+  if [ -z "${filepath}" ]; then
+    echo '';
+    echo '  Usage: fbootk <kernelpath> [bool_fota] (Kernel image to boot partition injector)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local partitiontarget=;
+  if [ ! -z "${fota}" ]; then
+    partitiontarget=$(androiddevicestarget fota);
+  else
+    partitiontarget=$(androiddevicestarget boot);
+  fi;
+
+  # Give adb root permissions
+  adbwait;
+  adbro;
+
+  # Initialize variables
+  adb=$(adbcmd);
+
+  # Check if '/tmp' exists
+  if [ ! -z "$(${adb} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/tmp;
+
+  # Check if '/data/local/tmp' exists
+  elif [ ! -z "$(${adb} shell 'if [ -d /data/local/tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/data/local/tmp;
+  else
+    echo '';
+    echo '  fbootk: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Push kernel to target
+  ${adb} push "${filepath}" "${adb_tmpdir}/tmpkernel";
+
+  # Push DT image to target (fboota extension)
+  if [ -f "${filepath%/kernel}/dt.img" ]; then
+    ${adb} push "${filepath%/kernel}/dt.img" "${adb_tmpdir}/dt.img";
+    dtimg="-d ${adb_tmpdir}/dt.img";
+  fi
+
+  # Push and fix permissions of 'bbootimg'
+  ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/bbootimg";
+
+  # Kernel informations and injection, then clenaup
+  adbsu "${adb_tmpdir}/bbootimg -i ${partitiontarget};
+         ${adb_tmpdir}/bbootimg -u ${partitiontarget} -k ${adb_tmpdir}/tmpkernel ${dtimg};
+         rm -f ${adb_tmpdir}/bbootimg;
+         rm -f ${adb_tmpdir}/tmpkernel;
+         rm -f ${adb_tmpdir}/dt.img";
+
+  # Reboot the device
+  if [ -z "${fota}" ]; then
+    ${adb} reboot;
+  else
+    ${adb} reboot recovery;
+  fi;
+  echo '';
+}
+
+# === Recovery Flasher ===
+function frecovery()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: frecovery <image> (Flash recovery with fastboot)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local adb;
+
+  # Initialize variables
+  adb=$(adbcmd);
+
+  # Reboot to bootloader
+  adbwait;
+  ${adb} reboot bootloader;
+
+  # Flash recovery with fastboot
+  if [ ! -z "${1}" ]; then
+    sudo fastboot flash recovery "${1}";
+  else
+    sudo fastboot flash recovery boot.img;
+  fi;
+  sudo fastboot reboot;
+}
+
+# === ADB Bootimage Pusher ===
+function adbbootpush()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbbootpush <image> (Inject bootimage to partition)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local adb;
+  local boot;
+
+  # Acquire root access if needed
+  adbro;
+
+  # Initialize variables
+  adb=$(adbcmd);
+  boot=$(androiddevicestarget boot);
+
+  # Installer
+  ${adb} push "${1}" /sdcard/boot.img;
+  adbsu "dd if=/dev/zero of=${boot};
+         dd if=/sdcard/boot.img of=${boot};
+         rm -f /sdcard/boot.img" \
+      | grep -v 'No space left on device';
+}
+
+# === ADB FOTA Pusher ===
+function adbfotapush()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbfotapush <image> (Inject FOTA to partition)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local adb;
+  local fota;
+
+  # Initialize variables
+  adb=$(adbcmd);
+  fota=$(androiddevicestarget fota);
+
+  # Installer
+  ${adb} push "${1}" /sdcard/fota.img;
+  adbsu "dd if=/dev/zero of=${fota};
+         dd if=/sdcard/fota.img of=${fota};
+         rm -f /sdcard/fota.img" \
+      | grep -v 'No space left on device';
+}
+
+# === ADB Recovery Pusher ===
+function adbrecoverypush()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbrecoverypush <image> (Inject recovery to partition)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local adb;
+  local recovery;
+
+  # Initialize variables
+  adb=$(adbcmd);
+  recovery=$(androiddevicestarget recovery);
+
+  # Installer
+  ${adb} push "${1}" /sdcard/recovery.img;
+  adbsu "dd if=/dev/zero of=${recovery};
+         dd if=/sdcard/recovery.img of=${recovery};
+         rm -f /sdcard/recovery.img" \
+      | grep -v 'No space left on device';
+}
+
+# === Kernel Injector Zip ===
+function kernelinjectorzip()
+{
+  # Usage
+  if [ -z "${2}" ] || [ ! -f "${2}" ]; then
+    echo '';
+    echo ' Usage: kernelinjectorzip <device> <kernel_file_path> [kernel_sources_for_modules] (Kernel to injector zip packager)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local PhoneName=${1};
+  local BootPartition;
+  local CurDir;
+  local KernelFile;
+  local KernelSources;
+  local OutFile;
+  local SystemPartition;
+  local TargetFile;
+  local TmpDir;
+
+  # Initialize variables
+  CurDir=$(pwd);
+  KernelFile=$(readlink -f "${2}");
+  KernelSources=$(readlink -f "${3}");
+  OutFile=kernel-injector-${PhoneName}-$(date +'%Y%m%d');
+  TargetFile="$(desktoppath)/${OutFile}";
+  TmpDir=$(mktemp -d);
+
+  # Partitions
+  BootPartition=$(androiddevicestarget boot "${PhoneName}");
+  SystemPartition=$(androiddevicestarget system "${PhoneName}");
+
+  # Generate zip and updater-script files
+  mkdir -p "${TmpDir}/META-INF/com/google/android/";
+  mkdir -p "${TmpDir}/scripts/";
+
+  # Copy base zip and 'kernel'
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TmpDir}/${OutFile}.unsigned.zip";
+  cp "${KernelFile}" "${TmpDir}/scripts/kernel";
+
+  # Write device specific changes
+  cd "${TmpDir}/";
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_KERNEL_INJECTOR}" './META-INF/com/google/android/updater-script';
+  sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" './META-INF/com/google/android/updater-script';
+  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR}" './scripts/';
+  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR_SH}" './scripts/';
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" './scripts/kernel_inject.sh';
+
+  # Update 'updater-script', 'scripts' and 'kernel'
+  zip -g "./${OutFile}.unsigned.zip" './META-INF/com/google/android/updater-script';
+  zip -g "./${OutFile}.unsigned.zip" './scripts/'*;
+  zip -g "./${OutFile}.unsigned.zip" './scripts/kernel';
+
+  # Find and pack modules
+  if [ ! -z "${KernelSources}" ]; then
+    mkdir -p "./system/lib/modules/";
+    while IFS= read -r -d '' module_file; do
+      cp "${module_file}" "./system/lib/modules/";
+    done < <(find "${KernelSources}" -name '*.ko');
+    zip -g "./${OutFile}.unsigned.zip" "./system/lib/modules/"*;
+  fi;
+
+  # Copy zip unsigned file to desktop
+  cp "./${OutFile}.unsigned.zip" "${TargetFile}.unsigned.zip";
+
+  # Zip signature
+  signzip "./${OutFile}.unsigned.zip" "${TargetFile}.zip";
+
+  # Check if zip got signed
+  if [ -f "${TargetFile}.zip" ]; then
+    rm "${TargetFile}.unsigned.zip";
+    TargetFile=${TargetFile}.zip;
+
+  # Fallback to unsigned zip
+  else
+    echo '';
+    echo ' kernelinjectorzip: The zip signing failed. Falling back to the unsigned zip';
+    TargetFile=${TargetFile}.unsigned.zip;
+  fi;
+
+  # End of work
+  rm -rf "${TmpDir}";
+  cd "${CurDir}";
+
+  # Result
+  echo '';
+  echo -e " \e[1;37mkernelinjectorzip: Package File:\e[0m ${TargetFile}";
+  echo '';
+}
+
+# === Boot Zip Packer ===
+function bootzip()
+{
+  # Usage
+  if [ -z "${2}" ] || [ ! -f "${2}" ]; then
+    echo '';
+    echo ' Usage: bootzip <device> <boot_img_path> [bool_push_to_device] (Bootimage to zip packager)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local PhoneName=${1};
+  local PushToDevice=${3};
+  local adb;
+  local adb_targetdir;
+  local BootPartition;
+  local CurDir;
+  local BootFile;
+  local OutFile;
+  local TargetFile;
+  local TmpDir;
+
+  # Initialize variables
+  adb=$(adbcmd);
+  BootFile=$(readlink -f "${2}");
+  CurDir=$(pwd);
+  OutFile=boot-${PhoneName}-$(date +'%Y%m%d');
+  TargetFile="$(desktoppath)/${OutFile}";
+  TmpDir=$(mktemp -d);
+
+  # Partitions
+  BootPartition=$(androiddevicestarget boot "${PhoneName}");
+
+  # Copy 'boot.img' and base zip
+  cp "${BootFile}" "${TmpDir}/boot.img";
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TmpDir}/${OutFile}.unsigned.zip";
+
+  # Write device specific changes
+  cd "${TmpDir}/";
+  mkdir -p './META-INF/com/google/android/';
+  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_BOOT}" './META-INF/com/google/android/updater-script';
+  sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" './META-INF/com/google/android/updater-script';
+
+  # Update 'updater-script' and 'boot.img'
+  zip -g "./${OutFile}.unsigned.zip" './META-INF/com/google/android/updater-script';
+  zip -g "./${OutFile}.unsigned.zip" './boot.img';
+
+  # Copy zip unsigned file to desktop
+  cp "./${OutFile}.unsigned.zip" "${TargetFile}.unsigned.zip";
+
+  # Zip signature
+  signzip "./${OutFile}.unsigned.zip" "${TargetFile}.zip";
+
+  # Check if zip got signed
+  if [ -f "${TargetFile}.zip" ]; then
+    rm "${TargetFile}.unsigned.zip";
+    OutFile=${OutFile}.zip;
+    TargetFile=${TargetFile}.zip;
+
+  # Fallback to unsigned zip
+  else
+    echo '';
+    echo ' bootzip: The zip signing failed. Falling back to the unsigned zip';
+    echo '';
+    OutFile=${OutFile}.unsigned.zip;
+    TargetFile=${TargetFile}.unsigned.zip;
+  fi;
+
+  # Push zip to the device
+  if [ "${PushToDevice}" = 'true' ]; then
+
+    # Wait for device
+    echo '';
+    adbwait;
+
+    # Check if '/sdcard' exists
+    if [ ! -z "$(${adb} shell 'ls /sdcard/ 2> /dev/null')" ]; then
+      adb_targetdir=/sdcard;
+
+    # Check if '/data/media/0' exists
+    elif [ ! -z "$(${adb} shell 'ls /data/media/0/ 2> /dev/null')" ]; then
+      adb_targetdir=/data/media/0;
+    fi;
+
+    # Push zip to device target
+    if [ -z "${adb_targetdir}" ]; then
+      echo '  bootzip: Failed pushing to device';
+    else
+      echo "  bootzip: Pushing to device ${adb_targetdir}/${OutFile}";
+      ${adb} push "${TargetFile}" "${adb_targetdir}/";
+    fi;
+  fi;
+
+  # End of work
+  rm -rf "${TmpDir}";
+  cd "${CurDir}";
+
+  # Result
+  echo '';
+  echo -e "  \e[1;36mbootzip: Package File:\e[0m ${TargetFile}";
+  export PACKAGE_RESULT=${TargetFile};
+  echo '';
+}
+
+# === Make Sepolicy ===
+function makesep()
+{
+  # Usage: makesep [bool_inject] (Compile sepolicies clean)
+
+  # Variables
+  local cwd;
+  local device;
+  local out_device_path;
+
+  # Access repo root
+  cwd=$(pwd);
+  croot;
+
+  # Prepare optional sepolicies injection
+  if [ ! -z "${1}" ]; then
+    adbro;
+  fi;
+
+  # Initialize variables
+  device=$(repogetdevice);
+  out_device_path=./out/target/product/${device};
+
+  # Cleanup ramdisk files
+  outsepdevcl "${device}";
+
+  # Disable build environment
+  export USE_NINJA=false;
+  export USE_SOONG_UI=false;
+
+  # Start sepolicies full compilations
+  if [ -d ./system/sepolicy ]; then
+    mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./system/sepolicy/;
+  else
+    mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./external/sepolicy/;
+  fi;
+
+  # Optionally inject sepolicies to device
+  if [ ! -z "${1}" ]; then
+    sepinject "${out_device_path}/root";
+  fi;
+
+  # Restore build environment and path
+  export USE_NINJA=;
+  export USE_SOONG_UI=;
+  cd "${cwd}/";
+}
+
+# === Sepolicies Injector ===
+function sepinject()
+{
+  # Variables
+  local device;
+  local root_path=${1};
+
+  # Get device name
+  device=$(repogetdevice);
+
+  # Detect root files
+  if [ -z "${root_path}" ]; then
+    if [ -f "./out/target/product/${device}/root/sepolicy" ]; then
+      root_path=./out/target/product/${device}/root;
+    fi;
+  fi;
+
+  # Check if files exists
+  root_path=$(readlink -e "${root_path}");
+
+  # Usage
+  if [ -z "${root_path}" ] || [ ! -f "${root_path}/sepolicy" ]; then
+    echo '';
+    echo '  Usage: sepinject <root_path> (Sepolicies files to boot partition injector)';
+    echo '';
+    return;
+  fi;
+
+  # Injector ramdisk files
+  adbramdiskinject "${root_path}/file_contexts"* "${root_path}/"*'_contexts' "${root_path}/sepolicy";
+}
+
+# === Ramdisk Files Injector ===
+function adbramdiskinject()
+{
+  # Variables
+  local adb_cmd;
+  local adb_tmpdir;
+  local file_name;
+  local file_path;
+  local files_paths=("${@}");
+
+  # Usage
+  if [ -z "${files_paths[*]}" ]; then
+    echo '';
+    echo '  Usage: adbramdiskinject <files_paths> (Ramdisk files to boot partition injector)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local partitiontarget=;
+  partitiontarget=$(androiddevicestarget boot);
+
+  # Give adb root permissions
+  adbwait;
+  adbro;
+
+  # Initialize variables
+  adb_cmd=$(adbcmd);
+
+  # Check if '/tmp' exists
+  if [ ! -z "$(${adb_cmd} shell 'if [ -d /tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/tmp;
+
+  # Check if '/data/local/tmp' exists
+  elif [ ! -z "$(${adb_cmd} shell 'if [ -d /data/local/tmp ]; then echo true; fi;')" ]; then
+    adb_tmpdir=/data/local/tmp;
+  else
+    echo '';
+    echo '  adbramdiskinject: No /tmp folder found, exiting...';
+    echo '';
+    return;
+  fi;
+
+  # Prepare temporary folder
+  adbsu "rm -rf ${adb_tmpdir}/inject;
+         mkdir -p '${adb_tmpdir}/inject'";
+
+  # Push and fix permissions of 'bbootimg'
+  ${adb_cmd} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/inject/bbootimg";
+  adbsu "chmod 755 ${adb_tmpdir}/inject/bbootimg";
+
+  # Bootimage extraction, then unpack gzip and cpio ramdisk
+  adbsu "cd ${adb_tmpdir}/inject/;
+         ${adb_tmpdir}/inject/bbootimg -x ${partitiontarget};
+         mv ${adb_tmpdir}/inject/initrd.img ${adb_tmpdir}/inject/initrd.cpio.gz;
+         gzip -d ${adb_tmpdir}/inject/initrd.cpio.gz;
+         mkdir -p ${adb_tmpdir}/inject/ramdisk;
+         cd ${adb_tmpdir}/inject/ramdisk/;
+         cpio -i -F ../initrd.cpio;
+         rm -f ../initrd.cpio";
+
+  # Push files to target
+  echo '';
+  for file_path in "${files_paths[@]}"; do
+    file_name=$(basename "${file_path}");
+    adbpushfile "${file_path}" "${adb_tmpdir}/inject/ramdisk/${file_name}";
+  done;
+
+  # Repack cpio and gzip ramdisk, then bootimage information and injection
+  adbsu "cd ${adb_tmpdir}/inject/ramdisk/;
+         find . | cpio -o -H newc -F ../initrd.cpio;
+         gzip -9 ${adb_tmpdir}/inject/initrd.cpio;
+         mv ${adb_tmpdir}/inject/initrd.cpio.gz ${adb_tmpdir}/inject/initrd.img;
+         ${adb_tmpdir}/inject/bbootimg -i ${partitiontarget};
+         ${adb_tmpdir}/inject/bbootimg -u ${partitiontarget} -r ${adb_tmpdir}/inject/initrd.img;
+         rm -rf ${adb_tmpdir}/inject";
+
+  # Reboot the device
+  ${adb_cmd} reboot;
+  echo '';
+}
+
+# === Bootimage Debuggable ===
+function bootimagedebuggable()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: bootimagedebuggable <device_product> <true/false> (Bootimage build unsecured patcher)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cwd;
+  local file_path;
+
+  # Access repo root
+  cwd=$(pwd);
+  croot;
+
+  # Apply unsecure changes
+  if [ "${2}" = 'true' ]; then
+
+    # Apply changes build/core/main.mk
+    file_path=./build/core/main.mk;
+    echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
+    sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/' "${file_path}";
+    sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' "${file_path}";
+
+    # Apply changes build/tools/post_process_props.py
+    file_path=./build/tools/post_process_props.py;
+    echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
+    sed -i 's/val = "adb"/val = "mtp,adb"/' "${file_path}";
+    sed -i 's/val = val + ",adb"/val = val + ",mtp,adb"/' "${file_path}";
+    sed -i 's/"persist.sys.usb.config", "none"/"persist.sys.usb.config", "mtp,adb"/' "${file_path}";
+
+    # Apply changes vendor/{cm|lineage}/config/common.mk
+    for file_path in \
+        ./vendor/cm/config/common.mk \
+        ./vendor/lineage/config/common.mk; do
+      if [ -f "${file_path}" ]; then
+        echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
+        sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' "${file_path}";
+      fi;
+    done;
+
+    # Apply changes out/target/product/${1}/*/default.prop
+    for file_path in \
+        ./out/target/product/${1}/root/default.prop \
+        ./out/target/product/${1}/recovery/root/default.prop \
+        ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
+        ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop; do
+      if [ -f "${file_path}" ]; then
+        echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
+        sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' "${file_path}";
+        sed -i 's/ro.secure=1/ro.secure=0/' "${file_path}";
+        sed -i 's/persist.sys.usb.config=none/persist.sys.usb.config=mtp,adb/g' "${file_path}";
+      fi;
+    done;
+
+  # Restore secure changes
+  else
+
+    # Restore changes build/core/main.mk
+    file_path=./build/core/main.mk;
+    echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
+    sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/' "${file_path}";
+    sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' "${file_path}";
+
+    # Restore changes build/tools/post_process_props.py
+    file_path=./build/tools/post_process_props.py;
+    echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
+    sed -i 's/val = "mtp,adb"/val = "adb"/' "${file_path}";
+    sed -i 's/val = val + ",mtp,adb"/val = val + ",adb"/' "${file_path}";
+    sed -i 's/"persist.sys.usb.config", "mtp,adb"/"persist.sys.usb.config", "none"/' "${file_path}";
+
+    # Restore changes vendor/{cm|lineage}/config/common.mk
+    for file_path in \
+        ./vendor/cm/config/common.mk \
+        ./vendor/lineage/config/common.mk; do
+      if [ -f "${file_path}" ]; then
+        echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
+        sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' "${file_path}";
+      fi;
+    done;
+
+    # Restore changes out/target/product/${1}/*/default.prop
+    for file_path in \
+        ./out/target/product/${1}/root/default.prop \
+        ./out/target/product/${1}/recovery/root/default.prop \
+        ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
+        ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop; do
+      if [ -f "${file_path}" ]; then
+        echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
+        sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' "${file_path}";
+        sed -i 's/ro.secure=0/ro.secure=1/' "${file_path}";
+        sed -i 's/persist.sys.usb.config=mtp,adb/persist.sys.usb.config=none/' "${file_path}";
+      fi;
+    done;
+
+  fi;
+
+  # Restore path
+  cd "${cwd}/";
+}

@@ -1,0 +1,66 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/review.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/shortcuts.rc)
+
+
+# === Gerrit LineageOS ===
+alias gitpr='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for';
+alias gitprh='gerritreview http://review.lineageos.org LineageOS . for';
+alias gitpr14='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for cm-14.1';
+alias gitpr15='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-15.0';
+alias gitprd='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . drafts';
+alias gitprdh='gerritreview http://review.lineageos.org LineageOS . drafts';
+alias gitpg='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . heads';
+alias gitpgh='gerritreview http://review.lineageos.org LineageOS . heads';
+alias gitprg='gitpr; gitpg';
+alias gitprgy='echo -n "y\ny\n" | gitpr; echo -n "y\ny" | gitpg';
+
+# === Gerrit AOSP ===
+alias gitpraosp='gerritreview https://android.googlesource.com aosp . for';
+alias gitpraospma='gerritreview https://android.googlesource.com aosp . for master';
+alias gitprdaosp='gerritreview https://android.googlesource.com aosp . drafts';
+alias gitprdaospma='gerritreview https://android.googlesource.com aosp . drafts master';
+
+# === Gerrit AICP ===
+alias gitpraicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . for n7.1';
+alias gitprhaicp='gerritreview http://gerrit.aicp-rom.com AICP . for n7.1';
+alias gitprdaicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . drafts n7.1';
+alias gitprdhaicp='gerritreview http://gerrit.aicp-rom.com AICP . drafts n7.1';
+alias gitpgaicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . heads n7.1';
+alias gitpghaicp='gerritreview http://gerrit.aicp-rom.com AICP . heads n7.1';
+alias gitprgaicp='gitpraicp; gitpgaicp';
+alias gitprghaicp='gitprhaicp; gitpghaicp';
+
+# === Gerrit LegacyXperia ===
+alias gitpr7='gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia . for';
+alias gitpr7h='gerritreview http://review.msm7x30.org LegacyXperia . for';
+alias gitpr7d='gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia . drafts';
+alias gitpr7dh='gerritreview http://review.msm7x30.org LegacyXperia . drafts';
+
+# === Gerrit Omni ===
+alias gitpromni='gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM for android-7.1';
+alias gitprhomni='gerritreview http://gerrit.omnirom.org . OmniROM for android-7.1';
+alias gitprdomni='gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM drafts android-7.1';
+alias gitprdhomni='gerritreview http://gerrit.omnirom.org . OmniROM drafts android-7.1';
+
+# === Gerrit TWRP ===
+alias gitprtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0';
+alias gitprdtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0';

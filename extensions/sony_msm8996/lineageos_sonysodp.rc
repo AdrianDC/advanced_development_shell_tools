@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/lineageos_sonysodp.rc)
+
+# === LineageOS Sony SODP Patcher ===
+function lineagesonysodppatcher()
+{
+  # Usage: lineagesonysodppatcher [specific_paths] (LineageOS SONY SODP Patcher)
+
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'AdrianDC' 'lineage_development_sonysodp' 'radian.dc@gmail.com' "${@}";
+}
+
+# === LineageOS Sony SODP Rebaser ===
+function lineagesonysodprebaser()
+{
+  # Usage: lineagesonysodprebaser [specific_paths] (LineageOS SONY SODP Rebaser)
+
+  # Use the androidprojectrebaser helper
+  androidprojectrebaser 'AdrianDC' 'cm-14.1' '
+    hardware/sony/camera::sony_hardware_qcom_camera::sonyxperiadev/camera::aosp/LA.UM.5.5.r1
+    hardware/sony/dataservices::vendor-qcom-opensource-dataservices::sonyxperiadev/::master
+    kernel/sony/msm::kernel-sony-msm::sonyxperiadev/kernel::aosp/LA.UM.5.5.r1
+    ' "${@}";
+}

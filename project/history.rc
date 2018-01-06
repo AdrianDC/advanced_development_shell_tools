@@ -1,0 +1,88 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Android Development Shell Tools Stats ===
+function shtoolsstats()
+{
+  # Usage: shtoolsstats (Statistics on the project files)
+
+  # Variables
+  local currentdir=${PWD};
+  local paths;
+
+  # List all project files
+  paths=("${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}");
+  paths=("${paths[@]#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/}");
+
+  # Statistics on the project files
+  echo '';
+  echo ' Lines| Sizes| Paths';
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  wc -cl "${paths[@]}";
+  echo '';
+  cd "${currentdir}/";
+}
+
+# === Android Development Shell Tools Differ ===
+function shtoolsdiff()
+{
+  # Usage: shtoolsdiff (Compare with upstream android_development_shell_tools)
+
+  # Compare with upstream
+  local currentdir=${PWD};
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git fetch origin;
+  git diff HEAD "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  git diff HEAD;
+  cd "${currentdir}/";
+}
+
+# === Android Development Shell Tools Log ===
+function shtoolslog()
+{
+  # Usage: shtoolslog [commits_count] (Display android_development_shell_tools history)
+
+  # Display project history
+  local currentdir=${PWD};
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git log --pretty=oneline -n "${1:-10}";
+  cd "${currentdir}/";
+}
+
+# === Android Development Shell Tools Show Commit ===
+function shtoolsshow()
+{
+  # Usage: shtoolsshow [offset_count] (Display android_development_shell_tools commit)
+
+  # Display project history
+  local currentdir=${PWD};
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git show "HEAD~${1:-0}";
+  cd "${currentdir}/";
+}
+
+# === Android Development Shell Tools Reset ===
+function shtoolsreset()
+{
+  # Usage: shtoolsreset (Reset project to remote HEAD)
+
+  # Reset project to remote HEAD
+  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  git fetch origin;
+  git reset "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  git diff --stat HEAD;
+}

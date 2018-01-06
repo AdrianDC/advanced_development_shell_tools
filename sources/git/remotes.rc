@@ -1,0 +1,217 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
+
+# === Git Remote List ===
+alias gitrv='git remote -v';
+
+# === Git Remote Setter ===
+function gitremoteset()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitremoteset <remote_name> <remote_url> (Git remote setter)';
+    echo '';
+    return;
+  fi;
+
+  # Set and update the remote
+  git remote add "${1}" "${2}" 2> /dev/null;
+  git remote set-url "${1}" "${2}";
+
+  # Debug the remote
+  echo -en  ' \e[1;32mRemote :\e[0m ';
+  git remote -v | grep "${1}" \
+                | grep -i '(fetch)' \
+                | awk '{ printf("%s -> %s", $1, $2); }';
+  echo '';
+}
+
+# === Git Remote Adapter ===
+function gitremoteadaptset()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitremoteadaptset <remote_name> <remote_github> [prefix_removal] [bool_prefix_android] [bool_underscore_to_dash] (Git remote adapter)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local project;
+  local target;
+  local remote=${1:-origin};
+  local repository=${2:-LineageOS};
+  local prefix_removal=${3};
+  local prefix_android=${4};
+  local underscore_to_dash=${5};
+
+  # Target detection
+  target=$(git remote -v \
+               | grep -v -i project \
+               | grep -i github \
+               | head -n 1 \
+               | awk '{ print $2 }');
+
+  # Build repository target
+  if [ -z "${target}" ]; then
+    project=$(git remote -v \
+                 | grep -v -i github\|project \
+                 | head -n 1 \
+                 | awk '{ print $2 }' \
+                 | sed 's/.*\.com\///' \
+                 | sed 's/platform/android/' \
+                 | sed 's/\//_/g');
+    echo "${project}";
+    target='http://github.com/'${repository}'/'${project};
+  fi;
+
+  # Remove additional content
+  if [ ! -z "${prefix_android}" ] && [[ "${target}" == *"${prefix_android}"* ]]; then
+    if [[ "${target}" == *'device_'* ]]; then
+      target=${target/device_/android_device_};
+    else
+      target=${target/platform_/android_};
+    fi;
+  fi;
+
+  # Parse the target to repository
+  target=$(echo "${target}" \
+         | sed "s/\(http:\/\/\|https:\/\/\|git:\/\/\)\(.*\)\/[^\/]*\/\(.*\)/http:\/\/\2\/${repository}\/\3/");
+
+  # Remove additional content
+  if [ ! -z "${prefix_removal}" ]; then
+    target=${target//${prefix_removal}};
+  fi;
+
+  # Replace _ with -
+  if [ ! -z "${underscore_to_dash}" ]; then
+    target=${target//_/-};
+  fi;
+
+  # Set new remote
+  gitremoteset "${remote}" "${target}";
+}
+
+# === Git Remote Verify ===
+function gitremoteverify()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitremoteverify <remote_name> "command_to_run_if_missing" (Git remote verifier)';
+    echo '';
+    return 1;
+  fi;
+
+  # Check remote existence
+  if ! git ls-remote --exit-code "${1}" > /dev/null 2>&1 &&
+      ! git config "remote.${1}.url" 2> /dev/null; then
+    echo '';
+    echo -e " \e[1;32mInformation :\e[0m Remote ${1} not found, executing '${2}'...";
+    ${2};
+  fi;
+  return ${?};
+}
+
+# === Git Remote Owner ===
+function gitraa()
+{
+  # Usage: gitraa (Add GitHub Username remote)
+
+  # Variables
+  local git_username;
+
+  # Add GitHub Username remote
+  git_username=$(githubusername 2> /dev/null);
+  git_username=${git_username:-AdrianDC};
+  gitremoteadaptset "${git_username}" "${git_username}";
+}
+
+# === Git Remotes Helpers ===
+function gitrai()    { gitremoteadaptset 'aicp' 'AICP' 'android_'; }
+function gitraon()   { gitremoteadaptset 'next' 'lineage-next'; }
+function gitraoo()   { gitremoteadaptset 'origin' "${1}"; }
+function gitraot()   { gitremoteadaptset 'origin' 'TheMuppets'; }
+function gitrat()    { gitremoteadaptset 'twrp' 'TeamWin'; }
+function gitral()    { gitremoteset lineage "${1}"; }
+function gitrapriv() { gitremoteset private "${1}"; }
+
+# === Git Remotes set-url Shortcuts ===
+alias gitraau='git remote set-url $(githubusername)';
+alias gitraou='git remote set-url origin';
+
+# === Git Remotes LineageOS Helper ===
+function gitrao()
+{
+  # Usage: gitrao (Add LineageOS origin remote)
+
+  # Add LineageOS origin remote
+  if [[ "$(pwd)/" == *"vendor/sony/"* ]]; then
+    gitremoteadaptset 'origin' 'TheMuppets' '' 'true';
+  else
+    gitremoteadaptset 'origin' 'LineageOS' '' 'true';
+  fi;
+}
+
+# === Git Remotes XperiaMultiROM Helper ===
+function gitrax()
+{
+  # Usage: gitrax (Add XperiaMultiROM xperia remote)
+
+  # Add XperiaMultiROM xperia remote
+  if [[ "$(pwd)/" == *'system/extras/multirom'* ]]; then
+    gitremoteset 'xperia' https://github.com/XperiaMultiROM/multirom.git;
+  else
+    gitremoteadaptset 'xperia' 'XperiaMultiROM';
+  fi;
+}
+
+# === Git Remotes MultiROM-Dev Helper ===
+function gitramd()
+{
+  # Usage: gitramd (Add MultiROM-Dev mromdev remote)
+
+  # Add MultiROM-Dev mromdev remote
+  if [[ "$(pwd)/" == *'system/extras/multirom'* ]]; then
+    gitremoteset 'mromdev' https://github.com/multirom-dev/multirom.git;
+  else
+    gitremoteadaptset 'mromdev' 'multirom-dev';
+  fi;
+}
+
+# === Git Remotes sonyxperiadev Helper ===
+function gitraos()
+{
+  # Usage: gitraos (Add sonyxperiadev origin remote)
+
+  # Add sonyxperiadev origin remote
+  if [[ "$(pwd)/" == *'copyleft'* ]]; then
+    gitremoteset origin https://github.com/sonyxperiadev/kernel-copyleft.git;
+  elif [[ "$(pwd)/" == *'kernel/sony/msm/'* ]]; then
+    gitremoteset origin https://github.com/sonyxperiadev/kernel.git;
+  elif [[ "$(pwd)/" == *'manifests'* ]]; then
+    gitremoteset origin https://github.com/sonyxperiadev/local_manifests.git;
+  else
+    gitremoteadaptset 'origin' 'sonyxperiadev' 'android_' '' 'true';
+  fi;
+}

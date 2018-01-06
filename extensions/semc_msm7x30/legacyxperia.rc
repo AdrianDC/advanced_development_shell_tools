@@ -1,0 +1,116 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_kernel/defconfig.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/semc_msm7x30/legacyxperia.rc)
+
+# === LineageOS Commits Patcher for LegacyXperia ===
+function lineagelxpatcher()
+{
+  # Usage: lineagelxpatcher [local_manifests_branch] (LineageOS LegacyXperia Patcher)
+
+  # Build environment
+  while [ ! -e './build/envsetup.sh' ]; do
+    cd ../;
+  done;
+  source ./build/envsetup.sh;
+
+  # Variables
+  local BuildBranch=${1:-cm-14.1};
+
+  # Sources Manifest
+  if [ ! -f '.repo/local_manifests/semc.xml' ]; then
+    if [ ! -d './.repo/local_manifests/' ]; then
+      mkdir './.repo/local_manifests/';
+    fi;
+    cd './.repo/local_manifests/'
+    git clone https://github.com/LegacyXperia/local_manifests.git --single-branch -b "${BuildBranch}" .;
+    cd '../../';
+  fi;
+
+  # Reset local_manifest contents
+  cd ./vendor/extra/;
+  git fetch msm7x30 cm-14.1;
+  git reset FETCH_HEAD;
+  git stash -u;
+  croot;
+
+  # Retrieve work in progress holder
+  ./vendor/extra/repopick.py -b LX_1563;
+
+  # LegacyXperia patches
+  ./vendor/extra/updates.sh;
+
+  # Enable SU inclusion
+  export WITH_SU=true;
+
+  # Enable TWRP inclusion
+  export WITH_TWRP=true;
+}
+
+# === LegacyXperia Repopick ===
+function lxrepopick()
+{
+  # Usage
+  if [ -z "${1}" ] || [ ! -z "${2}" ]; then
+    echo '';
+    echo ' Usage: lxrepopick <commit_id> (LineageOS LegacyXperia repopick tool)';
+    echo '';
+    return;
+  fi;
+
+  # Build environment
+  while [ ! -e './build/envsetup.sh' ]; do
+    cd ../;
+  done;
+
+  # If LegacyXperia script is absent
+  if [ ! -f './vendor/extra/repopick.py' ]; then
+    echo '';
+    echo ' LegacyXperia repopick.py was not found...';
+    echo '';
+    return;
+  fi;
+
+  # Execute repopick command
+  vendor/extra/repopick.py -b "LX_${1}";
+}
+
+# === LegacyXperia Kernel Defconfig ===
+function lxdefconfig()
+{
+  # Usage
+  if [ -z "${1}" ] || [ ! -z "${2}" ]; then
+    echo '';
+    echo ' Usage: lxdefconfig (Edit all lx defconfigs)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local defconfig;
+  local defconfigs;
+
+  # Find all defconfigs
+  defconfigs=$(ls arch/arm/configs/lx_*);
+
+  # Update all defconfigs
+  for defconfig in ${defconfigs}; do
+    makedefconf "${defconfig//*\/}";
+  done;
+}
