@@ -263,11 +263,3 @@ function shtoolsnews()
   # Restore current path
   cd "${currentdir}/";
 }
-
-# === Android Development Shell Tools Automated News ===
-if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
-  __shtools-config-news-enable;
-fi;
-if __shtools-config-news-active; then
-  shtoolsnews true;
-fi;

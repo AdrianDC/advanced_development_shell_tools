@@ -105,6 +105,14 @@ function __shtoolssources()
 # === Android Development Shell Tools Sources Inclusion ===
 __shtoolssources;
 
+# === Android Development Shell Tools Automated News ===
+if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+  __shtools-config-news-enable;
+fi;
+if __shtools-config-news-active; then
+  shtoolsnews true;
+fi;
+
 # === Android Development Shell Tools Prebuilt Files ===
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/android_binaries/strace_arm32;
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/android_binaries/strace_arm64;
