@@ -33,10 +33,10 @@ function shtools()
   echo '';
 
   # Display shtools* menu
-  for line_function in $(typeset -F | grep shtools | cut -d' ' -f 3 | grep -v '^shtools$'); do
+  for line_function in $(typeset -F | grep shtools | cut -d' ' -f 3 | grep -v '^shtools$\|^__'); do
 
     # Parse usage
-    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}");
+    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*);
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
