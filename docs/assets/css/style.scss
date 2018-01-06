@@ -52,11 +52,11 @@ footer {
   visibility: visible !important;
 }
 
-.groupheader {
+.group_header {
   font-weight: bold;
 }
 
-.grouplabel {
+.group_label {
   color: #267CB9;
 }
 
@@ -84,4 +84,8 @@ details > pre, details > ul {
 
 details > blockquote {
   margin-top: 20px;
+}
+
+.group_footer > p {
+  margin-bottom: 0px;
 }
