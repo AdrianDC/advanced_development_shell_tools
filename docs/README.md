@@ -30,12 +30,24 @@
 
 ---
 
-### [ Permanent installation for terminals ] ###
- * Open the `~/.bashrc` file, then adapt and add the following lines:
+### [ How to load and install the project ] ###
+
+ * **Clone the project locally with git:**
+   <br />
+   *`git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`*
+
+ * **Load the project in the current Shell terminal:**
+   <br />
+   *`source /path/to/folder/android_development_shell_tools.rc;`*
+
+ * **Permanently load the project:** Open *`~/.bashrc`*, adapt and add:
    ```Shell
-   export ANDROID_DEV_DRIVE=/media/../AndroidDev;
-   source "/.../android_development_shell_tools.rc";
+   export ANDROID_DEV_DRIVE='/media/../AndroidDev';
+   source '/.../android_development_shell_tools.rc';
    ```
+ * **The *`ANDROID_DEV_DRIVE`* variable** is a folder used for Android ROMs and kernels.
+   <br />
+   You do not *need* it, but a few functions rely on it to ease things.
 
 ---
 

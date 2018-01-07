@@ -130,23 +130,20 @@
 
 <!-- Indent -->
 <!-- List -->
- * **First, you need to clone this project locally**
+ * **Clone the project locally with git:**
    <br />
-   `git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`
+   *`git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`*
 
- * To load the scripts, do `source /path/to/folder/android_development_shell_tools.rc;`
-
- * **To permanently load the scripts** in your Shell terminals,
+ * **Load the project in the current Shell terminal:**
    <br />
-   open the `~/.bashrc` file, adapt and add the following lines:
+   *`source /path/to/folder/android_development_shell_tools.rc;`*
+
+ * **Permanently load the project:** Open *`~/.bashrc`*, adapt and add:
    ```Shell
-   export ANDROID_DEV_DRIVE=/media/../AndroidDev;
-   source "/.../android_development_shell_tools.rc";
+   export ANDROID_DEV_DRIVE='/media/../AndroidDev';
+   source '/.../android_development_shell_tools.rc';
    ```
-
- * **The `ANDROID_DEV_DRIVE` variable** is a reference folder I use
-   <br />
-   for all Android projects, repositories, kernels and ROMs.
+ * **The *`ANDROID_DEV_DRIVE`* variable** is a folder used for Android ROMs and kernels.
    <br />
    You do not *need* it, but a few functions rely on it to ease things.
 <!-- /List -->

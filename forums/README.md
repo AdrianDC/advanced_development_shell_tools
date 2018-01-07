@@ -1,4 +1,4 @@
-[CENTER][IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1515014919[/IMG][/CENTER]
+[CENTER][IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1515342372[/IMG][/CENTER]
 
 
 [SIZE=5][B][U]Disclaimer[/U][/B][/SIZE]
@@ -85,20 +85,18 @@
 [SIZE=5][B][U]How to install the project[/U][/B][/SIZE]
 
 [INDENT][LIST]
-[*][B]First, you need to clone this project locally[/B]
-   [FONT="Courier New"][I]`git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`[/I][/FONT]
+[*][B]Clone the project locally with git:[/B]
+   [I][FONT="Courier New"][I]`git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`[/I][/FONT][/I]
 
-[*]To load the scripts, do [FONT="Courier New"][I]`source /path/to/folder/android_development_shell_tools.rc;`[/I][/FONT]
+[*][B]Load the project in the current Shell terminal:[/B]
+   [I][FONT="Courier New"][I]`source /path/to/folder/android_development_shell_tools.rc;`[/I][/FONT][/I]
 
-[*][B]To permanently load the scripts[/B] in your Shell terminals,
-   open the [FONT="Courier New"][I]`~/.bashrc`[/I][/FONT] file, adapt and add the following lines:
+[*][B]Permanently load the project:[/B] Open [I][FONT="Courier New"][I]`~/.bashrc`[/I][/FONT][/I], adapt and add:
    [CODE]
-   export ANDROID_DEV_DRIVE=/media/../AndroidDev;
-   source "/.../android_development_shell_tools.rc";
+   export ANDROID_DEV_DRIVE='/media/../AndroidDev';
+   source '/.../android_development_shell_tools.rc';
    [/CODE]
-
-[*][B]The [FONT="Courier New"][I]`ANDROID_DEV_DRIVE`[/I][/FONT] variable[/B] is a reference folder I use
-   for all Android projects, repositories, kernels and ROMs.
+[*][I]*The [/I][FONT="Courier New"][I]`ANDROID_DEV_DRIVE`[/I][/FONT][I] variable[/I]* is a folder used for Android ROMs and kernels.
    You do not [I]need[/I] it, but a few functions rely on it to ease things.
 [/LIST][/INDENT]
 
