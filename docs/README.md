@@ -1350,13 +1350,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### <span class="group_label">Template Example Extensions</span> ####
-</summary>
-
-</details>
-
-<details>
-<summary class="group_header">
 #### <span class="group_label">Android Repository Scripts</span> ####
 </summary>
 
