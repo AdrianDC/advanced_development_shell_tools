@@ -110,18 +110,6 @@
    This can be useful when using a different computer, when running from a root Shell,
    <br />
    or even if you need a few functions for work to ease something.
-
- * **The "extensions/" folder can hold self-coded scripts folders** based on the scripts from
-   <br />
-   'android_development_shell_tools' and be included along the regular ones.
-   <br />
-   These scripts will not be lost with 'shtoolssync' and will stay in "extensions/".
-   <br />
-   *(Keeping a copy or symlinking extensions scripts is recommended for safety)*
-   <br />
-   If the new extension is generic enough for public use or interest,
-   <br />
-   I can easily consider merging it in the common upstream sources.
 <!-- /List -->
 <!-- /Indent -->
 

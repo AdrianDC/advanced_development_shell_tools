@@ -71,13 +71,6 @@
    [B]without the need of this project being synced locally[/B] or loaded in the Shell.
    This can be useful when using a different computer, when running from a root Shell,
    or even if you need a few functions for work to ease something.
-
-[*][B]The "extensions/" folder can hold self-coded scripts folders[/B] based on the scripts from
-   'android_development_shell_tools' and be included along the regular ones.
-   These scripts will not be lost with 'shtoolssync' and will stay in "extensions/".
-   [I](Keeping a copy or symlinking extensions scripts is recommended for safety)[/I]
-   If the new extension is generic enough for public use or interest,
-   I can easily consider merging it in the common upstream sources.
 [/LIST][/INDENT]
 
 
