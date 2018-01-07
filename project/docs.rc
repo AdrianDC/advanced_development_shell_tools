@@ -87,10 +87,11 @@ function shtoolsforum()
     sed -i ':a;N;$!ba;s#<!-- Center -->\n#[CENTER]#g;s#\n<!-- /Center -->#[/CENTER]#g' "${readme_forum}.${ext}";
     sed -i ':a;N;$!ba;s#<!-- Indent -->\n#[INDENT]#g;s#\n<!-- /Indent -->#[/INDENT]#g' "${readme_forum}.${ext}";
     sed -i 's#<!-- \(\|/\)List -->#[\1LIST]#g' "${readme_forum}.${ext}";
-    sed -i 's#^ \* #[*]#g' "${readme_forum}.${ext}";
-    sed -i 's#\*\*\([^*]*\)\*\*#[B]\1[/B]#g' "${readme_forum}.${ext}";
-    sed -i 's#\*\([^]]\{1\}[^*]*\)\*#[I]\1[/I]#g' "${readme_forum}.${ext}";
+    sed -i 's#^ \* #<!-- Item -->#g' "${readme_forum}.${ext}";
+    sed -i 's#\([^*]\{1\}\)\*\([^*]\{1\}[^\*]*\)\*\([^*]\{0,1\}\)#\1[I]\2[/I]\3#g' "${readme_forum}.${ext}";
+    sed -i 's#\([^*]\{1\}\)\*\*\([^*]*\)\*\*\([^*]\{0,1\}\)#\1[B]\2[/B]\3#g' "${readme_forum}.${ext}";
     sed -i 's#__\([^*]*\)__#[U]\1[/U]#g' "${readme_forum}.${ext}";
+    sed -i 's#^<!-- Item -->#[*]#g' "${readme_forum}.${ext}";
 
     # Get all previews png files
     preview_files=$(grep 'docs/assets.*\.png' "${readme_forum}.${ext}" \

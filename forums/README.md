@@ -96,7 +96,7 @@
    export ANDROID_DEV_DRIVE='/media/../AndroidDev';
    source '/.../android_development_shell_tools.rc';
    [/CODE]
-[*][I]*The [/I][FONT="Courier New"][I]`ANDROID_DEV_DRIVE`[/I][/FONT][I] variable[/I]* is a folder used for Android ROMs and kernels.
+[*][B]The [I][FONT="Courier New"][I]`ANDROID_DEV_DRIVE`[/I][/FONT][/I] variable[/B] is a folder used for Android ROMs and kernels.
    You do not [I]need[/I] it, but a few functions rely on it to ease things.
 [/LIST][/INDENT]
 
