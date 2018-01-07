@@ -1,4 +1,4 @@
-#### [ Previews ] gerritssh : Advanced Gerrit SSH interface
+#### [ Previews ] gerritssh : Advanced Gerrit SSH interface ####
 
 <!-- Indent -->
 ![gerritssh](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/gerritssh.png)
@@ -6,7 +6,7 @@
 
 <br />
 
-#### [ Previews ] repochanges : Detect all repo projects differences
+#### [ Previews ] repochanges : Detect all repo projects differences ####
 
 <!-- Indent -->
 ![repochanges](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/repochanges.png)
@@ -14,7 +14,7 @@
 
 <br />
 
-#### [ Previews ] adbp : Advanced recursive adb files pusher
+#### [ Previews ] adbp : Advanced recursive adb files pusher ####
 
 <!-- Indent -->
 ![adbp](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/adbp.png)
@@ -22,7 +22,7 @@
 
 <br />
 
-#### [ Previews ] adbside : ADB sideload helper
+#### [ Previews ] adbside : ADB sideload helper ####
 
 <!-- Indent -->
 ![adbside](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/adbside.png)
@@ -30,7 +30,7 @@
 
 <br />
 
-#### [ Previews ] gitlo* : Git logs and search helpers
+#### [ Previews ] gitlo* : Git logs and search helpers ####
 
 <!-- Indent -->
 ![gitlo](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/gitlo.png)
@@ -38,7 +38,7 @@
 
 <br />
 
-#### [ Previews ] gerritreview : Gerrit review uploader
+#### [ Previews ] gerritreview : Gerrit review uploader ####
 
 <!-- Indent -->
 ![gerritreview](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/gerritreview.png)
@@ -46,7 +46,7 @@
 
 <br />
 
-#### [ Previews ] sepaud : Logs sepolicy analyzer
+#### [ Previews ] sepaud : Logs sepolicy analyzer ####
 
 <!-- Indent -->
 ![sepaud](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/sepaud.png)
@@ -54,7 +54,7 @@
 
 <br />
 
-#### [ Previews ] adbmrominjector : MultiROM kernel image injector
+#### [ Previews ] adbmrominjector : MultiROM kernel image injector ####
 
 <!-- Indent -->
 ![adbmrominjector](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/adbmrominjector.png)
@@ -62,7 +62,7 @@
 
 <br />
 
-#### [ Previews ] gitstat : Git history with remote comparator
+#### [ Previews ] gitstat : Git history with remote comparator ####
 
 <!-- Indent -->
 ![gitstat](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/gitstat.png)
@@ -70,7 +70,7 @@
 
 <br />
 
-#### [ Previews ] binarysearch,binaryeditor : Binary files parser and searcher/editor
+#### [ Previews ] binarysearch,binaryeditor : Binary files parser and searcher/editor ####
 
 <!-- Indent -->
 ![gitstat](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/previews/binarysearch.png)
