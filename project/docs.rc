@@ -311,8 +311,11 @@ function shtoolsreadme()
         continue;
       fi;
 
+      # Search for function usage
+      line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${path_file}");
+
       # Parse function content
-      if [ "${line_type}" = 'Function' ]; then
+      if [ "${line_type}" = 'Function' ] || [ ! -z "${line_usage}" ]; then
 
         # Parse single line function
         if [[ "${line}" == *"${line_function}()"*"{"*"}" ]]; then
@@ -325,7 +328,6 @@ function shtoolsreadme()
 
         # Parse function usage
         else
-          line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${path_file}");
           line_usage=${line_usage#*Usage: };
           line_usage=${line_usage%;};
           line_usage=${line_usage%$"'"};
