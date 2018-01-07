@@ -185,14 +185,10 @@ function shtoolskits()
   local list;
   local name;
   local path;
-  local toolkits_last;
-  local toolkits_new;
-
-  # Get current toolkits
-  toolkits_last=$(grep '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
+  local toolkits;
 
   # First time usage
-  if [ -z "${toolkits_last}" ] || [ ! -z "${1}" ]; then
+  if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" ] || [ ! -z "${1}" ]; then
 
     # Function header
     echo '';
@@ -217,15 +213,15 @@ function shtoolskits()
 
     # Choices selection
     case "${key}" in
-      1) toolkits_last=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID};;
-      2) toolkits_last=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT};;
-      3) toolkits_last=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST};;
+      1) toolkits=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID};;
+      2) toolkits=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT};;
+      3) toolkits=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST};;
     esac;
 
     # Initialize default toolkits
     sed -i "/^# Toolkits:.*/d" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
-    toolkits_last="# Toolkits: ${toolkits_last}";
-    echo "${toolkits_last}" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+    export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS="# Toolkits: ${toolkits}";
+    echo "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
     echo '';
 
   fi;
@@ -242,7 +238,7 @@ function shtoolskits()
     cnt=0;
     key='';
     list=('');
-    toolkits_new='|';
+    toolkits='|';
 
     # Display __shtools-* menu
     for path in $(dirname "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" | uniq); do
@@ -256,9 +252,9 @@ function shtoolskits()
       list+=("${path}");
 
       # Status output
-      if [[ "${toolkits_last}" == *"|${path}|"* ]]; then
+      if [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${path}|"* ]]; then
         echo -en '  \e[1;32m[x]';
-        toolkits_new="${toolkits_new}${path}|";
+        toolkits="${toolkits}${path}|";
       else
         echo -en '  \e[1;31m[.]';
       fi;
@@ -285,18 +281,18 @@ function shtoolskits()
     # Execute requested function
     if [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
       path=${list[${key}]};
-      if [[ "${toolkits_new}" == *"${path}"* ]]; then
-        toolkits_new="${toolkits_new/${path}|/}"
+      if [[ "${toolkits}" == *"${path}"* ]]; then
+        toolkits="${toolkits/${path}|/}"
       else
-        toolkits_new="${toolkits_new}${path}|";
+        toolkits="${toolkits}${path}|";
       fi;
-      toolkits_last=${toolkits_new};
+      export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS="# Toolkits: ${toolkits}";
     fi;
 
   done;
 
   # Update new toolkits
-  sed -i "s/\(# Toolkits: \).*/\1${toolkits_new//\//\\\/}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+  sed -i "s/\(# Toolkits: \).*/\1${toolkits//\//\\\/}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
 }
 
 # === Android Development Shell Tools News ===
