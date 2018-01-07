@@ -248,7 +248,7 @@ function shtoolskits()
     for path in $(dirname "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" | uniq); do
 
       # Group variables
-      name=$(cat "${path}/.name");
+      name=$(cat "${path}/.name" 2>/dev/null);
       path=${path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
       if [ "${path}" = 'project' ]; then
         continue;
@@ -265,7 +265,7 @@ function shtoolskits()
 
       # Item choice
       cnt=$((cnt + 1));
-      echo -e "\e[1;33m ${cnt}: \e[1;37m${name} \e[1;32m[${path}]\e[0m";
+      echo -e "\e[1;33m ${cnt}: \e[1;37m${name:-[Unknown Folder Name]} \e[1;32m[${path}]\e[0m";
 
     done;
     echo '';
