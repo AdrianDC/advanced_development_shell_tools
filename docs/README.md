@@ -8,6 +8,8 @@
    <br />
    Samples of commands usage per context: [Project samples...](samples.md)
    <br />
+   User outputs from shtools* commands: [Project shtools...](shtools.md)
+   <br />
    XDA-Developers thread for this project : [Android Development Shell Tools](http://forum.xda-developers.com/-/-/-t3622382)
 
  * The 'android_development_shell_tools' is a project meant to provide
