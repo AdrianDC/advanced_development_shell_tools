@@ -70,7 +70,6 @@ function __shtoolssources()
 
 
   # Android Development Shell Tools Project
-  ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES=();
   for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*'.rc'; do
     if [ -f "${path}" ]; then
       ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
@@ -92,7 +91,6 @@ function __shtoolssources()
   done;
 
   # Android Development Shell Tools Scripts
-  ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS=();
   for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR}/"*'/'*'.sh'; do
     if [ -f "${path}" ]; then
       ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS+=("${path}");
