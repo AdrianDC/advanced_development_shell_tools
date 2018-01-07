@@ -108,29 +108,3 @@ function shtoolsamend()
   cd "${currentdir}/";
   shtoolsup;
 }
-
-# === Android Development Shell Tools Master ===
-function shtoolsmaster()
-{
-  # Usage: shtoolsmaster (Switch android_development_shell_tools to master branch)
-
-  # Switch android_development_shell_tools to master branch
-  local branch=${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH};
-  ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH=master;
-  echo '';
-  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}' branch\e[0m";
-  echo '';
-}
-
-# === Android Development Shell Tools Staging ===
-function shtoolsstaging()
-{
-  # Usage: shtoolsstaging (Switch android_development_shell_tools to staging branch)
-
-  # Switch android_development_shell_tools to staging branch
-  local branch=${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH};
-  ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH=staging;
-  echo '';
-  echo -e " \e[1;33mandroid_development_shell_tools: \e[0;33mSwitched from '${branch}' to '${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}' branch\e[0m";
-  echo '';
-}
