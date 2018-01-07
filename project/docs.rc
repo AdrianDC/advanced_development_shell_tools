@@ -68,7 +68,7 @@ function shtoolsforum()
   echo '';
 
   # Handle multiple README files
-  for ext in md 'previews.md' 'samples.md' 'shtools.md'; do
+  for ext in 'md' 'previews.md' 'samples.md' 'shtools.md' 'version.md'; do
 
     # Prepare README.forum
     rm -f "${readme_forum}.${ext}";
@@ -179,6 +179,9 @@ function shtoolsreadme()
 
   # Refresh shtools README.md
   cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.shtools.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/shtools.md";
+
+  # Refresh version README.md
+  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.version.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/version.md";
 
   # Read all sources
   for path_file in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" \
