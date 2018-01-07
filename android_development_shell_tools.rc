@@ -54,67 +54,53 @@ export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS;
 ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS=$(grep '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" 2>/dev/null);
 
 # === Android Development Shell Tools Sources ===
-function __shtoolssources()
-{
-  # Variables
-  local group;
-  local LC_ALL_HOST;
-  local path;
+LC_ALL_HOST=${LC_ALL};
+export LC_ALL=C;
+echo -en '\e[1;33mshtools: \e[1;33mLoading android_development_shell_tools...\e[0m';
 
-  # Loading header
-  echo -en '\e[1;33mshtools: \e[1;33mLoading android_development_shell_tools...\e[0m';
+# Android Development Shell Tools Project
+for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*'.rc'; do
+  if [ -f "${path}" ]; then
+    ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
+  fi;
+done;
 
-  # Locale override
-  LC_ALL_HOST=${LC_ALL};
-  export LC_ALL=C;
+# Android Development Shell Tools Sources
+for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR}/"*'/'*'.rc'; do
+  if [ -f "${path}" ]; then
+    ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
+  fi;
+done;
 
+# Android Development Shell Tools Extensions
+for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS_DIR}/"*'/'*'.rc'; do
+  if [ -f "${path}" ]; then
+    ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
+  fi;
+done;
 
-  # Android Development Shell Tools Project
-  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*'.rc'; do
-    if [ -f "${path}" ]; then
-      ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
-    fi;
-  done;
+# Android Development Shell Tools Scripts
+for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR}/"*'/'*'.sh'; do
+  if [ -f "${path}" ]; then
+    ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS+=("${path}");
+  fi;
+done;
 
-  # Android Development Shell Tools Sources
-  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR}/"*'/'*'.rc'; do
-    if [ -f "${path}" ]; then
-      ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
-    fi;
-  done;
+# Android Development Shell Tools Kits Importation
+for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
+  group=${path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+  group=${group%/*};
+  if [ "${group}" = 'project' ] || [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${group}|"* ]]; then
+    source "${path}";
+  fi;
+done;
 
-  # Android Development Shell Tools Extensions Sources
-  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS_DIR}/"*'/'*'.rc'; do
-    if [ -f "${path}" ]; then
-      ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
-    fi;
-  done;
-
-  # Android Development Shell Tools Scripts
-  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR}/"*'/'*'.sh'; do
-    if [ -f "${path}" ]; then
-      ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS+=("${path}");
-    fi;
-  done;
-
-  # Android Development Shell Tools Inclusion
-  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
-    group=${path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
-    group=${group%/*};
-    if [ "${group}" = 'project' ] || [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${group}|"* ]]; then
-      source "${path}";
-    fi;
-  done;
-
-  # Locale restore
-  export LC_ALL=${LC_ALL_HOST};
-
-  # Loading footer
-  echo -en "\r\033[K";
-}
-
-# === Android Development Shell Tools Sources Inclusion ===
-__shtoolssources;
+# Android Development Shell Tools Cleanup
+echo -en "\r\033[K";
+export LC_ALL=${LC_ALL_HOST};
+unset LC_ALL_HOST;
+unset group;
+unset path;
 
 # === Android Development Shell Tools Automated News ===
 if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
