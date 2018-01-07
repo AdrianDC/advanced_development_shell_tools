@@ -18,7 +18,7 @@
    <br />
    or to serve as a reference for commands and functions an Android developer needs
 
- * To keep a local sync of 'android_development_shell_tools' updated with upstream changes,
+ * To keep a local clone of 'android_development_shell_tools' updated with upstream changes,
    <br />
    simply run the *`shtoolssync;`* command and the updates will be downloaded
 
