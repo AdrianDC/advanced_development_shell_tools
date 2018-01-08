@@ -150,15 +150,19 @@ function gitconfcolors()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconfcolors <true/false/always> (Configure Git colors handling)';
+    echo ' Usage: gitconfcolors <always/auto/never> (Configure Git colors handling)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
-    always|false|true)
-      git config --global color.ui "${1}";;
+    always)
+      git config --global color.ui 'always';;
+    auto)
+      git config --global color.ui 'true';;
+    never)
+      git config --global color.ui 'false';;
     *)
       echo '';
       echo " Error: Option '${1}' not recognized";
