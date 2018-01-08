@@ -824,7 +824,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**gitconfgpgkey** *<b>\[Configure Git GPG signing key\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfgpgkey &lt;gpg_key_id&gt;*
   * [**gitconfconflictsrepeat** *<b>\[Configure Git conflicts repeated handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfconflictsrepeat &lt;enable/disable&gt;*
   * [**gitconfdiffrenames** *<b>\[Configure Git diff renames handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfdiffrenames &lt;basic/detect/ignore&gt;*
-  * [**gitconfgpgsignature** *<b>\[Configure Git GPG signature usage\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfgpgsignature &lt;true/false&gt;*
+  * [**gitconfgpgsignature** *<b>\[Configure Git GPG signature usage\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfgpgsignature &lt;enable/disable&gt;*
   * [**gpglist** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gpg &#8208;&#8208;list-secret-keys &#8208;&#8208;keyid-format LONG*
   * [**gpgsilent** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *echo "no-tty" &gt;&gt; ~/.gnupg/gpg.conf*
   * [**githi** *(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *git update-index &#8208;&#8208;assume-unchanged*

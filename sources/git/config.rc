@@ -359,15 +359,17 @@ function gitconfgpgsignature()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconfgpgsignature <true/false> (Configure Git GPG signature usage)';
+    echo ' Usage: gitconfgpgsignature <enable/disable> (Configure Git GPG signature usage)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
-    false|true)
-      git config --global commit.gpgsign "${1}";;
+    enable)
+      git config --global commit.gpgsign 'true';;
+    disable)
+      git config --global commit.gpgsign 'false';;
     *)
       echo '';
       echo " Error: Option '${1}' not recognized";
