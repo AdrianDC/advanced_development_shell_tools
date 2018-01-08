@@ -222,14 +222,14 @@ function gitconfpager()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconfpager <less/more/false> (Configure Git pager handling)';
+    echo ' Usage: gitconfpager <less/more/none> (Configure Git pager handling)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
-    false)
+    none)
       git config --global core.pager '';;
     less|more)
       git config --global core.pager "${1}";;
