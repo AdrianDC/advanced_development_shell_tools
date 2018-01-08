@@ -815,7 +815,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * [**githubusername** *<b>\[GitHub username getter\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * [**gitconfeditor** *<b>\[Configure Git editor application\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfeditor &lt;app_name&gt;*
   * [**gitconfmergetool** *<b>\[Configure Git merge tool handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfmergetool &lt;app_name&gt;*
-  * [**gitconffilecrlf** *<b>\[Configure Git file CR/LF EOL handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconffilecrlf &lt;true/false/input&gt;*
+  * [**gitconffilecrlf** *<b>\[Configure Git file CR/LF EOL handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconffilecrlf &lt;auto/detect/input&gt;*
   * [**gitconffileperms** *<b>\[Configure Git file permissions handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconffileperms &lt;true/false&gt;*
   * [**gitconfcolors** *<b>\[Configure Git colors handling\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfcolors &lt;true/false/always&gt;*
   * [**gitconfcommitstats** *<b>\[Configure Git commits stats visibility\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc) : *gitconfcommitstats &lt;yes/quick/no&gt;*

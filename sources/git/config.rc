@@ -90,15 +90,19 @@ function gitconffilecrlf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconffilecrlf <true/false/input> (Configure Git file CR/LF EOL handling)';
+    echo ' Usage: gitconffilecrlf <auto/detect/input> (Configure Git file CR/LF EOL handling)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
-    false|input|true)
-      git config --global core.autocrlf "${1}";;
+    auto)
+      git config --global core.autocrlf 'true';;
+    detect)
+      git config --global core.autocrlf 'false';;
+    input)
+      git config --global core.autocrlf 'input';;
     *)
       echo '';
       echo " Error: Option '${1}' not recognized";
