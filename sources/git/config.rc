@@ -299,15 +299,17 @@ function gitconfconflictsrepeat()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconfconflictsrepeat <true/false> (Configure Git conflicts repeated handling)';
+    echo ' Usage: gitconfconflictsrepeat <enable/disable> (Configure Git conflicts repeated handling)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
-    false|true)
-      git config --global rerere.enabled "${1}";;
+    enable)
+      git config --global rerere.enabled 'true';;
+    disable)
+      git config --global rerere.enabled 'false';;
     *)
       echo '';
       echo " Error: Option '${1}' not recognized";
