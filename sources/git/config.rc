@@ -121,15 +121,17 @@ function gitconffileperms()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconffileperms <true/false> (Configure Git file permissions handling)';
+    echo ' Usage: gitconffileperms <detect/ignore> (Configure Git file permissions handling)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
-    false|true)
-      git config --global core.filemode "${1}";;
+    detect)
+      git config --global core.filemode 'true';;
+    ignore)
+      git config --global core.filemode 'false';;
     *)
       echo '';
       echo " Error: Option '${1}' not recognized";
