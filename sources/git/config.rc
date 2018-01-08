@@ -251,14 +251,14 @@ function gitconfcredentials()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconfcredentials <cache/store/wincred> (Configure Git credentials handling)';
+    echo ' Usage: gitconfcredentials <cache/cache --timeout=X/store/wincred> (Configure Git credentials handling)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
-    cache|store|wincred)
+    cache|'cache --timeout='*|store|wincred)
       git config --global credential.helper "${1}";;
     *)
       echo '';
