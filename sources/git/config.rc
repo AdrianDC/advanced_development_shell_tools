@@ -181,14 +181,14 @@ function gitconfcommitstats()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconfcommitstats <yes/quick/no> (Configure Git commits stats visibility)';
+    echo ' Usage: gitconfcommitstats <show/quick/hide> (Configure Git commits stats visibility)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
-    false)
+    hide)
       git config --global commit.status 'false';
       git config --global merge.stat 'false';
       git config --global status.showUntrackedFiles 'no';;
@@ -196,7 +196,7 @@ function gitconfcommitstats()
       git config --global commit.status 'true';
       git config --global merge.stat 'true';
       git config --global status.showUntrackedFiles 'no';;
-    true)
+    show)
       git config --global commit.status 'true';
       git config --global merge.stat 'true';
       git config --global status.showUntrackedFiles 'normal';;
