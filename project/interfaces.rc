@@ -301,7 +301,8 @@ function shtoolsnews()
   # Usage: shtoolsnews (Display android_development_shell_tools news notifications)
 
   # Variables
-  local commits_count;
+  local commits_local_count;
+  local commits_remote_count;
   local currentdir=${PWD};
   local timestamp_current;
   local timestamp_last;
@@ -367,19 +368,33 @@ function shtoolsnews()
     echo '';
   fi;
 
-  # Present commits count
-  commits_count=$(git rev-list --right-only --count HEAD...FETCH_HEAD);
-  echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_count} new commits available upstream\e[0m";
-  echo '';
+  # Acquire commits counts
+  commits_local_count=$(git rev-list --left-only --count HEAD...FETCH_HEAD);
+  commits_remote_count=$(git rev-list --right-only --count HEAD...FETCH_HEAD);
 
-  # Present commits log
-  if [ "${commits_count}" -ne 0 ]; then
-    git log --abbrev-commit --color=always --pretty=oneline -n "${commits_count}" FETCH_HEAD \
+  # Present remote commits
+  if [ "${commits_remote_count}" -ne 0 ]; then
+    echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_remote_count} new commits available upstream\e[0m";
+    echo '';
+
+    # Present remote commits log
+    git log --abbrev-commit --color=always --pretty=oneline -n "${commits_remote_count}" FETCH_HEAD \
         | nl -n rn -s '  ' -w 3;
 
     # Present upgrade hint
     echo '';
-    echo -e ' \e[1;33mshtoolsnews: \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project\e[0m';
+    echo -e ' \e[1;33m> \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project\e[0m';
+    echo '';
+  fi;
+
+  # Present local commits
+  if [ "${commits_local_count}" -ne 0 ]; then
+    echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_local_count} local commits missing\e[0m";
+    echo '';
+
+    # Present local commits log
+    git log --abbrev-commit --color=always --pretty=oneline -n "${commits_local_count}" HEAD \
+        | nl -n rn -s '  ' -w 3;
     echo '';
   fi;
 
