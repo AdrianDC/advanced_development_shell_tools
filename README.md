@@ -35,7 +35,7 @@
 
 <!-- Indent -->
 <!-- List -->
- * **'android_development_shell_tools'** is a project I started in 2015
+ * The project [**android_development_shell_tools**](https://github.com/AdrianDC/android_development_shell_tools) started in 2015
    <br />
    to **ease Android development, ADB usage, Git commands and related projects.**
    <br />
@@ -55,7 +55,7 @@
    <br />
    can look into my sources and find documented **commands and syntaxes**,
    <br />
-   which can be used as a reference of Shell scripting and help making their own.
+   which can be used as a reference for Shell scripting and help making their own.
 <!-- /List -->
 <!-- /Indent -->
 
@@ -75,7 +75,7 @@
 
  * If you intend to keep personal or unfinished functions along this project,
    <br />
-   you can also look at the **[shell_users](https://github.com/AdrianDC/android_development_shell_tools/tree/shell_users)** branch, a minimal variant
+   you can also look at the **[android_development_shell_users](https://github.com/AdrianDC/android_development_shell_users)** project, a minimal variant
    <br />
    that allows holding functions or macros separately (like credentials).
 <!-- /List -->

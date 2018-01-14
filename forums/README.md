@@ -25,7 +25,7 @@
 [SIZE=5][B][U]About the project[/U][/B][/SIZE]
 
 [INDENT][LIST]
-[*][B]'android_development_shell_tools'[/B] is a project I started in 2015
+[*]The project [URL=https://github.com/AdrianDC/android_development_shell_tools][B]android_development_shell_tools[/B][/URL] started in 2015
    to [B]ease Android development, ADB usage, Git commands and related projects.[/B]
    Originally a private set of scripts, I made the project evolve towards
    a publically shareable set of tools that can be [B]easily used and even configured[/B]
@@ -36,7 +36,7 @@
    or to [B]serve as a reference for commands and functions[/B] an Android developer needs.
    [B]Developers or beginners[/B] interested in Shell commands and scripting
    can look into my sources and find documented [B]commands and syntaxes[/B],
-   which can be used as a reference of Shell scripting and help making their own.
+   which can be used as a reference for Shell scripting and help making their own.
 [/LIST][/INDENT]
 
 
@@ -49,7 +49,7 @@
    and the [B]newest commits / improvements will be added[/B] to your available tools.
 
 [*]If you intend to keep personal or unfinished functions along this project,
-   you can also look at the [B][URL=https://github.com/AdrianDC/android_development_shell_tools/tree/shell_users]shell_users[/URL][/B] branch, a minimal variant
+   you can also look at the [B][URL=https://github.com/AdrianDC/android_development_shell_users]android_development_shell_users[/URL][/B] project, a minimal variant
    that allows holding functions or macros separately (like credentials).
 [/LIST][/INDENT]
 
