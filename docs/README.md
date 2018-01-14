@@ -661,9 +661,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### Documentation: <span class="group_label">sources/android_rom/lineageos.rc</span> ###
 >
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/lineageos.rc)
   ```
   * **lineagewebjekyll** *[bool_install]* [*<b>\[Jekyll web helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/lineageos.rc)
