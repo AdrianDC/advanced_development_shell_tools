@@ -105,8 +105,20 @@ unset LC_ALL_HOST;
 unset group;
 unset path;
 
-# === Android Development Shell Tools Automated News ===
+# === Android Development Shell Tools First Launch ===
 if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='true';
+else
+  export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='';
+fi;
+
+# === Android Development Shell Tools Submodules ===
+if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
+  git submodule update --init --remote;
+fi;
+
+# === Android Development Shell Tools Automated News ===
+if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
   __shtools-config-news-enable;
 fi;
 if __shtools-config-news-active; then
