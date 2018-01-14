@@ -347,7 +347,8 @@ function shtoolsnews()
   fi;
 
   # Ignore if unchanged
-  if [ -z "${1}" ] && git diff --quiet HEAD FETCH_HEAD; then
+  if git diff --quiet HEAD FETCH_HEAD \
+      && git diff-index --quiet HEAD; then
     echo -en "\r\033[K";
     cd "${currentdir}/";
     return;
@@ -359,10 +360,10 @@ function shtoolsnews()
   echo '';
 
   # Present local diffs
-  if git diff --cached --quiet; then
+  if ! git diff-index --quiet HEAD; then
     echo -e " \e[1;33mshtoolsnews: \e[1;37mLocal differences detected\e[0m";
     echo '';
-    git diff --stat;
+    git diff --stat HEAD;
     echo '';
   fi;
 
