@@ -392,13 +392,17 @@ function shtoolsreadme()
           line_summary="<b>\\\[${line_summary}\\\]<\/b>";
         fi;
 
-        # Apply usage styling
-        if [ ! "${line_usage}" = "${line_function}" ]; then
+        # Ignore single usage calls
+        if [ "${line_usage}" = "${line_function}" ]; then
+          line_usage='';
+
+        # Apply alias usage styling
+        elif [ "${line_type}" = 'Alias' ]; then
           line_usage=" : *${line_usage}*";
 
-        # Ignore function usage
+        # Apply function usage styling
         else
-          line_usage=;
+          line_usage=" *${line_usage#${line_function} }*";
         fi;
 
       # Warning about missing usages
@@ -411,7 +415,7 @@ function shtoolsreadme()
       # Append function details
       readme_output+="${readme_buffer}";
       readme_buffer='';
-      readme_output+="  * [**${line_function}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path_name})${line_usage}\n";
+      readme_output+="  * **${line_function}**${line_usage} [*${line_summary}*](${github_project_url}\/${github_file_path}\/${path_name})\n";
 
     done < <(grep -a "^alias.*=\|^function .*()" "${path_file}");
 
