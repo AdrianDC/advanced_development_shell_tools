@@ -74,6 +74,7 @@
   * **shtoolscheck** *[bool_ignore]* [*<b>\[Run ShellCheck on the project\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
   * **shtoolspush** *[bool_ignore_readme]* [*<b>\[Commit new changes to android_development_shell_tools\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
   * **shtoolsamend** *[bool_ignore_readme] [bool_ignore_message]* [*<b>\[Amend new changes to android_development_shell_tools\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
+  * **shtoolsconf** [*<b>\[Edit android_development_shell_tools configuration\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
 
 ---
 > ### Documentation: <span class="group_label">project/docs.rc</span> ###

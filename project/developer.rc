@@ -108,3 +108,12 @@ function shtoolsamend()
   cd "${currentdir}/";
   shtoolsup;
 }
+
+# === Android Development Shell Tools Configuration Edit ===
+function shtoolsconf()
+{
+  # Usage: shtoolsconf (Edit android_development_shell_tools configuration)
+
+  # Edit android_development_shell_tools configuration
+  fileedit "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+}
