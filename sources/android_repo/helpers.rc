@@ -361,7 +361,7 @@ function repogetbranch()
 
   # Default fallback
   if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
-    branch=lineage-15.0;
+    branch=lineage-15.1;
   fi;
 
   # Output result

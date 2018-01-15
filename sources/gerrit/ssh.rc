@@ -56,7 +56,7 @@ function gerritssh()
     export GerritUsername='Username';
     export GerritHTTPUsername='Username';
     export GerritHTTPPassword='abcdefgh12345678';
-    export GerritBranchPrimary='lineage-15.0';
+    export GerritBranchPrimary='lineage-15.1';
     export GerritBranchSecondary='cm-14.1';
   fi;
 

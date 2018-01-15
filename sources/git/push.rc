@@ -101,7 +101,7 @@ function gitpurl()
 alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';
 alias gitpama='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master';
 alias gitpa14='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1';
-alias gitpa15='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) lineage-15.0';
+alias gitpa15='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) lineage-15.1';
 alias gitpal='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests'
 alias gitpaman='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests'
 

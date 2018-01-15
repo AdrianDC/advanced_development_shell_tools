@@ -25,7 +25,7 @@ function lineagenextrebaser()
   # Usage: lineagenextrebaser [specific_paths] (LineageOS Next Rebaser)
 
   # Use the androidprojectrebaser helper
-  androidprojectrebaser 'lineage-next' 'lineage-15.0_master' '
+  androidprojectrebaser 'lineage-next' 'lineage-15.1_master' '
     bionic::android_bionic::https://android.googlesource.com/platform/bionic::master
     bootable/recovery::android_bootable_recovery::https://android.googlesource.com/platform/bootable/recovery::master
     build/make::android_build_make::https://android.googlesource.com/platform/build::master

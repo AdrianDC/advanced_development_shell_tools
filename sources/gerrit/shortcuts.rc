@@ -25,7 +25,7 @@
 alias gitpr='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for';
 alias gitprh='gerritreview http://review.lineageos.org LineageOS . for';
 alias gitpr14='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for cm-14.1';
-alias gitpr15='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-15.0';
+alias gitpr15='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-15.1';
 alias gitprd='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . drafts';
 alias gitprdh='gerritreview http://review.lineageos.org LineageOS . drafts';
 alias gitpg='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . heads';
