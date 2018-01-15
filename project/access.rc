@@ -38,14 +38,22 @@ function shtoolssync()
 {
   # Usage: shtoolssync (Download new android_development_shell_tools changes)
 
-  # Download upstream changes
+  # Variables
   local currentdir=${PWD};
+
+  # Access Android Development Shell Tools folder
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
-  git fetch origin;
+
+  # Download upstream changes
+  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   git reset "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   git stash -u;
+
+  # Init and update submodules
   git submodule init;
   git submodule update;
+
+  # Restore current path
   cd "${currentdir}/";
 
   # Reload the project
