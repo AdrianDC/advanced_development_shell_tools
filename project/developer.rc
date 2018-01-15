@@ -55,9 +55,13 @@ function shtoolspush()
     shtoolsreadme;
   fi;
 
-  # Commit changes
+  # Variables
   local currentdir=${PWD};
+
+  # Access Android Development Shell Tools folder
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+
+  # Commit changes
   git add -N ./*;
   git add . -Ap;
   git commit -s;
@@ -71,6 +75,8 @@ function shtoolspush()
 
   # Push to upstream
   git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+
+  # Restore current path
   cd "${currentdir}/";
 
   # Reload the project
@@ -87,9 +93,13 @@ function shtoolsamend()
     shtoolsreadme;
   fi;
 
-  # Commit changes
+  # Variables
   local currentdir=${PWD};
+
+  # Access Android Development Shell Tools folder
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+
+  # Commit changes
   git add -N ./*;
   git add . -Ap;
   if [ -z "${2}" ]; then
@@ -107,6 +117,8 @@ function shtoolsamend()
 
   # Push to upstream
   git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+
+  # Restore current path
   cd "${currentdir}/";
 
   # Reload the project
