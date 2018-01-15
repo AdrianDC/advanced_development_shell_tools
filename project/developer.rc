@@ -72,6 +72,8 @@ function shtoolspush()
   # Push to upstream
   git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   cd "${currentdir}/";
+
+  # Reload the project
   shtoolsup;
 }
 
@@ -106,6 +108,8 @@ function shtoolsamend()
   # Push to upstream
   git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   cd "${currentdir}/";
+
+  # Reload the project
   shtoolsup;
 }
 

@@ -47,6 +47,8 @@ function shtoolssync()
   git submodule init;
   git submodule update;
   cd "${currentdir}/";
+
+  # Reload the project
   shtoolsup;
 }
 

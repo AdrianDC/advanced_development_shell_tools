@@ -161,7 +161,7 @@ function shtoolsreadme()
   local lc_all=${LC_ALL};
   LC_ALL=C;
 
-  # Refresh files list
+  # Reload the project
   shtoolsup;
 
   # Header

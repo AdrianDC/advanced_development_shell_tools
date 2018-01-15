@@ -167,8 +167,8 @@ function adbsudo()
   # Refresh adb server ownership
   __adbserver;
 
-  # Reload scripts
-  shtoolsup &> /dev/null;
+  # Reload the project
+  shtoolsup >/dev/null 2>&1;
 }
 
 # === ADB Command ===
