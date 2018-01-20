@@ -320,12 +320,9 @@ function shtoolsnews()
     # Validate timestamp from configuration
     timestamp_current=$(date +%Y-%m-%d);
     timestamp_last=$(grep '^# News timestamp: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
-    if [ ! -z "${timestamp_last}" ]; then
-      timestamp_last="20${timestamp_last##*:*20}";
-    fi;
     if [ -z "${timestamp_last}" ]; then
       echo "# News timestamp: ${timestamp_current}" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
-    elif [ "${timestamp_last}" = "${timestamp_current}" ]; then
+    elif echo "${timestamp_last}" | grep -q "${timestamp_current}"; then
       return;
     fi;
 
