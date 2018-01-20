@@ -37,6 +37,7 @@ function repoinitaosp()
   local branch;
   local init_command;
   local depth=;
+  local reposync='';
 
   # Branch selection
   if [ "${release}" = 'master' ]; then
@@ -75,6 +76,11 @@ function repoinitaosp()
     reposy;
   fi;
 
+  # Plan repo sync
+  if [ -f '.repo/manifest.xml' ]; then
+    reposync='true';
+  fi;
+
   # Clean repo manifest
   repoinitcleaner "${params}";
 
@@ -96,6 +102,11 @@ function repoinitaosp()
 
   # Post-clean repo manifest
   repoinitsafecleaner "${params}";
+
+  # Launch repo sync
+  if [ ! -z "${reposync}" ]; then
+    reposy;
+  fi;
 }
 
 # === Repo Init LineageOS ===
@@ -115,6 +126,7 @@ function repoinitlineage()
   local branch;
   local init_command;
   local depth=;
+  local reposync='';
 
   # Handle branches
   case ${release} in
@@ -155,6 +167,11 @@ function repoinitlineage()
     reposy;
   fi;
 
+  # Plan repo sync
+  if [ -f '.repo/manifest.xml' ]; then
+    reposync='true';
+  fi;
+
   # Clean repo manifest
   repoinitcleaner "${params}";
 
@@ -176,6 +193,11 @@ function repoinitlineage()
 
   # Post-clean repo manifest
   repoinitsafecleaner "${params}";
+
+  # Launch repo sync
+  if [ ! -z "${reposync}" ]; then
+    reposy;
+  fi;
 }
 
 # === Repo Init ResurrectionRemix ===
@@ -195,6 +217,7 @@ function repoinitrr()
   local branch=${release};
   local depth=;
   local init_command;
+  local reposync='';
 
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
@@ -221,6 +244,11 @@ function repoinitrr()
     reposy;
   fi;
 
+  # Plan repo sync
+  if [ -f '.repo/manifest.xml' ]; then
+    reposync='true';
+  fi;
+
   # Clean repo manifest
   repoinitcleaner "${params}";
 
@@ -241,6 +269,11 @@ function repoinitrr()
 
   # Post-clean repo manifest
   repoinitsafecleaner "${params}";
+
+  # Launch repo sync
+  if [ ! -z "${reposync}" ]; then
+    reposy;
+  fi;
 }
 
 # === Repo Init TWRP ===
@@ -260,6 +293,7 @@ function repoinittwrp()
   local branch=twrp-${release};
   local depth=;
   local init_command;
+  local reposync='';
 
   # Repo shallow
   if [[ "${params}" == *'shallow'* ]]; then
@@ -283,6 +317,11 @@ function repoinittwrp()
   # Wipe the out folder
   repoclean;
 
+  # Plan repo sync
+  if [ -f '.repo/manifest.xml' ]; then
+    reposync='true';
+  fi;
+
   # Clean repo manifest
   repoinitcleaner "${params}";
 
@@ -303,6 +342,11 @@ function repoinittwrp()
 
   # Post-clean repo manifest
   repoinitsafecleaner "${params}";
+
+  # Launch repo sync
+  if [ ! -z "${reposync}" ]; then
+    reposy;
+  fi;
 }
 
 # === Repo Init Cleaner ===
