@@ -61,10 +61,12 @@ function repotwrp()
   esac;
 
   # Make recovery
+  export ALLOW_MISSING_DEPENDENCIES=true;
   source ./build/envsetup.sh;
   croot;
   lunch "omni_${PhoneName}-userdebug";
   makes recoveryimage "${RootDir}/out/target/product/${PhoneName}/system/build.prop";
+  export ALLOW_MISSING_DEPENDENCIES=;
   echo '';
 
   # Make releases
@@ -266,6 +268,7 @@ function repomrom()
   fi;
 
   # Make recovery
+  export ALLOW_MISSING_DEPENDENCIES=true;
   source ./build/envsetup.sh;
   if [[ ! "${BuildParams}" == *'nobuild'* ]]; then
     rm -rf "${BuildDir}/multirom"*;
@@ -280,6 +283,7 @@ function repomrom()
   else
     echo 'Build skipped...';
   fi;
+  export ALLOW_MISSING_DEPENDENCIES=;
   echo '';
 
   # Make releases
