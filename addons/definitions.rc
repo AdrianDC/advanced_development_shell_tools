@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Android Development Shell Tools Addons Files ===
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/android_binaries/strace_arm32;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/android_binaries/strace_arm64;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_TINYMIX=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/android_binaries/tinymix;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/flashable_android_base.zip;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/kernel_inject;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR_SH=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/kernel_inject.sh;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/signapk;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_BOOT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/updater_script_flash_boot;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_FOTA=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/updater_script_flash_fota;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_OEM=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/updater_script_install_oem;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_SYSTEM=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/updater_script_install_system;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_KERNEL_INJECTOR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/updater_script_kernel_injector;
+export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_MULTIROM_SECONDARY=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/flashables/updater_script_multirom_secondary;
