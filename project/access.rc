@@ -33,6 +33,27 @@ function shtoolscd()
   cd "$(shtoolsget)";
 }
 
+# === Android Development Shell Tools Files ===
+function shtoolsfiles()
+{
+  # Usage: shtoolsfiles [entrypoint,sources,scripts] (List android_development_shell_tools files)
+
+  # Present entrypoint path
+  if [ -z "${1}" ] || [[ "${1}" == *"entrypoint"* ]]; then
+    echo "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
+  fi;
+
+  # Present sources paths
+  if [ -z "${1}" ] || [[ "${1}" == *"sources"* ]]; then
+    shtoolssources;
+  fi;
+
+  # Present scripts paths
+  if [ -z "${1}" ] || [[ "${1}" == *"scripts"* ]]; then
+    shtoolsscripts;
+  fi;
+}
+
 # === Android Development Shell Tools Syncer ===
 function shtoolssync()
 {

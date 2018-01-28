@@ -65,6 +65,7 @@
 >
   * **shtoolsget** [*<b>\[Get android_development_shell_tools path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
   * **shtoolscd** [*<b>\[Access android_development_shell_tools path\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
+  * **shtoolsfiles** *[entrypoint,sources,scripts]* [*<b>\[List android_development_shell_tools files\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
   * **shtoolssync** [*<b>\[Download new android_development_shell_tools changes\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
   * **shtoolsup** [*<b>\[Reloads android_development_shell_tools scripts\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
 
