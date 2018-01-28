@@ -1264,7 +1264,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 >
   * **autoreleaseaospsony8960o** *[devices]* [*<b>\[Automated AOSP Oreo Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
   * **autoreleaselineagesony8960** *[devices]* [*<b>\[Automated LineageOS Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
-  * **autoreleaselineagesony8960o** *[devices]* [*<b>\[Automated LineageOS 15.0 Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
   * **autoreleaserrsony8960** *[devices]* [*<b>\[Automated RR Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
   * **autoreleasecafsony8960** *[devices]* [*<b>\[Automated AOSP-CAF Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
   * **autoreleaseaospsony8960master** *&lt;devices&gt;* [*<b>\[Automated AOSP Master Sony 8960 releaser\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)

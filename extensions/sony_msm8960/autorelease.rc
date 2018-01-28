@@ -92,50 +92,6 @@ function autoreleaselineagesony8960()
   fi;
 }
 
-# === LineageOS Automatic Releaser ===
-function autoreleaselineagesony8960o()
-{
-  # Usage: autoreleaselineagesony8960o [devices] (Automated LineageOS 15.0 Sony 8960 releaser)
-
-  # AndroidDev
-  cdand;
-
-  # When option enabled, sync repository tree
-  if ! __shtools-builds-nosync-active && [ -z "${1}" ]; then
-    cdlineage;
-    reposy;
-  fi;
-
-  # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdlineage 8960 && ! __shtools-builds-nosync-active; then
-    reposy;
-  fi;
-
-  # Devices to build
-  local devices=${*:-huashan mint};
-
-  # Import pending reviews
-  lineagesony8960oreopatcher;
-
-  # Apply Sony Huashan and Blue changes
-  if ! aospsony8960opatcher 'device/sony/*'; then
-    return;
-  fi;
-
-  # Walk through devices
-  for device in ${devices}; do
-
-    # ROM build and release
-    romautorelease "${device}" next;
-
-  done;
-
-  # When option enabled and not local, clean out folder
-  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
-    repoclean;
-  fi;
-}
-
 # === ResurrectionRemix Sony 8960 Automatic Releaser ===
 function autoreleaserrsony8960()
 {
