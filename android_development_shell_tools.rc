@@ -34,10 +34,6 @@ export ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR=${ANDROID_DEVELOPMENT_SHELL_T
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts;
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/sources;
 
-# === Android Development Shell Tools Files ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS=();
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES=();
-
 # === Android Development Shell Tools Variables ===
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH='master';
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_VERSION='2018.1';
@@ -59,78 +55,119 @@ export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS;
 ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS=$(grep '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" 2>/dev/null);
 
 # === Android Development Shell Tools Sources ===
-LC_ALL_HOST=${LC_ALL};
-export LC_ALL=C;
-echo -en '\e[1;33mshtools: \e[1;33mLoading android_development_shell_tools...\e[0m';
+function shtoolssources()
+{
+  # Usage: shtoolssources (List sources from android_development_shell_tools)
 
-# Android Development Shell Tools Project
-for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*'.rc'; do
-  if [ -f "${path}" ]; then
-    ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
+  # Variables
+  local LC_ALL_HOST;
+  local path;
+
+  # Locale override
+  LC_ALL_HOST=${LC_ALL};
+  export LC_ALL=C;
+
+  # Android Development Shell Tools Project
+  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*'.rc'; do
+    if [ -f "${path}" ]; then
+      echo "${path}";
+    fi;
+  done;
+
+  # Android Development Shell Tools Sources
+  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR}/"*'/'*'.rc'; do
+    if [ -f "${path}" ]; then
+      echo "${path}";
+    fi;
+  done;
+
+  # Android Development Shell Tools Extensions
+  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS_DIR}/"*'/'*'.rc'; do
+    if [ -f "${path}" ]; then
+      echo "${path}";
+    fi;
+  done;
+
+  # Android Development Shell Tools Cleanup
+  export LC_ALL=${LC_ALL_HOST};
+}
+
+# === Android Development Shell Tools Scripts ===
+function shtoolsscripts()
+{
+  # Usage: shtoolsscripts (List scripts from android_development_shell_tools)
+
+  # Variables
+  local LC_ALL_HOST;
+  local path;
+
+  # Locale override
+  LC_ALL_HOST=${LC_ALL};
+  export LC_ALL=C;
+
+  # Android Development Shell Tools Scripts
+  for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR}/"*'/'*'.sh'; do
+    if [ -f "${path}" ]; then
+      echo "${path}";
+    fi;
+  done;
+
+  # Android Development Shell Tools Cleanup
+  export LC_ALL=${LC_ALL_HOST};
+}
+
+# === Android Development Shell Tools Instance ===
+function shtoolsinstance()
+{
+  # Usage: shtoolsinstance (Instantiate android_development_shell_tools)
+
+  # Variables
+  local group;
+  local path;
+
+  # Header
+  echo -en '\e[1;33mshtools: \e[1;33mLoading android_development_shell_tools...\e[0m';
+
+  # Import enabled kits
+  while read -r path; do
+    group=${path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+    group=${group%/*};
+    if [ "${group}" = 'project' ] || [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${group}|"* ]]; then
+      source "${path}";
+    fi;
+  done < <(shtoolssources);
+
+  # Cleanup
+  echo -en "\r\033[K";
+
+  # Import addons definitions
+  source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/definitions.rc";
+
+  # First launch detection
+  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+    export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='true';
+    __shtools-config-news-enable;
+
+  # Regular launch
+  else
+    export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='';
   fi;
-done;
 
-# Android Development Shell Tools Sources
-for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR}/"*'/'*'.rc'; do
-  if [ -f "${path}" ]; then
-    ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
+  # Submodules instantiation
+  if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
+    git submodule update --init --remote;
   fi;
-done;
 
-# Android Development Shell Tools Extensions
-for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS_DIR}/"*'/'*'.rc'; do
-  if [ -f "${path}" ]; then
-    ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES+=("${path}");
+  # Automated project news
+  if __shtools-config-news-active; then
+    shtoolsnews true;
   fi;
-done;
 
-# Android Development Shell Tools Scripts
-for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR}/"*'/'*'.sh'; do
-  if [ -f "${path}" ]; then
-    ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS+=("${path}");
+  # Automated project kits
+  if ! grep -q '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
+    shtoolskits;
   fi;
-done;
+}
 
-# Android Development Shell Tools Kits Importation
-for path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
-  group=${path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
-  group=${group%/*};
-  if [ "${group}" = 'project' ] || [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${group}|"* ]]; then
-    source "${path}";
-  fi;
-done;
-
-# Android Development Shell Tools Cleanup
-echo -en "\r\033[K";
-export LC_ALL=${LC_ALL_HOST};
-unset LC_ALL_HOST;
-unset group;
-unset path;
-
-# === Android Development Shell Tools Addons Files ===
-source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/definitions.rc";
-
-# === Android Development Shell Tools First Launch ===
-if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='true';
-else
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='';
-fi;
-
-# === Android Development Shell Tools Submodules ===
-if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
-  git submodule update --init --remote;
-fi;
-
-# === Android Development Shell Tools Automated News ===
-if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
-  __shtools-config-news-enable;
-fi;
-if __shtools-config-news-active; then
-  shtoolsnews true;
-fi;
-
-# === Android Development Shell Tools Automated Toolkits ===
-if ! grep -q '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
-  shtoolskits;
-fi;
+# === Android Development Shell Tools Instantiation ===
+shtoolsinstance;

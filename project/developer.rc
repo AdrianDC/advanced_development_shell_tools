@@ -25,10 +25,10 @@ function shtoolscheck()
 
   # Study all script files
   echo -e '\e[1;37m';
-  for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
+  while read -r file_source; do
 
     # Parsing header
-    echo -en "\r\033[K shtoolscheck: Checking ${file_source}...";
+    echo -en "\r\033[K shtoolscheck: Checking '${file_source}'...";
 
     # Launch ShellCheck
     if ! shellcheck "${file_source}" \
@@ -38,7 +38,8 @@ function shtoolscheck()
       echo '';
       return;
     fi;
-  done;
+
+  done < <(shtoolsfiles 'entrypoint,sources,scripts');
 
   # Successfull syntax check
   echo -e '\r\033[K \e[1;32mshtoolscheck: Syntax checked successfully\e[0m';

@@ -32,7 +32,7 @@ function shtoolse()
   local word;
 
   # Study all script files
-  for file_source in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}"; do
+  while read -r file_source; do
     for word in "${@}"; do
 
       # List found files
@@ -40,8 +40,9 @@ function shtoolse()
         files+=("${file_source}");
         continue;
       fi;
+
     done;
-  done;
+  done < <(shtoolsfiles 'entrypoint,sources');
 
   # Open listed files
   if [ ! -z "${files[*]}" ]; then

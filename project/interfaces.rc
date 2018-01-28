@@ -101,9 +101,7 @@ function shtools-()
       if [ ! "${line_option}" = "${line_function}" ] && "__shtools-${line_option}-active" 2> /dev/null; then
 
         # Parse usage
-        line_usage=$(grep -a "Usage: ${line_function} " \
-                     "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" \
-                     "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
+        line_usage=$(shtoolsfiles 'entrypoint,sources' | xargs grep -a "Usage: ${line_function} ");
         if [ -z "${line_usage}" ]; then
           continue;
         fi;
@@ -144,9 +142,7 @@ function shtools-()
       fi;
 
       # Parse usage
-      line_usage=$(grep -a "Usage: ${line_function} " \
-                   "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" \
-                   "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}");
+      line_usage=$(shtoolsfiles 'entrypoint,sources' | xargs grep -a "Usage: ${line_function} ");
       if [ -z "${line_usage}" ]; then
         continue;
       fi;
@@ -241,7 +237,7 @@ function shtoolskits()
     toolkits='|';
 
     # Display __shtools-* menu
-    for path in $(dirname "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" | uniq); do
+    while read -r path; do
 
       # Group variables
       name=$(cat "${path}/.name" 2>/dev/null);
@@ -263,7 +259,7 @@ function shtoolskits()
       cnt=$((cnt + 1));
       echo -e "\e[1;33m ${cnt}: \e[1;37m${name:-[Unknown Folder Name]} \e[1;32m[${path}]\e[0m";
 
-    done;
+    done < <(shtoolsfiles 'sources' | xargs dirname | uniq);
     echo '';
 
     # Display exit item

@@ -183,9 +183,8 @@ function shtoolsreadme()
   # Refresh version README.md
   cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.version.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/version.md";
 
-  # Read all sources
-  for path_file in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" \
-                   "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}"; do
+  # Read all sources and scripts
+  while read -r path_file; do
 
     # Handle file path
     path_relative=${path_file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
@@ -426,7 +425,7 @@ function shtoolsreadme()
       readme_buffer='';
     fi;
 
-  done;
+  done < <(shtoolsfiles 'sources,scripts');
 
   # Append last file group buffer
   readme_output+="${group_buffer}\<div class=\"group_footer\"\>\n\<br \/\>\n\n---\n";

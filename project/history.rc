@@ -22,17 +22,12 @@ function shtoolsstats()
 
   # Variables
   local currentdir=${PWD};
-  local paths;
-
-  # List all project files
-  paths=("${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}");
-  paths=("${paths[@]#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/}");
 
   # Statistics over project files
   echo '';
   echo ' Lines| Sizes| Paths';
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
-  wc -cl "${paths[@]}";
+  shtoolsfiles 'entrypoint,sources,scripts' | xargs wc -cl;
   echo '';
 
   # Restore current path
