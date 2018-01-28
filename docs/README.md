@@ -870,6 +870,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitmt** : *git mergetool* [*(Alias)*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/merge.rc)
   * **gitmte** [*<b>\[Merge tool with manual conflicts resolution\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/merge.rc)
   * **gitmtr** *&lt;referenced_path&gt;* [*<b>\[Merge tool with reference project sources\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/merge.rc)
+  * **gitmtbasic** [*<b>\[Merge tool with basic additions resolution\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/merge.rc)
 
 ---
 > ### Documentation: <span class="group_label">sources/git/pick.rc</span> ###

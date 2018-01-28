@@ -61,3 +61,35 @@ function gitmtr()
     git add "${file}";
   done;
 }
+
+# === Git MergeTool Basic Conflicts ===
+function gitmtbasic()
+{
+  # Usage: gitmtbasic (Merge tool with basic additions resolution)
+
+  # Files differences
+  git diff --name-only | uniq;
+  echo '';
+
+  # Basic fix for all unmerged files
+  for file in $(git diff --name-only | uniq); do
+    git diff "${file}";
+    echo '';
+    echo -n " ${file}: Diff before fix [Enter / Ctrl+C] ";
+    read -r;
+    echo '';
+    sed -i "s/>>>>>>>.*//g" "${file}";
+    sed -i "s/=======.*//g" "${file}";
+    sed -i "s/<<<<<<<.*//g" "${file}";
+    git diff "${file}";
+    echo '';
+    echo -n " ${file}: Done ? [Enter / Ctrl+C] ";
+    read -r;
+    git add "${file}";
+  done;
+
+  # Commit results
+  echo '';
+  git commit --no-edit;
+  echo '';
+}
