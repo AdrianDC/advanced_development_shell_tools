@@ -28,12 +28,14 @@ function shtoolsstats()
   paths=("${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES[@]}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS[@]}");
   paths=("${paths[@]#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/}");
 
-  # Statistics on the project files
+  # Statistics over project files
   echo '';
   echo ' Lines| Sizes| Paths';
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   wc -cl "${paths[@]}";
   echo '';
+
+  # Restore current path
   cd "${currentdir}/";
 }
 
@@ -42,12 +44,16 @@ function shtoolsdiff()
 {
   # Usage: shtoolsdiff (Compare with upstream android_development_shell_tools)
 
-  # Compare with upstream
+  # Variables
   local currentdir=${PWD};
+
+  # Compare with upstream
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git fetch origin;
   git diff HEAD "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   git diff HEAD;
+
+  # Restore current path
   cd "${currentdir}/";
 }
 
@@ -56,10 +62,14 @@ function shtoolslog()
 {
   # Usage: shtoolslog [commits_count] (Display android_development_shell_tools history)
 
-  # Display project history
+  # Variables
   local currentdir=${PWD};
+
+  # Display project history
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git log --pretty=oneline -n "${1:-10}";
+
+  # Restore current path
   cd "${currentdir}/";
 }
 
@@ -68,9 +78,13 @@ function shtoolsshow()
 {
   # Usage: shtoolsshow [offset_count] (Display android_development_shell_tools commit)
 
-  # Display project history
+  # Variables
   local currentdir=${PWD};
+
+  # Display project history
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
   git show "HEAD~${1:-0}";
+
+  # Restore current path
   cd "${currentdir}/";
 }
