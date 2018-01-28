@@ -74,15 +74,3 @@ function shtoolsshow()
   git show "HEAD~${1:-0}";
   cd "${currentdir}/";
 }
-
-# === Android Development Shell Tools Reset ===
-function shtoolsreset()
-{
-  # Usage: shtoolsreset (Reset project to remote HEAD)
-
-  # Reset project to remote HEAD
-  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
-  git fetch origin;
-  git reset "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
-  git diff --stat HEAD;
-}

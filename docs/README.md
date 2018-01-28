@@ -91,7 +91,6 @@
   * **shtoolsdiff** [*<b>\[Compare with upstream android_development_shell_tools\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
   * **shtoolslog** *[commits_count]* [*<b>\[Display android_development_shell_tools history\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
   * **shtoolsshow** *[offset_count]* [*<b>\[Display android_development_shell_tools commit\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
-  * **shtoolsreset** [*<b>\[Reset project to remote HEAD\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
 
 ---
 > ### Documentation: <span class="group_label">project/interfaces.rc</span> ###
