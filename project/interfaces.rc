@@ -177,10 +177,10 @@ function shtoolskits()
 
   # Variables
   local cnt;
+  local file_path;
   local key=-1;
   local list;
   local name;
-  local path;
   local toolkits;
 
   # First time usage
@@ -237,27 +237,27 @@ function shtoolskits()
     toolkits='|';
 
     # Display __shtools-* menu
-    while read -r path; do
+    while read -r file_path; do
 
       # Group variables
-      name=$(cat "${path}/.name" 2>/dev/null);
-      path=${path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
-      if [ "${path}" = 'project' ]; then
+      name=$(cat "${file_path}/.name" 2>/dev/null);
+      file_path=${file_path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+      if [ "${file_path}" = 'project' ]; then
         continue;
       fi;
-      list+=("${path}");
+      list+=("${file_path}");
 
       # Status output
-      if [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${path}|"* ]]; then
+      if [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${file_path}|"* ]]; then
         echo -en '  \e[1;32m[x]';
-        toolkits="${toolkits}${path}|";
+        toolkits="${toolkits}${file_path}|";
       else
         echo -en '  \e[1;31m[.]';
       fi;
 
       # Item choice
       cnt=$((cnt + 1));
-      echo -e "\e[1;33m ${cnt}: \e[1;37m${name:-[Unknown Folder Name]} \e[1;32m[${path}]\e[0m";
+      echo -e "\e[1;33m ${cnt}: \e[1;37m${name:-[Unknown Folder Name]} \e[1;32m[${file_path}]\e[0m";
 
     done < <(shtoolsfiles 'sources' | xargs dirname | uniq);
     echo '';
@@ -276,11 +276,11 @@ function shtoolskits()
 
     # Execute requested function
     if [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
-      path=${list[${key}]};
-      if [[ "${toolkits}" == *"${path}"* ]]; then
-        toolkits="${toolkits/${path}|/}"
+      file_path=${list[${key}]};
+      if [[ "${toolkits}" == *"${file_path}"* ]]; then
+        toolkits="${toolkits/${file_path}|/}"
       else
-        toolkits="${toolkits}${path}|";
+        toolkits="${toolkits}${file_path}|";
       fi;
       export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS="# Toolkits: ${toolkits}";
     fi;

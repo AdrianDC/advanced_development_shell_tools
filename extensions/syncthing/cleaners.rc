@@ -21,29 +21,29 @@ function stignoreclean()
   # Usage: stignoreclean (Cleanup untracked paths from SyncThing .stignore*)
 
   # Variables
-  local path;
-  local paths;
+  local ignored_path;
+  local ignored_paths;
 
   # Travel through .stignored paths
-  while read -r paths; do
+  while read -r ignored_paths; do
 
     # Ignore macros
-    if [ "${paths:0:1}" = '#' ]; then
+    if [ "${ignored_paths:0:1}" = '#' ]; then
       continue;
 
     # Remove folders contents
-    elif [ -d "${paths}" ]; then
-      if [ ! -z "$(ls -A "${paths}")" ]; then
-        echo "stignoreclean: Removing folder contents '${paths}'";
-        find "${paths}/" -mindepth 1 -delete;
+    elif [ -d "${ignored_paths}" ]; then
+      if [ ! -z "$(ls -A "${ignored_paths}")" ]; then
+        echo "stignoreclean: Removing folder contents '${ignored_paths}'";
+        find "${ignored_paths}/" -mindepth 1 -delete;
       fi;
 
     # Remove files
     else
-      for path in ${paths}; do
-        if [ -f "${path}" ]; then
-          echo "stignoreclean: Removing file '${path}'";
-          rm -f "${path}";
+      for ignored_path in ${ignored_paths}; do
+        if [ -f "${ignored_path}" ]; then
+          echo "stignoreclean: Removing file '${ignored_path}'";
+          rm -f "${ignored_path}";
         fi;
       done;
     fi;

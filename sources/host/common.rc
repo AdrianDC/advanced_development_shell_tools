@@ -96,27 +96,27 @@ function diropen()
   fi;
 
   # Variables
+  local file_path=${1};
   local opened;
-  local path=${1};
 
   # Get directory from file path
-  if [ -f "${path}" ]; then
-    path=$(dirname "${path}");
+  if [ -f "${file_path}" ]; then
+    file_path=$(dirname "${file_path}");
   fi;
 
   # GUI xdg directory viewer
-  xdg-open "${path}" 2> /dev/null;
+  xdg-open "${file_path}" 2> /dev/null;
   opened=${?};
 
   # GUI explorer directory viewer
   if [ ${opened} -ne 0 ] && [ ! -z "$(type -t explorer 2> /dev/null)" ]; then
-    explorer "${path//\//\\}";
+    explorer "${file_path//\//\\}";
     opened=0;
   fi;
 
   # Unknown environment
   if [ ${opened} -ne 0 ]; then
-    cd "${path}";
+    cd "${file_path}";
   fi;
 }
 
@@ -189,30 +189,30 @@ function desktoppath()
   # Usage: desktoppath (Acquire desktop path for most environments)
 
   # Variables
-  local path;
+  local file_path;
 
   # Environment ANDROID_DESKTOP override
-  path="${ANDROID_DESKTOP}";
+  file_path="${ANDROID_DESKTOP}";
 
   # Fallback to GUI xdg path
-  if [ -z "${path}" ]; then
-    path=$(xdg-user-dir DESKTOP 2>/dev/null);
+  if [ -z "${file_path}" ]; then
+    file_path=$(xdg-user-dir DESKTOP 2>/dev/null);
   fi;
 
   # Fallback to environment ANDROID_DEV_DRIVE path
-  if [ -z "${path}" ] && [ ! -z "${ANDROID_DEV_DRIVE}" ]; then
-    path="${ANDROID_DEV_DRIVE}/Desktop";
-    mkdir -p "${path}/";
+  if [ -z "${file_path}" ] && [ ! -z "${ANDROID_DEV_DRIVE}" ]; then
+    file_path="${ANDROID_DEV_DRIVE}/Desktop";
+    mkdir -p "${file_path}/";
   fi;
 
   # Fallback to home path
-  if [ -z "${path}" ]; then
-    path=~/Desktop;
-    mkdir -p "${path}/";
+  if [ -z "${file_path}" ]; then
+    file_path=~/Desktop;
+    mkdir -p "${file_path}/";
   fi;
 
   # Return path
-  echo "${path}";
+  echo "${file_path}";
 }
 
 # === Process Owner Check ===

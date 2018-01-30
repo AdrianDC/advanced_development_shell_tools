@@ -383,6 +383,7 @@ function repoinitsafecleaner()
   # Usage: repoinitsafecleaner [clean] (repo init safety cleaner)
 
   # Variables
+  local project_path;
   local temp_list_grep;
 
   # Prepare temp files
@@ -399,13 +400,13 @@ function repoinitsafecleaner()
 
   # Detect nested projects causing sync issues
   cp .repo/project.list "${temp_list_grep}";
-  while IFS= read -r path; do
-    if [ ! "${path: -1}" = '/' ]; then
-      path="${path}/";
+  while IFS= read -r project_path; do
+    if [ ! "${project_path: -1}" = '/' ]; then
+      project_path="${project_path}/";
     fi;
-    if grep -q "${path}" "${temp_list_grep}"; then
-      echo " repoinitsafecleaner: '${path}' has nested projects, deleting...";
-      rm -rfv "${path}";
+    if grep -q "${project_path}" "${temp_list_grep}"; then
+      echo " repoinitsafecleaner: '${project_path}' has nested projects, deleting...";
+      rm -rfv "${project_path}";
     fi;
   done < '.repo/project.list';
 

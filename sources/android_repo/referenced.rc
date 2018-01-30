@@ -289,12 +289,12 @@ function reporeflinker()
 
   # Variables
   local cnt;
+  local current_path=${PWD};
   local dev_path;
   local key;
   local local_manifests_file;
   local local_manifests_folder='';
   local options;
-  local path;
   local project;
   local search_file;
   local search_project;
@@ -304,7 +304,6 @@ function reporeflinker()
 
   # Development path
   dev_path=$(getand)/Development;
-  path=$(pwd);
 
   # Access local_manifests
   croot;
@@ -465,6 +464,6 @@ function reporeflinker()
   done;
 
   # Return to current path
-  cd "${path}";
+  cd "${current_path}";
   echo '';
 }

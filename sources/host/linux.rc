@@ -199,7 +199,7 @@ function drivespeedtest()
   fi;
 
   # Variables
-  local path=${1};
+  local file_path=${1};
   local time_diff;
   local value;
 
@@ -207,9 +207,9 @@ function drivespeedtest()
   echo '';
   sync;
   time_diff=$(date +%s%N);
-  time sh -c "dd if=/dev/zero of=${path} bs=100k count=1k && sync";
+  time sh -c "dd if=/dev/zero of=${file_path} bs=100k count=1k && sync";
   time_diff=$(($(date +%s%N) - time_diff));
-  rm "${path}";
+  rm "${file_path}";
   echo '';
 
   # Calculate performance

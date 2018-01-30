@@ -43,7 +43,7 @@ function uploadmega()
   fi;
 
   # Variables
-  local path=${1};
+  local file_path=${1};
   local target=${2:-Development};
   local time_start;
   local time_span;
@@ -52,13 +52,13 @@ function uploadmega()
   time_start=$(date +%s);
 
   # Load path from PACKAGE_RESULT
-  if [ -z "${path}" ] && [ -f "${PACKAGE_RESULT}" ]; then
-    path=${PACKAGE_RESULT};
+  if [ -z "${file_path}" ] && [ -f "${PACKAGE_RESULT}" ]; then
+    file_path=${PACKAGE_RESULT};
   fi;
 
   # File full path
-  if [ -f "${path}" ]; then
-    path=$(readlink -f "${path}");
+  if [ -f "${file_path}" ]; then
+    file_path=$(readlink -f "${file_path}");
   fi;
 
   # Detect main target inclusion
@@ -72,7 +72,7 @@ function uploadmega()
 
   # Use AndroidFiles to save the file
   if [ ! -z "${ANDROID_FILES_PATH}" ] && [[ "${target}" == *'Root/Android'* ]]; then
-    androidfilesadd "${path}" "${target#/Root/Android/}";
+    androidfilesadd "${file_path}" "${target#/Root/Android/}";
   fi;
 
   # Remove local megatools cache
@@ -81,11 +81,11 @@ function uploadmega()
   # Upload file to target
   echo '';
   megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      "${target}/$(basename "${path}")" 2> /dev/null;
+      "${target}/$(basename "${file_path}")" 2> /dev/null;
   megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       "${target}" 2> /dev/null;
   megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      --path "${target}" "${path}";
+      --path "${target}" "${file_path}";
 
   # Reload mega.nz account
   meganzreload;
@@ -124,24 +124,24 @@ function downloadmega()
   fi;
 
   # Variables
-  local path=${1};
+  local file_path=${1};
   local remove_remote=${2};
   local file_name;
   local time_start;
   local time_span;
 
   # Initialize variables
-  file_name=$(basename "${path}");
+  file_name=$(basename "${file_path}");
   time_start=$(date +%s);
 
   # Detect main target inclusion
-  if [[ ! "${path}" == *'/Root/'* ]]; then
-    path=/Root/Android/${path};
+  if [[ ! "${file_path}" == *'/Root/'* ]]; then
+    file_path=/Root/Android/${file_path};
   fi;
 
   # Upload header informations
   echo '';
-  echo -e " \e[1;33m[ Download from the server - Path '${path#/Root/Android/}' ]\e[0m";
+  echo -e " \e[1;33m[ Download from the server - Path '${file_path#/Root/Android/}' ]\e[0m";
 
   # Remove local megatools cache
   rm -rf /tmp/*.megatools.cache;
@@ -155,12 +155,12 @@ function downloadmega()
   # Download file from target
   echo '';
   megaget --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      --path ./ "${path}";
+      --path ./ "${file_path}";
 
   # Delete remote file
   if [ "${remove_remote}" = 'true' ] && [ -f "${file_name}" ]; then
     megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-        "${path}";
+        "${file_path}";
   fi;
 
   # Clean saved file

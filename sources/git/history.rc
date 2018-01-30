@@ -33,17 +33,17 @@ function gitlos()
   fi;
 
   # Variables
-  local input;
-  local path;
   local cnt;
+  local input;
+  local search_path;
 
   # Handle input values
   if [ -f "${1}" ] || [ -d "${1}" ]; then
-    path=${1};
+    search_path=${1};
     input=${2};
     cnt=${3:-30};
   else
-    path=.;
+    search_path=.;
     input=${1};
     cnt=${2:-30};
   fi;
@@ -52,7 +52,7 @@ function gitlos()
   echo '';
   echo -e " \e[1;37mSearching for ${input} in last ${cnt} commits...\e[0m";
   echo '';
-  for sha1 in $(git log --max-count="${cnt}" --format=format:%H -- "${path}"); do
+  for sha1 in $(git log --max-count="${cnt}" --format=format:%H -- "${search_path}"); do
     if git show "${sha1}" | grep -iq "${input}"; then
       git --no-pager show -M --name-only --oneline "${sha1}";
       git --no-pager show -M "${sha1}" | grep -i "${input}";

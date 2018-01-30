@@ -22,7 +22,8 @@ function cdd()
 
   # Variables
   local content;
-  local path;
+  local project_item;
+  local project_path;
 
   # Shortcut
   content=${1};
@@ -31,25 +32,25 @@ function cdd()
   fi;
 
   # Path generation
-  path=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/*\/*${content}*/g");
-  for path_item in ${path}; do
-    if [ -d "${path_item}" ] && [[ ! "${path_item}" == *'generic'* ]] && [[ ! "${path_item}" == *'/qcom/'* ]]; then
-      path=${path_item};
+  project_path=$(pwd | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/device\/*\/*${content}*/g");
+  for project_item in ${project_path}; do
+    if [ -d "${project_item}" ] && [[ ! "${project_item}" == *'generic'* ]] && [[ ! "${project_item}" == *'/qcom/'* ]]; then
+      project_path=${project_item};
       break;
     fi;
   done;
 
   # Check path
-  if [ ! -d "${path}" ]; then
-    path=$(find ./*"${1}"* -type d -depth 0 2> /dev/null | head -n 1);
-    if [ -z "${path}" ]; then
+  if [ ! -d "${project_path}" ]; then
+    project_path=$(find ./*"${1}"* -type d -depth 0 2> /dev/null | head -n 1);
+    if [ -z "${project_path}" ]; then
       echo " cdd: '${1}' not found...";
       return;
     fi;
   fi;
 
   # Access path
-  cd "${path}";
+  cd "${project_path}";
 }
 
 # === Project Access ===
@@ -66,7 +67,7 @@ function cdp()
   # Variables
   local cnt=0;
   local key;
-  local path;
+  local project_path;
   local list_paths=('');
   local top;
 
@@ -74,11 +75,11 @@ function cdp()
   top=$(gettop);
 
   # Parse projects list to find first match
-  while IFS= read -r path; do
-    path=${path%/};
-    if [[ "${path##*/}" == *"${1}"* ]]; then
+  while IFS= read -r project_path; do
+    project_path=${project_path%/};
+    if [[ "${project_path##*/}" == *"${1}"* ]]; then
       cnt=$((cnt + 1));
-      list_paths+=("${path}");
+      list_paths+=("${project_path}");
     fi;
   done < "${top}/.repo/project.list";
 
@@ -100,12 +101,12 @@ function cdp()
 
     # Display paths menu
     cnt=0;
-    for path in "${list_paths[@]}"; do
-      if [ -z "${path}" ]; then
+    for project_path in "${list_paths[@]}"; do
+      if [ -z "${project_path}" ]; then
         continue;
       fi;
       cnt=$((cnt + 1));
-      echo -e "  \e[1;33m${cnt}: \e[1;37m${path}\e[0m";
+      echo -e "  \e[1;33m${cnt}: \e[1;37m${project_path}\e[0m";
     done;
     echo '';
 
@@ -125,13 +126,13 @@ function cdman()
   # Usage: cdman (Access manifests path)
 
   # Variables
-  local path;
+  local folder_path;
 
   # Access manifests path
-  path=$(pwd \
-       | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/manifests/g");
-  mkdir -p "${path}/";
-  cd "${path}/";
+  folder_path=$(pwd \
+              | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/manifests/g");
+  mkdir -p "${folder_path}/";
+  cd "${folder_path}/";
 }
 
 # === Repo Local Manifests ===
@@ -140,13 +141,13 @@ function cdlocman()
   # Usage: cdlocman (Access local manifests path)
 
   # Variables
-  local path;
+  local folder_path;
 
   # Access local manifests path
-  path=$(pwd \
-       | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/local_manifests/g");
-  mkdir -p "${path}/";
-  cd "${path}/";
+  folder_path=$(pwd \
+              | sed "s/\(.*\)Android\([^/]*\/[^/]*\).*/\1Android\2\/.repo\/local_manifests/g");
+  mkdir -p "${folder_path}/";
+  cd "${folder_path}/";
 }
 
 # === Repo Out Getter ===
@@ -279,16 +280,13 @@ function pathchanged()
   # Usage: pathchanged <command> <parameters> (Run command and notify path changes)
 
   # Variables
-  local path;
-
-  # Save current path;
-  path=$(pwd);
+  local current_path=${PWD};
 
   # Run input command
   "${@}";
 
   # Notify path differences
-  [ "${path}" = "$(pwd)" ];
+  [ "${current_path}" = "$(pwd)" ];
 }
 
 # === ROMs Shortcuts ===

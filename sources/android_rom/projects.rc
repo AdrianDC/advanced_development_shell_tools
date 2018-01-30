@@ -183,6 +183,7 @@ function androidprojectpatcher()
   local android_top;
   local project_count;
   local project_index;
+  local project_path;
   local project_paths=();
   local currentdir=${PWD};
 
@@ -233,9 +234,9 @@ function androidprojectpatcher()
   # Extract specific projects paths
   if [ ! -z "${project_specific_inputs[*]}" ]; then
     android_top=$(gettop);
-    for path in "${project_specific_inputs[@]}"; do
-      path=$(readlink -f "${path}");
-      project_paths+=("${path#${android_top}/}");
+    for project_path in "${project_specific_inputs[@]}"; do
+      project_path=$(readlink -f "${project_path}");
+      project_paths+=("${project_path#${android_top}/}");
     done;
   fi;
 
@@ -260,8 +261,9 @@ function androidprojectpatcher()
   local git_revs_count;
   local git_revs_count_local;
   local git_revs_count_remote;
-  local path_branch;
+  local project_branch;
   local project_github;
+  local project_path;
   local shallow_count;
   local user_is_owner='';
 
@@ -271,29 +273,29 @@ function androidprojectpatcher()
   fi;
 
   # Projects loader
-  for path in "${project_paths[@]}"; do
+  for project_path in "${project_paths[@]}"; do
 
     # Project selection
-    path=${path%/};
-    path_branch=${path//\//_};
+    project_path=${project_path%/};
+    project_branch=${project_path//\//_};
     project_index=$((project_index + 1));
     echo '';
-    echo -e " \e[1;37m=== [${project_index}/${project_count}] ${path} [${path_branch}] ===\e[0m";
+    echo -e " \e[1;37m=== [${project_index}/${project_count}] ${project_path} [${project_branch}] ===\e[0m";
     echo '';
     croot;
 
     # Ignore missing git projects
-    if [ ! -d "${path}/.git" ]; then
+    if [ ! -d "${project_path}/.git" ]; then
       echo '  .git project not found, ignoring...';
       continue;
     fi;
-    cd "${path}/";
+    cd "${project_path}/";
 
     # Targets selection
     project_github="https://github.com/${project_owner}/${project_name}.git";
 
     # Fetch
-    if ! git fetch "${project_github}" "${path_branch}"; then
+    if ! git fetch "${project_github}" "${project_branch}"; then
       echo 'Remote project branch not found, ignoring...';
       continue;
     fi;
@@ -308,7 +310,7 @@ function androidprojectpatcher()
         shallow_count=$((shallow_count + 10));
         echo -en "\r\033[K  \e[1;33m> Searching common history with depth ${shallow_count}...\e[0m";
         git fetch --depth "${shallow_count}" "${remote_name}" "${remote_branch}" >/dev/null 2>&1;
-        git fetch --depth "${shallow_count}" "${project_github}" "${path_branch}" >/dev/null 2>&1;
+        git fetch --depth "${shallow_count}" "${project_github}" "${project_branch}" >/dev/null 2>&1;
       done;
       echo '';
     fi;
@@ -417,7 +419,7 @@ function androidprojectpatcher()
             echo -e '  \e[1;31m< Automatic update failed...';
             echo "     Tried to add following commits: ${sha1} ${commits_todo}";
             echo -e '  \e[1;33m> Manually fix then push with :\e[0m';
-            echo "     gitbranchpusher '${key_automated_patch}' '${project_github}' '${path_branch}';";
+            echo "     gitbranchpusher '${key_automated_patch}' '${project_github}' '${project_branch}';";
             echo '';
             commits_todo="git cherry-pick ${sha1} ${commits_todo}";
             ${commits_todo} 2>/dev/null;
@@ -434,7 +436,7 @@ function androidprojectpatcher()
 
         # Automatic push
         if [ ! -z "${user_is_owner}" ]; then
-          gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+          gitbranchpusher "${key_automated_push}" "${project_github}" "${project_branch}";
         fi;
 
       # Only push the project
@@ -442,7 +444,7 @@ function androidprojectpatcher()
 
         # Automatic push
         if [ ! -z "${user_is_owner}" ]; then
-          gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+          gitbranchpusher "${key_automated_push}" "${project_github}" "${project_branch}";
         fi;
 
       # Project is ready
@@ -456,7 +458,7 @@ function androidprojectpatcher()
 
       # Automatic push
       if [ ! -z "${user_is_owner}" ]; then
-        gitbranchpusher "${key_automated_push}" "${project_github}" "${path_branch}";
+        gitbranchpusher "${key_automated_push}" "${project_github}" "${project_branch}";
       fi;
 
     # Project is ready
@@ -492,6 +494,7 @@ function androidprojectrebaser()
   local project_specific_inputs=("${@:4}");
   local android_top;
   local currentdir=${PWD};
+  local project_path;
   local projects_specific=;
 
   # Automated key shortcut
@@ -505,9 +508,9 @@ function androidprojectrebaser()
   # Extract specific projects paths
   if [ ! -z "${project_specific_inputs[*]}" ]; then
     android_top=$(gettop);
-    for path in "${project_specific_inputs[@]}"; do
-      path=$(readlink -f "${path}");
-      projects_specific="${projects_specific} ${path#${android_top}/}";
+    for project_path in "${project_specific_inputs[@]}"; do
+      project_path=$(readlink -f "${project_path}");
+      projects_specific="${projects_specific} ${project_path#${android_top}/}";
     done;
   fi;
 
@@ -689,18 +692,18 @@ function androidprojectforeach()
   fi;
 
   # Variables
-  local path;
+  local project_path;
 
   # Android project remote paths list
-  for path in $(androidprojectpaths "${1}" "${2}"); do
+  for project_path in $(androidprojectpaths "${1}" "${2}"); do
 
     # Access path
     croot;
-    cd "${path}";
+    cd "${project_path}";
 
     # Information
     echo '';
-    echo "[${path}]";
+    echo "[${project_path}]";
 
     # Run commands
     ${3};
@@ -725,18 +728,18 @@ function androidprojectsync()
 
   # Variables
   local branch;
-  local path;
+  local project_path;
 
   # Android project remote paths list
-  for path in $(androidprojectpaths "${1}" "${2}"); do
+  for project_path in $(androidprojectpaths "${1}" "${2}"); do
 
     # Access path
     croot;
-    cd "${path}";
+    cd "${project_path}";
 
     # Information
     echo '';
-    echo " androidproject: Syncing '${path}' path...";
+    echo " androidproject: Syncing '${project_path}' path...";
 
     # Fetch and reset
     branch=$(repogetbranch);
@@ -763,18 +766,18 @@ function androidprojectungraft()
 
   # Variables
   local branch;
-  local path;
+  local project_path;
 
   # Android project remote paths list
-  for path in $(androidprojectpaths "${1}" "${2}"); do
+  for project_path in $(androidprojectpaths "${1}" "${2}"); do
 
     # Access path
     croot;
-    cd "${path}" 2>/dev/null || continue;
+    cd "${project_path}" 2>/dev/null || continue;
 
     # Information
     echo '';
-    echo " androidprojectungraft: Fetching '${path}' last 100 commits...";
+    echo " androidprojectungraft: Fetching '${project_path}' last 100 commits...";
 
     # Fetch and ungraft
     branch=$(repogetbranch);
@@ -800,18 +803,18 @@ function androidprojectunshallow()
 
   # Variables
   local branch;
-  local path;
+  local project_path;
 
   # Android project remote paths list
-  for path in $(androidprojectpaths "${1}" "${2}"); do
+  for project_path in $(androidprojectpaths "${1}" "${2}"); do
 
     # Access path
     croot;
-    cd "${path}" 2>/dev/null || continue;
+    cd "${project_path}" 2>/dev/null || continue;
 
     # Information
     echo '';
-    echo " androidprojectunshallow: Checking '${path}' shallow status...";
+    echo " androidprojectunshallow: Checking '${project_path}' shallow status...";
 
     # Fetch and unshallow
     branch=$(repogetbranch);

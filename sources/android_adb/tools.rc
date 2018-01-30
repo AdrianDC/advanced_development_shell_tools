@@ -331,17 +331,17 @@ function adbedit()
   # Usage: adbedit [file_path] (Edit adb file, default on /system/build.prop)
 
   # Variables
+  local file_path;
   local name;
-  local path;
 
   # Initialize variables
-  path=${1:-/system/build.prop};
-  name=$(basename "${path}");
+  file_path=${1:-/system/build.prop};
+  name=$(basename "${file_path}");
 
   # Pull file as root
   adbro;
   rm -f "${name}";
-  adb pull "${path}";
+  adb pull "${file_path}";
 
   # Check local file permissions
   if [ ! -r "${name}" ] || [ ! -w "${name}" ]; then
@@ -355,6 +355,6 @@ function adbedit()
   read -r;
 
   # Push back file to device
-  adb push "${name}" "${path}";
+  adb push "${name}" "${file_path}";
   rm "${name}";
 }

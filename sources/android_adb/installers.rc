@@ -353,14 +353,14 @@ function adbsiderom()
   local file_input=${1};
   local device=${2};
   local no_reboot=${3};
+  local addons_path=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.rom.addons;
   local name;
-  local path=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.rom.addons;
   local target_old;
 
   # Detect missing device input automatically
   if [ -z "${device}" ]; then
     file_input=$(readlink -f "${file_input}");
-    for name in $(cd "${path}/"; echo ''*); do
+    for name in $(cd "${addons_path}/"; echo ''*); do
       if [[ "${file_input}" == *"${name}"* ]]; then
         device=${name};
         break;
@@ -375,12 +375,12 @@ function adbsiderom()
   fi;
 
   # ROM addons folder
-  if [ ! -d "${path}/${device}" ]; then
-    mkdir "${path}";
-    mkdir "${path}/${device}";
+  if [ ! -d "${addons_path}/${device}" ]; then
+    mkdir "${addons_path}";
+    mkdir "${addons_path}/${device}";
     echo '';
-    echo -e "\e[1;33madbsiderom: Fill the '${path}/${device}/' folder with zip Addons to flash after the ROM zip\e[0m";
-    diropen "${path}/${device}";
+    echo -e "\e[1;33madbsiderom: Fill the '${addons_path}/${device}/' folder with zip Addons to flash after the ROM zip\e[0m";
+    diropen "${addons_path}/${device}";
     echo '';
     echo -n ' adbsiderom: Press [Enter] to continue... ';
     read -r;
@@ -404,7 +404,7 @@ function adbsiderom()
   fi;
 
   # Launch adbside for addons zip files
-  for file in "${path}/${device}/"*'.zip'; do
+  for file in "${addons_path}/${device}/"*'.zip'; do
     echo -e "\e[1;32madbsiderom: Flashing '$(basename "${file}")' [${device}]\e[0m";
     adbside "${file}" false;
   done;

@@ -26,7 +26,7 @@ function adbmromselect()
   local key;
   local options;
   local preselect=${1};
-  local path;
+  local rom_path;
   local roms;
 
   # Verify adb is ready
@@ -53,14 +53,14 @@ function adbmromselect()
   # Create ROMs selector list
   cnt=0;
   options=('None');
-  path=;
+  rom_path=;
   >&2 echo '';
   >&2 echo -e " \e[1;37m[ Select MultiROM installation ]\e[0m";
   >&2 echo '';
   >&2 echo "   ${cnt}: ${options[${cnt}]}";
-  while read -r path; do
+  while read -r rom_path; do
     cnt=$((cnt + 1));
-    options[${cnt}]=${path};
+    options[${cnt}]=${rom_path};
     >&2 echo "   ${cnt}: ${options[${cnt}]}";
   done < "${roms}";
   >&2 echo '';

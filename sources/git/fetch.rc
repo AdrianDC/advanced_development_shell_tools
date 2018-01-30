@@ -91,6 +91,7 @@ function gitunshallow()
   # Variables
   local currentdir=${PWD};
   local branch;
+  local submodule;
   local submodules;
 
   # Fetch and unshallow
@@ -100,8 +101,8 @@ function gitunshallow()
 
   # Fetch and unshallow submodules
   submodules=$(git submodule--helper list | cut -f 2);
-  for path in ${submodules}; do
-    cd "${currentdir}/${path}/";
+  for submodule in ${submodules}; do
+    cd "${currentdir}/${submodule}/";
     branch=$(repogetbranch);
     git fetch --unshallow "$(gitgetremote "${branch}")" "${branch}" 2>&1 \
       | grep -v 'on a complete repository does not make sense';

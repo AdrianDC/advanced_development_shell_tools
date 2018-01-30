@@ -136,11 +136,12 @@ function mmmzip()
   local BuildParams;
   local BuildPathFirst;
   local CurDir;
+  local FilePath;
   local FilesList=();
+  local FolderPath;
   local Installs;
   local LogFile;
   local OutFile;
-  local path;
   local SystemPartition;
   local TargetFile;
   local TmpDir;
@@ -152,12 +153,12 @@ function mmmzip()
   BuildPathFirst=${1:-.};
   LogFile=${TmpDir}/mmm_logs.txt;
   OutFile="${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
-  path=$(readlink -f "${BuildPathFirst}");
+  FolderPath=$(readlink -f "${BuildPathFirst}");
   TargetFile="$(desktoppath)/Builds/${OutFile}";
 
   # Handle paths
   mkdir -p "$(dirname "${TargetFile}")";
-  if [ ! -d "${path}" ]; then
+  if [ ! -d "${FolderPath}" ]; then
     croot;
   fi;
 
@@ -178,7 +179,7 @@ function mmmzip()
   echo '';
 
   # Make the modules
-  if [ -d "$(readlink -f "${path}")" ]; then
+  if [ -d "$(readlink -f "${FolderPath}")" ]; then
     mmm "${BuildMode}" "${BuildParams[@]}" | tee "${LogFile}";
   elif mka -v > /dev/null 2>&1; then
     mka "${BuildParams[@]}" | tee "${LogFile}";
@@ -270,7 +271,6 @@ function systozip()
   local Installs;
   local LogFile;
   local OutFile;
-  local path;
   local SystemPartition;
   local TargetFile;
   local TmpDir;
@@ -280,7 +280,6 @@ function systozip()
   TmpDir=$(mktemp -d);
   LogFile=${TmpDir}/mmm_logs.txt;
   OutFile="${TARGET_PRODUCT}-$(basename "$(readlink -f "${BuildPathFirst}")")-$(date +'%Y%m%d-%H%M').zip";
-  path=$(readlink -f "${BuildPathFirst}");
   TargetFile="$(desktoppath)/Builds/${OutFile}";
 
   # Handle paths

@@ -37,14 +37,14 @@ function androidfilesadd()
   fi;
 
   # Variables
-  local path=${1};
+  local file_path=${1};
   local target=${2};
 
   # Add new file to AndroidFiles
   echo '';
   echo -en  ' \e[1;33mandroidfilesadd:\e[0m ';
   mkdir -p "${ANDROID_FILES_PATH}/${target}";
-  cp -fv "${path}" "${ANDROID_FILES_PATH}/${target}";
+  cp -fv "${file_path}" "${ANDROID_FILES_PATH}/${target}";
 }
 
 # === AndroidFiles Syncer ===
