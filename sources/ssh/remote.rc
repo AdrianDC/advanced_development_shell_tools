@@ -32,7 +32,7 @@ function sshremote()
   # Ignore missing credentials
   if [ "${SSHRemoteUrl}" = 'ssh.domain.universe' ]; then
     >&2 echo '';
-    >&2 echo ' sshremote: Open android_ssh_remote.rc to see how to set your logins';
+    >&2 echo -e ' \e[1;31mError: Use "shtoolsf sshremote" to see how to set your logins\e[0m';
     >&2 echo '';
     return;
   fi;

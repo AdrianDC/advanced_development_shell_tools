@@ -47,7 +47,7 @@ function uploadbasketbuild()
   # BasketBuild Uploads Credentials
   if ! __shtools_credentials_basketbuild; then
     >&2 echo '';
-    >&2 echo ' uploadbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
+    >&2 echo -e ' \e[1;31mError: Use "shtoolsf __shtools_credentials_basketbuild" to see how to set your logins\e[0m';
     >&2 echo '';
     return;
   fi;
@@ -70,7 +70,7 @@ function downloadbasketbuild()
   # BasketBuild Uploads Credentials
   if ! __shtools_credentials_basketbuild; then
     >&2 echo '';
-    >&2 echo ' downloadbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
+    >&2 echo -e ' \e[1;31mError: Use "shtoolsf __shtools_credentials_basketbuild" to see how to set your logins\e[0m';
     >&2 echo '';
     return;
   fi;
@@ -108,7 +108,7 @@ function syncbasketbuild()
   # BasketBuild Uploads Credentials
   if ! __shtools_credentials_basketbuild; then
     >&2 echo '';
-    >&2 echo ' syncbasketbuild: Open android_uploads_basketbuild.rc to see how to set your logins';
+    >&2 echo -e ' \e[1;31mError: Use "shtoolsf __shtools_credentials_basketbuild" to see how to set your logins\e[0m';
     >&2 echo '';
     return;
   fi;

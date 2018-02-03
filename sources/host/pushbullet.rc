@@ -38,7 +38,7 @@ function pushb()
   # Ignore missing credentials
   if [ "${PushbulletToken}" = 'token' ]; then
     echo '';
-    echo ' pushb: Open sources/host/pushbullet.rc to see how to set your logins';
+    echo -e ' \e[1;31mError: Use "shtoolsf pushb" to see how to set your logins\e[0m';
     echo '';
     return;
   fi;

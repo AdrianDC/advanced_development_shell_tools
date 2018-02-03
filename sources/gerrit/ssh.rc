@@ -36,7 +36,7 @@ function gerritusername()
   # Warn about missing credentials
   if [ "${GerritUsername}" = 'Username' ]; then
     echo '' 1>&2;
-    echo -e ' \e[1;31mError: Open android_gerrit.rc (in gerritusername) to see how to set your logins\e[0m' 1>&2;
+    echo -e ' \e[1;31mError: Use "shtoolsf gerritusername" to see how to set your logins\e[0m' 1>&2;
     echo '' 1>&2;
   fi;
 
@@ -73,7 +73,7 @@ function gerritssh()
     echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2018\e[0m';
     echo '';
     echo -e "      \e[1;33mError: No configuration in ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc found";
-    echo -e '             Read android_gerritssh.rc script for more details\e[0m';
+    echo -e '             \e[1;31mUse "shtoolsf gerritssh" to see how to set your logins\e[0m';
     echo '';
     echo -e '      \e[1;32mInfo: Gerrit SSH credentials will be used to login and review';
     echo -e '             HTTP credentials will only be used for the "Publish" feature\e[0m';
