@@ -1,55 +1,48 @@
 # Android Development Shell Tools #
 
- * Project created by [Adrian DC](https://github.com/AdrianDC) - 2015-2018
+ * Created by [Adrian DC](https://github.com/AdrianDC) - 2015-2018
 
- * GitHub description of the project: [About the project...](project.md)
+ * Project description : [About...](project.md)
    <br />
-   Previews of a few regular functions: [Project previews...](previews.md)
+   Regularly used functions : [Previews...](previews.md)
    <br />
-   Samples of commands usage per context: [Project samples...](samples.md)
+   Some commands examples : [Samples...](samples.md)
    <br />
-   User outputs from shtools* commands: [Project shtools...](shtools.md)
+   Project user functions : [Handlers...](shtools.md)
    <br />
-   XDA-Developers thread for this project : [Android Development Shell Tools](http://forum.xda-developers.com/-/-/-t3622382)
+   XDA-Developers forum : [Thread...](http://forum.xda-developers.com/-/-/-t3622382)
 
- * The 'android_development_shell_tools' is a project meant to provide
-   <br />
-   multiple advanced functions and shortcuts to ease Android development
+ * This project is meant to provide multiple advanced functions and shortcuts to **ease Android, Git and Linux developments**
 
- * The sources written and shared here are either meant to be used as they are,
-   <br />
-   or to serve as a reference for commands and functions an Android developer needs
+ * The sources written and shared here are either meant to be used as they are, or to serve as a **reference for commands and functions a Shell developer needs**
 
- * To keep a local clone of 'android_development_shell_tools' updated with upstream changes,
-   <br />
-   simply run the *`shtoolssync;`* command and the updates will be downloaded
-
- * Scripts flagged "Standalone Import Ready" and starting with *`source <(curl -Ls...`*
-   <br />
-   are able to be directly sourced through the provided commands in any terminal
-   <br />
-   without the need of this project being synced locally or loaded in a root context
+ * **"Standalone Import Ready"** scripts starting with *`source <(curl -Ls...`* can be directly sourced through the provided commands from a Shell without this project
 
 ---
 
 ### [ How to load and install the project ] ###
 
- * **Clone the project locally with git:**
+ * **Clone the project locally with git**
    ```Shell
    git clone https://github.com/AdrianDC/android_development_shell_tools -b master;
    ```
- * **Load the project in the current Shell terminal:**
+ * **Load the project in a Shell terminal**
    ```Shell
    source /path/to/folder/android_development_shell_tools.rc;
    ```
- * **Permanently load the project:** Open *`~/.bashrc`*, adapt and add:
+ * **Permanently load the project**
+   <br />
+   Open *`~/.bashrc`*, adapt and add:
    ```Shell
    export ANDROID_DEV_DRIVE='/media/../AndroidDev';
    source '/.../android_development_shell_tools.rc';
    ```
- * **The *`ANDROID_DEV_DRIVE`* variable** is a folder used for Android ROMs and kernels.
+   **`ANDROID_DEV_DRIVE`**: Optional folder for Android functions.
    <br />
-   You do not *need* it, but a few functions rely on it to ease things.
+ * **Synchronize new project additions**
+   ```Shell
+   shtoolssync;
+   ```
 
 ---
 

@@ -28,6 +28,14 @@ footer {
   visibility: visible !important;
 }
 
+hr {
+  max-width: 650px;
+}
+
+section > ul {
+  max-width: 600px;
+}
+
 .group_header {
   font-weight: bold;
 }
