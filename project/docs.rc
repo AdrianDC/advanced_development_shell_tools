@@ -127,6 +127,7 @@ function shtoolsreadme()
   local delimiter_end='<!-- Functions End -->';
   local github_project_url=${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/};
   local github_file_path='blob\/master';
+  local github_file_url;
   local github_raw_path='raw\/master';
   local group_buffer;
   local group_current;
@@ -189,6 +190,7 @@ function shtoolsreadme()
     # Handle file path
     path_relative=${path_file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
     path_name=${path_relative//\//\\\/};
+    github_file_url="${github_project_url}\/${github_file_path}\/${path_name//./\\\.}";
     stats_sources=$((stats_sources + 1));
 
     # Parsing header
@@ -206,7 +208,7 @@ function shtoolsreadme()
     group_current=${path_relative%/*};
 
     # Create header section
-    header_buffer="\<span class=\"group_label\"\>${path_relative//\//\\\/}\<\/span\>";
+    header_buffer="\<span class=\"group_label\"\>[${path_relative//\//\\\/}](${github_file_url})\<\/span\>";
     readme_buffer='';
 
     # Add file group header
@@ -285,7 +287,7 @@ function shtoolsreadme()
       # Append function details
       readme_output+="${readme_buffer}";
       readme_buffer='';
-      readme_output+="  * [**\\\.\/${line_usage}** *${line_summary}*](${github_project_url}\/${github_file_path}\/${path_name//./\\\.})\n";
+      readme_output+="  * [**\\\.\/${line_usage}** *${line_summary}*](${github_file_url})\n";
 
       # Sections separation
       readme_output+="\n---\n";
