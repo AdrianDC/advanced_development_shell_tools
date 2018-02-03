@@ -135,8 +135,16 @@ function adbkp()
   adb shell "kill '${pid}'";
 }
 
-function ndkstack() { ndk-stack -sym "${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols" -dump; }
+# === ADB Data Sizes Study ===
+function ndkstack()
+{
+  # Usage: ndkstack (Android NDK stacktrace study @Hide)
 
+  # Android NDK stacktrace study
+  ndk-stack -sym "${ANDROID_DEV_DRIVE}/out/target/product/huashan/symbols" -dump;
+}
+
+# === ADB Data Sizes Study ===
 function adbdu()
 {
   # Usage: adbdu (Android /data/ sizes study)
