@@ -470,6 +470,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/android_repo/cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/helpers.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/cleaners.rc)
+  ```
   * **repoclean** *[out_folder]* [*<b>\[Delete&nbsp;contents&nbsp;from&nbsp;'out'&nbsp;folder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)
   * **repodestroy** [*<b>\[Delete&nbsp;complete&nbsp;repo&nbsp;apart&nbsp;from&nbsp;local_manifests\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)
   * **repodevclean** [*<b>\[Delete&nbsp;contents&nbsp;from&nbsp;'out/target/product'&nbsp;folder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)
