@@ -38,9 +38,34 @@ function toggle_documentation(button)
   });
 }
 
+// Function: Expands details wrapping an anchor
+function anchor_expands(id)
+{
+  // Find element by tag
+  var title = document.getElementById(id);
+  if (title) {
+
+    // Find related details
+    var details = title.closest("details");
+    if (details) {
+
+      // Expand related details
+      details.open = true;
+    }
+  }
+}
+
 // Page loaded event
 window.onload = function()
 {
   // Start anchor links creations
   anchorizejekyll();
+
+  // Acquire anchor tag
+  var anchor_tag = window.location.hash.substr(1);
+
+  // Apply anchor expands
+  if (anchor_tag && anchor_tag.length !== 0) {
+    anchor_expands(anchor_tag);
+  }
 }
