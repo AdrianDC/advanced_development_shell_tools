@@ -35,13 +35,13 @@
 ### [ How to load and install the project ] ###
 
  * **Clone the project locally with git:**
-   <br />
-   *`git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`*
-
+   ```Shell
+   git clone https://github.com/AdrianDC/android_development_shell_tools -b master;
+   ```
  * **Load the project in the current Shell terminal:**
-   <br />
-   *`source /path/to/folder/android_development_shell_tools.rc;`*
-
+   ```Shell
+   source /path/to/folder/android_development_shell_tools.rc;
+   ```
  * **Permanently load the project:** Open *`~/.bashrc`*, adapt and add:
    ```Shell
    export ANDROID_DEV_DRIVE='/media/../AndroidDev';
@@ -53,7 +53,7 @@
 
 ---
 
-### [ Functions detailed documentation ] ([+/-](javascript:toggle_documentation())) ###
+### [ Functions documentation ] ([+/-](javascript:toggle_documentation())) ###
 
 <!-- Functions Start -->
 <details>
