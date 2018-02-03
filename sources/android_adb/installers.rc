@@ -65,13 +65,23 @@ function adbpushfile()
   echo -e '\e[0m';
 }
 
+# === ADB Rooted File Pusher ===
+function adbpu()
+{
+  # Usage: adbpu <file_path> <file_target> (Push files through rooted adb)
+
+  # Push files through rooted adb
+  adbro;
+  adbpushfile "${@}";
+}
+
 # === ADB System File Listener / Installer ===
 function adbif()
 {
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: adbif <command...> (Modules build listener and installed)';
+    echo ' Usage: adbif <command...> (Android modules build and install)';
     echo '';
     return;
   fi;
@@ -165,7 +175,14 @@ function adbil()
 }
 
 # === ADB File Installer Helpers ===
-function adbi() { adbro; adbif "${@}"; }
+function adbi()
+{
+  # Usage: adbi <command...> (Android modules build and rooted install)
+
+  # Android modules build and rooted install
+  adbro;
+  adbif "${@}";
+}
 
 # === ADB File Pusher ===
 function adbpf()
@@ -246,9 +263,15 @@ function adbpf()
   done;
 }
 
-# === ADB Pushes ===
-function adbp() { adbro; adbpf "${@}"; }
-function adbpu() { adbro; adbpushfile "${@}"; }
+# === ADB Rooted File Pusher ===
+function adbp()
+{
+  # Usage: adbp (Advanced recursive rooted adb files pusher)
+
+  # Advanced recursive rooted adb files pusher
+  adbro;
+  adbpf "${@}";
+}
 
 # === ADB Packages Results Pusher ===
 function adbppr()
