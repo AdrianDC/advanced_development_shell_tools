@@ -15,6 +15,11 @@
 # limitations under the License.
 #
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/commit.rc)
+
 # === Git Show Helpers ===
 alias gitshow='git show -M --name-status';
 alias gitshf='git show -M --pretty=fuller';

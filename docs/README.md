@@ -770,6 +770,11 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/git/commit.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/commit.rc)
+  ```
   * **gitshow** : *git show -M &#8208;&#8208;name-status* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitshf** : *git show -M &#8208;&#8208;pretty=fuller* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitshl** *git show &#8208;&#8208;oneline &#8208;&#8208;name-only "${1}" \| tail -n +2 \| cut -c $((1+${2:-0}))-* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
