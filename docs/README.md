@@ -858,6 +858,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/git/history.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/history.rc)
+  ```
   * **gitlo** : *git log &#8208;&#8208;pretty=oneline &#8208;&#8208;abbrev-commit* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitlod** : *git log &#8208;&#8208;pretty=oneline &#8208;&#8208;abbrev-commit &#8208;&#8208;* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitloo** : *git log &#8208;&#8208;pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" &#8208;&#8208;date=short &#8208;&#8208;all &#8208;&#8208;* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
