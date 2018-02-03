@@ -89,6 +89,15 @@ details > blockquote {
     margin-bottom: 10px;
     padding-right: 20px;
   }
+  details {
+    margin-left: 8px;
+  }
+  details > blockquote {
+    padding-left: 12px;
+  }
+  details > blockquote > ul {
+    padding-left: 24px;
+  }
 }
 
 @media print, screen and (max-width: 720px) {
