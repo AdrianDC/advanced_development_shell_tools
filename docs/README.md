@@ -1371,6 +1371,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 > ### <span class="group_label">[extensions/syncthing/cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/cleaners.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/syncthing/cleaners.rc)
+  ```
   * **stignoreclean** [*<b>\[Cleanup&nbsp;untracked&nbsp;paths&nbsp;from&nbsp;SyncThing&nbsp;.stignore*\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/cleaners.rc)
 
 ---
