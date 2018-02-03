@@ -976,17 +976,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 #### <span class="group_label">Host Development Tools</span> ####
 </summary>
 
-> ### Documentation: <span class="group_label">sources/host/bash.rc</span> ###
->
-  ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/bash.rc)
-  ```
-  * **bashup** [*<b>\[Reload ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/bash.rc)
-  * **bashe** [*<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/bash.rc)
-  * **cls** [*<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/bash.rc)
-
----
 > ### Documentation: <span class="group_label">sources/host/binary.rc</span> ###
 >
   ```Shell
@@ -1086,6 +1075,17 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 >
   * **pushb** *[message]* [*<b>\[Pushbullet notification helper\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/pushbullet.rc)
   * **pushbsizes** *&lt;paths&gt;* [*<b>\[Path sizes in Pushbullet notification\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/pushbullet.rc)
+
+---
+> ### Documentation: <span class="group_label">sources/host/terminal.rc</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/terminal.rc)
+  ```
+  * **bashup** [*<b>\[Reload ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
+  * **bashe** [*<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
+  * **cls** [*<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
 
 ---
 > ### Documentation: <span class="group_label">sources/host/tools.rc</span> ###
