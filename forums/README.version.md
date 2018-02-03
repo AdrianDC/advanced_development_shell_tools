@@ -7,6 +7,8 @@
 
 [*]Complete project restructuration into isolated "Toolkits"
    allowing users to choose which parts should be loaded
+[*]Support for zsh (Z-Shell) added properly
+[*]Smartphone readability of the documentation improved
 [*]Clustering and initial configurations allowing a new user
    to adapt between "Android developer", "Developer using Git"
    or "Another type of developer or user"
