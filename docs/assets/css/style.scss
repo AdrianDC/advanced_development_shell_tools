@@ -24,10 +24,6 @@ footer {
   width: 240px;
 }
 
-.anchor-item:hover > a:last-child {
-  visibility: visible !important;
-}
-
 hr {
   max-width: 650px;
 }
@@ -56,18 +52,27 @@ details > summary > h4 {
 
 details > blockquote {
   font-style: inherit;
+  margin-top: 20px;
 }
 
 details > pre, details > blockquote > pre {
   margin-left: 10px;
 }
 
+.anchor-item {
+  word-wrap: normal;
+}
+
+.anchor-item:hover > a:last-child {
+  visibility: visible !important;
+}
+
 details > pre, details > ul {
   margin-top: 10px;
 }
 
-details > blockquote {
-  margin-top: 20px;
+details > blockquote > ul > li > a > em {
+  word-wrap: normal;
 }
 
 .group_footer > p {

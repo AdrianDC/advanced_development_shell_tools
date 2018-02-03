@@ -282,7 +282,7 @@ function shtoolsreadme()
       line_usage=${line_usage#\# Usage: };
 
       # Apply summary styling
-      line_summary="<b>\\\[${line_summary}\\\]<\\/b>";
+      line_summary="<b>\\\[${line_summary// /\\\&nbsp;}\\\]\&nbsp;<\\/b>";
 
       # Append function details
       readme_output+="${readme_buffer}";
@@ -388,7 +388,7 @@ function shtoolsreadme()
         if [[ "${line_usage}" == *"-SUMMARY-"*"-SUMMARY-"* ]]; then
           line_summary=${line_usage#*-SUMMARY-};
           line_summary=${line_summary%-SUMMARY-*};
-          line_summary="\\\[${line_summary}\\\]";
+          line_summary="\\\[${line_summary// /\\\&nbsp;}\\\]\&nbsp;";
           line_usage=${line_usage/-SUMMARY-*-SUMMARY-/};
         fi;
 
