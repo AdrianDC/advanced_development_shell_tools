@@ -842,6 +842,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/git/fetch.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/fetch.rc)
+  ```
   * **gitfetchtreset** *[remote] [branch]* [*<b>\[Git&nbsp;fetch&nbsp;and&nbsp;reset&nbsp;hard\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
   * **gitfcu** *&lt;url&gt; [branch]* [*<b>\[Git&nbsp;fetch&nbsp;url&nbsp;and&nbsp;reset\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
   * **gitfurl** *&lt;url&gt;* [*<b>\[Git&nbsp;fetch&nbsp;from&nbsp;full&nbsp;url\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
