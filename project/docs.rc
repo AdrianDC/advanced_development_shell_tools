@@ -325,6 +325,7 @@ function shtoolsreadme()
 
         # Parse single line function
         if [[ "${line}" == *"${line_function}()"*"{"*"}" ]]; then
+          line_summary="\(Inline\)";
           line_usage=${line#*\{ };
           line_usage=${line_usage% \}*};
           line_usage=${line_usage%;};
@@ -385,11 +386,12 @@ function shtoolsreadme()
         if [[ "${line_usage}" == *"-SUMMARY-"*"-SUMMARY-"* ]]; then
           line_summary=${line_usage#*-SUMMARY-};
           line_summary=${line_summary%-SUMMARY-*};
+          line_summary="\\\[${line_summary}\\\]";
           line_usage=${line_usage/-SUMMARY-*-SUMMARY-/};
-
-          # Apply summary styling
-          line_summary="<b>\\\[${line_summary}\\\]<\/b>";
         fi;
+
+        # Apply summary styling
+        line_summary="<b>${line_summary}<\/b>";
 
         # Ignore single usage calls
         if [ "${line_usage}" = "${line_function}" ]; then
