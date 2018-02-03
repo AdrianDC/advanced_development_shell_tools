@@ -877,6 +877,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/git/merge.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/merge.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/merge.rc)
+  ```
   * **gitmt** : *git mergetool* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/merge.rc)
   * **gitmte** [*<b>\[Merge&nbsp;tool&nbsp;with&nbsp;manual&nbsp;conflicts&nbsp;resolution\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/merge.rc)
   * **gitmtr** *&lt;referenced_path&gt;* [*<b>\[Merge&nbsp;tool&nbsp;with&nbsp;reference&nbsp;project&nbsp;sources\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/merge.rc)
