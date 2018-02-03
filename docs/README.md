@@ -1072,8 +1072,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/terminal.rc)
   ```
-  * **bashup** [*<b>\[Reload ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
-  * **bashe** [*<b>\[Edit ~/.bashrc\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
+  * **shconfig** [*<b>\[Get ~/.&lt;shell&gt;rc configuration\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
+  * **shup** [*<b>\[Reload ~/.&lt;shell&gt;rc configuration\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
+  * **she** [*<b>\[Edit ~/.&lt;shell&gt;rc configuration\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
   * **cls** [*<b>\[Clean terminal screen\]</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
 
 ---

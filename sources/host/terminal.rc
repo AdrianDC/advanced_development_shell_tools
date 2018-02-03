@@ -19,22 +19,46 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/terminal.rc)
 
-# === .bashrc Update ===
-function bashup()
+# === Shell Configuration Path ===
+function shconfig()
 {
-  # Usage: bashup (Reload ~/.bashrc)
+  # Usage: shconfig (Get ~/.<shell>rc configuration)
 
-  # Reload ~/.bashrc
-  source ~/.bashrc;
+  # Get current shell configuration path
+  case "$(ps -o command -p $$)" in
+
+    # Z-Shell
+    *zsh*)
+      echo "${HOME}/.zshrc";;
+
+    # Bash Shell
+    *bash*)
+      echo "${HOME}/.bashrc";;
+
+    # Unknown Shell
+    *)
+      >&2 echo '';
+      >&2 echo ' shconfig: ERROR: Shell detection failed';
+      >&2 echo '';;
+  esac;
 }
 
-# === .bashrc Edit ===
-function bashe()
+# === Shell Configuration Reload ===
+function shup()
 {
-  # Usage: bashe (Edit ~/.bashrc)
+  # Usage: shup (Reload ~/.<shell>rc configuration)
 
-  # Edit ~/.bashrc
-  FILEEDIT_TOUCH_NEW_FILE=true fileedit ~/.bashrc;
+  # Reload ~/.<shell>rc configuration
+  source "$(shconfig)";
+}
+
+# === Shell Configuration Edit ===
+function she()
+{
+  # Usage: she (Edit ~/.<shell>rc configuration)
+
+  # Edit ~/.<shell>rc configuration
+  FILEEDIT_TOUCH_NEW_FILE=true fileedit "$(shconfig)";
 }
 
 # === Clear Screen ===
