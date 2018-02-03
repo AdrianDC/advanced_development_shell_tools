@@ -186,6 +186,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/android_adb/logs.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/logs.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/logs.rc)
+  ```
   * **adbl** *[all/crash/events/main/radio/system] [file_output] [bool_clean]* [*<b>\[adb&nbsp;Logcat&nbsp;helper\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/logs.rc)
   * **adblr** [*<b>\[Logcat&nbsp;output&nbsp;relevant&nbsp;reader\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/logs.rc)
   * **adblpcln** *[file_adb.log]* [*<b>\[Logcat&nbsp;output&nbsp;public&nbsp;cleaner\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/logs.rc)
