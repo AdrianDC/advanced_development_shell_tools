@@ -66,9 +66,14 @@ details > blockquote {
 }
 
 @media print, screen and (max-width: 960px) {
+  body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
   header {
     width: auto;
     padding-right: 0px;
+    text-align: center;
   }
   section {
     margin-left: 0px;
@@ -76,16 +81,26 @@ details > blockquote {
   footer {
     width: auto;
   }
+  .header_bar {
+    display: none;
+  }
+  .header_view {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding-right: 20px;
+  }
 }
 
 @media print, screen and (max-width: 720px) {
   body {
-    padding: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 
 @media print, screen and (max-width: 480px) {
   body {
-    padding: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
   }
 }

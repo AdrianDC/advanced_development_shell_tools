@@ -15,21 +15,23 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>{{ site.title | default: site.github.repository_name | replace: '_', '_<wbr>' }}</h1>
-        <p>{{ site.description | default: site.github.project_tagline }}</p>
+        <div class="header_bar">
+          <h1>{{ site.title | default: site.github.repository_name | replace: '_', '_<wbr>' }}</h1>
+          <p>{{ site.description | default: site.github.project_tagline }}</p>
+        </div>
 
         {% if site.github.is_project_page %}
-          <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
+          <p class="header_view"><a href="{{ site.github.repository_url }}">GitHub project <small>{{ github_name }}</small></a></p>
 
-          <p class="view"><a href="./version.html">Open the project changelog</a></p>
+          <p class="header_view"><a href="./version.html">Project changelog</a></p>
         {% endif %}
 
         {% if page.url != '/' %}
-          <p class="view"><a href="./">&#8635; Back to the documentation</a></p>
+          <p class="header_view"><a href="./">&#8635; Back to the documentation</a></p>
         {% endif %}
 
         {% if site.github.is_user_page %}
-          <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
+          <p class="header_view"><a href="{{ site.github.owner_url }}">GitHub Profile</a></p>
         {% endif %}
 
         {% if site.show_downloads %}
