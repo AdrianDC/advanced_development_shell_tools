@@ -4,48 +4,23 @@
 @import "{{ site.theme }}";
 
 .wrapper {
-  width:auto;
-  margin:0 auto;
+  width: auto;
+  margin: 0 auto;
 }
 
 header {
-  width:240px;
+  width: 240px;
   word-wrap: break-word;
 }
 
 section {
-  width:auto;
-  margin-left:270px;
-  float:none;
+  width: auto;
+  margin-left: 270px;
+  float: none;
 }
 
 footer {
-  width:240px;
-}
-
-@media print, screen and (max-width: 960px) {
-  header {
-    width:auto;
-    padding-right:0px;
-  }
-  section {
-    margin-left:0px;
-  }
-  footer {
-    width:auto;
-  }
-}
-
-@media print, screen and (max-width: 720px) {
-  body {
-    padding: 25px;
-  }
-}
-
-@media print, screen and (max-width: 480px) {
-  body {
-    padding: 6px;
-  }
+  width: 240px;
 }
 
 .anchor-item:hover > a:last-child {
@@ -88,4 +63,29 @@ details > blockquote {
 
 .group_footer > p {
   margin-bottom: 0px;
+}
+
+@media print, screen and (max-width: 960px) {
+  header {
+    width: auto;
+    padding-right: 0px;
+  }
+  section {
+    margin-left: 0px;
+  }
+  footer {
+    width: auto;
+  }
+}
+
+@media print, screen and (max-width: 720px) {
+  body {
+    padding: 25px;
+  }
+}
+
+@media print, screen and (max-width: 480px) {
+  body {
+    padding: 6px;
+  }
 }
