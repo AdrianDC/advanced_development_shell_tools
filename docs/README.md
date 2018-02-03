@@ -519,6 +519,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/android_repo/init.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/init.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/init.rc)
+  ```
   * **repoinitaosp** *&lt;branch_id&gt; [referenced,clean,light/shallow,example]* [*<b>\[repo&nbsp;init&nbsp;for&nbsp;AOSP\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/init.rc)
   * **repoinitlineage** *&lt;13.0/14.1/15.0/15.1&gt; [referenced,clean,light/shallow,example]* [*<b>\[repo&nbsp;init&nbsp;for&nbsp;LineageOS\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/init.rc)
   * **repoinitrr** *&lt;nougat&gt; [referenced,clean,light/shallow]* [*<b>\[repo&nbsp;init&nbsp;for&nbsp;ResurrectionRemix\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/init.rc)

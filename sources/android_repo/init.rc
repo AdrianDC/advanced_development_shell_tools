@@ -15,6 +15,9 @@
 # limitations under the License.
 #
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/init.rc)
+
 # === Repo Init AOSP ===
 function repoinitaosp()
 {
