@@ -756,6 +756,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 > ### <span class="group_label">[sources/git/cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/cleaners.rc)
+  ```
   * **gits** : *git stash* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
   * **gitsp** : *git stash -p* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
   * **gitsu** : *git stash -u* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
