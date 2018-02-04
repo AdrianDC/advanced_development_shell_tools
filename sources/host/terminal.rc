@@ -61,6 +61,15 @@ function she()
   FILEEDIT_TOUCH_NEW_FILE=true fileedit "$(shconfig)";
 }
 
+# === Shell Minimal Instance ===
+function shminimal()
+{
+  # Usage: shminimal (Shell with SH_MINIMAL defined)
+
+  # Shell with SH_MINIMAL defined
+  SH_MINIMAL=true "$(ps -o command= -p $$)";
+}
+
 # === Clear Screen ===
 function cls()
 {

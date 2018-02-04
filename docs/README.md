@@ -1117,6 +1117,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **shconfig** [*<b>\[Get&nbsp;~/.&lt;shell&gt;rc&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
   * **shup** [*<b>\[Reload&nbsp;~/.&lt;shell&gt;rc&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
   * **she** [*<b>\[Edit&nbsp;~/.&lt;shell&gt;rc&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
+  * **shminimal** [*<b>\[Shell&nbsp;with&nbsp;SH_MINIMAL&nbsp;defined\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
   * **cls** [*<b>\[Clean&nbsp;terminal&nbsp;screen\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/terminal.rc)
 
 ---
