@@ -77,15 +77,15 @@ function gitmtbasic()
 
   # Basic fix for all unmerged files
   for file in $(git diff --name-only | uniq); do
-    git diff "${file}";
+    git --no-pager diff "${file}";
     echo '';
     echo -n " ${file}: Diff before fix [Enter / Ctrl+C] ";
     read -r;
     echo '';
-    sed -i "s/>>>>>>>.*//g" "${file}";
-    sed -i "s/=======.*//g" "${file}";
-    sed -i "s/<<<<<<<.*//g" "${file}";
-    git diff "${file}";
+    sed -i '/>>>>>>>.*/d' "${file}";
+    sed -i 's/=======.*//g' "${file}";
+    sed -i '/<<<<<<<.*/d' "${file}";
+    git --no-pager diff "${file}";
     echo '';
     echo -n " ${file}: Done ? [Enter / Ctrl+C] ";
     read -r;
@@ -94,6 +94,6 @@ function gitmtbasic()
 
   # Commit results
   echo '';
-  git commit --no-edit;
+  GIT_EDITOR="sed -i '/^#/d'" git commit;
   echo '';
 }
