@@ -36,7 +36,7 @@ function shtoolscd()
 # === Android Development Shell Tools Files ===
 function shtoolsfiles()
 {
-  # Usage: shtoolsfiles [entrypoint,sources,scripts] (List the project files)
+  # Usage: shtoolsfiles [entrypoint,sources,scripts] (List the project files @Hide)
 
   # Present entrypoint path
   if [ -z "${1}" ] || [[ "${1}" == *"entrypoint"* ]]; then
