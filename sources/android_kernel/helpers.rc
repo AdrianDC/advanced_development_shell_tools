@@ -37,4 +37,14 @@ function makekernelinjector()
 }
 
 # === GitHub Url Cherry-pick Prima Helper ===
-function gitcpupprima() { gitcpup "${1}" 'CORE' 'drivers/staging/prima/CORE'; }
+function gitcpupprima()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo ' Usage: gitcpupprima <url> (Git URL prima patch applier on a kernel)';
+    return;
+  fi;
+
+  # Use hidden extension on 'gitcpup' for rename path when PRIMA is on kernel
+  gitcpup "${1}" 'CORE' 'drivers/staging/prima/CORE';
+}
