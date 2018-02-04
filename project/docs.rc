@@ -18,7 +18,7 @@
 # === Android Development Shell Tools Docs ===
 function shtoolsdocs()
 {
-  # Usage: shtoolsdocs [bool_install] (Instantiate android_development_shell_tools documentation)
+  # Usage: shtoolsdocs [bool_install] (Instantiate the project documentation)
 
   # Variables
   local currentdir=${PWD};

@@ -21,7 +21,7 @@ function __shtoolsoptions()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: __shtoolsoptions <option_prefix> [option_set] (Settings holder for android_development_shell_tools)';
+    echo ' Usage: __shtoolsoptions <option_prefix> [option_set] (Settings holder for the project)';
     echo '';
     return;
   fi;

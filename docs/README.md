@@ -56,24 +56,24 @@
 
 > ### <span class="group_label">[project/access.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)</span> ###
 >
-  * **shtoolsget** [*<b>\[Get&nbsp;android_development_shell_tools&nbsp;path\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
-  * **shtoolscd** [*<b>\[Access&nbsp;android_development_shell_tools&nbsp;path\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
-  * **shtoolsfiles** *[entrypoint,sources,scripts]* [*<b>\[List&nbsp;android_development_shell_tools&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
-  * **shtoolssync** [*<b>\[Download&nbsp;new&nbsp;android_development_shell_tools&nbsp;changes\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
-  * **shtoolsup** [*<b>\[Reloads&nbsp;android_development_shell_tools&nbsp;scripts\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
+  * **shtoolsget** [*<b>\[Get&nbsp;the&nbsp;project&nbsp;path\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
+  * **shtoolscd** [*<b>\[Access&nbsp;the&nbsp;project&nbsp;path\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
+  * **shtoolsfiles** *[entrypoint,sources,scripts]* [*<b>\[List&nbsp;the&nbsp;project&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
+  * **shtoolssync** [*<b>\[Synchronize&nbsp;the&nbsp;project&nbsp;new&nbsp;changes\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
+  * **shtoolsup** [*<b>\[Reloads&nbsp;the&nbsp;project&nbsp;scripts\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/access.rc)
 
 ---
 > ### <span class="group_label">[project/developer.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)</span> ###
 >
   * **shtoolscheck** *[bool_ignore]* [*<b>\[Run&nbsp;ShellCheck&nbsp;on&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
-  * **shtoolspush** *[bool_ignore_readme]* [*<b>\[Commit&nbsp;new&nbsp;changes&nbsp;to&nbsp;android_development_shell_tools\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
-  * **shtoolsamend** *[bool_ignore_readme] [bool_ignore_message]* [*<b>\[Amend&nbsp;new&nbsp;changes&nbsp;to&nbsp;android_development_shell_tools\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
-  * **shtoolsconf** [*<b>\[Edit&nbsp;android_development_shell_tools&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
+  * **shtoolspush** *[bool_ignore_readme]* [*<b>\[Commit&nbsp;new&nbsp;changes&nbsp;to&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
+  * **shtoolsamend** *[bool_ignore_readme] [bool_ignore_message]* [*<b>\[Amend&nbsp;new&nbsp;changes&nbsp;to&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
+  * **shtoolsconf** [*<b>\[Edit&nbsp;the&nbsp;project&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/developer.rc)
 
 ---
 > ### <span class="group_label">[project/docs.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/docs.rc)</span> ###
 >
-  * **shtoolsdocs** *[bool_install]* [*<b>\[Instantiate&nbsp;android_development_shell_tools&nbsp;documentation\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/docs.rc)
+  * **shtoolsdocs** *[bool_install]* [*<b>\[Instantiate&nbsp;the&nbsp;project&nbsp;documentation\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/docs.rc)
   * **shtoolsforum** [*<b>\[Refresh&nbsp;README.forum&nbsp;project&nbsp;presentation\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/docs.rc)
   * **shtoolsreadme** [*<b>\[Refresh&nbsp;README.md&nbsp;functions&nbsp;usages\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/docs.rc)
 
@@ -81,17 +81,17 @@
 > ### <span class="group_label">[project/history.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)</span> ###
 >
   * **shtoolsstats** [*<b>\[Statistics&nbsp;on&nbsp;the&nbsp;project&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
-  * **shtoolsdiff** [*<b>\[Compare&nbsp;with&nbsp;upstream&nbsp;android_development_shell_tools\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
-  * **shtoolslog** *[commits_count]* [*<b>\[Display&nbsp;android_development_shell_tools&nbsp;history\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
-  * **shtoolsshow** *[offset_count]* [*<b>\[Display&nbsp;android_development_shell_tools&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
+  * **shtoolsdiff** [*<b>\[Compare&nbsp;with&nbsp;the&nbsp;upstream&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
+  * **shtoolslog** *[commits_count]* [*<b>\[Display&nbsp;the&nbsp;project&nbsp;history\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
+  * **shtoolsshow** *[offset_count]* [*<b>\[Display&nbsp;a&nbsp;project&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/history.rc)
 
 ---
 > ### <span class="group_label">[project/interfaces.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)</span> ###
 >
-  * **shtools** [*<b>\[Entrypoint&nbsp;menu&nbsp;to&nbsp;android_development_shell_tools\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
-  * **shtools-** [*<b>\[Options&nbsp;menu&nbsp;for&nbsp;android_development_shell_tools\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
-  * **shtoolskits** *[init]* [*<b>\[Toolkits&nbsp;selection&nbsp;for&nbsp;android_development_shell_tools\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
-  * **shtoolsnews** [*<b>\[Display&nbsp;android_development_shell_tools&nbsp;news&nbsp;notifications\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
+  * **shtools** [*<b>\[Entrypoint&nbsp;menu&nbsp;to&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
+  * **shtools-** [*<b>\[Options&nbsp;menu&nbsp;for&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
+  * **shtoolskits** *[init]* [*<b>\[Toolkits&nbsp;selection&nbsp;for&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
+  * **shtoolsnews** [*<b>\[Display&nbsp;the&nbsp;project&nbsp;news&nbsp;notifications\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
 
 ---
 > ### <span class="group_label">[project/search.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/search.rc)</span> ###

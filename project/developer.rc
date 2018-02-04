@@ -49,7 +49,7 @@ function shtoolscheck()
 # === Android Development Shell Tools Pusher ===
 function shtoolspush()
 {
-  # Usage: shtoolspush [bool_ignore_readme] (Commit new changes to android_development_shell_tools)
+  # Usage: shtoolspush [bool_ignore_readme] (Commit new changes to the project)
 
   # Update README.md
   if [ -z "${1}" ]; then
@@ -87,7 +87,7 @@ function shtoolspush()
 # === Android Development Shell Tools Amend ===
 function shtoolsamend()
 {
-  # Usage: shtoolsamend [bool_ignore_readme] [bool_ignore_message] (Amend new changes to android_development_shell_tools)
+  # Usage: shtoolsamend [bool_ignore_readme] [bool_ignore_message] (Amend new changes to the project)
 
   # Update README.md
   if [ -z "${1}" ]; then
@@ -129,8 +129,8 @@ function shtoolsamend()
 # === Android Development Shell Tools Configuration Edit ===
 function shtoolsconf()
 {
-  # Usage: shtoolsconf (Edit android_development_shell_tools configuration)
+  # Usage: shtoolsconf (Edit the project configuration)
 
-  # Edit android_development_shell_tools configuration
+  # Edit the project configuration
   fileedit "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
 }

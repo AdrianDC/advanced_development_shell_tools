@@ -18,25 +18,25 @@
 # === Android Development Shell Tools Path Getter ===
 function shtoolsget()
 {
-  # Usage: shtoolsget (Get android_development_shell_tools path)
+  # Usage: shtoolsget (Get the project path)
 
-  # Get android_development_shell_tools path
+  # Get the project path
   echo "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}";
 }
 
 # === Android Development Shell Tools Path Access ===
 function shtoolscd()
 {
-  # Usage: shtoolscd (Access android_development_shell_tools path)
+  # Usage: shtoolscd (Access the project path)
 
-  # Access android_development_shell_tools path
+  # Access the project path
   cd "$(shtoolsget)";
 }
 
 # === Android Development Shell Tools Files ===
 function shtoolsfiles()
 {
-  # Usage: shtoolsfiles [entrypoint,sources,scripts] (List android_development_shell_tools files)
+  # Usage: shtoolsfiles [entrypoint,sources,scripts] (List the project files)
 
   # Present entrypoint path
   if [ -z "${1}" ] || [[ "${1}" == *"entrypoint"* ]]; then
@@ -57,7 +57,7 @@ function shtoolsfiles()
 # === Android Development Shell Tools Syncer ===
 function shtoolssync()
 {
-  # Usage: shtoolssync (Download new android_development_shell_tools changes)
+  # Usage: shtoolssync (Synchronize the project new changes)
 
   # Variables
   local currentdir=${PWD};
@@ -84,9 +84,9 @@ function shtoolssync()
 # === Android Development Shell Tools Update ===
 function shtoolsup()
 {
-  # Usage: shtoolsup (Reloads android_development_shell_tools scripts)
+  # Usage: shtoolsup (Reloads the project scripts)
 
-  # Reload sources
+  # Reload the project sources
   source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
   echo '';
   echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[0;33mFunctions loaded properly\e[0m';

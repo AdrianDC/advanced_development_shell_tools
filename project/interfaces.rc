@@ -18,7 +18,7 @@
 # === Android Development Shell Tools Menu ===
 function shtools()
 {
-  # Usage: shtools (Entrypoint menu to android_development_shell_tools)
+  # Usage: shtools (Entrypoint menu to the project)
 
   # Variables
   local cnt=0;
@@ -63,7 +63,7 @@ function shtools()
 # === Android Development Shell Tools Options Menu ===
 function shtools-()
 {
-  # Usage: shtools- (Options menu for android_development_shell_tools)
+  # Usage: shtools- (Options menu for the project)
 
   # Variables
   local active;
@@ -173,7 +173,7 @@ function shtools-()
 # === Android Development Shell Tools Toolkits Menu ===
 function shtoolskits()
 {
-  # Usage: shtoolskits [init] (Toolkits selection for android_development_shell_tools)
+  # Usage: shtoolskits [init] (Toolkits selection for the project)
 
   # Variables
   local cnt;
@@ -297,7 +297,7 @@ function shtoolskits()
 # === Android Development Shell Tools News ===
 function shtoolsnews()
 {
-  # Usage: shtoolsnews (Display android_development_shell_tools news notifications)
+  # Usage: shtoolsnews (Display the project news notifications)
 
   # Variables
   local commits_local_count;
