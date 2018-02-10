@@ -153,6 +153,15 @@ function shtoolsinstance()
     export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='';
   fi;
 
+  # Verify git is installed
+  if ! type git >/dev/null 2>&1; then
+    echo '';
+    echo -en '\r\033[K \e[1;33mandroid_development_shell_tools: \e[1;31mPlease install git...\e[0m';
+    echo '';
+    echo '';
+    return;
+  fi;
+
   # Submodules instantiation
   if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
     git submodule update --init --remote;
