@@ -43,13 +43,15 @@ function gitconfeditor()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconfeditor <app_name> (Configure Git editor application)';
+    echo ' Usage: gitconfeditor <app_name/default> (Configure Git editor application)';
     echo '';
     return;
   fi;
 
   # Select option
   case "${1}" in
+    default)
+      git config --global --unset core.editor;;
     notepad++)
       git config --global core.editor 'notepad++ -multiInst -notabbar -nosession -noPlugin';;
     nano|vim|*)

@@ -823,7 +823,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
   ```
   * **githubusername** [*<b>\[GitHub&nbsp;username&nbsp;getter\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
-  * **gitconfeditor** *&lt;app_name&gt;* [*<b>\[Configure&nbsp;Git&nbsp;editor&nbsp;application\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
+  * **gitconfeditor** *&lt;app_name/default&gt;* [*<b>\[Configure&nbsp;Git&nbsp;editor&nbsp;application\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * **gitconfmergetool** *&lt;app_name&gt;* [*<b>\[Configure&nbsp;Git&nbsp;merge&nbsp;tool&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * **gitconffilecrlf** *&lt;auto/detect/input&gt;* [*<b>\[Configure&nbsp;Git&nbsp;file&nbsp;CR/LF&nbsp;EOL&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * **gitconffileperms** *&lt;detect/ignore&gt;* [*<b>\[Configure&nbsp;Git&nbsp;file&nbsp;permissions&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
