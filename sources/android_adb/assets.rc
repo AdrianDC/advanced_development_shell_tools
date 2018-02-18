@@ -98,7 +98,7 @@ function adbintents()
   # Usage: adbintents (List Android intents through adb)
 
   # List Android intents through adb
-  adb shell 'dumpsys package r' > intents.txt;
+  adb shell 'dumpsys package r';
 }
 
 # === ADB Camera Enabled / Launcher ===
