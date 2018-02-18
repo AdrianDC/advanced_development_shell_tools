@@ -22,27 +22,10 @@
 # === LineageOS Sony 8960 Oreo Patcher ===
 function lineagesony8960oreopatcher()
 {
-  # Usage: lineagesony8960oreopatcher [version=15.1] (LineageOS 8960 Oreo Patcher)
-
-  # Variables
-  local buffer;
+  # Usage: lineagesony8960oreopatcher [specific_paths] (LineageOS 8960 Oreo Patcher)
 
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'AdrianDC' 'lineage_development_sony8960' 'radian.dc@gmail.com' "${@}";
-
-  # Access Android root
-  croot;
-
-  # Launch repopicks script
-  echo '';
-  buffer=$(mktemp);
-  source <(curl -Ls "https://github.com/AdrianDC/lineage_development_sony8960_master/raw/local_manifests/repopick-lineage-${1:-15.1}.md?date=$(date '+%s')") 2>&1 | tee "${buffer}";
-
-  # Validate repopicks statuses
-  echo -e '\e[1;31m';
-  grep -ai -B1 'MERGED\|ABANDONED\|ERROR:' "${buffer}" | sed 's/\.\.\.//g';
-  rm -f "${buffer}";
-  echo -e '\e[0m';
 }
 
 # === LineageOS Rebaser ===
