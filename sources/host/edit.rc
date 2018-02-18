@@ -58,6 +58,25 @@ function editreplacematch()
   sed -i "s/${match_content}/${to_write}/g" "${files[@]}";
 }
 
+# === Edit Remove Lines ===
+function editremovelines()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: editremovelines <"match_line"> <"files"> (Edit by removing lines)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local match_line=${1};
+  local files=("${@:2}");
+
+  # Remove
+  sed -i "/^.*${match_line}.*/d" "${files[@]}";
+}
+
 # === Edit Remove Match ===
 function editremovematch()
 {

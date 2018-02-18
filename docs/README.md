@@ -1039,6 +1039,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * **editreplacelines** *&lt;"match_line"&gt; &lt;"to_write"&gt; &lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;replacing&nbsp;lines\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
   * **editreplacematch** *&lt;"match_line"&gt; &lt;"to_write"&gt; &lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;replacing&nbsp;matches\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
+  * **editremovelines** *&lt;"match_line"&gt; &lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;removing&nbsp;lines\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
   * **editremovematch** *&lt;"match_line"&gt; &lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;removing&nbsp;matches\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
   * **editremoveupto** *&lt;"match_line"&gt; &lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;removing&nbsp;lines&nbsp;up&nbsp;to&nbsp;first&nbsp;match\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
   * **editinsertabove** *&lt;"match_line"&gt; &lt;"to_insert"&gt; &lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;inserting&nbsp;above\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
