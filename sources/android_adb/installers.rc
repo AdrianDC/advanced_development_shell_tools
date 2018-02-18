@@ -113,10 +113,14 @@ function adbif()
         file_path="${repo_top}/${file_path}";
       fi;
       if [ -f "${file_path}" ]; then
+        packages+="${file_path} ";
         adbpf "${file_path}";
       fi;
     fi;
   done;
+
+  # Prepare public PACKAGES_RESULTS
+  export PACKAGES_RESULTS="${packages}";
 
   # End of process
   rm -f "${tmp_file}";
