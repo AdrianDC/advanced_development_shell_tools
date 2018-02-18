@@ -50,12 +50,12 @@ function editreplacematch()
   fi;
 
   # Variables
-  local match_line=${1};
+  local match_content=${1};
   local to_write=${2};
   local files=("${@:3}");
 
   # Replace
-  sed -i "s/\(^.*${match_line}.*\)/${to_write}/g" "${files[@]}";
+  sed -i "s/${match_content}/${to_write}/g" "${files[@]}";
 }
 
 # === Edit Remove Match ===
