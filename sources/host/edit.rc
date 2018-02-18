@@ -18,6 +18,26 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/edit.rc)
 
+# === Edit Replace Lines ===
+function editreplacelines()
+{
+  # Usage
+  if [ -z "${3}" ]; then
+    echo '';
+    echo ' Usage: editreplacelines <"match_line"> <"to_write"> <"files"> (Edit by replacing lines)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local match_line=${1};
+  local to_write=${2};
+  local files=("${@:3}");
+
+  # Replace
+  sed -i "s/^.*${match_line}.*/${to_write}/g" "${files[@]}";
+}
+
 # === Edit Replace Match ===
 function editreplacematch()
 {
