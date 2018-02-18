@@ -35,7 +35,7 @@ function editreplacelines()
   local files=("${@:3}");
 
   # Replace
-  sed -i "s/^.*${match_line}.*/${to_write}/g" "${files[@]}";
+  sed -i "s#^.*${match_line}.*#${to_write}#g" "${files[@]}";
 }
 
 # === Edit Replace Match ===
@@ -55,7 +55,7 @@ function editreplacematch()
   local files=("${@:3}");
 
   # Replace
-  sed -i "s/${match_content}/${to_write}/g" "${files[@]}";
+  sed -i "s#${match_content}#${to_write}#g" "${files[@]}";
 }
 
 # === Edit Remove Lines ===
@@ -74,7 +74,7 @@ function editremovelines()
   local files=("${@:2}");
 
   # Remove
-  sed -i "/^.*${match_line}.*/d" "${files[@]}";
+  sed -i "\#^.*${match_line}.*#d" "${files[@]}";
 }
 
 # === Edit Remove Match ===
@@ -93,7 +93,7 @@ function editremovematch()
   local files=("${@:2}");
 
   # Remove
-  sed -i "s/${match_content}//g" "${files[@]}";
+  sed -i "s#${match_content}##g" "${files[@]}";
 }
 
 # === Edit Remove Up To Match ===
@@ -112,7 +112,7 @@ function editremoveupto()
   local files=("${@:2}");
 
   # Remove up to match
-  sed -i "/^.*${match_line}.*/,\$!d" "${files[@]}";
+  sed -i "\#^.*${match_line}.*#,\$!d" "${files[@]}";
 }
 
 # === Edit Insert Above ===
@@ -132,7 +132,7 @@ function editinsertabove()
   local files=("${@:3}");
 
   # Insert above
-  sed -i "s/\(^.*${match_line}.*\)/${to_insert}\n\1/g" "${files[@]}";
+  sed -i "s#\(^.*${match_line}.*\)#${to_insert}\n\1#g" "${files[@]}";
 }
 
 # === Edit Insert Below ===
@@ -152,7 +152,7 @@ function editinsertbelow()
   local files=("${@:3}");
 
   # Insert below
-  sed -i "s/\(^.*${match_line}.*\)/\1\n${to_insert}/g" "${files[@]}";
+  sed -i "s#\(^.*${match_line}.*\)#\1\n${to_insert}#g" "${files[@]}";
 }
 
 # === Edit Replace Multiline ===
@@ -173,7 +173,7 @@ function editreplacemultiline()
   local files=("${@:4}");
 
   # Replace section from first to last
-  sed -i "/${match_first}/{:a; N; /${match_last}/!ba; s/${match_first}.*${match_last}/${replace}/; };" "${files[@]}";
+  sed -i "\#${match_first}#{:a; N; \#${match_last}#!ba; s#${match_first}.*${match_last}#${replace}#; };" "${files[@]}";
 }
 
 # === Edit Trim Output ===
