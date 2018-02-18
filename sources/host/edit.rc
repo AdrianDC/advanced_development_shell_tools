@@ -89,11 +89,11 @@ function editremovematch()
   fi;
 
   # Variables
-  local match_line=${1};
+  local match_content=${1};
   local files=("${@:2}");
 
   # Remove
-  sed -i "/^.*${match_line}.*/d" "${files[@]}";
+  sed -i "s/${match_content}//g" "${files[@]}";
 }
 
 # === Edit Remove Up To Match ===
