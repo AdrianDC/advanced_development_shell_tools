@@ -29,7 +29,8 @@ function adbl()
 
   # Buffer selection
   case "${1}" in
-    all|'') buffer='all';;
+    '')     buffer='';;
+    all)    buffer='all';;
     crash)  buffer='crash';;
     events) buffer='events';;
     main)   buffer='main';;
@@ -63,7 +64,11 @@ function adbl()
   fi;
 
   # Logcat command
-  logcat="adb logcat -b ${buffer}";
+  if [ -z "${buffer}" ]; then
+    logcat="adb logcat";
+  else
+    logcat="adb logcat -b ${buffer}";
+  fi;
 
   # Logcat read
   while true; do
