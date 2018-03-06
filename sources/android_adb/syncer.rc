@@ -118,3 +118,38 @@ function adbpushsync()
   echo -e '\r\033[K adbpushsync: Sync done';
   echo '';
 }
+
+# === ADB Pull Apks ===
+function adbpullapks()
+{
+  # Usage: adbpullapks (Pull all installed apks through adb)
+
+  # Variables
+  local currentdir=${PWD};
+  local device_apk_entry;
+  local device_apk_path;
+  local device_apk_name;
+
+  # Access references apk folder
+  cdrefapk;
+  echo '';
+
+  # Pull all packages installed on the device
+  while read -r device_apk_entry; do
+
+    # Get package name and path
+    device_apk_name=${device_apk_entry#*.apk=};
+    device_apk_path=${device_apk_entry%.apk=*};
+
+    # Pull package apk
+    echo " adbapksync: Pulling and saving: ${device_apk_name}.apk";
+    adb pull "${device_apk_path}.apk" "${device_apk_name}.apk" 2>/dev/null;
+
+  done < <(adb shell pm list packages -f \
+          | grep ':/data/' \
+          | cut -d':' -f2-);
+
+  # Restore current path
+  cd "${currentdir}/";
+  echo '';
+}

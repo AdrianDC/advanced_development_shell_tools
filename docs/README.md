@@ -254,6 +254,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/syncer.rc)
   ```
   * **adbpushsync** *&lt;local_path&gt; &lt;target_path&gt;* [*<b>\[Folders&nbsp;adb&nbsp;push&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/syncer.rc)
+  * **adbpullapks** [*<b>\[Pull&nbsp;all&nbsp;installed&nbsp;apks&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/syncer.rc)
 
 ---
 > ### <span class="group_label">[sources/android_adb/tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/tools.rc)</span> ###
