@@ -118,3 +118,37 @@ function adbpushsync()
   echo -e '\r\033[K adbpushsync: Sync done';
   echo '';
 }
+
+# === ADB Apk Sync ===
+function adbapksync()
+{
+  # Usage: adbapksync ( Extract all installed apks from a device through adb)
+
+  # Varibles
+  local currentdir=${PWD};
+
+  # Change path to refapk
+  cdrefapk;
+
+  # Get list of packages installed on the device
+  my_apks=($(adb shell pm list packages -f | grep "data" | awk -F "[/:-]" '{print $5}'));
+  echo " adbapksync: Getting list of packages";
+  echo '';
+
+  # Pull all packages installed on the device
+  for element in "${my_apks[@]}"; do
+
+    # Get packages installed path
+    my_path=$(adb shell pm path ${element} | awk -F ":" '{print $2}');
+
+    # Pull the apk
+    adb pull "${my_path}" 2> /dev/null;
+
+    # Rename the base.apk to original package name
+    mv base.apk "${element}.apk";
+    echo " adbapksync: Pulling & Saving: ${element}.apk";
+  done;
+
+  # Restore current path
+  cd "${currentdir}/";
+}
