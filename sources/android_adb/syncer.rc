@@ -152,3 +152,193 @@ function adbapksync()
   # Restore current path
   cd "${currentdir}/";
 }
+
+# === ADB File / Dir Sync ===
+function adbsync()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: adbsync <local_path> <remote_path> [twoway](Folders & Files adb push syncer)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local local_path=${1};
+  local remote_path=${2};
+  local params=${3};
+  local currentdir=${PWD};
+  IFS='';
+
+  # Header
+  echo '';
+  echo " adbsync: Syncing \"${local_path}\" to \"${remote_path}\"";
+
+  if [[ "${params}" == *'twoway'* ]]; then
+
+    # List local folders for pulling
+    cd "${local_path}/";
+    find * -type d > /tmp/local_folders;
+
+    # List remote folders
+    adb shell "cd \"${remote_path}\"; find * -type d;" > /tmp/remote_folders;
+
+    # Sort local & remote folders for comparison
+    sort /tmp/local_folders -o /tmp/local_folders;
+    sort /tmp/remote_folders -o /tmp/remote_folders;
+
+    # Create pull folders
+    touch /tmp/pull_folders;
+
+    # Diff local & remote Folders
+    diff /tmp/local_folders /tmp/remote_folders | grep ">" | awk -F "> " '{print$2}' > /tmp/pull_folders;
+
+    echo '';
+    # Create folders locally
+    while read folder; do
+      mkdir -p "${local_path}/${folder}";
+      echo " adbsync: Pulled \"${local_path}/${folder}\"";
+    done < /tmp/pull_folders;
+
+    # Remove temporary files
+    rm -rf /tmp/local_folders;
+    rm -rf /tmp/remote_folders;
+    rm -rf /tmp/pull_folders;
+
+    # List local files for pushing
+    cd "${local_path}/";
+    find * -type f -exec stat --printf='%s %n\n' {} + > /tmp/local_files;
+
+    # List remote files
+    adb shell "cd \"${remote_path}\"; find * -type f -exec stat -c '%s %n' {} +;" > /tmp/remote_files;
+
+    # Sort local & remote folders for comparison
+    sort /tmp/local_files -o /tmp/local_files;
+    sort /tmp/remote_files -o /tmp/remote_files;
+
+    # Create pull folders
+    touch /tmp/pull_files;
+
+    # Diff local & remote files
+    diff /tmp/local_files /tmp/remote_files | grep ">" | cut -f3- -d " " > /tmp/pull_files;
+
+    echo '';
+    # Create files locally
+    while read files; do
+      adb pull -a "${remote_path}/${files}" "${local_path}/${files}" 2> /dev/null;
+      echo " adbsync: Pulled \"${remote_path}/${files}\"";
+    done < /tmp/pull_files;
+
+    # Remove temporary files
+    rm -rf /tmp/local_files;
+    rm -rf /tmp/remote_files;
+    rm -rf /tmp/pull_files;
+
+  fi;
+
+  # List local folders for pushing
+  cd "${local_path}/";
+  find * -type d > /tmp/local_folders;
+
+  # List remote folders
+  adb shell "cd \"${remote_path}\"; find * -type d;" > /tmp/remote_folders;
+
+  # Sort local & remote folders for comparison
+  sort /tmp/local_folders -o /tmp/local_folders;
+  sort /tmp/remote_folders -o /tmp/remote_folders;
+
+  # Diff local & remote Folders
+  diff /tmp/local_folders /tmp/remote_folders | grep "<" | awk -F "< " '{print$2}' > /tmp/push_folders;
+
+  echo '';
+  # Create folders remotely
+  while read folder; do
+    adb shell mkdir -p "${remote_path}/${folder}";
+    echo " adbsync: Created \"${remote_path}/${folder}\"";
+  done < /tmp/push_folders;
+
+  # Remove temporary files
+  rm -rf /tmp/local_folders;
+  rm -rf /tmp/remote_folders;
+  rm -rf /tmp/push_folders;
+
+  # List local folders for removing
+  cd "${local_path}/";
+  find * -type d > /tmp/local_folders;
+
+  # List remote folders
+  adb shell "cd \"${remote_path}\"; find * -type d;" > /tmp/remote_folders;
+
+  # Sort local & remote folders for comparison
+  sort /tmp/local_folders -o /tmp/local_folders;
+  sort /tmp/remote_folders -o /tmp/remote_folders;
+
+  # Diff local & remote Folders
+  diff /tmp/local_folders /tmp/remote_folders | grep ">" | awk -F "> " '{print$2}' > /tmp/remove_folders;
+
+  # Remove folders remotely
+  while read folder; do
+    adb shell rm -rf "${remote_path}/${folder}";
+    echo " adbsync: Removed \"${remote_path}/${folder}\"";
+  done < /tmp/remove_folders;
+
+  # Remove temporary files
+  rm -rf /tmp/local_folders;
+  rm -rf /tmp/remote_folders;
+  rm -rf /tmp/remove_folders;
+
+  # List local files for pushing
+  cd "${local_path}/";
+  find * -type f -exec stat --printf='%s %n\n' {} + > /tmp/local_files;
+
+  # List remote files
+  adb shell "cd \"${remote_path}\"; find * -type f -exec stat -c '%s %n' {} +;" > /tmp/remote_files;
+
+  # Sort local & remote folders for comparison
+  sort /tmp/local_files -o /tmp/local_files;
+  sort /tmp/remote_files -o /tmp/remote_files;
+
+  # Diff local & remote files
+  diff /tmp/local_files /tmp/remote_files | grep "<" | cut -f3- -d " " > /tmp/push_files;
+
+  echo '';
+  # Create files remotely
+  while read files; do
+    adb push "${local_path}/${files}" "${remote_path}/${files}" 2> /dev/null;
+    echo " adbsync: Pushed \"${remote_path}/${files}\"";
+  done < /tmp/push_files;
+
+  # Remove temporary files
+  rm -rf /tmp/local_files;
+  rm -rf /tmp/remote_files;
+  rm -rf /tmp/push_files;
+
+  # List local files for removing
+  cd "${local_path}/";
+  find * -type f -exec stat --printf='%s %n\n' {} +> /tmp/local_files;
+
+  # List remote files
+  adb shell "cd \"${remote_path}\"; find * -type f -exec stat -c '%s %n' {} +;" > /tmp/remote_files;
+
+  # Sort local & remote folders for comparison
+  sort /tmp/local_files -o /tmp/local_files;
+  sort /tmp/remote_files -o /tmp/remote_files;
+
+  # Diff local & remote files
+  diff /tmp/local_files /tmp/remote_files | grep ">" | cut -f3- -d " " > /tmp/remove_files;
+
+  # Remove files remotely
+  while read files; do
+    adb shell rm -rf "${remote_path}/${files}";
+    echo " adbsync: Removed \"${remote_path}/${files}\"";
+  done < /tmp/remove_files;
+
+  # Remove temporary files
+  rm -rf /tmp/local_files;
+  rm -rf /tmp/remote_files;
+  rm -rf /tmp/remove_files;
+
+  # Restore current path
+  cd "${currentdir}/";
+}
