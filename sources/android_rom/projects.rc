@@ -210,22 +210,22 @@ function androidprojectpatcher()
   fi;
 
   # ==========================================================
-  # Detect 'sync' input
-  if [ "${project_specific_inputs[*]}" = 'sync' ]; then
+  # Detect '--sync' input
+  if [ "${project_specific_inputs[*]}" = '--sync' ]; then
     androidprojectsync "${project_owner}" "${project_name}";
     return;
   fi;
 
   # ==========================================================
-  # Detect 'ungraft' input
-  if [ "${project_specific_inputs[*]}" = 'ungraft' ]; then
+  # Detect '--ungraft' input
+  if [ "${project_specific_inputs[*]}" = '--ungraft' ]; then
     androidprojectungraft "${project_owner}" "${project_name}";
     return;
   fi;
 
   # ==========================================================
-  # Detect 'unshallow' input
-  if [ "${project_specific_inputs[*]}" = 'unshallow' ]; then
+  # Detect '--unshallow' input
+  if [ "${project_specific_inputs[*]}" = '--unshallow' ]; then
     androidprojectunshallow "${project_owner}" "${project_name}";
     return;
   fi;
