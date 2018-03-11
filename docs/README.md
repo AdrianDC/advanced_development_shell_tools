@@ -1289,10 +1289,10 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8960/aosp_sony8960.rc)
   ```
-  * **aospsony8960npatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;8960&nbsp;Nougat&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
-  * **aospsony8960opatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;8960&nbsp;O&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
-  * **aospsony8960omr1patcher** *[specific_paths]* [*<b>\[AOSP&nbsp;8960&nbsp;O&nbsp;MR1&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
-  * **aospsony8960masterpatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;8960&nbsp;Master&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
+  * **aospsony8960npatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;Nougat&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
+  * **aospsony8960opatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;O&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
+  * **aospsony8960omr1patcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;O&nbsp;MR1&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
+  * **aospsony8960masterpatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;Master&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
 
 ---
 > ### <span class="group_label">[extensions/sony_msm8960/autorelease.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)</span> ###

@@ -22,7 +22,7 @@
 # === AOSP Sony 8960 N Patcher ===
 function aospsony8960npatcher()
 {
-  # Usage: aospsony8960npatcher [specific_paths] (AOSP 8960 Nougat Patcher)
+  # Usage: aospsony8960npatcher [specific_paths] (AOSP Sony 8960 Nougat Patcher)
 
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_n' 'radian.dc@gmail.com' "${@}";
@@ -31,7 +31,7 @@ function aospsony8960npatcher()
 # === AOSP Sony 8960 O Patcher ===
 function aospsony8960opatcher()
 {
-  # Usage: aospsony8960opatcher [specific_paths] (AOSP 8960 O Patcher)
+  # Usage: aospsony8960opatcher [specific_paths] (AOSP Sony 8960 O Patcher)
 
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_o' 'radian.dc@gmail.com' "${@}";
@@ -40,7 +40,7 @@ function aospsony8960opatcher()
 # === AOSP Sony 8960 O MR1 Patcher ===
 function aospsony8960omr1patcher()
 {
-  # Usage: aospsony8960omr1patcher [specific_paths] (AOSP 8960 O MR1 Patcher)
+  # Usage: aospsony8960omr1patcher [specific_paths] (AOSP Sony 8960 O MR1 Patcher)
 
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_o_mr1' 'radian.dc@gmail.com' "${@}";
@@ -49,7 +49,7 @@ function aospsony8960omr1patcher()
 # === AOSP Sony 8960 Master Patcher ===
 function aospsony8960masterpatcher()
 {
-  # Usage: aospsony8960masterpatcher [specific_paths] (AOSP 8960 Master Patcher)
+  # Usage: aospsony8960masterpatcher [specific_paths] (AOSP Sony 8960 Master Patcher)
 
   # Use the androidprojectpatcher helper
   androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_master' 'radian.dc@gmail.com' "${@}";
