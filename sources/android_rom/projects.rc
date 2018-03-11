@@ -238,6 +238,13 @@ function androidprojectpatcher()
   fi;
 
   # ==========================================================
+  # Detect '--foreach' input
+  if [ "${project_specific_inputs[0]}" = '--foreach' ]; then
+    androidprojectforeach "${project_owner}" "${project_name}" "${project_specific_inputs[@]:1}";
+    return;
+  fi;
+
+  # ==========================================================
   # Extract specific projects paths
   if [ ! -z "${project_specific_inputs[*]}" ]; then
     android_top=$(gettop);
@@ -713,7 +720,7 @@ function androidprojectforeach()
     echo "[${project_path}]";
 
     # Run commands
-    ${3};
+    "${@:3}";
 
   done;
 
