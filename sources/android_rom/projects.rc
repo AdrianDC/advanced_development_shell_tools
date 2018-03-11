@@ -547,6 +547,7 @@ function androidprojectrebaser()
   # Variables
   local commits_result;
   local git_revs_count;
+  local git_revs_count_local;
   local git_revs_count_remote;
   local project_branch;
   local project_name;
@@ -613,7 +614,8 @@ function androidprojectrebaser()
     # Fetch and compare
     git fetch "${project_upstream}" "${project_branch}";
     git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-    git_revs_count_remote=$(echo "${git_revs_count}" | awk '{ print $2 }');
+    git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
+    git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
     echo '';
     if [ "${git_revs_count_remote}" -eq 0 ]; then
       echo -e "  \e[1;32m> Differences: ${git_revs_count:-Missing history}\e[0m";
@@ -621,6 +623,12 @@ function androidprojectrebaser()
       echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
     fi;
     echo '';
+
+    # Warn about projects without patches
+    if [ "${git_revs_count_local}" -eq 0 ] && [ "${git_revs_count_remote}" -eq 0 ]; then
+      echo -e "  \e[1;31m< No project differences detected...\e[0m";
+      echo '';
+    fi;
 
     # Handle unupdated projects
     if [ "${git_revs_count_remote}" -ne 0 ]; then
