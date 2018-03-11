@@ -341,6 +341,12 @@ function androidprojectpatcher()
     fi;
     echo '';
 
+    # Warn about projects without patches
+    if [ "${git_revs_count_local}" -eq 0 ] && [ "${git_revs_count_remote}" -eq 0 ]; then
+      echo -e "  \e[1;31m< No project patches detected...\e[0m";
+      echo '';
+    fi;
+
     # List patcher commits
     if [ "${git_revs_count_remote}" -ne 0 ]; then
       git --no-pager log --pretty=oneline --abbrev-commit -n "${git_revs_count_remote}" FETCH_HEAD;
