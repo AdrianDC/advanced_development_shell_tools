@@ -36,7 +36,7 @@ OLDIFS=${IFS};
 IFS=$'\n';
 for command in ${commands}; do
   echo " [${command}]";
-  sudo sh -c "timeout -k 5 5 ${command}";
+  sudo sh -c "timeout -k 5 5 bash -c '${command}'";
 done;
 IFS=${OLDIFS};
 
