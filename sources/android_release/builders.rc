@@ -71,7 +71,7 @@ function romautorelease()
       rom_tag='AOSP-8.x';
       rom_upload="${rom_phone}/${rom_tag}";;
 
-    # LineageOS 15.0
+    # LineageOS 15.x
     lineage)
       rom_tag='LineageOS-15.x';
       rom_upload="${rom_phone}/${rom_tag}";;
@@ -81,7 +81,7 @@ function romautorelease()
       rom_tag='AOSP-CAF-8.x';
       rom_upload="${rom_phone}/${rom_tag}";;
 
-    # LegacyXperia 15.0
+    # LegacyXperia 15.x
     lx)
       rom_tag='LineageOS-15.x';
       rom_upload="LegacyXperia/${rom_device}/${rom_tag}";;
@@ -101,7 +101,7 @@ function romautorelease()
       rom_tag='ResurrectionRemix-O';
       rom_upload="${rom_phone}/${rom_tag}";;
 
-    # Sony AOSP 8.0
+    # Sony AOSP 8.x
     sodp)
       rom_tag='AOSP-8.x';
       rom_target=$(codenametotarget "${rom_device}");
