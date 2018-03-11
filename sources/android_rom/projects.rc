@@ -231,6 +231,13 @@ function androidprojectpatcher()
   fi;
 
   # ==========================================================
+  # Detect '--list' input
+  if [ "${project_specific_inputs[*]}" = '--list' ]; then
+    androidprojectpaths "${project_owner}" "${project_name}";
+    return;
+  fi;
+
+  # ==========================================================
   # Extract specific projects paths
   if [ ! -z "${project_specific_inputs[*]}" ]; then
     android_top=$(gettop);
