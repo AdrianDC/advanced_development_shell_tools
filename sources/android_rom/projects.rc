@@ -343,7 +343,7 @@ function androidprojectpatcher()
 
     # List patcher commits
     if [ "${git_revs_count_remote}" -ne 0 ]; then
-      git log --pretty=oneline --abbrev-commit -n "${git_revs_count_remote}" FETCH_HEAD;
+      git --no-pager log --pretty=oneline --abbrev-commit -n "${git_revs_count_remote}" FETCH_HEAD;
       echo '';
     fi;
 
