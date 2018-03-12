@@ -186,6 +186,7 @@ function androidprojectpatcher()
   local project_path;
   local project_paths=();
   local currentdir=${PWD};
+  local tmp_list;
 
   # ==========================================================
   # Load Android tools
@@ -256,7 +257,10 @@ function androidprojectpatcher()
 
   # Automated remote changes list detection
   if [ -z "${project_paths[*]}" ]; then
-    mapfile -t project_paths < <(androidprojectpaths "${project_owner}" "${project_name}");
+    tmp_list=$(mktemp);
+    androidprojectpaths "${project_owner}" "${project_name}" > "${tmp_list}";
+    mapfile -t project_paths < "${tmp_list}";
+    rm -f "${tmp_list}";
   fi;
 
   # Array dimensions

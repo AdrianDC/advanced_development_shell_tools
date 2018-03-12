@@ -151,6 +151,8 @@ function shtoolsreadme()
   local stats_functions=0;
   local stats_hidden=0;
   local stats_sources=0;
+  local tmp_grep;
+  local tmp_list;
   local url;
 
   # Initialize variables
@@ -185,6 +187,8 @@ function shtoolsreadme()
   cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.version.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/version.md";
 
   # Read all sources and scripts
+  tmp_list=$(mktemp);
+  shtoolsfiles 'sources,scripts' > "${tmp_list}";
   while read -r path_file; do
 
     # Handle file path
@@ -296,6 +300,10 @@ function shtoolsreadme()
       continue;
 
     fi;
+
+    #  Acquire source contents
+    tmp_grep=$(mktemp);
+    grep -a "^alias.*=\|^function .*()" "${path_file}" > "${tmp_grep}";
 
     # Handle source contents
     # shellcheck disable=SC2162
@@ -420,7 +428,8 @@ function shtoolsreadme()
       readme_buffer='';
       readme_output+="  * **${line_function}**${line_usage} [*${line_summary}*](${github_project_url}\/${github_file_path}\/${path_name})\n";
 
-    done < <(grep -a "^alias.*=\|^function .*()" "${path_file}");
+    done < "${tmp_grep}";
+    rm -f "${tmp_grep}";
 
     # Sections separation
     if [ -z "${readme_buffer}" ]; then
@@ -429,7 +438,8 @@ function shtoolsreadme()
       readme_buffer='';
     fi;
 
-  done < <(shtoolsfiles 'sources,scripts');
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 
   # Append last file group buffer
   readme_output+="${group_buffer}\<div class=\"group_footer\"\>\n\<br \/\>\n\n---\n";

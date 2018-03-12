@@ -22,9 +22,12 @@ function shtoolscheck()
 
   # Variables
   local file_source;
+  local tmp_list;
 
   # Study all script files
   echo -e '\e[1;37m';
+  tmp_list=$(mktemp);
+  shtoolsfiles 'entrypoint,sources,scripts' > "${tmp_list}";
   while read -r file_source; do
 
     # Parsing header
@@ -39,7 +42,8 @@ function shtoolscheck()
       return;
     fi;
 
-  done < <(shtoolsfiles 'entrypoint,sources,scripts');
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 
   # Successfull syntax check
   echo -e '\r\033[K \e[1;32mshtoolscheck: Syntax checked successfully\e[0m';

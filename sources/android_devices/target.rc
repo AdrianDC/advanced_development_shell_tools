@@ -151,6 +151,7 @@ function repogetdevice()
   # Variables
   local cwd;
   local product=${TARGET_PRODUCT#*_};
+  local tmp_list;
 
   # Repo root
   cwd=$(pwd);
@@ -160,12 +161,15 @@ function repogetdevice()
   if ! ls './device/'*"/${product}" 1> /dev/null 2>&1; then
 
     # Analyse devices
+    tmp_list=$(mktemp);
+    find ./device/ -name cm.mk -or -name lineage.mk -or -name vendorsetup.sh > "${tmp_list}";
     while IFS= read -r -d '' device_path; do
       if grep -q "${TARGET_PRODUCT}" "${device_path}"; then
         product=$(dirname "${device_path}");
         product=$(basename "${product}");
       fi;
-    done < <(find ./device/ -name cm.mk -or -name lineage.mk -or -name vendorsetup.sh);
+    done < "${tmp_list}";
+    rm -f "${tmp_list}";
 
   fi;
 

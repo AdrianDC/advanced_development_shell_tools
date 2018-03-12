@@ -29,9 +29,12 @@ function shtoolse()
   # Variables
   local file_source;
   local files=();
+  local tmp_list;
   local word;
 
   # Study all script files
+  tmp_list=$(mktemp);
+  shtoolsfiles 'entrypoint,sources' > "${tmp_list}";
   while read -r file_source; do
     for word in "${@}"; do
 
@@ -42,7 +45,8 @@ function shtoolse()
       fi;
 
     done;
-  done < <(shtoolsfiles 'entrypoint,sources');
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 
   # Open listed files
   if [ ! -z "${files[*]}" ]; then

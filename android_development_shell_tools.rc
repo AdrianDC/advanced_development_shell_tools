@@ -124,18 +124,22 @@ function shtoolsinstance()
   # Variables
   local file_path;
   local group;
+  local tmp_list;
 
   # Header
   echo -en '\e[1;33mshtools: \e[1;33mLoading android_development_shell_tools...\e[0m';
 
   # Import enabled kits
+  tmp_list=$(mktemp);
+  shtoolssources > "${tmp_list}";
   while read -r file_path; do
     group=${file_path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
     group=${group%/*};
     if [ "${group}" = 'project' ] || [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${group}|"* ]]; then
       source "${file_path}";
     fi;
-  done < <(shtoolssources);
+  done < "${tmp_list}"
+  rm -f "${tmp_list}";
 
   # Cleanup
   echo -en "\r\033[K";

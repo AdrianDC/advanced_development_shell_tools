@@ -26,8 +26,11 @@ function stignoreclean()
   # Variables
   local ignored_path;
   local ignored_paths;
+  local tmp_list;
 
   # Travel through .stignored paths
+  tmp_list=$(mktemp);
+  cat .stignore* 2>/dev/null > "${tmp_list}";
   while read -r ignored_paths; do
 
     # Ignore macros
@@ -51,5 +54,6 @@ function stignoreclean()
       done;
     fi;
 
-  done < <(cat .stignore* 2>/dev/null);
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }

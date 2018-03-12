@@ -34,13 +34,19 @@ function gs()
 {
   # Usage: gs [inputs] (Grep through sources and binaries)
 
+  # Variables
+  local tmp_list;
+
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(findfilteredprojectfiles .);
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Strings Editor ===
@@ -56,14 +62,18 @@ function gce()
 
   # Variables
   local files=();
+  local tmp_list;
 
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       files+=("${file}");
     fi;
-  done < <(findfilteredprojectfiles .);
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 
   # Edit found files
   fileedit "${files[@]}";
@@ -74,13 +84,19 @@ function gck()
 {
   # Usage: gck [inputs] (Grep through kernel configurations)
 
+  # Variables
+  local tmp_list;
+
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name 'Kconfig' -o -name 'Makefile' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(findfilteredprojectfiles . \( -name 'Kconfig' -o -name 'Makefile' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Android Makefiles ===
@@ -88,13 +104,19 @@ function gca()
 {
   # Usage: gca [inputs] (Grep through Android makefiles)
 
+  # Variables
+  local tmp_list;
+
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Android Manifests ===
@@ -102,13 +124,19 @@ function gcmanifest()
 {
   # Usage: gcmanifest [inputs] (Grep through Android Manifests)
 
+  # Variables
+  local tmp_list;
+
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name 'AndroidManifest.xml' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(findfilteredprojectfiles . \( -name 'AndroidManifest.xml' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Android .rc Files ===
@@ -116,13 +144,19 @@ function gcrc()
 {
   # Usage: gcrc [inputs] (Grep through Android .rc files)
 
+  # Variables
+  local tmp_list;
+
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name '*.rc' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(findfilteredprojectfiles . \( -name '*.rc' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Android Sepolicies ===
@@ -130,13 +164,19 @@ function gcsep()
 {
   # Usage: gcsep [inputs] (Grep through Android sepolicies)
 
+  # Variables
+  local tmp_list;
+
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name '*.te' -o -name '*_contexts' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(findfilteredprojectfiles . \( -name '*.te' -o -name '*_contexts' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Android .xml Files ===
@@ -144,13 +184,19 @@ function gcxml()
 {
   # Usage: gcxml [inputs] (Grep through Android .xml files)
 
+  # Variables
+  local tmp_list;
+
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name '*.xml' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(findfilteredprojectfiles . \( -name '*.xml' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Android Sepolicies Contexts ===
@@ -158,13 +204,19 @@ function gccontexts()
 {
   # Usage: gccontexts [inputs] (Grep through Android sepolicies contexts)
 
+  # Variables
+  local tmp_list;
+
   # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name '*_contexts' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
-  done < <(findfilteredprojectfiles . \( -name '*_contexts' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Search Helpers ===
@@ -175,12 +227,18 @@ function gcmodules()
 {
   # Usage: gcmodules [path] (List all LOCAL_MODULE elements)
 
+  # Variables
+  local tmp_list;
+
   # Search all build definitions
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles "${1:-.}" \( -name '*.mk' -o -name '*.bp' \) > "${tmp_list}";
   while read -r file; do
     stringsgetall "$(readlink -f "${file}")" \
       | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
       | sed 's/.*\(:=[ \t]*\|name: "\)\([^"]*\)\(".*\|\)/\2/g';
-  done < <(findfilteredprojectfiles "${1:-.}" \( -name '*.mk' -o -name '*.bp' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Grep Android Phony ===
@@ -188,12 +246,18 @@ function gcphony()
 {
   # Usage: gcphony (List all PHONY rules)
 
+  # Variables
+  local tmp_list;
+
   # Search all build definitions
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name '*.mk' \) > "${tmp_list}";
   while read -r file; do
     stringsgetall "$(readlink -f "${file}")" \
       | grep -ai ".PHONY:" \
       | sed 's/.PHONY: //g';
-  done < <(findfilteredprojectfiles . \( -name '*.mk' \));
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }
 
 # === Strings Get All ===

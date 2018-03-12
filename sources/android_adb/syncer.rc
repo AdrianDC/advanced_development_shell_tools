@@ -129,12 +129,18 @@ function adbpullapks()
   local device_apk_entry;
   local device_apk_path;
   local device_apk_name;
+  local tmp_grep;
 
   # Access references apk folder
   cdrefapk;
   echo '';
 
   # Pull all packages installed on the device
+  tmp_grep=$(mktemp);
+  adb shell pm list packages -f \
+      | grep ':/data/' \
+      | cut -d':' -f2- \
+      > "${tmp_grep}";
   while read -r device_apk_entry; do
 
     # Get package name and path
@@ -145,9 +151,8 @@ function adbpullapks()
     echo " adbapksync: Pulling and saving: ${device_apk_name}.apk";
     adb pull "${device_apk_path}.apk" "${device_apk_name}.apk" 2>/dev/null;
 
-  done < <(adb shell pm list packages -f \
-          | grep ':/data/' \
-          | cut -d':' -f2-);
+  done < "${tmp_grep}";
+  rm -f "${tmp_grep}";
 
   # Restore current path
   cd "${currentdir}/";

@@ -605,6 +605,7 @@ function kernelinjectorzip()
   local SystemPartition;
   local TargetFile;
   local TmpDir;
+  local tmp_list;
 
   # Initialize variables
   CurDir=$(pwd);
@@ -642,9 +643,12 @@ function kernelinjectorzip()
   # Find and pack modules
   if [ ! -z "${KernelSources}" ]; then
     mkdir -p "./system/lib/modules/";
+    tmp_list=$(mktemp);
+    find "${KernelSources}" -name '*.ko' > "${tmp_list}";
     while IFS= read -r -d '' module_file; do
       cp "${module_file}" "./system/lib/modules/";
-    done < <(find "${KernelSources}" -name '*.ko');
+    done < "${tmp_list}";
+    rm -f "${tmp_list}";
     zip -g "./${OutFile}.unsigned.zip" "./system/lib/modules/"*;
   fi;
 

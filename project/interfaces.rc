@@ -181,6 +181,7 @@ function shtoolskits()
   local key=-1;
   local list;
   local name;
+  local tmp_list;
   local toolkits;
 
   # First time usage
@@ -237,6 +238,8 @@ function shtoolskits()
     toolkits='|';
 
     # Display __shtools-* menu
+    tmp_list=$(mktemp);
+    shtoolsfiles 'sources' | xargs dirname | uniq > "${tmp_list}";
     while read -r file_path; do
 
       # Group variables
@@ -259,7 +262,8 @@ function shtoolskits()
       cnt=$((cnt + 1));
       echo -e "\e[1;33m ${cnt}: \e[1;37m${name:-[Unknown Folder Name]} \e[1;32m[${file_path}]\e[0m";
 
-    done < <(shtoolsfiles 'sources' | xargs dirname | uniq);
+    done < "${tmp_list}";
+    rm -f "${tmp_list}";
     echo '';
 
     # Display exit item

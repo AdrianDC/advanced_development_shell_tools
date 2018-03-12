@@ -160,8 +160,11 @@ function overlaycompare()
 
   # Variables
   local source_path;
+  local tmp_list;
 
   # Loop through files
+  tmp_list=$(mktemp);
+  find "${@}" -type f > "${tmp_list}";
   while IFS= read -r overlay_path; do
 
     # Launch paths compare on both paths
@@ -171,5 +174,6 @@ function overlaycompare()
                 | sed 's/overlay[^\/]*\///');
     pathscompare "${overlay_path}" "${source_path}";
 
-  done < <(find "${@}" -type f);
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 }

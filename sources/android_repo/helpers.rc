@@ -284,18 +284,22 @@ function repoforeach()
   local currentdir;
   local project_path;
   local repo_top;
+  local tmp_list;
 
   # Get repo root
   currentdir=$(pwd);
   repo_top=$(gettop);
 
   # Run commands for each project
+  tmp_list=$(mktemp);
+  cat "${repo_top}/.repo/project.list" > "${tmp_list}";
   while read -r project_path; do
     echo '';
     echo " === ${project_path} ===";
     cd "${repo_top}/${project_path}";
     "${@}";
-  done < <(cat "${repo_top}/.repo/project.list");
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
 
   # Restore path
   cd "${currentdir}/";
