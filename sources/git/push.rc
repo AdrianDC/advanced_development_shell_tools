@@ -27,7 +27,7 @@ alias gitpf='git push -f';
 # === Git Push Validated Remote ===
 function gitpu()
 {
-  # Usage: gitpu [remote] [branch] [input] (Git push to validated remote)
+  # Usage: gitpu [remote] [branch] [y/n/d] (Git push to validated remote)
 
   # Variables
   local getbranch;
@@ -51,7 +51,16 @@ function gitpu()
   gitstat "${remote}" "${branch}" true;
 
   # Push command
-  cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
+  if [ ! "${input}" = 'd' ]; then
+    cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
+
+  # Delete command
+  else
+    cmd="git push -f ${remote} :refs/heads/${branch}";
+    echo '';
+    echo -e ' \e[1;31mWarning: This command will delete the remote branch\e[0m';
+    input='';
+  fi;
 
   # Push validation
   echo '';
