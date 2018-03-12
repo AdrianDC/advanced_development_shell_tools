@@ -37,6 +37,30 @@ function githubusername()
   echo "${GitUserName}";
 }
 
+# === Git Config User ===
+function gitconfuser()
+{
+  # Usage
+  if [ -z "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: gitconfuser <"name"> <"email"> (Configure Git user and email)';
+    echo '';
+    return;
+  fi;
+
+  # Set user values
+  git config --global user.name "${1}";
+  git config --global user.email "${2}";
+
+  # Display option
+  echo '';
+  echo -n ' gitconfuser: user.name = ';
+  git config --global --get user.name;
+  echo -n ' gitconfuser: user.email = ';
+  git config --global --get user.email;
+  echo '';
+}
+
 # === Git Config Editor ===
 function gitconfeditor()
 {
