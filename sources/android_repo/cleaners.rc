@@ -149,14 +149,14 @@ function repotagscleaner()
                     echo "";
                     git tag
                         | grep -v ${REPO_RREV##*/}
-                        | xargs git tag -d 2> /dev/null;
+                        | xargs -n1 git tag -d 2> /dev/null;
                     tags_output=$(git tag 2>&1
                               | grep -v "${REPO_RREV##*/}$");
                     if [ ! -z "${tags_output}" ]; then
                       git fetch --all --prune --tags;
                       git tag
                           | grep -v ${REPO_RREV##*/}
-                          | xargs git tag -d 2> /dev/null;
+                          | xargs -n1 git tag -d 2> /dev/null;
                     fi;
                     git fetch --prune ${REPO_REMOTE} ${REPO_RREV##*/};
                   fi;';

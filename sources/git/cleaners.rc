@@ -59,8 +59,8 @@ function gitonebranch()
   git branch -r | sed "s/${username}\/\(.*\)/\1/" \
                 | grep -v "HEAD" \
                 | grep -v "$(git rev-parse --abbrev-ref HEAD)" \
-                | xargs -I {} sh -c "echo -n \" Removing branch {} : \"; git push ${username} :{};";
+                | xargs -n1 -I {} sh -c "echo -n \" Removing branch {} : \"; git push ${username} :{};";
 
   # Remove tags
-  git tag -l | xargs -I {} sh -c "echo -n \" Removing tag {} : \"; git push ${username} :{}; echo -n "  "; git tag -d {};";
+  git tag -l | xargs -n1 -I {} sh -c "echo -n \" Removing tag {} : \"; git push ${username} :{}; echo -n "  "; git tag -d {};";
 }

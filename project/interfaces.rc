@@ -239,7 +239,7 @@ function shtoolskits()
 
     # Display __shtools-* menu
     tmp_list=$(mktemp);
-    shtoolsfiles 'sources' | xargs dirname | uniq > "${tmp_list}";
+    shtoolsfiles 'sources' | xargs -n1 dirname | uniq > "${tmp_list}";
     while read -r file_path; do
 
       # Group variables

@@ -98,7 +98,7 @@ function repoinitaosp()
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
-  git tag | grep -v "${branch}" | xargs git tag -d > /dev/null;
+  git tag | grep -v "${branch}" | xargs -n1 git tag -d > /dev/null;
   echo "repoinitaosp done for ${branch}";
   echo '';
   cd ../../;
@@ -189,7 +189,7 @@ function repoinitlineage()
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
-  git tag | grep -v "${branch}" | xargs git tag -d > /dev/null;
+  git tag | grep -v "${branch}" | xargs -n1 git tag -d > /dev/null;
   echo "repoinitlineage done for ${branch}";
   echo '';
   cd ../../;
@@ -266,7 +266,7 @@ function repoinitrr()
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
-  git tag | grep -v "${branch}" | xargs git tag -d;
+  git tag | grep -v "${branch}" | xargs -n1 git tag -d;
   echo "repoinitrr done for ${branch}";
   cd ../../;
 
@@ -339,7 +339,7 @@ function repoinittwrp()
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
-  git tag | grep -v "${branch}" | xargs git tag -d;
+  git tag | grep -v "${branch}" | xargs -n1 git tag -d;
   echo "repoinittwrp done for ${branch}";
   cd ../../;
 
