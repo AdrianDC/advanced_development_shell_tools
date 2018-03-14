@@ -27,9 +27,13 @@ function shtools()
   local line_usage;
   local list_functions=('');
 
+  # Enable UI wrapper
+  __shtoolsui 'enable';
+  __shtoolsui 'start';
+
   # Function header
   echo '';
-  echo -e " \e[1;37m[ Android Development Shell Tools - Menu ]\e[0m";
+  echo -e " \e[1;37m[ Android Development Shell Tools - Menu ]";
   echo '';
 
   # Display shtools* menu
@@ -46,15 +50,18 @@ function shtools()
 
     # Item choice
     cnt=$((cnt + 1));
-    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
+    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]";
 
   done;
   echo '';
 
   # Request user input
-  echo -n " > Command to run [1-${cnt}] : ";
+  echo -en " \e[1;37m> Command to run [1-${cnt}] : ";
   read -r key;
   echo '';
+
+  # Disable UI wrapper
+  __shtoolsui 'disable';
 
   # Execute requested function
   ${list_functions[${key}]};
@@ -74,14 +81,20 @@ function shtools-()
   local line_usage;
   local list_functions;
 
+  # Enable UI wrapper
+  __shtoolsui 'enable';
+
   # Loop until user exits
   key=-1;
   echo '';
   while [ ! "${key}" = '0' ] && [ ! "${key}" = 'q' ]; do
 
+    # Clear UI wrapper
+    __shtoolsui 'start';
+
     # Function header
     echo '';
-    echo -e " \e[1;37m[ Android Development Shell Tools - Options ]\e[0m";
+    echo -e " \e[1;37m[ Android Development Shell Tools - Options ]";
     echo '';
 
     # Reset containers
@@ -110,7 +123,7 @@ function shtools-()
 
         # Present active option
         active=$((active + 1));
-        echo -e "  \e[1;33mOption ${cnt} active: \e[1;37m${line_option} \e[1;32m[${line_usage}]\e[0m";
+        echo -e "  \e[1;33mOption ${cnt} active: \e[1;37m${line_option} \e[1;32m[${line_usage}]";
 
       fi;
     done;
@@ -122,7 +135,7 @@ function shtools-()
     cnt=0;
 
     # Display exit item
-    echo -e "  \e[1;33m0: \e[1;37mKeep current options \e[1;32m[Exit the configuration]\e[0m";
+    echo -e "  \e[1;33m0: \e[1;37mKeep current options \e[1;32m[Exit the configuration]";
 
     # Display __shtools-* menu
     for line_function in $(typeset -F | grep '__shtools-' | cut -d' ' -f 3 \
@@ -152,13 +165,13 @@ function shtools-()
 
       # Item choice
       cnt=$((cnt + 1));
-      echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function#__shtools-} \e[1;32m[${line_usage}]\e[0m";
+      echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function#__shtools-} \e[1;32m[${line_usage}]";
 
     done;
     echo '';
 
     # Request user input
-    echo -n " > Command to run [0-${cnt}] : ";
+    echo -en " \e[1;37m> Command to run [0-${cnt}] : ";
     read -r key;
     echo '';
 
@@ -168,6 +181,9 @@ function shtools-()
     fi;
 
   done;
+
+  # Disable UI wrapper
+  __shtoolsui 'disable';
 }
 
 # === Android Development Shell Tools Toolkits Menu ===
@@ -184,27 +200,33 @@ function shtoolskits()
   local tmp_list;
   local toolkits;
 
+  # Enable UI wrapper
+  __shtoolsui 'enable';
+
   # First time usage
   if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" ] || [ ! -z "${1}" ]; then
 
+    # Clear UI wrapper
+    __shtoolsui 'start';
+
     # Function header
     echo '';
-    echo -e " \e[1;37m[ Android Development Shell Tools - Toolkits ]\e[0m";
+    echo -e " \e[1;37m[ Android Development Shell Tools - Toolkits ]";
     echo '';
-    echo -e ' \e[1;33mshtoolskits:\e[0m This function is meant to select which parts of';
+    echo -e ' \e[1;33mshtoolskits:\e[1;37m This function is meant to select which parts of';
     echo '              android_development_shell_tools you want to load';
     echo '';
 
     # Choices list
-    echo -e ' \e[1;33mYou are: \e[1;37m1.\e[0m An Android developer or beginner';
-    echo -e '          \e[1;37m2.\e[0m A developer working with Git';
-    echo -e '          \e[1;37m3.\e[0m Another type of developer or user';
+    echo -e ' \e[1;33mYou are: \e[1;37m1.\e[1;37m An Android developer or beginner';
+    echo -e '          \e[1;37m2.\e[1;37m A developer working with Git';
+    echo -e '          \e[1;37m3.\e[1;37m Another type of developer or user';
     echo '';
 
     # Choices input
     key='0';
     while [ -z "${key}" ] || [ ! -z "${key//[0-9]}" ] || [ "${key}" -lt 1 ] || [ "${key}" -gt "3" ]; do
-      echo -en " \e[1;33m> \e[1;37mToolkits to use [1-3] :\e[0m ";
+      echo -en " \e[1;33m> \e[1;37mToolkits to use [1-3] :\e[1;37m ";
       read -r key;
     done;
 
@@ -226,9 +248,12 @@ function shtoolskits()
   # Loop until user exits
   while [ ! "${key}" = '0' ] && [ ! "${key}" = 'q' ]; do
 
+    # Clear UI wrapper
+    __shtoolsui 'start';
+
     # Function header
     echo '';
-    echo -e " \e[1;37m[ Android Development Shell Tools - Toolkits ]\e[0m";
+    echo -e " \e[1;37m[ Android Development Shell Tools - Toolkits ]";
     echo '';
 
     # Reset containers
@@ -260,18 +285,18 @@ function shtoolskits()
 
       # Item choice
       cnt=$((cnt + 1));
-      echo -e "\e[1;33m ${cnt}: \e[1;37m${name:-[Unknown Folder Name]} \e[1;32m[${file_path}]\e[0m";
+      echo -e "\e[1;33m ${cnt}: \e[1;37m${name:-[Unknown Folder Name]} \e[1;32m[${file_path}]";
 
     done < "${tmp_list}";
     rm -f "${tmp_list}";
     echo '';
 
     # Display exit item
-    echo -e "      \e[1;33m0: \e[1;37mStore current toolkits \e[1;32m[Exit the configuration]\e[0m";
+    echo -e "      \e[1;33m0: \e[1;37mStore current toolkits \e[1;32m[Exit the configuration]";
     echo '';
 
     # Request user input
-    echo -en " \e[1;33m> \e[1;37mToolkit to toggle [0-${cnt}] :\e[0m ";
+    echo -en " \e[1;33m> \e[1;37mToolkit to toggle [0-${cnt}] :\e[1;37m ";
     read -r key;
     if [ -z "${key}" ]; then
       key='0';
@@ -290,6 +315,9 @@ function shtoolskits()
     fi;
 
   done;
+
+  # Disable UI wrapper
+  __shtoolsui 'disable';
 
   # Update new toolkits
   sed -i "s/\(# Toolkits: \).*/\1${toolkits//\//\\\/}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
@@ -354,17 +382,22 @@ function shtoolsnews()
     cd "${currentdir}/";
     return;
   fi;
+  echo -en "\r\033[K";
+
+  # Enable UI wrapper
+  __shtoolsui 'enable';
+  __shtoolsui 'start';
 
   # Header
-  echo -e "\r\033[K";
-  echo -e ' \e[1;33m===[ android_development_shell_tools by AdrianDC ]===\e[0m';
+  echo '';
+  echo -e ' \e[1;33m===[ android_development_shell_tools by AdrianDC ]===';
   echo '';
 
   # Present local diffs
   if ! git diff-index --quiet HEAD; then
-    echo -e " \e[1;33mshtoolsnews: \e[1;37mLocal differences detected\e[0m";
+    echo -e " \e[1;33mshtoolsnews: \e[1;37mLocal differences detected";
     echo '';
-    git diff --stat HEAD;
+    git diff --stat HEAD 2>/dev/null | cat;
     echo '';
   fi;
 
@@ -374,36 +407,46 @@ function shtoolsnews()
 
   # Present remote commits
   if [ "${commits_remote_count}" -ne 0 ]; then
-    echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_remote_count} new commits available upstream\e[0m";
+    echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_remote_count} new commits available upstream";
     echo '';
 
     # Present remote commits log
-    git log --abbrev-commit --color=always --pretty=oneline -n "${commits_remote_count}" FETCH_HEAD \
-        | nl -n rn -s '  ' -w 3;
+    git log --abbrev-commit --pretty=oneline -n "${commits_remote_count}" FETCH_HEAD \
+        | nl -n rn -s '  ' -w 3 \
+        | cat;
 
     # Present upgrade hint
     echo '';
-    echo -e ' \e[1;33m> \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project\e[0m';
+    echo -e ' \e[1;33m> \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project';
     echo '';
   fi;
 
   # Present local commits
   if [ "${commits_local_count}" -ne 0 ]; then
-    echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_local_count} local commits missing\e[0m";
+    echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_local_count} local commits missing";
     echo '';
 
     # Present local commits log
-    git log --abbrev-commit --color=always --pretty=oneline -n "${commits_local_count}" HEAD \
-        | nl -n rn -s '  ' -w 3;
+    git log --abbrev-commit --pretty=oneline -n "${commits_local_count}" HEAD \
+        | nl -n rn -s '  ' -w 3 \
+        | cat;
     echo '';
   fi;
 
   # Delay input on automatic notifications
   if [ ! -z "${1}" ]; then
-    echo -en '\r\033[K \e[1;37m> Resuming input in 3 seconds...\e[0m';
+    echo -en '\r\033[K \e[1;37m> Resuming input in 3 seconds...';
     sleep 3;
     echo -en '\r\033[K';
+
+  # Block input on manual launch
+  else
+    echo -en '\r\033[K \e[1;37m> Resume... [ENTER]';
+    read -r;
   fi;
+
+  # Disable UI wrapper
+  __shtoolsui 'disable';
 
   # Restore current path
   cd "${currentdir}/";
