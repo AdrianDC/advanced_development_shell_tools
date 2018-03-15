@@ -168,7 +168,8 @@ function shtoolsinstance()
 
   # Submodules instantiation
   if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
-    git submodule update --init --remote;
+    git submodule update --init;
+    git submodule update --init --remote 2>/dev/null;
   fi;
 
   # Automated project news
