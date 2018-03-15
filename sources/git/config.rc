@@ -85,7 +85,7 @@ function gitconfeditor()
   # Display option
   echo '';
   echo -n ' gitconfeditor: core.editor = ';
-  git config --global --get core.editor;
+  git config --global --get core.editor || echo '';
   echo '';
 }
 
