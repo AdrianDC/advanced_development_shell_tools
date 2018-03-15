@@ -116,7 +116,7 @@ function shtools-()
       if [ ! "${line_option}" = "${line_function}" ] && "__shtools-${line_option}-active" 2> /dev/null; then
 
         # Parse usage
-        line_usage=$(shtoolsfiles 'entrypoint,sources' | xargs grep -a "Usage: ${line_function} ");
+        line_usage=$(shtoolsfiles 'entrypoint,sources' | xargs grep -a -m1 "Usage: ${line_function} ");
         if [ -z "${line_usage}" ]; then
           continue;
         fi;
@@ -157,7 +157,7 @@ function shtools-()
       fi;
 
       # Parse usage
-      line_usage=$(shtoolsfiles 'entrypoint,sources' | xargs grep -a "Usage: ${line_function} ");
+      line_usage=$(shtoolsfiles 'entrypoint,sources' | xargs grep -a -m1 "Usage: ${line_function} ");
       if [ -z "${line_usage}" ]; then
         continue;
       fi;

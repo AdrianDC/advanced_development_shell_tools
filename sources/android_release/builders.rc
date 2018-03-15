@@ -241,7 +241,7 @@ function autorelease()
   for line_function in $(typeset -F | grep ' autorelease' | cut -d' ' -f 3 | grep -v '^autorelease$'); do
 
     # Parse usage
-    line_usage=$(shtoolsfiles 'sources' | xargs grep -a "Usage: ${line_function} ");
+    line_usage=$(shtoolsfiles 'sources' | xargs grep -a -m1 "Usage: ${line_function} ");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;

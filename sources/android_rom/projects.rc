@@ -902,7 +902,7 @@ function rompatcher()
                        | grep -v '^androidprojectpatcher$'); do
 
     # Parse usage
-    line_usage=$(shtoolsfiles 'sources' | xargs grep -a "Usage: ${line_function} ");
+    line_usage=$(shtoolsfiles 'sources' | xargs grep -a -m1 "Usage: ${line_function} ");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
@@ -974,7 +974,7 @@ function romrebaser()
                        | grep -v '^androidprojectrebaser$'); do
 
     # Parse usage
-    line_usage=$(shtoolsfiles 'sources' | xargs grep -a "Usage: ${line_function} ");
+    line_usage=$(shtoolsfiles 'sources' | xargs grep -a -m1 "Usage: ${line_function} ");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
