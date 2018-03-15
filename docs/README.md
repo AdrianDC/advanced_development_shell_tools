@@ -778,6 +778,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitshow** : *git show -M &#8208;&#8208;name-status* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitshf** : *git show -M &#8208;&#8208;pretty=fuller* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitshl** *git show &#8208;&#8208;oneline &#8208;&#8208;name-only "${1}" \| tail -n +2 \| cut -c $((1+${2:-0}))-* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
+  * **gitshall** *[shal1]* [*<b>\[Show&nbsp;a&nbsp;git&nbsp;commit&nbsp;with&nbsp;all&nbsp;chars\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitap** : *git add -p* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitaa** : *git add . -Av* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitan** : *git add . -An* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)

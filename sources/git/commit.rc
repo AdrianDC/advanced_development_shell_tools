@@ -25,6 +25,15 @@ alias gitshow='git show -M --name-status';
 alias gitshf='git show -M --pretty=fuller';
 function gitshl() { git show --oneline --name-only "${1}" | tail -n +2 | cut -c $((1+${2:-0}))-; }
 
+# === Git Show All ==
+function gitshall()
+{
+  # Usage: gitshall [shal1] (Show a git commit with all chars)
+
+  # Show a git commit with all chars
+  git show --color --ws-error-highlight=context,new,old "${1:-HEAD}";
+}
+
 # === Git Add Helpers ===
 alias gitap='git add -p';
 alias gitaa='git add . -Av';
