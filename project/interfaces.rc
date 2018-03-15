@@ -64,7 +64,9 @@ function shtools()
   __shtoolsui 'disable';
 
   # Execute requested function
-  ${list_functions[${key}]};
+  if [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
+    ${list_functions[${key}]};
+  fi;
 }
 
 # === Android Development Shell Tools Options Menu ===
