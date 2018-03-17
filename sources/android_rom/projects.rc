@@ -630,7 +630,7 @@ function androidprojectrebaser()
 
     # Warn about projects without patches
     if [ "${git_revs_count_local}" -eq 0 ] && [ "${git_revs_count_remote}" -eq 0 ]; then
-      echo -e "  \e[1;31m< No project differences detected...\e[0m";
+      echo -e "  \e[1;33m< No project differences detected...\e[0m";
       echo '';
     fi;
 
