@@ -879,6 +879,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitdi** [*<b>\[Show&nbsp;git&nbsp;differences&nbsp;status\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitdfs** *&lt;sha1commit&gt;* [*<b>\[git&nbsp;diff&nbsp;status&nbsp;of&nbsp;an&nbsp;SHA1\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitdf** *&lt;sha1commit&gt; &lt;filepath&gt;* [*<b>\[git&nbsp;diffs&nbsp;from&nbsp;an&nbsp;SHA1\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
+  * **gitdiffall** [*<b>\[Show&nbsp;a&nbsp;git&nbsp;diff&nbsp;with&nbsp;all&nbsp;chars\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitfindsha1** *&lt;remote/branch&gt; &lt;"title text to search"&gt;* [*<b>\[git&nbsp;search&nbsp;commit&nbsp;by&nbsp;title&nbsp;contents\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
 
 ---

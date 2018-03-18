@@ -104,6 +104,15 @@ function gitdf()
   git diff "${1}^:${2}" "${1}:${2}";
 }
 
+# === Git Diff All ==
+function gitdiffall()
+{
+  # Usage: gitdiffall (Show a git diff with all chars)
+
+  # Show a git diff with all chars
+  git diff --color --ws-error-highlight=context,new,old;
+}
+
 # === Git Commit Finder ===
 function gitfindsha1()
 {
