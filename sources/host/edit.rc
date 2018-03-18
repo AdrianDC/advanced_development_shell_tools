@@ -96,6 +96,24 @@ function editremovematch()
   sed -i "s#${match_content}##g" "${files[@]}";
 }
 
+# === Edit Remove Trailing Spaces ===
+function editremovetrailingspaces()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: editremovetrailingspaces <"files"> (Edit by removing trailing spaces)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local files=("${@}");
+
+  # Remove
+  sed -i 's#[ \t]*$##g' "${files[@]}";
+}
+
 # === Edit Remove Up To Match ===
 function editremoveupto()
 {
