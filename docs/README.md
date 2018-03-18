@@ -670,7 +670,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/android_rom/projects.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/projects.rc)</span> ###
 >
-  * **gitbranchpusher** *[y/n] [remote_url] [branch]* [*<b>\[Push&nbsp;to&nbsp;project&nbsp;specific&nbsp;branch\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/projects.rc)
+  * **gitbranchpusher** *[y/n/d] [remote_url] [branch]* [*<b>\[Push&nbsp;to&nbsp;project&nbsp;specific&nbsp;branch\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/projects.rc)
   * **androidprojectpaths** *&lt;owner&gt; &lt;project_name&gt;* [*<b>\[Android&nbsp;project&nbsp;remote&nbsp;paths&nbsp;list\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/projects.rc)
   * **androidprojectpatcher** *&lt;owner&gt; &lt;project_name&gt; &lt;email&gt; [specific_path]* [*<b>\[Android&nbsp;project&nbsp;patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/projects.rc)
   * **androidprojectrebaser** *&lt;owner&gt; &lt;project_branch&gt; &lt;"project_paths::name::upstream::branch"&gt; [specific_path]* [*<b>\[Android&nbsp;project&nbsp;rebaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/projects.rc)

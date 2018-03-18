@@ -18,7 +18,7 @@
 # === Git Branch Pusher ===
 function gitbranchpusher()
 {
-  # Usage: gitbranchpusher [y/n] [remote_url] [branch] (Push to project specific branch)
+  # Usage: gitbranchpusher [y/n/d] [remote_url] [branch] (Push to project specific branch)
 
   # Variables
   local project_dir;
@@ -110,8 +110,17 @@ function gitbranchpusher()
   git rev-list --left-right --count FETCH_HEAD...HEAD;
   echo -e '\e[0m';
 
+  # Delete command
+  if [ "${param_send}" = 'd' ]; then
+    push_command="git push -f ${remote} :refs/heads/${project_branch}";
+    param_send='';
+
+  # Push command
+  else
+    push_command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
+  fi;
+
   # Confirmation
-  push_command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
   echo -en "  \e[1;33m> gitbranchpusher: ${push_command} [y/N] ?\e[0m ";
   notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
   if [ -z "${param_send}" ]; then
