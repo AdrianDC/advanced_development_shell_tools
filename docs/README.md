@@ -876,7 +876,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitloo** : *git log &#8208;&#8208;pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" &#8208;&#8208;date=short &#8208;&#8208;all &#8208;&#8208;* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitlosign** : *git log &#8208;&#8208;show-signature* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitlos** *&lt;path_or_.&gt; ["search string input"] [search_max_count]* [*<b>\[Search&nbsp;string&nbsp;in&nbsp;git&nbsp;history\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
-  * **gitdi** [*<b>\[Show&nbsp;git&nbsp;differences&nbsp;status\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
+  * **gitdi** *[SHA1]* [*<b>\[Show&nbsp;git&nbsp;differences&nbsp;status\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitdfs** *&lt;sha1commit&gt;* [*<b>\[git&nbsp;diff&nbsp;status&nbsp;of&nbsp;an&nbsp;SHA1\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitdf** *&lt;sha1commit&gt; &lt;filepath&gt;* [*<b>\[git&nbsp;diffs&nbsp;from&nbsp;an&nbsp;SHA1\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)
   * **gitdiffall** [*<b>\[Show&nbsp;a&nbsp;git&nbsp;diff&nbsp;with&nbsp;all&nbsp;chars\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/history.rc)

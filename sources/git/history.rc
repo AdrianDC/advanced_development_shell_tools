@@ -67,10 +67,10 @@ function gitlos()
 # === Git Diff Status ===
 function gitdi()
 {
-  # Usage: gitdi (Show git differences status)
+  # Usage: gitdi [SHA1] (Show git differences status)
 
   # Show unmerged diffs
-  git diff --name-status;
+  git diff --name-status "${1:-HEAD}";
   git ls-files --others --exclude-standard | awk '{print "U       " $0}';
 }
 
