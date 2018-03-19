@@ -105,7 +105,9 @@ function adbif()
   # Install new files
   for file_path in ${tmp_installs[*]}; do
     echo "${file_path}";
-    if [[ "${file_path}" == *'/system'* ]] && [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
+    if [[ ! "${file_path}" == *'/system.img' ]] &&
+        [[ "${file_path}" == *'/system'* ]] &&
+        [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
       file_path=$(echo -n "${file_path}" | tail -1 \
                 | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
                 | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
@@ -155,7 +157,9 @@ function adbil()
 
   # List new files
   for file_path in ${tmp_installs[*]}; do
-    if [[ "${file_path}" == *'/system'* ]] && [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
+    if [[ ! "${file_path}" == *'/system.img' ]] &&
+        [[ "${file_path}" == *'/system'* ]] &&
+        [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
       file_path=$(echo -n "${file_path}" | tail -1 \
                 | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
                 | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
