@@ -26,7 +26,7 @@ function g()
   # Usage: g [inputs] (Grep through sources)
 
   # Grep through files
-  GREP_COLORS='fn=1;1' grep -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
+  GREP_COLORS='fn=1;1' grep --color -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
 }
 
 # === Grep Strings ===
