@@ -116,22 +116,30 @@ function gitconffilecrlf()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: gitconffilecrlf <auto/detect/input> (Configure Git file CR/LF EOL handling)';
+    echo ' Usage: gitconffilecrlf <auto/detect/input> [bool_local] (Configure Git file CR/LF EOL handling)';
     echo '';
     return;
+  fi;
+
+  # Variables
+  local file_option='--global';
+
+  # Select file option
+  if [ ! -z "${2}" ]; then
+    file_option='--local';
   fi;
 
   # Select option
   case "${1}" in
     auto)
-      git config --global core.autocrlf 'true';
-      git config --global core.safecrlf 'false';;
+      git config "${file_option}" core.autocrlf 'true';
+      git config "${file_option}" core.safecrlf 'false';;
     detect)
-      git config --global core.autocrlf 'false';
-      git config --global core.safecrlf 'true';;
+      git config "${file_option}" core.autocrlf 'false';
+      git config "${file_option}" core.safecrlf 'true';;
     input)
-      git config --global core.autocrlf 'input';
-      git config --global core.safecrlf 'false';;
+      git config "${file_option}" core.autocrlf 'input';
+      git config "${file_option}" core.safecrlf 'false';;
     *)
       echo '';
       echo " Error: Option '${1}' not recognized";
@@ -140,7 +148,7 @@ function gitconffilecrlf()
   # Display option
   echo '';
   echo -n ' gitconffilecrlf: core.autocrlf = ';
-  git config --global --get core.autocrlf;
+  git config "${file_option}" --get core.autocrlf;
   echo '';
 }
 
