@@ -74,6 +74,14 @@ function gitgetbranch()
     branch='';
   done;
 
+  # Default fallback
+  if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
+    >&2 echo '';
+    >&2 echo -en ' \e[1;32mgitgetbranch:\e[1;33m Remote branch = \e[0m';
+    read -r branch;
+    >&2 echo '';
+  fi;
+
   # Output result
   echo "${branch}";
 }
