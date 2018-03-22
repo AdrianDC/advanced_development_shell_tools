@@ -850,6 +850,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/git/fetch.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)</span> ###
 >
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/fetch.rc)
   ```
@@ -936,6 +937,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/git/rebase.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)</span> ###
 >
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/rebase.rc)
   ```
