@@ -264,6 +264,10 @@ function shtoolskits()
     list=('');
     toolkits='|';
 
+    # Display guide information
+    echo -e '  \e[1;37mKits: \e[1;32m[+] Enabled, \e[1;31m[-] Disabled, \e[1;36m[!] Mandatory';
+    echo '';
+
     # Display __shtools-* menu
     tmp_list=$(mktemp);
     shtoolsfiles 'sources' | xargs -n1 dirname | uniq > "${tmp_list}";
@@ -278,11 +282,14 @@ function shtoolskits()
       list+=("${file_path}");
 
       # Status output
-      if [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${file_path}|"* ]]; then
-        echo -en '  \e[1;32m[x]';
+      if [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY}" == *"|${file_path}|"* ]]; then
+        echo -en '  \e[1;36m[!]';
+        toolkits="${toolkits}${file_path}|";
+      elif [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${file_path}|"* ]]; then
+        echo -en '  \e[1;32m[+]';
         toolkits="${toolkits}${file_path}|";
       else
-        echo -en '  \e[1;31m[.]';
+        echo -en '  \e[1;31m[-]';
       fi;
 
       # Item choice
@@ -308,10 +315,12 @@ function shtoolskits()
     # Execute requested function
     if [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
       file_path=${list[${key}]};
-      if [[ "${toolkits}" == *"${file_path}"* ]]; then
-        toolkits="${toolkits/${file_path}|/}"
-      else
-        toolkits="${toolkits}${file_path}|";
+      if [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY}" == *"|${file_path}|"* ]]; then
+        if [[ "${toolkits}" == *"${file_path}"* ]]; then
+          toolkits="${toolkits/${file_path}|/}"
+        else
+          toolkits="${toolkits}${file_path}|";
+        fi;
       fi;
       export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS="# Toolkits: ${toolkits}";
     fi;
