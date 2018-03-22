@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/review.rc)
 
 # === Gerrit Review Uploader ===
@@ -26,7 +27,7 @@ function gerritreview()
   local gerrit_organisation=${2};
   local gerrit_github=${3};
   local gerrit_type=${4};
-  local gerrit_branch=${5:-$(repogetbranch)};
+  local gerrit_branch=${5:-$(gitgetrepobranch)};
   local gerrit_confirm_twice=;
   local gerrit_fetch=;
   local gerrit_project=;

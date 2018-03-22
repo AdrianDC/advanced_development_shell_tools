@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/rebase.rc)
 
 # === Git Rebase Helpers ===
@@ -30,5 +31,5 @@ function gitrfedit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebas
 function gitredit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "HEAD~${1:-5}" -i; }
 
 # === Git rebasing ===
-function gitrb()  { branch=${1:-$(repogetbranch)}; git fetch github "${branch}"; git rebase "github/${branch}"; }
-function gitrbo() { branch=${1:-$(repogetbranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}"; git rebase "origin/${branch}"; }
+function gitrb()  { branch=${1:-$(gitgetrepobranch)}; git fetch github "${branch}"; git rebase "github/${branch}"; }
+function gitrbo() { branch=${1:-$(gitgetrepobranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}"; git rebase "origin/${branch}"; }

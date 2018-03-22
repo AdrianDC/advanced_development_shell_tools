@@ -330,48 +330,6 @@ function repocache()
   cd "${currentdir}/";
 }
 
-# === Repo Project Branch ===
-function repogetbranch()
-{
-  # Usage: repogetbranch (Get repo project branch)
-
-  # Variables
-  local branch='';
-  local infos;
-
-  # Initialize variables
-  infos=$(repo info . 2>&1);
-
-  # Repo detection
-  if [[ ! "${infos}" == *'repo to be installed'* ]] && [[ ! "${infos}" == *'sudo apt'* ]]; then
-    branch=$(echo "${infos}" \
-          | grep -i 'Current revision:' \
-          | head -n 1 \
-          | sed 's/.*: \(refs\/heads\/\|refs\/tags\/\|\)\(.*\)/\2/');
-  fi;
-
-  # Recent remotes
-  if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]]; then
-    branch=$(git 'for-each-ref' --sort='-committerdate' refs/remotes/ \
-           | grep "$(githubusername)\|origin\|xperia" \
-           | head -n 1 \
-           | sed 's/.*remotes\/[^\/]*\/\(.*\)/\1/');
-  fi;
-
-  # Detect branch from refs
-  if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
-    branch=$(gitgetbranch);
-  fi;
-
-  # Default fallback
-  if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
-    branch=lineage-15.1;
-  fi;
-
-  # Output result
-  echo "${branch}";
-}
-
 # === Repo List Exclude Search ===
 function repolistexclude()
 {

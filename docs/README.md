@@ -512,7 +512,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **reposycl** [*<b>\[Cleaned&nbsp;optimized&nbsp;relevant&nbsp;repo&nbsp;sync\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repoforeach** [*<b>\[Run&nbsp;commands&nbsp;for&nbsp;each&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repocache** *[cache_maximum_size]* [*<b>\[CCache&nbsp;watcher&nbsp;and&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
-  * **repogetbranch** [*<b>\[Get&nbsp;repo&nbsp;project&nbsp;branch\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repolistexclude** *[word_to_search]* [*<b>\[Get&nbsp;repo&nbsp;list&nbsp;fields&nbsp;to&nbsp;exclude&nbsp;with&nbsp;search\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **reposwitcher** *[bool_init]* [*<b>\[Helper&nbsp;to&nbsp;switch&nbsp;between&nbsp;local_manifests_*&nbsp;folders\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
 
@@ -692,6 +691,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/gerrit/review.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/gerrit/review.rc)</span> ###
 >
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/review.rc)
   ```
   * **gerritreview** *&lt;gerrit_ssh_or_http&gt; &lt;project_name_or_.&gt; &lt;github_name_or_.&gt; &lt;drafts/for/heads&gt; [branch]* [*<b>\[Gerrit&nbsp;review&nbsp;uploader\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/gerrit/review.rc)
@@ -850,6 +850,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/git/fetch.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)</span> ###
 >
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/fetch.rc)
   ```
   * **gitfetchtreset** *[remote] [branch]* [*<b>\[Git&nbsp;fetch&nbsp;and&nbsp;reset&nbsp;hard\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
@@ -935,6 +936,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/git/rebase.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)</span> ###
 >
   ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/rebase.rc)
   ```
   * **gitra** : *git rebase &#8208;&#8208;abort* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
@@ -946,8 +948,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitrall** *git rebase -i HEAD~$(($(git rev-list &#8208;&#8208;count HEAD) - 1))* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrfedit** *GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "${1}" -i* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitredit** *GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "HEAD~${1:-5}" -i* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
-  * **gitrb** *branch=${1:-$(repogetbranch)}; git fetch github "${branch}"; git rebase "github/${branch}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
-  * **gitrbo** *branch=${1:-$(repogetbranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}"; git rebase "origin/${branch}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
+  * **gitrb** *branch=${1:-$(gitgetrepobranch)}; git fetch github "${branch}"; git rebase "github/${branch}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
+  * **gitrbo** *branch=${1:-$(gitgetrepobranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}"; git rebase "origin/${branch}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
 
 ---
 > ### <span class="group_label">[sources/git/remotes.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)</span> ###
@@ -1000,6 +1002,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
   ```
   * **gitgetremote** *[branch_grep]* [*<b>\[Get&nbsp;git&nbsp;primary&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/tools.rc)
+  * **gitgetrepobranch** [*<b>\[Get&nbsp;git&nbsp;repo&nbsp;project&nbsp;branch\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/tools.rc)
   * **gitgetbranch** [*<b>\[Get&nbsp;git&nbsp;primary&nbsp;branch\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/tools.rc)
 
 ---

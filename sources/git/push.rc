@@ -37,7 +37,7 @@ function gitpu()
   local cmd;
 
   # Initialize variables
-  getbranch=$(repogetbranch);
+  getbranch=$(gitgetrepobranch);
   remote=${1:-$(gitgetremote "${getbranch}")};
   branch=${2:-${getbranch}};
   input=${3};

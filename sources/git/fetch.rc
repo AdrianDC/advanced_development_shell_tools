@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/fetch.rc)
 
 # === Git Fetch Reset Assets ===
@@ -24,7 +25,7 @@ function gitfetchtreset()
   # Usage: gitfetchtreset [remote] [branch] (Git fetch and reset hard)
 
   # Fetch and reset hard
-  git fetch "${1:-$(githubusername)}" "${2:-$(repogetbranch)}";
+  git fetch "${1:-$(githubusername)}" "${2:-$(gitgetrepobranch)}";
   git reset FETCH_HEAD --hard;
 }
 
@@ -98,7 +99,7 @@ function gitunshallow()
   local submodules;
 
   # Fetch and unshallow
-  branch=$(repogetbranch);
+  branch=$(gitgetrepobranch);
   git fetch --unshallow "$(gitgetremote "${branch}")" "${branch}" 2>&1 \
     | grep -v 'on a complete repository does not make sense';
 
@@ -106,7 +107,7 @@ function gitunshallow()
   submodules=$(git submodule--helper list | cut -f 2);
   for submodule in ${submodules}; do
     cd "${currentdir}/${submodule}/";
-    branch=$(repogetbranch);
+    branch=$(gitgetrepobranch);
     git fetch --unshallow "$(gitgetremote "${branch}")" "${branch}" 2>&1 \
       | grep -v 'on a complete repository does not make sense';
   done;

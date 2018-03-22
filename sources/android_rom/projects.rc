@@ -93,7 +93,7 @@ function gitbranchpusher()
   if [ ! -z "${remote_head}" ] && ! git merge-base HEAD FETCH_HEAD >/dev/null; then
     echo '';
     shallow_count=0;
-    remote_branch=$(repogetbranch);
+    remote_branch=$(gitgetrepobranch);
     remote_name=$(gitgetremote "${remote_branch}");
     while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
       shallow_count=$((shallow_count + 10));
@@ -331,7 +331,7 @@ function androidprojectpatcher()
     if ! git merge-base HEAD FETCH_HEAD >/dev/null; then
       echo '';
       shallow_count=0;
-      remote_branch=$(repogetbranch);
+      remote_branch=$(gitgetrepobranch);
       remote_name=$(gitgetremote "${remote_branch}");
       while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
         shallow_count=$((shallow_count + 10));
@@ -783,7 +783,7 @@ function androidprojectsync()
     echo " androidproject: Syncing '${project_path}' path...";
 
     # Fetch and reset
-    branch=$(repogetbranch);
+    branch=$(gitgetrepobranch);
     git fetch "$(gitgetremote "${branch}")" "${branch}" 2>&1;
     git reset --hard FETCH_HEAD;
 
@@ -821,7 +821,7 @@ function androidprojectungraft()
     echo " androidprojectungraft: Fetching '${project_path}' last 100 commits...";
 
     # Fetch and ungraft
-    branch=$(repogetbranch);
+    branch=$(gitgetrepobranch);
     git fetch --depth 100 "$(gitgetremote "${branch}")" "${branch}";
 
   done;
@@ -858,7 +858,7 @@ function androidprojectunshallow()
     echo " androidprojectunshallow: Checking '${project_path}' shallow status...";
 
     # Fetch and unshallow
-    branch=$(repogetbranch);
+    branch=$(gitgetrepobranch);
     git fetch --unshallow "$(gitgetremote "${branch}")" "${branch}" 2>&1 \
 	    | grep -v 'on a complete repository does not make sense';
 
