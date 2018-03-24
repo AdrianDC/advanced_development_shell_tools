@@ -129,5 +129,6 @@ function kernelcopyleftmerger()
   echo '';
   echo ' kernelcopyleftmerger: Cleaning unmerged files';
   git reset HEAD --hard;
-  git stash -u;
+  git stash;
+  git stash -u >/dev/null 2>&1;
 }

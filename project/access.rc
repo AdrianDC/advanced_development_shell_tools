@@ -68,7 +68,8 @@ function shtoolssync()
   # Download upstream changes
   git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   git reset "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
-  git stash -u;
+  git stash;
+  git stash -u >/dev/null 2>&1;
 
   # Init and update submodules
   git submodule init;

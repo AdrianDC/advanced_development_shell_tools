@@ -22,7 +22,7 @@
 # === Git Stash Helpers ===
 alias gits='git stash';
 alias gitsp='git stash -p';
-alias gitsu='git stash -u';
+alias gitsu='git stash; git stash -u >/dev/null 2>&1';
 alias gitspop='git stash pop';
 
 # === Git Clean Tags ===

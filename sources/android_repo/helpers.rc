@@ -208,7 +208,8 @@ function reposysafe()
           if git add -N ./* && ! git diff-index --quiet HEAD -- || git am --abort >/dev/null 2>&1; then
             echo -e \"\n \e[1;32mCleaning: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
             git reset HEAD --hard;
-            git stash -u;
+            git stash;
+            git stash -u >/dev/null 2>&1;
             git am --abort;
           fi;
           echo -e \"\n \e[1;32mCheckout: Project \${REPO_PROJECT} : \${REPO_REMOTE}/\${REPO_RREV##*/}\e[0m\n\";
@@ -269,9 +270,10 @@ function reposycl()
   # Cleaned optimized relevant repo sync
   # shellcheck disable=SC2016
   repo forall -c 'echo "Cleaning project ${REPO_PROJECT}";
-                  git rebase --abort > /dev/null 2>&1;
-                  git stash -u > /dev/null 2>&1;
-                  git reset --hard HEAD > /dev/null 2>&1;';
+                  git rebase --abort >/dev/null 2>&1;
+                  git stash >/dev/null 2>&1;
+                  git stash -u >/dev/null 2>&1;
+                  git reset --hard HEAD >/dev/null 2>&1;';
   repo sync -j"$(grep -c ^processor /proc/cpuinfo)" --current-branch --detach -f --force-broken --force-sync -c --no-clone-bundle --no-tags;
 }
 

@@ -47,7 +47,8 @@ function lineagelxpatcher()
   cd ./vendor/extra/;
   git fetch msm7x30 cm-14.1;
   git reset FETCH_HEAD;
-  git stash -u;
+  git stash;
+  git stash -u >/dev/null 2>&1;
   croot;
 
   # Retrieve work in progress holder
