@@ -108,6 +108,10 @@
 
 > ### <span class="group_label">[sources/android_adb/assets.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)</span> ###
 >
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/assets.rc)
+  ```
   * **adbdatabase** *&lt;/data/.../sqlite.db&gt;* [*<b>\[Android&nbsp;sqlite3&nbsp;database&nbsp;opener\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **sepaud** *&lt;logs_file&gt; [context_search]* [*<b>\[Logs&nbsp;sepolicy&nbsp;analyzer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **sepmsg** *&lt;logs_file&gt; &lt;context&gt; [grep]* [*<b>\[Logs&nbsp;sepolicy&nbsp;message&nbsp;extractor\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)

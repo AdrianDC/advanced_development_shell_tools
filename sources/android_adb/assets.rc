@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/assets.rc)
+
 # === ADB Database Opened ===
 function adbdatabase()
 {
@@ -107,12 +111,13 @@ function adbcamera()
   # Usage: adbcamera (Enable and launch camera applications)
 
   # Enable and launch camera applications
-  adb shell 'pm enable com.android.camera2/com.android.camera.CameraLauncher' | grep -v 'Unknown component';
-  adb shell 'pm enable org.codeaurora.snapcam/com.android.camera.CameraLauncher' | grep -v 'Unknown component';
-  adb shell 'pm enable org.cyanogenmod.snap/com.android.camera.CameraLauncher' | grep -v 'Unknown component';
-  adb shell 'pm enable org.lineageos.snap/com.android.camera.CameraLauncher' | grep -v 'Unknown component';
-  adb shell 'pm enable com.google.android.GoogleCamera/com.android.camera.CameraLauncher' | grep -v 'Unknown component';
-  adb shell 'am start -a android.media.action.IMAGE_CAPTURE';
+  adbsu 'pm enable com.android.camera2/com.android.camera.CameraLauncher;
+         pm enable org.codeaurora.snapcam/com.android.camera.CameraLauncher;
+         pm enable org.cyanogenmod.snap/com.android.camera.CameraLauncher;
+         pm enable org.lineageos.snap/com.android.camera.CameraLauncher;
+         pm enable com.google.android.GoogleCamera/com.android.camera.CameraLauncher' \
+      | grep -v 'Unknown component';
+  adbsu 'am start -a android.media.action.IMAGE_CAPTURE';
 }
 
 # === ADB Kill Process ===
