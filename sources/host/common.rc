@@ -129,19 +129,26 @@ function pathscompare()
   # Usage
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: pathscompare <path_left> <path_right> (Paths comparison for most environments)';
+    echo ' Usage: pathscompare <path_left> <path_right> [bool_wait] (Paths comparison for most environments)';
     echo '';
     return;
   fi;
 
   # Variables
   local opened=1;
-  local pid;
+  local pid=;
 
   # Meld path comparison
   if [ ! -z "$(type -t meld 2> /dev/null)" ]; then
     pid=$(nohup meld "${1}" "${2}" >/dev/null 2>&1 & echo "${!}");
     ps -p "${pid}" >/dev/null 2>&1 && opened=0;
+  fi;
+
+  # Wait for the pid
+  if [ ! -z "${3}" ] && [ ! -z "${pid}" ]; then
+    while [ -d "/proc/${pid}" ] && ! grep -q 'zombie' "/proc/${pid}/status"; do
+      sleep 1;
+    done;
   fi;
 
   # Unknown environment
