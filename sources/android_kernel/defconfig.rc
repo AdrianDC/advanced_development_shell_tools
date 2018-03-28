@@ -123,7 +123,7 @@ function makedefconf()
     if [ ! -z "${forceconfig}" ]; then
       kernelconfigupdater "${forceconfig}";
     fi;
-    pathscompare ./.config ./.config_android;
+    pathscompare ./.config ./.config_android true;
     rm ./.config_android;
 
   # Make full defconfig
@@ -136,13 +136,13 @@ function makedefconf()
       if [ -f "${diffcommon}" ]; then
         pathscompare ./.config "${diffconfig}" &
           pathscompare ./.config "${diffcommon}" &
-          pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
+          pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}" true;
       else
         pathscompare ./.config "${diffconfig}" &
-          pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
+          pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}" true;
       fi;
     else
-      pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}";
+      pathscompare ./.config "${DEFCONFIG_PATH}/${defconfig_file}" true;
     fi;
 
   # Make minimal defconfig
@@ -152,7 +152,7 @@ function makedefconf()
       kernelconfigupdater "${forceconfig}";
     fi;
     make savedefconfig;
-    pathscompare ./defconfig "${DEFCONFIG_PATH}/${defconfig_file}";
+    pathscompare ./defconfig "${DEFCONFIG_PATH}/${defconfig_file}" true;
     rm ./defconfig;
   fi;
 

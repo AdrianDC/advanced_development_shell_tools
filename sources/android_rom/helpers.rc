@@ -172,7 +172,7 @@ function overlaycompare()
                 | sed 's/overlay\/common/overlay/' \
                 | sed 's/overlay\/dictionaries/overlay/' \
                 | sed 's/overlay[^\/]*\///');
-    pathscompare "${overlay_path}" "${source_path}";
+    pathscompare "${overlay_path}" "${source_path}" true;
 
   done < "${tmp_list}";
   rm -f "${tmp_list}";

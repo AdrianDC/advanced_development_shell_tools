@@ -59,7 +59,7 @@ function gitmtr()
   # Edit all unmerged files with reference
   for file in $(git diff --name-only | uniq); do
     echo -n " - ${file} : ";
-    pathscompare "${file}" "${1}/${file}";
+    pathscompare "${file}" "${1}/${file}" true;
     echo -n ' Done ? [Enter / Ctrl+C] ';
     read -r;
     git add "${file}";
