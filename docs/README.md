@@ -813,7 +813,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitcidupstream** [*<b>\[Load&nbsp;commit-msg&nbsp;hook&nbsp;from&nbsp;upstream\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitrh** : *git reset FETCH_HEAD &#8208;&#8208;hard* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **githd** : *git reset HEAD &#8208;&#8208;hard* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
-  * **gitcl** : *git reset HEAD &#8208;&#8208;hard; git git stash; git stash -u &gt;/dev/null 2&gt;&1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
+  * **gitcl** : *git reset HEAD &#8208;&#8208;hard; git stash; git stash -u &gt;/dev/null 2&gt;&1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcla** : *git cherry-pick &#8208;&#8208;abort 2&gt;/dev/null; git am &#8208;&#8208;abort 2&gt;/dev/null; git reset HEAD &#8208;&#8208;hard; git stash; git stash -u &gt;/dev/null 2&gt;&1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitro** : *git reset HEAD^ &#8208;&#8208;hard* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitsl** : *git reset HEAD^; gitap; gitcae* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
