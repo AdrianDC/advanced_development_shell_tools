@@ -72,6 +72,10 @@ function androiddevicestarget()
   # Input request
   case "${request}" in
 
+    # Init request
+    init)
+      return;;
+
     # Device codename
     codename)
       echo "${device}";
