@@ -31,6 +31,7 @@ function adbbootdump()
   local kernel;
 
   # Dump bootimage from device
+  androiddevicestarget init;
   kernel=$(androiddevicestarget boot);
   cmdaddr=$(adb shell "od -j 152 -N 4 -tx4 -An '${kernel}'" \
           | tr -d ' ' | cut -c 2-9);

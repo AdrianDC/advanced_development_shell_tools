@@ -219,6 +219,7 @@ function mmmzip()
   if [ ! -z "${FilesList[*]}" ]; then
 
     # Partitions
+    androiddevicestarget init;
     SystemPartition=$(androiddevicestarget system);
 
     # Generate zip, updater-script and include files
@@ -317,6 +318,7 @@ function systozip()
   if [ ! -z "${FilesList[*]}" ]; then
 
     # Partitions
+    androiddevicestarget init;
     SystemPartition=$(androiddevicestarget system);
 
     # Generate zip, updater-script and include files
@@ -415,6 +417,7 @@ function packzip()
   done;
 
   # Partitions
+  androiddevicestarget init;
   SystemPartition=$(androiddevicestarget system);
 
   # Generate zip, updater-script and include files
@@ -566,6 +569,7 @@ function oeminjectorzip()
   if [ ! -z "${oem_files_list[*]}" ]; then
 
     # Partitions
+    androiddevicestarget init;
     oem_partition=$(androiddevicestarget oem);
 
     # Generate zip, updater-script and include files

@@ -113,6 +113,7 @@ function adbmrombootimage()
   adbready;
 
   # Get ROM and bootimage
+  androiddevicestarget init;
   partitiontarget=$(androiddevicestarget boot);
   romdir=$(adbmromselect "${preselect}");
   romtarget=${romdir}/boot.img;
@@ -202,6 +203,7 @@ function adbmrominjector()
   adbready;
 
   # Get ROM and bootimage
+  androiddevicestarget init;
   partitiontarget=$(androiddevicestarget boot);
   romtarget=$(adbmromselect "${preselect}")/boot.img;
 

@@ -90,6 +90,7 @@ function repotwrp()
   # Partitions
   local FOTAPartition;
   local SystemPartition;
+  androiddevicestarget init;
   FOTAPartition=$(androiddevicestarget fota);
   SystemPartition=$(androiddevicestarget system);
 
@@ -299,6 +300,7 @@ function repomrom()
   # Partitions
   local FOTAPartition;
   local SystemPartition;
+  androiddevicestarget init;
   FOTAPartition=$(androiddevicestarget fota);
   SystemPartition=$(androiddevicestarget system);
 

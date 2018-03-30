@@ -315,6 +315,7 @@ function adbbootinfo()
   adbro;
 
   # Initialize variables
+  androiddevicestarget init;
   adb=$(adbcmd);
   partitiontarget=$(androiddevicestarget boot);
 
@@ -354,6 +355,7 @@ function adbfotainfo()
   adbro;
 
   # Initialize variables
+  androiddevicestarget init;
   adb=$(adbcmd);
   partitiontarget=$(androiddevicestarget fota);
 
@@ -413,7 +415,10 @@ function fbootk()
   fi;
 
   # Variables
-  local partitiontarget=;
+  local partitiontarget;
+
+  # Initialize partition path
+  androiddevicestarget init;
   if [ ! -z "${fota}" ]; then
     partitiontarget=$(androiddevicestarget fota);
   else
@@ -519,6 +524,7 @@ function adbbootpush()
   adbro;
 
   # Initialize variables
+  androiddevicestarget init;
   adb=$(adbcmd);
   boot=$(androiddevicestarget boot);
 
@@ -546,6 +552,7 @@ function adbfotapush()
   local fota;
 
   # Initialize variables
+  androiddevicestarget init;
   adb=$(adbcmd);
   fota=$(androiddevicestarget fota);
 
@@ -573,6 +580,7 @@ function adbrecoverypush()
   local recovery;
 
   # Initialize variables
+  androiddevicestarget init;
   adb=$(adbcmd);
   recovery=$(androiddevicestarget recovery);
 
@@ -616,6 +624,7 @@ function kernelinjectorzip()
   TmpDir=$(mktemp -d);
 
   # Partitions
+  androiddevicestarget init;
   BootPartition=$(androiddevicestarget boot "${PhoneName}");
   SystemPartition=$(androiddevicestarget system "${PhoneName}");
 
@@ -712,6 +721,7 @@ function bootzip()
   TmpDir=$(mktemp -d);
 
   # Partitions
+  androiddevicestarget init;
   BootPartition=$(androiddevicestarget boot "${PhoneName}");
 
   # Copy 'boot.img' and base zip
@@ -884,7 +894,10 @@ function adbramdiskinject()
   fi;
 
   # Variables
-  local partitiontarget=;
+  local partitiontarget;
+
+  # Get partition path
+  androiddevicestarget init;
   partitiontarget=$(androiddevicestarget boot);
 
   # Give adb root permissions
