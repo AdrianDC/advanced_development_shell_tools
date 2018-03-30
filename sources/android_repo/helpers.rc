@@ -110,8 +110,12 @@ function repos()
   unset -f brunch;
   source ./build/envsetup.sh; croot;
 
+  # Open the lunch menu
+  if [ "${device}" = 'lunch' ]; then
+    lunch;
+
   # Prepare device environment for LineageOS
-  if type breakfast >/dev/null 2>&1; then
+  elif type breakfast >/dev/null 2>&1; then
     breakfast "${device}";
 
   # Prepare device environment for AOSP
