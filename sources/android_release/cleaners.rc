@@ -130,6 +130,7 @@ function outotadevcl()
   rm -rf "${out_device_path}/"*"${1}"*".zip.md5sum";
   rm -rf "${out_device_path}/data";
   rm -rf "${out_device_path}/obj/ETC/system_build_prop_intermediates";
+  rm -rf "${out_device_path}/obj/PACKAGING/apkcerts_intermediates";
   rm -rf "${out_device_path}/obj/PACKAGING/target_files_intermediates";
   rm -rf "${out_device_path}/ota_temp/RECOVERY/RAMDISK";
   rm -rf "${out_device_path}/"*"ota"*".zip";
