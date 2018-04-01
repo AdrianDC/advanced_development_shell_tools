@@ -410,7 +410,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_release/cleaners.rc)
   ```
-  * **outdevcl** *&lt;devicename&gt; [bool_minimal]* [*<b>\[Advanced&nbsp;ROM&nbsp;output&nbsp;cleaner&nbsp;for&nbsp;rebuilds\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/cleaners.rc)
+  * **outdevcl** *&lt;devicename&gt; [minimal/full]* [*<b>\[Advanced&nbsp;ROM&nbsp;output&nbsp;cleaner&nbsp;for&nbsp;rebuilds\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/cleaners.rc)
   * **outbootdevcl** *&lt;devicename&gt;* [*<b>\[ROM&nbsp;output&nbsp;cleaner&nbsp;for&nbsp;bootimage&nbsp;rebuilds\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/cleaners.rc)
   * **outotadevcl** *&lt;devicename&gt;* [*<b>\[ROM&nbsp;output&nbsp;cleaner&nbsp;for&nbsp;OTA&nbsp;rebuilds\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/cleaners.rc)
   * **outsepdevcl** *&lt;devicename&gt;* [*<b>\[ROM&nbsp;output&nbsp;cleaner&nbsp;for&nbsp;sepolicies&nbsp;rebuilds\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/cleaners.rc)

@@ -24,7 +24,7 @@ function outdevcl()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: outdevcl <devicename> [bool_minimal] (Advanced ROM output cleaner for rebuilds)';
+    echo ' Usage: outdevcl <devicename> [minimal/full] (Advanced ROM output cleaner for rebuilds)';
     echo '';
     return;
   fi;
@@ -33,14 +33,25 @@ function outdevcl()
   echo '';
   echo -e " \e[1;33moutdevcl:\e[0;33m Cleaning up ROM outputs for '${1}'\e[0m";
 
-  # Run bootimage output cleaner
-  outbootdevcl "${1}" 'nested';
+  # Run full output cleaners
+  if [ "${2}" = 'full' ]; then
 
-  # Run OTA output cleaner
-  outotadevcl "${1}" 'nested';
+    # Run product output cleaner
+    outproductdevcl "${1}";
 
-  # Run system output cleaner
-  outsystemdevcl "${1}" "${2}" 'nested';
+  # Run partial output cleaners
+  else
+
+    # Run bootimage output cleaner
+    outbootdevcl "${1}" 'nested';
+
+    # Run OTA output cleaner
+    outotadevcl "${1}" 'nested';
+
+    # Run system output cleaner
+    outsystemdevcl "${1}" "${2}" 'nested';
+
+  fi;
 
   # Run common output cleaner
   outcommoncl 'nested';
