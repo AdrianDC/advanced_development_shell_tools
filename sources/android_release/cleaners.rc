@@ -60,6 +60,9 @@ function outbootdevcl()
     return;
   fi;
 
+  # Variables
+  local out_device_path;
+
   # Header
   [ -z "${2}" ] && echo '';
   echo -e " \e[1;33moutbootdevcl:\e[0;33m Cleaning up bootimage outputs for '${1}'\e[0m";
@@ -100,6 +103,9 @@ function outotadevcl()
     return;
   fi;
 
+  # Variables
+  local out_device_path;
+
   # Header
   [ -z "${2}" ] && echo '';
   echo -e " \e[1;33moutotadevcl:\e[0;33m Cleaning up OTA outputs for '${1}'\e[0m";
@@ -128,6 +134,9 @@ function outsepdevcl()
     echo '';
     return;
   fi;
+
+  # Variables
+  local out_device_path;
 
   # Header
   [ -z "${2}" ] && echo '';
@@ -159,6 +168,9 @@ function outsystemdevcl()
     echo '';
     return;
   fi;
+
+  # Variables
+  local out_device_path;
 
   # Header
   [ -z "${3}" ] && echo '';
