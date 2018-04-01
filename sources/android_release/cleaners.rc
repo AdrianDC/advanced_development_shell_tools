@@ -192,6 +192,41 @@ function outsystemdevcl()
   fi;
 }
 
+# === ROM Output Product Cleaner ===
+function outproductdevcl()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: outproductdevcl <devicename> (ROM product output cleaner for new builds)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local out_path;
+
+  # Header
+  [ -z "${2}" ] && echo '';
+  echo -e " \e[1;33moutproductdevcl:\e[0;33m Cleaning up product outputs for '${1}'\e[0m";
+  [ -z "${2}" ] && echo '';
+
+  # Out path
+  out_path=${OUT_DIR:-./out};
+
+  # Delete relevant outputs
+  rm -f "${out_path}/.kati_stamp-"*"${1}"*;
+  rm -f "${out_path}/build-"*"${1}"*'.ninja';
+  rm -f "${out_path}/ninja-"*"${1}"*'.sh';
+  rm -f "${out_path}/env-"*"${1}"*'.sh';
+  rm -f "${out_path}/combined-"*"${1}"*'.ninja';
+  rm -rf "${out_path}/host/"*'/obj/EXECUTABLES/'*"${1}"*;
+  rm -rf "${out_path}/host/"*'/bin/'*"${1}"*;
+  rm -f "${out_path}/soong/Android-"*"${1}"*'.mk';
+  rm -f "${out_path}/soong/make_vars-"*"${1}"*'.mk';
+  rm -rf "${out_path}/target/product/${1}";
+}
+
 # === ROM Output Sepolicies Cleaner ===
 function outcommoncl()
 {
