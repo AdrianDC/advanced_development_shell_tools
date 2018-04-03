@@ -53,7 +53,9 @@ function makekernelcopyleft()
     kerneldefconfig 'msm-perf';
 
     # Kernel toolchains selection
-    kerneltoolchains;
+    if [ -z "${KERNEL_TOOLCHAINS_KEEP}" ]; then
+      kerneltoolchains;
+    fi;
 
     # Kernel configuration
     make "${DEFCONFIG_NAME}" O=./.build;

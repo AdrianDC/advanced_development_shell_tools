@@ -51,7 +51,9 @@ function makekernel()
     kerneldefconfig "${1}";
 
     # Kernel toolchains selection
-    kerneltoolchains "${2}";
+    if [ -z "${KERNEL_TOOLCHAINS_KEEP}" ]; then
+      kerneltoolchains "${2}";
+    fi;
 
     # Kernel configuration
     make "${DEFCONFIG_NAME}" O=./.build;
