@@ -1426,6 +1426,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **stignoreclean** [*<b>\[Cleanup&nbsp;untracked&nbsp;paths&nbsp;from&nbsp;SyncThing&nbsp;.stignore*\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/cleaners.rc)
 
 ---
+> ### <span class="group_label">[extensions/syncthing/helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/helpers.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/syncthing/helpers.rc)
+  ```
+  * **stconflictslist** [*<b>\[Find&nbsp;local&nbsp;SyncThing&nbsp;files&nbsp;conflicts\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/helpers.rc)
+
+---
 </details>
 
 <details>
