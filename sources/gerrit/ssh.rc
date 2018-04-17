@@ -49,8 +49,12 @@ function gerritssh()
 {
   # Usage: gerritssh [branch] [change_id_reverser] (Advanced Gerrit SSH interface)
 
+  # Common definitions
+  export GerritFetch='github.com';
+
   # Gerrit Credentials
   if [ -z "${GerritUsername}" ]; then
+    export GerritFetch='github.com';
     export GerritReview='LineageOS';
     export GerritRemote='review.lineageos.org';
     export GerritUsername='Username';
@@ -162,7 +166,7 @@ function gerritssh()
   if [ ! -z "${projectreversemerge}" ]; then
 
     # Read remote current HEAD
-    git fetch "https://${GerritRemote}/${GerritReview}/${projectname}" "${projectbranch}" 2> /dev/null;
+    git fetch "https://${GerritFetch}/${GerritReview}/${projectname}" "${projectbranch}" 2> /dev/null;
     local remotecurrenthead;
     remotecurrenthead=$(git rev-parse FETCH_HEAD);
 
