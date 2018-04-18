@@ -162,6 +162,14 @@ function gerritssh()
   grep -E '^\    isDraft' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilepatchdrafts}";
   sort "${tmpfileids}" > "${tmpfileidsfor}";
 
+  # Project support flags
+  local support_drafts='true';
+
+  # Handle drafts support
+  if [ ! -s "${tmpfilepatchdrafts}" ]; then
+    support_drafts='';
+  fi;
+
   # Handle commit reverse merging
   if [ ! -z "${projectreversemerge}" ]; then
 
@@ -441,7 +449,7 @@ function gerritssh()
     fi;
 
     # Commit Draft Publish
-    if [[ ! "${patchdraft}" == 'false' ]]; then
+    if [ ! -z "${support_drafts}" ] && [[ ! "${patchdraft}" == 'false' ]]; then
       echo -en  "      \e[1;31m> Publish draft   \e[1;37m${i}/${patchset}\e[1;31m (y/N) ?\e[0m ";
       if [ -z "${cmd_publish}" ]; then
         read -r key;
