@@ -57,7 +57,7 @@ function shtools()
 
   # Request user input
   echo -en " \e[1;37m> Command to run [1-${cnt}] : ";
-  read -r key;
+  __shtoolsui 'input';
   echo '';
 
   # Disable UI wrapper
@@ -174,7 +174,7 @@ function shtools-()
 
     # Request user input
     echo -en " \e[1;37m> Command to run [0-${cnt}] : ";
-    read -r key;
+    __shtoolsui 'input';
     echo '';
 
     # Execute requested function
@@ -229,7 +229,7 @@ function shtoolskits()
     key='0';
     while [ -z "${key}" ] || [ ! -z "${key//[0-9]}" ] || [ "${key}" -lt 1 ] || [ "${key}" -gt "3" ]; do
       echo -en " \e[1;33m> \e[1;37mToolkits to use [1-3] :\e[1;37m ";
-      read -r key;
+      __shtoolsui 'input';
     done;
 
     # Choices selection
@@ -306,7 +306,7 @@ function shtoolskits()
 
     # Request user input
     echo -en " \e[1;33m> \e[1;37mToolkit to toggle [0-${cnt}] :\e[1;37m ";
-    read -r key;
+    __shtoolsui 'input';
     if [ -z "${key}" ]; then
       key='0';
     fi;
@@ -453,7 +453,7 @@ function shtoolsnews()
   # Block input on manual launch
   else
     echo -en '\r\033[K \e[1;37m> Resume... [ENTER]';
-    read -r;
+    __shtoolsui 'input';
   fi;
 
   # Disable UI wrapper

@@ -18,7 +18,7 @@
 # === Android Development Shell Tools UI ===
 function __shtoolsui()
 {
-  # Usage: __shtoolsui <enable/start/disable> (UI wrapper for the project)
+  # Usage: __shtoolsui <enable/start/input/disable> (UI wrapper for the project)
 
   # Enable UI wrapper
   if [ "${1}" = 'enable' ]; then
@@ -35,6 +35,19 @@ function __shtoolsui()
 
     # Terminal cleanup
     clear;
+
+  # Input UI wrapper
+  elif [ "${1}" = 'input' ]; then
+
+    # Enable interruption inputs
+    trap 'echo ""; kill -s SIGINT -- $$' SIGINT;
+
+    # Interruptible read
+    export key;
+    key=$(read -r input; echo "${input}");
+
+    # Disable interruption inputs
+    trap - SIGINT;
 
   # Disable UI wrapper
   else
