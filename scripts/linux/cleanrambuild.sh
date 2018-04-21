@@ -23,9 +23,9 @@ free;
 echo '';
 
 # Kill relevant RAM eating processes
-killall ckati;
-killall java;
-killall ninja;
+killall -9 ckati;
+killall -9 java;
+killall -9 ninja;
 
 # Show available RAM
 echo '';
