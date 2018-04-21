@@ -402,16 +402,18 @@ function repoinitsafecleaner()
   fi;
 
   # Detect nested projects causing sync issues
-  cp .repo/project.list "${temp_list_grep}";
-  while IFS= read -r project_path; do
-    if [ ! "${project_path: -1}" = '/' ]; then
-      project_path="${project_path}/";
-    fi;
-    if grep -q "${project_path}" "${temp_list_grep}"; then
-      echo " repoinitsafecleaner: '${project_path}' has nested projects, deleting...";
-      rm -rfv "${project_path}";
-    fi;
-  done < '.repo/project.list';
+  if [ -f .repo/project.list ]; then
+    cp .repo/project.list "${temp_list_grep}";
+    while IFS= read -r project_path; do
+      if [ ! "${project_path: -1}" = '/' ]; then
+        project_path="${project_path}/";
+      fi;
+      if grep -q "${project_path}" "${temp_list_grep}"; then
+        echo " repoinitsafecleaner: '${project_path}' has nested projects, deleting...";
+        rm -rfv "${project_path}";
+      fi;
+    done < '.repo/project.list';
+  fi;
 
   # Detect symlinked repo files causing leftovers
   grep 'copyfile\|linkfile' .repo/manifests/*.xml .repo/manifests/*/*.xml 2>/dev/null \
