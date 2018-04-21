@@ -372,10 +372,10 @@ function reposwitcher()
   local reposy_all=();
 
   # Access Android root
-  croot;
+  croot 2>/dev/null;
 
   # Initialization mode
-  if [ ! -z "${1}" ]; then
+  if [ ! -z "${1}" ] || [ ! -d '.repo' ]; then
 
     # Remove leftover symlinks or regular folders
     if [ -L '.repo/local_manifests' ]; then
