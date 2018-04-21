@@ -20,16 +20,6 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/fetch.rc)
 
-# === Git Fetch Reset Assets ===
-function gitfetchtreset()
-{
-  # Usage: gitfetchtreset [remote] [branch] (Git fetch and reset hard)
-
-  # Fetch and reset hard
-  git fetch "${1:-$(githubusername)}" "${2:-$(gitgetrepobranch)}";
-  git reset FETCH_HEAD --hard;
-}
-
 # === Git Fetch Validated Remote ===
 function gitfu()
 {
@@ -53,6 +43,16 @@ function gitfu()
   # Fetch branch from remote
   git fetch "${remote}" "${branch}";
   echo '';
+}
+
+# === Git Fetch Reset ===
+function gitfr()
+{
+  # Usage: gitfr [remote] [branch] (Git fetch and reset hard)
+
+  # Fetch and reset hard
+  gitfur "${1}" "${2}";
+  git reset FETCH_HEAD --hard;
 }
 
 # === Git Full Url Fetch ===
@@ -117,7 +117,7 @@ alias gitf='git fetch';
 alias gitfmr='git fetch origin; git reset origin/master';
 alias gitfs='git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash';
 alias gitfsu='git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash -p';
-alias gitfgr='gitfetchtreset github';
-alias gitfor='gitremoteverify origin gitrao; gitfetchtreset origin';
-alias gitfar='gitremoteverify $(githubusername) gitraa; gitfetchtreset $(githubusername)';
-alias gitfprivr='gitfetchtreset private';
+alias gitfgr='gitfr github';
+alias gitfor='gitremoteverify origin gitrao; gitfr origin';
+alias gitfar='gitremoteverify $(githubusername) gitraa; gitfr $(githubusername)';
+alias gitfprivr='gitfr private';
