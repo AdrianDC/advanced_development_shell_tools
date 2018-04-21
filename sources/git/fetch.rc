@@ -55,36 +55,6 @@ function gitfu()
   echo '';
 }
 
-# === GitHub Url Fetch-Reset ===
-function gitfcu()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: gitfcu <url> [branch] (Git fetch url and reset)';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  link=${1};
-
-  if [ ! -z "${2}" ]; then
-    branch=${2};
-  else
-    branch=cm-14.1;
-  fi;
-
-  if [ -z "${link}" ]; then
-    echo " Error: Not a GitHub url '${link}'";
-    return;
-  fi;
-
-  git fetch "${link}" "${branch}";
-  echo '';
-  git reset --hard FETCH_HEAD;
-}
-
 # === Git Full Url Fetch ===
 function gitfurl()
 {
