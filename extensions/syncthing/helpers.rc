@@ -26,3 +26,31 @@ function stconflictslist()
   # List conflicts from SyncThing folders
   find ./ -name '*.sync-conflict-*';
 }
+
+# === SyncThing Conflicts Resolve ===
+function stconflictsresolve()
+{
+  # Usage: stconflictsresolve (Resolve conflicts from SyncThing folders)
+
+  # Variables
+  local file_conflict;
+  local file_extension;
+  local file_origin;
+
+  # Header
+  echo '';
+
+  # Resolve conflicts from SyncThing folders
+  while read -r file_conflict; do
+
+    # Get file origin
+    file_extension=${file_conflict##*.};
+    file_origin=${file_conflict%.sync-conflict*}.${file_extension};
+
+    # Compare conflict with origin
+    echo "stconflictsresolve: Resolving '${file_origin}'...";
+    pathscompare "${file_origin}" "${file_conflict}" --wait;
+    echo '';
+
+  done < <(find ./ -name '*.sync-conflict*');
+}
