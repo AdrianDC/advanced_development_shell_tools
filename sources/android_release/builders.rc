@@ -315,6 +315,11 @@ function autobuild()
   # Cleanup device outputs
   outdevcl "${1}" 'minimal';
 
+  # When option enabled, clean RAM before build
+  if __shtools-builds-cleanram-active; then
+    cleanrambuild;
+  fi;
+
   # Prepare device and 'brunch' environment
   repos "${1}";
 
@@ -327,6 +332,11 @@ function autobuild()
   # Build device for AOSP
   else
     makes otapackage;
+  fi;
+
+  # When option enabled, clean RAM after build
+  if __shtools-builds-cleanram-active; then
+    cleanrambuild;
   fi;
 
   # When option enabled, notify build result
