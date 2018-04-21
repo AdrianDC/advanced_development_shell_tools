@@ -30,6 +30,31 @@ function gitfetchtreset()
   git reset FETCH_HEAD --hard;
 }
 
+# === Git Fetch Validated Remote ===
+function gitfu()
+{
+  # Usage: gitfu [remote] [branch] (Git fetch from validated remote)
+
+  # Variables
+  local getbranch;
+  local remote;
+  local branch;
+
+  # Initialize variables
+  getbranch=$(gitgetrepobranch);
+  remote=${1:-$(gitgetremote "${getbranch}")};
+  branch=${2:-${getbranch}};
+
+  # Header information
+  echo '';
+  echo -e " \e[1;32m=== gitfu - Fetching from '${remote}', branch '${branch}' ===\e[0m";
+  echo '';
+
+  # Fetch branch from remote
+  git fetch "${remote}" "${branch}";
+  echo '';
+}
+
 # === GitHub Url Fetch-Reset ===
 function gitfcu()
 {
