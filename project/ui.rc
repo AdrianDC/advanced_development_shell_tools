@@ -57,3 +57,45 @@ function __shtoolsui()
 
   fi;
 }
+
+# === Android Development Shell Tools UI Test ===
+function __shtoolstestui()
+{
+  # Usage: __shtoolstestui (UI test for the project)
+
+  # Variables
+  local cnt=0;
+  local key;
+
+  # Enable UI wrapper
+  __shtoolsui 'enable';
+  __shtoolsui 'start';
+
+  # Function header
+  echo '';
+  echo -e " \e[1;37m[ Android Development Shell Tools - Test ]";
+  echo '';
+
+  # Display test menu
+  while [ ${cnt} -lt 9 ]; do
+
+    # Item choice
+    cnt=$((cnt + 1));
+    sleep 0.1;
+    echo -e "  \e[1;33m${cnt}: \e[1;37mItem entry or function \e[1;32m[Content ${cnt}]";
+
+  done;
+  echo '';
+
+  # Request user input
+  echo -en " \e[1;37m> Entry selection [1-${cnt}] : ";
+  __shtoolsui 'input';
+
+  # Display user input
+  echo '';
+  echo -en " \e[1;37m< Selected entry '${key}'...";
+  sleep 2;
+
+  # Disable UI wrapper
+  __shtoolsui 'disable';
+}
