@@ -315,7 +315,7 @@ function shtoolskits()
     # Execute requested function
     if [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
       file_path=${list[${key}]};
-      if [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY}" == *"|${file_path}|"* ]]; then
+      if [[ ! "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY}" == *"|${file_path}|"* ]]; then
         if [[ "${toolkits}" == *"${file_path}"* ]]; then
           toolkits="${toolkits/${file_path}|/}"
         else
