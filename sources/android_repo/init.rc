@@ -397,7 +397,7 @@ function repoinitsafecleaner()
   echo " repoinitsafecleaner: Searching for nested projects...";
 
   # Detect missing project.list
-  if [ ! -f .repo/project.list ]; then
+  if [ ! -f .repo/project.list ] && [ -d .repo/manifests ]; then
     reposy bionic;
   fi;
 
