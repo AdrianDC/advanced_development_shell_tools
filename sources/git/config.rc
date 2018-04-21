@@ -61,6 +61,81 @@ function gitconfuser()
   echo '';
 }
 
+# === Git Config Users ===
+function gitu()
+{
+  # Usage: gitu (Add and switch between git users)
+
+  # Variables
+  local cnt=0;
+  local key;
+  local line_content;
+  local line_name;
+  local line_email;
+  local list_names=('');
+  local list_emails=('');
+
+  # Create .gitusers initial file
+  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers" ]; then
+    echo -n '' > "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
+  fi;
+
+  # Enable UI wrapper
+  __shtoolsui 'enable';
+  __shtoolsui 'start';
+
+  # Function header
+  echo '';
+  echo -e " \e[1;37m[ Android Development Shell Tools - Git Users ]";
+  echo '';
+
+  # Display configuration item
+  echo -e '  \e[1;33m0: \e[1;37mConfigure a new user';
+  echo '';
+
+  # Display git users menu
+  while read -r line_content; do
+
+    # Parse users
+    line_name=${line_content%\',*};
+    line_name=${line_name#\'};
+    line_email=${line_content#*,\'};
+    line_email=${line_email%\'};
+    list_names+=("'${line_name}'");
+    list_emails+=("'${line_email}'");
+
+    # Item choice
+    cnt=$((cnt + 1));
+    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_name} \e[1;32m<${line_email}>";
+
+  done < "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
+  echo '';
+
+  # Request user input
+  echo -en " \e[1;37m> Switch to an user [0-${cnt}] : ";
+  __shtoolsui 'input';
+  echo '';
+
+  # Add and configure requested user
+  if [ "${key}" -eq '0' ]; then
+    echo -en " \e[1;37m> User name: ";
+    read -r line_name;
+    echo -en " \e[1;37m> User email: ";
+    read -r line_email;
+    if [ ! -z "${line_email}" ] && [ ! -z "${line_email}" ]; then
+      echo "'${line_name}','${line_email}'" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
+      gitconfuser "'${line_name}'" "'${line_email}'";
+    fi;
+
+  # Configure requested user
+  elif [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
+    gitconfuser "${list_names[${key}]}" "${list_emails[${key}]}";
+  fi;
+
+  # Disable UI wrapper
+  __shtoolsui 'disable';
+}
+
 # === Git Config Editor ===
 function gitconfeditor()
 {
