@@ -38,6 +38,7 @@ function gitshall()
 alias gitap='git add -p';
 alias gitaa='git add . -Av';
 alias gitan='git add . -An';
+alias gitav='git add -Av';
 alias gitaaf='git add . -Afv';
 alias gitanf='git add . -Afn';
 alias gitanp='git config core.fileMode false; git add -p; git config --unset core.fileMode';
