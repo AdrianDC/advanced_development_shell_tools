@@ -54,6 +54,7 @@ function uploadftp()
   local variant=${3};
   local send_file_ext;
   local send_file_name;
+  local temp_credentials;
   local time_start;
   local time_span;
 
@@ -89,14 +90,19 @@ function uploadftp()
     echo "   File '${send_file_name}' uploading...";
     echo '';
 
+    # Temporary credentials creation
+    temp_credentials=$(mktemp);
+    chmod 600 "${temp_credentials}";
+    echo "host ${FTPUploadUserUrl}" > "${temp_credentials}";
+    echo "user ${FTPUploadUserName}" >> "${temp_credentials}";
+    echo "pass ${FTPUploadPassword}" >> "${temp_credentials}";
+
     # Upload through FTP
     if ! ncftpput \
         -m \
         -v \
         -t 10 \
-        -u "${FTPUploadUserName}" \
-        -p "${FTPUploadPassword}" \
-        "${FTPUploadUserUrl}" \
+        -f "${temp_credentials}" \
         "${upload_folder}" \
         "${send_file}"; then
 
@@ -105,6 +111,9 @@ function uploadftp()
       echo '';
       echo '   Failed uploading through FTP.';
     fi;
+
+    # Temporary credentials cleanup
+    rm -f "${temp_credentials}";
 
   # File missing
   else
@@ -133,6 +142,7 @@ function downloadftp()
   local download_file=${1};
   local variant=${2};
   local download_file_name;
+  local temp_credentials;
   local time_start;
   local time_span;
 
@@ -162,15 +172,23 @@ function downloadftp()
   echo "   File '${download_file}' downloading...";
   echo '';
 
+  # Temporary credentials creation
+  temp_credentials=$(mktemp);
+  chmod 600 "${temp_credentials}";
+  echo "host ${FTPUploadUserUrl}" > "${temp_credentials}";
+  echo "user ${FTPUploadUserName}" >> "${temp_credentials}";
+  echo "pass ${FTPUploadPassword}" >> "${temp_credentials}";
+
   # Upload through FTP
   ncftpget -C \
            -v \
            -t 10 \
-           -u "${FTPUploadUserName}" \
-           -p "${FTPUploadPassword}" \
-           "${FTPUploadUserUrl}" \
+           -f "${temp_credentials}" \
            "${download_file}" \
            "./${download_file_name}";
+
+  # Temporary credentials cleanup
+  rm -f "${temp_credentials}";
 
   # Detect result FTP download
   case ${?} in
