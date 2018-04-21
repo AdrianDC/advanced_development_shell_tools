@@ -21,8 +21,8 @@
 # === SyncThing Conflicts List Helper ===
 function stconflictslist()
 {
-  # Usage: stconflictslist (Find local SyncThing files conflicts)
+  # Usage: stconflictslist (List conflicts from SyncThing folders)
 
-  # List SyncThing local conflicts
+  # List conflicts from SyncThing folders
   find ./ -name '*.sync-conflict-*';
 }

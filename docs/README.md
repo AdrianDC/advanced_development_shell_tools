@@ -1432,7 +1432,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/syncthing/helpers.rc)
   ```
-  * **stconflictslist** [*<b>\[Find&nbsp;local&nbsp;SyncThing&nbsp;files&nbsp;conflicts\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/helpers.rc)
+  * **stconflictslist** [*<b>\[List&nbsp;conflicts&nbsp;from&nbsp;SyncThing&nbsp;folders\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/helpers.rc)
 
 ---
 </details>
