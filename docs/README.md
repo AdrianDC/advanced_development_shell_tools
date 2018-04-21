@@ -1433,6 +1433,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/syncthing/helpers.rc)
   ```
   * **stconflictslist** [*<b>\[List&nbsp;conflicts&nbsp;from&nbsp;SyncThing&nbsp;folders\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/helpers.rc)
+  * **stconflictsclean** [*<b>\[Clean&nbsp;conflicts&nbsp;from&nbsp;SyncThing&nbsp;folders\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/helpers.rc)
   * **stconflictsresolve** [*<b>\[Resolve&nbsp;conflicts&nbsp;from&nbsp;SyncThing&nbsp;folders\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/syncthing/helpers.rc)
 
 ---

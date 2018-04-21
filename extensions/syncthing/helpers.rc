@@ -27,6 +27,15 @@ function stconflictslist()
   find ./ -name '*.sync-conflict-*';
 }
 
+# === SyncThing Conflicts Clean Helper ===
+function stconflictsclean()
+{
+  # Usage: stconflictsclean (Clean conflicts from SyncThing folders)
+
+  # Clean conflicts from SyncThing folders
+  find ./ -name '*.sync-conflict-*' -print -delete;
+}
+
 # === SyncThing Conflicts Resolve ===
 function stconflictsresolve()
 {
