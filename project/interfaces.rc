@@ -177,8 +177,12 @@ function shtools-()
     __shtoolsui 'input';
     echo '';
 
+    # Default handling
+    if [ -z "${key}" ]; then
+      key=0;
+
     # Execute requested function
-    if [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
+    elif [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
       ${list_functions[${key}]};
     fi;
 
