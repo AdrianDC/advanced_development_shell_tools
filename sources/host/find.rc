@@ -33,7 +33,7 @@ function findhidden()
   fi;
 
   # Find hidden files in a path
-  find "${1:-./}" -mindepth 1 -maxdepth "${2:-1}" -name '.*' -print;
+  find "${1:-./}" -mindepth 1 -maxdepth "${2:-1}" -name '.*' -print | LC_ALL=C sort;
 }
 
 # === Find Filtered Project Files ===
