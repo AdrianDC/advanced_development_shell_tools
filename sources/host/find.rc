@@ -21,6 +21,21 @@
 # === Find Name ===
 alias findn='find -name';
 
+# === Find Hidden Files ===
+function findhidden()
+{
+  # Usage
+  if [ "${1}" = '--help' ] || [ "${1}" = '-h' ]; then
+    echo '';
+    echo ' Usage: findhidden [path] [depth] (Find hidden files in a path)';
+    echo '';
+    return;
+  fi;
+
+  # Find hidden files in a path
+  find "${1:-./}" -mindepth 1 -maxdepth "${2:-1}" -name '.*' -print;
+}
+
 # === Find Filtered Project Files ===
 function findfilteredprojectfiles()
 {

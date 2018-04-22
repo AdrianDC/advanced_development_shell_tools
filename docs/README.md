@@ -1071,6 +1071,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/find.rc)
   ```
   * **findn** : *find -name* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/find.rc)
+  * **findhidden** *[path] [depth]* [*<b>\[Find&nbsp;hidden&nbsp;files&nbsp;in&nbsp;a&nbsp;path\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/find.rc)
   * **findfilteredprojectfiles** *[path] [params]* [*<b>\[Find&nbsp;filtered&nbsp;project&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/find.rc)
   * **findnewer** *&lt;20160123&gt;* [*<b>\[Search&nbsp;files&nbsp;newer&nbsp;than&nbsp;a&nbsp;date\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/find.rc)
 
