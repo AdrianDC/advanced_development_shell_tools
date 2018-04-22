@@ -516,7 +516,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **repoprune** [*<b>\[Apply&nbsp;repo-wide&nbsp;prune&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **reposycl** [*<b>\[Cleaned&nbsp;optimized&nbsp;relevant&nbsp;repo&nbsp;sync\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repoforeach** [*<b>\[Run&nbsp;commands&nbsp;for&nbsp;each&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
-  * **repocache** *[cache_maximum_size]* [*<b>\[CCache&nbsp;watcher&nbsp;and&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
+  * **repocache** *[size_max/clean/wipe]* [*<b>\[CCache&nbsp;watcher&nbsp;and&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repolistexclude** *[word_to_search]* [*<b>\[Get&nbsp;repo&nbsp;list&nbsp;fields&nbsp;to&nbsp;exclude&nbsp;with&nbsp;search\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **reposwitcher** *[bool_init]* [*<b>\[Helper&nbsp;to&nbsp;switch&nbsp;between&nbsp;local_manifests_*&nbsp;folders\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
 

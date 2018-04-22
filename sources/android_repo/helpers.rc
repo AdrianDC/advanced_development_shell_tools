@@ -315,7 +315,7 @@ function repoforeach()
 # === Repo CCache Status/Setter ===
 function repocache()
 {
-  # Usage: repocache [cache_maximum_size] (CCache watcher and configuration)
+  # Usage: repocache [size_max/clean/wipe] (CCache watcher and configuration)
 
   # Variables
   local currentdir;
@@ -324,8 +324,18 @@ function repocache()
   currentdir=$(pwd);
   croot;
 
+  # Clean CCache
+  if [ "${1}" = 'clean' ]; then
+    ./prebuilts/misc/linux-x86/ccache/ccache -C;
+
+  # Wipe CCache
+  elif [ "${1}" = 'wipe' ]; then
+    if [ ! -z "${CCACHE_DIR}" ]; then
+      rm -rf "${CCACHE_DIR}/"*;
+    fi;
+
   # Update the maximum on input (example 20G)
-  if [ ! -z "${1}" ]; then
+  elif [ ! -z "${1}" ]; then
     ./prebuilts/misc/linux-x86/ccache/ccache -M "${1}";
   fi;
 
