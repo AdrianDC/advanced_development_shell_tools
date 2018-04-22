@@ -488,7 +488,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **reposyrm** *&lt;project/relative/path&gt;* [*<b>\[Project&nbsp;repo&nbsp;sync&nbsp;with&nbsp;removal\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)
   * **reposyrmf** *&lt;project/relative/path&gt;* [*<b>\[Project&nbsp;repo&nbsp;sync&nbsp;with&nbsp;forced&nbsp;removal\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)
   * **repopathsizes** *&lt;project/relative/path&gt;* [*<b>\[Repo&nbsp;project&nbsp;paths&nbsp;sizes\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)
-  * **repocleancache** : *if [ ! -z "${CCACHE_DIR}" ]; then rm -rfv "${CCACHE_DIR}/"*; fi* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)
 
 ---
 > ### <span class="group_label">[sources/android_repo/compare.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/compare.rc)</span> ###

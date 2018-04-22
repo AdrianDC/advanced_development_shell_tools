@@ -297,6 +297,3 @@ function repopathsizes()
     echo '';
   done;
 }
-
-# === Repo CCache Cleaner ===
-alias repocleancache='if [ ! -z "${CCACHE_DIR}" ]; then rm -rfv "${CCACHE_DIR}/"*; fi';
