@@ -361,23 +361,23 @@ function repoinitcleaner()
   repoinitsafecleaner "${1}";
 
   # Cleanup repo and manifests
-  rm -rfv .repo/manifests;
-  rm -rfv .repo/manifests.git;
-  rm -rfv .repo/manifest.xml;
-  rm -rfv .repo/repo;
+  rm -rf .repo/manifests;
+  rm -rf .repo/manifests.git;
+  rm -rf .repo/manifest.xml;
+  rm -rf .repo/repo;
 
   # Cleanup project files and history if requested
   if [[ "${1}" == *'clean'* ]]; then
-    rm -rfv .repo/project.list;
-    rm -rfv .repo/projects;
-    rm -rfv .repo/project-objects;
-    rm -rfv ./*;
+    rm -rf .repo/project.list;
+    rm -rf .repo/projects;
+    rm -rf .repo/project-objects;
+    rm -rf ./*;
   fi;
 
   # Cleanup known faulty projects
-  rm -rfv prebuilts/qemu-kernel;
-  rm -rfv .repo/projects/prebuilts/qemu-kernel.git;
-  rm -rfv .repo/project-objects/prebuilts/qemu-kernel.git;
+  rm -rf prebuilts/qemu-kernel;
+  rm -rf .repo/projects/prebuilts/qemu-kernel.git;
+  rm -rf .repo/project-objects/prebuilts/qemu-kernel.git;
 }
 
 # === Repo Init Safe Cleaner ===
@@ -394,7 +394,7 @@ function repoinitsafecleaner()
 
   # Function header
   echo '';
-  echo " repoinitsafecleaner: Searching for nested projects...";
+  echo ' repoinitsafecleaner: Searching for nested projects...';
 
   # Detect missing project.list
   if [ ! -f .repo/project.list ] && [ -d .repo/manifests ]; then
@@ -410,7 +410,7 @@ function repoinitsafecleaner()
       fi;
       if grep -q "${project_path}" "${temp_list_grep}"; then
         echo " repoinitsafecleaner: '${project_path}' has nested projects, deleting...";
-        rm -rfv "${project_path}";
+        rm -rf "${project_path}";
       fi;
     done < '.repo/project.list';
   fi;
@@ -418,7 +418,7 @@ function repoinitsafecleaner()
   # Detect symlinked repo files causing leftovers
   grep 'copyfile\|linkfile' .repo/manifests/*.xml .repo/manifests/*/*.xml 2>/dev/null \
       | sed 's/.*dest="\([^\"]*\)".*/\1/g' \
-      | xargs -n1 rm -fv;
+      | xargs -n1 rm -f;
 
   # Remove temporary files
   rm -f "${temp_list_grep}";
