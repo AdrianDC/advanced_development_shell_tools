@@ -61,6 +61,25 @@ function she()
   FILEEDIT_TOUCH_NEW_FILE=true fileedit "$(shconfig)";
 }
 
+# === Shell Path ===
+function shpath()
+{
+  # Usage: shpath (Shell path getter)
+
+  # Variables
+  local command;
+
+  # Get current shell command
+  command=$(ps -o command= -p $$ 2>/dev/null);
+  if [ -z "${command}" ]; then
+    command=$(ps -p $$);
+    command=/usr/${command##*/usr/};
+  fi;
+
+  # Return current shell command
+  echo "${command}";
+}
+
 # === Shell Minimal Instance ===
 function shminimal()
 {
