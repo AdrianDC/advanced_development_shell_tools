@@ -25,7 +25,7 @@ function shconfig()
   # Usage: shconfig (Get ~/.<shell>rc configuration)
 
   # Get current shell configuration path
-  case "$(ps -o command= -p $$)" in
+  case "$(shpath)" in
 
     # Z-Shell
     *zsh*)
