@@ -85,8 +85,12 @@ function shminimal()
 {
   # Usage: shminimal (Shell with SH_MINIMAL defined)
 
+  # Variables
+  local command;
+
   # Shell with SH_MINIMAL defined
-  SH_MINIMAL=true "$(ps -o command= -p $$)";
+  command=$(shpath);
+  SH_MINIMAL=true "${command}";
 }
 
 # === Clear Screen ===
