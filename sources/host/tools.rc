@@ -76,7 +76,7 @@ function pbin()
 
   # Acquire token from Pastebin
   token=$(curl -s 'https://pastebin.com' \
-        | grep 'csrf_token_post' \
+        | grep --color=never 'csrf_token_post' \
         | sed 's/.*name="csrf_token_post" value="\(.*\)".*/\1/')
 
   # Upload to Pastebin
@@ -88,7 +88,7 @@ function pbin()
         -F 'paste_format=8' \
         -F 'paste_private=1' \
         -F 'submit_hidden=submit_hidden' \
-      | grep 'location');
+      | grep --color=never 'location');
   url="http://pastebin.com/raw${url##*: }";
   echo " pastebin: ${url}";
 

@@ -60,7 +60,7 @@ function binaryeditor()
     # Replacement mode
     if [ ! -z "${REPLACEMENT}" ]; then
       STRINGS=$(stringsgetall "${FILE}" \
-              | grep "${PATTERN}" \
+              | grep --color=never "${PATTERN}" \
               | sort -u -r);
 
       # Information found
@@ -103,7 +103,7 @@ function binaryeditor()
       # Information not found
       else
         STRINGS=$(stringsgetall "${FILE}" \
-                | grep "${REPLACEMENT}" \
+                | grep --color=never "${REPLACEMENT}" \
                 | sort -u -r);
         if [ ! -z "${STRINGS}" ]; then
           echo -e "   \e[1;37m${FILE}:\e[0m ${REPLACEMENT} \e[1;33mFound.\e[0m";
@@ -113,7 +113,7 @@ function binaryeditor()
     # Search mode
     else
       STRINGS=$(stringsgetall "${FILE}" \
-              | grep "${PATTERN}" \
+              | grep --color=never "${PATTERN}" \
               | sort -u -r \
               | tr '\n' ',');
       if [ ! -z "${STRINGS}" ]; then

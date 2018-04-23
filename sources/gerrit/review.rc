@@ -54,19 +54,19 @@ function gerritreview()
 
   # Remote detection
   if [ ! "${gerrit_organisation}" = '.' ]; then
-    gerrit_remote=$(git remote -v | grep "/${gerrit_organisation}/" | tail -n 1);
+    gerrit_remote=$(git remote -v | grep --color=never "/${gerrit_organisation}/" | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ] && [ ! "${gerrit_organisation}" = 'aosp' ]; then
-    gerrit_remote=$(git remote -v | grep origin$'\t' | tail -n 1);
+    gerrit_remote=$(git remote -v | grep --color=never origin$'\t' | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ] && [ "${gerrit_organisation}" = 'aosp' ]; then
-    gerrit_remote=$(git remote -v | grep aosp$'\t' | tail -n 1);
+    gerrit_remote=$(git remote -v | grep --color=never aosp$'\t' | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ]; then
-    gerrit_remote=$(git remote -v | grep "${gerrit_organisation}.*//" | tail -n 1);
+    gerrit_remote=$(git remote -v | grep --color=never "${gerrit_organisation}.*//" | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ] && [ ! "${gerrit_organisation}" = 'aosp' ]; then
-    gerrit_remote=$(git remote -v | grep github$'\t' | tail -n 1);
+    gerrit_remote=$(git remote -v | grep --color=never github$'\t' | tail -n 1);
   fi;
   if [ -z "${gerrit_remote}" ]; then
     gerrit_remote=$(git rev-parse --show-toplevel \

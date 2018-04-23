@@ -65,7 +65,7 @@ function __shtoolsoptions()
 
   # Acquire current options
   elif [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
-    option_command=$(grep "${1}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
+    option_command=$(grep --color=never "${1}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
     if [ ! -z "${option_command}" ]; then
       export ANDROID_DEVELOPMENT_SHELL_TOOLS_OPTIONS_LOAD=true;
       ${option_command};

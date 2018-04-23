@@ -39,8 +39,8 @@ function gitremoteset()
 
   # Debug the remote
   echo -en  ' \e[1;32mRemote :\e[0m ';
-  git remote -v | grep "${1}" \
-                | grep -i '(fetch)' \
+  git remote -v | grep --color=never "${1}" \
+                | grep -i --color=never '(fetch)' \
                 | awk '{ printf("%s -> %s", $1, $2); }';
   echo '';
 }
@@ -67,15 +67,15 @@ function gitremoteadaptset()
 
   # Target detection
   target=$(git remote -v \
-               | grep -v -i project \
-               | grep -i github \
+               | grep -iv project \
+               | grep -i --color=never github \
                | head -n 1 \
                | awk '{ print $2 }');
 
   # Build repository target
   if [ -z "${target}" ]; then
     project=$(git remote -v \
-                 | grep -v -i github\|project \
+                 | grep -iv github\|project \
                  | head -n 1 \
                  | awk '{ print $2 }' \
                  | sed 's/.*\.com\///' \

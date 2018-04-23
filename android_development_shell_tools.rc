@@ -52,7 +52,7 @@ export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID='|sources/android_adb|so
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST='|sources/host|extensions/linux|';
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT='|sources/git|sources/host|sources/ssh|extensions/linux|';
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY='|sources/git|sources/host|';
-ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS=$(grep '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" 2>/dev/null);
+ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS=$(grep --color=never '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" 2>/dev/null);
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS;
 
 # === Android Development Shell Tools Sources ===

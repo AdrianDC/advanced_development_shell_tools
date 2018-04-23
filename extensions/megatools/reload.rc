@@ -42,8 +42,8 @@ function meganzreload()
   local proc_id;
 
   # Load user credentials
-  username=$(grep 'Username' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" | sed 's/.*= //');
-  password=$(grep 'Password' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" | sed 's/.*= //');
+  username=$(grep --color=never 'Username' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" | sed 's/.*= //');
+  password=$(grep --color=never 'Password' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" | sed 's/.*= //');
 
   # Start mega-cmd server
   echo '';

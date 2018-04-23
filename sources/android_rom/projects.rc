@@ -58,7 +58,8 @@ function gitbranchpusher()
 
   # Target remote
   if [ -z "${remote}" ] && [ -f "$(gettop)/.repo/local_manifests/roomservice.xml" ]; then
-    remote=$(grep "Project: '" "$(gettop)/.repo/local_manifests/roomservice.xml" | sed "s/.* '\(.*\)' .*/\1/");
+    remote=$(grep --color=never "Project: '" "$(gettop)/.repo/local_manifests/roomservice.xml" \
+           | sed "s/.* '\(.*\)' .*/\1/");
     if [ ! -z "${remote}" ]; then
       remote=${remote#* };
       remote=${remote% *};
@@ -892,7 +893,7 @@ function rompatcher()
   # Detect the existence of roomservice.xml
   roomservice_xml=$(gettop)/.repo/local_manifests/roomservice.xml;
   if [ -f "${roomservice_xml}" ]; then
-    search_patcher=$(grep "ROM Patcher: '" "${roomservice_xml}" \
+    search_patcher=$(grep --color=never "ROM Patcher: '" "${roomservice_xml}" \
                    | sed "s/.* '\(.*\)' .*/\1/");
 
     # Notify found rompatcher function
@@ -908,12 +909,15 @@ function rompatcher()
   echo '';
 
   # Display *patcher menu
-  for line_function in $(typeset -F | grep 'patcher$' | cut -d' ' -f 3 \
+  for line_function in $(typeset -F \
+                       | grep --color=never 'patcher$' \
+                       | cut -d' ' -f 3 \
                        | grep -v '^rompatcher$' \
                        | grep -v '^androidprojectpatcher$'); do
 
     # Parse usage
-    line_usage=$(shtoolsfiles 'sources' | xargs grep -a -m1 "Usage: ${line_function} ");
+    line_usage=$(shtoolsfiles 'sources' \
+               | xargs grep -a -m1 --color=never "Usage: ${line_function} ");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
@@ -964,7 +968,7 @@ function romrebaser()
   # Detect the existence of roomservice.xml
   roomservice_xml=$(gettop)/.repo/local_manifests/roomservice.xml;
   if [ -f "${roomservice_xml}" ]; then
-    search_rebaser=$(grep "ROM Rebaser: '" "${roomservice_xml}" \
+    search_rebaser=$(grep --color=never "ROM Rebaser: '" "${roomservice_xml}" \
                    | sed "s/.* '\(.*\)' .*/\1/");
 
     # Notify found romrebaser function
@@ -980,12 +984,14 @@ function romrebaser()
   echo '';
 
   # Display *rebaser menu
-  for line_function in $(typeset -F | grep 'rebaser$' | cut -d' ' -f 3 \
+  for line_function in $(typeset -F \
+                       | grep --color=never 'rebaser$' | cut -d' ' -f 3 \
                        | grep -v '^romrebaser$' \
                        | grep -v '^androidprojectrebaser$'); do
 
     # Parse usage
-    line_usage=$(shtoolsfiles 'sources' | xargs grep -a -m1 "Usage: ${line_function} ");
+    line_usage=$(shtoolsfiles 'sources' \
+               | xargs grep -a -m1 --color=never "Usage: ${line_function} ");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;

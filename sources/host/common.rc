@@ -237,7 +237,7 @@ function processownercheck()
   if uname -a | grep -q 'Linux'; then
     #shellcheck disable=SC2009
     ps -eo cmd,uname:20,state 2>/dev/null \
-        | grep "^${1}" \
+        | grep --color=never "^${1}" \
         | grep -v '\(T\|Z\)$' \
         | grep -q "${2}";
   else

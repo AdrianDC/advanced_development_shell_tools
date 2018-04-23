@@ -121,9 +121,9 @@ function gerritssh()
   local projectorigin;
   local projectname;
   local tmpdir;
-  projectorigin=$(git remote -v | grep origin | tail -n 1);
+  projectorigin=$(git remote -v | grep --color=never origin | tail -n 1);
   if [ -z "${projectorigin}" ]; then
-    projectorigin=$(git remote -v | grep ${GerritReview} | tail -n 1);
+    projectorigin=$(git remote -v | grep --color=never ${GerritReview} | tail -n 1);
   fi;
   projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
   tmpdir=$(mktemp -d);
@@ -154,12 +154,12 @@ function gerritssh()
   fi;
 
   # Parse relevant informations
-  grep -E '^\  number' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfileids}";
-  grep -E '^\  branch' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfilebranch}";
-  grep -E '^\  subject' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfilenames}";
-  grep -E '^\ \[' "${tmpfilestate}" | sed 's/.*\[\(.*\)\].*/\1/' > "${tmpfileparents}";
-  grep -E '^\    number' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilepatchsets}";
-  grep -E '^\    isDraft' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilepatchdrafts}";
+  grep -E --color=never '^\  number' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfileids}";
+  grep -E --color=never '^\  branch' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfilebranch}";
+  grep -E --color=never '^\  subject' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfilenames}";
+  grep -E --color=never '^\ \[' "${tmpfilestate}" | sed 's/.*\[\(.*\)\].*/\1/' > "${tmpfileparents}";
+  grep -E --color=never '^\    number' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilepatchsets}";
+  grep -E --color=never '^\    isDraft' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilepatchdrafts}";
   sort "${tmpfileids}" > "${tmpfileidsfor}";
 
   # Project support flags
@@ -187,11 +187,11 @@ function gerritssh()
 
     # Parse commits SHA1
     local tmpfilesha1=${tmpdir}/sha1;
-    grep -E '^\    revision' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilesha1}";
+    grep -E --color=never '^\    revision' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilesha1}";
 
     # Parse the reverse indexes
     while true; do
-      tmpcommitpos=$(grep -n "${tmpcommitid}" "${tmpfileids}" | cut -d : -f 1);
+      tmpcommitpos=$(grep -n --color=never "${tmpcommitid}" "${tmpfileids}" | cut -d : -f 1);
 
       # Exit on failed reverse search
       if [ -z "${tmpcommitpos}" ]; then
@@ -205,7 +205,7 @@ function gerritssh()
 
       # Commit parent and next child search
       tmpcommitparent=$(sed "${tmpcommitpos}!d" "${tmpfileparents}");
-      tmpcommitidsearch=$(grep -n "${tmpcommitparent}" "${tmpfilesha1}" | cut -d : -f 1);
+      tmpcommitidsearch=$(grep -n --color=never "${tmpcommitparent}" "${tmpfilesha1}" | cut -d : -f 1);
 
       # Reverse to HEAD successful
       if [ "${tmpcommitparent}" = "${remotecurrenthead}" ]; then
@@ -442,7 +442,7 @@ function gerritssh()
         if [[ "${key}" == 'y' || "${key}" == 'Y' ]]; then
           ${gerritssh} review --rebase --project "${GerritReview}/${projectname}" "${i},${patchset}";
           patchset=$(${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" \
-                   | grep -E '^\    number' \
+                   | grep -E --color=never '^\    number' \
                    | cut -d' ' -f6-);
         fi;
       fi;
@@ -485,7 +485,7 @@ function gerritssh()
 
           # Get Commit Details
           ${gerritssh} query --current-patch-set "status:open project:${GerritReview}/${projectname} change:${i}" > "${tmpfilepatchinfo}";
-          patchcommit=$(grep -E '^\    revision' "${tmpfilepatchinfo}" \
+          patchcommit=$(grep -E --color=never '^\    revision' "${tmpfilepatchinfo}" \
                       | cut -d' ' -f6-);
           # | sed '${d}'
           sed -n '/commitMessage/,/createdOn/ p' "${tmpfilepatchinfo}" \

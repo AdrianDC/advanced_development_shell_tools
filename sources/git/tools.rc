@@ -29,8 +29,8 @@ function gitgetremote()
 
   # Remotes detection
   remotes=$(git 'for-each-ref' \
-         | grep -i 'remotes' \
-         | grep -i "${1}" \
+         | grep -i --color=never 'remotes' \
+         | grep -i --color=never "${1}" \
          | sed 's/.*\/remotes\/\([^\/]*\).*/\1/');
 
   # Validate remotes
@@ -65,7 +65,7 @@ function gitgetrepobranch()
   # Repo detection
   if [[ ! "${infos}" == *'repo to be installed'* ]] && [[ ! "${infos}" == *'sudo apt'* ]]; then
     branch=$(echo "${infos}" \
-          | grep -i 'Current revision:' \
+          | grep -i --color=never 'Current revision:' \
           | head -n 1 \
           | sed 's/.*: \(refs\/heads\/\|refs\/tags\/\|\)\(.*\)/\2/');
   fi;
@@ -73,7 +73,7 @@ function gitgetrepobranch()
   # Recent remotes
   if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]]; then
     branch=$(git 'for-each-ref' --sort='-committerdate' refs/remotes/ \
-           | grep "$(githubusername)\|origin\|xperia" \
+           | grep --color=never "$(githubusername)\|origin\|xperia" \
            | head -n 1 \
            | sed 's/.*remotes\/[^\/]*\/\(.*\)/\1/');
   fi;
@@ -98,7 +98,7 @@ function gitgetbranch()
 
   # Remotes detection
   branches=$(git 'for-each-ref' \
-           | grep -i 'remotes' \
+           | grep -i --color=never 'remotes' \
            | grep -v 'HEAD' \
            | sed 's/.*\/remotes\/\([^\/]*\/[^\/]*\).*/\1/');
 

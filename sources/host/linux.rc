@@ -139,22 +139,22 @@ function netspeed()
 
   # Display network speeds
   echo '';
-  dev_eth=$(grep -c eth0 /proc/net/dev);
-  dev_wlan=$(grep -c wlan0 /proc/net/dev);
+  dev_eth=$(grep -c --color=never eth0 /proc/net/dev);
+  dev_wlan=$(grep -c --color=never wlan0 /proc/net/dev);
   tput sc;
 
   while [ "${dev_eth}" -ne 0 ] || [ "${dev_wlan}" -ne 0 ]; do
     if [ "${dev_eth}" -ne 0 ]; then
       vals_eth=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
-               <(grep eth0 /proc/net/dev) \
-               <(sleep 1; grep eth0 /proc/net/dev));
+               <(grep --color=never eth0 /proc/net/dev) \
+               <(sleep 1; grep --color=never eth0 /proc/net/dev));
     else
       vals_eth=;
     fi;
     if [ "${dev_wlan}" -ne 0 ]; then
       vals_wlan=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
-                <(grep wlan0 /proc/net/dev) \
-                <(sleep 1; grep wlan0 /proc/net/dev));
+                <(grep --color=never wlan0 /proc/net/dev) \
+                <(sleep 1; grep --color=never wlan0 /proc/net/dev));
     else
       vals_wlan=;
     fi;

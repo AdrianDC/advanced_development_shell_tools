@@ -126,7 +126,7 @@ function gitfindsha1()
 
   # Search
   git log --pretty=oneline "${1}" \
-    | grep "${2}" \
+    | grep --color=never "${2}" \
     | head -n 1 \
     | cut -f 1 -d ' ';
 }

@@ -118,7 +118,8 @@ function fastupl()
 
         # .apk application
         if [ "${1: -4}" = '.apk' ]; then
-          apkname=$(aapt d xmltree "${1}" AndroidManifest.xml | grep -i 'package=');
+          apkname=$(aapt d xmltree "${1}" AndroidManifest.xml \
+                  | grep -i --color=never 'package=');
           apkname=${apkname#*$'"'};
           apkname=${apkname%%$'"'*};
           if [ ! -z "${apkname}" ]; then

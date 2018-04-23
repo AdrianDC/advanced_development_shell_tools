@@ -26,7 +26,7 @@ function g()
   # Usage: g [inputs] (Grep through sources)
 
   # Grep through files
-  GREP_COLORS='fn=1;1' grep --color -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
+  GREP_COLORS='fn=1;1' grep --color=auto -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
 }
 
 # === Grep Strings ===
@@ -41,7 +41,7 @@ function gs()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -68,7 +68,7 @@ function gce()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       files+=("${file}");
     fi;
@@ -91,7 +91,7 @@ function gck()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . \( -name 'Kconfig' -o -name 'Makefile' \) > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -111,7 +111,7 @@ function gca()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' \) > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -131,7 +131,7 @@ function gcmanifest()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . \( -name 'AndroidManifest.xml' \) > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -151,7 +151,7 @@ function gcrc()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . \( -name '*.rc' \) > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -171,7 +171,7 @@ function gcsep()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . \( -name '*.te' -o -name '*_contexts' \) > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -191,7 +191,7 @@ function gcxml()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . \( -name '*.xml' \) > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -211,7 +211,7 @@ function gccontexts()
   tmp_list=$(mktemp);
   findfilteredprojectfiles . \( -name '*_contexts' \) > "${tmp_list}";
   while read -r file; do
-    found=$(stringsgetall "${file}" | grep -ai "${*}");
+    found=$(stringsgetall "${file}" | grep -ai --color=always "${*}");
     if [ ! -z "${found}" ]; then
       echo -e "\e[1;31m${file} :\e[0m ${found}";
     fi;
@@ -235,7 +235,7 @@ function gcmodules()
   findfilteredprojectfiles "${1:-.}" \( -name '*.mk' -o -name '*.bp' \) > "${tmp_list}";
   while read -r file; do
     stringsgetall "$(readlink -f "${file}")" \
-      | grep -ai "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
+      | grep -ai --color=never "LOCAL_MODULE[ ]*:=\|LOCAL_PACKAGE_NAME[ ]*:=\|    name: " \
       | sed 's/.*\(:=[ \t]*\|name: "\)\([^"]*\)\(".*\|\)/\2/g';
   done < "${tmp_list}";
   rm -f "${tmp_list}";
@@ -254,7 +254,7 @@ function gcphony()
   findfilteredprojectfiles . \( -name '*.mk' \) > "${tmp_list}";
   while read -r file; do
     stringsgetall "$(readlink -f "${file}")" \
-      | grep -ai ".PHONY:" \
+      | grep -ai --color=never ".PHONY:" \
       | sed 's/.PHONY: //g';
   done < "${tmp_list}";
   rm -f "${tmp_list}";

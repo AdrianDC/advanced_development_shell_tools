@@ -269,7 +269,8 @@ function megamirror()
       if [ -d "${file_path}" ]; then
         file_type=1;
       fi;
-      IFS=' ' read -r -a line_tmp <<< "$(awk "\$3 == ${file_type}" "${tmp_remote_ls}" 2>&1 | grep "${remote_folder}/${file_escaped//\\\|/\|}$")";
+      IFS=' ' read -r -a line_tmp <<< "$(awk "\$3 == ${file_type}" "${tmp_remote_ls}" 2>&1 \
+          | grep --color=never "${remote_folder}/${file_escaped//\\\|/\|}$")";
 
       # Verify folder exists
       if [ -d "${file_path}" ]; then

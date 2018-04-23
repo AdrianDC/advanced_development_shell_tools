@@ -94,7 +94,7 @@ function shtoolsforum()
     sed -i 's#^<!-- Item -->#[*]#g' "${readme_forum}.${ext}";
 
     # Get all previews png files
-    preview_files=$(grep 'docs/assets.*\.png' "${readme_forum}.${ext}" \
+    preview_files=$(grep --color=never 'docs/assets.*\.png' "${readme_forum}.${ext}" \
                   | sed "s/.*${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/}\/raw\/master\/\(.*\.png\).*/\1/g");
     for preview_file in ${preview_files}; do
 
@@ -201,7 +201,7 @@ function shtoolsreadme()
     echo -en "\r\033[K  Parsing ${path_relative}";
 
     # Detect standalone ready scripts
-    line_standalone=$(grep -a '^# source <(curl -Ls' "${path_file}");
+    line_standalone=$(grep -a --color=never '^# source <(curl -Ls' "${path_file}");
 
     # Detect .sh executable scripts
     if [ "${path_relative: -3}" = '.sh' ]; then
@@ -270,7 +270,7 @@ function shtoolsreadme()
 
       # Parse shell script usage
       line_function=${path_relative##*\/};
-      line_usage=$(grep -a "Usage: ${line_function}" "${path_file}");
+      line_usage=$(grep -a --color=never "Usage: ${line_function}" "${path_file}");
 
       # Warning about missing usages
       if [ -z "${line_usage}" ]; then
@@ -303,7 +303,7 @@ function shtoolsreadme()
 
     #  Acquire source contents
     tmp_grep=$(mktemp);
-    grep -a "^alias.*=\|^function .*()" "${path_file}" > "${tmp_grep}";
+    grep -a --color=never "^alias.*=\|^function .*()" "${path_file}" > "${tmp_grep}";
 
     # Handle source contents
     # shellcheck disable=SC2162
@@ -328,7 +328,7 @@ function shtoolsreadme()
       fi;
 
       # Search for function usage
-      line_usage=$(grep -a "Usage: ${line_function}\( \|'\|\"\)" "${path_file}");
+      line_usage=$(grep -a --color=never "Usage: ${line_function}\( \|'\|\"\)" "${path_file}");
 
       # Parse function content
       if [ "${line_type}" = 'Function' ] || [ ! -z "${line_usage}" ]; then
