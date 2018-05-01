@@ -450,8 +450,8 @@ function shtoolsreadme()
   # Inject README.md changes
   # shellcheck disable=SC2028
   echo "/${delimiter_start}/{p; :a; N; /${delimiter_end}/!ba; s/.*\n/${readme_output}/; };" > "${command_file}";
-  sed -i -f "${command_file}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
-  rm "${command_file}";
+  sed -i -f "${command_file}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md" &&
+      rm -f "${command_file}";
 
   # Restore locale
   LC_ALL=${lc_all};
