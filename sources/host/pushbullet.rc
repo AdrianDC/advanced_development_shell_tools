@@ -46,6 +46,7 @@ function pushb()
   # Pushbullet notification message
   if [ ! -z "${*}" ]; then
     PushbulletComment=${*};
+    PushbulletComment=${PushbulletComment//$'\n'/\\n};
     PushbulletNoteUrl=;
   else
     PushbulletComment='Done';
