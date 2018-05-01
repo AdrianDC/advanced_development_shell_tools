@@ -143,6 +143,7 @@ function gitcid()
   fi;
 
   # Copy commit-msg
+  rm -f "${git_path}/hooks/commit-msg";
   cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/repo/commit-msg" "${git_path}/hooks/commit-msg";
   chmod u+x "${git_path}/hooks/commit-msg";
 
