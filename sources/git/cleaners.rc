@@ -22,8 +22,20 @@
 # === Git Stash Helpers ===
 alias gits='git stash';
 alias gitsp='git stash -p';
-alias gitsu='git stash; git stash -u >/dev/null 2>&1';
 alias gitspop='git stash pop';
+
+# === Git Stash Untracked ===
+function gitsu()
+{
+  # Usage: gitsu (Git stash with untracked files)
+
+  # Stash differences
+  git stash;
+
+  # Stash untracked files
+  git stash -u >/dev/null 2>&1 ||
+    git ls-files --exclude-standard --others -z | xargs -0 rm -f;
+}
 
 # === Git Clean Tags ===
 function gitcleantags()

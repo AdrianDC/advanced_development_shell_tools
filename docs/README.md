@@ -766,8 +766,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * **gits** : *git stash* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
   * **gitsp** : *git stash -p* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
-  * **gitsu** : *git stash; git stash -u &gt;/dev/null 2&gt;&1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
   * **gitspop** : *git stash pop* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
+  * **gitsu** [*<b>\[Git&nbsp;stash&nbsp;with&nbsp;untracked&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
   * **gitcleantags** *&lt;branch_to_keep&gt;* [*<b>\[Cleanup&nbsp;unrequired&nbsp;git&nbsp;tags\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
   * **gitonebranch** [*<b>\[Git&nbsp;remove&nbsp;non-default&nbsp;remote&nbsp;branches\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/cleaners.rc)
 
