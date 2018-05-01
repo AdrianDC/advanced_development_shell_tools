@@ -80,8 +80,7 @@ function gitpu()
     return;
   fi;
 
-  # Fetch and push
-  git fetch "${remote}" "${branch}";
+  # Push to remote
   ${cmd};
   echo '';
 }
