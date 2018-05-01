@@ -1,4 +1,4 @@
 [submodule "addons/mkbootimg_tools"]
 	path = addons/mkbootimg_tools
-	url = https://github.com/xiaolu/mkbootimg_tools
+	url = git://github.com/xiaolu/mkbootimg_tools.git
 	branch = master
