@@ -207,8 +207,7 @@ function reporefsync()
       git --no-pager diff -R FETCH_HEAD;
       if [ -z "${1}" ]; then
         git reset FETCH_HEAD;
-        git stash;
-        git stash -u >/dev/null 2>&1;
+        gitsu;
       fi;
       git submodule update --init --remote;
     fi;
@@ -223,8 +222,7 @@ function reporefsync()
       git --no-pager diff -R FETCH_HEAD;
       if [ -z "${1}" ]; then
         git reset FETCH_HEAD;
-        git stash;
-        git stash -u >/dev/null 2>&1;
+        gitsu;
       fi;
       git submodule update --init --remote;
     fi;
@@ -238,8 +236,7 @@ function reporefsync()
     git --no-pager diff -R FETCH_HEAD;
     if [ -z "${1}" ]; then
       git reset FETCH_HEAD;
-      git stash;
-      git stash -u >/dev/null 2>&1;
+      gitsu;
     fi;
     git submodule update --init --remote;
   fi;
@@ -252,8 +249,7 @@ function reporefsync()
     git --no-pager diff -R FETCH_HEAD;
     if [ -z "${1}" ]; then
       git reset FETCH_HEAD;
-      git stash;
-      git stash -u >/dev/null 2>&1;
+      gitsu;
     fi;
     git submodule update --init --remote;
   fi;
@@ -266,8 +262,7 @@ function reporefsync()
     git --no-pager diff -R FETCH_HEAD;
     if [ -z "${1}" ]; then
       git reset FETCH_HEAD;
-      git stash;
-      git stash -u >/dev/null 2>&1;
+      gitsu;
     fi;
     git submodule update --init --remote;
   fi;

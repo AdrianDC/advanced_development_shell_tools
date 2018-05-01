@@ -17,6 +17,7 @@
 
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_kernel/builders.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/cleaners.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/builders.rc)
 
@@ -131,6 +132,5 @@ function kernelcopyleftmerger()
   echo '';
   echo ' kernelcopyleftmerger: Cleaning unmerged files';
   git reset HEAD --hard;
-  git stash;
-  git stash -u >/dev/null 2>&1;
+  gitsu;
 }

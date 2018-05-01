@@ -484,8 +484,7 @@ function androidprojectpatcher()
       # Project is ready
       else
         git reset --hard FETCH_HEAD;
-        git stash;
-        git stash -u >/dev/null 2>&1;
+        gitsu;
       fi;
 
     # Handle unupdated remotes
@@ -499,8 +498,7 @@ function androidprojectpatcher()
     # Project is ready
     else
       git reset --hard FETCH_HEAD;
-      git stash;
-      git stash -u >/dev/null 2>&1;
+      gitsu;
     fi;
 
   done;

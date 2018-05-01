@@ -16,6 +16,7 @@
 #
 
 # === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/cleaners.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/commit.rc)
@@ -209,8 +210,8 @@ function gitcommitstable
 # === Git Reset Helpers ===
 alias gitrh='git reset FETCH_HEAD --hard';
 alias githd='git reset HEAD --hard';
-alias gitcl='git reset HEAD --hard; git stash; git stash -u >/dev/null 2>&1';
-alias gitcla='git cherry-pick --abort 2>/dev/null; git am --abort 2>/dev/null; git reset HEAD --hard; git stash; git stash -u >/dev/null 2>&1';
+alias gitcl='git reset HEAD --hard; gitsu';
+alias gitcla='git cherry-pick --abort 2>/dev/null; git am --abort 2>/dev/null; git reset HEAD --hard; gitsu';
 alias gitro='git reset HEAD^ --hard';
 alias gitsl='git reset HEAD^; gitap; gitcae';
 alias gitrl='git revert HEAD -n; git commit -m "Revert"; git reset HEAD^; git add -p';
