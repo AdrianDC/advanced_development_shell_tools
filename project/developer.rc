@@ -74,8 +74,11 @@ function shtoolspush()
   # Commits stats with upstream
   git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   echo '';
-  echo -n ' New changes - missing : ';
-  git rev-list --left-right --count HEAD...FETCH_HEAD;
+  echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
+  git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l | xargs echo -n;
+  echo -en ' \e[1;37m| Upstream commits:\e[1;33m ';
+  git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l;
+  echo -en '\e[0m';
   echo '';
 
   # Push to upstream
@@ -116,8 +119,11 @@ function shtoolsamend()
   # Commits stats with upstream
   git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   echo '';
-  echo -n ' New changes - missing : ';
-  git rev-list --left-right --count HEAD...FETCH_HEAD;
+  echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
+  git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l | xargs echo -n;
+  echo -en ' \e[1;37m| Upstream commits:\e[1;33m ';
+  git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l;
+  echo -en '\e[0m';
   echo '';
 
   # Push to upstream

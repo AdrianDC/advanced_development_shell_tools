@@ -43,7 +43,7 @@ function repochanges()
        git fetch --quiet \${REPO_REMOTE} \${REPO_RREV##*/};
 
        # Detect new remote commits
-       changescount=\$(git rev-list --right-only --count HEAD...FETCH_HEAD);
+       changescount=\$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l);
        if [ \${changescount} -ne 0 ]; then
          printf \"\r\033[K [Project \${REPO_PROJECT}] \${changescount} remote updates\";
          echo '';
@@ -52,7 +52,7 @@ function repochanges()
        fi;
 
        # Detect local commits
-       changescount=\$(git rev-list --left-only --count HEAD...FETCH_HEAD);
+       changescount=\$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l);
        if [ \${changescount} -ne 0 ]; then
          printf \"\r\033[K [Project \${REPO_PROJECT}] \${changescount} local changes\";
          echo '';

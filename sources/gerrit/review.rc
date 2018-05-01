@@ -115,8 +115,11 @@ function gerritreview()
   # Check review statistics
   git fetch "${gerrit_fetch}" "refs/heads/${gerrit_branch}";
   echo '';
-  echo -en " \e[1;33mNew changes - missing : \e[0m";
-  git rev-list --left-right --count HEAD...FETCH_HEAD;
+  echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
+  git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l | xargs echo -n;
+  echo -en ' \e[1;37m| Upstream commits:\e[1;33m ';
+  git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l;
+  echo -en '\e[0m';
 
   # Command creation
   local command="git push ${gerrit_url}/${gerrit_project} HEAD:refs/${gerrit_type}/${gerrit_branch}";

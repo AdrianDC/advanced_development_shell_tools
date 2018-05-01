@@ -417,8 +417,8 @@ function shtoolsnews()
   fi;
 
   # Acquire commits counts
-  commits_local_count=$(git rev-list --left-only --count HEAD...FETCH_HEAD);
-  commits_remote_count=$(git rev-list --right-only --count HEAD...FETCH_HEAD);
+  commits_local_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l);
+  commits_remote_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l);
 
   # Present remote commits
   if [ "${commits_remote_count}" -ne 0 ]; then

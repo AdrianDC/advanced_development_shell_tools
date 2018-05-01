@@ -107,8 +107,10 @@ function gitbranchpusher()
 
   # Present commits counts
   echo '';
-  echo -en ' \e[1;32mNew changes - missing: ';
-  git rev-list --left-right --count FETCH_HEAD...HEAD;
+  echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
+  git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l | xargs echo -n;
+  echo -en ' \e[1;37m| Upstream commits:\e[1;33m ';
+  git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l;
   echo -e '\e[0m';
 
   # Delete command
@@ -286,7 +288,6 @@ function androidprojectpatcher()
   local commits_list=();
   local commits_result;
   local commits_todo;
-  local git_revs_count;
   local git_revs_count_local;
   local git_revs_count_remote;
   local project_branch;
@@ -344,14 +345,13 @@ function androidprojectpatcher()
     fi;
 
     # Compare
-    git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-    git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
-    git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
+    git_revs_count_local=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l);
+    git_revs_count_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l);
     echo '';
     if [ ! -z "${git_revs_count_local}" ] && [ "${git_revs_count_local}" -eq 0 ]; then
-      echo -e "  \e[1;32m> Differences: ${git_revs_count:-Missing history}\e[0m";
+      echo -e "  \e[1;32m> Differences: ${git_revs_count_local} ${git_revs_count_remote}\e[0m";
     else
-      echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
+      echo -e "  \e[1;31m> Differences: ${git_revs_count_local} ${git_revs_count_remote}\e[0m";
     fi;
     echo '';
 
@@ -562,7 +562,6 @@ function androidprojectrebaser()
   # ==========================================================
   # Variables
   local commits_result;
-  local git_revs_count;
   local git_revs_count_local;
   local git_revs_count_remote;
   local project_branch;
@@ -629,14 +628,13 @@ function androidprojectrebaser()
 
     # Fetch and compare
     git fetch "${project_upstream}" "${project_branch}";
-    git_revs_count=$(git rev-list --left-right --count HEAD...FETCH_HEAD | tail -n 1);
-    git_revs_count_local=$(echo "${git_revs_count:-0}" | awk '{ print $1 }');
-    git_revs_count_remote=$(echo "${git_revs_count:-0}" | awk '{ print $2 }');
+    git_revs_count_local=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l);
+    git_revs_count_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l);
     echo '';
     if [ "${git_revs_count_remote}" -eq 0 ]; then
-      echo -e "  \e[1;32m> Differences: ${git_revs_count:-Missing history}\e[0m";
+      echo -e "  \e[1;32m> Differences: ${git_revs_count_local} ${git_revs_count_remote}\e[0m";
     else
-      echo -e "  \e[1;31m> Differences: ${git_revs_count:-Missing history}\e[0m";
+      echo -e "  \e[1;31m> Differences: ${git_revs_count_local} ${git_revs_count_remote}\e[0m";
     fi;
     echo '';
 
