@@ -123,7 +123,7 @@ function reporefupdate()
       echo " Updating AOSP ${project} references...";
       git add "${params}";
       if ! git diff --cached --quiet; then
-        git commit --amend --no-edit;
+        GIT_EDITOR="sed -i '/^#/d'" git commit --amend
         gitpu origin local_manifests y;
       fi;
     fi;
@@ -138,7 +138,7 @@ function reporefupdate()
       echo " Updating LineageOS ${project} references...";
       git add "${params}";
       if ! git diff --cached --quiet; then
-        git commit --amend --no-edit;
+        GIT_EDITOR="sed -i '/^#/d'" git commit --amend
         gitpu origin local_manifests y;
       fi;
     fi;
@@ -152,7 +152,7 @@ function reporefupdate()
     echo " Updating common manifests references...";
     git add "${params}";
     if ! git diff --cached --quiet; then
-      git commit --amend --no-edit;
+      GIT_EDITOR="sed -i '/^#/d'" git commit --amend
       gitpu origin local_manifests y;
     fi;
   fi;
@@ -165,7 +165,7 @@ function reporefupdate()
     echo " Updating MultiROM references...";
     git add "${params}";
     if ! git diff --cached --quiet; then
-      git commit --amend --no-edit;
+      GIT_EDITOR="sed -i '/^#/d'" git commit --amend
       gitpu origin local_manifests y;
     fi;
   fi;
@@ -178,7 +178,7 @@ function reporefupdate()
     echo " Updating TWRP references...";
     git add "${params}";
     if ! git diff --cached --quiet; then
-      git commit --amend --no-edit;
+      GIT_EDITOR="sed -i '/^#/d'" git commit --amend
       gitpu origin local_manifests y;
     fi;
   fi;

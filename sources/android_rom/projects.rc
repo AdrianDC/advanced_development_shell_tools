@@ -462,7 +462,7 @@ function androidprojectpatcher()
 
           # Detect marker commits and tag them
           if git --no-pager log -1 --pretty=format:"%ae" "${sha1}" | grep -q 'marker.commit'; then
-            git commit --allow-empty --no-edit;
+            GIT_EDITOR="sed -i '/^#/d'" git commit --allow-empty;
             gitcamarker;
           fi;
 

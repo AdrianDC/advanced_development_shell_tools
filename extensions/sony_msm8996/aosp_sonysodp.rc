@@ -113,7 +113,7 @@ function sonyaospkernelupdate()
   # Commit prebuilt kernel
   cd ./device/sony/common-kernel/;
   git add -v "kernel-dtb-${device_name}";
-  git commit --no-edit -m "sony: ${device_name}: Update prebuilt kernel";
+  GIT_EDITOR="sed -i '/^#/d'" git commit -m "sony: ${device_name}: Update prebuilt kernel";
   echo '';
   croot;
 }

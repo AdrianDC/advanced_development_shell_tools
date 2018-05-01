@@ -113,7 +113,7 @@ function shtoolsamend()
   if [ -z "${2}" ]; then
     git commit -s --amend;
   else
-    git commit -s --amend --no-edit;
+    GIT_EDITOR="sed -i '/^#/d'" git commit -s --amend;
   fi;
 
   # Commits stats with upstream
