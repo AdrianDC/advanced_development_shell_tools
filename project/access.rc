@@ -66,8 +66,8 @@ function shtoolssync()
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
   # Download upstream changes
-  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
-  git reset "origin/${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" &&
+      git reset FETCH_HEAD;
   gitsu;
 
   # Init and update submodules
