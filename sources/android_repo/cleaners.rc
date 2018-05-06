@@ -48,6 +48,7 @@ function repodestroy()
   rm -rf ./.repo/project-objects;
   rm -rf ./.repo/projects;
   rm -rf ./.repo/repo;
+  rm -f ./.repo/.repo_fetchtimes.json;
   echo '';
 }
 
