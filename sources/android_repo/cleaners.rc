@@ -40,14 +40,14 @@ function repodestroy()
   echo '';
   echo -n ' repodestroy: Destroying repo apart from local_manifests ? [ENTER] ';
   read -r;
-  rm -rfv ./*;
-  rm -rfv ./.repo/manifests;
-  rm -rfv ./.repo/manifests.git;
-  rm -rfv ./.repo/manifest.xml;
-  rm -fv ./.repo/project.list;
-  rm -rfv ./.repo/project-objects;
-  rm -rfv ./.repo/projects;
-  rm -rfv ./.repo/repo;
+  rm -rf ./*;
+  rm -rf ./.repo/manifests;
+  rm -rf ./.repo/manifests.git;
+  rm -rf ./.repo/manifest.xml;
+  rm -f ./.repo/project.list;
+  rm -rf ./.repo/project-objects;
+  rm -rf ./.repo/projects;
+  rm -rf ./.repo/repo;
   echo '';
 }
 
