@@ -53,7 +53,8 @@ function pushb()
   fi;
 
   # Pushbullet notification upload
-  curl --header "Access-Token: ${PushbulletToken}" \
+  curl --silent --show-error \
+       --header "Access-Token: ${PushbulletToken}" \
        --header "Content-Type: application/json" \
        --data-binary "{\"body\":\"${PushbulletComment}\",\"title\":\"\",\"type\":\"note\", \
                        \"url\":\"${PushbulletNoteUrl}\",\"created\":\"$(date +%s)\", \
