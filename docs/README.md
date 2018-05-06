@@ -1229,6 +1229,21 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
+#### <span class="group_label">Byobu Extensions</span> ####
+</summary>
+
+> ### <span class="group_label">[extensions/byobu/helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/byobu/helpers.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/byobu/helpers.rc)
+  ```
+  * **byobusessionscleanup** [*<b>\[Exit&nbsp;all&nbsp;unattached&nbsp;byobu&nbsp;sessions\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/byobu/helpers.rc)
+
+---
+</details>
+
+<details>
+<summary class="group_header">
 #### <span class="group_label">LineageOS Next Extensions</span> ####
 </summary>
 
