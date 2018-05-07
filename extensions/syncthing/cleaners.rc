@@ -36,23 +36,24 @@ function stignoreclean()
     # Ignore macros
     if [ "${ignored_paths:0:1}" = '#' ]; then
       continue;
-
-    # Remove folders contents
-    elif [ -d "${ignored_paths}" ]; then
-      if [ ! -z "$(ls -A "${ignored_paths}")" ]; then
-        echo "stignoreclean: Removing folder contents '${ignored_paths}'";
-        find "${ignored_paths}/" -mindepth 1 -delete;
-      fi;
-
-    # Remove files
-    else
-      for ignored_path in ${ignored_paths}; do
-        if [ -f "${ignored_path}" ]; then
-          echo "stignoreclean: Removing file '${ignored_path}'";
-          rm -f "${ignored_path}";
-        fi;
-      done;
     fi;
+
+    # Expand paths
+    for ignored_path in ${ignored_paths}; do
+
+      # Remove folders contents
+      if [ -d "${ignored_path}" ]; then
+        if [ ! -z "$(ls -A "${ignored_path}")" ]; then
+          echo "stignoreclean: Removing folder contents '${ignored_path}'";
+          find "${ignored_path}/" -mindepth 1 -delete;
+        fi;
+
+      # Remove files
+      elif [ -f "${ignored_path}" ]; then
+        echo "stignoreclean: Removing file '${ignored_path}'";
+        rm -f "${ignored_path}";
+      fi;
+    done;
 
   done < "${tmp_list}";
   rm -f "${tmp_list}";
