@@ -160,13 +160,16 @@ function megamirror()
 
       # Delete remote file
       if [ ! -z "${flag_delete}" ]; then
-        echo -n ' Delete remote [y/N] ? ';
+        echo -n ' Delete remote [y/N/a] ? ';
         if [ -z "${key_override}" ]; then
           if ! read -r -t 20 key; then
             echo '';
+          elif [ "${key}" = 'A' ] || [ "${key}" = 'a' ]; then
+            key_override='y';
+            key='y';
           fi;
         else
-          echo '';
+          echo "${key_override}";
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
           megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
@@ -302,13 +305,16 @@ function megamirror()
 
       # Delete local file
       if [ ! -z "${flag_delete}" ]; then
-        echo -n ' Delete local [y/N] ? ';
+        echo -n ' Delete local [y/N/a] ? ';
         if [ -z "${key_override}" ]; then
           if ! read -r -t 20 key; then
             echo '';
+          elif [ "${key}" = 'A' ] || [ "${key}" = 'a' ]; then
+            key_override='y';
+            key='y';
           fi;
         else
-          echo '';
+          echo "${key_override}";
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
           rm -r "${file_path}";
