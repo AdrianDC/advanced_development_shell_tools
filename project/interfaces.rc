@@ -335,7 +335,7 @@ function shtoolskits()
   __shtoolsui 'disable';
 
   # Update new toolkits
-  sed -i "s/\(# Toolkits: \).*/\1${toolkits//\//\\\/}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+  sed -i "s#\(\# Toolkits: \).*#\1${toolkits}#g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
 
   # Reload the project
   shtoolsup >/dev/null 2>&1;
