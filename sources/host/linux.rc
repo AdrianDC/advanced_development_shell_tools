@@ -322,6 +322,15 @@ function networkrestart()
   sudo service network-manager restart;
 }
 
+# === Temp Cleaner ===
+function tmpclean()
+{
+  # Usage: tmpclean (Cleanup /tmp from old leftovers)
+
+  # Cleanup /tmp from old leftovers
+  sudo find /tmp -type f -atime '+2' -print -delete;
+}
+
 # === Done Notification Sender ===
 alias isdone='notify-send "Process execution finished !"';
 
