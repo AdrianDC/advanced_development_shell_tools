@@ -942,8 +942,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitraau** : *git remote set-url $(githubusername)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitraou** : *git remote set-url origin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitrao** [*<b>\[Add&nbsp;LineageOS&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitrax** [*<b>\[Add&nbsp;XperiaMultiROM&nbsp;xperia&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitramd** [*<b>\[Add&nbsp;MultiROM-Dev&nbsp;mromdev&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitraos** [*<b>\[Add&nbsp;sonyxperiadev&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitrap** [*<b>\[Development&nbsp;projects&nbsp;selector\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
 

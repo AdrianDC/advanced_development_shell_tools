@@ -170,32 +170,6 @@ function gitrao()
   fi;
 }
 
-# === Git Remotes XperiaMultiROM Helper ===
-function gitrax()
-{
-  # Usage: gitrax (Add XperiaMultiROM xperia remote)
-
-  # Add XperiaMultiROM xperia remote
-  if [[ "$(pwd)/" == *'system/extras/multirom'* ]]; then
-    gitremoteset 'xperia' https://github.com/XperiaMultiROM/multirom.git;
-  else
-    gitremoteadaptset 'xperia' 'XperiaMultiROM';
-  fi;
-}
-
-# === Git Remotes MultiROM-Dev Helper ===
-function gitramd()
-{
-  # Usage: gitramd (Add MultiROM-Dev mromdev remote)
-
-  # Add MultiROM-Dev mromdev remote
-  if [[ "$(pwd)/" == *'system/extras/multirom'* ]]; then
-    gitremoteset 'mromdev' https://github.com/multirom-dev/multirom.git;
-  else
-    gitremoteadaptset 'mromdev' 'multirom-dev';
-  fi;
-}
-
 # === Git Remotes sonyxperiadev Helper ===
 function gitraos()
 {
