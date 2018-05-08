@@ -215,3 +215,74 @@ function gitraos()
     gitremoteadaptset 'origin' 'sonyxperiadev' 'android_' '' 'true';
   fi;
 }
+
+# === Git Remotes Projects ===
+function gitrap()
+{
+  # Usage: gitrap (Development projects selector)
+
+  # Variables
+  local cnt=0;
+  local key;
+  local line_function;
+  local line_usage;
+  local list_functions=('');
+  local project;
+
+  # Check remote existence
+  if ! git ls-remote --exit-code 'project' > /dev/null 2>&1; then
+
+    # Detect roomservice.xml provided project
+    if [ -f "$(gettop)/.repo/local_manifests/roomservice.xml" ]; then
+      project=$(grep "Project: '" "$(gettop)/.repo/local_manifests/roomservice.xml" | sed "s/.* '\(.*\)' .*/\1/");
+      if [ ! -z "${project}" ]; then
+
+        # Extract project tag
+        project=${project#* };
+        project=${project% *};
+
+        # Apply project target
+        gitremoteset project "${project}";
+
+        # Display selected project target
+        echo '';
+        echo -e " \e[1;33mgitrap: Default project remote set to \e[0m'${project}'";
+        echo '';
+        return;
+
+      fi;
+    fi;
+  fi;
+
+  # Display shtools* menu
+  echo '';
+  for line_function in $(typeset -F | grep gitrap | cut -d' ' -f 3 | grep -v '^gitrap$'); do
+
+    # Parse usage
+    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/sources/android_repo/projects.rc");
+    if [ -z "${line_usage}" ]; then
+      continue;
+    fi;
+    line_usage=${line_usage#*\(};
+    line_usage=${line_usage%\)*};
+    list_functions+=("${line_function}");
+
+    # Item choice
+    cnt=$((cnt + 1));
+    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
+
+  done;
+  echo '';
+
+  # Request user input
+  key=0;
+  while [ -z "${key}" ] || [ ! -z "${key//[0-9]/}" ] || [ ${key} -le 0 ] || [ ${key} -gt ${cnt} ]; do
+    echo -n " > Project to select [1-${cnt}] : ";
+    read -r key;
+  done;
+
+  # Execute requested function
+  echo '';
+  ${list_functions[${key}]};
+  echo '';
+}

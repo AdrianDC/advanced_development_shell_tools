@@ -516,11 +516,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **repoinit** *[bool_manually]* [*<b>\[repo&nbsp;init&nbsp;menu\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/init.rc)
 
 ---
-> ### <span class="group_label">[sources/android_repo/projects.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)</span> ###
->
-  * **gitrap** [*<b>\[Development&nbsp;projects&nbsp;selector\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-
----
 > ### <span class="group_label">[sources/android_repo/referenced.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)</span> ###
 >
   * **reporeferencedaosp** *&lt;"command_to_run"&gt; &lt;"device1 device2 ..."&gt;* [*<b>\[AOSP&nbsp;referenced&nbsp;repo&nbsp;commands&nbsp;launcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
@@ -958,6 +953,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitrax** [*<b>\[Add&nbsp;XperiaMultiROM&nbsp;xperia&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitramd** [*<b>\[Add&nbsp;MultiROM-Dev&nbsp;mromdev&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitraos** [*<b>\[Add&nbsp;sonyxperiadev&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
+  * **gitrap** [*<b>\[Development&nbsp;projects&nbsp;selector\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
 
 ---
 > ### <span class="group_label">[sources/git/stats.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)</span> ###
