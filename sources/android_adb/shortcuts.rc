@@ -38,15 +38,7 @@ function adbsw()
 
 # === ADB Partitions Shortcuts ===
 function adbblkp() { adb shell ls -l /dev/block/bootdevice/by-name/; }
-function adbmountcache() { adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache; }
-function adbmountdata() { adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data; }
-function adbmountmicrosd() { adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext; }
 function adbsgdisk() { adb shell sgdisk --print /dev/block/mmcblk0; }
-function adbumountcache() { adb shell umount /cache; }
-function adbumountdata() { adb shell umount /data; }
-function adbumountmicrosd() { adb shell umount /storage/ext; }
-function adbmount() { adbmountcache; adbmountdata; adbmountmicrosd; }
-function adbumount() { adbumountcache; adbumountdata; adbumountmicrosd; }
 
 # === ADB Advanced Shortcuts ===
 function adbinfomem() { adb shell dumpsys meminfo; }
