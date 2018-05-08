@@ -45,6 +45,11 @@ function autoreleaselegacyxperia()
   # Force clean option
   __shtools-builds-cleandevices-enable;
 
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
 
@@ -52,4 +57,9 @@ function autoreleaselegacyxperia()
     romautorelease "${device}" lx;
 
   done;
+
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
 }

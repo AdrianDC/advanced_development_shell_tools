@@ -37,6 +37,11 @@ function autoreleaseaospsodp8996()
   # Devices to build
   local devices=${*:-dora};
 
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
 
@@ -44,6 +49,11 @@ function autoreleaseaospsodp8996()
     romautorelease "${device}" sodp;
 
   done;
+
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
 
   # When option enabled and not local, clean out folder
   if __shtools-builds-clean-active && ! __shtools-builds-local-active; then

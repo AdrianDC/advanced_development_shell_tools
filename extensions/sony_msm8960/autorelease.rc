@@ -42,6 +42,11 @@ function autoreleaseaospsony8960o()
     return;
   fi;
 
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
 
@@ -49,6 +54,11 @@ function autoreleaseaospsony8960o()
     romautorelease "${device}" aosp;
 
   done;
+
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
 
   # When option enabled and not local, clean out folder
   if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
@@ -78,6 +88,11 @@ function autoreleaselineagesony8960()
     reposy;
   fi;
 
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
+
   # Walk through devices
   for device in ${devices}; do
 
@@ -85,6 +100,11 @@ function autoreleaselineagesony8960()
     romautorelease "${device}" lineage;
 
   done;
+
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
 
   # When option enabled and not local, clean out folder
   if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
