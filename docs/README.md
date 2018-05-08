@@ -563,8 +563,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **cdrefdev** *cd "$(getand)/References/Devices/"${1:+*${1}}* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdserv** *cd "$(getand)/Server"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **adbapks** *cdrefapk; adbapkinstall* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
-  * **impaospcaf** *rsync -arv &#8208;&#8208;delete &#8208;&#8208;delete-after "$(toaospcaf "${1}")" "./${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
-  * **implineage** *rsync -arv &#8208;&#8208;delete &#8208;&#8208;delete-after "$(tolineage "${1}")" "./${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cpaosp** *cp -fv "./${1}" "$(toaosp "${2}")/${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cplineage** *cp -fv "./${1}" "$(tolineage "${2}")/${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **meldaosp** *pathscompare "./${1}" "$(toaosp "${2}")/${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
