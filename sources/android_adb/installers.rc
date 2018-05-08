@@ -357,7 +357,7 @@ function adbside()
 
   # Wait for an adb recovery
   while true; do
-    if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'recovery'" 2> /dev/null; then
+    if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'recovery\|unauthorized'" 2> /dev/null; then
       break;
     fi;
     echo -e '\e[1;33madbside: Waiting for recovery\e[0m';
