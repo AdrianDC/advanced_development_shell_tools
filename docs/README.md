@@ -411,14 +411,8 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/android_release/helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/helpers.rc)</span> ###
 >
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/installers.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_release/helpers.rc)
   ```
-  * **noninja** *&lt;command...&gt;* [*<b>\[Run&nbsp;command&nbsp;without&nbsp;ninja\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/helpers.rc)
-  * **mmo** *&lt;command...&gt;* [*<b>\[Build&nbsp;module&nbsp;without&nbsp;ninja\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/helpers.rc)
-  * **mmi** *&lt;command...&gt;* [*<b>\[Build&nbsp;&&nbsp;install&nbsp;module&nbsp;without&nbsp;ninja\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/helpers.rc)
-  * **mmil** *&lt;command...&gt;* [*<b>\[Build&nbsp;&&nbsp;list&nbsp;module&nbsp;without&nbsp;ninja\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/helpers.rc)
   * **noccache** *&lt;command...&gt;* [*<b>\[Run&nbsp;command&nbsp;without&nbsp;CCache\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/helpers.rc)
 
 ---

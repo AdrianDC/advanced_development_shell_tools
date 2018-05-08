@@ -16,79 +16,7 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/installers.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_release/helpers.rc)
-
-# === Ninja Disabler ===
-function noninja()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: noninja <command...> (Run command without ninja)';
-    echo '';
-    return;
-  fi;
-
-  # Run command without ninja
-  export USE_NINJA=false;
-  export USE_SOONG_UI=false;
-  "${@}";
-  export USE_NINJA=;
-  export USE_SOONG_UI=;
-}
-
-# === Build Without Ninja ===
-function mmo()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: mmo <command...> (Build module without ninja)';
-    echo '';
-    return;
-  fi;
-
-  # Build module without ninja
-  export USE_NINJA=false;
-  mmm "${@}";
-  export USE_NINJA=;
-}
-
-# === Build & Install Without Ninja ===
-function mmi()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: mmi <command...> (Build & install module without ninja)';
-    echo '';
-    return;
-  fi;
-
-  # Build & install module without ninja
-  export USE_NINJA=false;
-  adbi mmm "${@}";
-  export USE_NINJA=;
-}
-
-# === Build & Listen Without Ninja ===
-function mmil()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: mmil <command...> (Build & list module without ninja)';
-    echo '';
-    return;
-  fi;
-
-  # Build & list module without ninja
-  export USE_NINJA=false;
-  adbil mmm "${@}";
-  export USE_NINJA=;
-}
 
 # === CCache Disabler ===
 function noccache()
