@@ -317,7 +317,6 @@ function cdrefapk()     { cd "$(getand)/References/apk"; }
 function cdrefdev()     { cd "$(getand)/References/Devices/"${1:+*${1}}; }
 function cdserv()       { cd "$(getand)/Server"; }
 function adbapks()      { cdrefapk; adbapkinstall; }
-function cdandfiles()   { cd "${ANDROID_FILES_PATH}/"; }
 function impaospcaf()   { rsync -arv --delete --delete-after "$(toaospcaf "${1}")" "./${1}"; }
 function implineage()   { rsync -arv --delete --delete-after "$(tolineage "${1}")" "./${1}"; }
 function cpaosp()       { cp -fv "./${1}" "$(toaosp "${2}")/${1}"; }
