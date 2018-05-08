@@ -1010,7 +1010,8 @@ function bootimagedebuggable()
         ./out/target/product/${1}/root/default.prop \
         ./out/target/product/${1}/recovery/root/default.prop \
         ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
-        ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop; do
+        ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop \
+        ./out/target/product/${1}/system/etc/prop.default; do
       if [ -f "${file_path}" ]; then
         echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
         sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' "${file_path}";
@@ -1050,7 +1051,8 @@ function bootimagedebuggable()
         ./out/target/product/${1}/root/default.prop \
         ./out/target/product/${1}/recovery/root/default.prop \
         ./out/target/product/${1}/ota_temp/\*/RAMDISK/default.prop \
-        ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop; do
+        ./out/target/product/${1}/obj/PACKAGING/target_files_intermediates/\*/\*/RAMDISK/default.prop \
+        ./out/target/product/${1}/system/etc/prop.default; do
       if [ -f "${file_path}" ]; then
         echo "  bootimagedebuggable: Restoring debug secure in ${file_path}";
         sed -i 's/ro.adb.secure=0/ro.adb.secure=1/' "${file_path}";
