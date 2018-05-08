@@ -31,6 +31,14 @@ function repocache()
   currentdir=$(pwd);
   croot;
 
+  # Validate CCache binary
+  if [ ! -f ./prebuilts/misc/linux-x86/ccache/ccache ]; then
+    echo '';
+    echo -e ' \e[1;31mrepocache: ccache or repository not found...\e[0m';
+    echo '';
+    return;
+  fi;
+
   # Clean CCache
   if [ "${1}" = 'clean' ]; then
     ./prebuilts/misc/linux-x86/ccache/ccache -C;
