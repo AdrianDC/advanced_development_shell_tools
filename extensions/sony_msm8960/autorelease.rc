@@ -88,6 +88,11 @@ function autoreleaselineagesony8960()
     reposy;
   fi;
 
+  # ROM patcher
+  if ! lineagesony8960oreopatcher 'a'; then
+    return;
+  fi;
+
   # When option enabled and not local, reinit CCache
   if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
     repocache 'reinit';
