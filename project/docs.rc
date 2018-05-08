@@ -367,10 +367,13 @@ function shtoolsreadme()
         line_usage=${line};
         line_usage=${line_usage#*=};
         line_usage=${line_usage%;};
-        line_usage=${line_usage#$"'"};
-        line_usage=${line_usage#$'"'};
-        line_usage=${line_usage%$"'"};
-        line_usage=${line_usage%$'"'};
+        if [ "${line_usage:0:1}" = "'" ]; then
+          line_usage=${line_usage#$"'"};
+          line_usage=${line_usage%$"'"};
+        elif [ "${line_usage:0:1}" = '"' ]; then
+          line_usage=${line_usage#$'"'};
+          line_usage=${line_usage%$'"'};
+        fi;
         line_usage=${line_usage//--/&#8208;&#8208;};
         stats_aliases=$((stats_aliases + 1));
       fi;

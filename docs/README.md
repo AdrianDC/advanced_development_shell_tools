@@ -768,7 +768,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitcs** : *git commit $(gitgpgparam) -s* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitca** : *git commit $(gitgpgparam) &#8208;&#8208;amend* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcae** : *GIT_EDITOR="sed -i "/^#/d"" git commit $(gitgpgparam) &#8208;&#8208;amend* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
-  * **gitcad** : *GIT_EDITOR="sed -i "/^#/d"" git commit $(gitgpgparam) &#8208;&#8208;amend &#8208;&#8208;date="$(date -R)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
+  * **gitcad** : *GIT_EDITOR="sed -i "/^#/d"" git commit $(gitgpgparam) &#8208;&#8208;amend &#8208;&#8208;date="$(date -R)"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitrevert** : *GIT_EDITOR="sed -i "/^#/d"" git revert $(gitgpgparam)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitfix** [*<b>\[Fix&nbsp;git&nbsp;commit&nbsp;issues\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcauthor** [*<b>\[Apply&nbsp;own&nbsp;author&nbsp;to&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
@@ -1076,7 +1076,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **mtpmountdisable** [*<b>\[Disable&nbsp;MTP&nbsp;automount\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **networkrestart** [*<b>\[Restart&nbsp;network&nbsp;manager\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **tmpclean** [*<b>\[Cleanup&nbsp;/tmp&nbsp;from&nbsp;old&nbsp;leftovers\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
-  * **isdone** : *notify-send "Process execution finished !* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
+  * **isdone** : *notify-send "Process execution finished !"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **topcpu** : *top -o %CPU* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **topmem** : *top -o %MEM* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
 
@@ -1171,7 +1171,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **androidfilessync** *&lt;--upload/--download&gt;* [*<b>\[Sync&nbsp;AndroidFiles&nbsp;folder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
   * **androidfilesdownload** : *androidfilessync &#8208;&#8208;download* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
   * **androidfilesupload** : *androidfilessync &#8208;&#8208;upload* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
-  * **androidfilescd** : *cd "${ANDROID_FILES_PATH}/* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
+  * **androidfilescd** : *cd "${ANDROID_FILES_PATH}/"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
   * **androidfilesopen** [*<b>\[Open&nbsp;AndroidFiles&nbsp;folder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
 
 ---
