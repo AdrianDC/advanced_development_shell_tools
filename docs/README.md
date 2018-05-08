@@ -519,16 +519,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/android_repo/projects.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)</span> ###
 >
   * **gitrap** [*<b>\[Development&nbsp;projects&nbsp;selector\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitraplineagesony8996** [*<b>\[LineageOS&nbsp;Sony&nbsp;8996&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitrapaospsony8960n** [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;Nougat&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitrapaospsony8960o** [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;O&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitrapaospsony8960master** [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;Master&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitrapaospsonysodp** [*<b>\[AOSP&nbsp;Sony&nbsp;SODP&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitrapaospcaf** [*<b>\[AOSP-CAF&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitraplineagesony8960master** [*<b>\[LineageOS&nbsp;Sony&nbsp;8960&nbsp;Master&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitraplineagesonysodp** [*<b>\[LineageOS&nbsp;Sony&nbsp;SODP&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitrapmultirom** [*<b>\[MultiROM&nbsp;Sony&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
-  * **gitraptwrp** [*<b>\[TWRP&nbsp;Sony&nbsp;development&nbsp;project&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/projects.rc)
 
 ---
 > ### <span class="group_label">[sources/android_repo/referenced.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)</span> ###
