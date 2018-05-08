@@ -479,6 +479,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/compare.rc)
   ```
   * **repocomparetags** *&lt;base_tag_or_HEAD&gt; &lt;compare_tag_or_HEAD&gt;* [*<b>\[Helper&nbsp;to&nbsp;compare&nbsp;release&nbsp;tags\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/compare.rc)
+  * **repocompareril** *[bool_caf]* [*<b>\[Compare&nbsp;device&nbsp;to&nbsp;hardware/{ril\|ril-caf}\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/compare.rc)
 
 ---
 > ### <span class="group_label">[sources/android_repo/helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)</span> ###
@@ -574,7 +575,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **nout** *diropen "$(toout "${1}")"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **aospsyncall** *reporeferencedaosp "reposy"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **lineagesyncall** *reporeferencedlineage "reposy"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
-  * **meldril** *[bool_caf]* [*<b>\[Compare&nbsp;device&nbsp;to&nbsp;hardware/{ril\|ril-caf}\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdmromboot** *croot; cd ./system/extras/libbootimg/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdmromcore** *croot; cd ./system/extras/multirom/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdlsdk** *croot; cd ./lineage-sdk/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)

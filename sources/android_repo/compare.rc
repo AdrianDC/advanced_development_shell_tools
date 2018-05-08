@@ -108,3 +108,18 @@ function repocomparetags()
   echo -e  '\r\033[K repocomparetags: Done searching';
   echo '';
 }
+
+# === Repo Compare RIL ===
+function repocompareril()
+{
+  # Usage: repocompareril [bool_caf] (Compare device to hardware/{ril|ril-caf})
+
+  # Compare device to hardware/ril or hardware/ril-caf with a parameter given
+  if [ ! -z "${1}" ]; then
+    pathscompare include/telephony/ril.h ../../../hardware/ril-caf/include/telephony/ril.h &
+    pathscompare libril ../../../hardware/ril-caf/libril;
+  else
+    pathscompare include/telephony/ril.h ../../../hardware/ril/include/telephony/ril.h &
+    pathscompare libril ../../../hardware/ril/libril;
+  fi;
+}
