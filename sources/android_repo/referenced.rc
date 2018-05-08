@@ -467,3 +467,142 @@ function reporeflinker()
   cd "${current_path}";
   echo '';
 }
+
+# === Repo Switcher ===
+function reposwitcher()
+{
+  # Usage: reposwitcher [bool_init] (Helper to switch between local_manifests_* folders)
+
+  # Variables
+  local cnt;
+  local current_path=${PWD};
+  local current_repo='';
+  local folder;
+  local key;
+  local options;
+  local out;
+  local reposy_all=();
+
+  # Access Android root
+  croot 2>/dev/null;
+
+  # Initialization mode
+  if [ ! -z "${1}" ] || [ ! -d '.repo' ]; then
+
+    # Remove leftover symlinks or regular folders
+    if [ -L '.repo/local_manifests' ]; then
+      rm .repo/local_manifests;
+    else
+      rm -rf .repo/local_manifests;
+    fi;
+    if [ -L 'out' ]; then
+      rm out;
+    else
+      rm -rf out;
+    fi;
+
+    # Request user input for local_manifests_<name>
+    echo '';
+    echo -en  " \e[1;33mreposwitcher: Name for local_manifests_<name> :\e[0m ";
+    read -r key;
+    echo '';
+
+    # Create folder, generate symlink to local_manifests folder
+    folder="local_manifests_${key}";
+    mkdir -p ".repo/${folder}";
+    echo -n ' ';
+    rm -fv .repo/local_manifests;
+    ln -fsv "${folder}" .repo/local_manifests;
+
+    # Populate local_manifests linkages
+    reporeflinker;
+
+  fi;
+
+  # Abort if local_manifests is not a symlink
+  if [ -e '.repo/local_manifests' ] && [ ! -L '.repo/local_manifests' ]; then
+    echo '';
+    echo ' reposwitcher: local_manifests is not a symlink';
+    echo '   Please delete the ".repo/local_manifests" folder';
+    echo '   Add ".repo/local_manifests_NAME" folders';
+    echo '';
+    return;
+  fi;
+
+  # Abort if out is not a symlink
+  if [ -e 'out' ] && [ ! -L 'out' ]; then
+    echo '';
+    echo ' reposwitcher: out is not a symlink';
+    echo '   Please delete the "out" folder';
+    echo '';
+    return;
+  fi;
+
+  # Detect current local_manifests symlink
+  if [ -L '.repo/local_manifests' ]; then
+    current_repo=$(readlink -f '.repo/local_manifests');
+    current_repo=${current_repo##*/};
+  fi;
+
+  # Create folders selector list
+  cnt=0;
+  options=('Keep current local_manifests');
+  folder=;
+  echo '';
+  echo -e " \e[1;37m[ Select a folder for local_manifests ]\e[0m";
+  echo '';
+  echo "   ${cnt}: ${options[${cnt}]}";
+  for folder in .repo/local_manifests_*; do
+    cnt=$((cnt + 1));
+    options[${cnt}]=${folder##*/};
+    if [ "${options[${cnt}]}" = "${current_repo}" ]; then
+      echo -e "   ${cnt}: ${options[${cnt}]} \e[1;37m(Active)\e[0m";
+    else
+      echo "   ${cnt}: ${options[${cnt}]}";
+    fi;
+  done;
+  echo '';
+  echo -en  " \e[1;33mlocal_manifests to use [0 to ${cnt}] :\e[0m ";
+  read -r key;
+  echo '';
+  if [ ! -z "${key}" ] && [ "${key}" -gt 0 ] && [ "${key}" -le ${cnt} ]; then
+    folder=${options[${key}]};
+  else
+    return 0;
+  fi;
+
+  # If folder provided
+  if [ ! -z "${folder}" ]; then
+
+    # Generate symlink to local_manifests folder
+    echo -n ' ';
+    rm -fv .repo/local_manifests;
+    ln -fsv "${folder}" .repo/local_manifests;
+    echo '';
+
+    # Generate out specific folder
+    out=out_${folder#local_manifests_};
+    if [ ! -d "${out}" ]; then
+      mkdir "${out}";
+    fi;
+
+    # Generate symlink to out folder
+    echo -n ' ';
+    rm -fv out;
+    ln -fsv "${out}" out;
+    echo '';
+
+  # Delete otherwise
+  else
+    rm -f .repo/local_manifests;
+  fi;
+
+  # Launch repo init menu
+  repoinit;
+
+  # Launch repo syncer
+  reposy "${reposy_all[@]}";
+
+  # Return to current path
+  cd "${current_path}";
+}

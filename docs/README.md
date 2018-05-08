@@ -500,7 +500,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **repoforeach** [*<b>\[Run&nbsp;commands&nbsp;for&nbsp;each&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repocache** *[size_max/clean/wipe]* [*<b>\[CCache&nbsp;watcher&nbsp;and&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repolistexclude** *[word_to_search]* [*<b>\[Get&nbsp;repo&nbsp;list&nbsp;fields&nbsp;to&nbsp;exclude&nbsp;with&nbsp;search\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
-  * **reposwitcher** *[bool_init]* [*<b>\[Helper&nbsp;to&nbsp;switch&nbsp;between&nbsp;local_manifests_*&nbsp;folders\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
 
 ---
 > ### <span class="group_label">[sources/android_repo/init.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/init.rc)</span> ###
@@ -540,6 +539,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **reporefsync** *[bool_dry_run]* [*<b>\[Download&nbsp;new&nbsp;projects&nbsp;manifests\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
   * **reporefrefresh** [*<b>\[Download&nbsp;and&nbsp;upload&nbsp;new&nbsp;projects&nbsp;manifests\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
   * **reporeflinker** [*<b>\[Helper&nbsp;to&nbsp;symlink&nbsp;local_manifests&nbsp;to&nbsp;Developments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
+  * **reposwitcher** *[bool_init]* [*<b>\[Helper&nbsp;to&nbsp;switch&nbsp;between&nbsp;local_manifests_*&nbsp;folders\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
 
 ---
 > ### <span class="group_label">[sources/android_repo/shortcuts.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)</span> ###
