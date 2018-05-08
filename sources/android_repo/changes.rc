@@ -28,7 +28,8 @@ function repochanges()
 
   # Diff execution
   echo '';
-  echo -n ' Scanning...';
+  echo -n '';
+  printf '\r\033[K Scanning...';
   repo forall -j"$(grep -c ^processor /proc/cpuinfo)" -c "
 
      # Filter out projects
@@ -72,6 +73,7 @@ function repochanges()
     " 2> /dev/null;
 
   # Done
+  printf '\r\033[K';
   echo '';
   echo '';
 }
