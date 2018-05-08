@@ -222,6 +222,15 @@ function desktoppath()
   echo "${file_path}";
 }
 
+# === Desktop Path Access ===
+function cddesk()
+{
+  # Usage: cddesk (Access desktop path for most environments)
+
+  # Access desktop path for most environments
+  cd "$(desktoppath)";
+}
+
 # === Process Owner Check ===
 function processownercheck()
 {

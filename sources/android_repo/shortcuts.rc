@@ -305,7 +305,6 @@ function cdtwrp()       { cd "$(totwrp)"; }
 
 # === Private Shortcuts ===
 function cdand()        { cd "$(getand)"; }
-function cddesk()       { cd "$(desktoppath)"; }
 function cddev()        { cd "$(getand)/Development/${1}" 2> /dev/null; }
 function cddevaosp()    { cd "$(getand)/Development/aosp_"*"${1}" 2> /dev/null; }
 function cddevlineage() { cd "$(getand)/Development/lineage_"*"${1}" 2> /dev/null; }

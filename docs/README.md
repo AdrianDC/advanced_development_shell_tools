@@ -552,7 +552,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **cdrr** *cd "$(torr "${1}")"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdtwrp** *cd "$(totwrp)"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdand** *cd "$(getand)"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
-  * **cddesk** *cd "$(desktoppath)"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cddev** *cd "$(getand)/Development/${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cddevaosp** *cd "$(getand)/Development/aosp_"*"${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cddevlineage** *cd "$(getand)/Development/lineage_"*"${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
@@ -1004,6 +1003,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **pathscompare** *&lt;path_left&gt; &lt;path_right&gt; [bool_wait]* [*<b>\[Paths&nbsp;comparison&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **urlopen** *&lt;url&gt;* [*<b>\[URL&nbsp;opener&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **desktoppath** [*<b>\[Acquire&nbsp;desktop&nbsp;path&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
+  * **cddesk** [*<b>\[Access&nbsp;desktop&nbsp;path&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **processownercheck** *&lt;process_name&gt; &lt;owner&gt;* [*<b>\[Returns&nbsp;if&nbsp;a&nbsp;process&nbsp;is&nbsp;owned&nbsp;by&nbsp;someone\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
 
 ---
