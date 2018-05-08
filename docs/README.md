@@ -1277,9 +1277,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 >
   * **autoreleaseaospsony8960o** *[devices]* [*<b>\[Automated&nbsp;AOSP&nbsp;Oreo&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
   * **autoreleaselineagesony8960** *[devices]* [*<b>\[Automated&nbsp;LineageOS&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
-  * **autoreleaserrsony8960** *[devices]* [*<b>\[Automated&nbsp;RR&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
-  * **autoreleasecafsony8960** *[devices]* [*<b>\[Automated&nbsp;AOSP-CAF&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
-  * **autoreleaseaospsony8960master** *&lt;devices&gt;* [*<b>\[Automated&nbsp;AOSP&nbsp;Master&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
 
 ---
 > ### <span class="group_label">[extensions/sony_msm8960/lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/lineageos.rc)</span> ###
