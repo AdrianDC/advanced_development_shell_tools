@@ -25,7 +25,7 @@ function repocache()
 
   # Variables
   local currentdir;
-  local maxsize;
+  local max_size;
 
   # Access repo root
   currentdir=$(pwd);
@@ -45,11 +45,22 @@ function repocache()
 
   # Reinit CCache
   elif [ "${1}" = 'reinit' ]; then
-    maxsize=$(grep 'max_size' "${CCACHE_DIR}/ccache.conf");
-    if [ ! -z "${maxsize}" ]; then
-      maxsize=${maxsize##*= };
+    max_size=$(grep 'max_size' "${CCACHE_DIR}/ccache.conf" 2>/dev/null);
+    if [ ! -z "${max_size}" ]; then
+
+      # Acquire maxsize
+      max_size=${max_size##*= };
+
+      # Wipe while retaining ccache.conf
+      mv -f "${CCACHE_DIR}/ccache.conf" "${CCACHE_DIR}/.ccache.conf";
       rm -rf "${CCACHE_DIR}/"*;
-      ./prebuilts/misc/linux-x86/ccache/ccache -M "${maxsize}";
+      mv -f "${CCACHE_DIR}/.ccache.conf" "${CCACHE_DIR}/ccache.conf";
+
+      # Cleanup and reinit
+      echo '';
+      echo -en ' \e[1;33mrepocache:\e[0m ';
+      ./prebuilts/misc/linux-x86/ccache/ccache -M "${max_size}";
+      echo '';
     fi;
 
     # Avoid study on reinit
