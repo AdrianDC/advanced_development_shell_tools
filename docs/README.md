@@ -1203,22 +1203,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### <span class="group_label">LineageOS Next Extensions</span> ####
-</summary>
-
-> ### <span class="group_label">[extensions/lineage_next/lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/lineageos.rc)</span> ###
->
-  ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/lineage_next/lineageos.rc)
-  ```
-  * **lineagenextrebaser** *[specific_paths]* [*<b>\[LineageOS&nbsp;Next&nbsp;Rebaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/lineage_next/lineageos.rc)
-
----
-</details>
-
-<details>
-<summary class="group_header">
 #### <span class="group_label">Linux Host Extensions</span> ####
 </summary>
 
