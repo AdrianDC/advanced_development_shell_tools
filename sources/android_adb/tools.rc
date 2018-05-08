@@ -106,6 +106,18 @@ function adbready()
   fi;
 }
 
+# === ADB Test ===
+function __adbtest()
+{
+  # Usage: __adbtest (ADB access test)
+
+  # Verify adb is ready
+  adbready;
+
+  # ADB access test
+  adb shell 'whoami';
+}
+
 # === ADB Root Checked Mounter ===
 function adbro()
 {
