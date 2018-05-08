@@ -15,26 +15,6 @@
 # limitations under the License.
 #
 
-# === Make and upload ===
-function mmmupl()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: mmmupl <package_or_path> [bool_partial_build] (Make zip and upload)';
-    echo '';
-    return;
-  fi;
-
-  # Build and package zip
-  export MMMZIP_BUILD_PARTIAL=${2:-true};
-  mmmzip "${1}";
-  export MMMZIP_BUILD_PARTIAL=;
-
-  # Upload to Private
-  fastupl "${PACKAGE_RESULT}" 'zip';
-}
-
 # === Bootimage File Uploader ===
 function devuplboot()
 {

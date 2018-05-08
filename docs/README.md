@@ -1159,7 +1159,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 ---
 > ### <span class="group_label">[sources/uploads/helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/helpers.rc)</span> ###
 >
-  * **mmmupl** *&lt;package_or_path&gt; [bool_partial_build]* [*<b>\[Make&nbsp;zip&nbsp;and&nbsp;upload\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/helpers.rc)
   * **devuplboot** *&lt;device&gt;* [*<b>\[Upload&nbsp;ROM&nbsp;bootimage\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/helpers.rc)
   * **devuplrom** *&lt;device&gt; [folder_path]* [*<b>\[Upload&nbsp;ROM&nbsp;build\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/helpers.rc)
   * **pushbrom** *&lt;device_name&gt; [rom_name]* [*<b>\[Notify&nbsp;build&nbsp;success\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/helpers.rc)
