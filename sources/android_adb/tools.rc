@@ -83,7 +83,8 @@ function __adbserver()
     ${adb_timeout} kill-server;
     killall 'adb' 2>/dev/null;
     timeout -k 20 20 sudo killall 'adb' 2>/dev/null;
-    ${adb_timeout} start-server;
+    ${adb_timeout} start-server \
+        | grep -v 'daemon not running\|daemon started successfully';
 
   fi;
 }
