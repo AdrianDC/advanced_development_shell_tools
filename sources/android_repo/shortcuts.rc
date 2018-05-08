@@ -297,7 +297,6 @@ function tomultirom()   { torompaths 'MultiROM'; }
 function torr()         { torompaths 'ResurrectionRemix' "${1}"; }
 function totwrp()       { torompaths 'TWRP'; }
 function cdaosp()       { cd "$(toaosp "${1}")"; }
-function cdl()          { cd "$(tolineage "${1}")"; }
 function cdlineage()    { cd "$(tolineage "${1}")"; }
 function cdaospcaf()    { cd "$(toaospcaf)"; }
 function cdmultirom()   { cd "$(tomultirom)"; }
