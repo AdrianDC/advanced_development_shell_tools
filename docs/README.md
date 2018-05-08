@@ -236,7 +236,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **adbblkp** *adb shell ls -l /dev/block/bootdevice/by-name/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/shortcuts.rc)
   * **adbsgdisk** *adb shell sgdisk &#8208;&#8208;print /dev/block/mmcblk0* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/shortcuts.rc)
   * **adbinfomem** *adb shell dumpsys meminfo* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/shortcuts.rc)
-  * **adbrcbin** *adb shell restorecon -R /sbin* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/shortcuts.rc)
   * **adbemergencycalls** *adb shell setprop ril.ecclist "${@}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/shortcuts.rc)
   * **adbemergencylist** *adb shell getprop ril.ecclist* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/shortcuts.rc)
   * **adbservices** *adb shell service list* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/shortcuts.rc)

@@ -42,7 +42,6 @@ function adbsgdisk() { adb shell sgdisk --print /dev/block/mmcblk0; }
 
 # === ADB Advanced Shortcuts ===
 function adbinfomem() { adb shell dumpsys meminfo; }
-function adbrcbin() { adb shell restorecon -R /sbin; }
 function adbemergencycalls() { adb shell setprop ril.ecclist "${@}"; }
 function adbemergencylist() { adb shell getprop ril.ecclist; }
 function adbservices() { adb shell service list; }
