@@ -38,8 +38,6 @@ function adbsw()
 
 # === ADB Partitions Shortcuts ===
 function adbblkp() { adb shell ls -l /dev/block/bootdevice/by-name/; }
-function adbfotarandom() { adb root; adb shell dd if=/dev/random of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel; }
-function adbfotazero() { adb root; adb shell dd if=/dev/zero of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel; }
 function adbmountcache() { adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Cache /cache; }
 function adbmountdata() { adb shell mount -t ext4 /dev/block/platform/msm_sdcc.1/by-name/Userdata /data; }
 function adbmountmicrosd() { adb shell mkdir -p /storage/ext; adb shell mount -t ext4 /dev/block/mmcblk1p1 /storage/ext; }
