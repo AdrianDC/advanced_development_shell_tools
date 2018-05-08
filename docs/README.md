@@ -499,7 +499,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **repoprune** [*<b>\[Apply&nbsp;repo-wide&nbsp;prune&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **reposycl** [*<b>\[Cleaned&nbsp;optimized&nbsp;relevant&nbsp;repo&nbsp;sync\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repoforeach** [*<b>\[Run&nbsp;commands&nbsp;for&nbsp;each&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
-  * **repocache** *[size_max/clean/reinit/wipe]* [*<b>\[CCache&nbsp;watcher&nbsp;and&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repolistexclude** *[word_to_search]* [*<b>\[Get&nbsp;repo&nbsp;list&nbsp;fields&nbsp;to&nbsp;exclude&nbsp;with&nbsp;search\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
 
 ---
@@ -578,6 +577,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **cdlsdk** *croot; cd ./lineage-sdk/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdrecovery** *croot; cd ./bootable/recovery/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdsepolicy** *croot; cd ./system/sepolicy/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
+
+---
+> ### <span class="group_label">[sources/android_repo/tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/tools.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/tools.rc)
+  ```
+  * **repocache** *[size_max/clean/reinit/wipe]* [*<b>\[CCache&nbsp;watcher&nbsp;and&nbsp;configuration\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/tools.rc)
 
 ---
 </details>

@@ -312,53 +312,6 @@ function repoforeach()
   echo '';
 }
 
-# === Repo CCache Status/Setter ===
-function repocache()
-{
-  # Usage: repocache [size_max/clean/reinit/wipe] (CCache watcher and configuration)
-
-  # Variables
-  local currentdir;
-  local maxsize;
-
-  # Access repo root
-  currentdir=$(pwd);
-  croot;
-
-  # Clean CCache
-  if [ "${1}" = 'clean' ]; then
-    ./prebuilts/misc/linux-x86/ccache/ccache -C;
-
-  # Reinit CCache
-  elif [ "${1}" = 'reinit' ]; then
-    maxsize=$(grep 'max_size' "${CCACHE_DIR}/ccache.conf");
-    if [ ! -z "${maxsize}" ]; then
-      maxsize=${maxsize##*= };
-      rm -rf "${CCACHE_DIR}/"*;
-      ./prebuilts/misc/linux-x86/ccache/ccache -M "${maxsize}";
-    fi;
-
-    # Avoid study on reinit
-    return;
-
-  # Wipe CCache
-  elif [ "${1}" = 'wipe' ]; then
-    if [ ! -z "${CCACHE_DIR}" ]; then
-      rm -rf "${CCACHE_DIR}/"*;
-    fi;
-
-  # Update the maximum on input (example 20G)
-  elif [ ! -z "${1}" ]; then
-    ./prebuilts/misc/linux-x86/ccache/ccache -M "${1}";
-  fi;
-
-  # Study the CCache
-  watch -n 1 -d "./prebuilts/misc/linux-x86/ccache/ccache" -s;
-
-  # Restore path
-  cd "${currentdir}/";
-}
-
 # === Repo List Exclude Search ===
 function repolistexclude()
 {

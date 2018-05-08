@@ -1,0 +1,66 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/tools.rc)
+
+# === Repo CCache Status/Setter ===
+function repocache()
+{
+  # Usage: repocache [size_max/clean/reinit/wipe] (CCache watcher and configuration)
+
+  # Variables
+  local currentdir;
+  local maxsize;
+
+  # Access repo root
+  currentdir=$(pwd);
+  croot;
+
+  # Clean CCache
+  if [ "${1}" = 'clean' ]; then
+    ./prebuilts/misc/linux-x86/ccache/ccache -C;
+
+  # Reinit CCache
+  elif [ "${1}" = 'reinit' ]; then
+    maxsize=$(grep 'max_size' "${CCACHE_DIR}/ccache.conf");
+    if [ ! -z "${maxsize}" ]; then
+      maxsize=${maxsize##*= };
+      rm -rf "${CCACHE_DIR}/"*;
+      ./prebuilts/misc/linux-x86/ccache/ccache -M "${maxsize}";
+    fi;
+
+    # Avoid study on reinit
+    return;
+
+  # Wipe CCache
+  elif [ "${1}" = 'wipe' ]; then
+    if [ ! -z "${CCACHE_DIR}" ]; then
+      rm -rf "${CCACHE_DIR}/"*;
+    fi;
+
+  # Update the maximum on input (example 20G)
+  elif [ ! -z "${1}" ]; then
+    ./prebuilts/misc/linux-x86/ccache/ccache -M "${1}";
+  fi;
+
+  # Study the CCache
+  watch -n 1 -d "./prebuilts/misc/linux-x86/ccache/ccache" -s;
+
+  # Restore path
+  cd "${currentdir}/";
+}
