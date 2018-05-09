@@ -59,7 +59,7 @@ function repodevclean()
 
   # Delete contents from 'out/target/product' folder
   echo '';
-  echo ' repodevclean: Cleaning out/target/product folder...';
+  echo -e ' \e[1;33mrepodevclean:\e[0m Cleaning out/target/product folder...';
   find out/target/product/ -mindepth 1 -delete;
   echo '';
 
