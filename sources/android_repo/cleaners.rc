@@ -26,7 +26,7 @@ function repoclean()
 
   # Delete contents from 'out' folder
   echo '';
-  echo ' repoclean: Cleaning out folder...';
+  echo -e ' \e[1;33mrepoclean:\e[0m Cleaning out folder...';
   find "${1:-out}/" -mindepth 1 -delete;
   echo '';
 }
