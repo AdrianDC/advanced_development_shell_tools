@@ -54,10 +54,11 @@ function meganzreload()
   mega-login "${username}" "${password}" | grep -v 'Already logged in.';
 
   # Reload Mega account
+  echo -en ' \e[1;33mmeganzreload:\e[0m ';
   mega-reload;
 
   # Stop mega-cmd server
-  kill -9 "${proc_id}";
-  kill "${proc_id}";
+  kill -9 "${proc_id}" 2>/dev/null;
+  kill "${proc_id}" 2>/dev/null;
   echo '';
 }
