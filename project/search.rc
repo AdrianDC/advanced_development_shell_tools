@@ -34,7 +34,7 @@ function shtoolse()
 
   # Study all script files
   tmp_list=$(mktemp);
-  shtoolsfiles 'entrypoint,sources' > "${tmp_list}";
+  shtoolsfiles 'entrypoint,sources,scripts' > "${tmp_list}";
   while read -r file_source; do
     for word in "${@}"; do
 
