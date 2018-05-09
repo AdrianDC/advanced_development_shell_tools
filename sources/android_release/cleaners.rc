@@ -31,7 +31,7 @@ function outdevcl()
 
   # Header
   echo '';
-  echo -e " \e[1;33moutdevcl:\e[0;33m Cleaning up ROM outputs for '${1}'\e[0m";
+  echo -e " \e[1;33moutdevcl:\e[0m Cleaning up ROM outputs for '${1}'";
 
   # Run full output cleaners
   if [ "${2}" = 'full' ]; then
@@ -76,7 +76,7 @@ function outbootdevcl()
 
   # Header
   [ -z "${2}" ] && echo '';
-  echo -e " \e[1;33moutbootdevcl:\e[0;33m Cleaning up bootimage outputs for '${1}'\e[0m";
+  echo -e " \e[1;33moutbootdevcl:\e[0m Cleaning up bootimage outputs for '${1}'";
   [ -z "${2}" ] && echo '';
 
   # Out path
@@ -119,7 +119,7 @@ function outotadevcl()
 
   # Header
   [ -z "${2}" ] && echo '';
-  echo -e " \e[1;33moutotadevcl:\e[0;33m Cleaning up OTA outputs for '${1}'\e[0m";
+  echo -e " \e[1;33moutotadevcl:\e[0m Cleaning up OTA outputs for '${1}'";
   [ -z "${2}" ] && echo '';
 
   # Out path
@@ -152,7 +152,7 @@ function outsepdevcl()
 
   # Header
   [ -z "${2}" ] && echo '';
-  echo -e " \e[1;33moutsepdevcl:\e[0;33m Cleaning up sepolicy outputs for '${1}'\e[0m";
+  echo -e " \e[1;33moutsepdevcl:\e[0m Cleaning up sepolicy outputs for '${1}'";
   [ -z "${2}" ] && echo '';
 
   # Out path
@@ -186,7 +186,7 @@ function outsystemdevcl()
 
   # Header
   [ -z "${3}" ] && echo '';
-  echo -e " \e[1;33moutsystemdevcl:\e[0;33m Cleaning up system outputs for '${1}'\e[0m";
+  echo -e " \e[1;33moutsystemdevcl:\e[0m Cleaning up system outputs for '${1}'";
   [ -z "${3}" ] && echo '';
 
   # Out path
@@ -220,7 +220,7 @@ function outproductdevcl()
 
   # Header
   [ -z "${2}" ] && echo '';
-  echo -e " \e[1;33moutproductdevcl:\e[0;33m Cleaning up product outputs for '${1}'\e[0m";
+  echo -e " \e[1;33moutproductdevcl:\e[0m Cleaning up product outputs for '${1}'";
   [ -z "${2}" ] && echo '';
 
   # Out path
@@ -246,7 +246,7 @@ function outcommoncl()
 
   # Header
   [ -z "${1}" ] && echo '';
-  echo -e " \e[1;33moutbootdevcl:\e[0;33m Cleaning up common outputs\e[0m";
+  echo -e " \e[1;33moutbootdevcl:\e[0m Cleaning up common outputs";
   [ -z "${1}" ] && echo '';
 
   # Delete build temporary outputs
