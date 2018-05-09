@@ -19,15 +19,18 @@
 
 # Show available RAM
 echo '';
-free;
+echo -e ' \e[1;33mcleanrambuild:\e[0m Before RAM cleanups...';
 echo '';
+free;
 
 # Kill relevant RAM eating processes
-killall -9 ckati;
-killall -9 java;
-killall -9 ninja;
+killall -9 ckati 2>&1 | grep -v 'no process found';
+killall -9 java 2>&1 | grep -v 'no process found';
+killall -9 ninja 2>&1 | grep -v 'no process found';
 
 # Show available RAM
+echo '';
+echo -e ' \e[1;33mcleanrambuild:\e[0m After RAM cleanups...';
 echo '';
 free;
 echo '';

@@ -18,8 +18,15 @@
 # Usage: cleanram.sh (RAM caches cleanup)
 
 # Show available RAM
-free;
-sudo echo '';
+echo '';
+echo -e ' \e[1;33mcleanram:\e[0m Before RAM cleanups...';
+echo '';
+sudo free;
+
+# RAM cleanup header
+echo '';
+echo -e ' \e[1;33mcleanram:\e[0m Dropping caches...';
+echo '';
 
 # RAM cleanup commands
 commands=$(echo \
@@ -35,11 +42,14 @@ swapon -a' \
 OLDIFS=${IFS};
 IFS=$'\n';
 for command in ${commands}; do
-  echo " [${command}]";
+  echo "  ${command}";
   sudo sh -c "timeout -k 5 5 bash -c '${command}'";
 done;
 IFS=${OLDIFS};
 
 # Show available RAM
 echo '';
+echo -e ' \e[1;33mcleanram:\e[0m After RAM cleanups...';
+echo '';
 free;
+echo '';
