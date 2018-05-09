@@ -38,7 +38,7 @@ function repodestroy()
 
   # Delete complete repo apart from local_manifests
   echo '';
-  echo -n ' repodestroy: Destroying repo apart from local_manifests ? [ENTER] ';
+  echo -en ' \e[1;33mrepodestroy:\e[0m Destroying repo apart from local_manifests ? [ENTER] ';
   read -r;
   rm -rf ./*;
   rm -rf ./.repo/manifests;
