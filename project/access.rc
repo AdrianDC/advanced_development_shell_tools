@@ -89,6 +89,6 @@ function shtoolsup()
   # Reload the project sources
   source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
   echo '';
-  echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[0;33mFunctions loaded properly\e[0m';
+  echo -e ' \e[1;33mandroid_development_shell_tools: \e[1;37mFunctions loaded properly\e[0m';
   echo '';
 }

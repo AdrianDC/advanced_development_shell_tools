@@ -64,7 +64,7 @@ function shtoolsforum()
 
   # Header
   echo '';
-  echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README forum documentations\e[0m';
+  echo -e ' \e[1;33mandroid_development_shell_tools:\e[1;37m Building README forum documentations\e[0m';
   echo '';
 
   # Handle multiple README files
@@ -168,7 +168,7 @@ function shtoolsreadme()
   shtoolsup;
 
   # Header
-  echo -e ' \e[1;33mandroid_development_shell_tools:\e[0;33m Building README.md documentation\e[0m';
+  echo -e ' \e[1;33mandroid_development_shell_tools:\e[1;37m Building README.md documentation\e[0m';
   echo -n '  ...';
 
   # Refresh project README.md

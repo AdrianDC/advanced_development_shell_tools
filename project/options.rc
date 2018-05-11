@@ -38,7 +38,7 @@ function __shtoolsoptions()
   if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ] &&
       grep -q "^${1#__}" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
     echo '';
-    echo -e " \e[1;33mshtools-: \e[0;33mUpgrading ${1} syntax\e[0m";
+    echo -e " \e[1;33mshtools-: \e[1;37mUpgrading ${1} syntax\e[0m";
     echo '';
     sed -i "s/^${1#__}/${1}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
   fi;

@@ -22,7 +22,7 @@ ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=$(readlink -f "${ANDROID_DEVELOPMENT_
 export ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT;
 if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" ]; then
   echo '';
-  echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[0;33mExecution path could not be found\e[0m';
+  echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[1;31mExecution path could not be found\e[0m';
   echo '';
   return;
 fi;
@@ -128,7 +128,7 @@ function shtoolsinstance()
   local tmp_list;
 
   # Header
-  echo -en '\e[1;33mshtools: \e[1;33mLoading android_development_shell_tools...\e[0m';
+  echo -en ' \e[1;33mandroid_development_shell_tools: \e[1;37mLoading project...\e[0m';
 
   # Import enabled kits
   tmp_list=$(mktemp);
