@@ -85,7 +85,6 @@ function bootelf()
   # Variables
   local boot_file=${1};
   local out_folder=${2};
-  local pwd_folder;
 
   # Path generations
   boot_file=$(readlink -f "${boot_file}");
@@ -98,9 +97,8 @@ function bootelf()
   fi;
 
   # Unpack
-  pwd_folder=$(pwd);
   cp "${boot_file}" "${out_folder}/boot.elf";
-  cd "${out_folder}/";
+  pushd "${out_folder}/";
   7z e ./boot.elf;
   rm ./boot.elf;
 
@@ -223,6 +221,6 @@ function bootelf()
   fi;
 
   # End of process
-  cd "${pwd_folder}";
+  popd;
   echo '';
 }
