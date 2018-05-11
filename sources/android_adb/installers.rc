@@ -114,8 +114,7 @@ function adbif()
         [[ "${file_path}" == *'/system'* ]] &&
         [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
       file_path=$(echo -n "${file_path}" | tail -1 \
-                | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
-                | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
+                | sed 's/\x1B\[[0-9;]*[JKmsu]//g');
       if [ ! -f "${file_path}" ]; then
         file_path="${repo_top}/${file_path}";
       fi;
@@ -166,8 +165,7 @@ function adbil()
         [[ "${file_path}" == *'/system'* ]] &&
         [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
       file_path=$(echo -n "${file_path}" | tail -1 \
-                | sed 's/\x1B\[[0-9;]*[JKmsu]//g' \
-                | sed 's/.*\/\([^\[]*.zip\).*/\1/g');
+                | sed 's/\x1B\[[0-9;]*[JKmsu]//g');
       if [ ! -f "${file_path}" ] && [ ! "${file_path:0:1}" = '/' ]; then
         file_path=$(gettop)/${file_path};
       fi;

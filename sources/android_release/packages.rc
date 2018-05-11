@@ -203,14 +203,12 @@ function packzip()
     FileTarget=;
     if [[ "${FilePath}" == *'/system'* ]]; then
       FilePath=$(echo -n "${FilePath}" | tail -1 \
-               | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
-               | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
+               | sed "s/\x1B\[[0-9;]*[JKmsu]//g");
       FileTarget=$(echo "${FilePath}" \
                  | sed "s/.*\(system\/.*\)/\1/g");
     elif [[ "${FilePath}" == *'/proprietary'* ]]; then
       FilePath=$(echo -n "${FilePath}" | tail -1 \
-               | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
-               | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
+               | sed "s/\x1B\[[0-9;]*[JKmsu]//g");
       FileTarget=$(echo "${FilePath}" \
                  | sed "s/.*proprietary\/\(.*\)/system\/\1/g");
     fi;
@@ -360,8 +358,7 @@ function oeminjectorzip()
 
     # Target selection
     oem_file=$(echo -n "${oem_file}" | tail -1 \
-             | sed "s/\x1B\[[0-9;]*[JKmsu]//g" \
-             | sed "s/.*\/\([^\[]*.zip\).*/\1/g");
+             | sed "s/\x1B\[[0-9;]*[JKmsu]//g");
     oem_target_file=oem/${oem_file};
     oem_target_dir=$(dirname "${oem_target_file}");
     if [ ! -d "${tmp_dir}/${oem_target_dir}" ]; then
