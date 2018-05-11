@@ -386,7 +386,7 @@ function shtoolsnews()
     if [ -z "${1}" ]; then
       echo '';
     else
-      sleep 3;
+      sleep 1;
     fi;
     echo -en "\r\033[K";
     cd "${currentdir}/";
