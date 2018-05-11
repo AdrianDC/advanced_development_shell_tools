@@ -326,7 +326,7 @@ function adbside()
 
   # Reboot to recovery if needed
   if ! timeout -k 2 2 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
-    echo -e '\e[1;33madbside: Rebooting to recovery\e[0m';
+    echo -e ' \e[1;33madbside: \e[1;37mRebooting to recovery\e[0m';
     ${adb_cmd} reboot recovery;
     rebooted=true;
   fi;
@@ -336,7 +336,7 @@ function adbside()
     if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'recovery\|sideload'" 2> /dev/null; then
       break;
     fi;
-    echo -e '\e[1;33madbside: Waiting for recovery or sideload\e[0m';
+    echo -e ' \e[1;33madbside: \e[1;37mWaiting for recovery or sideload\e[0m';
     sleep 2;
   done;
 
@@ -347,7 +347,7 @@ function adbside()
     fi;
 
     # Start twrp sideload
-    echo -e '\e[1;33madbside: Waiting for sideload\e[0m';
+    echo -e ' \e[1;33madbside: \e[1;37mWaiting for sideload\e[0m';
     ${adb_cmd} shell twrp sideload 2> /dev/null;
     sleep 2;
   done;
@@ -360,15 +360,15 @@ function adbside()
     if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'recovery\|unauthorized'" 2> /dev/null; then
       break;
     fi;
-    echo -e '\e[1;33madbside: Waiting for recovery\e[0m';
+    echo -e ' \e[1;33madbside: \e[1;37mWaiting for recovery\e[0m';
     sleep 2;
   done;
 
   # Reboot to Android if requested or forced reboot to recovery
   if [ -z "${2}" ] && [ -z "${rebooted}" ] || [ "${2}" = 'false' ]; then
-    echo -e '\e[1;33madbside: Staying in recovery\e[0m';
+    echo -e ' \e[1;33madbside: \e[1;37mStaying in recovery\e[0m';
   else
-    echo -e '\e[1;33madbside: Rebooting to Android\e[0m';
+    echo -e ' \e[1;33madbside: \e[1;37mRebooting to Android\e[0m';
     ${adb_cmd} reboot;
   fi;
   echo '';
@@ -415,7 +415,7 @@ function adbsiderom()
     mkdir "${addons_path}";
     mkdir "${addons_path}/${device}";
     echo '';
-    echo -e "\e[1;33madbsiderom: Fill the '${addons_path}/${device}/' folder with zip Addons to flash after the ROM zip\e[0m";
+    echo -e " \e[1;33madbsiderom: \e[1;37mFill the '${addons_path}/${device}/' folder with zip Addons to flash after the ROM zip\e[0m";
     diropen "${addons_path}/${device}";
     echo '';
     echo -n ' adbsiderom: Press [Enter] to continue... ';
@@ -425,13 +425,13 @@ function adbsiderom()
   # Launch adbside with ROM zip
   if [ "${file_input: -4}" = '.zip' ]; then
     echo '';
-    echo -e "\e[1;32madbsiderom: Flashing '$(basename "${file_input}")' [${device}]\e[0m";
+    echo -e " \e[1;33madbsiderom: \e[1;32mFlashing '$(basename "${file_input}")' [${device}]\e[0m";
     adbside "${file_input}" false;
 
   # Launch adbbootpush with bootimage img
   elif [ "${file_input: -4}" = '.img' ]; then
     echo '';
-    echo -e "\e[1;32madbsiderom: Pushing '$(basename "${file_input}")' bootimage [${device}]\e[0m";
+    echo -e " \e[1;33madbsiderom: \e[1;32mPushing '$(basename "${file_input}")' bootimage [${device}]\e[0m";
     target_old=${TARGET_PRODUCT};
     export TARGET_PRODUCT=rom_${device};
     adbbootpush "${file_input}";
@@ -441,13 +441,13 @@ function adbsiderom()
 
   # Launch adbside for addons zip files
   for file in "${addons_path}/${device}/"*'.zip'; do
-    echo -e "\e[1;32madbsiderom: Flashing '$(basename "${file}")' [${device}]\e[0m";
+    echo -e " \e[1;33madbsiderom: \e[1;32mFlashing '$(basename "${file}")' [${device}]\e[0m";
     adbside "${file}" false;
   done;
 
   # Reboot to Android if requested
   if [ -z "${no_reboot}" ]; then
-    echo -e '\e[1;32madbsiderom: Rebooting to Android\e[0m';
+    echo -e ' \e[1;33madbsiderom: \e[1;37mRebooting to Android\e[0m';
     $(adbcmd) shell reboot;
     echo '';
   fi;
