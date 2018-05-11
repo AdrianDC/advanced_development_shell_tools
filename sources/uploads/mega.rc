@@ -29,7 +29,7 @@ function uploadmega()
   # Verify megatools is installed
   if ! type megals >/dev/null 2>&1; then
     echo '';
-    echo ' megatools: Please install megatools before using tools like "megals"';
+    echo -e ' \e[1;33mmegatools:\e[0m Please install megatools before using tools like "megals"';
     echo '';
     return;
   fi;
@@ -37,7 +37,7 @@ function uploadmega()
   # Ignore missing credentials
   if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
     echo '';
-    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
+    echo -e " \e[1;33mmegatools:\e[0m ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
     echo '';
     return;
   fi;
@@ -110,7 +110,7 @@ function downloadmega()
   # Verify megatools is installed
   if ! type megals >/dev/null 2>&1; then
     echo '';
-    echo ' megatools: Please install megatools before using tools like "megals"';
+    echo -e ' \e[1;33mmegatools:\e[0m Please install megatools before using tools like "megals"';
     echo '';
     return;
   fi;
@@ -118,7 +118,7 @@ function downloadmega()
   # Ignore missing credentials
   if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
     echo '';
-    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
+    echo -e " \e[1;33mmegatools:\e[0m ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
     echo '';
     return;
   fi;
@@ -208,7 +208,7 @@ function listmega()
   # Verify megatools is installed
   if ! type megals >/dev/null 2>&1; then
     echo '';
-    echo ' megatools: Please install megatools before using tools like "megals"';
+    echo -e ' \e[1;33mmegatools:\e[0m Please install megatools before using tools like "megals"';
     echo '';
     return;
   fi;
@@ -216,7 +216,7 @@ function listmega()
   # Ignore missing credentials
   if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
     echo '';
-    echo " megatools: ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
+    echo -e " \e[1;33mmegatools:\e[0m ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
     echo '';
     return;
   fi;
