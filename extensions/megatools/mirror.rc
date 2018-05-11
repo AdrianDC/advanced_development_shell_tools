@@ -86,7 +86,7 @@ function megamirror()
   # =======================================================
   # Introduction message
   echo '';
-  echo -e " \e[1;37mmegamirror: Syncing '${local_folder}' and '${remote_folder}'...\e[0m";
+  echo -e " \e[1;33mmegamirror:\e[1;37m Syncing '${local_folder}' and '${remote_folder}'...\e[0m";
 
   # Remove local megatools cache
   rm -rf /tmp/*.megatools.cache;
@@ -132,7 +132,7 @@ function megamirror()
       # Verify folder exists
       if [ "${file_type}" = '1' ] && [ "${file_size}" = '-' ]; then
         if [ ! -d "${file_local}" ]; then
-          echo -en " \e[1;31mmegamirror: Remote folder '${file_local_output}/' is missing:\e[0m";
+          echo -en " \e[1;33mmegamirror:\e[1;31m Remote folder '${file_local_output}/' is missing:\e[0m";
           flag_delete=true;
 
         # Exclude folder from needed uploads
@@ -144,7 +144,7 @@ function megamirror()
       elif [ -f "${file_local}" ]; then
         file_local_size=$(stat -c "%s" "${file_local}");
         if [ "${file_size/-/0}" -ne "${file_local_size}" ]; then
-          echo -en " \e[1;31mmegamirror: Remote file '${file_local_output}' is different:\e[0m";
+          echo -en " \e[1;33mmegamirror:\e[1;31m Remote file '${file_local_output}' is different:\e[0m";
           flag_delete=true;
 
         # Exclude file from needed uploads
@@ -154,7 +154,7 @@ function megamirror()
 
       # Remote file no longer exist locally
       else
-        echo -en " \e[1;31mmegamirror: Remote file '${file_local_output}' locally removed:\e[0m";
+        echo -en " \e[1;33mmegamirror:\e[1;31m Remote file '${file_local_output}' locally removed:\e[0m";
         flag_delete=true;
       fi;
 
@@ -174,7 +174,7 @@ function megamirror()
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
           megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
               "${file_path}";
-          echo -e " \e[1;32mmegamirror: Removed remote '${file_path}'\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;32m Removed remote '${file_path}'\e[0m";
 
           # Remove folder elements
           if [ "${file_type}" = '1' ]; then
@@ -188,7 +188,7 @@ function megamirror()
     # ===========================================
     # Upload with megacopy to remote
     if [[ "${option_params}" == *'--copy'* ]]; then
-      echo -e " \e[1;33mmegamirror: megacopy starting...\e[0m";
+      echo -e " \e[1;33mmegamirror:\e[1;37m megacopy starting...\e[0m";
       rm -rf /tmp/*.megatools.cache;
       megacopy --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
           --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
@@ -213,12 +213,12 @@ function megamirror()
         if [ -d "${file_local}" ]; then
           megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
               "${file_path}";
-          echo -e " \e[1;33mmegamirror: Created remote folder '${file_path}/'\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;37m Created remote folder '${file_path}/'\e[0m";
 
         # Upload file to target
         else
           file_path=$(dirname "${file_path}");
-          echo -e " \e[1;33mmegamirror: Uploading to the server - Path '${file_path}'\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;37m Uploading to the server - Path '${file_path}'\e[0m";
           megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
               "${file_path}" 2>&1 \
             | grep -v 'Directory already exists:';
@@ -227,7 +227,7 @@ function megamirror()
 
           # Show upload time
           time_span=$(($(date +%s) - time_start));
-          echo -e " \e[1;37mmegamirror: Upload done in ${time_span} secs\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;37m Upload done in ${time_span} secs\e[0m";
 
         fi;
       done;
@@ -278,7 +278,7 @@ function megamirror()
       # Verify folder exists
       if [ -d "${file_path}" ]; then
         if [ -z "${line_tmp[2]}" ]; then
-          echo -en " \e[1;31mmegamirror: Remote folder '${file_local_output}/' is missing:\e[0m";
+          echo -en " \e[1;33mmegamirror:\e[1;31m Remote folder '${file_local_output}/' is missing:\e[0m";
           flag_delete=true;
 
         # Exclude folder from needed downloads
@@ -289,7 +289,7 @@ function megamirror()
       # Verify files sizes do not mismatch
       elif [ ! -z "${line_tmp[*]}" ]; then
         if [ "${file_size}" -ne "${line_tmp[3]/-/0}" ]; then
-          echo -en " \e[1;31mmegamirror: Local file '${file_local_output}' is different:\e[0m";
+          echo -en " \e[1;33mmegamirror:\e[1;31m Local file '${file_local_output}' is different:\e[0m";
           flag_delete=true;
 
         # Exclude file from needed downloads
@@ -299,7 +299,7 @@ function megamirror()
 
       # Local file no longer exist remotely
       else
-        echo -en " \e[1;31mmegamirror: Local file '${file_local_output}' remotely removed:\e[0m";
+        echo -en " \e[1;33mmegamirror:\e[1;31m Local file '${file_local_output}' remotely removed:\e[0m";
         flag_delete=true;
       fi;
 
@@ -318,7 +318,7 @@ function megamirror()
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
           rm -r "${file_path}";
-          echo -e " \e[1;32mmegamirror: Removed local '${file_path}'\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;32m Removed local '${file_path}'\e[0m";
         fi;
       fi;
 
@@ -327,7 +327,7 @@ function megamirror()
     # ===========================================
     # Download with megacopy to local
     if [[ "${option_params}" == *'--copy'* ]]; then
-      echo -e " \e[1;33mmegamirror: megacopy starting...\e[0m";
+      echo -e " \e[1;33mmegamirror:\e[1;37m megacopy starting...\e[0m";
       rm -rf /tmp/*.megatools.cache;
       megacopy --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
           --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
@@ -360,7 +360,7 @@ function megamirror()
         if [ "${file_type}" = '1' ]; then
           if [ ! -d "${file_local}" ]; then
             mkdir -p "${file_local}";
-            echo -e " \e[1;33mmegamirror: Created local folder '${file_local}/'\e[0m";
+            echo -e " \e[1;33mmegamirror:\e[1;37m Created local folder '${file_local}/'\e[0m";
           fi;
 
         # Download file
@@ -368,7 +368,7 @@ function megamirror()
 
           # Download header informations
           file_local=$(dirname "${file_local}");
-          echo -e " \e[1;33mmegamirror: Downloading from the server - Path '${file_local}/'\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;37m Downloading from the server - Path '${file_local}/'\e[0m";
 
           # Download file to local
           mkdir -p "${file_local}";
@@ -377,7 +377,7 @@ function megamirror()
 
           # Show download time
           time_span=$(($(date +%s) - time_start));
-          echo -e " \e[1;37mmegamirror: Download done in ${time_span} secs\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;37m\e[1;37m Download done in ${time_span} secs\e[0m";
 
         fi;
       done;
@@ -386,7 +386,7 @@ function megamirror()
 
   # =======================================================
   # End message
-  echo -e " \e[1;32mmegamirror: Synced '${local_folder}' and '${remote_folder}'\e[0m";
+  echo -e " \e[1;33mmegamirror:\e[1;32m Synced '${local_folder}' and '${remote_folder}'\e[0m";
   echo '';
 
   # Cleanup temp files
