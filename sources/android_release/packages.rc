@@ -105,6 +105,26 @@ function signzip()
   fi;
 }
 
+# === Sign Zip Packages ===
+function signzips()
+{
+  # Usage
+  if [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: signzips <zip_1> [zip_2] ... (Sign flashable zips)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local file_path;
+
+  # Sign the zip files
+  for file_path in "${@}"; do
+    signzip "${1}";
+  done;
+}
+
 # === Sign Apk Package ===
 function signapk()
 {
@@ -118,6 +138,26 @@ function signapk()
 
   # Reuse signzip for the same purpose
   signzip "${1}" "${2}";
+}
+
+# === Sign Apk Packages ===
+function signapks()
+{
+  # Usage
+  if [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: signapks <apk_1> [apk_2] ... (Sign apk files)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local file_path;
+
+  # Sign the apk files
+  for file_path in "${@}"; do
+    signapk "${1}";
+  done;
 }
 
 # === Module Zip Maker ===

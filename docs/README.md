@@ -419,7 +419,9 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/android_release/packages.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)</span> ###
 >
   * **signzip** *&lt;zip_to_sign&gt; [signed_output_zip]* [*<b>\[Sign&nbsp;flashable&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
+  * **signzips** *&lt;zip_1&gt; [zip_2] ...* [*<b>\[Sign&nbsp;flashable&nbsp;zips\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
   * **signapk** *&lt;apk_to_sign&gt; [signed_output_apk]* [*<b>\[Sign&nbsp;an&nbsp;apk&nbsp;file\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
+  * **signapks** *&lt;apk_1&gt; [apk_2] ...* [*<b>\[Sign&nbsp;apk&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
   * **mmmzip** *&lt;paths_or_modules&gt;* [*<b>\[Build&nbsp;module&nbsp;to&nbsp;flashable&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
   * **systozip** *&lt;files&gt;* [*<b>\[System&nbsp;files&nbsp;to&nbsp;flashable&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
   * **packzip** *&lt;files&gt;* [*<b>\[Files&nbsp;to&nbsp;flashable&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
