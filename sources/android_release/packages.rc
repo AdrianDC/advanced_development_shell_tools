@@ -111,7 +111,7 @@ function signapk()
   # Usage
   if [ ! -f "${1}" ]; then
     echo '';
-    echo ' Usage: signapk <apk_to_sign> [signed_output_apk] (Sign apk files)';
+    echo ' Usage: signapk <apk_to_sign> [signed_output_apk] (Sign an apk file)';
     echo '';
     return;
   fi;
