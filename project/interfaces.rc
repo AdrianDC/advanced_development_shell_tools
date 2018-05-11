@@ -344,7 +344,7 @@ function shtoolskits()
 # === Android Development Shell Tools News ===
 function shtoolsnews()
 {
-  # Usage: shtoolsnews (Display the project news notifications)
+  # Usage: shtoolsnews [since_days] (Display the project news notifications)
 
   # Variables
   local commits_local_count;
@@ -354,6 +354,7 @@ function shtoolsnews()
   local line_sha1;
   local line_topic;
   local since_days=${1};
+  local since_tag;
   local timestamp_current;
   local timestamp_last;
 
@@ -394,8 +395,15 @@ function shtoolsnews()
     return;
   fi;
 
+  # Acquire reference tag
+  if [ -z "${since_days}" ]; then
+    since_tag=FETCH_HEAD;
+  else
+    since_tag=$(git rev-list FETCH_HEAD --since "${since_days} days ago" | tail -n 1);
+  fi;
+
   # Ignore if unchanged
-  if git diff --quiet HEAD FETCH_HEAD \
+  if git diff --quiet HEAD "${since_tag}" \
       && git diff-index --quiet HEAD; then
     echo -en "\r\033[K";
     cd "${currentdir}/";
@@ -422,7 +430,11 @@ function shtoolsnews()
 
   # Acquire commits counts
   commits_local_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l);
-  commits_remote_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l);
+  if [ -z "${since_days}" ]; then
+    commits_remote_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l);
+  else
+    commits_remote_count=$(git rev-list --left-right "${since_tag}"...FETCH_HEAD | grep '^>' | wc -l);
+  fi;
 
   # Present local commits
   if [ "${commits_local_count}" -ne 0 ]; then
@@ -444,7 +456,11 @@ function shtoolsnews()
 
   # Present remote commits
   if [ "${commits_remote_count}" -ne 0 ]; then
-    echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_remote_count} new commits available upstream";
+    if [ -z "${since_days}" ]; then
+      echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_remote_count} new commits available upstream";
+    else
+      echo -e " \e[1;33mshtoolsnews: \e[1;37m${commits_remote_count} commits published upstream since ${since_days} days";
+    fi;
     echo '';
 
     # Present remote commits log

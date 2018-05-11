@@ -90,7 +90,7 @@
   * **shtools** [*<b>\[Entrypoint&nbsp;menu&nbsp;to&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
   * **shtools-** [*<b>\[Options&nbsp;menu&nbsp;for&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
   * **shtoolskits** *[init]* [*<b>\[Toolkits&nbsp;selection&nbsp;for&nbsp;the&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
-  * **shtoolsnews** [*<b>\[Display&nbsp;the&nbsp;project&nbsp;news&nbsp;notifications\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
+  * **shtoolsnews** *[since_days]* [*<b>\[Display&nbsp;the&nbsp;project&nbsp;news&nbsp;notifications\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/interfaces.rc)
 
 ---
 > ### <span class="group_label">[project/search.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/project/search.rc)</span> ###
