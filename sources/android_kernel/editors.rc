@@ -47,6 +47,7 @@ function boottools()
   if [ -z "${2}" ]; then
 
     # Edit
+    pushd "${out_folder}";
     diropen "${out_folder}";
     echo '';
     echo -n ' Press Enter to continue [ENTER] ';
@@ -68,6 +69,7 @@ function boottools()
   fi;
 
   # End of process
+  popd;
   echo '';
 }
 
@@ -149,6 +151,7 @@ function bootelf()
   if [ -z "${2}" ]; then
 
     # Edit
+    cd "${out_folder}";
     diropen "${out_folder}";
     echo '';
     echo -n ' Press Enter to continue [ENTER] ';
