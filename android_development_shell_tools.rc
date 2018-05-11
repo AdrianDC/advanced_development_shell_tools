@@ -175,7 +175,7 @@ function shtoolsinstance()
 
   # Automated project news
   if __shtools-config-news-active; then
-    shtoolsnews true;
+    ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION=true shtoolsnews;
   fi;
 
   # Automated project kits

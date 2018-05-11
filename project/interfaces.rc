@@ -353,11 +353,12 @@ function shtoolsnews()
   local line;
   local line_sha1;
   local line_topic;
+  local since_days=${1};
   local timestamp_current;
   local timestamp_last;
 
   # Direct call output
-  if [ -z "${1}" ]; then
+  if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
     echo '';
 
   # Ignore automated news based on timestamp
@@ -383,7 +384,7 @@ function shtoolsnews()
   echo -en ' \e[1;33mshtoolsnews: \e[1;33mChecking remote upgrades...\e[0m';
   if ! git fetch --quiet origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" >/dev/null 2>&1; then
     echo -en '\r\033[K \e[1;33mshtoolsnews: \e[1;31mInternet access not available...\e[0m';
-    if [ -z "${1}" ]; then
+    if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
       echo '';
     else
       sleep 1;
@@ -464,7 +465,7 @@ function shtoolsnews()
   fi;
 
   # Delay input on automatic notifications
-  if [ ! -z "${1}" ]; then
+  if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
     echo -en '\r\033[K \e[1;37m> Resuming input in 3 seconds...';
     sleep 3;
     echo -en '\r\033[K';
