@@ -76,7 +76,7 @@ function repoinitaosp()
   # Prepare synced objects for migrations
   if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     echo '';
-    ${init_command};
+    ${init_command} 2>&1 | grep -v '^ * ';
     echo '';
     reposy;
   fi;
@@ -90,7 +90,7 @@ function repoinitaosp()
   repoinitcleaner "${params}";
 
   # Launch init command
-  ${init_command};
+  ${init_command} 2>&1 | grep -v '^ * ';
 
   # Exit on repo init failure
   if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
@@ -173,7 +173,7 @@ function repoinitlineage()
   # Prepare synced objects for migrations
   if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     echo '';
-    ${init_command};
+    ${init_command} 2>&1 | grep -v '^ * ';
     echo '';
     reposy;
   fi;
@@ -187,7 +187,7 @@ function repoinitlineage()
   repoinitcleaner "${params}";
 
   # Launch init command
-  ${init_command};
+  ${init_command} 2>&1 | grep -v '^ * ';
 
   # Exit on repo init failure
   if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
@@ -255,7 +255,7 @@ function repoinitrr()
   # Prepare synced objects for migrations
   if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
     echo '';
-    ${init_command};
+    ${init_command} 2>&1 | grep -v '^ * ';
     echo '';
     reposy;
   fi;
@@ -269,7 +269,7 @@ function repoinitrr()
   repoinitcleaner "${params}";
 
   # Launch init command
-  ${init_command};
+  ${init_command} 2>&1 | grep -v '^ * ';
 
   # Exit on repo init failure
   if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
@@ -346,7 +346,7 @@ function repoinittwrp()
   repoinitcleaner "${params}";
 
   # Launch init command
-  ${init_command};
+  ${init_command} 2>&1 | grep -v '^ * ';
 
   # Exit on repo init failure
   if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
