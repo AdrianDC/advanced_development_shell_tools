@@ -91,7 +91,7 @@ function repoinitaosp()
   ${init_command};
 
   # Exit on repo init failure
-  if [ ! -d .repo/manifests ]; then
+  if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
     echo "repoinitaosp failed for ${branch}";
     return;
   fi;
@@ -182,7 +182,7 @@ function repoinitlineage()
   ${init_command};
 
   # Exit on repo init failure
-  if [ ! -d .repo/manifests ]; then
+  if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
     echo "repoinitlineage failed for ${branch}";
     return;
   fi;
@@ -259,7 +259,7 @@ function repoinitrr()
   ${init_command};
 
   # Exit on repo init failure
-  if [ ! -d .repo/manifests ]; then
+  if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
     echo "repoinitrr failed for ${branch}";
     return;
   fi;
@@ -332,7 +332,7 @@ function repoinittwrp()
   ${init_command};
 
   # Exit on repo init failure
-  if [ ! -d .repo/manifests ]; then
+  if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
     echo "repoinittwrp failed for ${branch}";
     return;
   fi;
