@@ -65,17 +65,19 @@ function repoinitaosp()
 
   # Output init command
   echo '';
-  echo " ${init_command}";
-  echo '';
+  echo -e " \e[1;33mrepoinitaosp: \e[0m${init_command}";
 
   # Exit init for examples only
   if [[ "${params}" == *'example'* ]]; then
+    echo '';
     return;
   fi;
 
   # Prepare synced objects for migrations
   if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
+    echo '';
     ${init_command};
+    echo '';
     reposy;
   fi;
 
@@ -92,15 +94,17 @@ function repoinitaosp()
 
   # Exit on repo init failure
   if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
-    echo "repoinitaosp failed for ${branch}";
+    echo '';
+    echo -e " \e[1;33mrepoinitaosp: \e[1;31mFailed for ${branch}\e[0m";
+    echo '';
     return;
   fi;
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
   git tag | grep -v "${branch}" | xargs -n1 git tag -d > /dev/null;
-  echo "repoinitaosp done for ${branch}";
   echo '';
+  echo -e " \e[1;33mrepoinitaosp: \e[1;32mDone for ${branch}\e[0m";
   cd ../../;
 
   # Post-clean repo manifest
@@ -109,6 +113,8 @@ function repoinitaosp()
   # Launch repo sync
   if [ ! -z "${reposync}" ]; then
     reposy;
+    echo -e " \e[1;33mrepoinitaosp: \e[1;32mDone syncing ${branch}\e[0m";
+    echo '';
   fi;
 }
 
@@ -156,17 +162,19 @@ function repoinitlineage()
 
   # Output init command
   echo '';
-  echo " ${init_command}";
-  echo '';
+  echo -e " \e[1;33mrepoinitlineage: \e[0m${init_command}";
 
   # Exit init for examples only
   if [[ "${params}" == *'example'* ]]; then
+    echo '';
     return;
   fi;
 
   # Prepare synced objects for migrations
   if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
+    echo '';
     ${init_command};
+    echo '';
     reposy;
   fi;
 
@@ -183,15 +191,17 @@ function repoinitlineage()
 
   # Exit on repo init failure
   if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
-    echo "repoinitlineage failed for ${branch}";
+    echo '';
+    echo -e " \e[1;33mrepoinitlineage: \e[1;31mFailed for ${branch}\e[0m";
+    echo '';
     return;
   fi;
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
   git tag | grep -v "${branch}" | xargs -n1 git tag -d > /dev/null;
-  echo "repoinitlineage done for ${branch}";
   echo '';
+  echo -e " \e[1;33mrepoinitlineage: \e[1;32mDone for ${branch}\e[0m";
   cd ../../;
 
   # Post-clean repo manifest
@@ -200,6 +210,8 @@ function repoinitlineage()
   # Launch repo sync
   if [ ! -z "${reposync}" ]; then
     reposy;
+    echo -e " \e[1;33mrepoinitlineage: \e[1;32mDone syncing ${branch}\e[0m";
+    echo '';
   fi;
 }
 
@@ -238,12 +250,13 @@ function repoinitrr()
 
   # Output init command
   echo '';
-  echo " ${init_command}";
-  echo '';
+  echo -e " \e[1;33mrepoinitrr: \e[0m${init_command}";
 
   # Prepare synced objects for migrations
   if [[ ! "${params}" == *'clean'* ]] && [[ ! "${params}" == *'light'* ]] && [[ ! "${params}" == *'shallow'* ]]; then
+    echo '';
     ${init_command};
+    echo '';
     reposy;
   fi;
 
@@ -260,14 +273,17 @@ function repoinitrr()
 
   # Exit on repo init failure
   if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
-    echo "repoinitrr failed for ${branch}";
+    echo '';
+    echo -e " \e[1;33mrepoinitrr: \e[1;31mFailed for ${branch}\e[0m";
+    echo '';
     return;
   fi;
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
   git tag | grep -v "${branch}" | xargs -n1 git tag -d;
-  echo "repoinitrr done for ${branch}";
+  echo '';
+  echo -e " \e[1;33mrepoinitrr: \e[1;32mDone for ${branch}\e[0m";
   cd ../../;
 
   # Post-clean repo manifest
@@ -276,6 +292,8 @@ function repoinitrr()
   # Launch repo sync
   if [ ! -z "${reposync}" ]; then
     reposy;
+    echo -e " \e[1;33mrepoinitrr: \e[1;32mDone syncing ${branch}\e[0m";
+    echo '';
   fi;
 }
 
@@ -314,8 +332,7 @@ function repoinittwrp()
 
   # Output init command
   echo '';
-  echo " ${init_command}";
-  echo '';
+  echo -e " \e[1;33mrepoinittwrp: \e[0m${init_command}";
 
   # Wipe the out folder
   repoclean;
@@ -333,14 +350,17 @@ function repoinittwrp()
 
   # Exit on repo init failure
   if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
-    echo "repoinittwrp failed for ${branch}";
+    echo '';
+    echo -e " \e[1;33mrepoinittwrp: \e[1;31mFailed for ${branch}\e[0m";
+    echo '';
     return;
   fi;
 
   # Unneeded branches cleanup
   cd .repo/manifests/;
   git tag | grep -v "${branch}" | xargs -n1 git tag -d;
-  echo "repoinittwrp done for ${branch}";
+  echo '';
+  echo -e " \e[1;33mrepoinittwrp: \e[1;32mDone for ${branch}\e[0m";
   cd ../../;
 
   # Post-clean repo manifest
@@ -349,6 +369,8 @@ function repoinittwrp()
   # Launch repo sync
   if [ ! -z "${reposync}" ]; then
     reposy;
+    echo -e " \e[1;33mrepoinittwrp: \e[1;32mDone syncing ${branch}\e[0m";
+    echo '';
   fi;
 }
 
@@ -394,7 +416,7 @@ function repoinitsafecleaner()
 
   # Function header
   echo '';
-  echo -e ' \e[1;33mrepoinitsafecleaner:\e[0m Searching for nested projects...';
+  echo -e ' \e[1;33mrepoinitsafecleaner: \e[0mSearching for nested projects...';
 
   # Detect missing project.list
   if [ ! -f .repo/project.list ] && [ -d .repo/manifests ]; then
@@ -409,7 +431,7 @@ function repoinitsafecleaner()
         project_path="${project_path}/";
       fi;
       if grep -q "${project_path}" "${temp_list_grep}"; then
-        echo -e " \e[1;33mrepoinitsafecleaner:\e[0m '${project_path}' has nested projects, deleting...";
+        echo -e " \e[1;33mrepoinitsafecleaner: \e[0m'${project_path}' has nested projects, deleting...";
         rm -rf "${project_path}";
       fi;
     done < '.repo/project.list';
@@ -570,7 +592,6 @@ function repoinit()
   # Show repo init command
   echo '';
   echo -e " \e[1;33m> Launching:\e[0m ${list_functions[${key}]} ${branch} ${options}";
-  echo '';
 
   # Launch repo init command
   ${list_functions[${key}]} "${branch}" "${options}";
