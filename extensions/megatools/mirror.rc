@@ -227,7 +227,7 @@ function megamirror()
 
           # Show upload time
           time_span=$(($(date +%s) - time_start));
-          echo -e " \e[1;33mmegamirror:\e[1;37m Upload done in ${time_span} secs\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;32m Upload done in ${time_span} secs\e[0m";
 
         fi;
       done;
@@ -377,7 +377,7 @@ function megamirror()
 
           # Show download time
           time_span=$(($(date +%s) - time_start));
-          echo -e " \e[1;33mmegamirror:\e[1;37m\e[1;37m Download done in ${time_span} secs\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;32m Download done in ${time_span} secs\e[0m";
 
         fi;
       done;
