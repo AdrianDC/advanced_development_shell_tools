@@ -371,6 +371,7 @@ function androidprojectpatcher()
     if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
       echo -e '  \e[1;37m> Commands: Y (Rebase on new changes)';
       echo -e '              n (Use the old project sources)';
+      echo -e '              i (Ignore this project sources)';
       if [ ! -z "${user_is_owner}" ]; then
       echo -e '              a (Automatically update all projects)';
       fi;
@@ -401,6 +402,10 @@ function androidprojectpatcher()
         key_input=;
         key_automated_patch=n;
         key_automated_push=n;
+      elif [ "${key}" = 'i' ] || [ "${key}" = 'I' ]; then
+        key_input=i;
+        key_automated_patch=i;
+        key_automated_push=;
       elif [ "${key}" = 'l' ] || [ "${key}" = 'L' ]; then
         key_input=l;
         key_automated_patch=y;
@@ -482,7 +487,7 @@ function androidprojectpatcher()
         fi;
 
       # Project is ready
-      else
+      elif [ ! "${key_automated_push}" = 'i' ]; then
         git reset --hard FETCH_HEAD;
         gitsu;
       fi;
