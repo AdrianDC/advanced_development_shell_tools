@@ -246,7 +246,7 @@ function outcommoncl()
 
   # Header
   [ -z "${1}" ] && echo '';
-  echo -e " \e[1;33moutbootdevcl:\e[0m Cleaning up common outputs";
+  echo -e " \e[1;33moutcommoncl:\e[0m Cleaning up common outputs";
   [ -z "${1}" ] && echo '';
 
   # Delete build temporary outputs
