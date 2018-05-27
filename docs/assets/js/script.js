@@ -20,11 +20,11 @@ function anchorizejekyll()
     link = document.createElement('a');
     link.innerHTML = '&nbsp;&infin;';
     link.href = '#' + node.getAttribute('id');
+    link.style.position = "absolute";
     link.style.visibility = "hidden";
     node.className = 'anchor-item';
     node.appendChild(link);
   });
-
 }
 
 // Function: Toggle all documentation details
