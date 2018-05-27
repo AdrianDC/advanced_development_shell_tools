@@ -351,7 +351,6 @@ function shtoolsnews()
   local commits_remote_count;
   local currentdir=${PWD};
   local line;
-  local line_sha1;
   local line_topic;
   local since_days=${1};
   local since_tag;
@@ -445,7 +444,6 @@ function shtoolsnews()
     echo -e '  \e[1;37m                     Functions \e[1;33m# \e[1;37m Details';
     echo -e '  \e[1;37m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \e[1;33m# \e[1;37m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
     while read -r line; do
-      line_sha1=${line%% *};
       line=${line#* };
       line_topic=${line%%:*};
       line=${line#*:};
@@ -467,7 +465,6 @@ function shtoolsnews()
     echo -e '  \e[1;37m                     Functions \e[1;33m# \e[1;37m Details';
     echo -e '  \e[1;37m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \e[1;33m# \e[1;37m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
     while read -r line; do
-      line_sha1=${line%% *};
       line=${line#* };
       line_topic=${line%%:*};
       line=${line#*:};
