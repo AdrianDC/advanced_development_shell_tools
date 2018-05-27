@@ -250,6 +250,7 @@ function processownercheck()
         | grep -v '\(T\|Z\)$' \
         | grep -q "${2}";
   else
+    # shellcheck disable=SC2009
     ps -W 2>/dev/null \
         | grep -q "${1}.exe";
   fi;
