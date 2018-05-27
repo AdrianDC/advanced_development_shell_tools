@@ -64,11 +64,19 @@ function gitstat()
   fi;
 }
 
-# === Git Projects Statistics (shortcuts) ===
-alias gitst='gitremoteverify origin gitrao && gitstat origin lineage-15.1';
+# === Git Projects Statistics (automated) ===
+alias gitst='gitremoteverify origin gitrao && branch=$(gitgetrepobranch) && gitstat "$(gitgetremote "${branch}")" "${branch}"';
+
+# === Git Projects Statistics (origin) ===
 alias gitsto='gitremoteverify origin gitrao && gitstat origin $(git rev-parse --abbrev-ref HEAD)';
 alias gitstom='gitremoteverify origin gitrao && gitstat origin master';
+
+# === Git Projects Statistics (username) ===
 alias gitsta='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) lineage-15.1';
 alias gitstam='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master';
+
+# === Git Projects Statistics (github) ===
 alias gitstg='gitremoteverify github false && gitstat github';
+
+# === Git Projects Statistics (aosp) ===
 alias gitstaosp='gitremoteverify aosp false && gitstat aosp master';
