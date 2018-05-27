@@ -1,5 +1,5 @@
 #!/bin/sh
-# From Gerrit Code Review 2.14.1
+# From Gerrit Code Review 2.15.1-1-gcd234e365c
 #
 # Part of Gerrit Code Review (https://www.gerritcodereview.com/)
 #
@@ -79,6 +79,9 @@ add_ChangeId() {
 	# - in END, the last textLine+ block is available for footer parsing
 	$AWK '
 	BEGIN {
+		if (match(ENVIRON["OS"], "Windows")) {
+			RS="\r?\n" # Required on recent Cygwin
+		}
 		# while we start with the assumption that textLine+
 		# is a footer, the first block is not.
 		isFooter = 0
