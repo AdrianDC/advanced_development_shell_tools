@@ -81,37 +81,47 @@ function gitbranchpusher()
   echo -e " \e[1;37mTarget remote:\e[0m ${remote}";
   echo '';
 
-  # Fetch upstream remote
-  git fetch "${remote}" "${project_branch}";
-  remote_head=$(cut -f1 .git/FETCH_HEAD);
+  # Fetch existing remote branch
+  if git fetch "${remote}" "${project_branch}" 2>/dev/null; then
 
-  # Present diff statistics
-  echo '';
-  echo -e ' \e[1;31mSources content differences:\e[0m';
-  git --no-pager diff --stat HEAD FETCH_HEAD;
+    # Present diff statistics
+    echo '';
+    echo -e ' \e[1;31mSources content differences:\e[0m';
+    git --no-pager diff --stat HEAD FETCH_HEAD;
 
-  # Fetch until history base match
-  if [ ! -z "${remote_head}" ] && ! git merge-base HEAD FETCH_HEAD >/dev/null; then
+    # Fetch until history base match
+    remote_head=$(cut -f1 .git/FETCH_HEAD);
+    if [ ! -z "${remote_head}" ] && ! git merge-base HEAD FETCH_HEAD >/dev/null; then
+      echo '';
+      shallow_count=0;
+      remote_branch=$(gitgetrepobranch);
+      remote_name=$(gitgetremote "${remote_branch}");
+      while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
+        shallow_count=$((shallow_count + 10));
+        echo -en "\r\033[K \e[1;33mSearching common history with depth ${shallow_count}...\e[0m";
+        git fetch --depth "${shallow_count}" "${remote}" "${project_branch}" >/dev/null 2>&1;
+        git fetch --depth "${shallow_count}" "${remote_name}" "${remote_branch}" >/dev/null 2>&1;
+      done;
+      echo '';
+    fi;
+
+    # Present commits counts
     echo '';
-    shallow_count=0;
-    remote_branch=$(gitgetrepobranch);
-    remote_name=$(gitgetremote "${remote_branch}");
-    while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
-      shallow_count=$((shallow_count + 10));
-      echo -en "\r\033[K \e[1;33mSearching common history with depth ${shallow_count}...\e[0m";
-      git fetch --depth "${shallow_count}" "${remote}" "${project_branch}" >/dev/null 2>&1;
-      git fetch --depth "${shallow_count}" "${remote_name}" "${remote_branch}" >/dev/null 2>&1;
-    done;
+    echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
+    git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l | xargs echo -n;
+    echo -en ' \e[1;37m| Upstream commits:\e[1;33m ';
+    git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l;
+    echo -e '\e[0m';
+
+  # Missing remote branch
+  else
+
+    # Present missing branch information
+    echo -e " \e[1;31mError: Remote branch '${project_branch}' was not found...\e[0m";
+    echo -e " \e[1;33mWarning: \e[1;37mPushing will create a new '${project_branch}' branch\e[0m";
     echo '';
+
   fi;
-
-  # Present commits counts
-  echo '';
-  echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
-  git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l | xargs echo -n;
-  echo -en ' \e[1;37m| Upstream commits:\e[1;33m ';
-  git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l;
-  echo -e '\e[0m';
 
   # Delete command
   if [ "${param_send}" = 'd' ]; then
@@ -124,7 +134,7 @@ function gitbranchpusher()
   fi;
 
   # Confirmation
-  echo -en "  \e[1;33m> gitbranchpusher: ${push_command} [y/N] ?\e[0m ";
+  echo -en " \e[1;33mgitbranchpusher: \e[1;37m${push_command} [y/N] ?\e[0m ";
   notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
   if [ -z "${param_send}" ]; then
     read -r -t 20 key;
@@ -134,14 +144,14 @@ function gitbranchpusher()
   fi;
 
   # Upload to remote
-  echo '';
   if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
     echo '';
     ${push_command};
   elif [ "${key}" = 'n' ] || [ "${key}" = 'N' ]; then
-    echo '  < Upload ignored. Consider uploading later';
+    echo -e ' \e[1;33mgitbranchpusher: \e[1;37mUpload ignored, consider uploading later...';
   else
-    echo '  < Upload ignored after timeout... Consider uploading later';
+    echo '';
+    echo -e ' \e[1;33mgitbranchpusher: \e[1;37mUpload ignored after timeout, consider uploading later...';
   fi;
   echo '';
 }
