@@ -234,9 +234,13 @@ function androidprojectpatcher()
     done < <(grep '^repopick' "${project_repopick}");
 
     # Validate repopick statuses
-    echo -en '\e[1;31m';
-    grep -ai -B1 'MERGED\|ABANDONED\|ERROR:\|: HTTP Error ' "${tmp_buffer}" | sed 's/\.\.\.//g';
-    echo -e '\e[0m';
+    if grep -aiq 'MERGED\|ABANDONED\|ERROR:\|: HTTP Error ' "${tmp_buffer}"; then
+      echo '';
+      echo -e ' \e[1;31m=== [Repopick] Errors detected ===\e[0m';
+      echo -e '\e[1;31m';
+      grep -ai -B1 'MERGED\|ABANDONED\|ERROR:\|: HTTP Error ' "${tmp_buffer}" | sed 's/\.\.\.//g';
+      echo -en '\e[0m';
+    fi;
     rm -f "${tmp_buffer}";
   fi;
 
