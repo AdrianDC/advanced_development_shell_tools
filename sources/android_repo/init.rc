@@ -90,10 +90,9 @@ function repoinitaosp()
   repoinitcleaner "${params}";
 
   # Launch init command
-  ${init_command} 2>&1 | grep -v '^ * ';
+  if ! ${init_command} 2>&1 | grep -v '^ * ' || [ ! -d .repo/manifests ]; then
 
-  # Exit on repo init failure
-  if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
+    # Exit on repo init failure
     echo '';
     echo -e " \e[1;33mrepoinitaosp: \e[1;31mFailed for ${branch}\e[0m";
     echo '';
@@ -187,10 +186,9 @@ function repoinitlineage()
   repoinitcleaner "${params}";
 
   # Launch init command
-  ${init_command} 2>&1 | grep -v '^ * ';
+  if ! ${init_command} 2>&1 | grep -v '^ * ' || [ ! -d .repo/manifests ]; then
 
-  # Exit on repo init failure
-  if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
+    # Exit on repo init failure
     echo '';
     echo -e " \e[1;33mrepoinitlineage: \e[1;31mFailed for ${branch}\e[0m";
     echo '';
@@ -269,10 +267,9 @@ function repoinitrr()
   repoinitcleaner "${params}";
 
   # Launch init command
-  ${init_command} 2>&1 | grep -v '^ * ';
+  if ! ${init_command} 2>&1 | grep -v '^ * ' || [ ! -d .repo/manifests ]; then
 
-  # Exit on repo init failure
-  if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
+    # Exit on repo init failure
     echo '';
     echo -e " \e[1;33mrepoinitrr: \e[1;31mFailed for ${branch}\e[0m";
     echo '';
@@ -346,10 +343,9 @@ function repoinittwrp()
   repoinitcleaner "${params}";
 
   # Launch init command
-  ${init_command} 2>&1 | grep -v '^ * ';
+  if ! ${init_command} 2>&1 | grep -v '^ * ' || [ ! -d .repo/manifests ]; then
 
-  # Exit on repo init failure
-  if [ ${?} -ne 0 ] || [ ! -d .repo/manifests ]; then
+    # Exit on repo init failure
     echo '';
     echo -e " \e[1;33mrepoinittwrp: \e[1;31mFailed for ${branch}\e[0m";
     echo '';
