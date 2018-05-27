@@ -244,7 +244,7 @@ function processownercheck()
 
   # Search for process and validate owner exists
   if uname -a | grep -q 'Linux'; then
-    #shellcheck disable=SC2009
+    # shellcheck disable=SC2009
     ps -eo cmd,uname:20,state 2>/dev/null \
         | grep --color=never "^${1}" \
         | grep -v '\(T\|Z\)$' \
