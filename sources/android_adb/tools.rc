@@ -66,6 +66,7 @@ function __adbserver()
   adb_timeout="timeout -k 5 5 $(adbcmd)";
 
   # Exit if adb not running
+  # shellcheck disable=SC2009
   if ! pgrep adb >/dev/null 2>&1 &&
       ! ps -W | grep -q adb.exe >/dev/null 2>&1; then
     return;
