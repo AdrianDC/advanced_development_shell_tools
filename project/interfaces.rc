@@ -429,11 +429,11 @@ function shtoolsnews()
   fi;
 
   # Acquire commits counts
-  commits_local_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l);
+  commits_local_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<');
   if [ -z "${since_days}" ]; then
-    commits_remote_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l);
+    commits_remote_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
   else
-    commits_remote_count=$(git rev-list --left-right "${since_tag}"...FETCH_HEAD | grep '^>' | wc -l);
+    commits_remote_count=$(git rev-list --left-right "${since_tag}"...FETCH_HEAD | grep -c '^>');
   fi;
 
   # Present local commits

@@ -116,9 +116,9 @@ function gerritreview()
   git fetch "${gerrit_fetch}" "refs/heads/${gerrit_branch}";
   echo '';
   echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
-  git rev-list --left-right HEAD...FETCH_HEAD | grep '^<' | wc -l | xargs echo -n;
+  git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<' | xargs echo -n;
   echo -en ' \e[1;37m| Upstream commits:\e[1;33m ';
-  git rev-list --left-right HEAD...FETCH_HEAD | grep '^>' | wc -l;
+  git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>';
   echo -en '\e[0m';
 
   # Command creation
