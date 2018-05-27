@@ -105,3 +105,18 @@ function adbgetenforced()
   adb shell 'getenforce';
   echo -e '\e[0m';
 }
+
+# === ADB Set Device Enforced ===
+function adbsetenforced()
+{
+  # Usage: adbsetenforced (Set device enforced through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Set device enforced through adb
+  adbsu 'setenforce 1';
+
+  # Get device status
+  adbgetenforced;
+}
