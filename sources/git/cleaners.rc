@@ -76,3 +76,46 @@ function gitonebranch()
   # Remove tags
   git tag -l | xargs -n1 -I {} sh -c "echo -n \" Removing tag {} : \"; git push ${username} :{}; echo -n "  "; git tag -d {};";
 }
+
+# === Git Untracked Paths Cleaner ===
+function gitignoreclean()
+{
+  # Usage: gitignoreclean (Cleanup untracked paths from Git .gitignore)
+
+  # Variables
+  local ignored_path;
+  local ignored_paths;
+  local tmp_list;
+
+  # Travel through .gitignore paths
+  tmp_list=$(mktemp);
+  cat .gitignore 2>/dev/null > "${tmp_list}";
+  while read -r ignored_paths; do
+
+    # Ignore comments
+    if [ "${ignored_paths:0:1}" = '#' ]; then
+      continue;
+    fi;
+
+    # Expand paths
+    for ignored_path in ${ignored_paths}; do
+
+      # Remove folders contents
+      if [ -d "${ignored_path}" ]; then
+        if [ ! -z "$(ls -A "${ignored_path}")" ]; then
+          echo "gitignoreclean: Removing folder contents '${ignored_path}'";
+          find "${ignored_path}/" -mindepth 1 -delete;
+        fi;
+        echo "gitignoreclean: Removing folder '${ignored_path}'";
+        rm -rf "${ignored_path}";
+
+      # Remove files
+      elif [ -f "${ignored_path}" ]; then
+        echo "gitignoreclean: Removing file '${ignored_path}'";
+        rm -f "${ignored_path}";
+      fi;
+    done;
+
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
+}
