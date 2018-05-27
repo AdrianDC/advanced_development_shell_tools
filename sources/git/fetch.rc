@@ -51,7 +51,7 @@ function gitfr()
   # Usage: gitfr [remote] [branch] (Git fetch and reset hard)
 
   # Fetch and reset hard
-  gitfur "${1}" "${2}";
+  gitfu "${1}" "${2}";
   git reset FETCH_HEAD --hard;
 }
 
