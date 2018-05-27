@@ -68,7 +68,7 @@ function __adbserver()
   # Exit if adb not running
   # shellcheck disable=SC2009
   if ! pgrep adb >/dev/null 2>&1 &&
-      ! ps -W | grep -q adb.exe >/dev/null 2>&1; then
+      ! ps -W 2>/dev/null | grep -q adb.exe 2>&1; then
     return;
   fi;
 
