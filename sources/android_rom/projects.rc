@@ -205,11 +205,12 @@ function androidprojectpatcher()
 
   # ==========================================================
   # Load Android tools
-  if [ -z "$(type -t croot)" ]; then
+  if [ -z "$(type -t hmm)" ]; then
     while [ ! -e './build/envsetup.sh' ]; do
       cd ../;
     done;
     source ./build/envsetup.sh;
+    echo hi;
   fi;
   cd "${currentdir}";
 
@@ -583,7 +584,7 @@ function androidprojectrebaser()
   fi;
 
   # Repo root
-  if [ -z "$(type -t croot)" ]; then
+  if [ -z "$(type -t hmm)" ]; then
     while [ ! -e './build/envsetup.sh' ]; do
       cd ../;
     done;
