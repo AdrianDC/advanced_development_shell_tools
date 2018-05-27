@@ -90,3 +90,18 @@ function adbw()
   # Wait for device through adb
   adb 'wait-for-device';
 }
+
+# === ADB Get Device Enforced ===
+function adbgetenforced()
+{
+  # Usage: adbgetenforced (Get device enforced status through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Get device enforced status through adb
+  echo '';
+  echo -en ' \e[1;33madbgetenforced: \e[1;37m';
+  adb shell 'getenforce';
+  echo -e '\e[0m';
+}

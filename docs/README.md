@@ -149,6 +149,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **adbrr** [*<b>\[Reboot&nbsp;device&nbsp;to&nbsp;recovery&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/device.rc)
   * **adbrb** [*<b>\[Reboot&nbsp;device&nbsp;to&nbsp;bootloader&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/device.rc)
   * **adbw** [*<b>\[Wait&nbsp;for&nbsp;device&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/device.rc)
+  * **adbgetenforced** [*<b>\[Get&nbsp;device&nbsp;enforced&nbsp;status&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/device.rc)
 
 ---
 > ### <span class="group_label">[sources/android_adb/flash.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/flash.rc)</span> ###
