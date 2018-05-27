@@ -259,6 +259,7 @@ function autorelease()
   # Request user input
   echo -n " > Command to run [1-${cnt}] : ";
   read -r key;
+  echo '';
 
   # Execute requested function
   ${list_functions[${key}]} "${@}";
