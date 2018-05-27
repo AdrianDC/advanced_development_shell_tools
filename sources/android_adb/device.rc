@@ -120,3 +120,18 @@ function adbsetenforced()
   # Get device status
   adbgetenforced;
 }
+
+# === ADB Set Device Permissive ===
+function adbsetpermissive()
+{
+  # Usage: adbsetpermissive (Set device permissive through adb)
+
+  # Verify adb is ready
+  adbready;
+
+  # Set device permissive through adb
+  adbsu 'setenforce 0';
+
+  # Get device status
+  adbgetenforced;
+}
