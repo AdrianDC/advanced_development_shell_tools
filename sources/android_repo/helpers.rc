@@ -136,6 +136,7 @@ function reporoomserv()
   # Variables
   local cwd;
   local files;
+  local file_repopick;
 
   # Path handling
   cwd=$(pwd);
@@ -146,8 +147,18 @@ function reporoomserv()
 
   # Files to open
   files=('.repo/local_manifests/roomservice.xml' '.repo/manifest.xml');
+
+  # Untracked local_manifests
   if [ -f .repo/local_manifests/untracked.xml ]; then
     files+=('.repo/local_manifests/untracked.xml');
+  fi;
+
+  # Repopicks local_manifests
+  file_repopick=$(readlink -f '.repo/local_manifests/roomservice.xml');
+  file_repopick=${file_repopick%/*}/repopick-${file_repopick##*/};
+  file_repopick=${file_repopick%.xml}.md;
+  if [ -f "${file_repopick}" ]; then
+    files+=("${file_repopick}");
   fi;
 
   # Manifest and local_manifests editor
