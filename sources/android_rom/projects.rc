@@ -123,24 +123,23 @@ function gitbranchpusher()
 
   fi;
 
-  # Delete command
-  if [ "${param_send}" = 'd' ]; then
-    push_command="git push -f ${remote} :refs/heads/${project_branch}";
-    param_send='';
-
   # Push command
-  else
-    push_command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
-  fi;
+  push_command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
 
   # Confirmation
-  echo -en " \e[1;33mgitbranchpusher: \e[1;37m${push_command} [y/N] ?\e[0m ";
+  echo -en " \e[1;33mgitbranchpusher: \e[1;37m${push_command} [y/N/d] ?\e[0m ";
   notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
   if [ -z "${param_send}" ]; then
     read -r -t 20 key;
   else
-    key=y;
+    key=${param_send};
     echo "${key}";
+  fi;
+
+  # Delete command
+  if [ "${key}" = 'd' ] || [ "${key}" = 'D' ]; then
+    push_command="git push -f ${remote} :refs/heads/${project_branch}";
+    key='y';
   fi;
 
   # Upload to remote
