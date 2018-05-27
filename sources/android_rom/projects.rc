@@ -197,8 +197,11 @@ function androidprojectpatcher()
   local project_index;
   local project_path;
   local project_paths=();
+  local project_repopick;
   local currentdir=${PWD};
+  local tmp_buffer;
   local tmp_list;
+  local tmp_repopick;
 
   # ==========================================================
   # Load Android tools
@@ -209,6 +212,32 @@ function androidprojectpatcher()
     source ./build/envsetup.sh;
   fi;
   cd "${currentdir}";
+
+  # ==========================================================
+  # Detect projet repopick list
+  project_repopick=$(readlink -f "$(gettop)/.repo/local_manifests/roomservice.xml");
+  project_repopick=${project_repopick%/*}/repopick-${project_repopick##*/};
+  project_repopick=${project_repopick%.xml}.md;
+
+  # Automated repopick list execution
+  if [ -f "${project_repopick}" ]; then
+
+    # Run each repopick
+    tmp_buffer=$(mktemp);
+    while read -r tmp_repopick; do
+      tmp_repopick=${tmp_repopick%;};
+      echo '';
+      echo -e " \e[1;37m=== [Repopick] ${tmp_repopick} ===\e[0m";
+      echo '';
+      eval "${tmp_repopick}" 2>&1 | tee -a "${tmp_buffer}";
+    done < <(grep '^repopick' "${project_repopick}");
+
+    # Validate repopick statuses
+    echo -en '\e[1;31m';
+    grep -ai -B1 'MERGED\|ABANDONED\|ERROR:\|: HTTP Error ' "${tmp_buffer}" | sed 's/\.\.\.//g';
+    echo -e '\e[0m';
+    rm -f "${tmp_buffer}";
+  fi;
 
   # ==========================================================
   # Automated key shortcut
