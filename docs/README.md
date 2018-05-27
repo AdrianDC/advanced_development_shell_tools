@@ -118,6 +118,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **adbintents** [*<b>\[List&nbsp;Android&nbsp;intents&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbcamera** [*<b>\[Enable&nbsp;and&nbsp;launch&nbsp;camera&nbsp;applications\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbkp** *&lt;process_name&gt;* [*<b>\[Kill&nbsp;process&nbsp;by&nbsp;name\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
+  * **adbrun** *&lt;executable_path&gt; [params]* [*<b>\[Run&nbsp;a&nbsp;device&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbdu** [*<b>\[Android&nbsp;/data/&nbsp;sizes&nbsp;study\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbpropradiolog** *&lt;value&gt;* [*<b>\[Radio&nbsp;debug&nbsp;property&nbsp;overrider\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbalsa** [*<b>\[Audio&nbsp;cards&nbsp;advanced&nbsp;study\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)

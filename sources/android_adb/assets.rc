@@ -143,6 +143,38 @@ function adbkp()
   adb shell "kill '${pid}'";
 }
 
+# === ADB Run On Device ===
+function adbrun()
+{
+  # Usage
+  if [ ! -f "${1}" ]; then
+    echo '';
+    echo ' Usage: adbrun <executable_path> [params] (Run a device through adb)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local param;
+  local params='';
+
+  # Verify adb is ready
+  adbready;
+
+  # Build parameters string
+  for param in "${@:2}"; do
+    params="${params} \\\"${param}\\\"";
+  done;
+
+  # Run on a device through adb
+  echo '';
+  adb push "${1}" '/tmp/executable.tmp';
+  adbsu "chmod 755 /tmp/executable.tmp
+         /tmp/executable.tmp${params};
+         rm -f /tmp/executable.tmp";
+  echo '';
+}
+
 # === ADB Data Sizes Study ===
 function ndkstack()
 {
