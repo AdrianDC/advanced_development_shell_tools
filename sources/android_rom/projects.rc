@@ -18,7 +18,7 @@
 # === Git Branch Pusher ===
 function gitbranchpusher()
 {
-  # Usage: gitbranchpusher [y/n/d] [remote_url] [branch] (Push to project specific branch)
+  # Usage: gitbranchpusher [y/n/d/s] [remote_url] [branch] (Push to project specific branch)
 
   # Variables
   local project_dir;
@@ -127,13 +127,19 @@ function gitbranchpusher()
   push_command="git push -f ${remote} HEAD:refs/heads/${project_branch}";
 
   # Confirmation
-  echo -en " \e[1;33mgitbranchpusher: \e[1;37m${push_command} [y/N/d] ?\e[0m ";
+  echo -en " \e[1;33mgitbranchpusher: \e[1;37m${push_command} [y/N/d/s] ?\e[0m ";
   notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
   if [ -z "${param_send}" ]; then
     read -r -t 20 key;
   else
     key=${param_send};
     echo "${key}";
+  fi;
+
+  # Staging command
+  if [ "${key}" = 's' ] || [ "${key}" = 'S' ]; then
+    push_command="git push -f ${remote} HEAD:refs/heads/staging/${project_branch}";
+    key='y';
   fi;
 
   # Delete command
