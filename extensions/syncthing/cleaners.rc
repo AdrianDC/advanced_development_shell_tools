@@ -179,12 +179,13 @@ function stignoreclean()
       # Remove folders contents
       if [ -d "${ignored_path}" ]; then
         if [ ! -z "$(ls -A "${ignored_path}")" ]; then
-          echo "stignoreclean: Removing folder contents '${ignored_path}'";
+          echo '';
+          echo -e " \e[1;33mstignoreclean: \e[1;37mRemoving folder contents '${ignored_path}'\e[0m";
           while read -r ignored_found; do
 
             # Preserve negative ignores
             if [ ! -z "${tmp_negative}" ] && echo "${ignored_found}" | grep -q "${tmp_negative}"; then
-              echo "               Preserving '${ignored_found}'";
+              echo -e "                \e[1;32mPreserving '${ignored_found}'\e[0m";
               continue;
             fi;
 
@@ -199,17 +200,22 @@ function stignoreclean()
 
         # Preserve negative ignores
         if [ ! -z "${tmp_negative}" ] && echo "${ignored_path}" | grep -q "${tmp_negative}"; then
-          echo "stignoreclean: Preserving '${ignored_path}'";
+          echo '';
+          echo -e " \e[1;33mstignoreclean: \e[1;32mPreserving '${ignored_path}'\e[0m";
           continue;
         fi;
 
         # Preserve negative ignores
-        echo "stignoreclean: Removing file '${ignored_path}'";
+        echo '';
+        echo -e " \e[1;33mstignoreclean: \e[1;37mRemoving file '${ignored_path}'\e[0m";
         rm -f "${ignored_path}";
 
       fi;
     done;
 
   done < "${tmp_list}";
+
+  # Cleanup
+  echo '';
   rm -f "${tmp_list}";
 }
