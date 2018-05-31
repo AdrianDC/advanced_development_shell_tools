@@ -18,6 +18,127 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/syncthing/cleaners.rc)
 
+# === SyncThing Untracked Paths From Git ===
+function stignorefromgit()
+{
+  # Usage: stignorefromgit [bool_dry_run] (Rebuild SyncThing .stignore* from .gitignore)
+
+  # Variables
+  local dry_run="${1}";
+  local gitignore_file;
+  local gitignore_line;
+  local gitignore_path;
+  local gitignore_prefix;
+  local gitignore_unique;
+  local stignore;
+  local tmp_list;
+
+  # Detect .stignore path
+  if [ -f ./.stignored ]; then
+    stignore=./.stignored;
+  elif [ -f ./.stignore ]; then
+    stignore=./.stignored;
+  else
+    echo '';
+    echo -e ' \e[1;31mstignorefromgit: \e[1;37mSyncThing .stignore* file not found...\e[0m';
+    echo '';
+  fi;
+
+  # Reset .stignore file
+  echo -n '' > "${stignore}.tmp";
+
+  # Travel through .gitignore paths
+  tmp_list=$(mktemp);
+  LC_ALL=C find ./ -name .gitignore | sort > "${tmp_list}";
+  while read -r gitignore_file; do
+
+    # Acquire folder path
+    gitignore_path="${gitignore_file#./}";
+    gitignore_path="${gitignore_path%/*}";
+    if [ ! -z "${gitignore_path}" ]; then
+      gitignore_path="${gitignore_path}/";
+    fi;
+
+    # Read .gitignore files
+    while read -r gitignore_line; do
+
+      # Detect root lines
+      if [ "${gitignore_line:0:1}" = '/' ]; then
+        gitignore_line="${gitignore_line#/}";
+        gitignore_unique='true';
+      else
+        gitignore_unique='';
+      fi;
+
+      # Detect negated lines
+      if [ "${gitignore_line:0:1}" = '!' ]; then
+        gitignore_line="${gitignore_line#!}"
+        gitignore_prefix='!';
+        gitignore_unique='true';
+      else
+        gitignore_prefix='';
+      fi;
+
+      # Adapt folder inclusions to .stignore
+      if [ "${gitignore_line: -1}" = '/' ]; then
+        gitignore_line="${gitignore_line%/}";
+        gitignore_unique='true';
+      fi;
+
+      # Ignore empty or commented lines
+      if [ -z "${gitignore_line}" ] || [ "${gitignore_line:0:1}" = '#' ]; then
+        continue;
+      fi;
+
+      # Adapt line contents to .stignore
+      gitignore_line="${gitignore_line//\\#/#}";
+
+      # Detect unique paths
+      if [ -d "${gitignore_path}${gitignore_line}" ] ||
+          [ -f "${gitignore_path}${gitignore_line}" ] ||
+          [[ "${gitignore_line}" = *'/'* ]] ||
+          [[ ! "${gitignore_line}" = *'/'* && ! "${gitignore_line:0:1}" = '.' && "${gitignore_line: -2}" = '.*' ]]; then
+        gitignore_unique='true';
+      fi;
+
+      # Append to .stignore
+      echo "${gitignore_prefix}${gitignore_path}${gitignore_line}" >> "${stignore}.tmp";
+      if [ -z "${gitignore_unique}" ]; then
+        echo "${gitignore_prefix}${gitignore_path}**/${gitignore_line}" >> "${stignore}.tmp";
+      fi;
+
+    done < "${gitignore_file}";
+  done < "${tmp_list}";
+
+  # Detect differences
+  if ! cmp -s "${stignore}" "${stignore}.tmp"; then
+
+    # Present differences
+    # Credits: Colorized diff output (https://stackoverflow.com/questions/8800578/how-to-colorize-diff-on-the-command-line/16865578#16865578)
+    echo '';
+    echo -e ' \e[1;33mstignorefromgit:\e[1;37m Differences detected with the previous version...\e[0m';
+    echo '';
+    sleep 1;
+    diff -U3 --minimal "${stignore}" "${stignore}.tmp" \
+        | sed 's/^-/\x1b[1;31m-/;s/^+/\x1b[1;32m+/;s/^@/\x1b[1;34m@/;s/$/\x1b[0m/' \
+        | less -r;
+
+    # Update .stignore file
+    if [ -z "${dry_run}" ]; then
+      rm -f "${stignore}";
+      mv "${stignore}.tmp" "${stignore}";
+
+    # Dry run
+    else
+      rm -f "${stignore}.tmp";
+    fi;
+
+  # Remove temporary
+  else
+    rm -f "${stignore}.tmp";
+  fi;
+}
+
 # === SyncThing Untracked Paths Cleaner ===
 function stignoreclean()
 {
