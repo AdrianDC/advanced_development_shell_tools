@@ -59,6 +59,7 @@ function shtoolsforum()
   local preview_file;
   local preview_files;
   local preview_timestamp;
+  local preview_url=${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/};
   local readme_forum=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/forums/README;
   local readme_md=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README;
 
@@ -95,7 +96,7 @@ function shtoolsforum()
 
     # Get all previews png files
     preview_files=$(grep --color=never 'docs/assets.*\.png' "${readme_forum}.${ext}" \
-                  | sed "s/.*${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/}\/raw\/master\/\(.*\.png\).*/\1/g");
+                  | sed "s/.*${preview_url}\/raw\/master\/\(.*\.png\).*/\1/g");
     for preview_file in ${preview_files}; do
 
       # Filter out wrong outputs
