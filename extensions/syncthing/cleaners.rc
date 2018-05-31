@@ -145,13 +145,27 @@ function stignoreclean()
   # Usage: stignoreclean (Cleanup untracked paths from SyncThing .stignore*)
 
   # Variables
+  local ignored_found;
   local ignored_path;
   local ignored_paths;
   local tmp_list;
+  local tmp_negative;
+
+  # Acquire .stignore paths
+  tmp_list=$(mktemp);
+  grep -hv '^!' .stignore* 2>/dev/null > "${tmp_list}";
+
+  # Build negative paths
+  tmp_negative='';
+  while read -r ignored_paths; do
+    ignored_paths="${ignored_paths#!}";
+    if [ ! -z "${tmp_negative}" ]; then
+      tmp_negative="${tmp_negative}\|";
+    fi;
+    tmp_negative="${tmp_negative}$ignored_paths";
+  done < <(grep -h '^!' .stignore* 2>/dev/null);
 
   # Travel through .stignored paths
-  tmp_list=$(mktemp);
-  cat .stignore* 2>/dev/null > "${tmp_list}";
   while read -r ignored_paths; do
 
     # Ignore macros
@@ -166,13 +180,33 @@ function stignoreclean()
       if [ -d "${ignored_path}" ]; then
         if [ ! -z "$(ls -A "${ignored_path}")" ]; then
           echo "stignoreclean: Removing folder contents '${ignored_path}'";
-          find "${ignored_path}/" -mindepth 1 -delete;
+          while read -r ignored_found; do
+
+            # Preserve negative ignores
+            if [ ! -z "${tmp_negative}" ] && echo "${ignored_found}" | grep -q "${tmp_negative}"; then
+              echo "               Preserving '${ignored_found}'";
+              continue;
+            fi;
+
+            # Remove found ignored files
+            rm -rf "${ignored_found}";
+
+          done < <(find "${ignored_path}/" -mindepth 1);
         fi;
 
       # Remove files
       elif [ -f "${ignored_path}" ]; then
+
+        # Preserve negative ignores
+        if [ ! -z "${tmp_negative}" ] && echo "${ignored_path}" | grep -q "${tmp_negative}"; then
+          echo "stignoreclean: Preserving '${ignored_path}'";
+          continue;
+        fi;
+
+        # Preserve negative ignores
         echo "stignoreclean: Removing file '${ignored_path}'";
         rm -f "${ignored_path}";
+
       fi;
     done;
 
