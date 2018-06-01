@@ -58,23 +58,30 @@ function gitcleantags()
 # === Git One Branch Keeper ===
 function gitonebranch()
 {
-  # Usage: gitonebranch (Git remove non-default remote branches)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitonebranch <remote> (Git remove non-default remote branches)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local remote=${1};
 
   # Fetch remotes
-  local username;
-  username=$(githubusername);
-  git fetch "${username}";
-  git fetch "${username}" refs/heads/*:refs/heads/*;
-  git fetch "${username}" refs/tags/*:refs/tags/*;
+  git fetch "${remote}";
+  git fetch "${remote}" refs/heads/*:refs/heads/*;
+  git fetch "${remote}" refs/tags/*:refs/tags/*;
 
   # Remove branches
-  git branch -r | sed "s/${username}\/\(.*\)/\1/" \
+  git branch -r | sed "s/${remote}\/\(.*\)/\1/" \
                 | grep -v "HEAD" \
                 | grep -v "$(git rev-parse --abbrev-ref HEAD)" \
-                | xargs -n1 -I {} sh -c "echo -n \" Removing branch {} : \"; git push ${username} :{};";
+                | xargs -n1 -I {} sh -c "echo -n \" Removing branch {} : \"; git push ${remote} :{};";
 
   # Remove tags
-  git tag -l | xargs -n1 -I {} sh -c "echo -n \" Removing tag {} : \"; git push ${username} :{}; echo -n "  "; git tag -d {};";
+  git tag -l | xargs -n1 -I {} sh -c "echo -n \" Removing tag {} : \"; git push ${remote} :{}; echo -n "  "; git tag -d {};";
 }
 
 # === Git Untracked Paths Cleaner ===
