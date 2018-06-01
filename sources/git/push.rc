@@ -42,6 +42,10 @@ function gitpu()
   branch=${2:-${getbranch}};
   input=${3};
 
+  # Variables fallbacks
+  remote=${remote:-origin};
+  branch=${branch:-master};
+
   # Header information
   echo '';
   echo -e " \e[1;32m=== gitpu - Pushing to branch '${branch}' ===\e[0m";
