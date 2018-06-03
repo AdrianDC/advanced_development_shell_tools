@@ -1082,7 +1082,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **disableautomount** [*<b>\[Linux&nbsp;USB&nbsp;automount&nbsp;disabler\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **diffbin** *&lt;binary_left&gt; &lt;binary_right&gt; [first_n_lines]* [*<b>\[Compare&nbsp;binary&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **drivespeedtest** *&lt;test_file_path&gt;* [*<b>\[Run&nbsp;drive&nbsp;write&nbsp;speed&nbsp;test\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
-  * **buildlock** *&lt;command...&gt;* [*<b>\[Mutex-locked&nbsp;command&nbsp;execution\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **mtpmountdisable** [*<b>\[Disable&nbsp;MTP&nbsp;automount\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **networkrestart** [*<b>\[Restart&nbsp;network&nbsp;manager\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **tmpclean** [*<b>\[Cleanup&nbsp;/tmp&nbsp;from&nbsp;old&nbsp;leftovers\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
@@ -1127,6 +1126,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **pbin** *&lt;file&gt; or \| pbin* [*<b>\[Share&nbsp;Pastebin&nbsp;logs\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/tools.rc)
   * **pbinperm** : *PASTEBIN_EXPIRE=N pbin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/tools.rc)
   * **remotescript** *&lt;url&gt; [bool_automated]* [*<b>\[Remote&nbsp;script&nbsp;launcher&nbsp;with&nbsp;confirmations\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/tools.rc)
+  * **buildlock** *&lt;command...&gt;* [*<b>\[Mutex-locked&nbsp;command&nbsp;execution\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/tools.rc)
   * **wip** *[commands to store]* [*<b>\[Work&nbsp;in&nbsp;progress&nbsp;commands&nbsp;to&nbsp;store&nbsp;and&nbsp;use\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/tools.rc)
 
 ---

@@ -163,34 +163,6 @@ function drivespeedtest()
   echo '';
 }
 
-# === Build Locker ===
-function buildlock()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: buildlock <command...> (Mutex-locked command execution)';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  local file_lock=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.tmp_runlock.tag;
-
-  # Lock Detected
-  if [ -f "${file_lock}" ]; then
-    echo '';
-    echo " buildlock: The file '${file_lock}' still exists, waiting...";
-    echo '';
-    while [ -f "${file_lock}" ]; do sleep 10; done;
-  fi;
-
-  # Run work
-  echo 1 > "${file_lock}";
-  "${@}";
-  rm -f "${file_lock}";
-}
-
 # === USB MTP Mounts ===
 function mtpmountdisable()
 {
