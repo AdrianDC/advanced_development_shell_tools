@@ -215,7 +215,18 @@ function stignoreclean()
 
   done < "${tmp_list}";
 
-  # Cleanup
+  # Cleanup if requested
   echo '';
-  rm -f "${tmp_list}";
+  if [ -z "${SYNCTHING_IGNORE_CHECK}" ]; then
+    rm -f "${tmp_list}";
+  fi;
+}
+
+# === SyncThing Untracked Paths Checked ===
+function stignorecheck()
+{
+  # Usage: stignorecheck (Check untracked paths from SyncThing .stignore*)
+
+  # Check untracked paths from SyncThing .stignore*
+  SYNCTHING_IGNORE_CHECK=true stignoreclean;
 }
