@@ -212,7 +212,8 @@ function androidprojectpatcher()
   local project_index;
   local project_path;
   local project_paths=();
-  local project_repopick;
+  local project_repopick_file;
+  local project_repopick_tag;
   local currentdir=${PWD};
   local tmp_buffer;
   local tmp_list;
@@ -225,18 +226,19 @@ function androidprojectpatcher()
       cd ../;
     done;
     source ./build/envsetup.sh;
-    echo hi;
   fi;
   cd "${currentdir}";
 
   # ==========================================================
   # Detect projet repopick list
-  project_repopick=$(readlink -f "$(gettop)/.repo/local_manifests/roomservice.xml");
-  project_repopick=${project_repopick%/*}/repopick-${project_repopick##*/};
-  project_repopick=${project_repopick%.xml}.md;
+  project_repopick_tag=$(readlink -f "$(gettop)/.repo/local_manifests/roomservice.xml");
+  project_repopick_tag=repopick-${project_repopick_tag##*/};
+  project_repopick_tag=${project_repopick_tag%.xml}.md;
+  project_repopick_file=$(mktemp);
+  curl -fLs "https://github.com/${project_owner}/${project_name}/raw/local_manifests/${project_repopick_tag}" > "${project_repopick_file}";
 
   # Automated repopick list execution
-  if [ -f "${project_repopick}" ]; then
+  if [ -f "${project_repopick_file}" ]; then
 
     # Run each repopick
     tmp_buffer=$(mktemp);
@@ -246,7 +248,7 @@ function androidprojectpatcher()
       echo -e " \e[1;37m=== [Repopick] ${tmp_repopick} ===\e[0m";
       echo '';
       eval "${tmp_repopick}" 2>&1 | tee -a "${tmp_buffer}";
-    done < <(grep '^repopick' "${project_repopick}");
+    done < <(grep '^repopick' "${project_repopick_file}");
 
     # Validate repopick statuses
     if grep -aiq 'MERGED\|ABANDONED\|ERROR:\|: HTTP Error ' "${tmp_buffer}"; then
@@ -258,6 +260,9 @@ function androidprojectpatcher()
     fi;
     rm -f "${tmp_buffer}";
   fi;
+
+  # Cleanup project repopick list
+  rm -f "${project_repopick_file}";
 
   # ==========================================================
   # Automated key shortcut
