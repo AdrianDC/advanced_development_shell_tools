@@ -1094,6 +1094,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 >
   * **netspeed** [*<b>\[Display&nbsp;network&nbsp;speeds\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/network.rc)
   * **netspeedtest** [*<b>\[Run&nbsp;SpeedTest&nbsp;client\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/network.rc)
+  * **getremoteip** [*<b>\[Get&nbsp;remote&nbsp;ip&nbsp;through&nbsp;ipecho.net\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/network.rc)
 
 ---
 > ### <span class="group_label">[sources/host/pushbullet.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/pushbullet.rc)</span> ###

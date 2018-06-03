@@ -69,3 +69,12 @@ function netspeedtest()
   # Run SpeedTest client
   curl -s  https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -;
 }
+
+# === Get Remote ip ===
+function getremoteip()
+{
+  # Usage: getremoteip (Get remote ip through ipecho.net)
+
+  # Get remote ip through ipecho.net
+  curl -s http://ipecho.net/plain;
+}
