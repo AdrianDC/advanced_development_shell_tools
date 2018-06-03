@@ -1080,8 +1080,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **videoresize** *&lt;video_file&gt;* [*<b>\[Resize&nbsp;video&nbsp;dimensions\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **disableautomount** [*<b>\[Linux&nbsp;USB&nbsp;automount&nbsp;disabler\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **diffbin** *&lt;binary_left&gt; &lt;binary_right&gt; [first_n_lines]* [*<b>\[Compare&nbsp;binary&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
-  * **netspeed** [*<b>\[Display&nbsp;network&nbsp;speeds\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
-  * **netspeedtest** [*<b>\[Run&nbsp;SpeedTest&nbsp;client\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **drivespeedtest** *&lt;test_file_path&gt;* [*<b>\[Run&nbsp;drive&nbsp;write&nbsp;speed&nbsp;test\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **buildlock** *&lt;command...&gt;* [*<b>\[Mutex-locked&nbsp;command&nbsp;execution\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **fileschemesorter** *&lt;file_to_sort&gt; &lt;file_reference&gt;* [*<b>\[Sort&nbsp;file&nbsp;against&nbsp;scheme&nbsp;file\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
@@ -1091,6 +1089,12 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **isdone** : *notify-send "Process execution finished !"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **topcpu** : *top -o %CPU* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **topmem** : *top -o %MEM* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
+
+---
+> ### <span class="group_label">[sources/host/network.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/network.rc)</span> ###
+>
+  * **netspeed** [*<b>\[Display&nbsp;network&nbsp;speeds\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/network.rc)
+  * **netspeedtest** [*<b>\[Run&nbsp;SpeedTest&nbsp;client\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/network.rc)
 
 ---
 > ### <span class="group_label">[sources/host/pushbullet.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/pushbullet.rc)</span> ###

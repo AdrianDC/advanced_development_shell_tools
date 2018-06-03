@@ -1,0 +1,71 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Network Speed ===
+function netspeed()
+{
+  # Usage: netspeed (Display network speeds)
+
+  # Display network speeds
+  echo '';
+  dev_eth=$(grep -c --color=never eth0 /proc/net/dev);
+  dev_wlan=$(grep -c --color=never wlan0 /proc/net/dev);
+  tput sc;
+
+  while [ "${dev_eth}" -ne 0 ] || [ "${dev_wlan}" -ne 0 ]; do
+    if [ "${dev_eth}" -ne 0 ]; then
+      vals_eth=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
+               <(grep --color=never eth0 /proc/net/dev) \
+               <(sleep 1; grep --color=never eth0 /proc/net/dev));
+    else
+      vals_eth=;
+    fi;
+    if [ "${dev_wlan}" -ne 0 ]; then
+      vals_wlan=$(awk '{if(l1){print ($2-l1)/1024"kB/s",($10-l2)/1024"kB/s"} else{l1=$2; l2=$10;}}' \
+                <(grep --color=never wlan0 /proc/net/dev) \
+                <(sleep 1; grep --color=never wlan0 /proc/net/dev));
+    else
+      vals_wlan=;
+    fi;
+
+    if [ ! -z "${vals_eth}" ]; then
+      tput rc;
+      tput ed;
+      tput el;
+      if [ ! -z "${vals_eth}" ]; then
+        echo -e " \e[1;33mEthernet:\e[0m";
+        echo -e "   Download: $(echo "${vals_eth}" | awk '{ print $1 }')";
+        echo -e "   Upload: $(echo "${vals_eth}" | awk '{ print $2 }')";
+      fi;
+      if [ ! -z "${vals_wlan}" ]; then
+        echo -e " \e[1;33mWLAN:    \e[0m";
+        echo -e "   Download: $(echo "${vals_wlan}" | awk '{ print $1 }')";
+        echo -e "   Upload: $(echo "${vals_wlan}" | awk '{ print $2 }')";
+      fi;
+    fi;
+    sleep 1;
+  done;
+}
+
+# === Net Speed Test ===
+function netspeedtest()
+{
+  # Usage: netspeedtest (Run SpeedTest client)
+
+  # Run SpeedTest client
+  curl -s  https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -;
+}
