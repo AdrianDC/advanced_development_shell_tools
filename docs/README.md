@@ -1034,6 +1034,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **editinsertbelow** *&lt;"match_line"&gt; &lt;"to_insert"&gt; &lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;inserting&nbsp;below\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
   * **editreplacemultiline** *&lt;"match_first"&gt; &lt;"match_last"&gt; &lt;"replace"&gt; &lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;replacing&nbsp;multiple&nbsp;lines\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
   * **edittrimoutput** *&lt;"files"&gt;* [*<b>\[Edit&nbsp;by&nbsp;triming&nbsp;output&nbsp;line&nbsp;rewrites\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
+  * **fileschemesorter** *&lt;file_to_sort&gt; &lt;file_reference&gt;* [*<b>\[Sort&nbsp;file&nbsp;against&nbsp;scheme&nbsp;file\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/edit.rc)
 
 ---
 > ### <span class="group_label">[sources/host/find.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/find.rc)</span> ###
@@ -1082,7 +1083,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **diffbin** *&lt;binary_left&gt; &lt;binary_right&gt; [first_n_lines]* [*<b>\[Compare&nbsp;binary&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **drivespeedtest** *&lt;test_file_path&gt;* [*<b>\[Run&nbsp;drive&nbsp;write&nbsp;speed&nbsp;test\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **buildlock** *&lt;command...&gt;* [*<b>\[Mutex-locked&nbsp;command&nbsp;execution\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
-  * **fileschemesorter** *&lt;file_to_sort&gt; &lt;file_reference&gt;* [*<b>\[Sort&nbsp;file&nbsp;against&nbsp;scheme&nbsp;file\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **mtpmountdisable** [*<b>\[Disable&nbsp;MTP&nbsp;automount\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **networkrestart** [*<b>\[Restart&nbsp;network&nbsp;manager\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **tmpclean** [*<b>\[Cleanup&nbsp;/tmp&nbsp;from&nbsp;old&nbsp;leftovers\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)

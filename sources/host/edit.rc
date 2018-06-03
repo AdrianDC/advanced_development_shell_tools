@@ -210,3 +210,54 @@ function edittrimoutput()
   sed -i 's/\(\r\|'$'\033''\[K\)//g' "${@}";
   sed -Ei 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' "${@}";
 }
+
+# === File Scheme Sorter ===
+function fileschemesorter()
+{
+  # Usage
+  if [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: fileschemesorter <file_to_sort> <file_reference> (Sort file against scheme file)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local file_to_sort=${1};
+  local file_reference=${2};
+  local file_temp_1;
+  local file_temp_2;
+  local file_temp_3;
+
+  # Initialize variables
+  file_temp_1=$(mktemp);
+  file_temp_2=$(mktemp);
+  file_temp_3=$(mktemp);
+
+  # Reference browse
+  touch "${file_temp_1}";
+  while read -r line; do
+
+    # Relevant lines
+    if [ ! -z "${line}" ] && grep -q "${line}$" "${file_to_sort}"; then
+      echo "${line}" >> "${file_temp_1}";
+    fi;
+
+  done < "${file_reference}";
+
+  # Final comparison
+  sort "${file_to_sort}" -o "${file_temp_2}";
+  sort "${file_temp_1}" -o "${file_temp_3}";
+  pathscompare "${file_temp_2}" "${file_temp_3}";
+  pathscompare "${file_to_sort}" "${file_temp_1}" true;
+  echo '';
+  echo ' Press [ENTER] to continue...';
+  echo '';
+  read -r;
+  rm "${file_to_sort}";
+  mv "${file_temp_1}" "${file_to_sort}";
+
+  # Cleanup
+  rm -f "${file_temp_2}";
+  rm -f "${file_temp_3}";
+}
