@@ -54,6 +54,10 @@ function stignorefromgit()
   # Reset .stignore file
   echo -n '' > "${stignore}.tmp";
 
+  # Preserve .git folders
+  echo '!.git' >> "${stignore}.tmp";
+  echo '!**/.git' >> "${stignore}.tmp";
+
   # Travel through .gitignore paths
   tmp_list=$(mktemp);
   LC_ALL=C find ./ -name .gitignore | sort > "${tmp_list}";
