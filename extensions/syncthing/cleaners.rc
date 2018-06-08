@@ -93,7 +93,6 @@ function stignorefromgit()
       # Adapt folder inclusions to .stignore
       if [ "${gitignore_line: -1}" = '/' ]; then
         gitignore_line="${gitignore_line%/}";
-        gitignore_unique='true';
       fi;
 
       # Ignore empty or commented lines
