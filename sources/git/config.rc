@@ -70,6 +70,7 @@ function gitu()
   local cnt=0;
   local key;
   local line_content;
+  local line_enabled;
   local line_name;
   local line_email;
   local list_names=('');
@@ -104,9 +105,17 @@ function gitu()
     list_names+=("'${line_name}'");
     list_emails+=("'${line_email}'");
 
+    # Detect enabled line
+    if [ "'${line_email}'" = "$(git config --global --get user.email)" ] &&
+        [ "'${line_name}'" = "$(git config --global --get user.name)" ]; then
+      line_enabled=' \e[1;33m(Active)';
+    else
+      line_enabled='';
+    fi;
+
     # Item choice
     cnt=$((cnt + 1));
-    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_name} \e[1;32m<${line_email}>";
+    echo -e "  \e[1;33m${cnt}: \e[1;37m${line_name} \e[1;32m<${line_email}>${line_enabled}";
 
   done < "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
   echo '';
