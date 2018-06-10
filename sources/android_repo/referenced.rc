@@ -344,7 +344,7 @@ function reporeflinker()
     echo -e " \e[1;37m[ Select a project for '${file}' ]\e[0m";
     echo '';
     echo "   ${cnt}: ${options[${cnt}]}";
-    for project in ${dev_path}/*; do
+    for project in "${dev_path}/"*; do
       cnt=$((cnt + 1));
       options[${cnt}]=${project##*/};
       if [ "${options[${cnt}]}" = "${search_project}" ]; then
@@ -387,7 +387,7 @@ function reporeflinker()
       echo -e " \e[1;37m[ Select manifest target for '${file}' ]\e[0m";
       echo '';
       echo "   ${cnt}: ${options[${cnt}]}";
-      for target in ${dev_path}/${project}/*.xml; do
+      for target in "${dev_path}/${project}/"*.xml; do
         if [[ "${file}" == 'roomservice.xml' && "${target##*/}" == 'untracked-'* ]] ||
             [[ "${file}" == 'untracked.xml' && ! "${target##*/}" == 'untracked-'* ]]; then
           continue;
