@@ -200,7 +200,46 @@ function gitcpup()
   rm -f "${tmpfile}";
 }
 
-# === GitHub Url Cherry-pick Renamed ===
+# === Git Patch File Cherry-pick ===
+function gitcpuf()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitcpuf <patch_file> (Git patch from file applier)';
+    echo '';
+    return;
+  fi;
+
+  # Cherry-pick
+  echo '';
+  rm -rf .git/rebase-apply;
+  if ! git am -3 "${1}"; then
+    echo '';
+    echo -e " \e[1;33mgitcpuf: Could not apply ${1}\e[0m";
+    echo '';
+
+    # Attempt to patch
+    if ! patch -p1 -fuzz=10 -i "${1}"; then
+      echo '';
+      echo -e " \e[1;33mgitcpuf: Cound not patch with ${1}\e[0m";
+      echo '';
+      return;
+    fi;
+
+    # Add changes to git index
+    git add -Ap;
+
+    #  Finish cherry-pick
+    git am --continue;
+  fi;
+
+  # Display result
+  git log --max-count=1 --pretty=oneline;
+  echo '';
+}
+
+# === Git Url Cherry-pick Renamed ===
 function gitcpur()
 {
   # Usage
