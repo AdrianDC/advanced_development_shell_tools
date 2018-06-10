@@ -155,7 +155,7 @@ function stignoreclean()
   # Usage: stignoreclean [bool_dry_run] (Cleanup untracked paths from SyncThing .stignore*)
 
   # Variables
-  local dry_run="${1}";
+  local dry_run=${1};
   local ignored_found;
   local ignored_path;
   local ignored_paths;
@@ -230,11 +230,9 @@ function stignoreclean()
 
   done < "${tmp_list}";
 
-  # Cleanup if requested
+  # Cleanup
   echo '';
-  if [ -z "${SYNCTHING_IGNORE_CHECK}" ]; then
-    rm -f "${tmp_list}";
-  fi;
+  rm -f "${tmp_list}";
 }
 
 # === SyncThing Untracked Paths Checked ===
@@ -243,5 +241,5 @@ function stignorecheck()
   # Usage: stignorecheck (Check untracked paths from SyncThing .stignore*)
 
   # Check untracked paths from SyncThing .stignore*
-  SYNCTHING_IGNORE_CHECK=true stignoreclean;
+  stignoreclean --dry-run;
 }
