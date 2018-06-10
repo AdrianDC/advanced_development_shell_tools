@@ -885,7 +885,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```
   * **gitcpu** *&lt;githuburltocommit&gt; [branch]* [*<b>\[Git&nbsp;URL&nbsp;commit&nbsp;cherry-picker\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/pick.rc)
   * **gitmerges** *&lt;commit_sha1&gt; [count]* [*<b>\[Attempt&nbsp;to&nbsp;merge&nbsp;commit&nbsp;history\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/pick.rc)
-  * **gitcpo** *&lt;branch&gt; &lt;amount_of_commits&gt;* [*<b>\[GitHub&nbsp;origin&nbsp;cherry-picker\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/pick.rc)
+  * **gitcpo** *&lt;branch&gt; &lt;amount_of_commits&gt;* [*<b>\[Git&nbsp;origin&nbsp;cherry-picker\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/pick.rc)
   * **gitcpup** *[url]* [*<b>\[Git&nbsp;URL&nbsp;patch&nbsp;applier\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/pick.rc)
   * **gitcpur** *&lt;url&gt; &lt;search_text&gt; &lt;replace_text&gt;* [*<b>\[Git&nbsp;URL&nbsp;retargeted&nbsp;patch&nbsp;applier\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/pick.rc)
 

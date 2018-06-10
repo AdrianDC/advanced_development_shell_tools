@@ -95,14 +95,14 @@ function gitmerges()
   done;
 }
 
-# === GitHub Origin Cherry-Pick ===
+# === Git Origin Cherry-Pick ===
 function gitcpo()
 {
   # Usage
   echo '';
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo -e '  \e[1;37mGit Origin Cherry-Pick.\e[0m';
-    echo '    Usage: gitcpo <branch> <amount_of_commits> (GitHub origin cherry-picker)';
+    echo '    Usage: gitcpo <branch> <amount_of_commits> (Git origin cherry-picker)';
     echo '';
     return;
   fi;
@@ -117,8 +117,7 @@ function gitcpo()
   fi;
 }
 
-
-# === GitHub Url Cherry-pick ===
+# === Git Url Cherry-pick ===
 function gitcpup()
 {
   # Usage: gitcpup [url] (Git URL patch applier)';
@@ -134,7 +133,7 @@ function gitcpup()
     return;
   fi;
 
-  # Remote additional informations
+  # Remove additional information
   tmpurl=${tmpurl%%#*};
 
   # GitHub/GitLab patch
@@ -153,7 +152,7 @@ function gitcpup()
     if [[ ! "${tmpurl}" == *'patch/'* ]]; then
       echo '';
       echo -e ' \e[1;33mgitcpup: Link incomplete, add "..." around the url\e[0m';
-      echo " Failed on ${tmpurl}";
+      echo -e " \e[1;33mgitcpup: Failed on ${tmpurl}\e[0m";
       echo '';
       return;
     fi;
@@ -167,7 +166,7 @@ function gitcpup()
     if [[ ! "${tmpurl}" == *'patch/'* ]]; then
       echo '';
       echo -e ' \e[1;33mgitcpup: Link incomplete, add "..." around the url\e[0m';
-      echo " Failed on ${tmpurl}";
+      echo -e " \e[1;33mgitcpup: Failed on ${tmpurl}\e[0m";
       echo '';
       return;
     fi;
@@ -175,8 +174,10 @@ function gitcpup()
 
   # Download patch
   tmpfile=$(mktemp);
-  rm -rf .git/rebase-apply;
   curl "${tmpurl}" > "${tmpfile}" 2> /dev/null;
+
+  # Prepare pick
+  rm -rf .git/rebase-apply;
 
   # Files renaming
   if [ ! -z "${2}" ] && [ ! -z "${3}" ]; then
@@ -186,10 +187,12 @@ function gitcpup()
   # Cherry-pick
   if ! git am -3 "${tmpfile}"; then
     echo '';
-    echo " Failed on ${tmpurl}";
+    echo -e " \e[1;33mgitcpup: Failed on ${tmpurl}\e[0m";
     echo '';
     return;
   fi;
+
+  # Display result
   git log --max-count=1 --pretty=oneline;
   echo '';
 
@@ -232,10 +235,12 @@ function gitcpur()
   curl "${tmpurl}" | sed "s/${search}/${replace}/g" > "${tmpfile}" 2> /dev/null;
   if ! git am -3 "${tmpfile}"; then
     echo '';
-    echo " Failed on ${tmpurl}";
+    echo -e " \e[1;33mgitcpur: Failed on ${tmpurl}\e[0m";
     echo '';
     return;
   fi;
+
+  # Display result
   git log --max-count=1 --pretty=oneline;
   echo '';
 
