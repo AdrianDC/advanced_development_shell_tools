@@ -60,6 +60,7 @@ function gitstat()
     # Present missing branch information
     echo '';
     echo -e " \e[1;33mgitstat: \e[1;37mRemote branch '${2}' branch was not found...\e[0m";
+    sleep 1;
 
   fi;
 }
