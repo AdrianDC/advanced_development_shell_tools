@@ -27,20 +27,58 @@ alias gitpf='git push -f';
 # === Git Push Validated Remote ===
 function gitpu()
 {
-  # Usage: gitpu [remote] [branch] [y/n/d] (Git push to validated remote)
-
   # Variables
-  local getbranch;
-  local remote;
   local branch;
-  local input;
   local cmd;
+  local commits_remote;
+  local getbranch;
+  local option;
+  local params=("${@}");
+  local remote;
 
-  # Initialize variables
+  # Validate parameters
+  if [ "${#}" -le 0 ]; then
+    option='';
+  elif [ "${#}" -le 3 ]; then
+    option=${params[$((${#}-1))]};
+  else
+    option='-h';
+  fi;
+
+  # Validate option
+  case "${option}" in
+
+    # Help option
+    -h|--help)
+      echo '';
+      echo "Usage: gitpu [remote] [branch] [y/n/d/f] (Git push to validated remote)";
+      echo '';
+      return;;
+
+    # Valid option
+    y|Y|n|N|d|D|f|F)
+      params=("${params[@]:0:$((${#}-1))}");
+      remote=${params[0]};
+      branch=${params[1]};;
+
+    # No option or unknown option
+    *)
+      if [ ! -z "${3}" ]; then
+        echo '';
+        echo -e " \e[1;33mgitpu: \e[1;31mUnknown '${3}' option...\e[0m";
+        echo '';
+        return;
+      fi;
+      remote=${params[0]};
+      branch=${params[1]};
+      option='';;
+
+  esac;
+
+  # Variables detection
   getbranch=$(gitgetrepobranch);
-  remote=${1:-$(gitgetremote "${getbranch}")};
-  branch=${2:-${getbranch}};
-  input=${3};
+  remote=${remote:-$(gitgetremote "${getbranch}")};
+  branch=${branch:-${getbranch}};
 
   # Variables fallbacks
   remote=${remote:-origin};
@@ -54,27 +92,47 @@ function gitpu()
   # Get remote stats
   gitstat "${remote}" "${branch}" true;
 
-  # Push command
-  if [ ! "${input}" = 'd' ]; then
-    cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
-
-  # Delete command
-  else
-    cmd="git push -f ${remote} :refs/heads/${branch}";
+  # Validate force pushing
+  commits_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
+  if [[ ! 'dD' == *"${option:-?}"* ]] && [ "${commits_remote}" -ne 0 ]; then
     echo '';
-    echo -e ' \e[1;31mWarning: This command will delete the remote branch\e[0m';
-    input='';
+    echo -en " \e[1;33mgitpu: \e[1;31m${commits_remote} commits will be lost on the remote. Continue ? [Enter] ";
+    read -r;
+    option='f';
   fi;
 
+  # Prefix
+  echo '';
+  echo -en ' \e[1;33mgitpu: ';
+
+  # Push force command
+  case "${option}" in
+
+    # Delete push
+    d|D)
+      cmd="git push -f ${remote} :refs/heads/${branch}";
+      option='';
+      echo -en "\e[0;31m${cmd} \e[1;31m# Delete: Y/n ? \e[0m";;
+
+    # Force push
+    f|F)
+      cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
+      option='y';
+      echo -en "\e[0;31m${cmd} \e[1;31m# Rewrite: Y/n ? \e[0m";;
+
+    # Regular push
+    y|Y|n|N|'')
+      cmd="git push ${remote} HEAD:refs/heads/${branch}";
+      echo -en "\e[0;32m${cmd} \e[1;32m# Update: Y/n ? \e[0m";;
+
+  esac;
+
   # Push validation
-  echo '';
-  echo -e " \e[1;33mgitpu:\e[0m ${cmd}";
-  echo '';
-  echo -en " \e[1;37m> Proceed with git push (Y/n) ? \e[0m";
-  if [ -z "${input}" ]; then
-    read -r key;
+  if [ -z "${option}" ]; then
+    read -n1 -r key;
+    echo '';
   else
-    key=${input};
+    key=${option};
     echo "${key}";
   fi;
   echo '';

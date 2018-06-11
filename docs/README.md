@@ -900,7 +900,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/push.rc)
   ```
   * **gitpf** : *git push -f* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpu** *[remote] [branch] [y/n/d]* [*<b>\[Git&nbsp;push&nbsp;to&nbsp;validated&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
+  * **gitpu** *[remote] [branch] [y/n/d/f]* [*<b>\[Git&nbsp;push&nbsp;to&nbsp;validated&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
   * **gitpurl** *&lt;url&gt;* [*<b>\[Git&nbsp;pull&nbsp;to&nbsp;full&nbsp;url\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
   * **gitpa** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
   * **gitpama** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
