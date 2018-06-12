@@ -20,10 +20,19 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/grep.rc)
 
-# === Grep Helper ===
+# === Grep Sources ===
 function g()
 {
   # Usage: g [inputs] (Grep through sources)
+
+  # Grep through files
+  GREP_COLORS='fn=1;1' grep --color=auto -ir --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;
+}
+
+# === Grep Binaries ===
+function gb()
+{
+  # Usage: gb [inputs] (Grep through binaries)
 
   # Grep through files
   GREP_COLORS='fn=1;1' grep --color=auto -air --exclude={*.o,*.a,*.cmd,*.ko} --exclude-dir="\.git" --exclude-dir="\.repo" "${*}" .;

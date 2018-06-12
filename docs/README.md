@@ -1058,6 +1058,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/grep.rc)
   ```
   * **g** *[inputs]* [*<b>\[Grep&nbsp;through&nbsp;sources\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
+  * **gb** *[inputs]* [*<b>\[Grep&nbsp;through&nbsp;binaries\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
   * **gs** *[inputs]* [*<b>\[Grep&nbsp;through&nbsp;sources&nbsp;and&nbsp;binaries\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
   * **gce** *&lt;inputs&gt;* [*<b>\[Grep&nbsp;and&nbsp;edit&nbsp;through&nbsp;sources&nbsp;and&nbsp;binaries\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
   * **gck** *[inputs]* [*<b>\[Grep&nbsp;through&nbsp;kernel&nbsp;configurations\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
