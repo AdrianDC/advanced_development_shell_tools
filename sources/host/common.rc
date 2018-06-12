@@ -51,7 +51,11 @@ function fileedit()
     file=$(readlink -f "${file}");
 
     # GUI xdg editor
-    xdg-open "${file}" 2> /dev/null;
+    if type dbus-launch >/dev/null 2>&1; then
+      dbus-launch xdg-open "${file}" 2>/dev/null;
+    else
+      xdg-open "${file}" 2>/dev/null;
+    fi;
     opened=${?};
 
     # GUI notepad++ editor
