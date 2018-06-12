@@ -32,21 +32,22 @@ function gitpu()
   local cmd;
   local commits_remote;
   local getbranch;
+  local input;
   local option;
   local params=("${@}");
   local remote;
 
   # Validate parameters
   if [ "${#}" -le 0 ]; then
-    option='';
+    input='';
   elif [ "${#}" -le 3 ]; then
-    option=${params[$((${#}-1))]};
+    input=${params[$((${#}-1))]};
   else
-    option='-h';
+    input='-h';
   fi;
 
-  # Validate option
-  case "${option}" in
+  # Validate options
+  case "${input}" in
 
     # Help option
     -h|--help)
@@ -59,7 +60,8 @@ function gitpu()
     y|Y|n|N|d|D|f|F)
       params=("${params[@]:0:$((${#}-1))}");
       remote=${params[0]};
-      branch=${params[1]};;
+      branch=${params[1]};
+      option="${input}";;
 
     # No option or unknown option
     *)
@@ -96,8 +98,14 @@ function gitpu()
   commits_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
   if [[ ! 'dD' == *"${option:-?}"* ]] && [ "${commits_remote}" -ne 0 ]; then
     echo '';
-    echo -en " \e[1;33mgitpu: \e[1;31m${commits_remote} commits will be lost on the remote. Continue ? [Enter] ";
-    read -r;
+    echo -en " \e[1;33mgitpu: \e[1;31m${commits_remote} commits will be lost on the remote.";
+    case "${input}" in
+      f|F)
+        echo -e '\e[0m';;
+      *)
+        echo -en ' Continue ? [Enter] \e[0m';
+        read -r;;
+    esac;
     option='f';
   fi;
 
@@ -117,7 +125,10 @@ function gitpu()
     # Force push
     f|F)
       cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
-      option='y';
+      case "${input}" in
+        f|F) option='y';;
+        *) option='';;
+      esac;
       echo -en "\e[0;31m${cmd} \e[1;31m# Rewrite: Y/n ? \e[0m";;
 
     # Regular push
