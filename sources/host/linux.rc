@@ -111,6 +111,30 @@ function disableautomount()
   gsettings set org.gnome.desktop.media-handling automount false;
 }
 
+# === Reown Recursively ===
+function reownas()
+{
+  # Usage
+  if [ ! -z "${2}" ]; then
+    echo '';
+    echo ' Usage: reownas [other_user_name] (Reown current folder recursively)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local user=${1};
+
+  # Default to current user
+  if [ -z "${user}" ]; then
+    user=$(whoami);
+  fi;
+
+  # Reown current folder recursively
+  sudo chown -Rv "${user}:${user}" "${PWD:?}" \
+      | grep -v 'retained as';
+}
+
 # === Diff Binaries ===
 function diffbin()
 {

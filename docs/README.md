@@ -1083,6 +1083,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **cpioext** *&lt;cpio_file_to_extract&gt;* [*<b>\[Extract&nbsp;cpio&nbsp;file\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **videoresize** *&lt;video_file&gt;* [*<b>\[Resize&nbsp;video&nbsp;dimensions\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **disableautomount** [*<b>\[Linux&nbsp;USB&nbsp;automount&nbsp;disabler\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
+  * **reownas** *[other_user_name]* [*<b>\[Reown&nbsp;current&nbsp;folder&nbsp;recursively\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **diffbin** *&lt;binary_left&gt; &lt;binary_right&gt; [first_n_lines]* [*<b>\[Compare&nbsp;binary&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **drivespeedtest** *&lt;test_file_path&gt;* [*<b>\[Run&nbsp;drive&nbsp;write&nbsp;speed&nbsp;test\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
   * **mtpmountdisable** [*<b>\[Disable&nbsp;MTP&nbsp;automount\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/linux.rc)
