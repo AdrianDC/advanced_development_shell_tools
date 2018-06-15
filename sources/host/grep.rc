@@ -108,17 +108,17 @@ function gck()
   rm -f "${tmp_list}";
 }
 
-# === Grep Android Makefiles ===
+# === Grep All Makefiles ===
 function gca()
 {
-  # Usage: gca [inputs] (Grep through Android makefiles)
+  # Usage: gca [inputs] (Grep through all build makefiles)
 
   # Variables
   local tmp_list;
 
   # Grep through files
   tmp_list=$(mktemp);
-  findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' \) > "${tmp_list}";
+  findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' -o -name '*.cmake' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai --color=always -- "${*}");
     if [ ! -z "${found}" ]; then
