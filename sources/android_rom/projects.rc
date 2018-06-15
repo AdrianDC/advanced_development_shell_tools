@@ -226,8 +226,8 @@ function androidprojectpatcher()
       cd ../;
     done;
     source ./build/envsetup.sh;
+    cd "${currentdir}/";
   fi;
-  cd "${currentdir}";
 
   # ==========================================================
   # Detect projet repopick list
@@ -239,6 +239,15 @@ function androidprojectpatcher()
 
   # Automated repopick list execution
   if [ -f "${project_repopick_file}" ]; then
+
+    # Validate repopick availability
+    if [ -z "$(type -t repopick)" ]; then
+      while [ ! -e './build/envsetup.sh' ]; do
+        cd ../;
+      done;
+      source ./build/envsetup.sh;
+      cd "${currentdir}/";
+    fi;
 
     # Run each repopick
     tmp_buffer=$(mktemp);
