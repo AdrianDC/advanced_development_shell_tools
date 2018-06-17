@@ -66,7 +66,7 @@ function gitstat()
 }
 
 # === Git Projects Statistics (automated) ===
-alias gitst='gitremoteverify origin gitrao && branch=$(gitgetrepobranch) && gitstat "$(gitgetremote "${branch}")" "${branch}"';
+alias gitst='branch=$(gitgetrepobranch) && gitstat "$(gitgetremote "${branch}")" "${branch}"';
 
 # === Git Projects Statistics (origin) ===
 alias gitsto='gitremoteverify origin gitrao && gitstat origin $(git rev-parse --abbrev-ref HEAD)';

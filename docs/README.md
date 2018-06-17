@@ -967,7 +967,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/stats.rc)
   ```
   * **gitstat** *&lt;remote&gt; &lt;branch&gt; [stats_only]* [*<b>\[Git&nbsp;history&nbsp;with&nbsp;remote&nbsp;comparator\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)
-  * **gitst** : *gitremoteverify origin gitrao && branch=$(gitgetrepobranch) && gitstat "$(gitgetremote "${branch}")" "${branch}"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)
+  * **gitst** : *branch=$(gitgetrepobranch) && gitstat "$(gitgetremote "${branch}")" "${branch}"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)
   * **gitsto** : *gitremoteverify origin gitrao && gitstat origin $(git rev-parse &#8208;&#8208;abbrev-ref HEAD)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)
   * **gitstom** : *gitremoteverify origin gitrao && gitstat origin master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)
   * **gitsta** : *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) lineage-15.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)
