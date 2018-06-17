@@ -50,9 +50,11 @@ function fileedit()
     # Resolve symlink paths
     file=$(readlink -f "${file}");
 
-    # GUI xdg editor
-    if type dbus-launch >/dev/null 2>&1; then
+    # Root GUI xdg directory viewer
+    if [ "${EUID}" -eq 0 ] && type dbus-launch >/dev/null 2>&1; then
       dbus-launch xdg-open "${file}" 2>/dev/null;
+
+    # User GUI xdg directory viewer
     else
       xdg-open "${file}" 2>/dev/null;
     fi;
@@ -108,9 +110,11 @@ function diropen()
     file_path=$(dirname "${file_path}");
   fi;
 
-  # GUI xdg directory viewer
-  if type dbus-launch >/dev/null 2>&1; then
+  # Root GUI xdg directory viewer
+  if [ "${EUID}" -eq 0 ] && type dbus-launch >/dev/null 2>&1; then
     dbus-launch xdg-open "${file_path}" 2>/dev/null;
+
+  # User GUI xdg directory viewer
   else
     xdg-open "${file_path}" 2> /dev/null;
   fi;
