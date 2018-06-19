@@ -784,6 +784,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitrevert** : *GIT_EDITOR="sed -i "/^#/d"" git revert $(gitgpgparam)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitfix** [*<b>\[Fix&nbsp;git&nbsp;commit&nbsp;issues\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcauthor** [*<b>\[Apply&nbsp;own&nbsp;author&nbsp;to&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
+  * **gitcaownership** *&lt;from_SHA1&gt;* [*<b>\[Apply&nbsp;ownership&nbsp;from&nbsp;a&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcamarker** [*<b>\[Apply&nbsp;marker&nbsp;commit&nbsp;to&nbsp;author/committer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcid** [*<b>\[Apply&nbsp;commit-msg&nbsp;hook&nbsp;to&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcidupstream** [*<b>\[Load&nbsp;commit-msg&nbsp;hook&nbsp;from&nbsp;upstream\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)

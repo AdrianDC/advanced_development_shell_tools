@@ -95,7 +95,7 @@ function gitfix()
   rm -fv .git/.COMMIT_EDITMSG.swp;
 }
 
-# === Git Author Commit ===
+# === Git Commit Amend Author ===
 function gitcauthor()
 {
   # Usage: gitcauthor (Apply own author to commit)
@@ -110,7 +110,34 @@ function gitcauthor()
   GIT_EDITOR="sed -i '/^#/d'" ${gitcommit} --amend --author="$(git config --global --get user.name) <$(git config --global --get user.email)>";
 }
 
-# === Git Marker Commit ===
+# === Git Commit Amend Ownership ===
+function gitcaownership()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitcaownership <from_SHA1> (Apply ownership from a commit)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local author;
+  local email;
+  local gitcommit;
+
+  # Prepare git commit with gpg
+  gitcommit="git commit $(gitgpgparam)";
+
+  # Acquire ownership
+  author=$(git log --format='%an' "${1}"^!);
+  email=$(git log --format='%ae' "${1}"^!);
+
+  # Apply own author to commit
+  GIT_EDITOR="sed -i '/^#/d'" ${gitcommit} --amend --author="${author} <${email}>";
+}
+
+# === Git Commit Amend Marker Commit ===
 function gitcamarker()
 {
   # Usage: gitcamarker (Apply marker commit to author/committer)
@@ -129,7 +156,7 @@ function gitcamarker()
   unset GIT_COMMITTER_EMAIL;
 }
 
-# === Git Commits Change-ID ===
+# === Git Commit Amend Change-ID ===
 function gitcid()
 {
   # Usage: gitcid (Apply commit-msg hook to commit)
@@ -153,7 +180,7 @@ function gitcid()
   git commit --amend;
 }
 
-# === Git Commits Change-ID Upstream Download ===
+# === Git Commit Amend Change-ID Upstream Download ===
 function gitcidupstream()
 {
   # Usage: gitcidupstream (Load commit-msg hook from upstream)
