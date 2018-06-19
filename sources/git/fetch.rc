@@ -20,6 +20,12 @@
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/fetch.rc)
 
+# === Git Fetch Shortcuts ===
+alias gitf='git fetch';
+alias gitfor='gitremoteverify origin gitrao; gitfr origin';
+alias gitfar='gitremoteverify $(githubusername) gitraa; gitfr $(githubusername)';
+alias gitfprivr='gitfr private';
+
 # === Git Fetch Validated Remote ===
 function gitfu()
 {
@@ -111,13 +117,3 @@ function gitunshallow()
   # Restore current dir
   cd "${currentdir}/";
 }
-
-# === Git Fetch Shortcuts ===
-alias gitf='git fetch';
-alias gitfmr='git fetch origin; git reset origin/master';
-alias gitfs='git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash';
-alias gitfsu='git fetch origin; git reset origin/$(git rev-parse --abbrev-ref HEAD); git stash -p';
-alias gitfgr='gitfr github';
-alias gitfor='gitremoteverify origin gitrao; gitfr origin';
-alias gitfar='gitremoteverify $(githubusername) gitraa; gitfr $(githubusername)';
-alias gitfprivr='gitfr private';
