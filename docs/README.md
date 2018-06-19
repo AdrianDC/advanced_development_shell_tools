@@ -977,6 +977,14 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitstaosp** : *gitremoteverify aosp false && gitstat aosp master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)
 
 ---
+> ### <span class="group_label">[sources/git/tags.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/tags.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tags.rc)
+  ```
+  * **gittagdescribe** [*<b>\[Describe&nbsp;git&nbsp;history&nbsp;relative&nbsp;to&nbsp;tags\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/tags.rc)
+
+---
 > ### <span class="group_label">[sources/git/tools.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/tools.rc)</span> ###
 >
   ```Shell
