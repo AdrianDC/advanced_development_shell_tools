@@ -18,6 +18,7 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tags.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/fetch.rc)
 
 # === Git Fetch Shortcuts ===
@@ -46,8 +47,14 @@ function gitfu()
   echo -e " \e[1;32m=== gitfu - Fetching from '${remote}', branch '${branch}' ===\e[0m";
   echo '';
 
+  # Fetch branch with tags from remote
+  if [ "${3}" = '--tags' ]; then
+    git fetch --tags "${remote}" "${branch}";
+
   # Fetch branch from remote
-  git fetch "${remote}" "${branch}";
+  else
+    git fetch "${remote}" "${branch}";
+  fi;
   echo '';
 }
 
@@ -59,6 +66,20 @@ function gitfr()
   # Fetch and reset hard
   gitfu "${1}" "${2}";
   git reset FETCH_HEAD --hard;
+}
+
+# === Git Fetch with Tags Reset ===
+function gitftr()
+{
+  # Usage: gitftr [remote] [branch] (Git fetch with tags and reset hard)
+
+  # Fetch with tags and reset hard
+  gitfu "${1}" "${2}" --tags;
+  git reset FETCH_HEAD --hard;
+  echo '';
+  echo -en ' \e[1;33mgitftr: HEAD description: \e[1;37m';
+  gittagdescribe;
+  echo -e '\e[0m';
 }
 
 # === Git Full Url Fetch ===

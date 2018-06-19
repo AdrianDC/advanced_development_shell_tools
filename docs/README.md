@@ -834,6 +834,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   ```Shell
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tags.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/fetch.rc)
   ```
   * **gitf** : *git fetch* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
@@ -842,6 +843,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitfprivr** : *gitfr private* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
   * **gitfu** *[remote] [branch]* [*<b>\[Git&nbsp;fetch&nbsp;from&nbsp;validated&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
   * **gitfr** *[remote] [branch]* [*<b>\[Git&nbsp;fetch&nbsp;and&nbsp;reset&nbsp;hard\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
+  * **gitftr** *[remote] [branch]* [*<b>\[Git&nbsp;fetch&nbsp;with&nbsp;tags&nbsp;and&nbsp;reset&nbsp;hard\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
   * **gitfurl** *&lt;url&gt;* [*<b>\[Git&nbsp;fetch&nbsp;from&nbsp;full&nbsp;url\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
   * **gitunshallow** [*<b>\[Git&nbsp;fetch&nbsp;and&nbsp;unshallow&nbsp;project\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/fetch.rc)
 
