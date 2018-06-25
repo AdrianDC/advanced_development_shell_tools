@@ -235,7 +235,7 @@ function androidprojectpatcher()
   project_repopick_tag=repopick-${project_repopick_tag##*/};
   project_repopick_tag=${project_repopick_tag%.xml}.md;
   project_repopick_file=$(mktemp);
-  curl -fLs "https://github.com/${project_owner}/${project_name}/raw/local_manifests/${project_repopick_tag}" > "${project_repopick_file}";
+  curl -fLs "https://github.com/${project_owner}/${project_name}/raw/local_manifests/${project_repopick_tag}?date=$(date +%s)" > "${project_repopick_file}";
 
   # Automated repopick list execution
   if [ -f "${project_repopick_file}" ]; then
