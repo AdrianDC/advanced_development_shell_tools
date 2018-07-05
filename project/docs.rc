@@ -149,6 +149,7 @@ function shtoolsreadme()
   local stats_functions=0;
   local stats_hidden=0;
   local stats_sources=0;
+  local test_standalone;
   local tmp_grep;
   local tmp_list;
   local url;
@@ -246,24 +247,28 @@ function shtoolsreadme()
         paths_standalone=${paths_standalone%\)*};
 
         # Warning about missing linkages
-        for path_standalone in ${paths_standalone}; do
+        test_standalone=$(mktemp);
+        echo "${paths_standalone}" | tr ' ' '\n' | grep -v '^$' > "${test_standalone}";
+        while read -r path_standalone; do
           if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/${path_standalone}" ]; then
             >&2 echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: Standalone import link not found (${path_standalone})";
             >&2 echo '';
             return;
           fi;
-        done;
+        done < "${test_standalone}";
 
         # Parse standalone import lines
-        line_standalone=${line_standalone//# source <\(curl -Ls/};
-        line_standalone=${line_standalone//)/};
+        line_standalone=${line_standalone//\# source <\(curl -Ls/};
+        line_standalone=${line_standalone//\)/};
 
         # Build standalone import outputs
         echo -en "${readme_buffer}  \`\`\`Shell\n";
         readme_buffer='';
-        for url in ${line_standalone}; do
+        echo "${line_standalone}" | tr ' ' '\n' | grep -v '^$' > "${test_standalone}"
+        while read -r url; do
           echo -en "source <(curl -Ls ${url})\n";
-        done;
+        done < "${test_standalone}";
+        rm -f "${test_standalone}";
         echo -en "  \`\`\`\n";
 
       fi;
@@ -315,7 +320,7 @@ function shtoolsreadme()
         line_function=${line};
         line_function=${line_function#function };
         line_function=${line_function#alias };
-        line_function=${line_function%%()*};
+        line_function=${line_function%%\(\)*};
         line_function=${line_function%%=*};
         line_type=${line//*alias*/Alias};
         line_type=${line_type//*function*/Function};
@@ -348,8 +353,8 @@ function shtoolsreadme()
           else
             line_usage=${line_usage#*Usage: };
             line_usage=${line_usage%;};
-            line_usage=${line_usage%$"'"};
-            line_usage=${line_usage%$'"'};
+            line_usage=${line_usage%"'"};
+            line_usage=${line_usage%'"'};
             stats_functions=$((stats_functions + 1));
 
             # Mark function summary field
@@ -368,11 +373,11 @@ function shtoolsreadme()
           line_usage=${line#*=};
           line_usage=${line_usage%;};
           if [ "${line_usage:0:1}" = "'" ]; then
-            line_usage=${line_usage#$"'"};
-            line_usage=${line_usage%$"'"};
+            line_usage=${line_usage#"'"};
+            line_usage=${line_usage%"'"};
           elif [ "${line_usage:0:1}" = '"' ]; then
-            line_usage=${line_usage#$'"'};
-            line_usage=${line_usage%$'"'};
+            line_usage=${line_usage#'"'};
+            line_usage=${line_usage%'"'};
           fi;
           line_usage=${line_usage//--/&#8208;&#8208;};
           stats_aliases=$((stats_aliases + 1));
