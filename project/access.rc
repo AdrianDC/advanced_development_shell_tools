@@ -65,6 +65,9 @@ function shtoolssync()
   # Access Android Development Shell Tools folder
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
+  # Display project news
+  shtoolsnews;
+
   # Download upstream changes
   git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" &&
       git reset FETCH_HEAD;
