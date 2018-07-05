@@ -104,12 +104,10 @@
 [SIZE=5][B][U]How to contribute to the project[/U][/B][/SIZE]
 
 [INDENT][LIST]
-[*]Perform the [B]scripts modifications, fixes or additions[/B].
-
-[*]Update README.md documentation with [B][FONT="Courier New"][I]`shtoolsreadme;`[/I][/FONT][/B].
-
+[*]Perform the [B]scripts modifications, fixes or additions[/B]
+[*]Validate the code thanks to ShellCheck with [B][FONT="Courier New"][I]`shtoolscheck;`[/I][/FONT][/B]
+[*]Update README.md documentation with [B][FONT="Courier New"][I]`shtoolsreadme;`[/I][/FONT][/B]
 [*][B]Commit the changes[/B] with git (refer to older commits for style)
-
 [*]Push your changes and [B]create a pull-request[/B] once ready
 [/LIST][/INDENT]
 

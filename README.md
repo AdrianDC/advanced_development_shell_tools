@@ -155,12 +155,10 @@
 
 <!-- Indent -->
 <!-- List -->
- * Perform the **scripts modifications, fixes or additions**.
-
- * Update README.md documentation with **`shtoolsreadme;`**.
-
+ * Perform the **scripts modifications, fixes or additions**
+ * Validate the code thanks to ShellCheck with **`shtoolscheck;`**
+ * Update README.md documentation with **`shtoolsreadme;`**
  * **Commit the changes** with git (refer to older commits for style)
-
  * Push your changes and **create a pull-request** once ready
 <!-- /List -->
 <!-- /Indent -->
