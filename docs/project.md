@@ -29,7 +29,7 @@
 <!-- /List -->
 <!-- /Indent -->
 
-<br />
+---
 
 ### __About the project__ ###
 
@@ -59,7 +59,7 @@
 <!-- /List -->
 <!-- /Indent -->
 
-<br />
+---
 
 ### __How to update with upstream changes__ ###
 
@@ -81,7 +81,7 @@
 <!-- /List -->
 <!-- /Indent -->
 
-<br />
+---
 
 ### __About the documentation and structure__ ###
 
@@ -113,7 +113,7 @@
 <!-- /List -->
 <!-- /Indent -->
 
-<br />
+---
 
 ### __Project and documentations__ ###
 
@@ -124,7 +124,7 @@
 <!-- /List -->
 <!-- /Indent -->
 
-<br />
+---
 
 ### __How to install the project__ ###
 
@@ -149,7 +149,7 @@
 <!-- /List -->
 <!-- /Indent -->
 
-<br />
+---
 
 ### __How to contribute to the project__ ###
 
@@ -163,7 +163,7 @@
 <!-- /List -->
 <!-- /Indent -->
 
-<br />
+---
 
 ### __Project contributors and modules__ ###
 
