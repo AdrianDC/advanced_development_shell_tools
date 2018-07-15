@@ -36,6 +36,9 @@ function fileedit()
   # Files editor for most environments
   for file in "${@}"; do
 
+    # Trim file path
+    file=${file%%:*};
+
     # If option enabled, create missing files
     if [ ! -z "${FILEEDIT_TOUCH_NEW_FILE}" ] && [ ! -f "${file}" ]; then
       mkdir -p "${file%/*}";
