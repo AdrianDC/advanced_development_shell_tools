@@ -1147,6 +1147,18 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
+#### <span class="group_label">SQLite Development Tools</span> ####
+</summary>
+
+> ### <span class="group_label">[sources/sqlite/converter.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/sqlite/converter.rc)</span> ###
+>
+  * **sqlite2csv** *&lt;.sqlite&gt; &lt;output_dir&gt;* [*<b>\[Convert&nbsp;SQLite&nbsp;database&nbsp;to&nbsp;.csv&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/sqlite/converter.rc)
+
+---
+</details>
+
+<details>
+<summary class="group_header">
 #### <span class="group_label">SSH Server Tools</span> ####
 </summary>
 

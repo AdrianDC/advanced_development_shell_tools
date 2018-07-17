@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === SQLite to CSV Converter ===
+function sqlite2csv()
+{
+  # Usage
+  if [ ! -f "${1}" ] || [ -z "${2}" ]; then
+    echo '';
+    echo ' Usage: sqlite2csv <.sqlite> <output_dir> (Convert SQLite database to .csv files)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local sqlite_file=${1};
+  local output_path=${2};
+  local tables;
+
+  # Prepare output folder
+  mkdir -p "${output_path}/";
+
+  # Acquire tables list
+  tables=($(sqlite3 "${sqlite_file}" '.tables'));
+
+  # Walk through tables
+  echo '';
+  for table in "${tables[@]}"; do
+
+    # Convert table to .csv
+    sqlite3 -header -csv "${sqlite_file}" "SELECT * from ${table}" > "${output_path}/${table}.csv";
+    echo -e " \e[1;33msqlite2csv:\e[1;32m '${table}' > \e[1;37m${output_path}/${table}.csv";
+
+  done;
+  echo -e '\e[0m';
+}
