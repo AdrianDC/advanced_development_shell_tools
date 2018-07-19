@@ -78,10 +78,12 @@ function gitonebranch()
   git branch -r | sed "s/${remote}\/\(.*\)/\1/" \
                 | grep -v "HEAD" \
                 | grep -v "$(git rev-parse --abbrev-ref HEAD)" \
-                | xargs -n1 -I {} sh -c "echo -n \" Removing branch {} : \"; git push ${remote} :{};";
+                | sed 's/\x1b\[[0-9;]*m//g' \
+                | xargs -n1 -I {} sh -c "echo -n \" Removing branch {} : \"; git push ${remote} :refs/heads/{};";
 
   # Remove tags
-  git tag -l | xargs -n1 -I {} sh -c "echo -n \" Removing tag {} : \"; git push ${remote} :{}; echo -n "  "; git tag -d {};";
+  git tag -l | sed 's/\x1b\[[0-9;]*m//g' \
+             | xargs -n1 -I {} sh -c "echo -n \" Removing tag {} : \"; git push ${remote} :refs/tags/{}; echo -n \"  \"; git tag -d {};";
 }
 
 # === Git Untracked Paths Cleaner ===
