@@ -40,17 +40,26 @@ function githubusername()
 # === Git Config User ===
 function gitconfuser()
 {
-  # Usage
-  if [ -z "${1}" ] || [ -z "${2}" ]; then
+  # Variables
+  local name=${1};
+  local email=${2};
+
+  # Usage and user input
+  if [ -z "${name}" ] || [ -z "${email}" ]; then
     echo '';
     echo ' Usage: gitconfuser <"name"> <"email"> (Configure Git user and email)';
     echo '';
-    return;
+    echo -en " \e[1;37m> User name: ";
+    read -r name;
+    echo -en " \e[1;37m> User email: ";
+    read -r email;
   fi;
 
   # Set user values
-  git config --global user.name "${1}";
-  git config --global user.email "${2}";
+  if [ ! -z "${name}" ] && [ ! -z "${email}" ]; then
+    git config --global user.name "${name}";
+    git config --global user.email "${email}";
+  fi;
 
   # Display option
   echo '';
@@ -148,22 +157,29 @@ function gitu()
 # === Git Config Editor ===
 function gitconfeditor()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local editor=${1};
+
+  # Usage and user input
+  if [ -z "${editor}" ]; then
     echo '';
     echo ' Usage: gitconfeditor <app_name/default> (Configure Git editor application)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Editor: ";
+    read -r editor;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${editor}" in
     default)
       git config --global --unset core.editor;;
     notepad++)
       git config --global core.editor 'notepad++ -multiInst -notabbar -nosession -noPlugin';;
     nano|vim|*)
-      git config --global core.editor "${1}";;
+      git config --global core.editor "${editor}";;
+    '')
+      echo '';
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -176,16 +192,22 @@ function gitconfeditor()
 # === Git Config Merge Tool ===
 function gitconfmergetool()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local app_name=${1};
+
+  # Usage and user input
+  if [ -z "${app_name}" ]; then
     echo '';
     echo ' Usage: gitconfmergetool <app_name> (Configure Git merge tool handling)';
     echo '';
-    return;
+    echo -en " \e[1;37m> App name: ";
+    read -r app_name;
   fi;
 
   # Set option
-  git config --global merge.tool "${1}";
+  if [ ! -z "${app_name}" ]; then
+    git config --global merge.tool "${app_name}";
+  fi;
 
   # Display option
   echo '';
@@ -197,24 +219,29 @@ function gitconfmergetool()
 # === Git Config File CR/LF ===
 function gitconffilecrlf()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+  local file_local=${2};
+  local file_option;
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconffilecrlf <auto/detect/input> [bool_local] (Configure Git file CR/LF EOL handling)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
-  # Variables
-  local file_option='--global';
-
   # Select file option
-  if [ ! -z "${2}" ]; then
+  if [ ! -z "${file_local}" ]; then
     file_option='--local';
+  else
+    file_option='--global';
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     auto)
       git config "${file_option}" core.autocrlf 'true';
       git config "${file_option}" core.safecrlf 'false';;
@@ -226,7 +253,7 @@ function gitconffilecrlf()
       git config "${file_option}" core.safecrlf 'false';;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -239,23 +266,27 @@ function gitconffilecrlf()
 # === Git Config File Permissions ===
 function gitconffileperms()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconffileperms <detect/ignore> (Configure Git file permissions handling)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     detect)
       git config --global core.filemode 'true';;
     ignore)
       git config --global core.filemode 'false';;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -268,16 +299,20 @@ function gitconffileperms()
 # === Git Config Colors ===
 function gitconfcolors()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconfcolors <always/auto/never> (Configure Git colors handling)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     always)
       git config --global color.ui 'always';;
     auto)
@@ -286,7 +321,7 @@ function gitconfcolors()
       git config --global color.ui 'false';;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -299,16 +334,20 @@ function gitconfcolors()
 # === Git Config Commit Stats ===
 function gitconfcommitstats()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconfcommitstats <show/quick/hide> (Configure Git commits stats visibility)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     hide)
       git config --global commit.status 'false';
       git config --global merge.stat 'false';
@@ -323,7 +362,7 @@ function gitconfcommitstats()
       git config --global status.showUntrackedFiles 'normal';;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -340,23 +379,27 @@ function gitconfcommitstats()
 # === Git Config Pager ===
 function gitconfpager()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconfpager <less/more/none> (Configure Git pager handling)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     none)
       git config --global core.pager '';;
     less|more)
-      git config --global core.pager "${1}";;
+      git config --global core.pager "${mode}";;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -369,21 +412,25 @@ function gitconfpager()
 # === Git Config Credentials ===
 function gitconfcredentials()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconfcredentials <cache/cache --timeout=X/store/wincred> (Configure Git credentials handling)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     cache|'cache --timeout='*|store|wincred)
-      git config --global credential.helper "${1}";;
+      git config --global credential.helper "${mode}";;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -396,16 +443,22 @@ function gitconfcredentials()
 # === Git Config GPG Key ===
 function gitconfgpgkey()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconfgpgkey <gpg_key_id> (Configure Git GPG signing key)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Set option
-  git config --global user.signingkey "${1}";
+  if [ ! -z "${mode}" ]; then
+    git config --global user.signingkey "${mode}";
+  fi;
 
   # Display option
   echo '';
@@ -417,23 +470,27 @@ function gitconfgpgkey()
 # === Git Config Conflicts Repeat ===
 function gitconfconflictsrepeat()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconfconflictsrepeat <enable/disable> (Configure Git conflicts repeated handling)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     enable)
       git config --global rerere.enabled 'true';;
     disable)
       git config --global rerere.enabled 'false';;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -446,16 +503,20 @@ function gitconfconflictsrepeat()
 # === Git Config Diff Renames ===
 function gitconfdiffrenames()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconfdiffrenames <basic/detect/ignore> (Configure Git diff renames handling)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     disable)
       git config --global diff.renames 'false';;
     detect)
@@ -464,7 +525,7 @@ function gitconfdiffrenames()
       git config --global diff.renames 'false';;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
@@ -477,23 +538,27 @@ function gitconfdiffrenames()
 # === Git Config GPG Signature ===
 function gitconfgpgsignature()
 {
-  # Usage
-  if [ -z "${1}" ]; then
+  # Variables
+  local mode=${1};
+
+  # Usage and user input
+  if [ -z "${mode}" ]; then
     echo '';
     echo ' Usage: gitconfgpgsignature <enable/disable> (Configure Git GPG signature usage)';
     echo '';
-    return;
+    echo -en " \e[1;37m> Mode: ";
+    read -r mode;
   fi;
 
   # Select option
-  case "${1}" in
+  case "${mode}" in
     enable)
       git config --global commit.gpgsign 'true';;
     disable)
       git config --global commit.gpgsign 'false';;
     *)
       echo '';
-      echo " Error: Option '${1}' not recognized";
+      echo " Error: Option '${mode}' not recognized";;
   esac;
 
   # Display option
