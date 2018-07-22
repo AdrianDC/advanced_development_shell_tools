@@ -619,7 +619,7 @@ function kernelinjectorzip()
   CurDir=$(pwd);
   KernelFile=$(readlink -f "${2}");
   KernelSources=$(readlink -f "${3}");
-  OutFile=kernel-injector-${PhoneName}-$(date +'%Y%m%d');
+  OutFile=kernel-${PhoneName}-$(date +'%Y%m%d');
   TargetFile="$(desktoppath)/${OutFile}";
   TmpDir=$(mktemp -d);
 
