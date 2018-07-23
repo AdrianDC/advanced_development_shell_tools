@@ -201,7 +201,7 @@ function gitcidupstream()
 }
 
 # === Git Commit Stable
-function gitcommitstable
+function gitcommitstable()
 {
   # Default variables
   local to_insert_default=RM-290;
