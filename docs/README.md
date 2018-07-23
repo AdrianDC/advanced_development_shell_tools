@@ -788,6 +788,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitcamarker** [*<b>\[Apply&nbsp;marker&nbsp;commit&nbsp;to&nbsp;author/committer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcid** [*<b>\[Apply&nbsp;commit-msg&nbsp;hook&nbsp;to&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcidupstream** [*<b>\[Load&nbsp;commit-msg&nbsp;hook&nbsp;from&nbsp;upstream\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
+  * **gitec** [*<b>\[Edit&nbsp;all&nbsp;files&nbsp;from&nbsp;a&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcommitstable** *&lt;"commit_range"&gt; &lt;"to_insert* [*<b>\[default&nbsp;RM-290\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitrh** : *git reset FETCH_HEAD &#8208;&#8208;hard* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **githd** : *git reset HEAD &#8208;&#8208;hard* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)

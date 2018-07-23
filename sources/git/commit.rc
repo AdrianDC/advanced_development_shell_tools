@@ -200,6 +200,29 @@ function gitcidupstream()
   chmod u+x "${git_path}/hooks/commit-msg";
 }
 
+# === Git Commit Editor
+function gitec()
+{
+  # Usage: gitec (Edit all files from a commit)
+
+  # Variables
+  local files_list=();
+  local line;
+  local tmp_list;
+
+  # Acquire commit files list
+  tmp_list=$(mktemp);
+  git diff-tree --no-commit-id --name-only -r HEAD > "${tmp_list}";
+
+  # Walk through commit files
+  while read -r line; do
+    files_list+=("${line}");
+  done < "${tmp_list}";
+
+  # Edit commit files
+  fe "${files_list[@]}";
+}
+
 # === Git Commit Stable
 function gitcommitstable()
 {
