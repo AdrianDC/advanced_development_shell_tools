@@ -17,6 +17,7 @@
 
 # === Standalone Source Helper ===
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
+# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/stats.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/rebase.rc)
 
@@ -30,6 +31,31 @@ function gitr() { git rebase "HEAD~${1:-5}" -i; }
 function gitrall() { git rebase -i HEAD~$(($(git rev-list HEAD | wc -l) - 1)); }
 function gitrfedit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "${1}" -i; }
 function gitredit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "HEAD~${1:-5}" -i; }
+
+# === Git Rebase Local Commits ===
+function gitrbl()
+{
+  # Usage: gitrbl [remote] [branch] (Git rebase all local commits)
+
+  # Variables
+  local branch;
+  local commits_count;
+  local remote;
+
+  # Get remote and branch
+  branch=${2:-$(gitgetrepobranch)};
+  remote=${1:-$(gitgetremote "${branch}")};
+
+  # Get local commits count
+  echo '';
+  gitstat "${remote}" "${branch}";
+  commits_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<' | xargs echo -n);
+
+  # Rebase local commits
+  echo '';
+  git rebase -i HEAD~"${commits_count}";
+  echo '';
+}
 
 # === Git rebasing ===
 function gitrb()  { branch=${1:-$(gitgetrepobranch)}; git fetch github "${branch}" && git rebase FETCH_HEAD; }
