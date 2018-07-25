@@ -932,7 +932,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitrf** *&lt;sha1&gt;* [*<b>\[Git&nbsp;rebase&nbsp;from&nbsp;a&nbsp;given&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitr** *[count]* [*<b>\[Git&nbsp;rebase&nbsp;the&nbsp;last&nbsp;commits\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrall** [*<b>\[Git&nbsp;rebase&nbsp;all&nbsp;commits\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
-  * **gitrfedit** *GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "${1}" -i* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
+  * **gitrfedit** *&lt;sha1&gt;* [*<b>\[Git&nbsp;rebase&nbsp;and&nbsp;edit&nbsp;from&nbsp;a&nbsp;given&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitredit** *[count]* [*<b>\[Git&nbsp;rebase&nbsp;and&nbsp;edit&nbsp;the&nbsp;last&nbsp;commits\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrbl** *[remote] [branch]* [*<b>\[Git&nbsp;rebase&nbsp;all&nbsp;local&nbsp;commits\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrb** *branch=${1:-$(gitgetrepobranch)}; git fetch github "${branch}" && git rebase FETCH_HEAD* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
