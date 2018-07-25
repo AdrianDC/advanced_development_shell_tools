@@ -109,6 +109,28 @@ function gitrbl()
   echo '';
 }
 
-# === Git rebasing ===
-function gitrb()  { branch=${1:-$(gitgetrepobranch)}; git fetch github "${branch}" && git rebase FETCH_HEAD; }
+# === Git Rebase Over Remote Branch ===
+function gitrb()
+{
+  # Usage: gitrb [remote] [branch] (Git rebase over remote branch)
+
+  # Variables
+  local branch;
+  local remote;
+
+  # Get remote and branch
+  branch=${2:-$(gitgetrepobranch)};
+  remote=${1:-$(gitgetremote "${branch}")};
+
+  # Get local commits count
+  echo '';
+  gitstat "${remote}" "${branch}";
+
+  # Rebase commits
+  echo '';
+  git rebase FETCH_HEAD;
+  echo '';
+}
+
+# === Git Rebase ===
 function gitrbo() { branch=${1:-$(gitgetrepobranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}" && git rebase FETCH_HEAD; }

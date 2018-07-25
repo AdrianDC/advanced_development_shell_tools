@@ -935,7 +935,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitrfedit** *&lt;sha1&gt;* [*<b>\[Git&nbsp;rebase&nbsp;and&nbsp;edit&nbsp;from&nbsp;a&nbsp;given&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitredit** *[count]* [*<b>\[Git&nbsp;rebase&nbsp;and&nbsp;edit&nbsp;the&nbsp;last&nbsp;commits\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrbl** *[remote] [branch]* [*<b>\[Git&nbsp;rebase&nbsp;all&nbsp;local&nbsp;commits\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
-  * **gitrb** *branch=${1:-$(gitgetrepobranch)}; git fetch github "${branch}" && git rebase FETCH_HEAD* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
+  * **gitrb** *[remote] [branch]* [*<b>\[Git&nbsp;rebase&nbsp;over&nbsp;remote&nbsp;branch\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrbo** *branch=${1:-$(gitgetrepobranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}" && git rebase FETCH_HEAD* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
 
 ---
