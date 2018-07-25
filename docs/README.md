@@ -18,9 +18,10 @@
 
  * **"Standalone Import Ready"** scripts starting with *`source <(curl -Ls...`* can be directly sourced through the provided commands from a Shell without this project
 
----
-
-### [ How to load and install the project ] ###
+<details style="margin-bottom: 1.5em;">
+<summary>
+#### See how to install and update the project
+</summary>
 
  * **Clone the project locally with git**
    ```Shell
@@ -43,6 +44,7 @@
    ```Shell
    shtoolssync;
    ```
+</details>
 
 ---
 
