@@ -598,20 +598,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 #### <span class="group_category">Android &bull; </span><span class="group_label">ROM Tools</span> ####
 </summary>
 
-> ### <span class="group_label">[sources/android_rom/aicp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/aicp.rc)</span> ###
->
-  * **gitcpaicp** [*<b>\[Automated&nbsp;upstream&nbsp;to&nbsp;AICP&nbsp;device&nbsp;merger\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/aicp.rc)
-
----
-> ### <span class="group_label">[sources/android_rom/aospcaf.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/aospcaf.rc)</span> ###
->
-  ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/aospcaf.rc)
-  ```
-  * **aospcafpatcher** *[specific_paths]* [*<b>\[AOSP-CAF&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/aospcaf.rc)
-
----
 > ### <span class="group_label">[sources/android_rom/helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/helpers.rc)</span> ###
 >
   ```Shell
@@ -627,21 +613,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/android_rom/images.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/images.rc)</span> ###
 >
   * **androidextractimage** *&lt;file.img&gt; &lt;output_path&gt;* [*<b>\[Android&nbsp;filesystem.img&nbsp;extractor\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/images.rc)
-
----
-> ### <span class="group_label">[sources/android_rom/lineageoms.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/lineageoms.rc)</span> ###
->
-  * **lineageomspatcher** [*<b>\[LineageOMS&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/lineageoms.rc)
-
----
-> ### <span class="group_label">[sources/android_rom/lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/lineageos.rc)</span> ###
->
-  ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/lineageos.rc)
-  ```
-  * **lineagewebjekyll** *[bool_install]* [*<b>\[Jekyll&nbsp;web&nbsp;helper\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/lineageos.rc)
-  * **lineagecvetracker** *[bool_install]* [*<b>\[CVE&nbsp;tracker&nbsp;instance&nbsp;helper\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/lineageos.rc)
 
 ---
 > ### <span class="group_label">[sources/android_rom/projects.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_rom/projects.rc)</span> ###
@@ -1170,6 +1141,42 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **uploadprivatemega** *&lt;device_name&gt;* [*<b>\[Upload&nbsp;to&nbsp;private&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
   * **syncmega** : *megamirror* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
   * **listmega** *[options]* [*<b>\[List&nbsp;remote&nbsp;files&nbsp;on&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
+
+---
+</details>
+
+<details>
+<summary class="group_header">
+#### <span class="group_category">Extensions &bull; </span><span class="group_label">Android ROM Helpers</span> ####
+</summary>
+
+> ### <span class="group_label">[extensions/android_rom/aicp.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/aicp.rc)</span> ###
+>
+  * **gitcpaicp** [*<b>\[Automated&nbsp;upstream&nbsp;to&nbsp;AICP&nbsp;device&nbsp;merger\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/aicp.rc)
+
+---
+> ### <span class="group_label">[extensions/android_rom/aospcaf.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/aospcaf.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/android_rom/aospcaf.rc)
+  ```
+  * **aospcafpatcher** *[specific_paths]* [*<b>\[AOSP-CAF&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/aospcaf.rc)
+
+---
+> ### <span class="group_label">[extensions/android_rom/lineageoms.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/lineageoms.rc)</span> ###
+>
+  * **lineageomspatcher** [*<b>\[LineageOMS&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/lineageoms.rc)
+
+---
+> ### <span class="group_label">[extensions/android_rom/lineageos.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/lineageos.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/android_rom/lineageos.rc)
+  ```
+  * **lineagewebjekyll** *[bool_install]* [*<b>\[Jekyll&nbsp;web&nbsp;helper\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/lineageos.rc)
+  * **lineagecvetracker** *[bool_install]* [*<b>\[CVE&nbsp;tracker&nbsp;instance&nbsp;helper\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_rom/lineageos.rc)
 
 ---
 </details>
