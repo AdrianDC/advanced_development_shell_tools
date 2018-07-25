@@ -1487,7 +1487,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### <span class="group_category">Android &bull; </span><span class="group_label">Repository Scripts</span> ####
+#### <span class="group_category">Scripts &bull; </span><span class="group_label">Android Repository</span> ####
 </summary>
 
 > ### <span class="group_label">[scripts/android_repo/install.sh](https://github.com/AdrianDC/android_development_shell_tools/blob/master/scripts/android_repo/install.sh)</span> ###
@@ -1502,7 +1502,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 <details>
 <summary class="group_header">
-#### <span class="group_category">Linux &bull; </span><span class="group_label">Host Scripts</span> ####
+#### <span class="group_category">Scripts &bull; </span><span class="group_label">Linux Host</span> ####
 </summary>
 
 > ### <span class="group_label">[scripts/linux/cleanram.sh](https://github.com/AdrianDC/android_development_shell_tools/blob/master/scripts/linux/cleanram.sh)</span> ###
