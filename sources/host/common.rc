@@ -144,7 +144,7 @@ function pathscompare()
   # Usage
   if [ -z "${1}" ] || [ -z "${2}" ]; then
     echo '';
-    echo ' Usage: pathscompare <path_left> <path_right> [bool_wait] (Paths comparison for most environments)';
+    echo ' Usage: pathscompare <path_left> <path_right> [--wait] (Paths comparison for most environments)';
     echo '';
     return;
   fi;
@@ -160,7 +160,7 @@ function pathscompare()
   fi;
 
   # Wait for the pid
-  if [ ! -z "${3}" ] && [ ! -z "${pid}" ]; then
+  if [ "${3}" = '--wait' ] && [ ! -z "${pid}" ]; then
     while [ -d "/proc/${pid}" ] && ! grep -q 'zombie' "/proc/${pid}/status"; do
       sleep 1;
     done;

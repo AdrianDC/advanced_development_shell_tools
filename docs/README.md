@@ -1024,7 +1024,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **fen** : *FILEEDIT_TOUCH_NEW_FILE=true fileedit* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **diropen** *[path]* [*<b>\[Directory&nbsp;opener&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **dop** : *diropen* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
-  * **pathscompare** *&lt;path_left&gt; &lt;path_right&gt; [bool_wait]* [*<b>\[Paths&nbsp;comparison&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
+  * **pathscompare** *&lt;path_left&gt; &lt;path_right&gt; [--wait]* [*<b>\[Paths&nbsp;comparison&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **urlopen** *&lt;url&gt;* [*<b>\[URL&nbsp;opener&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **desktoppath** [*<b>\[Acquire&nbsp;desktop&nbsp;path&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **cddesk** [*<b>\[Access&nbsp;desktop&nbsp;path&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
