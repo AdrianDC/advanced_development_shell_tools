@@ -30,7 +30,15 @@ function gitrf() { git rebase "${1}^" -i; }
 function gitr() { git rebase "HEAD~${1:-5}" -i; }
 function gitrall() { git rebase -i HEAD~$(($(git rev-list HEAD | wc -l) - 1)); }
 function gitrfedit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "${1}" -i; }
-function gitredit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "HEAD~${1:-5}" -i; }
+
+# === Git Rebase And Edit Commits ===
+function gitredit()
+{
+  # Usage: gitredit [count] (Git rebase and edit the last commits)
+
+  # Git rebase and edit the last commits
+  GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "HEAD~${1:-5}" -i;
+}
 
 # === Git Rebase Local Commits ===
 function gitrbl()
