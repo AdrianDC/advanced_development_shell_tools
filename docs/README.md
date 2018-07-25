@@ -929,7 +929,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitrc** : *git rebase &#8208;&#8208;continue* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitre** : *git rebase &#8208;&#8208;edit-todo* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrs** : *git rebase &#8208;&#8208;skip* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
-  * **gitrf** *git rebase "${1}^" -i* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
+  * **gitrf** *&lt;sha1&gt;* [*<b>\[Git&nbsp;rebase&nbsp;from&nbsp;a&nbsp;given&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitr** *git rebase "HEAD~${1:-5}" -i* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrall** *git rebase -i HEAD~$(($(git rev-list HEAD \| wc -l) - 1))* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrfedit** *GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "${1}" -i* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)

@@ -26,7 +26,22 @@ alias gitra='git rebase --abort';
 alias gitrc='git rebase --continue';
 alias gitre='git rebase --edit-todo';
 alias gitrs='git rebase --skip';
-function gitrf() { git rebase "${1}^" -i; }
+
+# === Git Rebase From Commit ===
+function gitrf()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitrf <sha1> (Git rebase from a given commit)';
+    echo '';
+    return;
+  fi;
+
+  # Git rebase from a given commit
+  git rebase "${1}^" -i;
+}
+
 function gitr() { git rebase "HEAD~${1:-5}" -i; }
 function gitrall() { git rebase -i HEAD~$(($(git rev-list HEAD | wc -l) - 1)); }
 function gitrfedit() { GIT_SEQUENCE_EDITOR="sed -i -e 's/pick/edit/g'" git rebase "${1}" -i; }
