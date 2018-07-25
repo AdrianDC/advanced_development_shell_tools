@@ -943,9 +943,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitrapriv** *gitremoteset private "${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitraau** : *git remote set-url $(githubusername)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitraou** : *git remote set-url origin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitrao** [*<b>\[Add&nbsp;LineageOS&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitraos** [*<b>\[Add&nbsp;sonyxperiadev&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitrap** [*<b>\[Development&nbsp;projects&nbsp;selector\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
 
 ---
 > ### <span class="group_label">[sources/git/stats.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)</span> ###
@@ -1259,6 +1256,18 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitppm** : *gitremoteverify project gitrap && gitpu project master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
   * **gitppriv** : *gitremoteverify private false && gitpu private* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
   * **gitpprivm** : *gitremoteverify private false && gitpu private master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+
+---
+> ### <span class="group_label">[extensions/git/remotes.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/remotes.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/git/remotes.rc)
+  ```
+  * **gitrao** [*<b>\[Add&nbsp;LineageOS&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/remotes.rc)
+  * **gitraos** [*<b>\[Add&nbsp;sonyxperiadev&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/remotes.rc)
+  * **gitrap** [*<b>\[Development&nbsp;projects&nbsp;selector\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/remotes.rc)
 
 ---
 </details>
