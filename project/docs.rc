@@ -366,6 +366,7 @@ function shtoolsreadme()
             line_usage=${line_usage%;};
             line_usage=${line_usage%"'"};
             line_usage=${line_usage%'"'};
+            line_usage=${line_usage//--/&#8208;&#8208;};
             stats_functions=$((stats_functions + 1));
 
             # Mark function summary field

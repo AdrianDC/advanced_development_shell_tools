@@ -817,7 +817,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitconfcolors** *&lt;always/auto/never&gt;* [*<b>\[Configure&nbsp;Git&nbsp;colors&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * **gitconfcommitstats** *&lt;show/quick/hide&gt;* [*<b>\[Configure&nbsp;Git&nbsp;commits&nbsp;stats&nbsp;visibility\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * **gitconfpager** *&lt;less/more/none&gt;* [*<b>\[Configure&nbsp;Git&nbsp;pager&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
-  * **gitconfcredentials** *&lt;cache/cache --timeout=X/store/wincred&gt;* [*<b>\[Configure&nbsp;Git&nbsp;credentials&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
+  * **gitconfcredentials** *&lt;cache/cache &#8208;&#8208;timeout=X/store/wincred&gt;* [*<b>\[Configure&nbsp;Git&nbsp;credentials&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * **gitconfgpgkey** *&lt;gpg_key_id&gt;* [*<b>\[Configure&nbsp;Git&nbsp;GPG&nbsp;signing&nbsp;key\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * **gitconfconflictsrepeat** *&lt;enable/disable&gt;* [*<b>\[Configure&nbsp;Git&nbsp;conflicts&nbsp;repeated&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
   * **gitconfdiffrenames** *&lt;basic/detect/ignore&gt;* [*<b>\[Configure&nbsp;Git&nbsp;diff&nbsp;renames&nbsp;handling\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/config.rc)
@@ -1024,7 +1024,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **fen** : *FILEEDIT_TOUCH_NEW_FILE=true fileedit* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **diropen** *[path]* [*<b>\[Directory&nbsp;opener&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **dop** : *diropen* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
-  * **pathscompare** *&lt;path_left&gt; &lt;path_right&gt; [--wait]* [*<b>\[Paths&nbsp;comparison&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
+  * **pathscompare** *&lt;path_left&gt; &lt;path_right&gt; [&#8208;&#8208;wait]* [*<b>\[Paths&nbsp;comparison&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **urlopen** *&lt;url&gt;* [*<b>\[URL&nbsp;opener&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **desktoppath** [*<b>\[Acquire&nbsp;desktop&nbsp;path&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
   * **cddesk** [*<b>\[Access&nbsp;desktop&nbsp;path&nbsp;for&nbsp;most&nbsp;environments\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/common.rc)
@@ -1185,7 +1185,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **uploadbasketbuild** *&lt;file_path&gt; [target_folder]* [*<b>\[File&nbsp;to&nbsp;BasketBuild&nbsp;server&nbsp;uploader\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
   * **downloadbasketbuild** *&lt;remote_path&gt;* [*<b>\[Download&nbsp;from&nbsp;BasketBuild\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
   * **uploadprivatebasketbuild** *&lt;device_name&gt;* [*<b>\[Upload&nbsp;to&nbsp;private&nbsp;BasketBuild\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
-  * **syncbasketbuild** *&lt;local_path&gt; &lt;remote_path&gt; &lt;--download/--upload&gt;* [*<b>\[Folder&nbsp;with&nbsp;BasketBuild&nbsp;server&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
+  * **syncbasketbuild** *&lt;local_path&gt; &lt;remote_path&gt; &lt;&#8208;&#8208;download/&#8208;&#8208;upload&gt;* [*<b>\[Folder&nbsp;with&nbsp;BasketBuild&nbsp;server&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
 
 ---
 > ### <span class="group_label">[sources/uploads/common.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/common.rc)</span> ###
@@ -1199,7 +1199,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 >
   * **uploadftp** *&lt;file_path&gt; [target_folder] [uploadftp_variant]* [*<b>\[File&nbsp;to&nbsp;FTP&nbsp;server&nbsp;uploader\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/ftp.rc)
   * **downloadftp** *&lt;remote_path&gt; [uploadftp_variant]* [*<b>\[Download&nbsp;from&nbsp;FTP\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/ftp.rc)
-  * **syncftp** *&lt;local_path&gt; &lt;remote_path&gt; &lt;--download/--upload&gt; [uploadftp_variant]* [*<b>\[Folder&nbsp;with&nbsp;FTP&nbsp;server&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/ftp.rc)
+  * **syncftp** *&lt;local_path&gt; &lt;remote_path&gt; &lt;&#8208;&#8208;download/&#8208;&#8208;upload&gt; [uploadftp_variant]* [*<b>\[Folder&nbsp;with&nbsp;FTP&nbsp;server&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/ftp.rc)
 
 ---
 > ### <span class="group_label">[sources/uploads/helpers.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/helpers.rc)</span> ###
@@ -1213,7 +1213,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/uploads/local.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)</span> ###
 >
   * **androidfilesadd** *&lt;file_path&gt; &lt;target_folder&gt;* [*<b>\[Add&nbsp;file&nbsp;to&nbsp;AndroidFiles\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
-  * **androidfilessync** *&lt;--upload/--download&gt;* [*<b>\[Sync&nbsp;AndroidFiles&nbsp;folder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
+  * **androidfilessync** *&lt;&#8208;&#8208;upload/&#8208;&#8208;download&gt;* [*<b>\[Sync&nbsp;AndroidFiles&nbsp;folder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
   * **androidfilesdownload** : *androidfilessync &#8208;&#8208;download* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
   * **androidfilesupload** : *androidfilessync &#8208;&#8208;upload* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
   * **androidfilescd** : *cd "${ANDROID_FILES_PATH}/"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/local.rc)
@@ -1267,7 +1267,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 
 > ### <span class="group_label">[extensions/megatools/mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/mirror.rc)</span> ###
 >
-  * **megamirror** *&lt;local_folder&gt; &lt;remote_folder&gt; &lt;--upload/--download&gt; [--copy,-y/-n]* [*<b>\[MEGA&nbsp;mirror&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/mirror.rc)
+  * **megamirror** *&lt;local_folder&gt; &lt;remote_folder&gt; &lt;&#8208;&#8208;upload/&#8208;&#8208;download&gt; [&#8208;&#8208;copy,-y/-n]* [*<b>\[MEGA&nbsp;mirror&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/mirror.rc)
 
 ---
 > ### <span class="group_label">[extensions/megatools/reload.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/reload.rc)</span> ###
