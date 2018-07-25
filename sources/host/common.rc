@@ -96,47 +96,47 @@ alias fen='FILEEDIT_TOUCH_NEW_FILE=true fileedit';
 # === Director Opener ===
 function diropen()
 {
+  # Variables
+  local folder_path=${1:-.};
+  local opened;
+
   # Usage
-  if [ ! -d "${1}" ] && [ ! -f "${1}" ]; then
+  if [ ! -d "${folder_path}" ] && [ ! -f "${folder_path}" ]; then
     echo '';
-    echo ' Usage: diropen <path> (Directory opener for most environments)';
+    echo ' Usage: diropen [path] (Directory opener for most environments)';
     echo '';
     return;
   fi;
 
-  # Variables
-  local file_path=${1};
-  local opened;
-
   # Get directory from file path
-  if [ -f "${file_path}" ]; then
-    file_path=$(dirname "${file_path}");
+  if [ -f "${folder_path}" ]; then
+    folder_path=$(dirname "${folder_path}");
   fi;
 
   # Root GUI xdg directory viewer
   if [ "${EUID}" -eq 0 ] && type dbus-launch >/dev/null 2>&1; then
-    dbus-launch xdg-open "${file_path}" 2>/dev/null;
+    dbus-launch xdg-open "${folder_path}" 2>/dev/null;
 
   # User GUI xdg directory viewer
   else
-    xdg-open "${file_path}" 2> /dev/null;
+    xdg-open "${folder_path}" 2> /dev/null;
   fi;
   opened=${?};
 
   # GUI explorer directory viewer
   if [ ${opened} -ne 0 ] && [ ! -z "$(type -t explorer 2> /dev/null)" ]; then
-    explorer "${file_path//\//\\}";
+    explorer "${folder_path//\//\\}";
     opened=0;
   fi;
 
   # Unknown environment
   if [ ${opened} -ne 0 ]; then
-    cd "${file_path}";
+    cd "${folder_path}";
   fi;
 }
 
 # === Directory Opener Shortcut ===
-alias dop='diropen .';
+alias dop='diropen';
 
 # === Path Comparison ===
 function pathscompare()
