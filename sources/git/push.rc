@@ -16,7 +16,6 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/stats.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 # source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/push.rc)
@@ -200,23 +199,3 @@ function gitpurl()
   # Git push to full url
   gitpu "${url}" "${branch}";
 }
-
-# === Git Push Validated Username Helpers ===
-alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';
-alias gitpama='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master';
-alias gitpa14='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1';
-alias gitpa15='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) lineage-15.1';
-alias gitpal='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests'
-alias gitpaman='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests'
-
-# === Git Push Validated Origin Helpers ===
-alias gitpo='gitremoteverify origin false && gitpu origin';
-alias gitpom='gitremoteverify origin false && gitpu origin master';
-
-# === Git Push Validated Project Helpers ===
-alias gitpp='gitremoteverify project gitrap && gitpu project';
-alias gitppm='gitremoteverify project gitrap && gitpu project master';
-
-# === Git Push Validated Private Helpers ===
-alias gitppriv='gitremoteverify private false && gitpu private';
-alias gitpprivm='gitremoteverify private false && gitpu private master';

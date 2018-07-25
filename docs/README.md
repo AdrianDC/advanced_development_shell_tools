@@ -895,7 +895,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 > ### <span class="group_label">[sources/git/push.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)</span> ###
 >
   ```Shell
-source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/stats.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/push.rc)
@@ -903,18 +902,6 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitpf** : *git push -f* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
   * **gitpu** *[remote] [branch] [-y/-n/-d/-f]* [*<b>\[Git&nbsp;push&nbsp;to&nbsp;validated&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
   * **gitpurl** *&lt;url&gt;* [*<b>\[Git&nbsp;pull&nbsp;to&nbsp;full&nbsp;url\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpa** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpama** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpa14** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpa15** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) lineage-15.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpal** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpaman** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpo** : *gitremoteverify origin false && gitpu origin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpom** : *gitremoteverify origin false && gitpu origin master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpp** : *gitremoteverify project gitrap && gitpu project* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitppm** : *gitremoteverify project gitrap && gitpu project master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitppriv** : *gitremoteverify private false && gitpu private* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpprivm** : *gitremoteverify private false && gitpu private master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
 
 ---
 > ### <span class="group_label">[sources/git/rebase.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)</span> ###
@@ -1242,6 +1229,36 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
 source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/byobu/helpers.rc)
   ```
   * **byobusessionscleanup** [*<b>\[Exit&nbsp;all&nbsp;unattached&nbsp;byobu&nbsp;sessions\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/byobu/helpers.rc)
+
+---
+</details>
+
+<details>
+<summary class="group_header">
+#### <span class="group_category">Extensions &bull; </span><span class="group_label">Git Helpers</span> ####
+</summary>
+
+> ### <span class="group_label">[extensions/git/push.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/stats.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/push.rc)
+source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/git/push.rc)
+  ```
+  * **gitpa** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpama** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpa14** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpa15** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) lineage-15.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpal** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpaman** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpo** : *gitremoteverify origin false && gitpu origin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpom** : *gitremoteverify origin false && gitpu origin master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpp** : *gitremoteverify project gitrap && gitpu project* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitppm** : *gitremoteverify project gitrap && gitpu project master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitppriv** : *gitremoteverify private false && gitpu private* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
+  * **gitpprivm** : *gitremoteverify private false && gitpu private master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/git/push.rc)
 
 ---
 </details>
