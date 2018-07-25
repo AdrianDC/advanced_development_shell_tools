@@ -132,5 +132,5 @@ function gitrb()
   echo '';
 }
 
-# === Git Rebase ===
-function gitrbo() { branch=${1:-$(gitgetrepobranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}" && git rebase FETCH_HEAD; }
+# === Git Rebase Over Origin Branch ===
+alias gitrbo='gitrb origin';

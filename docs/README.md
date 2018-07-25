@@ -936,7 +936,7 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **gitredit** *[count]* [*<b>\[Git&nbsp;rebase&nbsp;and&nbsp;edit&nbsp;the&nbsp;last&nbsp;commits\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrbl** *[remote] [branch]* [*<b>\[Git&nbsp;rebase&nbsp;all&nbsp;local&nbsp;commits\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
   * **gitrb** *[remote] [branch]* [*<b>\[Git&nbsp;rebase&nbsp;over&nbsp;remote&nbsp;branch\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
-  * **gitrbo** *branch=${1:-$(gitgetrepobranch)}; gitremoteverify origin gitrao; git fetch origin "${branch}" && git rebase FETCH_HEAD* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
+  * **gitrbo** : *gitrb origin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/rebase.rc)
 
 ---
 > ### <span class="group_label">[sources/git/remotes.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)</span> ###
