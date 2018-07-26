@@ -16,8 +16,8 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/edit.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/tools.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/edit.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/tools.rc)
 
 # === Hastebin ===
 function haste()
@@ -156,7 +156,7 @@ function remotescript()
 
   # Retrieve script
   tmpfile=$(mktemp);
-  curl -Ls "${script}" > "${tmpfile}";
+  curl -Ls1 "${script}" > "${tmpfile}";
 
   # Open descriptor 3 on input
   exec 3<"${tmpfile}";

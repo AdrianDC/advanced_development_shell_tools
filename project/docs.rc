@@ -207,7 +207,7 @@ function shtoolsreadme()
       >&2 echo -en "\r\033[K  Parsing ${path_relative}";
 
       # Detect standalone ready scripts
-      line_standalone=$(grep -a --color=never '^# source <(curl -Ls' "${path_file}");
+      line_standalone=$(grep -a --color=never '^# source <(curl -Ls1' "${path_file}");
 
       # Detect .sh executable scripts
       if [ "${path_relative: -3}" = '.sh' ]; then
@@ -269,7 +269,7 @@ function shtoolsreadme()
         done < "${test_standalone}";
 
         # Parse standalone import lines
-        line_standalone=${line_standalone//\# source <\(curl -Ls/};
+        line_standalone=${line_standalone//\# source <\(curl -Ls1/};
         line_standalone=${line_standalone//\)/};
 
         # Build standalone import outputs
@@ -277,7 +277,7 @@ function shtoolsreadme()
         readme_buffer='';
         echo "${line_standalone}" | tr ' ' '\n' | grep -v '^$' > "${test_standalone}"
         while read -r url; do
-          echo -en "source <(curl -Ls ${url})\n";
+          echo -en "source <(curl -Ls1 ${url})\n";
         done < "${test_standalone}";
         rm -f "${test_standalone}";
         echo -en "  \`\`\`\n";

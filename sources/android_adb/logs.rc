@@ -16,8 +16,8 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/logs.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/logs.rc)
 
 # === ADB Logcat Reader ===
 function adbl()

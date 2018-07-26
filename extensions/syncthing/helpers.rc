@@ -16,7 +16,7 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/syncthing/helpers.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/syncthing/helpers.rc)
 
 # === SyncThing Conflicts List Helper ===
 function stconflictslist()

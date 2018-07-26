@@ -16,11 +16,11 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/stats.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/push.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/git/push.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/stats.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/tools.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/push.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/git/push.rc)
 
 # === Git Push Validated Username Helpers ===
 alias gitpa='gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)';

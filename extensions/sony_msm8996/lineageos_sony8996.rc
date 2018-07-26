@@ -16,8 +16,8 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/lineageos_sony8996.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/sony_msm8996/lineageos_sony8996.rc)
 
 # === LineageOS Sony 8996 Patcher ===
 function lineagesony8996patcher()

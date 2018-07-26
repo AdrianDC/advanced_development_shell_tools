@@ -16,7 +16,7 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/changelog.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/changelog.rc)
 
 # === Repo Changelog (Base code from AICP repos 2015) ===
 function repochangelog()

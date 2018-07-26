@@ -16,8 +16,8 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
-# source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/android_rom/aospcaf.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_rom/projects.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/android_rom/aospcaf.rc)
 
 # === AOSP-CAF Patcher ===
 function aospcafpatcher()
