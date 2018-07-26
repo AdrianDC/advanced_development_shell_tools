@@ -155,7 +155,11 @@ function pathscompare()
 
   # Meld path comparison
   if [ ! -z "$(type -t meld 2> /dev/null)" ]; then
-    pid=$(nohup meld "${1}" "${2}" >/dev/null 2>&1 & echo "${!}");
+    if [ "${EUID}" -eq 0 ] && type dbus-launch >/dev/null 2>&1; then
+      pid=$(nohup dbus-launch meld "${1}" "${2}" >/dev/null 2>&1 & echo "${!}");
+    else
+      pid=$(nohup meld "${1}" "${2}" >/dev/null 2>&1 & echo "${!}");
+    fi;
     ps -p "${pid}" >/dev/null 2>&1 && opened=0;
   fi;
 
