@@ -64,6 +64,29 @@ function gitlos()
   done;
 }
 
+# === Git Logs From Commit Files ===
+function gitlc()
+{
+  # Usage: gitlc [SHA1] (Show histories from a commit's files)
+
+  # Variables
+  local commit="${1:-HEAD}";
+  local file_path;
+  local tmp_list;
+
+  # Acquire commit files list
+  tmp_list=$(mktemp);
+  git diff-tree --no-commit-id --name-only -r "${commit}" > "${tmp_list}";
+
+  # Walk through commit files
+  while read -r file_path; do
+    echo '';
+    echo -e " \e[1;37m${commit}\e[1;33m@\e[1;32m${file_path}\e[0m:";
+    echo '';
+    gitlo --max-count=5 -- "${file_path}";
+  done < "${tmp_list}";
+}
+
 # === Git Diff Status ===
 function gitdi()
 {
