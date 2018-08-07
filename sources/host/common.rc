@@ -175,6 +175,8 @@ function pathscompare()
     echo '';
     echo " pathscompare: Nothing to compare '${1}' and '${2}'";
     echo '';
+    fileedit "${1}";
+    fileedit "${2}";
   fi;
 }
 
