@@ -471,7 +471,7 @@ function androidprojectpatcher()
         key_automated_patch=n;
         key_automated_push=n;
       elif [ "${key}" = 'i' ] || [ "${key}" = 'I' ]; then
-        key_input=i;
+        key_input=;
         key_automated_patch=i;
         key_automated_push=;
       elif [ "${key}" = 'l' ] || [ "${key}" = 'L' ]; then
