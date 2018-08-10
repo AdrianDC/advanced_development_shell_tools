@@ -96,7 +96,7 @@ function repos()
   # Override OUT for symlinks
   if [ -L './out' ]; then
     export OUT_DIR;
-    OUT_DIR=$(readlink -f './out');
+    OUT_DIR=$(readlink './out');
   else
     unset OUT_DIR;
   fi;
