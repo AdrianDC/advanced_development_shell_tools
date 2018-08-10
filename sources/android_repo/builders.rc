@@ -65,7 +65,7 @@ function repotwrp()
   source ./build/envsetup.sh;
   croot;
   lunch "omni_${PhoneName}-userdebug";
-  makes recoveryimage "${RootDir}/out/target/product/${PhoneName}/system/build.prop";
+  LC_ALL=C makes recoveryimage "${RootDir}/out/target/product/${PhoneName}/system/build.prop";
   export ALLOW_MISSING_DEPENDENCIES=;
   echo '';
 
@@ -277,9 +277,9 @@ function repomrom()
     # Build
     lunch "omni_${PhoneName}-userdebug";
     if [[ "${BuildParams}" == *'kernel'* ]]; then
-      makes multirom_kernel_zip;
+      LC_ALL=C makes multirom_kernel_zip;
     else
-      makes recoveryimage multirom trampoline multirom_zip multirom_uninstaller multirom_recovery_injector_zip;
+      LC_ALL=C makes recoveryimage multirom trampoline multirom_zip multirom_uninstaller multirom_recovery_injector_zip;
     fi;
   else
     echo 'Build skipped...';
