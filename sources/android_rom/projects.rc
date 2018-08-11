@@ -554,8 +554,8 @@ function androidprojectpatcher()
           gitbranchpusher "${key_automated_push}" "${project_github}" "${project_branch}";
         fi;
 
-      # Project is ready
-      elif [ ! "${key_automated_push}" = 'i' ]; then
+      # Project is ready to use
+      elif [ ! "${key_automated_patch}" = 'i' ]; then
         git reset --hard FETCH_HEAD;
         gitsu;
       fi;
@@ -568,7 +568,7 @@ function androidprojectpatcher()
         gitbranchpusher "${key_automated_push}" "${project_github}" "${project_branch}";
       fi;
 
-    # Project is ready
+    # Project is ready to use
     else
       git reset --hard FETCH_HEAD;
       gitsu;
