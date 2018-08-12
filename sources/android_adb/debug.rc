@@ -57,7 +57,7 @@ function adbst()
   fi;
 
   # Append strace command
-  cmd="${cmd}; if [ ! -z \"\${pid}\" ]; then /system/bin/strace -y ${2} -s 4096 -p \"\${pid}\"; else echo 'adbst: No matching process found...'; fi;";
+  cmd="${cmd}; if [ ! -z \"\${pid}\" ]; then /system/bin/strace -y ${2} -s 4096 -p \"\${pid}\" 2>&1; else echo 'adbst: No matching process found...'; fi;";
 
   # Run command as root
   echo '';
