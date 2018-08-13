@@ -1159,6 +1159,19 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
 
 <details>
 <summary class="group_header">
+#### <span class="group_category">Extensions &bull; </span><span class="group_label">Build Wrappers</span> ####
+</summary>
+
+> ### <span class="group_label">[extensions/android_build/make.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_build/make.rc)</span> ###
+>
+  * **makei** : *adbi makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_build/make.rc)
+  * **makel** : *adbil makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_build/make.rc)
+
+---
+</details>
+
+<details>
+<summary class="group_header">
 #### <span class="group_category">Extensions &bull; </span><span class="group_label">Android ROM Helpers</span> ####
 </summary>
 
