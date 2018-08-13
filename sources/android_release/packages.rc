@@ -259,6 +259,29 @@ function packzip()
   cd "${CurDir}";
 }
 
+# === Packages Results Zip Maker ===
+function packzippr()
+{
+  # Usage
+  if [ -z "${PACKAGES_RESULTS}" ]; then
+    echo '';
+    echo ' Usage: packzippr (Pack files from PACKAGES_RESULTS to a flashable zip)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local results=();
+
+  # Results array
+  for result in ${PACKAGES_RESULTS}; do
+    results+=("${result}");
+  done;
+
+  # Pack results to zip
+  packzip "${results[@]}";
+}
+
 # === Git Zip Maker ===
 function gitzip()
 {

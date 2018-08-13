@@ -429,6 +429,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **signapk** *&lt;apk_to_sign&gt; [signed_output_apk]* [*<b>\[Sign&nbsp;an&nbsp;apk&nbsp;file\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
   * **signapks** *&lt;apk_1&gt; [apk_2] ...* [*<b>\[Sign&nbsp;apk&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
   * **packzip** *&lt;files&gt;* [*<b>\[Files&nbsp;to&nbsp;flashable&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
+  * **packzippr** [*<b>\[Pack&nbsp;files&nbsp;from&nbsp;PACKAGES_RESULTS&nbsp;to&nbsp;a&nbsp;flashable&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
   * **gitzip** *&lt;commit_sha1&gt;* [*<b>\[Git&nbsp;commit&nbsp;files&nbsp;to&nbsp;flashable&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
   * **oeminjectorzip** *&lt;oem_image&gt;* [*<b>\[OEM&nbsp;files&nbsp;to&nbsp;flashable&nbsp;injector&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/packages.rc)
 
