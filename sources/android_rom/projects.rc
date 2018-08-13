@@ -366,7 +366,7 @@ function androidprojectpatcher()
   local user_is_owner='';
 
   # Check current user rights
-  if [ "$(git config --global user.email)" = "${project_email}" ]; then
+  if [ "$(git config --global user.email | tr -d "\'")" = "${project_email}" ]; then
     user_is_owner='true';
   fi;
 
