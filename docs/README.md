@@ -397,7 +397,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **romautorelease** *&lt;device_name&gt; &lt;rom_tag&gt; [nowipe,j1/j2]* [*<b>\[Advanced&nbsp;automated&nbsp;ROM&nbsp;builder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/builders.rc)
   * **autorelease** [*<b>\[Helper&nbsp;menu&nbsp;access&nbsp;to&nbsp;autorelease*&nbsp;functions\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/builders.rc)
   * **romlogs** *&lt;device&gt; &lt;rom&gt; [logs_count_default_200]* [*<b>\[View&nbsp;ROMs&nbsp;build&nbsp;logs&nbsp;from&nbsp;romautorelease\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/builders.rc)
-  * **autobuild** *&lt;device&gt;* [*<b>\[Development&nbsp;automated&nbsp;ROM&nbsp;builder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/builders.rc)
+  * **autobuild** *&lt;device&gt; [bool_nocleanram]* [*<b>\[Development&nbsp;automated&nbsp;ROM&nbsp;builder\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/builders.rc)
 
 ---
 > ### <span class="group_label">[sources/android_release/cleaners.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_release/cleaners.rc)</span> ###

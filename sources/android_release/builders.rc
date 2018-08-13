@@ -305,7 +305,7 @@ function autobuild()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: autobuild <device> (Development automated ROM builder)';
+    echo ' Usage: autobuild <device> [bool_nocleanram] (Development automated ROM builder)';
     echo '';
     return;
   fi;
@@ -317,7 +317,7 @@ function autobuild()
   outdevcl "${1}" 'minimal';
 
   # When option enabled, clean RAM before build
-  if __shtools-builds-cleanram-active; then
+  if [ -z "${2}" ] && __shtools-builds-cleanram-active; then
     cleanrambuild;
   fi;
 
@@ -336,7 +336,7 @@ function autobuild()
   fi;
 
   # When option enabled, clean RAM after build
-  if __shtools-builds-cleanram-active; then
+  if [ -z "${2}" ] && __shtools-builds-cleanram-active; then
     cleanrambuild;
   fi;
 
