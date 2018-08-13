@@ -921,6 +921,14 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
 #### <span class="group_category">Host &bull; </span><span class="group_label">Development Tools</span> ####
 </summary>
 
+> ### <span class="group_label">[sources/host/aliases.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/aliases.rc)</span> ###
+>
+  ```Shell
+source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/aliases.rc)
+  ```
+  * **ll** : *ls -la* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/aliases.rc)
+
+---
 > ### <span class="group_label">[sources/host/binary.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/binary.rc)</span> ###
 >
   ```Shell

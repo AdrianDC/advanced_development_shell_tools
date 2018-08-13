@@ -56,6 +56,11 @@ function gitbranchpusher()
     project_branch=${project_dir//\//_};
   fi;
 
+  # Special branches
+  if [ "${project_branch}" = '.repo_manifests' ]; then
+    project_branch='repo_manifests';
+  fi;
+
   # Target remote
   if [ -z "${remote}" ] && [ -f "$(gettop)/.repo/local_manifests/roomservice.xml" ]; then
     remote=$(grep --color=never "Project: '" "$(gettop)/.repo/local_manifests/roomservice.xml" \
