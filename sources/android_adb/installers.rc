@@ -106,7 +106,7 @@ function adbif()
 
   # Find installed files
   repo_top=$(gettop 2> /dev/null);
-  tmp_installs=$(grep -a 'target/product/[^\/]*/system' "${tmp_file}" \
+  tmp_installs=$(grep -aoh '[^ ]*target/product/[^\/]*/system[^ ]*' "${tmp_file}" \
                | sort \
                | uniq);
 
@@ -170,7 +170,7 @@ function adbil()
   ret=${PIPESTATUS[0]};
 
   # Find installed files
-  tmp_installs=$(grep -a "target/product/[^\/]*/system" "${tmp_file}" \
+  tmp_installs=$(grep -aoh '[^ ]*target/product/[^\/]*/system[^ ]*' "${tmp_file}" \
                | sort \
                | uniq);
 
