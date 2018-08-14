@@ -47,7 +47,13 @@ function gerritusername()
 # === Gerrit SSH ===
 function gerritssh()
 {
-  # Usage: gerritssh [branch] [change_id_reverser] (Advanced Gerrit SSH interface)
+  # Usage
+  if [ "${1}" = '--help' ]; then
+    echo '';
+    echo ' Usage: gerritssh [branch] [change_id_reverser] (Advanced Gerrit SSH interface)';
+    echo '';
+    return;
+  fi;
 
   # Common definitions
   export GerritFetch='github.com';
