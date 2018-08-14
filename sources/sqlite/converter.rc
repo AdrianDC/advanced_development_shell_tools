@@ -35,7 +35,7 @@ function sqlite2csv()
   mkdir -p "${output_path}/";
 
   # Acquire tables list
-  tables=($(sqlite3 "${sqlite_file}" '.tables'));
+  readarray -t tables <<< "$(sqlite3 "${sqlite_file}" '.tables')";
 
   # Walk through tables
   echo '';
