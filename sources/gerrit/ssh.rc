@@ -329,7 +329,7 @@ function gerritssh()
     patchname=$(sed ${gerritidpos}'!d' "${tmpfilenames}");
     patchset=$(sed ${gerritidpos}'!d' "${tmpfilepatchsets}");
     patchdraft=$(sed ${gerritidpos}'!d' "${tmpfilepatchdrafts}");
-    if [[ ! "${patchdraft}" == 'false' ]]; then
+    if [ ! -z "${support_drafts}" ] && [[ ! "${patchdraft}" == 'false' ]]; then
       patchdraft=' [DRAFT]';
     else
       patchdraft=;
