@@ -89,7 +89,7 @@ function autoreleaselineagesony8960()
   fi;
 
   # ROM patcher
-  if ! lineagesony8960oreopatcher 'a'; then
+  if ! lineagesony8960patcher 'a'; then
     return;
   fi;
 
