@@ -92,24 +92,26 @@ function adbif()
   fi;
 
   # Variables
+  local packages_arr=();
+  local packages_res='';
   local repo_top;
+  local ret;
   local tmp_file;
   local tmp_installs;
 
   # Execute input command
   tmp_file=$(mktemp);
   "${@}" | tee "${tmp_file}";
-  echo '';
+  ret=${PIPESTATUS[0]};
 
-  # Find new files
+  # Find installed files
   repo_top=$(gettop 2> /dev/null);
   tmp_installs=$(grep -a 'target/product/[^\/]*/system' "${tmp_file}" \
                | sort \
                | uniq);
 
-  # Install new files
+  # List installed files
   for file_path in ${tmp_installs[*]}; do
-    echo "${file_path}";
     if [[ ! "${file_path}" == *'/system.img' ]] &&
         [[ "${file_path}" == *'/system'* ]] &&
         [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
@@ -119,18 +121,30 @@ function adbif()
         file_path="${repo_top}/${file_path}";
       fi;
       if [ -f "${file_path}" ]; then
-        packages+="${file_path} ";
-        adbpf "${file_path}";
+        packages_arr+=("${file_path}");
+        packages_res+="${file_path} ";
       fi;
     fi;
   done;
 
+  # Push installed files
+  if [ "${ret}" -eq 0 ]; then
+    adbpf "${packages_arr[@]}";
+
+  # Cleanup incomplete files
+  else
+    rm -f "${packages_arr[@]}";
+  fi;
+
   # Prepare public PACKAGES_RESULTS
-  export PACKAGES_RESULTS="${packages}";
+  export PACKAGES_RESULTS="${packages_res}";
 
   # End of process
   rm -f "${tmp_file}";
   echo '';
+
+  # Result
+  return "${ret}";
 }
 
 # === ADB System File Listener / Lister ===
@@ -145,21 +159,22 @@ function adbil()
   fi;
 
   # Variables
-  local packages='';
+  local packages_arr=();
+  local packages_res='';
   local tmp_file;
   local tmp_installs;
 
   # Execute input command
   tmp_file=$(mktemp);
   "${@}" | tee "${tmp_file}";
-  echo '';
+  ret=${PIPESTATUS[0]};
 
-  # Find new files
+  # Find installed files
   tmp_installs=$(grep -a "target/product/[^\/]*/system" "${tmp_file}" \
                | sort \
                | uniq);
 
-  # List new files
+  # List installed files
   for file_path in ${tmp_installs[*]}; do
     if [[ ! "${file_path}" == *'/system.img' ]] &&
         [[ "${file_path}" == *'/system'* ]] &&
@@ -170,19 +185,32 @@ function adbil()
         file_path=$(gettop)/${file_path};
       fi;
       if [ -f "${file_path}" ]; then
-        echo '';
-        echo -e " \e[1;36m${file_path}\e[0m";
-        packages+="${file_path} ";
+        packages_arr+=("${file_path}");
+        packages_res+="${file_path} ";
+
+        # List installed files
+        if [ "${ret}" -eq 0 ]; then
+          echo '';
+          echo -e " \e[1;36m${file_path}\e[0m";
+        fi;
       fi;
     fi;
   done;
 
+  # Cleanup incomplete files
+  if [ "${ret}" -ne 0 ]; then
+    rm -f "${packages_arr[@]}";
+  fi;
+
   # Prepare public PACKAGES_RESULTS
-  export PACKAGES_RESULTS="${packages}";
+  export PACKAGES_RESULTS="${packages_res}";
 
   # End of process
   rm -f "${tmp_file}";
   echo '';
+
+  # Result
+  return "${ret}";
 }
 
 # === ADB File Installer Helpers ===
