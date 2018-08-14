@@ -21,6 +21,8 @@ function androiddevicestarget()
   # Usage: androiddevicestarget [boot/system/...] [device] (Devices targets mapper)
 
   # Variables
+  local adb_cmd;
+  local adb_device;
   local request=${1};
   local device=${2};
   local fullpath;
@@ -33,16 +35,22 @@ function androiddevicestarget()
     device=;
   fi;
 
-  # Autodetect
+  # Detect from TARGET_PRODUCT
   if [ -z "${device}" ]; then
     device=${TARGET_PRODUCT#*_};
   fi;
+
+  # Detect from KBUILD_DIFFCONFIG
   if [ -z "${device}" ]; then
     device=${KBUILD_DIFFCONFIG%_*};
   fi;
+
+  # Detect from ANDROID_DEVICE_TARGET
   if [ -z "${device}" ]; then
     device=${ANDROID_DEVICE_TARGET};
   fi;
+
+  # Detect from target devices
   if [ -z "${device}" ]; then
     fullpath=$(pwd);
     for devicename in ${target_devices}; do
@@ -51,6 +59,19 @@ function androiddevicestarget()
       fi;
     done;
   fi;
+
+  # Detect from adb
+  if [ -z "${device}" ]; then
+    adb_cmd=$(adbcmd);
+    adb_device=$(timeout -k 2 2 sh -c "${adb_cmd} shell getprop ro.build.product");
+    for devicename in ${target_devices}; do
+      if [ "${adb_device}" = "${devicename}" ]; then
+        device=${devicename};
+      fi;
+    done;
+  fi;
+
+  # Unknown device
   if [ -z "${device}" ]; then
     >&2 echo '';
     >&2 echo ' export TARGET_PRODUCT=device_name is empty';
