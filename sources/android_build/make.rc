@@ -59,6 +59,9 @@ function makes()
     echo -e " \e[1;31m#### ${BUILD_RESULT} ####\e[0m";
   fi;
   echo '';
+
+  # Return result
+  return ${ret};
 }
 
 # === Internal make time string builder ===
