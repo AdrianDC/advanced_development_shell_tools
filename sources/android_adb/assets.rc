@@ -53,11 +53,20 @@ function sepaud()
     return;
   fi;
 
+  # Load sepolicy file from device
+  if [ ! -f sepolicy.dump ]; then
+    echo '';
+    echo ' sepaud: Loading sepolicy image from the device with ADB...';
+    echo '';
+    adbwait;
+    adb pull /sys/fs/selinux/policy ./sepolicy.dump;
+  fi;
+
   # Logs sepolicy analyzer
   echo '';
   grep -a "avc.*denied .*${2}" "${1}";
   grep -a 'does not have a SELinux domain defined' "${1}";
-  grep -a "avc.*denied .*${2}" "${1}" | audit2allow -p sepolicy;
+  grep -a "avc.*denied .*${2}" "${1}" | audit2allow -p ./sepolicy.dump;
   echo '';
 }
 
