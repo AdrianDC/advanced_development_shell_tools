@@ -78,12 +78,16 @@ function uploadmega()
   # Remove local megatools cache
   rm -rf /tmp/*.megatools.cache;
 
-  # Upload file to target
+  # Prepare remote for upload
   echo '';
   megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       "${target}/$(basename "${file_path}")" 2> /dev/null;
   megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       "${target}" 2> /dev/null;
+
+  # Upload file to target (twice to prevent handle failures)
+  megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
+      --path "${target}" "${file_path}" ||
   megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
       --path "${target}" "${file_path}";
 
