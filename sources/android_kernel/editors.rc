@@ -213,7 +213,7 @@ function bootelf()
     python ./mkelf.py -o boot-new.elf kernel@0x80208000 ramdisk.img@0x81900000,ramdisk RPM.bin@0x00020000,rpm cmdline.txt@0x00000000,cmdline;
 
     # Replace input bootimage
-    mv ./boot-new.elf "${boot_file}";
+    mv -f ./boot-new.elf "${boot_file}";
     echo '';
     echo ' [ Done ]';
     echo '';
