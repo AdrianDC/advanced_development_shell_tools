@@ -359,7 +359,9 @@ function shtoolsnews()
 
   # Direct call output
   if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
-    echo '';
+    if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+      echo '';
+    fi;
 
   # Ignore automated news based on timestamp
   else
@@ -411,8 +413,10 @@ function shtoolsnews()
   echo -en "\r\033[K";
 
   # Enable UI wrapper
-  __shtoolsui 'enable';
-  __shtoolsui 'start';
+  if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+    __shtoolsui 'enable';
+    __shtoolsui 'start';
+  fi;
 
   # Header
   echo '';
@@ -472,13 +476,19 @@ function shtoolsnews()
     done < <(git log --abbrev-commit --pretty=oneline -n "${commits_remote_count}" FETCH_HEAD);
 
     # Present upgrade hint
-    echo '';
-    echo -e ' \e[1;33m> \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project';
+    if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+      echo '';
+      echo -e ' \e[1;33m> \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project';
+    fi;
     echo '';
   fi;
 
+  # Ignore input during project sync
+  if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+    sleep 1;
+
   # Delay input on automatic notifications
-  if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
+  elif [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
     echo -en '\r\033[K \e[1;37m> Resuming input in 3 seconds...';
     sleep 3;
     echo -en '\r\033[K';
@@ -490,7 +500,9 @@ function shtoolsnews()
   fi;
 
   # Disable UI wrapper
-  __shtoolsui 'disable';
+  if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+    __shtoolsui 'disable';
+  fi;
 
   # Restore current path
   cd "${currentdir}/";

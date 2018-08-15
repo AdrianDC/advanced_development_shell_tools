@@ -66,7 +66,7 @@ function shtoolssync()
   cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
   # Display project news
-  shtoolsnews;
+  ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC=true shtoolsnews;
 
   # Download upstream changes
   git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" &&
