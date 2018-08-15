@@ -119,6 +119,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **sepmsg** *&lt;logs_file&gt; &lt;context&gt; [grep]* [*<b>\[Logs&nbsp;sepolicy&nbsp;message&nbsp;extractor\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbintents** [*<b>\[List&nbsp;Android&nbsp;intents&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbcamera** [*<b>\[Enable&nbsp;and&nbsp;launch&nbsp;camera&nbsp;applications\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
+  * **adbsuwbypass** [*<b>\[Bypass&nbsp;the&nbsp;Android&nbsp;Setup&nbsp;Wizard\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbkp** *&lt;process_name&gt;* [*<b>\[Kill&nbsp;process&nbsp;by&nbsp;name\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbrun** *&lt;executable_path&gt; [params]* [*<b>\[Run&nbsp;a&nbsp;device&nbsp;through&nbsp;adb\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)
   * **adbdu** [*<b>\[Android&nbsp;/data/&nbsp;sizes&nbsp;study\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_adb/assets.rc)

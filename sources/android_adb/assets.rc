@@ -129,6 +129,18 @@ function adbcamera()
   adbsu 'am start -a android.media.action.IMAGE_CAPTURE';
 }
 
+# === ADB Setup Wizard Bypass ===
+function adbsuwbypass()
+{
+  # Usage: adbsuwbypass (Bypass the Android Setup Wizard)
+
+  # Bypass the Android Setup Wizard
+  adbsu 'pm disable com.google.android.setupwizard;
+         settings put global setup_wizard_has_run 1;
+         settings put secure user_setup_complete 1;
+         settings put global device_provisioned 1'
+}
+
 # === ADB Kill Process ===
 function adbkp()
 {
