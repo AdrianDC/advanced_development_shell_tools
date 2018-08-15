@@ -442,9 +442,9 @@ function androidprojectpatcher()
 
     # Handle unupdated projects
     if [ "${git_revs_count_local}" -ne 0 ] && [ "${git_revs_count_remote}" -ne 0 ]; then
-      echo -e '  \e[1;37m> Commands: Y (Rebase on new changes)';
-      echo -e '              n (Use the old project sources)';
-      echo -e '              i (Ignore this project sources)';
+      echo -e '  \e[1;37m> Commands: Y (Rebase on local history)';
+      echo -e '              n (Use the remote project history)';
+      echo -e '              i (Ignore this project'\''s sources)';
       if [ ! -z "${user_is_owner}" ]; then
       echo -e '              a (Automatically update all projects)';
       fi;
