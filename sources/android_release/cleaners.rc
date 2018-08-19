@@ -199,7 +199,25 @@ function outsystemdevcl()
   # Delete relevant outputs while keeping heavy ones
   elif [ -d "${out_device_path}/system" ]; then
     find "${out_device_path}/system" -type f \
-        -not -iname '*.apk' -and -not -iname '*.jar' \
+        -not -name '*.apk' -and \
+        -not -name '*.art' -and \
+        -not -name '*.bmd' -and \
+        -not -name '*.dat' -and \
+        -not -name '*.fw' -and \
+        -not -name '*.hyb' -and \
+        -not -name '*.idc' -and \
+        -not -name '*.jar' -and \
+        -not -name '*.kcm' -and \
+        -not -name '*.kl' -and \
+        -not -name '*.lic.txt' -and \
+        -not -name '*.oat' -and \
+        -not -name '*.odex' -and \
+        -not -name '*.ogg' -and \
+        -not -name '*.otf' -and \
+        -not -name '*.prof' -and \
+        -not -name '*.rel' -and \
+        -not -name '*.ttf' -and \
+        -not -name '*.vdex' \
         -delete;
   fi;
 }
