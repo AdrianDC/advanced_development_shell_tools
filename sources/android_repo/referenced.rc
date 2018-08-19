@@ -306,7 +306,8 @@ function reporeflinker()
   dev_path=$(getand)/Development;
 
   # Access local_manifests
-  croot;
+  croot 2>/dev/null;
+  mkdir -p ./.repo/local_manifests/;
   cd ./.repo/local_manifests/;
   echo '';
 
