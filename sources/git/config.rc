@@ -49,9 +49,9 @@ function gitconfuser()
     echo '';
     echo ' Usage: gitconfuser <"name"> <"email"> (Configure Git user and email)';
     echo '';
-    echo -en " \e[1;37m> User name: ";
+    echo -en ' \e[1;37m> User name:\e[0m ';
     read -r name;
-    echo -en " \e[1;37m> User email: ";
+    echo -en ' \e[1;37m> User email:\e[0m ';
     read -r email;
   fi;
 
@@ -130,15 +130,15 @@ function gitu()
   echo '';
 
   # Request user input
-  echo -en " \e[1;37m> Switch to an user [0-${cnt}] : ";
+  echo -en " \e[1;37m> Switch to an user [0-${cnt}]:\e[0m ";
   __shtoolsui 'input';
   echo '';
 
   # Add and configure requested user
   if [ "${key}" -eq '0' ]; then
-    echo -en " \e[1;37m> User name: ";
+    echo -en ' \e[1;37m> User name:\e[0m ';
     read -r line_name;
-    echo -en " \e[1;37m> User email: ";
+    echo -en ' \e[1;37m> User email:\e[0m ';
     read -r line_email;
     if [ ! -z "${line_email}" ] && [ ! -z "${line_email}" ]; then
       echo "'${line_name}','${line_email}'" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
@@ -165,7 +165,7 @@ function gitconfeditor()
     echo '';
     echo ' Usage: gitconfeditor <app_name/default> (Configure Git editor application)';
     echo '';
-    echo -en " \e[1;37m> Editor: ";
+    echo -en ' \e[1;37m> Editor:\e[0m ';
     read -r editor;
   fi;
 
@@ -200,7 +200,7 @@ function gitconfmergetool()
     echo '';
     echo ' Usage: gitconfmergetool <app_name> (Configure Git merge tool handling)';
     echo '';
-    echo -en " \e[1;37m> App name: ";
+    echo -en ' \e[1;37m> App name:\e[0m ';
     read -r app_name;
   fi;
 
@@ -229,7 +229,7 @@ function gitconffilecrlf()
     echo '';
     echo ' Usage: gitconffilecrlf <auto/detect/input> [bool_local] (Configure Git file CR/LF EOL handling)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -274,7 +274,7 @@ function gitconffileperms()
     echo '';
     echo ' Usage: gitconffileperms <detect/ignore> (Configure Git file permissions handling)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -307,7 +307,7 @@ function gitconfcolors()
     echo '';
     echo ' Usage: gitconfcolors <always/auto/never> (Configure Git colors handling)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -342,7 +342,7 @@ function gitconfcommitstats()
     echo '';
     echo ' Usage: gitconfcommitstats <show/quick/hide> (Configure Git commits stats visibility)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -387,7 +387,7 @@ function gitconfpager()
     echo '';
     echo ' Usage: gitconfpager <less/more/none> (Configure Git pager handling)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -420,7 +420,7 @@ function gitconfcredentials()
     echo '';
     echo ' Usage: gitconfcredentials <cache/cache --timeout=X/store/wincred> (Configure Git credentials handling)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -451,7 +451,7 @@ function gitconfgpgkey()
     echo '';
     echo ' Usage: gitconfgpgkey <gpg_key_id> (Configure Git GPG signing key)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -478,7 +478,7 @@ function gitconfconflictsrepeat()
     echo '';
     echo ' Usage: gitconfconflictsrepeat <enable/disable> (Configure Git conflicts repeated handling)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -511,7 +511,7 @@ function gitconfdiffrenames()
     echo '';
     echo ' Usage: gitconfdiffrenames <basic/detect/ignore> (Configure Git diff renames handling)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
@@ -546,7 +546,7 @@ function gitconfgpgsignature()
     echo '';
     echo ' Usage: gitconfgpgsignature <enable/disable> (Configure Git GPG signature usage)';
     echo '';
-    echo -en " \e[1;37m> Mode: ";
+    echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
   fi;
 
