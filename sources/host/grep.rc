@@ -118,7 +118,7 @@ function gca()
 
   # Grep through files
   tmp_list=$(mktemp);
-  findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile' -o -name '*.cmake' \) > "${tmp_list}";
+  findfilteredprojectfiles . \( -name '*.mk' -o -name '*.bp' -o -name '*.go' -o -name 'Makefile*' -o -name '*.cmake' \) > "${tmp_list}";
   while read -r file; do
     found=$(stringsgetall "${file}" | grep -ai --color=always -- "${*}");
     if [ ! -z "${found}" ]; then
