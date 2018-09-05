@@ -362,6 +362,8 @@ function androidprojectpatcher()
   local project_branch;
   local project_github;
   local project_path;
+  local remote_branch;
+  local remote_name;
   local shallow_count;
   local user_is_owner='';
 
@@ -643,9 +645,13 @@ function androidprojectrebaser()
   local project_branch;
   local project_name;
   local project_path;
+  local project_github;
   local project_upstream;
   local push_branch=${projects_branch};
   local push_command;
+  local remote_branch;
+  local remote_name;
+  local shallow_count;
 
   # Projects loader
   for project in ${projects_paths}; do
@@ -693,17 +699,36 @@ function androidprojectrebaser()
     fi;
     cd "${project_path}/";
 
-    # Prepend GitHub is needed
+    # Prepend GitHub if needed
     if [[ ! "${project_upstream}" = *'://'* ]]; then
       project_upstream="https://github.com/${project_upstream}";
     fi;
 
-    # Fetch and unshallow if needed
-    git fetch --unshallow "https://github.com/${projects_owner}/${project_name}" "${push_branch}" 2>&1 \
-        | grep -v 'on a complete repository does not make sense';
+    # Targets selection
+    project_github="https://github.com/${projects_owner}/${project_name}";
 
-    # Fetch and compare
-    git fetch "${project_upstream}" "${project_branch}";
+    # Fetch
+    if ! git fetch "${project_github}" "${push_branch}"; then
+      echo 'Remote project branch not found, ignoring...';
+      continue;
+    fi;
+
+    # Fetch until history base match
+    if ! git merge-base HEAD FETCH_HEAD >/dev/null; then
+      echo '';
+      shallow_count=0;
+      remote_branch=$(gitgetrepobranch);
+      remote_name=$(gitgetremote "${remote_branch}");
+      while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
+        shallow_count=$((shallow_count + 10));
+        echo -en "\r\033[K  \e[1;33m> Searching common history with depth ${shallow_count}...\e[0m";
+        git fetch --depth "${shallow_count}" "${remote_name}" "${remote_branch}" >/dev/null 2>&1;
+        git fetch --depth "${shallow_count}" "${project_github}" "${push_branch}" >/dev/null 2>&1;
+      done;
+      echo '';
+    fi;
+
+    # Compare
     git_revs_count_local=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<');
     git_revs_count_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
     echo '';
