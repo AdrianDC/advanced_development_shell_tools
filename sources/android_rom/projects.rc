@@ -241,9 +241,14 @@ function androidprojectpatcher()
     curl -fLs "${project_specific_inputs[0]}" > "${project_repopick_file}";
     project_specific_inputs=();
   else
-    project_repopick_tag=$(readlink -f "$(gettop)/.repo/local_manifests/roomservice.xml");
-    project_repopick_tag=repopick-${project_repopick_tag##*/};
-    project_repopick_tag=${project_repopick_tag%.xml}.md;
+    pushd "$(gettop)/.repo/manifests/" >/dev/null;
+    project_repopick_tag=$(repo info . 2>&1 \
+                         | grep -i --color=never 'Manifest branch:' \
+                         | head -n 1\
+                         | sed 's/.*: \(refs\/heads\/\|refs\/tags\/\|\)\(.*\)/\2/' \
+                         | cut -d'-' -f2);
+    popd >/dev/null;
+    project_repopick_tag="repopick-lineage-sony8960-${project_repopick_tag}.md";
     curl -fLs "https://github.com/${project_owner}/${project_name}/raw/local_manifests/${project_repopick_tag}?date=$(date +%s)" > "${project_repopick_file}";
   fi;
 
