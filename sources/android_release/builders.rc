@@ -76,30 +76,10 @@ function romautorelease()
       rom_tag='LineageOS-15.x';
       rom_upload="${rom_phone}/${rom_tag}";;
 
-    # AOSP-CAF 8.x
-    caf)
-      rom_tag='AOSP-CAF-8.x';
-      rom_upload="${rom_phone}/${rom_tag}";;
-
     # LegacyXperia 15.x
     lx)
       rom_tag='LineageOS-15.x';
       rom_upload="LegacyXperia/${rom_device}/${rom_tag}";;
-
-    # AOSP Master
-    master)
-      rom_tag='AOSP-Master';
-      rom_upload='Development';;
-
-    # LineageOS Next
-    next)
-      rom_tag='LineageNext-Master';
-      rom_upload='Development';;
-
-    # ResurrectionRemix Oreo
-    rr)
-      rom_tag='ResurrectionRemix-O';
-      rom_upload="${rom_phone}/${rom_tag}";;
 
     # Sony AOSP 8.x
     sodp)
@@ -156,27 +136,14 @@ function romautorelease()
   case "${rom_name}" in
 
     # AOSP Release | AOSP Master | Sony SODP
-    aosp|master|sodp)
+    aosp|sodp)
       repos "${rom_target}";
       makes otapackage | tee "${rom_logs_output}";;
 
     # LineageOS Release | Lineage Next | LegacyXperia
-    lineage|next|lx)
+    lineage|lx)
       repos "${rom_target}";
       brunch "${rom_target}" | tee "${rom_logs_output}";;
-
-    # AOSP-CAF Release
-    caf)
-      source ./build/envsetup.sh;
-      lunch "aospcaf_${rom_target}-userdebug";
-      makes otapackage | tee "${rom_logs_output}";;
-
-    # ResurrectionRemix Release
-    rr)
-      export RR_BUILDTYPE=OFFICIAL;
-      repos "${rom_target}";
-      brunch "${rom_target}" | tee "${rom_logs_output}";
-      export RR_BUILDTYPE='';;
 
     # Unknown ROM
     *)
