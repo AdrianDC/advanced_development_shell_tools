@@ -66,26 +66,26 @@ function romautorelease()
   # Select ROM target
   case "${rom_name}" in
 
-    # AOSP 8.x
+    # AOSP
     aosp)
-      rom_tag='AOSP-8.x';
+      rom_tag="AOSP-${ROM_RELEASE:-8.x}";
       rom_upload="${rom_phone}/${rom_tag}";;
 
-    # LineageOS 15.x
+    # LineageOS
     lineage)
-      rom_tag='LineageOS-15.x';
+      rom_tag="LineageOS-${ROM_RELEASE:-15.x}";
       rom_upload="${rom_phone}/${rom_tag}";;
 
-    # LegacyXperia 15.x
+    # LegacyXperia
     lx)
-      rom_tag='LineageOS-15.x';
+      rom_tag="LineageOS-${ROM_RELEASE:-15.x}";
       rom_upload="LegacyXperia/${rom_device}/${rom_tag}";;
 
-    # Sony AOSP 8.x
+    # Sony AOSP
     sodp)
-      rom_tag='AOSP-8.x';
+      rom_tag="AOSP-${ROM_RELEASE:-8.x}";
       rom_target=$(codenametotarget "${rom_device}");
-      rom_upload=${rom_phone}/AOSP-7.x;
+      rom_upload="${rom_phone}/AOSP-${ROM_RELEASE:-8.x}";
 
       # Handle Sony AOSP kernel build
       sonyaospkernelupdate "${rom_device}";;
