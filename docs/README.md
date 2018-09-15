@@ -1167,6 +1167,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
 >
   * **makei** : *adbi makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_build/make.rc)
   * **makel** : *adbil makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_build/make.rc)
+  * **makez** *adbil makes "${@}"; packzippr* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/android_build/make.rc)
 
 ---
 </details>

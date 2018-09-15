@@ -20,3 +20,6 @@ alias makei='adbi makes';
 
 # === Make with Packages Results ===
 alias makel='adbil makes';
+
+# === Make with Packages Zip ===
+function makez() { adbil makes "${@}"; packzippr; }
