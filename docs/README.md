@@ -1389,6 +1389,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
 > ### <span class="group_label">[extensions/sony_msm8960/autorelease.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)</span> ###
 >
   * **autoreleaseaospsony8960o** *[devices]* [*<b>\[Automated&nbsp;AOSP&nbsp;Oreo&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
+  * **autoreleaseaospsony8960p** *[devices]* [*<b>\[Automated&nbsp;AOSP&nbsp;Oreo&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
   * **autoreleaselineagesony8960** *[devices]* [*<b>\[Automated&nbsp;LineageOS&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
 
 ---
