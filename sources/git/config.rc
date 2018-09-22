@@ -227,7 +227,7 @@ function gitconffilecrlf()
   # Usage and user input
   if [ -z "${mode}" ]; then
     echo '';
-    echo ' Usage: gitconffilecrlf <auto/detect/input> [bool_local] (Configure Git file CR/LF EOL handling)';
+    echo ' Usage: gitconffilecrlf <auto/detect/input/warn> [bool_local] (Configure Git file CR/LF EOL handling)';
     echo '';
     echo -en ' \e[1;37m> Mode:\e[0m ';
     read -r mode;
@@ -251,6 +251,9 @@ function gitconffilecrlf()
     input)
       git config "${file_option}" core.autocrlf 'input';
       git config "${file_option}" core.safecrlf 'false';;
+    warn)
+      git config "${file_option}" core.autocrlf 'false';
+      git config "${file_option}" core.safecrlf 'false';;
     *)
       echo '';
       echo " Error: Option '${mode}' not recognized";;
@@ -260,6 +263,8 @@ function gitconffilecrlf()
   echo '';
   echo -n ' gitconffilecrlf: core.autocrlf = ';
   git config "${file_option}" --get core.autocrlf;
+  echo -n ' gitconffilecrlf: core.safecrlf = ';
+  git config "${file_option}" --get core.safecrlf;
   echo '';
 }
 
