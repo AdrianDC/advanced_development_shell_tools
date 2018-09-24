@@ -22,6 +22,7 @@
 alias gitlo='git log --pretty=oneline --abbrev-commit';
 alias gitlod='git log --pretty=oneline --abbrev-commit --';
 alias gitloo='git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s" --date=short --all --';
+alias gitlor='git log --pretty=format:"%C(yellow)%h %Cred%ad %Creset%s %Cgreen%d" --date=short --all --'
 alias gitlosign='git log --show-signature';
 
 # === Git Log Searcher ===
