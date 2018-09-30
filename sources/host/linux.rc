@@ -30,7 +30,7 @@ function rsynca()
   fi;
 
   # Sync execution
-  rsync -av --delete "${1}" "${2}";
+  rsync -aAHPvXz --delete "${1}" "${2}";
 }
 
 # === Folders Fast Syncer ===
@@ -45,7 +45,7 @@ function rsyncf()
   fi;
 
   # Sync execution
-  rsync -av --delete --size-only "${1}" "${2}";
+  rsync -aAHPvXz --delete --size-only "${1}" "${2}";
 }
 
 alias pcinfo='inxi -Fxz';
