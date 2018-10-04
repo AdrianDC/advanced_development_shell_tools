@@ -1,0 +1,179 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Standalone Source Helper ===
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/repopicks.rc)
+
+# === Gerrit Repopicks ===
+function gerritrepopicks()
+{
+  # Usage
+  if [ "${1}" = '--help' ]; then
+    echo '';
+    echo ' Usage: gerritrepopicks [branch] (Gerrit repopicks automated extractor)';
+    echo '';
+    return;
+  fi;
+
+  # Common definitions
+  export GerritFetch='github.com';
+
+  # Gerrit Credentials
+  if [ -z "${GerritUsername}" ]; then
+    export GerritFetch='github.com';
+    export GerritReview='LineageOS';
+    export GerritRemote='review.lineageos.org';
+    export GerritUsername='Username';
+    export GerritHTTPUsername='Username';
+    export GerritHTTPPassword='abcdefgh12345678';
+    export GerritBranchPrimary='lineage-15.1';
+    export GerritBranchSecondary='cm-14.1';
+  fi;
+
+  # Create .bash_android.gerrit.rc with the exports to override the credentials
+  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc" ]; then
+    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc";
+  fi;
+
+  # Manual user login if credentials missing
+  if [ "${GerritUsername}" = 'Username' ]; then
+
+    # Header data
+    echo '';
+    echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2018\e[0m';
+    echo '';
+    echo -e "      \e[1;33mError: No configuration in ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc found";
+    echo -e '             \e[1;31mUse "shtoolsf gerritssh" to see how to set your logins\e[0m';
+    echo '';
+    echo -e '      \e[1;32mInfo: Gerrit SSH credentials will be used to login and review';
+    echo -e '             HTTP credentials will only be used for the "Publish" feature\e[0m';
+    echo '';
+
+    # Credentials acquisition
+    local input;
+    echo -e "      \e[1;37mServer:\e[0m ${GerritRemote}";
+    echo -en  '      \e[1;37mUsername:\e[0m ';
+    read -r input;
+    export GerritUsername=${input};
+    export GerritHTTPUsername=${input};
+    echo -en  '      \e[1;37mPassword (HTTP):\e[0m ';
+    read -r input;
+    export GerritHTTPPassword=${input};
+
+    # Credentials ready
+    echo '';
+    echo -e '      \e[1;33mWarning: Credentials remembered only for this session\e[0m';
+    sleep 3;
+  fi;
+
+  # Configurations
+  local gerritssh="ssh -p 29418 ${GerritUsername}@${GerritRemote} gerrit";
+  local projectbranch=${1:-${GerritBranchPrimary}};
+
+  # Splash Text
+  echo '';
+  echo -en "    \e[1;37mShell Gerrit Reviewer by Adrian DC - Connecting to ${projectbranch}\e[0m";
+
+  # Project Loading
+  local projectorigin;
+  local projectname;
+  local tmpdir;
+  projectorigin=$(git remote -v | grep --color=never origin | tail -n 1);
+  if [ -z "${projectorigin}" ]; then
+    projectorigin=$(git remote -v | grep --color=never ${GerritReview} | tail -n 1);
+  fi;
+  projectname=$(echo "${projectorigin}" | cut -f 2 | sed "s/.*\/\([^.]*\).* .*/\1/");
+  tmpdir=$(mktemp -d);
+
+  # Project Temp Files
+  local patchname;
+  local repopickcounter;
+  local tmpfileidscount;
+  local tmpfilestate=${tmpdir}/state;
+  local tmpfileids=${tmpdir}/ids;
+  local tmpfileidsfor=${tmpdir}/'for';
+  local tmpfilebranch=${tmpdir}/branch;
+  local tmpfilenames=${tmpdir}/names;
+  local tmpfileparents=${tmpdir}/parents;
+
+  # Query gerrit through ssh
+  if ! ${gerritssh} query \
+      --current-patch-set "status:open project:${GerritReview}/${projectname} branch:${projectbranch}" \
+      > "${tmpfilestate}"; then
+    echo '';
+    echo -e "     \e[1;31m> Error... '${gerritssh}' did not connect properly\e[0m";
+    echo '';
+    rm -rf "${tmpdir}";
+    return;
+  fi;
+
+  # Parse relevant informations
+  grep -E --color=never '^\  number' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfileids}";
+  grep -E --color=never '^\  branch' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfilebranch}";
+  grep -E --color=never '^\  subject' "${tmpfilestate}" | cut -d' ' -f4- > "${tmpfilenames}";
+  grep -E --color=never '^\ \[' "${tmpfilestate}" | sed 's/.*\[\(.*\)\].*/\1/' > "${tmpfileparents}";
+  sort "${tmpfileids}" > "${tmpfileidsfor}";
+
+  # Branch empty
+  if [ ! -s "${tmpfileidsfor}" ]; then
+    echo '';
+    echo -en  '     \e[1;32m> No commit on review. ';
+    echo -e 'Exiting...\e[0m';
+    echo '';
+    rm -rf "${tmpdir}";
+    return;
+  fi;
+
+  # Project Connected
+  echo -e "\r\033[K \e[1;31m\e[4;31mConnected to Gerrit - ${GerritReview}/${projectname} - ${projectbranch}\e[0m";
+
+  # Commits on Review
+  tmpfileidscount=$(wc -w < "${tmpfileidsfor}");
+  echo '';
+  while IFS= read -r i; do
+
+    # Commit Details
+    local gerritidpos=-1;
+    local gerritidcount=0;
+    while IFS= read -r j; do
+      gerritidcount=$((gerritidcount+1));
+      if [[ "${i}" == "${j}" ]]; then
+        gerritidpos=${gerritidcount};
+        break;
+      fi;
+    done < "${tmpfileids}";
+    patchname=$(sed ${gerritidpos}'!d' "${tmpfilenames}");
+
+    # Repopick counter
+    repopickcounter='';
+    if [ "${tmpfileidscount}" -gt 10 ]; then
+      repopickcounter="-c ${tmpfileidscount} ";
+    fi;
+    tmpfileidscount=$((tmpfileidscount-1));
+
+    # Commit repopick command
+    echo -e "repopick ${repopickcounter}${i}; # ${patchname}  ";
+
+  done < "${tmpfileidsfor}";
+
+  # End of Project
+  rm -rf "${tmpdir}";
+  echo '';
+  echo -e "  \e[1;37mDone with ${GerritReview}/${projectname} - ${projectbranch}\e[0m ";
+  echo '';
+}
