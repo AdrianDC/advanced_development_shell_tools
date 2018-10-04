@@ -30,6 +30,7 @@ function gitpu()
   local branch;
   local cmd;
   local commits_remote;
+  local fetch_sha1;
   local getbranch;
   local input;
   local option;
@@ -103,9 +104,22 @@ function gitpu()
 
   # Get remote stats
   gitstat "${remote}" "${branch}" true;
+  fetch_sha1=$(git rev-parse FETCH_HEAD 2>/dev/null | grep -v 'FETCH_HEAD');
+
+  # Analyse existing branches
+  if [ ! -z "${fetch_sha1}" ]; then
+    commits_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
+
+  # Handle new branches
+  else
+    commits_remote=0;
+    case "${input}" in
+      -d) ;;
+      *) option='-c';;
+    esac;
+  fi;
 
   # Validate force pushing
-  commits_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
   case "${option}" in
     -d)
       ;;
@@ -146,6 +160,15 @@ function gitpu()
         *) key='';;
       esac;
       echo -en "\e[0;31m${cmd} \e[1;31m# Rewrite: Y/n ? \e[0m";;
+
+    # Creation push
+    -c)
+      cmd="git push ${remote} HEAD:refs/heads/${branch}";
+      case "${input}" in
+        -f|-y) key='y';;
+        *) key='';;
+      esac;
+      echo -en "\e[0;32m${cmd} \e[1;33m# Create new branch: Y/n ? \e[0m";;
 
     # Regular push
     -y|-n|'')
