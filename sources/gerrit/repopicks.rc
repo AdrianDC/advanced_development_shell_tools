@@ -25,7 +25,7 @@ function gerritrepopicks()
   # Usage
   if [ "${1}" = '--help' ]; then
     echo '';
-    echo ' Usage: gerritrepopicks [branch] (Gerrit repopicks automated extractor)';
+    echo ' Usage: gerritrepopicks <change_number> [branch] (Gerrit repopicks automated extractor)';
     echo '';
     return;
   fi;
@@ -83,7 +83,8 @@ function gerritrepopicks()
 
   # Configurations
   local gerritssh="ssh -p 29418 ${GerritUsername}@${GerritRemote} gerrit";
-  local projectbranch=${1:-${GerritBranchPrimary}};
+  local change_number=${1};
+  local projectbranch=${2:-${GerritBranchPrimary}};
 
   # Splash Text
   echo '';
@@ -138,6 +139,83 @@ function gerritrepopicks()
     rm -rf "${tmpdir}";
     return;
   fi;
+
+  # Read remote current HEAD
+  git fetch "https://${GerritFetch}/${GerritReview}/${projectname}" "${projectbranch}" 2> /dev/null;
+  local remotecurrenthead;
+  remotecurrenthead=$(git rev-parse FETCH_HEAD);
+
+  # Reverse merging variables
+  local tmpcommitid=${change_number};
+  local tmpcommitidsearch;
+  local tmpcommitpos;
+  local tmpcommitparent;
+  export tmpcommitspattern=;
+
+  # Parse commits SHA1
+  local tmpfilesha1=${tmpdir}/sha1;
+  grep -E --color=never '^\    revision' "${tmpfilestate}" | cut -d' ' -f6- > "${tmpfilesha1}";
+
+  # Parse the reverse indexes
+  while true; do
+    tmpcommitpos=$(grep -n --color=never "${tmpcommitid}" "${tmpfileids}" | cut -d : -f 1);
+
+    # Exit on failed reverse search
+    if [ -z "${tmpcommitpos}" ]; then
+      echo '';
+      echo -e "     \e[1;31m> Aborting... '${change_number}' could not be reversed to HEAD\e[0m";
+      echo -e "     \e[1;33m> Commit '${tmpcommitid}' was not found on this project\e[0m";
+      echo '';
+      rm -rf "${tmpdir}";
+      return;
+    fi;
+
+    # Commit parent and next child search
+    tmpcommitparent=$(sed "${tmpcommitpos}!d" "${tmpfileparents}");
+    tmpcommitidsearch=$(grep -n --color=never "${tmpcommitparent}" "${tmpfilesha1}" | cut -d : -f 1);
+
+    # Reverse to HEAD successful
+    if [ "${tmpcommitparent}" = "${remotecurrenthead}" ]; then
+      export tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
+      break;
+
+    # Valid ID available to continue
+    elif [ ! -z "${tmpcommitidsearch}" ]; then
+      tmpcommitid=$(sed "${tmpcommitidsearch}!d" "${tmpfileids}");
+      export tmpcommitspattern="${tmpcommitpos} ${tmpcommitspattern}";
+
+    # Exit on failed reverse search
+    elif [ -z "${tmpcommitparent}" ] || [ -z "${tmpcommitidsearch}" ]; then
+      echo '';
+      echo -e "     \e[1;31m> Aborting... '${change_number}' could not be reversed to HEAD\e[0m";
+      echo -e "     \e[1;33m> Commit '${tmpcommitid}' has no valid parent ${tmpcommitparent}\e[0m";
+      echo '';
+      rm -rf "${tmpdir}";
+      return;
+    fi;
+  done;
+
+  # Prepare gerrit state files
+  tmpcommitparent=$(sed "${tmpcommitpos}!d" "${tmpfileparents}");
+  mv "${tmpfileids}" "${tmpfileids}.tmp";
+  mv "${tmpfilebranch}" "${tmpfilebranch}.tmp";
+  mv "${tmpfilenames}" "${tmpfilenames}.tmp";
+  mv "${tmpfileparents}" "${tmpfileparents}.tmp";
+  touch "${tmpfileids}";
+  touch "${tmpfilebranch}";
+  touch "${tmpfilenames}";
+  touch "${tmpfileparents}";
+
+  # Regenerate gerrit files
+  for lineid in ${tmpcommitspattern}; do
+    sed "${lineid}!d" "${tmpfileids}.tmp" >> "${tmpfileids}";
+    sed "${lineid}!d" "${tmpfilebranch}.tmp" >> "${tmpfilebranch}";
+    sed "${lineid}!d" "${tmpfilenames}.tmp" >> "${tmpfilenames}";
+    sed "${lineid}!d" "${tmpfileparents}.tmp" >> "${tmpfileparents}";
+  done;
+  cp "${tmpfileids}" "${tmpfileidsfor}";
+  export tmpcommitspattern=;
+  echo '';
 
   # Project Connected
   echo -e "\r\033[K \e[1;31m\e[4;31mConnected to Gerrit - ${GerritReview}/${projectname} - ${projectbranch}\e[0m";
