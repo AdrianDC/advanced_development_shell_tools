@@ -40,7 +40,7 @@ function lineagesony8960rebaser()
   pushd ./ >/dev/null;
   croot;
   cd ./device/sony/huashan/;
-  branch=$(gitgetrepobranch);
+  branch=$(gitgetrepobranch 'AdrianDC');
   popd >/dev/null;
 
   # Use the androidprojectrebaser helper

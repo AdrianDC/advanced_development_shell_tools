@@ -95,8 +95,8 @@ function gitrbl()
   local remote;
 
   # Get remote and branch
-  branch=${2:-$(gitgetrepobranch)};
-  remote=${1:-$(gitgetremote "${branch}")};
+  remote=${1:-$(gitgetremote)};
+  branch=${2:-$(gitgetbranch "${remote}")};
 
   # Get local commits count
   echo '';
@@ -119,8 +119,8 @@ function gitrb()
   local remote;
 
   # Get remote and branch
-  branch=${2:-$(gitgetrepobranch)};
-  remote=${1:-$(gitgetremote "${branch}")};
+  remote=${1:-$(gitgetremote)};
+  branch=${2:-$(gitgetbranch "${remote}")};
 
   # Get local commits count
   echo '';

@@ -31,7 +31,6 @@ function gitpu()
   local cmd;
   local commits_remote;
   local fetch_sha1;
-  local getbranch;
   local input;
   local option;
   local params=("${@}");
@@ -89,13 +88,8 @@ function gitpu()
   input=${option};
 
   # Variables detection
-  getbranch=$(gitgetrepobranch);
-  remote=${params[0]:-$(gitgetremote "${getbranch}")};
-  branch=${params[1]:-${getbranch}};
-
-  # Variables fallbacks
-  remote=${remote:-origin};
-  branch=${branch:-master};
+  remote=${params[0]:-$(gitgetremote)};
+  branch=${params[1]:-$(gitgetbranch "${remote}")};
 
   # Header information
   echo '';

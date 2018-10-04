@@ -21,29 +21,169 @@
 # === Git Project Remote ===
 function gitgetremote()
 {
-  # Usage: gitgetremote [branch_grep] (Get git primary remote)
+  # Usage: gitgetremote (Get git remote)
 
   # Variables
+  local cnt;
+  local key;
   local remote;
-  local remotes;
+  local remote_url;
+  local remotes=();
+  local tmp_file;
 
-  # Remotes detection
-  remotes=$(git 'for-each-ref' \
-         | grep -i --color=never 'remotes' \
-         | grep -i --color=never "${1}" \
-         | sed 's/.*\/remotes\/\([^\/]*\).*/\1/');
+  # Remotes access
+  tmp_file=$(mktemp);
+  git remote > "${tmp_file}";
+  while read -r remote; do
+    remotes+=("${remote}");
+  done < "${tmp_file}";
+  rm -f "${tmp_file}";
 
-  # Validate remotes
-  for remote in ${remotes}; do
-    if git remote -v | cut -f 1 | grep -q "${remote}"; then
-      break;
-    fi;
+  # Unique remote result
+  if [ "${#remotes[@]}" -eq 1 ]; then
+    echo "${remotes[0]}";
+    return;
+  fi;
+
+  # Remotes list
+  >&2 echo '';
+  >&2 echo -e ' \e[1;32m=== gitgetremote - Git Remote Selection ===';
+  >&2 echo '';
+  cnt=0;
+  for remote in "${remotes[@]}"; do
+    cnt=$((cnt + 1));
+    remote_url=$(git config --get "remote.${remote}.url");
+    >&2 echo -e " \e[1;33m[${cnt}] \e[1;37m${remote} - \e[0;33m${remote_url}";
   done;
 
-  # Fix remote for AOSP
-  if ! git ls-remote --exit-code "${remote}" > /dev/null 2>&1 &&
-      git ls-remote --exit-code "aosp" > /dev/null 2>&1; then
-    remote='aosp';
+  # Remote choice
+  >&2 echo '';
+  >&2 echo -en " \e[1;33mgitgetremote: \e[1;37mGit remote to use \e[1;32m[1-${cnt}] \e[1;33m:\e[0m ";
+  if [ "${cnt}" -eq 1 ]; then
+    >&2 echo '1';
+    key='1';
+  else
+    exec 3<>/dev/tty;
+    read -r -u 3 key;
+    exec 3>&-;
+  fi;
+  >&2 echo '';
+
+  # Remote selection
+  if [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
+    key=$((key - 1));
+    remote=${remotes[${key}]};
+  else
+    remote='?';
+  fi;
+
+  # Output result
+  echo "${remote}";
+}
+
+# === Git Project Branch ===
+function gitgetbranch()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitgetbranch <remote> (Get git branch)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local cnt;
+  local branch;
+  local branches=();
+  local key;
+  local remote=${1};
+  local tmp_file;
+
+  # Branches access
+  tmp_file=$(mktemp);
+  git branch -ar \
+      | grep -v 'HEAD' \
+      | grep -- "${remote}/" \
+      > "${tmp_file}";
+  while read -r branch; do
+    branches+=("${branch#*/}");
+  done < "${tmp_file}";
+  rm -f "${tmp_file}";
+
+  # Branches list
+  >&2 echo '';
+  >&2 echo -e ' \e[1;32m=== gitgetbranch - Git Branch Selection ===';
+  >&2 echo '';
+  cnt=0;
+  key=0;
+  if [ "${#branches[@]}" -ge 1 ]; then
+    >&2 echo -e " \e[1;33m[0] \e[1;37mManual branch input";
+    >&2 echo '';
+    for branch in "${branches[@]}"; do
+      cnt=$((cnt + 1));
+      >&2 echo -e " \e[1;33m[${cnt}] \e[1;37m${branch} - \e[0;33m${remote}";
+    done;
+
+    # Branch choice
+    >&2 echo '';
+    >&2 echo -en " \e[1;33mgitgetbranch: \e[1;37mGit branch to use \e[1;32m[0-${cnt}] \e[1;33m:\e[0m ";
+    exec 3<>/dev/tty;
+    read -r -u 3 key;
+    exec 3>&-;
+  fi;
+
+  # Branch selection
+  if [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
+    >&2 echo '';
+    key=$((key - 1));
+    branch=${branches[${key}]};
+  elif [ "${key}" -eq 0 ]; then
+    >&2 echo -en ' \e[1;33mgitgetbranch:\e[1;37m Git remote branch input : \e[0m';
+    read -r branch;
+    >&2 echo '';
+  else
+    >&2 echo '';
+    branch='?';
+  fi;
+
+  # Output result
+  echo "${branch}";
+}
+
+# === Git Repo Remote ===
+function gitgetreporemote()
+{
+  # Usage
+  if [ ! -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitgetreporemote (Get git repo project remote)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local branch;
+  local branches;
+
+  # Remotes detection
+  branches=$(git 'for-each-ref' \
+           | grep -i --color=never 'remotes' \
+           | grep -v 'HEAD' \
+           | sed 's/.*\/remotes\/\([^\/]*\/[^\/]*\).*/\1/');
+
+  # Validate remotes
+  for branch in ${branches}; do
+    if git remote -v | cut -f 1 | grep -q "${branch%/*}"; then
+      branch=${branch#*/};
+      break;
+    fi;
+    branch='';
+  done;
+
+  # Detect remote from refs
+  if [ -z "${remote}" ] || [[ "${remote}" == *'Manifest'* ]] || [[ "${remote}" == *'HEAD'* ]]; then
+    remote=$(gitgetremote);
   fi;
 
   # Output result
@@ -53,11 +193,18 @@ function gitgetremote()
 # === Git Repo Branch ===
 function gitgetrepobranch()
 {
-  # Usage: gitgetrepobranch (Get git repo project branch)
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: gitgetrepobranch <remote> (Get git repo project branch)';
+    echo '';
+    return;
+  fi;
 
   # Variables
   local branch='';
   local infos;
+  local remote=${1};
 
   # Initialize variables
   infos=$(repo info . 2>&1);
@@ -80,43 +227,7 @@ function gitgetrepobranch()
 
   # Detect branch from refs
   if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
-    branch=$(gitgetbranch);
-  fi;
-
-  # Output result
-  echo "${branch}";
-}
-
-# === Git Project Branch ===
-function gitgetbranch()
-{
-  # Usage: gitgetbranch (Get git primary branch)
-
-  # Variables
-  local branch;
-  local branches;
-
-  # Remotes detection
-  branches=$(git 'for-each-ref' \
-           | grep -i --color=never 'remotes' \
-           | grep -v 'HEAD' \
-           | sed 's/.*\/remotes\/\([^\/]*\/[^\/]*\).*/\1/');
-
-  # Validate remotes
-  for branch in ${branches}; do
-    if git remote -v | cut -f 1 | grep -q "${branch%/*}"; then
-      branch=${branch#*/};
-      break;
-    fi;
-    branch='';
-  done;
-
-  # Default fallback
-  if [ -z "${branch}" ] || [[ "${branch}" == *'Manifest'* ]] || [[ "${branch}" == *'HEAD'* ]]; then
-    >&2 echo '';
-    >&2 echo -en ' \e[1;32mgitgetbranch:\e[1;33m Remote branch = \e[0m';
-    read -r branch;
-    >&2 echo '';
+    branch=$(gitgetbranch "${remote}");
   fi;
 
   # Output result

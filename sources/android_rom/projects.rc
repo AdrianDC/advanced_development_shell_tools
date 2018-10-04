@@ -99,8 +99,8 @@ function gitbranchpusher()
     if [ ! -z "${remote_head}" ] && ! git merge-base HEAD FETCH_HEAD >/dev/null; then
       echo '';
       shallow_count=0;
-      remote_branch=$(gitgetrepobranch);
-      remote_name=$(gitgetremote "${remote_branch}");
+      remote_name=$(gitgetreporemote);
+      remote_branch=$(gitgetrepobranch "${remote_name}");
       while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
         shallow_count=$((shallow_count + 10));
         echo -en "\r\033[K \e[1;33mSearching common history with depth ${shallow_count}...\e[0m";
@@ -435,8 +435,8 @@ function androidprojectpatcher()
     if ! git merge-base HEAD FETCH_HEAD >/dev/null; then
       echo '';
       shallow_count=0;
-      remote_branch=$(gitgetrepobranch);
-      remote_name=$(gitgetremote "${remote_branch}");
+      remote_name=$(gitgetreporemote);
+      remote_branch=$(gitgetrepobranch "${remote_name}");
       while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
         shallow_count=$((shallow_count + 10));
         echo -en "\r\033[K  \e[1;33m> Searching common history with depth ${shallow_count}...\e[0m";
@@ -748,8 +748,8 @@ function androidprojectrebaser()
     if ! git merge-base HEAD FETCH_HEAD >/dev/null; then
       echo '';
       shallow_count=0;
-      remote_branch=$(gitgetrepobranch);
-      remote_name=$(gitgetremote "${remote_branch}");
+      remote_name=$(gitgetreporemote);
+      remote_branch=$(gitgetrepobranch "${remote_name}");
       while ! git merge-base HEAD FETCH_HEAD >/dev/null; do
         shallow_count=$((shallow_count + 10));
         echo -en "\r\033[K  \e[1;33m> Searching common history with depth ${shallow_count}...\e[0m";
@@ -903,6 +903,7 @@ function androidprojectsync()
   # Variables
   local branch;
   local project_path;
+  local remote;
 
   # Android project remote paths list
   for project_path in $(androidprojectpaths "${1}" "${2}"); do
@@ -916,8 +917,9 @@ function androidprojectsync()
     echo " androidproject: Syncing '${project_path}' path...";
 
     # Fetch and reset
-    branch=$(gitgetrepobranch);
-    git fetch "$(gitgetremote "${branch}")" "${branch}" 2>&1;
+    remote=$(gitgetreporemote);
+    branch=$(gitgetrepobranch "${remote}");
+    git fetch "${remote}" "${branch}" 2>&1;
     git reset --hard FETCH_HEAD;
 
   done;
@@ -941,6 +943,7 @@ function androidprojectungraft()
   # Variables
   local branch;
   local project_path;
+  local remote;
 
   # Android project remote paths list
   for project_path in $(androidprojectpaths "${1}" "${2}"); do
@@ -954,8 +957,9 @@ function androidprojectungraft()
     echo " androidprojectungraft: Fetching '${project_path}' last 100 commits...";
 
     # Fetch and ungraft
-    branch=$(gitgetrepobranch);
-    git fetch --depth 100 "$(gitgetremote "${branch}")" "${branch}";
+    remote=$(gitgetreporemote);
+    branch=$(gitgetreporemote "${remote}");
+    git fetch --depth 100 "${remote}" "${branch}";
 
   done;
 
@@ -978,6 +982,7 @@ function androidprojectunshallow()
   # Variables
   local branch;
   local project_path;
+  local remote;
 
   # Android project remote paths list
   for project_path in $(androidprojectpaths "${1}" "${2}"); do
@@ -991,8 +996,9 @@ function androidprojectunshallow()
     echo " androidprojectunshallow: Checking '${project_path}' shallow status...";
 
     # Fetch and unshallow
-    branch=$(gitgetrepobranch);
-    git fetch --unshallow "$(gitgetremote "${branch}")" "${branch}" 2>&1 \
+    remote=$(gitgetreporemote);
+    branch=$(gitgetrepobranch "${remote}");
+    git fetch --unshallow "${remote}" "${branch}" 2>&1 \
 	    | grep -v 'on a complete repository does not make sense';
 
   done;

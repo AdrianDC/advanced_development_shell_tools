@@ -27,7 +27,7 @@ function gerritreview()
   local gerrit_organisation=${2};
   local gerrit_github=${3};
   local gerrit_type=${4};
-  local gerrit_branch=${5:-$(gitgetrepobranch)};
+  local gerrit_branch=${5};
   local gerrit_confirm_twice=;
   local gerrit_fetch=;
   local gerrit_project=;
@@ -45,7 +45,7 @@ function gerritreview()
 
   # Usage
   if [ -z "${gerrit_url}" ] || [ -z "${gerrit_organisation}" ] || [ -z "${gerrit_github}" ] ||
-      [ -z "${gerrit_type}" ] || [ -z "${gerrit_branch}" ]; then
+      [ -z "${gerrit_type}" ]; then
     echo '';
     echo ' Usage: gerritreview <gerrit_ssh_or_http> <project_name_or_.> <github_name_or_.> <drafts/for/heads> [branch] (Gerrit review uploader)';
     echo '';
@@ -74,6 +74,9 @@ function gerritreview()
                   | sed "s#/#_#");
     gerrit_remote="android_${gerrit_remote}";
   fi;
+
+  # Branch detection
+  gerrit_branch=${gerrit_branch:-$(gitgetrepobranch "${gerrit_remote}")};
 
   # Project detection for AOSP
   if [ "${gerrit_organisation}" = 'aosp' ]; then

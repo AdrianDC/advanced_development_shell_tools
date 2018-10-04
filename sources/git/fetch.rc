@@ -33,14 +33,12 @@ function gitfu()
   # Usage: gitfu [remote] [branch] (Git fetch from validated remote)
 
   # Variables
-  local getbranch;
   local remote;
   local branch;
 
   # Initialize variables
-  getbranch=$(gitgetrepobranch);
-  remote=${1:-$(gitgetremote "${getbranch}")};
-  branch=${2:-${getbranch}};
+  remote=${1:-$(gitgetremote)};
+  branch=${2:-$(gitgetbranch "${remote}")};
 
   # Header information
   echo '';
@@ -119,20 +117,23 @@ function gitunshallow()
   # Variables
   local currentdir=${PWD};
   local branch;
+  local remote;
   local submodule;
   local submodules;
 
   # Fetch and unshallow
-  branch=$(gitgetrepobranch);
-  git fetch --unshallow "$(gitgetremote "${branch}")" "${branch}" 2>&1 \
+  remote=$(gitgetreporemote);
+  branch=$(gitgetrepobranch "${remote}");
+  git fetch --unshallow "${remote}" "${branch}" 2>&1 \
     | grep -v 'on a complete repository does not make sense';
 
   # Fetch and unshallow submodules
   submodules=$(git submodule--helper list | cut -f 2);
   for submodule in ${submodules}; do
     cd "${currentdir}/${submodule}/";
-    branch=$(gitgetrepobranch);
-    git fetch --unshallow "$(gitgetremote "${branch}")" "${branch}" 2>&1 \
+    remote=$(gitgetreporemote);
+    branch=$(gitgetbranch "${remote}");
+    git fetch --unshallow "${remote}" "${branch}" 2>&1 \
       | grep -v 'on a complete repository does not make sense';
   done;
 
