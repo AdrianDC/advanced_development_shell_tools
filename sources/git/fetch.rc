@@ -74,6 +74,7 @@ function gitftr()
   # Usage: gitftr [remote] [branch] (Git fetch with tags and reset hard)
 
   # Fetch with tags and reset hard
+  git tag -l | xargs git tag -d >/dev/null;
   gitfu "${1}" "${2}" --tags;
   git reset FETCH_HEAD --hard;
   echo '';
