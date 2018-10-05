@@ -148,11 +148,5 @@ function gitraa()
 }
 
 # === Git Remotes Helpers ===
-function gitraoo()   { gitremoteadaptset 'origin' "${1}"; }
-function gitraot()   { gitremoteadaptset 'origin' 'TheMuppets'; }
-function gitrat()    { gitremoteadaptset 'twrp' 'TeamWin'; }
-function gitrapriv() { gitremoteset private "${1}"; }
-
-# === Git Remotes set-url Shortcuts ===
-alias gitraau='git remote set-url $(githubusername)';
-alias gitraou='git remote set-url origin';
+function gitraorigin() { gitremoteset 'origin' "${1}"; }
+function gitrapriv() { gitremoteset 'private' "${1}"; }

@@ -728,7 +728,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **gitcid** [*<b>\[Apply&nbsp;commit-msg&nbsp;hook&nbsp;to&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcidupstream** [*<b>\[Load&nbsp;commit-msg&nbsp;hook&nbsp;from&nbsp;upstream\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitec** [*<b>\[Edit&nbsp;all&nbsp;files&nbsp;from&nbsp;a&nbsp;commit\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
-  * **gitcommitstable** *&lt;"commit_range"&gt; &lt;"to_insert* [*<b>\[default&nbsp;RM-290\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitrh** : *git reset FETCH_HEAD &#8208;&#8208;hard* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **githd** : *git reset HEAD &#8208;&#8208;hard* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcl** : *git reset HEAD &#8208;&#8208;hard; gitsu* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/commit.rc)
@@ -878,12 +877,8 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **gitremoteadaptset** *&lt;remote_name&gt; &lt;remote_github&gt; [prefix_removal] [bool_prefix_android] [bool_underscore_to_dash]* [*<b>\[Git&nbsp;remote&nbsp;adapter\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitremoteverify** *&lt;remote_name&gt; "command_to_run_if_missing"* [*<b>\[Git&nbsp;remote&nbsp;verifier\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
   * **gitraa** [*<b>\[Add&nbsp;GitHub&nbsp;Username&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitraoo** *gitremoteadaptset 'origin' "${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitraot** *gitremoteadaptset 'origin' 'TheMuppets'* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitrat** *gitremoteadaptset 'twrp' 'TeamWin'* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitrapriv** *gitremoteset private "${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitraau** : *git remote set-url $(githubusername)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
-  * **gitraou** : *git remote set-url origin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
+  * **gitraorigin** *gitremoteset 'origin' "${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
+  * **gitrapriv** *gitremoteset 'private' "${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/remotes.rc)
 
 ---
 > ### <span class="group_label">[sources/git/stats.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/stats.rc)</span> ###
@@ -1247,8 +1242,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **gitpr14** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for cm-14.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitpr15** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-15.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitpr16** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-16.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprd** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . drafts* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprdh** : *gerritreview http://review.lineageos.org LineageOS . drafts* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitpg** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . heads* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitpgh** : *gerritreview http://review.lineageos.org LineageOS . heads* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprg** : *gitpr; gitpg* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)

@@ -223,40 +223,6 @@ function gitec()
   fileedit "${files_list[@]}";
 }
 
-# === Git Commit Stable
-function gitcommitstable()
-{
-  # Default variables
-  local to_insert_default=RM-290;
-
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: gitcommitstable <"commit_range"> <"to_insert (default RM-290)">';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  local commit_range=${1};
-  local to_insert=${2:-${to_insert_default}};
-
-  # Single commits changes
-  if [[ ! "${commit_range}" == *'..'* ]]; then
-    commit_range=${commit_range}^..${commit_range};
-  fi;
-
-  # Pick and edit
-  for commit_sha1 in $(git rev-list --reverse "${commit_range}"); do
-    rm -f .git/COMMIT_EDITMSG;
-    rm -f .git/.COMMIT_EDITMSG.swp;
-    git cherry-pick "${commit_sha1}";
-    sed -i -e "2,/^[^ ]*: .*/s/^\([^ ]*: .*\)/${to_insert}\n\n\1/" .git/COMMIT_EDITMSG;
-    git commit --amend --edit --file=.git/COMMIT_EDITMSG;
-    echo '';
-  done;
-}
-
 # === Git Reset Helpers ===
 alias gitrh='git reset FETCH_HEAD --hard';
 alias githd='git reset HEAD --hard';
