@@ -220,7 +220,7 @@ function gitec()
   done < "${tmp_list}";
 
   # Edit commit files
-  fe "${files_list[@]}";
+  fileedit "${files_list[@]}";
 }
 
 # === Git Commit Stable
