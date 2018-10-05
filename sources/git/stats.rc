@@ -25,22 +25,32 @@
 function gitstat()
 {
   # Usage
-  if [ -z "${2}" ]; then
+  if [ "${1}" = '--help' ]; then
     echo '';
-    echo ' Usage: gitstat <remote> <branch> [stats_only] (Git history with remote comparator)';
+    echo ' Usage: gitstat [remote] [branch] [stats_only] (Git history with remote comparator)';
     echo '';
     return;
   fi;
 
+  # Variables
+  local branch;
+  local remote;
+  local stats_only;
+
+  # Initializations
+  remote=${1:-$(gitgetremote)};
+  branch=${2:-$(gitgetbranch "${remote}")};
+  stats_only=${3};
+
   # Informations
-  echo -e " \e[1;33mgitstat:\e[0m git fetch ${1} ${2}; git rev-list --left-right HEAD...FETCH_HEAD;";
+  echo -e " \e[1;33mgitstat:\e[0m git fetch ${remote} ${branch}; git rev-list --left-right HEAD...FETCH_HEAD;";
   echo '';
 
   # Fetch existing remote branch
-  if git fetch "${1}" "${2}"; then
+  if git fetch "${remote}" "${branch}"; then
 
     # Differences
-    if [ ! -z "${3}" ]; then
+    if [ ! -z "${stats_only}" ]; then
       git --no-pager diff --stat HEAD FETCH_HEAD;
     else
       git --no-pager diff HEAD...FETCH_HEAD;
@@ -59,14 +69,14 @@ function gitstat()
 
     # Present missing branch information
     echo '';
-    echo -e " \e[1;33mgitstat: \e[1;37mRemote branch '${2}' branch was not found...\e[0m";
+    echo -e " \e[1;33mgitstat: \e[1;37mRemote branch '${branch}' branch was not found...\e[0m";
     sleep 1;
 
   fi;
 }
 
-# === Git Projects Statistics (automated) ===
-alias gitst='gitstat "$(gitgetremote)" "$(gitgetbranch)"';
+# === Git Projects Statistics Shortcut ===
+alias gitst='gitstat';
 
 # === Git Projects Statistics (origin) ===
 alias gitsto='gitremoteverify origin gitrao && gitstat origin $(git rev-parse --abbrev-ref HEAD)';
