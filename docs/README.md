@@ -526,8 +526,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
 ---
 > ### <span class="group_label">[sources/android_repo/referenced.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)</span> ###
 >
-  * **reporeferencedaosp** *&lt;"command_to_run"&gt; &lt;"device1 device2 ..."&gt;* [*<b>\[AOSP&nbsp;referenced&nbsp;repo&nbsp;commands&nbsp;launcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
-  * **reporeferencedlineage** *&lt;"command_to_run"&gt; &lt;"device1 device2 ..."&gt;* [*<b>\[LineageOS&nbsp;referenced&nbsp;repo&nbsp;commands&nbsp;launcher\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
   * **reporefupdate** *[bool_automated]* [*<b>\[Upload&nbsp;new&nbsp;projects&nbsp;manifests\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
   * **reporefsync** *[bool_dry_run]* [*<b>\[Download&nbsp;new&nbsp;projects&nbsp;manifests\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
   * **reporefrefresh** [*<b>\[Download&nbsp;and&nbsp;upload&nbsp;new&nbsp;projects&nbsp;manifests\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/referenced.rc)
@@ -578,8 +576,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **meldmrom** *pathscompare "./${1}" "$(tomultirom)/${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **meldtwrp** *pathscompare "./${1}" "$(totwrp)/${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **nout** *diropen "$(toout "${1}")"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
-  * **aospsyncall** *reporeferencedaosp "reposy"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
-  * **lineagesyncall** *reporeferencedlineage "reposy"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdmromboot** *croot; cd ./system/extras/libbootimg/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdmromcore** *croot; cd ./system/extras/multirom/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)
   * **cdlsdk** *croot; cd ./lineage-sdk/* [*<b>(Inline)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/android_repo/shortcuts.rc)

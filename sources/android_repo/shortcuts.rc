@@ -325,10 +325,6 @@ function meldmrom()     { pathscompare "./${1}" "$(tomultirom)/${1}"; }
 function meldtwrp()     { pathscompare "./${1}" "$(totwrp)/${1}"; }
 function nout()         { diropen "$(toout "${1}")"; }
 
-# === Syncer Shortcuts ===
-function aospsyncall() { reporeferencedaosp "reposy"; }
-function lineagesyncall() { reporeferencedlineage "reposy"; }
-
 # === Repository Shortcuts ===
 function cdmromboot()  { croot; cd ./system/extras/libbootimg/; }
 function cdmromcore()  { croot; cd ./system/extras/multirom/; }
