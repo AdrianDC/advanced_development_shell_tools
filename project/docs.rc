@@ -273,14 +273,16 @@ function shtoolsreadme()
         line_standalone=${line_standalone//\)/};
 
         # Build standalone import outputs
-        echo -en "${readme_buffer}  \`\`\`Shell\n";
+        echo -en "${readme_buffer}>  <div class='standalone-import'>\n";
         readme_buffer='';
+        echo -en "  \`\`\`Shell\n";
         echo "${line_standalone}" | tr ' ' '\n' | grep -v '^$' > "${test_standalone}"
         while read -r url; do
           echo -en "source <(curl -Ls1 ${url})\n";
         done < "${test_standalone}";
         rm -f "${test_standalone}";
         echo -en "  \`\`\`\n";
+        echo -en ">  </div>\n";
 
       fi;
 

@@ -64,6 +64,18 @@ details > blockquote {
   margin-top: 20px;
 }
 
+details > blockquote > .standalone-import {
+  max-height: 0px;
+  overflow: hidden;
+  -webkit-transition: max-height 0.5s ease-in-out;
+  -moz-transition: max-height 0.5s ease-in-out;
+  transition: max-height 0.5s ease-in-out;
+}
+
+details > blockquote:hover > .standalone-import {
+  max-height: 200px;
+}
+
 details > pre, details > blockquote > pre {
   margin-left: 10px;
 }
