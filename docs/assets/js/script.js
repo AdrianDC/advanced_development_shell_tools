@@ -30,7 +30,7 @@ function anchorizejekyll()
 // Function: Toggle all documentation details
 function toggle_documentation(button)
 {
-  var details = document.querySelectorAll('details');
+  var details = document.querySelectorAll('details.group_details');
   expand_documentation = !expand_documentation;
 
   Array.from(details).forEach(function(obj, idx) {

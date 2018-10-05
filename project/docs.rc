@@ -241,7 +241,7 @@ function shtoolsreadme()
         fi;
 
         # Build group header output
-        readme_buffer+="${group_buffer}<details>\n<summary class=\"group_header\">\n#### ";
+        readme_buffer+="${group_buffer}<details class='group_details'>\n<summary class=\"group_header\">\n#### ";
         readme_buffer+="<span class=\"group_category\">${group_category} &bull; </span>";
         readme_buffer+="<span class=\"group_label\">${group_name}</span> ####\n</summary>\n\n";
         group_last=${group_current};
