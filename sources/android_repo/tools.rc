@@ -21,7 +21,13 @@
 # === Repo CCache Status/Setter ===
 function repocache()
 {
-  # Usage: repocache [size_max/clean/reinit/wipe] (CCache watcher and configuration)
+  # Usage
+  if [ "${1}" = '--help' ]; then
+    echo '';
+    echo ' Usage: repocache [size_max/clean/reinit/wipe] (CCache watcher and configuration)';
+    echo '';
+    return;
+  fi;
 
   # Variables
   local currentdir;
