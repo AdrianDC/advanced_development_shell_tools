@@ -105,9 +105,11 @@ function gitgetbranch()
   git branch -ar \
       | grep -v 'HEAD' \
       | grep --color=never -- "${remote}/" \
+      | sed 's# *\([^ /]*\)/\([^ /]*\)\(\| .*\)#\2#' \
+      | uniq \
       > "${tmp_file}";
   while read -r branch; do
-    branches+=("${branch#*/}");
+    branches+=("${branch}");
   done < "${tmp_file}";
   rm -f "${tmp_file}";
 
