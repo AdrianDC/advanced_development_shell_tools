@@ -23,7 +23,7 @@
 function gerritrepopicks()
 {
   # Usage
-  if [ "${1}" = '--help' ]; then
+  if [ -z "${1}" ] || [ "${1}" = '--help' ]; then
     echo '';
     echo ' Usage: gerritrepopicks <change_number> [branch] (Gerrit repopicks automated extractor)';
     echo '';
