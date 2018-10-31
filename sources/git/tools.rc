@@ -129,7 +129,7 @@ function gitgetbranch()
 
     # Branch choice
     >&2 echo '';
-    >&2 echo -en " \e[1;33mgitgetbranch: \e[1;37mGit branch to use \e[1;32m[0-${cnt}] \e[1;33m:\e[0m ";
+    >&2 echo -en " \e[1;33mgitgetbranch: \e[1;37mSelect branch \e[1;32m[0-${cnt}] \e[1;37m/ Delete branch \e[1;31m[<0] \e[1;33m:\e[0m ";
     exec 3<>/dev/tty;
     read -r -u 3 key;
     exec 3>&-;
@@ -140,6 +140,24 @@ function gitgetbranch()
     >&2 echo '';
     key=$((key - 1));
     branch=${branches[${key}]};
+  elif [ "${key}" -le -1 ] && [ "${key}" -ge "-${cnt}" ]; then
+    key=$((-1 - key));
+    branch=${branches[${key}]};
+    >&2 echo -en " \e[1;33mgitgetbranch:\e[1;31m Delete local branch '${branch}' ? [Y/n] \e[0m";
+    key='';
+    read -r key;
+    if [ ! "${key}" = 'n' ]; then
+      remote=$(git branch -ar \
+             | grep -v 'HEAD' \
+             | grep --color=never -- "${remote}/" \
+             | grep --color=never -- "${branch}" \
+             | sed 's# *\([^ /]*\)/\([^ /]*\)\(\| .*\)#\1#');
+      git branch -d "${branch}" 2>&1 | grep -v 'branch .* not found.';
+      git update-ref -d "refs/remotes/${remote}/${branch}";
+    fi;
+    >&2 echo '';
+    gitgetbranch "${1}";
+    return;
   elif [ "${key}" -eq 0 ]; then
     >&2 echo -en ' \e[1;33mgitgetbranch:\e[1;37m Git remote branch input : \e[0m';
     read -r branch;
