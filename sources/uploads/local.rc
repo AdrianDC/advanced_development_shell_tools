@@ -74,11 +74,8 @@ function androidfilessync()
   # Use megamirror inside AndroidFiles folder
   cwd=$(pwd);
   cd "${ANDROID_FILES_PATH}";
-  megamirror . '/Root/Android' "${1}" "${2}";
+  megamirror . 'Android' "${1}" "${2}";
   cd "${cwd}";
-
-  # Reload mega.nz account
-  meganzreload;
 }
 
 # === AndroidFiles Download / Upload Helper ===

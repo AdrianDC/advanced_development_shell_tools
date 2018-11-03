@@ -1248,8 +1248,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **uploadmega** *&lt;file_path&gt; [target_folder]* [*<b>\[Upload&nbsp;to&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
   * **downloadmega** *&lt;remote_path&gt; [boot_remove_remote]* [*<b>\[Download&nbsp;from&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
   * **uploadprivatemega** *&lt;device_name&gt;* [*<b>\[Upload&nbsp;to&nbsp;private&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
-  * **syncmega** : *megamirror* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
-  * **listmega** *[options]* [*<b>\[List&nbsp;remote&nbsp;files&nbsp;on&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
 
 ---
 </details>
@@ -1439,14 +1437,14 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
 #### <span class="group_category">Extensions &bull; </span><span class="group_label">MEGA Storage</span> ####
 </summary>
 
-> ### <span class="group_label">[extensions/megatools/mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/mirror.rc)</span> ###
+> ### <span class="group_label">[extensions/mega/mirror.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/mega/mirror.rc)</span> ###
 >
-  * **megamirror** *&lt;local_folder&gt; &lt;remote_folder&gt; &lt;&#8208;&#8208;upload/&#8208;&#8208;download&gt; [&#8208;&#8208;copy,-y/-n]* [*<b>\[MEGA&nbsp;mirror&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/mirror.rc)
+  * **megamirror** *&lt;local_folder&gt; &lt;remote_folder&gt; &lt;&#8208;&#8208;upload/&#8208;&#8208;download&gt; [&#8208;&#8208;copy,-y/-n]* [*<b>\[MEGA&nbsp;mirror&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/mega/mirror.rc)
 
 ---
-> ### <span class="group_label">[extensions/megatools/reload.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/reload.rc)</span> ###
+> ### <span class="group_label">[extensions/mega/reload.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/mega/reload.rc)</span> ###
 >
-  * **meganzreload** [*<b>\[Reload&nbsp;Mega.nz&nbsp;account&nbsp;and&nbsp;keys\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/megatools/reload.rc)
+  * **meganzreload** [*<b>\[Reload&nbsp;Mega.nz&nbsp;account&nbsp;and&nbsp;keys\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/mega/reload.rc)
 
 ---
 </details>

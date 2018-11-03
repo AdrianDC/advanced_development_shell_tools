@@ -26,19 +26,19 @@ function uploadmega()
     return;
   fi;
 
-  # Verify megatools is installed
-  if ! type megals >/dev/null 2>&1; then
+  # Verify megacmd is installed
+  if ! type mega-ls >/dev/null 2>&1; then
     echo '';
-    echo -e ' \e[1;33mmegatools:\e[0m Please install megatools before using tools like "megals"';
+    echo -e ' \e[1;33mmega-cmd:\e[0m Please install megacmd before using tools like "mega-ls"';
     echo '';
     return;
   fi;
 
+  # Reload mega.nz account
+  meganzreload;
+
   # Ignore missing credentials
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
-    echo '';
-    echo -e " \e[1;33mmegatools:\e[0m ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
-    echo '';
+  if ! mega-ls > /dev/null; then
     return;
   fi;
 
@@ -62,8 +62,8 @@ function uploadmega()
   fi;
 
   # Detect main target inclusion
-  if [[ ! "${target}" == *'/Root/'* ]]; then
-    target=/Root/Android/${target};
+  if [[ ! "${target}" == 'Private/'* ]]; then
+    target=Android/${target};
   fi;
 
   # Upload header informations
@@ -72,24 +72,17 @@ function uploadmega()
 
   # Use AndroidFiles to save the file
   if [ ! -z "${ANDROID_FILES_PATH}" ] && [[ "${target}" == *'Root/Android'* ]]; then
-    androidfilesadd "${file_path}" "${target#/Root/Android/}";
+    androidfilesadd "${file_path}" "${target#Android/}";
   fi;
-
-  # Remove local megatools cache
-  rm -rf /tmp/*.megatools.cache;
 
   # Prepare remote for upload
   echo '';
-  megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      "${target}/$(basename "${file_path}")" 2> /dev/null;
-  megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      "${target}" 2> /dev/null;
+  mega-rm "${target}/$(basename "${file_path}")" 2> /dev/null;
+  mega-mkdir "${target}" 2> /dev/null;
 
   # Upload file to target (twice to prevent handle failures)
-  megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      --path "${target}" "${file_path}" ||
-  megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      --path "${target}" "${file_path}";
+  mega-put "${file_path}" "${target}" ||
+      mega-put "${file_path}" "${target}";
 
   # Reload mega.nz account
   meganzreload;
@@ -111,19 +104,19 @@ function downloadmega()
     return;
   fi;
 
-  # Verify megatools is installed
-  if ! type megals >/dev/null 2>&1; then
+  # Verify megacmd is installed
+  if ! type mega-ls >/dev/null 2>&1; then
     echo '';
-    echo -e ' \e[1;33mmegatools:\e[0m Please install megatools before using tools like "megals"';
+    echo -e ' \e[1;33mmega-cmd:\e[0m Please install megacmd before using tools like "mega-ls"';
     echo '';
     return;
   fi;
 
+  # Reload mega.nz account
+  meganzreload;
+
   # Ignore missing credentials
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
-    echo '';
-    echo -e " \e[1;33mmegatools:\e[0m ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
-    echo '';
+  if ! mega-ls > /dev/null; then
     return;
   fi;
 
@@ -139,16 +132,13 @@ function downloadmega()
   time_start=$(date +%s);
 
   # Detect main target inclusion
-  if [[ ! "${file_path}" == *'/Root/'* ]]; then
-    file_path=/Root/Android/${file_path};
+  if [[ ! "${file_path}" == 'Private/'* ]]; then
+    file_path=Android/${file_path};
   fi;
 
   # Upload header informations
   echo '';
-  echo -e " \e[1;33m[ Download from the server - Path '${file_path#/Root/Android/}' ]\e[0m";
-
-  # Remove local megatools cache
-  rm -rf /tmp/*.megatools.cache;
+  echo -e " \e[1;33m[ Download from the server - Path '${file_path#Android/}' ]\e[0m";
 
   # Save local file
   if [ -f "${file_name}" ]; then
@@ -158,14 +148,15 @@ function downloadmega()
 
   # Download file from target
   echo '';
-  megaget --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      --path ./ "${file_path}";
+  mega-get "${file_path}" ./;
 
   # Delete remote file
   if [ "${remove_remote}" = 'true' ] && [ -f "${file_name}" ]; then
-    megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-        "${file_path}";
+    mega-rm "${file_path}";
   fi;
+
+  # Reload mega.nz account
+  meganzreload;
 
   # Clean saved file
   if [ -f "${file_name}" ]; then
@@ -198,33 +189,5 @@ function uploadprivatemega()
   fi;
 
   # File upload to Private
-  uploadmega "${1}" '/Root/Private';
-}
-
-# === Folder Syncer Mega.nz ===
-alias syncmega='megamirror';
-
-# === Files Lister Mega.nz ===
-function listmega()
-{
-  # Usage: listmega [options] (List remote files on MEGA.nz)';
-
-  # Verify megatools is installed
-  if ! type megals >/dev/null 2>&1; then
-    echo '';
-    echo -e ' \e[1;33mmegatools:\e[0m Please install megatools before using tools like "megals"';
-    echo '';
-    return;
-  fi;
-
-  # Ignore missing credentials
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
-    echo '';
-    echo -e " \e[1;33mmegatools:\e[0m ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
-    echo '';
-    return;
-  fi;
-
-  megals --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      "${@}";
+  uploadmega "${1}" 'Private';
 }

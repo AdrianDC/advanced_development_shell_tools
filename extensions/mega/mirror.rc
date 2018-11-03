@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# === Megatools Mirror ===
+# === Mega Mirror ===
 function megamirror()
 {
   # Usage
@@ -23,25 +23,26 @@ function megamirror()
     echo '';
     echo ' Usage: megamirror <local_folder> <remote_folder> <--upload/--download> [--copy,-y/-n] (MEGA mirror syncer)';
     echo '';
-    echo '  > Upload with --upload (individual), optional --copy (megacopy)';
-    echo '  > Download with --download (individual), optional --copy (megacopy)';
+    echo '  > Upload with --upload (individual), optional --copy (mega-sync)';
+    echo '  > Download with --download (individual), optional --copy (mega-sync)';
     echo '';
     return;
   fi;
 
-  # Verify megatools is installed
-  if ! type megals >/dev/null 2>&1; then
+  # Verify megacmd is installed
+  if ! type mega-ls >/dev/null 2>&1; then
     echo '';
-    echo -e ' \e[1;33mmegatools:\e[0m Please install megatools before using tools like "megals"';
+    echo -e ' \e[1;33mmega-cmd:\e[0m Please install megacmd before using tools like "mega-ls"';
     echo '';
     return;
   fi;
+
+  # =======================================================
+  # Reload mega.nz account
+  meganzreload;
 
   # Ignore missing credentials
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ]; then
-    echo '';
-    echo -e " \e[1;33mmegatools:\e[0m ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc is missing, please read megatools documentation";
-    echo '';
+  if ! mega-ls > /dev/null; then
     return;
   fi;
 
@@ -57,8 +58,7 @@ function megamirror()
   local key_override;
   local line;
   local line_tmp;
-  local file_type;
-  local file_size;
+  local file_details;
   local file_path;
   local file_local;
   local file_escaped;
@@ -85,16 +85,11 @@ function megamirror()
 
   # =======================================================
   # Introduction message
-  echo '';
   echo -e " \e[1;33mmegamirror:\e[1;37m Syncing '${local_folder}' and '${remote_folder}'...\e[0m";
-
-  # Remove local megatools cache
-  rm -rf /tmp/*.megatools.cache;
 
   # Retrieve files informations
   find "${local_folder}" -mindepth 1 -printf '%s\t%P#\n' > "${tmp_local_ls}";
-  megals --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-      -lR "${remote_folder}" > "${tmp_remote_ls}";
+  mega-find -l "${remote_folder}" > "${tmp_remote_ls}";
 
   # =======================================================
   # Upload mode
@@ -104,7 +99,7 @@ function megamirror()
     while [ -s "${tmp_remote_ls}" ]; do
 
       # Extract first line
-      IFS=' ' read -r -a line <<< "$(sed '1!d' "${tmp_remote_ls}")";
+      IFS='()' read -r -a line <<< "$(sed '1!d' "${tmp_remote_ls}")";
       sed -i '1d' "${tmp_remote_ls}";
 
       # Ignore empty lines
@@ -113,9 +108,9 @@ function megamirror()
       fi;
 
       # Parse line content
-      file_type=${line[2]};
-      file_size=${line[3]};
-      file_path=${line[*]:6};
+      file_details=${line[1]%,*};
+      file_size=${file_details};
+      file_path=${line[0]% };
       file_local=${file_path#${remote_folder}};
       file_local=${file_local#/};
       file_local_output=${file_local//\\/\\\\};
@@ -130,7 +125,7 @@ function megamirror()
       fi;
 
       # Verify folder exists
-      if [ "${file_type}" = '1' ] && [ "${file_size}" = '-' ]; then
+      if [ "${file_details}" = 'folder' ]; then
         if [ ! -d "${file_local}" ]; then
           echo -en " \e[1;33mmegamirror:\e[1;31m Remote folder '${file_local_output}/' is missing:\e[0m";
           flag_delete=true;
@@ -142,9 +137,10 @@ function megamirror()
 
       # Verify files sizes do not mismatch
       elif [ -f "${file_local}" ]; then
-        file_local_size=$(stat -c "%s" "${file_local}");
-        if [ "${file_size/-/0}" -ne "${file_local_size}" ]; then
-          echo -en " \e[1;33mmegamirror:\e[1;31m Remote file '${file_local_output}' is different:\e[0m";
+        file_local_size=$(stat -c "%s" "${file_local}" \
+                        | awk '{ split( "B KB MB GB" , v ); s=1; while( $1>2048 ){ $1/=1024; s++ } printf "%0.2f %s\n", $1, v[s] }');
+        if [ ! "${file_size}" = "${file_local_size}" ]; then
+          echo -en " \e[1;33mmegamirror:\e[1;31m Remote file '${file_local_output}' is different (${file_size} != ${file_local_size}):\e[0m";
           flag_delete=true;
 
         # Exclude file from needed uploads
@@ -172,12 +168,11 @@ function megamirror()
           echo "${key_override}";
         fi;
         if [ "${key}" = 'Y' ] || [ "${key}" = 'y' ]; then
-          megarm --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-              "${file_path}";
+          mega-rm "${file_path}";
           echo -e " \e[1;33mmegamirror:\e[1;32m Removed remote '${file_path}'\e[0m";
 
           # Remove folder elements
-          if [ "${file_type}" = '1' ]; then
+          if [ "${file_details}" = 'folder' ]; then
             sed -i "\|${file_escaped}|d" "${tmp_remote_ls}";
           fi;
         fi;
@@ -186,13 +181,12 @@ function megamirror()
     done;
 
     # ===========================================
-    # Upload with megacopy to remote
+    # Upload with mega-sync to remote
     if [[ "${option_params}" == *'--copy'* ]]; then
-      echo -e " \e[1;33mmegamirror:\e[1;37m megacopy starting...\e[0m";
-      rm -rf /tmp/*.megatools.cache;
-      megacopy --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-          --local "${local_folder}" --remote "${remote_folder}" 2>&1 \
-        | grep -v 'ERROR: File already exists at';
+      echo -e " \e[1;33mmegamirror:\e[1;37m mega-sync starting...\e[0m";
+      # TODO: Validate and reenable
+      #mega-sync "${local_folder}" "${remote_folder}" 2>&1 \
+      #    | grep -v 'ERROR: File already exists at';
 
     # Upload with megaput to remote
     else
@@ -211,19 +205,16 @@ function megamirror()
 
         # Create remote folder
         if [ -d "${file_local}" ]; then
-          megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-              "${file_path}";
+          mega-mkdir "${file_path}";
           echo -e " \e[1;33mmegamirror:\e[1;37m Created remote folder '${file_path}/'\e[0m";
 
         # Upload file to target
         else
           file_path=$(dirname "${file_path}");
-          echo -e " \e[1;33mmegamirror:\e[1;37m Uploading to the server - Path '${file_path}'\e[0m";
-          megamkdir --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-              "${file_path}" 2>&1 \
-            | grep -v 'Directory already exists:';
-          megaput --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-              --path "${file_path}" "${file_local}";
+          echo -e " \e[1;33mmegamirror:\e[1;37m Uploading to the server - Path '${file_local}'\e[0m";
+          mega-mkdir "${file_path}" 2>&1 \
+              | grep -v 'Folder already exists:';
+          mega-put "${file_local}" "${file_path}";
 
           # Show upload time
           time_span=$(($(date +%s) - time_start));
@@ -268,33 +259,34 @@ function megamirror()
       fi;
 
       # Extract remote information
-      file_type=0;
+      file_details='';
       if [ -d "${file_path}" ]; then
-        file_type=1;
+        file_details='folder';
       fi;
-      IFS=' ' read -r -a line_tmp <<< "$(awk "\$3 == ${file_type}" "${tmp_remote_ls}" 2>&1 \
-          | grep --color=never "${remote_folder}/${file_escaped//\\\|/\|}$")";
+      IFS='()' read -r -a line_tmp <<< "$(grep --color=never "${remote_folder}/${file_escaped//\\\|/\|} (${file_details}" "${tmp_remote_ls}")";
 
       # Verify folder exists
       if [ -d "${file_path}" ]; then
-        if [ -z "${line_tmp[2]}" ]; then
+        if [ -z "${line_tmp[1]%,*}" ]; then
           echo -en " \e[1;33mmegamirror:\e[1;31m Remote folder '${file_local_output}/' is missing:\e[0m";
           flag_delete=true;
 
         # Exclude folder from needed downloads
         else
-          sed -i "\|${remote_folder}/${file_escaped}$|d" "${tmp_remote_ls}";
+          sed -i "\|${remote_folder}/${file_escaped} (|d" "${tmp_remote_ls}";
         fi;
 
       # Verify files sizes do not mismatch
       elif [ ! -z "${line_tmp[*]}" ]; then
-        if [ "${file_size}" -ne "${line_tmp[3]/-/0}" ]; then
-          echo -en " \e[1;33mmegamirror:\e[1;31m Local file '${file_local_output}' is different:\e[0m";
+        file_size=$(echo "${file_size}" \
+                  | awk '{ split( "B KB MB GB" , v ); s=1; while( $1>2048 ){ $1/=1024; s++ } printf "%0.2f %s\n", $1, v[s] }');
+        if [ ! "${file_size}" = "${line_tmp[1]%,*}" ]; then
+          echo -en " \e[1;33mmegamirror:\e[1;31m Local file '${file_local_output}' is different (${file_size} != ${line_tmp[1]%,*}):\e[0m";
           flag_delete=true;
 
         # Exclude file from needed downloads
         else
-          sed -i "\|${remote_folder}/${file_escaped}$|d" "${tmp_remote_ls}";
+          sed -i "\|${remote_folder}/${file_escaped} (|d" "${tmp_remote_ls}";
         fi;
 
       # Local file no longer exist remotely
@@ -325,25 +317,24 @@ function megamirror()
     done;
 
     # ===========================================
-    # Download with megacopy to local
+    # Download with mega-sync to local
     if [[ "${option_params}" == *'--copy'* ]]; then
       echo -e " \e[1;33mmegamirror:\e[1;37m megacopy starting...\e[0m";
-      rm -rf /tmp/*.megatools.cache;
-      megacopy --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-          --local "${local_folder}" --remote "${remote_folder}" --download 2>&1 \
-        | grep -v 'ERROR: File already exists at';
+      # TODO: Validate and reenable
+      #mega-sync "${local_folder}" "${remote_folder}" --download 2>&1 \
+      #    | grep -v 'ERROR: File already exists at';
 
-    # Download with megaget to local
+    # Download with mega-get to local
     else
 
-      # Check all files listed for upload
+      # Check all files listed for download
       while [ -s "${tmp_remote_ls}" ]; do
-        IFS=' ' read -r -a line <<< "$(sed '1!d' "${tmp_remote_ls}")";
+        IFS='()' read -r -a line <<< "$(sed '1!d' "${tmp_remote_ls}")";
         sed -i '1d' "${tmp_remote_ls}";
 
         # Parse file informations
-        file_type=${line[2]};
-        file_path=${line[*]:6};
+        file_details=${line[1]%,*};
+        file_path=${line[0]% };
         file_local=${file_path#${remote_folder}};
         file_local=${file_local#/};
         file_escaped=${file_local//\|/\\\|};
@@ -357,7 +348,7 @@ function megamirror()
         fi;
 
         # Create local folder
-        if [ "${file_type}" = '1' ]; then
+        if [ "${file_details}" = 'folder' ]; then
           if [ ! -d "${file_local}" ]; then
             mkdir -p "${file_local}";
             echo -e " \e[1;33mmegamirror:\e[1;37m Created local folder '${file_local}/'\e[0m";
@@ -368,12 +359,11 @@ function megamirror()
 
           # Download header informations
           file_local=$(dirname "${file_local}");
-          echo -e " \e[1;33mmegamirror:\e[1;37m Downloading from the server - Path '${file_local}/'\e[0m";
+          echo -e " \e[1;33mmegamirror:\e[1;37m Downloading from the server - Path '${file_path}'\e[0m";
 
           # Download file to local
           mkdir -p "${file_local}";
-          megaget --config="${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" \
-              --path "${file_local}" "${file_path}";
+          mega-get "${file_path}" "${file_local}";
 
           # Show download time
           time_span=$(($(date +%s) - time_start));
@@ -387,9 +377,12 @@ function megamirror()
   # =======================================================
   # End message
   echo -e " \e[1;33mmegamirror:\e[1;32m Synced '${local_folder}' and '${remote_folder}'\e[0m";
-  echo '';
 
   # Cleanup temp files
   rm "${tmp_local_ls}";
   rm "${tmp_remote_ls}";
+
+  # =======================================================
+  # Reload mega.nz account
+  meganzreload;
 }

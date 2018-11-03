@@ -84,10 +84,10 @@ function fastupl()
   # Launch file private uploader
   if __shtools-uploads-mega-active; then
     uploadprivatemega "${1}" "${2}";
-    cmd="downloadmega '/Root/Private/${filename}';";
+    cmd="downloadmega 'Private/${filename}';";
   elif __shtools-uploads-basketbuild-active; then
     uploadprivatebasketbuild "${1}" "${2}";
-    cmd="downloadbasketbuild '/Root/Private/${filename}';";
+    cmd="downloadbasketbuild 'Private/${filename}';";
   fi;
 
   # Abort if no command provided

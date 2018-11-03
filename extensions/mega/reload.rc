@@ -22,8 +22,13 @@ function meganzreload()
   if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ] || [ ! -z "${1}" ]; then
     echo '';
     echo ' Usage: meganzreload (Reload Mega.nz account and keys)';
-    echo "  ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc from megatools has to be configured";
-    echo '  Dependencies: sudo apt-get install libc-ares-dev libcrypto++-dev libfreeimage-dev';
+    echo "  ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc needs to following content:";
+    echo '';
+    echo '---';
+    echo '[Login]';
+    echo 'Username = XXXX';
+    echo 'Password = ****';
+    echo '---';
     echo '';
     return;
   fi;
