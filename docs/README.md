@@ -908,7 +908,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   ```
 >  </div>
   * **gitpf** : *git push -f* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
-  * **gitpu** *[remote] [branch] [-y/-n/-d/-f]* [*<b>\[Git&nbsp;push&nbsp;to&nbsp;validated&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
+  * **gitpu** *[remote] [branch] [-y/-n/-d/-f/-t/&#8208;&#8208;tags]* [*<b>\[Git&nbsp;push&nbsp;to&nbsp;validated&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
   * **gitpurl** *&lt;url&gt;* [*<b>\[Git&nbsp;pull&nbsp;to&nbsp;full&nbsp;url\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/git/push.rc)
 
 ---

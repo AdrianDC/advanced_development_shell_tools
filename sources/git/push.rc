@@ -33,10 +33,22 @@ function gitpu()
   local fetch_sha1;
   local input;
   local option;
-  local params=("${@}");
+  local params;
   local remote;
+  local tags='';
+
+  # Tags option
+  case "${1}" in
+
+    # Tags option
+    -t|--tags)
+      tags=' --tags';
+      shift;;
+
+  esac;
 
   # Validate parameters
+  params=("${@}");
   if [ "${#}" -le 0 ]; then
     input='';
   elif [ "${#}" -le 3 ]; then
@@ -53,7 +65,7 @@ function gitpu()
     # Help option
     -h|--help)
       echo '';
-      echo "Usage: gitpu [remote] [branch] [-y/-n/-d/-f] (Git push to validated remote)";
+      echo "Usage: gitpu [remote] [branch] [-y/-n/-d/-f/-t/--tags] (Git push to validated remote)";
       echo '';
       return;;
 
@@ -148,7 +160,7 @@ function gitpu()
 
     # Force push
     -f)
-      cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
+      cmd="git push -f${tags} ${remote} HEAD:refs/heads/${branch}";
       case "${input}" in
         -f) key='y';;
         *) key='';;
@@ -157,7 +169,7 @@ function gitpu()
 
     # Creation push
     -c)
-      cmd="git push ${remote} HEAD:refs/heads/${branch}";
+      cmd="git push${tags} ${remote} HEAD:refs/heads/${branch}";
       case "${input}" in
         -f|-y) key='y';;
         *) key='';;
@@ -166,7 +178,7 @@ function gitpu()
 
     # Regular push
     -y|-n|'')
-      cmd="git push ${remote} HEAD:refs/heads/${branch}";
+      cmd="git push${tags} ${remote} HEAD:refs/heads/${branch}";
       key=${option:1};
       echo -en "\e[0;32m${cmd} \e[1;32m# Update: Y/n ? \e[0m";;
 
