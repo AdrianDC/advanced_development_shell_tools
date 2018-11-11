@@ -133,7 +133,7 @@ function gitpu()
       if [ "${commits_remote}" -ne 0 ]; then
         echo '';
         echo -e " \e[1;33mgitpu: \e[1;31m${commits_remote} commits will be lost on the remote.\e[0m";
-      else
+      elif [ -z "${tags}" ]; then
         option='-y';
       fi;;
     *)
