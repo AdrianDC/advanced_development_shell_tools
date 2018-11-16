@@ -106,6 +106,7 @@ function gitgetbranch()
       | grep -v 'HEAD' \
       | grep --color=never -- "${remote}/" \
       | sed 's# *\(.* -> \|\)\([^ /]*\)/\([^ /]*\)#\3#' \
+      | sort \
       | uniq \
       > "${tmp_file}";
   while read -r branch; do
