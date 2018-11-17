@@ -1098,6 +1098,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **gcsep** *[inputs]* [*<b>\[Grep&nbsp;through&nbsp;Android&nbsp;sepolicies\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
   * **gcxml** *[inputs]* [*<b>\[Grep&nbsp;through&nbsp;Android&nbsp;.xml&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
   * **gccontexts** *[inputs]* [*<b>\[Grep&nbsp;through&nbsp;Android&nbsp;sepolicies&nbsp;contexts\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
+  * **gcdocker** *[inputs]* [*<b>\[Grep&nbsp;through&nbsp;Docker&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
   * **grepi** : *grep -ai* [*<b>(Alias)</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
   * **gcmodules** *[path]* [*<b>\[List&nbsp;all&nbsp;LOCAL_MODULE&nbsp;elements\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)
   * **gcphony** [*<b>\[List&nbsp;all&nbsp;PHONY&nbsp;rules\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/host/grep.rc)

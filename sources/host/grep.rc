@@ -228,6 +228,26 @@ function gccontexts()
   rm -f "${tmp_list}";
 }
 
+# === Grep Docker Files ===
+function gcdocker()
+{
+  # Usage: gcdocker [inputs] (Grep through Docker files)
+
+  # Variables
+  local tmp_list;
+
+  # Search all build definitions
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name 'Dockerfile' -o -name 'docker-compose.yml' \) > "${tmp_list}";
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai --color=always -- "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
+}
+
 # === Grep Search Helpers ===
 alias grepi='grep -ai';
 
