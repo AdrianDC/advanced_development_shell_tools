@@ -103,9 +103,10 @@ function gitgetbranch()
   # Branches access
   tmp_file=$(mktemp);
   git branch -ar \
-      | grep -v 'HEAD' \
+      | grep --color=never -v 'HEAD' \
       | grep --color=never -- "${remote}/" \
       | sed 's# *\(.* -> \|\)\([^ /]*\)/\([^ /]*\)#\3#' \
+      | sed -E 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g' \
       | sort \
       | uniq \
       > "${tmp_file}";
