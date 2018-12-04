@@ -62,7 +62,7 @@ function uploadmega()
   fi;
 
   # Detect main target inclusion
-  if [[ ! "${target}" == 'Private/'* ]]; then
+  if [[ ! "${target}" == 'Private'* ]]; then
     target=Android/${target};
   fi;
 
@@ -78,11 +78,11 @@ function uploadmega()
   # Prepare remote for upload
   echo '';
   mega-rm "${target}/$(basename "${file_path}")" 2> /dev/null;
-  mega-mkdir "${target}" 2> /dev/null;
+  mega-mkdir -p "${target}/" 2> /dev/null;
 
   # Upload file to target (twice to prevent handle failures)
-  mega-put "${file_path}" "${target}" ||
-      mega-put "${file_path}" "${target}";
+  mega-put "${file_path}" "${target}/" ||
+      mega-put "${file_path}" "${target}/";
 
   # Reload mega.nz account
   meganzreload;
