@@ -78,11 +78,10 @@ function uploadmega()
   # Prepare remote for upload
   echo '';
   mega-rm "${target}/$(basename "${file_path}")" 2> /dev/null;
-  mega-mkdir -p "${target}/" 2> /dev/null;
 
   # Upload file to target (twice to prevent handle failures)
-  mega-put "${file_path}" "${target}/" ||
-      mega-put "${file_path}" "${target}/";
+  mega-put -c "${file_path}" "${target}/" ||
+      mega-put -c "${file_path}" "${target}/";
 
   # Reload mega.nz account
   meganzreload;
