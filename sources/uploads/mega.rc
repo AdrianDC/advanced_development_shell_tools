@@ -76,8 +76,7 @@ function uploadmega()
   fi;
 
   # Prepare remote for upload
-  echo '';
-  mega-rm "${target}/$(basename "${file_path}")" 2> /dev/null;
+  mega-rm "${target}/$(basename "${file_path}")" 2>&1 > /dev/null;
 
   # Upload file to target (twice to prevent handle failures)
   mega-put -c "${file_path}" "${target}/" ||
