@@ -108,6 +108,26 @@ function gck()
   rm -f "${tmp_list}";
 }
 
+# === Grep All Sources ===
+function gcs()
+{
+  # Usage: gcs [inputs] (Grep through all code sources)
+
+  # Variables
+  local tmp_list;
+
+  # Grep through files
+  tmp_list=$(mktemp);
+  findfilteredprojectfiles . \( -name '*.c' -o -name '*.cc' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' \) > "${tmp_list}";
+  while read -r file; do
+    found=$(stringsgetall "${file}" | grep -ai --color=always -- "${*}");
+    if [ ! -z "${found}" ]; then
+      echo -e "\e[1;31m${file} :\e[0m ${found}";
+    fi;
+  done < "${tmp_list}";
+  rm -f "${tmp_list}";
+}
+
 # === Grep All Makefiles ===
 function gca()
 {
