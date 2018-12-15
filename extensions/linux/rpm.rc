@@ -28,6 +28,6 @@ function rpmfindlist()
     echo '';
     echo " ===[${file_path}]===";
     rpm -qlp "${file_path}";
-  done < <(find -name '*.rpm');
+  done < <(find ./ -name '*.rpm');
   echo '';
 }
