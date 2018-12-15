@@ -1433,6 +1433,11 @@ source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/r
   * **cleanramkill** *[bool_cleanram]* [*<b>\[Complete&nbsp;RAM&nbsp;cleanup&nbsp;including&nbsp;"java"\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/cleaners.rc)
 
 ---
+> ### <span class="group_label">[extensions/linux/rpm.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/rpm.rc)</span> ###
+>
+  * **rpmfindlist** [*<b>\[Find&nbsp;all&nbsp;.rpm&nbsp;files&nbsp;and&nbsp;list&nbsp;contents\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/extensions/linux/rpm.rc)
+
+---
 </details>
 
 <details class='group_details'>
