@@ -133,8 +133,8 @@ function gitbranchpusher()
 
   # Confirmation
   echo -en " \e[1;33mgitbranchpusher: \e[1;37m${push_command} [y/N/d/s] ?\e[0m ";
-  notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
   if [ -z "${param_send}" ]; then
+    notify-send "gitbranchpusher: Push ${project_dir} ?" 2> /dev/null;
     read -r -t 20 key;
   else
     key=${param_send};
