@@ -542,7 +542,12 @@ function androidprojectpatcher()
 
         # Detect commits to pick - Detect own cherry-picked additional commits in an own updated project
         else
-          readarray -t commits_list <<< "$(git log --format=format:'%H|%ce' FETCH_HEAD | sed "s/|${project_email}//g" | sed '/|/q' | sed 's/|marker.commit//' | sed 's/|.*//' | tac)";
+          readarray -t commits_list <<< "$(git log --format=format:'%H|%ce' FETCH_HEAD \
+                                         | sed "s/|${project_email}//g" \
+                                         | sed '/|/q' \
+                                         | sed 's/|marker.commit//' \
+                                         | sed '/|.*/d' \
+                                         | tac)";
           if [ -z "${commits_list[*]}" ] || [ "${#commits_list[@]}" -gt "${git_revs_count_remote}" ]; then
 
             # Detect commits to pick - Detect own cherry-picked commits based on commits delta
