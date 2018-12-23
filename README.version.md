@@ -1,4 +1,6 @@
-# Advanced Development Shell Tools - Changelog #
+<!-- Center -->
+![Advanced Development Shell Tools](https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png)
+<!-- /Center -->
 
 
 <!-- Indent -->

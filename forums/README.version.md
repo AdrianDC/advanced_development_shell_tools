@@ -1,4 +1,4 @@
-# Advanced Development Shell Tools - Changelog #
+[CENTER][IMG]https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1545583809[/IMG][/CENTER]
 
 
 [INDENT][LIST]
