@@ -93,9 +93,9 @@ function signzip()
   fi;
 
   # Sign ZIP
-  java -jar "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/signapk-cm121.jar" \
-      -w "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/testkey.x509.pem" \
-      "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/testkey.pk8" \
+  java -jar "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/signapk-cm121.jar" \
+      -w "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/testkey.x509.pem" \
+      "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SIGNAPK_DIR}/testkey.pk8" \
       "${zip_input}" \
       "${zip_output}";
 
@@ -233,8 +233,8 @@ function packzip()
   # Generate zip, updater-script and include files
   cd "${TmpDir}/";
   mkdir -p ./META-INF/com/google/android/;
-  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${OutFile}.unsigned.zip";
-  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_SYSTEM}" ./META-INF/com/google/android/updater-script;
+  cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${OutFile}.unsigned.zip";
+  cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_SYSTEM}" ./META-INF/com/google/android/updater-script;
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
   zip -g "${TmpDir}/${OutFile}.unsigned.zip" ./META-INF/com/google/android/updater-script;
   rm -rf ./META-INF;
@@ -407,8 +407,8 @@ function oeminjectorzip()
 
     # Generate zip, updater-script and include files
     mkdir -p ./META-INF/com/google/android/;
-    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${target_name}.unsigned.zip";
-    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_OEM}" ./META-INF/com/google/android/updater-script;
+    cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${target_name}.unsigned.zip";
+    cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPDATER_INSTALL_OEM}" ./META-INF/com/google/android/updater-script;
     sed -i "s/ANDROID_OEM_PARTITION/${oem_partition//\//\\\/}/" ./META-INF/com/google/android/updater-script;
     zip -g "${tmp_dir}/${target_name}.unsigned.zip" ./META-INF/com/google/android/updater-script;
     zip -g "${tmp_dir}/${target_name}.unsigned.zip" "${oem_files_list[@]}";

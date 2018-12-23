@@ -19,10 +19,10 @@
 function meganzreload()
 {
   # Usage
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ] || [ ! -z "${1}" ]; then
+  if [ ! -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" ] || [ ! -z "${1}" ]; then
     echo '';
     echo ' Usage: meganzreload (Reload Mega.nz account and keys)';
-    echo "  ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc needs to following content:";
+    echo "  ${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc needs to following content:";
     echo '';
     echo '---';
     echo '[Login]';
@@ -47,8 +47,8 @@ function meganzreload()
   local proc_id;
 
   # Load user credentials
-  username=$(grep --color=never 'Username' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" | sed 's/.*= //');
-  password=$(grep --color=never 'Password' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" | sed 's/.*= //');
+  username=$(grep --color=never 'Username' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" | sed 's/.*= //');
+  password=$(grep --color=never 'Password' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.megarc" | sed 's/.*= //');
 
   # Start mega-cmd server
   echo '';

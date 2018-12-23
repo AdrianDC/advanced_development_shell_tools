@@ -1046,7 +1046,7 @@ function rompatcher()
 
   # Function header
   echo '';
-  echo -e " \e[1;37m[ Android Development Shell Tools - ROM Patchers ]\e[0m";
+  echo -e " \e[1;37m[ Advanced Development Shell Tools - ROM Patchers ]\e[0m";
   echo '';
 
   # Display *patcher menu
@@ -1121,7 +1121,7 @@ function romrebaser()
 
   # Function header
   echo '';
-  echo -e " \e[1;37m[ Android Development Shell Tools - ROM Rebasers ]\e[0m";
+  echo -e " \e[1;37m[ Advanced Development Shell Tools - ROM Rebasers ]\e[0m";
   echo '';
 
   # Display *rebaser menu

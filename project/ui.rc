@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# === Android Development Shell Tools UI ===
+# === Advanced Development Shell Tools UI ===
 function __shtoolsui()
 {
   # Usage: __shtoolsui <enable/start/input/disable> (UI wrapper for the project)
@@ -58,7 +58,7 @@ function __shtoolsui()
   fi;
 }
 
-# === Android Development Shell Tools UI Test ===
+# === Advanced Development Shell Tools UI Test ===
 function __shtoolstestui()
 {
   # Usage: __shtoolstestui (UI test for the project)
@@ -73,7 +73,7 @@ function __shtoolstestui()
 
   # Function header
   echo '';
-  echo -e " \e[1;37m[ Android Development Shell Tools - Test ]";
+  echo -e " \e[1;37m[ Advanced Development Shell Tools - Test ]";
   echo '';
 
   # Display test menu

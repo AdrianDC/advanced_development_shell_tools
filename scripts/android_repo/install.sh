@@ -75,7 +75,7 @@ echo "export CCACHE_DIR=\${ANDROID_DEV_DRIVE}/CCache;";
 echo "export CCACHE_LOGFILE=\${CCACHE_DIR}/ccache.log;";
 echo '';
 echo '# Bash Scripts';
-echo "source ${current_bash_dir}/android_development_shell_tools.rc;";
+echo "source ${current_bash_dir}/advanced_development_shell_tools.rc;";
 echo '';
 sudo gedit ~/.bashrc;
 

@@ -16,9 +16,9 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/remotes.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/git/remotes.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/config.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/remotes.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/git/remotes.rc)
 
 # === Git Remotes LineageOS Helper ===
 function gitrao()
@@ -93,7 +93,7 @@ function gitrap()
   for line_function in $(typeset -F | grep gitrap | cut -d' ' -f 3 | grep -v '^gitrap$'); do
 
     # Parse usage
-    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/sources/android_repo/projects.rc");
+    line_usage=$(grep -a "Usage: ${line_function} " "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/sources/android_repo/projects.rc");
     if [ -z "${line_usage}" ]; then
       continue;
     fi;

@@ -16,9 +16,9 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_devices/target.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/flash.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_devices/target.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/flash.rc)
 
 # === ADB Bootimage Dumper ===
 function adbbootdump()

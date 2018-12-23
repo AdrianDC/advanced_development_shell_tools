@@ -16,8 +16,8 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_kernel/defconfig.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/extensions/semc_msm7x30/legacyxperia.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_kernel/defconfig.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/semc_msm7x30/legacyxperia.rc)
 
 # === LineageOS Commits Patcher for LegacyXperia ===
 function lineagelxpatcher()

@@ -16,7 +16,7 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/config.rc)
 
 # === GitHub Username ===
 function githubusername()
@@ -29,8 +29,8 @@ function githubusername()
   export GitUserName='Username';
 
   # Create .bash_android.github.rc with the exports to override the credentials
-  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.github.rc" ]; then
-    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.github.rc";
+  if [ -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.github.rc" ]; then
+    source "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.github.rc";
   fi;
 
   # Return username
@@ -86,8 +86,8 @@ function gitu()
   local list_emails=('');
 
   # Create .gitusers initial file
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers" ]; then
-    echo -n '' > "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
+  if [ ! -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers" ]; then
+    echo -n '' > "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
   fi;
 
   # Enable UI wrapper
@@ -96,7 +96,7 @@ function gitu()
 
   # Function header
   echo '';
-  echo -e " \e[1;37m[ Android Development Shell Tools - Git Users ]";
+  echo -e " \e[1;37m[ Advanced Development Shell Tools - Git Users ]";
   echo '';
 
   # Display configuration item
@@ -126,7 +126,7 @@ function gitu()
     cnt=$((cnt + 1));
     echo -e "  \e[1;33m${cnt}: \e[1;37m${line_name} \e[1;32m<${line_email}>${line_enabled}";
 
-  done < "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
+  done < "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
   echo '';
 
   # Request user input
@@ -141,7 +141,7 @@ function gitu()
     echo -en ' \e[1;37m> User email:\e[0m ';
     read -r line_email;
     if [ ! -z "${line_email}" ] && [ ! -z "${line_email}" ]; then
-      echo "'${line_name}','${line_email}'" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
+      echo "'${line_name}','${line_email}'" >> "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.gitusers";
       gitconfuser "'${line_name}'" "'${line_email}'";
     fi;
 

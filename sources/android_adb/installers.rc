@@ -16,9 +16,9 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_repo/helpers.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/installers.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_repo/helpers.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/installers.rc)
 
 # === ADB File Pusher ===
 function adbpushfile()
@@ -421,7 +421,7 @@ function adbsiderom()
   local file_input=${1};
   local device=${2};
   local no_reboot=${3};
-  local addons_path=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.rom.addons;
+  local addons_path=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.rom.addons;
   local name;
   local target_old;
 

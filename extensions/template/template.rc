@@ -22,6 +22,6 @@ function templateaddonfunction()
 
   # Code
   echo '';
-  echo ' android_development_shell_tools: This function is only a template';
+  echo ' advanced_development_shell_tools: This function is only a template';
   echo '';
 }

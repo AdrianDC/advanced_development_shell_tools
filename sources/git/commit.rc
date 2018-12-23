@@ -16,10 +16,10 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/cleaners.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/config.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/git/commit.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/cleaners.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/config.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/host/common.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/commit.rc)
 
 # === Git Show Helpers ===
 alias gitshow='git show -M --name-status';
@@ -172,7 +172,7 @@ function gitcid()
 
   # Copy commit-msg
   rm -f "${git_path}/hooks/commit-msg";
-  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/repo/commit-msg" "${git_path}/hooks/commit-msg";
+  cp -fv "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/repo/commit-msg" "${git_path}/hooks/commit-msg";
   chmod u+x "${git_path}/hooks/commit-msg";
 
   # Update commit with Change-ID
@@ -196,7 +196,7 @@ function gitcidupstream()
 
   # Fetch commit-msg file
   curl -Lo "${git_path}/hooks/commit-msg" http://review.lineageos.org/tools/hooks/commit-msg;
-  cp -fv "${git_path}/hooks/commit-msg" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/repo/commit-msg";
+  cp -fv "${git_path}/hooks/commit-msg" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/repo/commit-msg";
   chmod u+x "${git_path}/hooks/commit-msg";
 }
 

@@ -16,8 +16,8 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/assets.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/assets.rc)
 
 # === ADB Database Opened ===
 function adbdatabase()
@@ -294,7 +294,7 @@ function adbtinymix()
   # Detect tinymix requirement
   tinymix_exists=$(adbsu 'if [ ! -e /system/bin/tinymix ]; then echo false; fi;');
   if [ ! -z "${tinymix_exists}" ]; then
-    adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_TINYMIX}" /sdcard/tinymix;
+    adb push "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_FILES_TINYMIX}" /sdcard/tinymix;
     adbsur 'cp /sdcard/tinymix /system/bin/tinymix;
             rm /sdcard/tinymix;
             chmod 777 /system/bin/tinymix';

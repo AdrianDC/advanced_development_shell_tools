@@ -1,0 +1,195 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === Shell Entrypoint Handling ===
+ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=${BASH_SOURCE[0]};
+ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT:-${(%):-%N}};
+ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=$(readlink -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}");
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT;
+if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" ]; then
+  echo '';
+  echo -e ' \e[1;33madvanced_development_shell_tools by AdrianDC: \e[1;31mExecution path could not be found\e[0m';
+  echo '';
+  return;
+fi;
+
+# === Advanced Development Shell Tools Folders ===
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT%/*};
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS_DIR=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/extensions;
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/project;
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts;
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/sources;
+
+# === Advanced Development Shell Tools Variables ===
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BRANCH='master';
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_VERSION='2018.1';
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_URL='https://github.com/AdrianDC/advanced_development_shell_tools';
+
+# === Advanced Development Shell Tools Workspace ===
+if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}" ]; then
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE=~;
+fi;
+
+# === Advanced Development Shell Tools Configuration ===
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_advanced_development_shell_tools.rc;
+
+# === Advanced Development Shell Tools Configuration Migration ===
+ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android_development_shell_tools.rc;
+if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ] && [ ! -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+  mv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+  sed -i 's/Android Development Shell Tools/Advanced Development Shell Tools/g' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+fi;
+
+# === Advanced Development Shell Tools Toolkits ===
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID='|sources/android_adb|sources/android_build|sources/android_devices|sources/android_kernel|sources/android_release|sources/android_repo|sources/android_rom|sources/gerrit|sources/git|sources/host|sources/ssh|sources/uploads|extensions/linux|';
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST='|sources/host|extensions/linux|';
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT='|sources/git|sources/host|sources/ssh|extensions/linux|';
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY='|sources/git|sources/host|';
+ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS=$(grep --color=never '^# Toolkits: ' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" 2>/dev/null);
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS;
+
+# === Advanced Development Shell Tools Sources ===
+function shtoolssources()
+{
+  # Usage: shtoolssources (List sources from advanced_development_shell_tools)
+
+  # Variables
+  local file_path;
+  local LC_ALL_HOST;
+
+  # Locale override
+  LC_ALL_HOST=${LC_ALL};
+  export LC_ALL=C;
+
+  # Advanced Development Shell Tools Project
+  for file_path in "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*'.rc'; do
+    if [ -f "${file_path}" ]; then
+      echo "${file_path}";
+    fi;
+  done;
+
+  # Advanced Development Shell Tools Sources
+  for file_path in "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR}/"*'/'*'.rc'; do
+    if [ -f "${file_path}" ]; then
+      echo "${file_path}";
+    fi;
+  done;
+
+  # Advanced Development Shell Tools Extensions
+  for file_path in "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS_DIR}/"*'/'*'.rc'; do
+    if [ -f "${file_path}" ]; then
+      echo "${file_path}";
+    fi;
+  done;
+
+  # Advanced Development Shell Tools Cleanup
+  export LC_ALL=${LC_ALL_HOST};
+}
+
+# === Advanced Development Shell Tools Scripts ===
+function shtoolsscripts()
+{
+  # Usage: shtoolsscripts (List scripts from advanced_development_shell_tools)
+
+  # Variables
+  local file_path;
+  local LC_ALL_HOST;
+
+  # Locale override
+  LC_ALL_HOST=${LC_ALL};
+  export LC_ALL=C;
+
+  # Advanced Development Shell Tools Scripts
+  for file_path in "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR}/"*'/'*'.sh'; do
+    if [ -f "${file_path}" ]; then
+      echo "${file_path}";
+    fi;
+  done;
+
+  # Advanced Development Shell Tools Cleanup
+  export LC_ALL=${LC_ALL_HOST};
+}
+
+# === Advanced Development Shell Tools Instance ===
+function shtoolsinstance()
+{
+  # Usage: shtoolsinstance (Instantiate advanced_development_shell_tools)
+
+  # Variables
+  local file_path;
+  local group;
+  local tmp_list;
+
+  # Header
+  echo -en ' \e[1;33madvanced_development_shell_tools: \e[1;37mLoading project...\e[0m';
+
+  # Import enabled kits
+  tmp_list=$(mktemp);
+  shtoolssources > "${tmp_list}";
+  while read -r file_path; do
+    group=${file_path#${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+    group=${group%/*};
+    if [ "${group}" = 'project' ] || [[ "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${group}|"* ]]; then
+      source "${file_path}";
+    fi;
+  done < "${tmp_list}"
+  rm -f "${tmp_list}";
+
+  # Cleanup
+  echo -en "\r\033[K";
+
+  # Import addons definitions
+  source "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/definitions.rc";
+
+  # First launch detection
+  if [ ! -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
+    export ADVANCED_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='true';
+    __shtools-config-news-enable;
+
+  # Regular launch
+  else
+    export ADVANCED_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='';
+  fi;
+
+  # Verify git is installed
+  if ! type git >/dev/null 2>&1; then
+    echo '';
+    echo -en '\r\033[K \e[1;33madvanced_development_shell_tools: \e[1;31mPlease install git...\e[0m';
+    echo '';
+    echo '';
+    return;
+  fi;
+
+  # Submodules instantiation
+  if [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
+    git submodule update --init;
+    git submodule update --init --remote 2>/dev/null;
+  fi;
+
+  # Automated project news
+  if __shtools-config-news-active; then
+    ADVANCED_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION=true shtoolsnews;
+  fi;
+
+  # Automated project kits
+  if ! grep -q '^# Toolkits: ' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
+    shtoolskits;
+  fi;
+}
+
+# === Advanced Development Shell Tools Instantiation ===
+shtoolsinstance;

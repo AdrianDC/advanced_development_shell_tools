@@ -20,17 +20,17 @@ function __shtools-host-pushbullet-enable()
 {
   # Usage: __shtools-host-pushbullet-enable (Enable optional host Pushbullet)
   __shtoolsoptions '__shtools-host-pushbullet-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_HOST_PUSHBULLET=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_HOST_PUSHBULLET=true;
 }
 function __shtools-host-pushbullet-disable()
 {
   # Usage: __shtools-host-pushbullet-disable (Disable optional host Pushbullet)
   __shtoolsoptions '__shtools-host-pushbullet-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_HOST_PUSHBULLET=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_HOST_PUSHBULLET=;
 }
 function __shtools-host-pushbullet-active()
 {
   # Usage: __shtools-host-pushbullet-active (Get optional host Pushbullet)
   __shtoolsoptions '__shtools-host-pushbullet-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_HOST_PUSHBULLET}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_HOST_PUSHBULLET}" ];
 }

@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# === Android Development Shell Tools Syntax Checker ===
+# === Advanced Development Shell Tools Syntax Checker ===
 function shtoolscheck()
 {
   # Usage: shtoolscheck [bool_ignore] (Run ShellCheck on the project)
@@ -50,7 +50,7 @@ function shtoolscheck()
   echo '';
 }
 
-# === Android Development Shell Tools Pusher ===
+# === Advanced Development Shell Tools Pusher ===
 function shtoolspush()
 {
   # Usage: shtoolspush [bool_ignore_readme] (Commit new changes to the project)
@@ -63,8 +63,8 @@ function shtoolspush()
   # Variables
   local currentdir=${PWD};
 
-  # Access Android Development Shell Tools folder
-  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  # Access Advanced Development Shell Tools folder
+  cd "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
   # Commit changes
   git add -N ./*;
@@ -72,7 +72,7 @@ function shtoolspush()
   git commit -s;
 
   # Commits stats with upstream
-  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  git fetch origin "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   echo '';
   echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
   git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<' | xargs echo -n;
@@ -82,7 +82,7 @@ function shtoolspush()
   echo '';
 
   # Push to upstream
-  git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  git push -f origin "HEAD:${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
 
   # Restore current path
   cd "${currentdir}/";
@@ -91,7 +91,7 @@ function shtoolspush()
   shtoolsup;
 }
 
-# === Android Development Shell Tools Amend ===
+# === Advanced Development Shell Tools Amend ===
 function shtoolsamend()
 {
   # Usage: shtoolsamend [bool_ignore_readme] [bool_ignore_message] (Amend new changes to the project)
@@ -104,8 +104,8 @@ function shtoolsamend()
   # Variables
   local currentdir=${PWD};
 
-  # Access Android Development Shell Tools folder
-  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  # Access Advanced Development Shell Tools folder
+  cd "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
   # Commit changes
   git add -N ./*;
@@ -117,7 +117,7 @@ function shtoolsamend()
   fi;
 
   # Commits stats with upstream
-  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  git fetch origin "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
   echo '';
   echo -en ' \e[1;33mgitstat: \e[1;37mLocal commits:\e[1;33m ';
   git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<' | xargs echo -n;
@@ -127,7 +127,7 @@ function shtoolsamend()
   echo '';
 
   # Push to upstream
-  git push -f origin "HEAD:${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
+  git push -f origin "HEAD:${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BRANCH}";
 
   # Restore current path
   cd "${currentdir}/";
@@ -136,11 +136,11 @@ function shtoolsamend()
   shtoolsup;
 }
 
-# === Android Development Shell Tools Configuration Edit ===
+# === Advanced Development Shell Tools Configuration Edit ===
 function shtoolsconf()
 {
   # Usage: shtoolsconf (Edit the project configuration)
 
   # Edit the project configuration
-  fileedit "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+  fileedit "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
 }

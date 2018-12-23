@@ -86,7 +86,7 @@ function cdp()
   # Single input available
   if [ "${cnt}" -eq 0 ]; then
     echo '';
-    echo -e " \e[1;37m[ Android Development Shell Tools - No project found ]\e[0m";
+    echo -e " \e[1;37m[ Advanced Development Shell Tools - No project found ]\e[0m";
     echo '';
 
   # Single input available
@@ -96,7 +96,7 @@ function cdp()
   # Multiple inputs available
   else
     echo '';
-    echo -e " \e[1;37m[ Android Development Shell Tools - Available project paths ]\e[0m";
+    echo -e " \e[1;37m[ Advanced Development Shell Tools - Available project paths ]\e[0m";
     echo '';
 
     # Display paths menu

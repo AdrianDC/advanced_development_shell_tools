@@ -16,8 +16,8 @@
 #
 
 # === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/gerrit/repopicks.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/repopicks.rc)
 
 # === Gerrit Repopicks ===
 function gerritrepopicks()
@@ -46,8 +46,8 @@ function gerritrepopicks()
   fi;
 
   # Create .bash_android.gerrit.rc with the exports to override the credentials
-  if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc" ]; then
-    source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc";
+  if [ -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc" ]; then
+    source "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc";
   fi;
 
   # Manual user login if credentials missing
@@ -57,7 +57,7 @@ function gerritrepopicks()
     echo '';
     echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2018\e[0m';
     echo '';
-    echo -e "      \e[1;33mError: No configuration in ${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc found";
+    echo -e "      \e[1;33mError: No configuration in ${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc found";
     echo -e '             \e[1;31mUse "shtoolsf gerritssh" to see how to set your logins\e[0m';
     echo '';
     echo -e '      \e[1;32mInfo: Gerrit SSH credentials will be used to login and review';

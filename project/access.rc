@@ -15,16 +15,16 @@
 # limitations under the License.
 #
 
-# === Android Development Shell Tools Path Getter ===
+# === Advanced Development Shell Tools Path Getter ===
 function shtoolsget()
 {
   # Usage: shtoolsget (Get the project path)
 
   # Get the project path
-  echo "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}";
+  echo "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}";
 }
 
-# === Android Development Shell Tools Path Access ===
+# === Advanced Development Shell Tools Path Access ===
 function shtoolscd()
 {
   # Usage: shtoolscd (Access the project path)
@@ -33,14 +33,14 @@ function shtoolscd()
   cd "$(shtoolsget)";
 }
 
-# === Android Development Shell Tools Files ===
+# === Advanced Development Shell Tools Files ===
 function shtoolsfiles()
 {
   # Usage: shtoolsfiles [entrypoint,sources,scripts] (List the project files @Hide)
 
   # Present entrypoint path
   if [ -z "${1}" ] || [[ "${1}" == *"entrypoint"* ]]; then
-    echo "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
+    echo "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
   fi;
 
   # Present sources paths
@@ -54,7 +54,7 @@ function shtoolsfiles()
   fi;
 }
 
-# === Android Development Shell Tools Syncer ===
+# === Advanced Development Shell Tools Syncer ===
 function shtoolssync()
 {
   # Usage: shtoolssync (Synchronize the project new changes)
@@ -62,14 +62,14 @@ function shtoolssync()
   # Variables
   local currentdir=${PWD};
 
-  # Access Android Development Shell Tools folder
-  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  # Access Advanced Development Shell Tools folder
+  cd "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
   # Display project news
-  ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC=true shtoolsnews;
+  ADVANCED_DEVELOPMENT_SHELL_TOOLS_SYNC=true shtoolsnews;
 
   # Download upstream changes
-  git fetch origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" &&
+  git fetch origin "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BRANCH}" &&
       git reset FETCH_HEAD;
   gitsu;
 
@@ -84,14 +84,14 @@ function shtoolssync()
   shtoolsup;
 }
 
-# === Android Development Shell Tools Update ===
+# === Advanced Development Shell Tools Update ===
 function shtoolsup()
 {
   # Usage: shtoolsup (Reloads the project scripts)
 
   # Reload the project sources
-  source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
+  source "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}";
   echo '';
-  echo -e ' \e[1;33mandroid_development_shell_tools: \e[1;37mFunctions loaded properly\e[0m';
+  echo -e ' \e[1;33madvanced_development_shell_tools: \e[1;37mFunctions loaded properly\e[0m';
   echo '';
 }

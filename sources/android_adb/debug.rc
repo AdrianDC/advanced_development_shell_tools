@@ -39,9 +39,9 @@ function adbst()
   if [ ! -z "${strace_exists}" ]; then
     adbro;
     if [ ! -z "$(adbsu grep '64' /proc/cpuinfo)" ]; then
-      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64}" "${target}/strace";
+      adb push "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_64}" "${target}/strace";
     else
-      adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" "${target}/strace";
+      adb push "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_FILES_STRACE_32}" "${target}/strace";
     fi;
     adbsur "cp '${target}/strace' /system/bin/strace;
             rm '${target}/strace';

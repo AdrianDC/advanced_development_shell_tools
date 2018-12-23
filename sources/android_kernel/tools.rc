@@ -15,16 +15,16 @@
 # limitations under the License.
 #
 
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_build/helpers.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_devices/target.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/host/common.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_release/cleaners.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/android_development_shell_tools/raw/master/sources/android_kernel/tools.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/tools.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_build/helpers.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_devices/target.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/host/common.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_release/cleaners.rc)
+# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_kernel/tools.rc)
 
 # === Build paths ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg;
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg_host;
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg;
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg_host;
 
 # === Fast Bootimage Builder ===
 function fboota()
@@ -297,7 +297,7 @@ function bootinfo()
   fi;
 
   # Run bbootimg on the kernel input
-  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST}" -i "${1}";
+  "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST}" -i "${1}";
 }
 
 # === Kernel Informations ===
@@ -334,7 +334,7 @@ function adbbootinfo()
   fi;
 
   # Push and fix permissions of 'bbootimg' then kernel informations and cleanup
-  ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
+  ${adb} push "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
   adbsu "chmod 755 ${adb_tmpdir}/bbootimg;
          ${adb_tmpdir}/bbootimg -i ${partitiontarget};
          rm -f ${adb_tmpdir}/bbootimg";
@@ -374,7 +374,7 @@ function adbfotainfo()
   fi;
 
   # Push, fix permissions of 'bbootimg' then get FOTA informations
-  ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
+  ${adb} push "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
   adbsu "chmod 755 ${adb_tmpdir}/bbootimg;
          ${adb_tmpdir}/bbootimg -i ${partitiontarget};
          rm -f ${adb_tmpdir}/bbootimg";
@@ -456,7 +456,7 @@ function fbootk()
   fi
 
   # Push and fix permissions of 'bbootimg'
-  ${adb} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
+  ${adb} push "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/bbootimg";
   adbsu "chmod 755 ${adb_tmpdir}/bbootimg";
 
   # Kernel informations and injection, then clenaup
@@ -633,15 +633,15 @@ function kernelinjectorzip()
   mkdir -p "${TmpDir}/scripts/";
 
   # Copy base zip and 'kernel'
-  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TmpDir}/${OutFile}.unsigned.zip";
+  cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TmpDir}/${OutFile}.unsigned.zip";
   cp "${KernelFile}" "${TmpDir}/scripts/kernel";
 
   # Write device specific changes
   cd "${TmpDir}/";
-  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_KERNEL_INJECTOR}" './META-INF/com/google/android/updater-script';
+  cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPDATER_KERNEL_INJECTOR}" './META-INF/com/google/android/updater-script';
   sed -i "s/ANDROID_SYSTEM_PARTITION/${SystemPartition//\//\\\/}/" './META-INF/com/google/android/updater-script';
-  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR}" './scripts/';
-  cp -fv "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR_SH}" './scripts/';
+  cp -fv "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR}" './scripts/';
+  cp -fv "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_KERNEL_INJECTOR_SH}" './scripts/';
   sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" './scripts/kernel_inject.sh';
 
   # Update 'updater-script', 'scripts' and 'kernel'
@@ -726,12 +726,12 @@ function bootzip()
 
   # Copy 'boot.img' and base zip
   cp "${BootFile}" "${TmpDir}/boot.img";
-  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TmpDir}/${OutFile}.unsigned.zip";
+  cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_FLASHABLE_ANDROID_BASE}" "${TmpDir}/${OutFile}.unsigned.zip";
 
   # Write device specific changes
   cd "${TmpDir}/";
   mkdir -p './META-INF/com/google/android/';
-  cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_BOOT}" './META-INF/com/google/android/updater-script';
+  cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPDATER_FLASH_BOOT}" './META-INF/com/google/android/updater-script';
   sed -i "s/ANDROID_BOOT_PARTITION/${BootPartition//\//\\\/}/" './META-INF/com/google/android/updater-script';
 
   # Update 'updater-script' and 'boot.img'
@@ -926,7 +926,7 @@ function adbramdiskinject()
          mkdir -p '${adb_tmpdir}/inject'";
 
   # Push and fix permissions of 'bbootimg'
-  ${adb_cmd} push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/inject/bbootimg";
+  ${adb_cmd} push "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" "${adb_tmpdir}/inject/bbootimg";
   adbsu "chmod 755 ${adb_tmpdir}/inject/bbootimg";
 
   # Bootimage extraction, then unpack gzip and cpio ramdisk

@@ -1,4 +1,4 @@
-[CENTER][IMG]https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1515342372[/IMG][/CENTER]
+[CENTER][IMG]https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png[/IMG][/CENTER]
 
 
 [SIZE=5][B][U]Disclaimer[/U][/B][/SIZE]
@@ -26,8 +26,8 @@
 [SIZE=5][B][U]About the project[/U][/B][/SIZE]
 
 [INDENT][LIST]
-[*]The project [URL=https://github.com/AdrianDC/android_development_shell_tools][B]android_development_shell_tools[/B][/URL] started in 2015
-   to [B]ease Android development, ADB usage, Git commands and related projects.[/B]
+[*]The project [URL=https://github.com/AdrianDC/advanced_development_shell_tools][B]advanced_development_shell_tools[/B][/URL] started in 2015
+   to [B]ease Android and Linux developments, ADB usage, Git commands and related projects.[/B]
    Originally a private set of scripts, I made the project evolve towards
    a publically shareable set of tools that can be [B]easily used and even configured[/B]
    by anyone interested in using advanced development tools and in winning time.
@@ -45,7 +45,7 @@
 [SIZE=5][B][U]How to update with upstream changes[/U][/B][/SIZE]
 
 [INDENT][LIST]
-[*][B]To keep a local sync of 'android_development_shell_tools' updated with upstream changes[/B],
+[*][B]To keep a local sync of 'advanced_development_shell_tools' updated with upstream changes[/B],
    simply run the [B][FONT="Courier New"][I]`shtoolssync;`[/I][/FONT][/B] command and the updates will be downloaded.
    Local modifications will be lost through the update (read about [FONT="Courier New"][I]`git stash pop`[/I][/FONT] in that case)
    and the [B]newest commits / improvements will be added[/B] to your available tools.
@@ -81,8 +81,8 @@
 [SIZE=5][B][U]Project and documentations[/U][/B][/SIZE]
 
 [INDENT][LIST]
-[*][B]Documentation and references :[/B] [URL=http://adriandc.github.io/android_development_shell_tools]android_development_shell_tools[/URL]
-[*][B]Sources on GitHub :[/B] [URL=https://github.com/AdrianDC/android_development_shell_tools]android_development_shell_tools[/URL]
+[*][B]Documentation and references :[/B] [URL=http://adriandc.github.io/advanced_development_shell_tools]advanced_development_shell_tools[/URL]
+[*][B]Sources on GitHub :[/B] [URL=https://github.com/AdrianDC/advanced_development_shell_tools]advanced_development_shell_tools[/URL]
 [/LIST][/INDENT]
 
 ---
@@ -91,15 +91,15 @@
 
 [INDENT][LIST]
 [*][B]Clone the project locally with git:[/B]
-   [I][FONT="Courier New"][I]`git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`[/I][/FONT][/I]
+   [I][FONT="Courier New"][I]`git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master;`[/I][/FONT][/I]
 
 [*][B]Load the project in the current Shell terminal:[/B]
-   [I][FONT="Courier New"][I]`source /path/to/folder/android_development_shell_tools.rc;`[/I][/FONT][/I]
+   [I][FONT="Courier New"][I]`source /path/to/folder/advanced_development_shell_tools.rc;`[/I][/FONT][/I]
 
 [*][B]Permanently load the project:[/B] Open [I][FONT="Courier New"][I]`~/.bashrc`[/I][/FONT][/I], adapt and add:
    [CODE]
    export ANDROID_DEV_DRIVE='/media/../AndroidDev';
-   source '/.../android_development_shell_tools.rc';
+   source '/.../advanced_development_shell_tools.rc';
    [/CODE]
 [*][B]The [I][FONT="Courier New"][I]`ANDROID_DEV_DRIVE`[/I][/FONT][/I] variable[/B] is a folder used for Android ROMs and kernels.
    You do not [I]need[/I] it, but a few functions rely on it to ease things.
@@ -122,8 +122,8 @@
 [SIZE=5][B][U]Project contributors and modules[/U][/B][/SIZE]
 
 [INDENT][LIST]
-[*][URL=https://github.com/AdrianDC]AdrianDC[/URL] : android_development_shell_tools creator and main developer
-[*][URL=https://github.com/Caio99BR]Caio99BR[/URL] : android_development_shell_tools user and contributor
+[*][URL=https://github.com/AdrianDC]AdrianDC[/URL] : advanced_development_shell_tools creator and main developer
+[*][URL=https://github.com/Caio99BR]Caio99BR[/URL] : advanced_development_shell_tools user and contributor
 [*][URL=https://github.com/multirom-dev/libbootimg/graphs/contributors]multirom-dev[/URL] : libbootimg evolutions originally by [URL=https://github.com/Tasssadar]Tassadar[/URL]
 [*][URL=https://github.com/xiaolu/mkbootimg_tools]xiaolu[/URL] : mkbootimg_tools submodule original developer
 [/LIST][/INDENT]

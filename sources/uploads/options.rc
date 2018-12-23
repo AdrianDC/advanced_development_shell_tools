@@ -20,19 +20,19 @@ function __shtools-uploads-basketbuild-enable()
 {
   # Usage: __shtools-uploads-basketbuild-enable (Enable optional BasketBuild uploads)
   __shtoolsoptions '__shtools-uploads-basketbuild-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=true;
 }
 function __shtools-uploads-basketbuild-disable()
 {
   # Usage: __shtools-uploads-basketbuild-disable (Disable optional BasketBuild uploads)
   __shtoolsoptions '__shtools-uploads-basketbuild-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=;
 }
 function __shtools-uploads-basketbuild-active()
 {
   # Usage: __shtools-uploads-basketbuild-active (Get optional BasketBuild uploads)
   __shtoolsoptions '__shtools-uploads-basketbuild-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD}" ];
 }
 
 # === Options - Files Uploader - FTP ===
@@ -40,19 +40,19 @@ function __shtools-uploads-ftp-enable()
 {
   # Usage: __shtools-uploads-ftp-enable (Enable optional FTP uploads)
   __shtoolsoptions '__shtools-uploads-ftp-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP=true;
 }
 function __shtools-uploads-ftp-disable()
 {
   # Usage: __shtools-uploads-ftp-disable (Disable optional FTP uploads)
   __shtoolsoptions '__shtools-uploads-ftp-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP=;
 }
 function __shtools-uploads-ftp-active()
 {
   # Usage: __shtools-uploads-ftp-active (Get optional FTP uploads)
   __shtoolsoptions '__shtools-uploads-ftp-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_FTP}" ];
 }
 
 # === Options - Files Uploader - Mega.nz ===
@@ -60,17 +60,17 @@ function __shtools-uploads-mega-enable()
 {
   # Usage: __shtools-uploads-mega-enable (Enable optional Mega.nz uploads)
   __shtoolsoptions '__shtools-uploads-mega-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA=true;
 }
 function __shtools-uploads-mega-disable()
 {
   # Usage: __shtools-uploads-mega-disable (Disable optional Mega.nz uploads)
   __shtoolsoptions '__shtools-uploads-mega-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA=;
 }
 function __shtools-uploads-mega-active()
 {
   # Usage: __shtools-uploads-mega-active (Get optional Mega.nz uploads)
   __shtoolsoptions '__shtools-uploads-mega-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_MEGA}" ];
 }

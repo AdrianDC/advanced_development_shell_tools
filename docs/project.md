@@ -1,5 +1,5 @@
 <!-- Center -->
-![Android Development Shell Tools](https://github.com/AdrianDC/android_development_shell_tools/raw/master/docs/assets/res/logo.png)
+![Advanced Development Shell Tools](https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png)
 <!-- /Center -->
 
 
@@ -35,9 +35,9 @@
 
 <!-- Indent -->
 <!-- List -->
- * The project [**android_development_shell_tools**](https://github.com/AdrianDC/android_development_shell_tools) started in 2015
+ * The project [**advanced_development_shell_tools**](https://github.com/AdrianDC/advanced_development_shell_tools) started in 2015
    <br />
-   to **ease Android development, ADB usage, Git commands and related projects.**
+   to **ease Android and Linux developments, ADB usage, Git commands and related projects.**
    <br />
    Originally a private set of scripts, I made the project evolve towards
    <br />
@@ -65,7 +65,7 @@
 
 <!-- Indent -->
 <!-- List -->
- * **To keep a local sync of 'android_development_shell_tools' updated with upstream changes**,
+ * **To keep a local sync of 'advanced_development_shell_tools' updated with upstream changes**,
    <br />
    simply run the **`shtoolssync;`** command and the updates will be downloaded.
    <br />
@@ -119,8 +119,8 @@
 
 <!-- Indent -->
 <!-- List -->
- * **Documentation and references :** [android_development_shell_tools](http://adriandc.github.io/android_development_shell_tools)
- * **Sources on GitHub :** [android_development_shell_tools](https://github.com/AdrianDC/android_development_shell_tools)
+ * **Documentation and references :** [advanced_development_shell_tools](http://adriandc.github.io/advanced_development_shell_tools)
+ * **Sources on GitHub :** [advanced_development_shell_tools](https://github.com/AdrianDC/advanced_development_shell_tools)
 <!-- /List -->
 <!-- /Indent -->
 
@@ -132,16 +132,16 @@
 <!-- List -->
  * **Clone the project locally with git:**
    <br />
-   *`git clone https://github.com/AdrianDC/android_development_shell_tools -b master;`*
+   *`git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master;`*
 
  * **Load the project in the current Shell terminal:**
    <br />
-   *`source /path/to/folder/android_development_shell_tools.rc;`*
+   *`source /path/to/folder/advanced_development_shell_tools.rc;`*
 
  * **Permanently load the project:** Open *`~/.bashrc`*, adapt and add:
    ```Shell
    export ANDROID_DEV_DRIVE='/media/../AndroidDev';
-   source '/.../android_development_shell_tools.rc';
+   source '/.../advanced_development_shell_tools.rc';
    ```
  * **The *`ANDROID_DEV_DRIVE`* variable** is a folder used for Android ROMs and kernels.
    <br />
@@ -169,8 +169,8 @@
 
 <!-- Indent -->
 <!-- List -->
- * [AdrianDC](https://github.com/AdrianDC) : android_development_shell_tools creator and main developer
- * [Caio99BR](https://github.com/Caio99BR) : android_development_shell_tools user and contributor
+ * [AdrianDC](https://github.com/AdrianDC) : advanced_development_shell_tools creator and main developer
+ * [Caio99BR](https://github.com/Caio99BR) : advanced_development_shell_tools user and contributor
  * [multirom-dev](https://github.com/multirom-dev/libbootimg/graphs/contributors) : libbootimg evolutions originally by [Tassadar](https://github.com/Tasssadar)
  * [xiaolu](https://github.com/xiaolu/mkbootimg_tools) : mkbootimg_tools submodule original developer
 <!-- /List -->

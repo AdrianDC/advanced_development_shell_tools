@@ -169,7 +169,7 @@ function romautorelease()
     devuplrom "${rom_device}" "${rom_upload}";
 
     # When option enabled, notify uploaded build
-    if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}" ] &&
+    if [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE}" ] &&
         __shtools-host-pushbullet-active; then
       pushb "$(hostname): ${rom_tag} for ${rom_device} uploaded";
     fi;

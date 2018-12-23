@@ -1,4 +1,4 @@
-# Android Development Shell Tools - Changelog #
+# Advanced Development Shell Tools - Changelog #
 
 
 [INDENT][LIST]
@@ -44,7 +44,7 @@
 
 [SIZE=5][B]During 2016:[/B][/SIZE]
 
-[*]Project renamed to "Android Development Shell Tools" project
+[*]Project renamed to "Advanced Development Shell Tools" project
    and updated to ease new developers first usage
 [*]Additions from multiple developer and user functions to
    assist shell commands around Android projects and devices

@@ -16,8 +16,8 @@
 #
 
 # === Build paths ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/mkbootimg_tools;
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_MKELF=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/mkelf/mkelf.py;
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_MKBOOT=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/mkbootimg_tools;
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_MKELF=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/mkelf/mkelf.py;
 
 # === Boot Tools ===
 function boottools()
@@ -41,7 +41,7 @@ function boottools()
 
   # Unpack
   rm -rf "${out_folder}";
-  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT}/mkboot" "${boot_file}" "${out_folder}";
+  "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_MKBOOT}/mkboot" "${boot_file}" "${out_folder}";
 
   # Edition mode
   if [ -z "${2}" ]; then
@@ -60,7 +60,7 @@ function boottools()
     fi;
     rm -f "${boot_file}.tmp";
     mv "${boot_file}" "${boot_file}.tmp";
-    "${ANDROID_DEVELOPMENT_SHELL_TOOLS_MKBOOT}/mkboot" "${out_folder}" "${boot_file}";
+    "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_MKBOOT}/mkboot" "${out_folder}" "${boot_file}";
     if [ -f "${boot_file}.tmp" ]; then
       rm -f "${boot_file}.tmp";
     fi;
@@ -209,7 +209,7 @@ function bootelf()
     echo '';
     echo ' [ Compiling the boot.img ]';
     echo '';
-    cp "${ANDROID_DEVELOPMENT_SHELL_TOOLS_MKELF}" ./mkelf.py;
+    cp "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_MKELF}" ./mkelf.py;
     python ./mkelf.py -o boot-new.elf kernel@0x80208000 ramdisk.img@0x81900000,ramdisk RPM.bin@0x00020000,rpm cmdline.txt@0x00000000,cmdline;
 
     # Replace input bootimage

@@ -224,7 +224,7 @@ function adbmrominjector()
 
   # Files to device push=
   adb push "${filepath}" '/tmp/tmpkernel';
-  adb push "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" '/tmp/bbootimg';
+  adb push "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG}" '/tmp/bbootimg';
   adbsu 'chmod +x /tmp/bbootimg;
          chmod 755 /tmp/bbootimg';
 

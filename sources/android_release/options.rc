@@ -20,19 +20,19 @@ function __shtools-builds-bringup-enable()
 {
   # Usage: __shtools-builds-bringup-enable (Enable bringup builds option)
   __shtoolsoptions '__shtools-builds-bringup-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP=true;
 }
 function __shtools-builds-bringup-disable()
 {
   # Usage: __shtools-builds-bringup-disable (Disable bringup builds option)
   __shtoolsoptions '__shtools-builds-bringup-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP=;
 }
 function __shtools-builds-bringup-active()
 {
   # Usage: __shtools-builds-bringup-active (Get bringup builds option)
   __shtoolsoptions '__shtools-builds-bringup-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_BRINGUP}" ];
 }
 
 # === Options - Builds - clean ===
@@ -40,19 +40,19 @@ function __shtools-builds-clean-enable()
 {
   # Usage: __shtools-builds-clean-enable (Enable clean builds option)
   __shtoolsoptions '__shtools-builds-clean-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN=true;
 }
 function __shtools-builds-clean-disable()
 {
   # Usage: __shtools-builds-clean-disable (Disable clean builds option)
   __shtoolsoptions '__shtools-builds-clean-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN=;
 }
 function __shtools-builds-clean-active()
 {
   # Usage: __shtools-builds-clean-active (Get clean builds option)
   __shtoolsoptions '__shtools-builds-clean-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEAN}" ];
 }
 
 # === Options - Builds - cleanccache ===
@@ -60,19 +60,19 @@ function __shtools-builds-cleanccache-enable()
 {
   # Usage: __shtools-builds-cleanccache-enable (Enable cleanccache builds option)
   __shtoolsoptions '__shtools-builds-cleanccache-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANCCACHE=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANCCACHE=true;
 }
 function __shtools-builds-cleanccache-disable()
 {
   # Usage: __shtools-builds-cleanccache-disable (Disable cleanccache builds option)
   __shtoolsoptions '__shtools-builds-cleanccache-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANCCACHE=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANCCACHE=;
 }
 function __shtools-builds-cleanccache-active()
 {
   # Usage: __shtools-builds-cleanccache-active (Get cleanccache builds option)
   __shtoolsoptions '__shtools-builds-cleanccache-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANCCACHE}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANCCACHE}" ];
 }
 
 # === Options - Builds - cleandevices ===
@@ -80,19 +80,19 @@ function __shtools-builds-cleandevices-enable()
 {
   # Usage: __shtools-builds-cleandevices-enable (Enable cleandevices builds option)
   __shtoolsoptions '__shtools-builds-cleandevices-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES=true;
 }
 function __shtools-builds-cleandevices-disable()
 {
   # Usage: __shtools-builds-cleandevices-disable (Disable cleandevices builds option)
   __shtoolsoptions '__shtools-builds-cleandevices-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES=;
 }
 function __shtools-builds-cleandevices-active()
 {
   # Usage: __shtools-builds-cleandevices-active (Get cleandevices builds option)
   __shtoolsoptions '__shtools-builds-cleandevices-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES}" ];
 }
 
 # === Options - Builds - cleanram ===
@@ -100,19 +100,19 @@ function __shtools-builds-cleanram-enable()
 {
   # Usage: __shtools-builds-cleanram-enable (Enable cleanram builds option)
   __shtoolsoptions '__shtools-builds-cleanram-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM=true;
 }
 function __shtools-builds-cleanram-disable()
 {
   # Usage: __shtools-builds-cleanram-disable (Disable cleanram builds option)
   __shtoolsoptions '__shtools-builds-cleanram-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM=;
 }
 function __shtools-builds-cleanram-active()
 {
   # Usage: __shtools-builds-cleanram-active (Get cleanram builds option)
   __shtoolsoptions '__shtools-builds-cleanram-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM}" ];
 }
 
 # === Options - Builds - debug ===
@@ -120,19 +120,19 @@ function __shtools-builds-debug-enable()
 {
   # Usage: __shtools-builds-debug-enable (Enable debug builds option)
   __shtoolsoptions '__shtools-builds-debug-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG=true;
 }
 function __shtools-builds-debug-disable()
 {
   # Usage: __shtools-builds-debug-disable (Disable debug builds option)
   __shtoolsoptions '__shtools-builds-debug-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG=;
 }
 function __shtools-builds-debug-active()
 {
   # Usage: __shtools-builds-debug-active (Get debug builds option)
   __shtoolsoptions '__shtools-builds-debug-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_DEBUG}" ];
 }
 
 # === Options - Builds - local ===
@@ -140,19 +140,19 @@ function __shtools-builds-local-enable()
 {
   # Usage: __shtools-builds-local-enable (Enable local builds option)
   __shtoolsoptions '__shtools-builds-local-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL=true;
 }
 function __shtools-builds-local-disable()
 {
   # Usage: __shtools-builds-local-disable (Disable local builds option)
   __shtoolsoptions '__shtools-builds-local-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL=;
 }
 function __shtools-builds-local-active()
 {
   # Usage: __shtools-builds-local-active (Get local builds option)
   __shtoolsoptions '__shtools-builds-local-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_LOCAL}" ];
 }
 
 # === Options - Builds - nosync ===
@@ -160,17 +160,17 @@ function __shtools-builds-nosync-enable()
 {
   # Usage: __shtools-builds-nosync-enable (Enable nosync builds option)
   __shtoolsoptions '__shtools-builds-nosync-' 'enable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC=true;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC=true;
 }
 function __shtools-builds-nosync-disable()
 {
   # Usage: __shtools-builds-nosync-disable (Disable nosync builds option)
   __shtoolsoptions '__shtools-builds-nosync-' 'disable';
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC=;
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC=;
 }
 function __shtools-builds-nosync-active()
 {
   # Usage: __shtools-builds-nosync-active (Get nosync builds option)
   __shtoolsoptions '__shtools-builds-nosync-';
-  [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC}" ];
+  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_NOSYNC}" ];
 }

@@ -15,174 +15,24 @@
 # limitations under the License.
 #
 
-# === Shell Entrypoint Handling ===
+# === Android Development Shell Tools Entrypoint ===
 ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=${BASH_SOURCE[0]};
 ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT:-${(%):-%N}};
 ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT=$(readlink -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}");
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT;
 if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT}" ]; then
   echo '';
-  echo -e ' \e[1;33mandroid_development_shell_tools by AdrianDC: \e[1;31mExecution path could not be found\e[0m';
+  echo -e ' \e[1;33madvanced_development_shell_tools by AdrianDC: \e[1;31mExecution path could not be found\e[0m';
   echo '';
   return;
 fi;
 
 # === Android Development Shell Tools Folders ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT%/*};
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/extensions;
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/project;
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts;
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/sources;
+ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR=${ANDROID_DEVELOPMENT_SHELL_TOOLS_ENTRYPOINT%/*};
 
-# === Android Development Shell Tools Variables ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH='master';
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_VERSION='2018.1';
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_URL='https://github.com/AdrianDC/android_development_shell_tools';
-
-# === Android Development Shell Tools Workspace ===
-if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}" ]; then
-  export ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE=~;
+# === Legacy Shell Entrypoint Handling ===
+if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE}" ]; then
+  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE};
 fi;
 
-# === Android Development Shell Tools Configuration ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION=${ANDROID_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android_development_shell_tools.rc;
-
-# === Android Development Shell Tools Toolkits ===
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID='|sources/android_adb|sources/android_build|sources/android_devices|sources/android_kernel|sources/android_release|sources/android_repo|sources/android_rom|sources/gerrit|sources/git|sources/host|sources/ssh|sources/uploads|extensions/linux|';
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST='|sources/host|extensions/linux|';
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT='|sources/git|sources/host|sources/ssh|extensions/linux|';
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY='|sources/git|sources/host|';
-ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS=$(grep --color=never '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" 2>/dev/null);
-export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS;
-
-# === Android Development Shell Tools Sources ===
-function shtoolssources()
-{
-  # Usage: shtoolssources (List sources from android_development_shell_tools)
-
-  # Variables
-  local file_path;
-  local LC_ALL_HOST;
-
-  # Locale override
-  LC_ALL_HOST=${LC_ALL};
-  export LC_ALL=C;
-
-  # Android Development Shell Tools Project
-  for file_path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*'.rc'; do
-    if [ -f "${file_path}" ]; then
-      echo "${file_path}";
-    fi;
-  done;
-
-  # Android Development Shell Tools Sources
-  for file_path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR}/"*'/'*'.rc'; do
-    if [ -f "${file_path}" ]; then
-      echo "${file_path}";
-    fi;
-  done;
-
-  # Android Development Shell Tools Extensions
-  for file_path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_EXTENSIONS_DIR}/"*'/'*'.rc'; do
-    if [ -f "${file_path}" ]; then
-      echo "${file_path}";
-    fi;
-  done;
-
-  # Android Development Shell Tools Cleanup
-  export LC_ALL=${LC_ALL_HOST};
-}
-
-# === Android Development Shell Tools Scripts ===
-function shtoolsscripts()
-{
-  # Usage: shtoolsscripts (List scripts from android_development_shell_tools)
-
-  # Variables
-  local file_path;
-  local LC_ALL_HOST;
-
-  # Locale override
-  LC_ALL_HOST=${LC_ALL};
-  export LC_ALL=C;
-
-  # Android Development Shell Tools Scripts
-  for file_path in "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SCRIPTS_DIR}/"*'/'*'.sh'; do
-    if [ -f "${file_path}" ]; then
-      echo "${file_path}";
-    fi;
-  done;
-
-  # Android Development Shell Tools Cleanup
-  export LC_ALL=${LC_ALL_HOST};
-}
-
-# === Android Development Shell Tools Instance ===
-function shtoolsinstance()
-{
-  # Usage: shtoolsinstance (Instantiate android_development_shell_tools)
-
-  # Variables
-  local file_path;
-  local group;
-  local tmp_list;
-
-  # Header
-  echo -en ' \e[1;33mandroid_development_shell_tools: \e[1;37mLoading project...\e[0m';
-
-  # Import enabled kits
-  tmp_list=$(mktemp);
-  shtoolssources > "${tmp_list}";
-  while read -r file_path; do
-    group=${file_path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
-    group=${group%/*};
-    if [ "${group}" = 'project' ] || [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${group}|"* ]]; then
-      source "${file_path}";
-    fi;
-  done < "${tmp_list}"
-  rm -f "${tmp_list}";
-
-  # Cleanup
-  echo -en "\r\033[K";
-
-  # Import addons definitions
-  source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/definitions.rc";
-
-  # First launch detection
-  if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ]; then
-    export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='true';
-    __shtools-config-news-enable;
-
-  # Regular launch
-  else
-    export ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH='';
-  fi;
-
-  # Verify git is installed
-  if ! type git >/dev/null 2>&1; then
-    echo '';
-    echo -en '\r\033[K \e[1;33mandroid_development_shell_tools: \e[1;31mPlease install git...\e[0m';
-    echo '';
-    echo '';
-    return;
-  fi;
-
-  # Submodules instantiation
-  if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_FIRST_LAUNCH}" ]; then
-    git submodule update --init;
-    git submodule update --init --remote 2>/dev/null;
-  fi;
-
-  # Automated project news
-  if __shtools-config-news-active; then
-    ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION=true shtoolsnews;
-  fi;
-
-  # Automated project kits
-  if ! grep -q '^# Toolkits: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
-    shtoolskits;
-  fi;
-}
-
-# === Android Development Shell Tools Instantiation ===
-shtoolsinstance;
+# === Shell Entrypoint Call ===
+source "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/advanced_development_shell_tools.rc";

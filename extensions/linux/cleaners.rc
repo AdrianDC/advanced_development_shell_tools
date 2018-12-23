@@ -21,7 +21,7 @@ function cleanram()
   # Usage: cleanram (RAM caches cleanup)
 
   # Run cleanram script
-  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts/linux/cleanram.sh";
+  "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts/linux/cleanram.sh";
 }
 
 # === CleanRAM after builds ===
@@ -30,7 +30,7 @@ function cleanrambuild()
   # Usage: cleanrambuild (RAM caches cleanup)
 
   # Run cleanram script
-  "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts/linux/cleanrambuild.sh";
+  "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts/linux/cleanrambuild.sh";
 }
 
 # === CleanRAM with Kills ===

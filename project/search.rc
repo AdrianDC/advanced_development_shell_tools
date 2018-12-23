@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# === Android Development Shell Tools Functions Editor ===
+# === Advanced Development Shell Tools Functions Editor ===
 function shtoolse()
 {
   # Usage
@@ -54,7 +54,7 @@ function shtoolse()
   fi;
 }
 
-# === Android Development Shell Tools Functions Editor ===
+# === Advanced Development Shell Tools Functions Editor ===
 function shtoolsf()
 {
   # Usage

@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# === Android Development Shell Tools Menu ===
+# === Advanced Development Shell Tools Menu ===
 function shtools()
 {
   # Usage: shtools (Entrypoint menu to the project)
@@ -33,14 +33,14 @@ function shtools()
 
   # Function header
   echo '';
-  echo -e " \e[1;37m[ Android Development Shell Tools - Menu ]";
+  echo -e " \e[1;37m[ Advanced Development Shell Tools - Menu ]";
   echo '';
 
   # Display shtools* menu
   for line_function in $(typeset -F | grep shtools | cut -d' ' -f 3 | grep -v '^shtools$\|^__'); do
 
     # Parse usage
-    line_usage=$(grep -a "Usage: ${line_function} " "${ANDROID_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*);
+    line_usage=$(grep -a "Usage: ${line_function} " "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_PROJECT_DIR}/"*);
     if [ -z "${line_usage}" ]; then
       continue;
     fi;
@@ -69,7 +69,7 @@ function shtools()
   fi;
 }
 
-# === Android Development Shell Tools Options Menu ===
+# === Advanced Development Shell Tools Options Menu ===
 function shtools-()
 {
   # Usage: shtools- (Options menu for the project)
@@ -96,7 +96,7 @@ function shtools-()
 
     # Function header
     echo '';
-    echo -e " \e[1;37m[ Android Development Shell Tools - Options ]";
+    echo -e " \e[1;37m[ Advanced Development Shell Tools - Options ]";
     echo '';
 
     # Reset containers
@@ -192,7 +192,7 @@ function shtools-()
   __shtoolsui 'disable';
 }
 
-# === Android Development Shell Tools Toolkits Menu ===
+# === Advanced Development Shell Tools Toolkits Menu ===
 function shtoolskits()
 {
   # Usage: shtoolskits [init] (Toolkits selection for the project)
@@ -210,17 +210,17 @@ function shtoolskits()
   __shtoolsui 'enable';
 
   # First time usage
-  if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" ] || [ ! -z "${1}" ]; then
+  if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" ] || [ ! -z "${1}" ]; then
 
     # Clear UI wrapper
     __shtoolsui 'start';
 
     # Function header
     echo '';
-    echo -e " \e[1;37m[ Android Development Shell Tools - Toolkits ]";
+    echo -e " \e[1;37m[ Advanced Development Shell Tools - Toolkits ]";
     echo '';
     echo -e ' \e[1;33mshtoolskits:\e[1;37m This function is meant to select which parts of';
-    echo '              android_development_shell_tools you want to load';
+    echo '              advanced_development_shell_tools you want to load';
     echo '';
 
     # Choices list
@@ -238,15 +238,15 @@ function shtoolskits()
 
     # Choices selection
     case "${key}" in
-      1) toolkits=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID};;
-      2) toolkits=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT};;
-      3) toolkits=${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST};;
+      1) toolkits=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID};;
+      2) toolkits=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT};;
+      3) toolkits=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST};;
     esac;
 
     # Initialize default toolkits
-    sed -i "/^# Toolkits:.*/d" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
-    export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS="# Toolkits: ${toolkits}";
-    echo "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+    sed -i "/^# Toolkits:.*/d" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+    export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS="# Toolkits: ${toolkits}";
+    echo "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" >> "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
     echo '';
 
   fi;
@@ -259,7 +259,7 @@ function shtoolskits()
 
     # Function header
     echo '';
-    echo -e " \e[1;37m[ Android Development Shell Tools - Toolkits ]";
+    echo -e " \e[1;37m[ Advanced Development Shell Tools - Toolkits ]";
     echo '';
 
     # Reset containers
@@ -279,17 +279,17 @@ function shtoolskits()
 
       # Group variables
       name=$(cat "${file_path}/.name" 2>/dev/null);
-      file_path=${file_path#${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+      file_path=${file_path#${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/};
       if [ "${file_path}" = 'project' ]; then
         continue;
       fi;
       list+=("${file_path}");
 
       # Status output
-      if [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY}" == *"|${file_path}|"* ]]; then
+      if [[ "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY}" == *"|${file_path}|"* ]]; then
         echo -en '  \e[1;36m[!]';
         toolkits="${toolkits}${file_path}|";
-      elif [[ "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${file_path}|"* ]]; then
+      elif [[ "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${file_path}|"* ]]; then
         echo -en '  \e[1;32m[+]';
         toolkits="${toolkits}${file_path}|";
       else
@@ -319,14 +319,14 @@ function shtoolskits()
     # Execute requested function
     if [ "${key}" -eq "${key}" ] 2> /dev/null && [ "${key}" -ge 1 ] && [ "${key}" -le "${cnt}" ]; then
       file_path=${list[${key}]};
-      if [[ ! "${ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY}" == *"|${file_path}|"* ]]; then
+      if [[ ! "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY}" == *"|${file_path}|"* ]]; then
         if [[ "${toolkits}" == *"${file_path}"* ]]; then
           toolkits="${toolkits/${file_path}|/}"
         else
           toolkits="${toolkits}${file_path}|";
         fi;
       fi;
-      export ANDROID_DEVELOPMENT_SHELL_TOOLS_TOOLKITS="# Toolkits: ${toolkits}";
+      export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS="# Toolkits: ${toolkits}";
     fi;
 
   done;
@@ -335,13 +335,13 @@ function shtoolskits()
   __shtoolsui 'disable';
 
   # Update new toolkits
-  sed -i "s#\(\# Toolkits: \).*#\1${toolkits}#g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+  sed -i "s#\(\# Toolkits: \).*#\1${toolkits}#g" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
 
   # Reload the project
   shtoolsup >/dev/null 2>&1;
 }
 
-# === Android Development Shell Tools News ===
+# === Advanced Development Shell Tools News ===
 function shtoolsnews()
 {
   # Usage: shtoolsnews [since_days] (Display the project news notifications)
@@ -358,8 +358,8 @@ function shtoolsnews()
   local timestamp_last;
 
   # Direct call output
-  if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
-    if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+  if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
+    if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
       echo '';
     fi;
 
@@ -368,25 +368,25 @@ function shtoolsnews()
 
     # Validate timestamp from configuration
     timestamp_current=$(date +%Y-%m-%d);
-    timestamp_last=$(grep '^# News timestamp: ' "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
+    timestamp_last=$(grep '^# News timestamp: ' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}");
     if [ -z "${timestamp_last}" ]; then
-      echo "# News timestamp: ${timestamp_current}" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+      echo "# News timestamp: ${timestamp_current}" >> "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
     elif echo "${timestamp_last}" | grep -q "${timestamp_current}"; then
       return;
     fi;
 
     # Update new timestamp configuration
-    sed -i "s/\(# News timestamp: \).*/\1${timestamp_current}/g" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
+    sed -i "s/\(# News timestamp: \).*/\1${timestamp_current}/g" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
   fi;
 
-  # Access Android Development Shell Tools folder
-  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/";
+  # Access Advanced Development Shell Tools folder
+  cd "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/";
 
   # Fetch remote project and ignore if unavailable
   echo -en ' \e[1;33mshtoolsnews: \e[1;33mChecking remote upgrades...\e[0m';
-  if ! git fetch --quiet origin "${ANDROID_DEVELOPMENT_SHELL_TOOLS_BRANCH}" >/dev/null 2>&1; then
+  if ! git fetch --quiet origin "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BRANCH}" >/dev/null 2>&1; then
     echo -en '\r\033[K \e[1;33mshtoolsnews: \e[1;31mInternet access not available...\e[0m';
-    if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
+    if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
       echo '';
     else
       sleep 1;
@@ -413,14 +413,14 @@ function shtoolsnews()
   echo -en "\r\033[K";
 
   # Enable UI wrapper
-  if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+  if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
     __shtoolsui 'enable';
     __shtoolsui 'start';
   fi;
 
   # Header
   echo '';
-  echo -e ' \e[1;33m===[ android_development_shell_tools by AdrianDC ]===';
+  echo -e ' \e[1;33m===[ advanced_development_shell_tools by AdrianDC ]===';
   echo '';
 
   # Present local diffs
@@ -476,7 +476,7 @@ function shtoolsnews()
     done < <(git log --abbrev-commit --pretty=oneline -n "${commits_remote_count}" FETCH_HEAD);
 
     # Present upgrade hint
-    if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+    if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
       echo '';
       echo -e ' \e[1;33m> \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project';
     fi;
@@ -484,11 +484,11 @@ function shtoolsnews()
   fi;
 
   # Ignore input during project sync
-  if [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+  if [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
     sleep 1;
 
   # Delay input on automatic notifications
-  elif [ ! -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
+  elif [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION}" ]; then
     echo -en '\r\033[K \e[1;37m> Resuming input in 3 seconds...';
     sleep 3;
     echo -en '\r\033[K';
@@ -500,7 +500,7 @@ function shtoolsnews()
   fi;
 
   # Disable UI wrapper
-  if [ -z "${ANDROID_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
+  if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
     __shtoolsui 'disable';
   fi;
 

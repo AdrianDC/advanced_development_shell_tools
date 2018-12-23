@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-# === Android Development Shell Tools Docs ===
+# === Advanced Development Shell Tools Docs ===
 function shtoolsdocs()
 {
   # Usage: shtoolsdocs [bool_install] (Instantiate the project documentation)
@@ -24,7 +24,7 @@ function shtoolsdocs()
   local currentdir=${PWD};
 
   # Access documentation path
-  cd "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/";
+  cd "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/";
 
   # Installation mode
   if [ ! -z "${1}" ]; then
@@ -49,7 +49,7 @@ function shtoolsdocs()
   cd "${currentdir}/";
 }
 
-# === Android Development Shell Tools README.forum Updater ===
+# === Advanced Development Shell Tools README.forum Updater ===
 function shtoolsforum()
 {
   # Usage: shtoolsforum (Refresh README.forum project presentation)
@@ -59,13 +59,13 @@ function shtoolsforum()
   local preview_file;
   local preview_files;
   local preview_timestamp;
-  local preview_url=${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/};
-  local readme_forum=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/forums/README;
-  local readme_md=${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README;
+  local preview_url=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_URL//\//\\\/};
+  local readme_forum=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/forums/README;
+  local readme_md=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/README;
 
   # Header
   echo '';
-  echo -e ' \e[1;33mandroid_development_shell_tools:\e[1;37m Building README forum documentations\e[0m';
+  echo -e ' \e[1;33madvanced_development_shell_tools:\e[1;37m Building README forum documentations\e[0m';
   echo '';
 
   # Handle multiple README files
@@ -117,7 +117,7 @@ function shtoolsforum()
   echo '';
 }
 
-# === Android Development Shell Tools README.md Updater ===
+# === Advanced Development Shell Tools README.md Updater ===
 function shtoolsreadme()
 {
   # Usage: shtoolsreadme (Refresh README.md functions usages)
@@ -125,7 +125,7 @@ function shtoolsreadme()
   # Variables
   local delimiter_start='<!-- Functions Start -->';
   local delimiter_end='<!-- Functions End -->';
-  local github_project_url=${ANDROID_DEVELOPMENT_SHELL_TOOLS_URL};
+  local github_project_url=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_URL};
   local github_file_path='blob/master';
   local github_file_url;
   local github_raw_path='raw/master';
@@ -167,31 +167,31 @@ function shtoolsreadme()
   shtoolsup;
 
   # Header
-  echo -e ' \e[1;33mandroid_development_shell_tools:\e[1;37m Building README.md documentation\e[0m';
+  echo -e ' \e[1;33madvanced_development_shell_tools:\e[1;37m Building README.md documentation\e[0m';
   echo -n '  ...';
 
   # Refresh project README.md
-  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/project.md";
+  cp -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/README.md" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/project.md";
 
   # Refresh previews README.md
-  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.previews.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/previews.md";
+  cp -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/README.previews.md" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/previews.md";
 
   # Refresh samples README.md
-  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.samples.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/samples.md";
+  cp -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/README.samples.md" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/samples.md";
 
   # Refresh shtools README.md
-  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.shtools.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/shtools.md";
+  cp -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/README.shtools.md" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/shtools.md";
 
   # Refresh version README.md
-  cp -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/README.version.md" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/version.md";
+  cp -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/README.version.md" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/version.md";
 
   # Cleanup previous README.md
-  sed -i "\#^${delimiter_start}#,\$d" "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
+  sed -i "\#^${delimiter_start}#,\$d" "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
 
   # Build new documentation inline
   {
     # Inject start delimiter
-    echo -en "${delimiter_start}\n" >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
+    echo -en "${delimiter_start}\n" >> "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
 
     # Read all sources and scripts
     tmp_list=$(mktemp);
@@ -199,7 +199,7 @@ function shtoolsreadme()
     while read -r path_file; do
 
       # Handle file path
-      path_relative=${path_file##${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/};
+      path_relative=${path_file##${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/};
       github_file_url="${github_project_url}/${github_file_path}/${path_relative}";
       stats_sources=$((stats_sources + 1));
 
@@ -223,8 +223,8 @@ function shtoolsreadme()
 
       # Add file group header
       if [ ! "${group_current}" = "${group_last}" ]; then
-        group_category=$(cat "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/${group_current}/.category" 2>/dev/null);
-        group_name=$(cat "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/${group_current}/.name" 2>/dev/null);
+        group_category=$(cat "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/${group_current}/.category" 2>/dev/null);
+        group_name=$(cat "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/${group_current}/.name" 2>/dev/null);
 
         # Warning about missing group categories
         if [ -z "${group_category}" ]; then
@@ -261,7 +261,7 @@ function shtoolsreadme()
         test_standalone=$(mktemp);
         echo "${paths_standalone}" | tr ' ' '\n' | grep -v '^$' > "${test_standalone}";
         while read -r path_standalone; do
-          if [ ! -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/${path_standalone}" ]; then
+          if [ ! -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/${path_standalone}" ]; then
             >&2 echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: Standalone import link not found (${path_standalone})";
             >&2 echo '';
             return;
@@ -460,12 +460,12 @@ function shtoolsreadme()
     echo -en "${group_buffer}<div class=\"group_footer\">\n<br />\n\n---\n";
 
     # Generation information
-    echo -en "* _Automatically generated by [shtoolsreadme](${github_project_url}/${github_file_path}/project/docs.rc) for [android_development_shell_tools](${github_project_url})_\n</div>\n";
+    echo -en "* _Automatically generated by [shtoolsreadme](${github_project_url}/${github_file_path}/project/docs.rc) for [advanced_development_shell_tools](${github_project_url})_\n</div>\n";
 
     # Inject end delimiter
     echo -en "${delimiter_end}\n"
 
-  } >> "${ANDROID_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
+  } >> "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/docs/README.md";
 
   # Restore locale
   LC_ALL=${lc_all};

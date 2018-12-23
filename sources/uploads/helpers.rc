@@ -87,9 +87,9 @@ function devuplrom()
     else
       fileupl "${romfile}" "${upload}";
     fi;
-    export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE=${romfile};
+    export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE=${romfile};
   else
-    export ANDROID_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE=;
+    export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADED_FILE=;
   fi;
 
   # End of process
