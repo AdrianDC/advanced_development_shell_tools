@@ -1,4 +1,4 @@
-[CENTER][IMG]https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png[/IMG][/CENTER]
+[CENTER][IMG]https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1545583809[/IMG][/CENTER]
 
 
 [SIZE=5][B][U]Disclaimer[/U][/B][/SIZE]
