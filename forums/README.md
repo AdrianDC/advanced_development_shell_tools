@@ -21,7 +21,6 @@
    [/CODE]
 [/LIST][/INDENT]
 
----
 
 [SIZE=5][B][U]About the project[/U][/B][/SIZE]
 
@@ -40,7 +39,6 @@
    which can be used as a reference for Shell scripting and help making their own.
 [/LIST][/INDENT]
 
----
 
 [SIZE=5][B][U]How to update with upstream changes[/U][/B][/SIZE]
 
@@ -55,7 +53,6 @@
    that allows holding functions or macros separately (like credentials).
 [/LIST][/INDENT]
 
----
 
 [SIZE=5][B][U]About the documentation and structure[/U][/B][/SIZE]
 
@@ -76,7 +73,6 @@
    or even if you need a few functions for work to ease something.
 [/LIST][/INDENT]
 
----
 
 [SIZE=5][B][U]Project and documentations[/U][/B][/SIZE]
 
@@ -85,7 +81,6 @@
 [*][B]Sources on GitHub :[/B] [URL=https://github.com/AdrianDC/advanced_development_shell_tools]advanced_development_shell_tools[/URL]
 [/LIST][/INDENT]
 
----
 
 [SIZE=5][B][U]How to install the project[/U][/B][/SIZE]
 
@@ -105,7 +100,6 @@
    You do not [I]need[/I] it, but a few functions rely on it to ease things.
 [/LIST][/INDENT]
 
----
 
 [SIZE=5][B][U]How to contribute to the project[/U][/B][/SIZE]
 
@@ -117,7 +111,6 @@
 [*]Push your changes and [B]create a pull-request[/B] once ready
 [/LIST][/INDENT]
 
----
 
 [SIZE=5][B][U]Project contributors and modules[/U][/B][/SIZE]
 

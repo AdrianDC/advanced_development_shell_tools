@@ -93,6 +93,7 @@ function shtoolsforum()
     sed -i 's#\([^*]\{1\}\)\*\*\([^*]*\)\*\*\([^*]\{0,1\}\)#\1[B]\2[/B]\3#g' "${readme_forum}.${ext}";
     sed -i 's#__\([^*]*\)__#[U]\1[/U]#g' "${readme_forum}.${ext}";
     sed -i 's#^<!-- Item -->#[*]#g' "${readme_forum}.${ext}";
+    sed -i '/^---$/d' "${readme_forum}.${ext}";
 
     # Get all previews png files
     preview_files=$(grep --color=never 'docs/assets.*\.png' "${readme_forum}.${ext}" \
