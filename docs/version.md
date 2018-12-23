@@ -4,6 +4,12 @@
 <!-- Indent -->
 <!-- List -->
 
+### During 2019: ###
+
+ * Project rename from Android Development Shell Tools
+   to Advanced Development Shell Tools as the project
+   is now meant for a wider use than Android alone
+
 ### During 2018: ###
 
  * Complete project restructuration into isolated "Toolkits"
