@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2015-2018 Adrian DC
+# Copyright 2015-2019 Adrian DC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ export ADVANCED_DEVELOPMENT_SHELL_TOOLS_SOURCES_DIR=${ADVANCED_DEVELOPMENT_SHELL
 
 # === Advanced Development Shell Tools Variables ===
 export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BRANCH='master';
-export ADVANCED_DEVELOPMENT_SHELL_TOOLS_VERSION='2018.1';
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_VERSION='2019.1';
 export ADVANCED_DEVELOPMENT_SHELL_TOOLS_URL='https://github.com/AdrianDC/advanced_development_shell_tools';
 
 # === Advanced Development Shell Tools Workspace ===

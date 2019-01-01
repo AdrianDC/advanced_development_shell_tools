@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2015-2018 Adrian DC
+# Copyright 2015-2019 Adrian DC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ function gerritrepopicks()
 
     # Header data
     echo '';
-    echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2018\e[0m';
+    echo -e '    \e[1;37m\e[4;37mShell Gerrit Reviewer by Adrian DC - 2015-2019\e[0m';
     echo '';
     echo -e "      \e[1;33mError: No configuration in ${ADVANCED_DEVELOPMENT_SHELL_TOOLS_WORKSPACE:-${HOME}}/.bash_android.gerrit.rc found";
     echo -e '             \e[1;31mUse "shtoolsf gerritssh" to see how to set your logins\e[0m';

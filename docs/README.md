@@ -3,7 +3,7 @@
 <!-- /Center -->
 
 
- * Created by [Adrian DC](https://github.com/AdrianDC) - 2015-2018
+ * Created by [Adrian DC](https://github.com/AdrianDC) - 2015-2019
 
  * Project description : [About...](project.md)
    <br />

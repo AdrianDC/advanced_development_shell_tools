@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2015-2018 Adrian DC
+# Copyright 2015-2019 Adrian DC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ function fboota()
 
   # Header
   echo '';
-  echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016-2018 ]\e[0m';
+  echo -e ' \e[1;37m[ Fast Kernel Builder by Adrian DC - 2016-2019 ]\e[0m';
   echo '';
 
   # Root holder for fastboot flash
