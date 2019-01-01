@@ -739,7 +739,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **gitsu** [*<b>\[Git&nbsp;stash&nbsp;with&nbsp;untracked&nbsp;files\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/cleaners.rc)
   * **gitcleantags** *&lt;branch_to_keep&gt;* [*<b>\[Cleanup&nbsp;unrequired&nbsp;git&nbsp;tags\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/cleaners.rc)
   * **gitonebranch** *&lt;remote&gt;* [*<b>\[Git&nbsp;remove&nbsp;non-default&nbsp;remote&nbsp;branches\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/cleaners.rc)
-  * **gitignoreclean** [*<b>\[Cleanup&nbsp;untracked&nbsp;paths&nbsp;from&nbsp;Git&nbsp;.gitignore\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/cleaners.rc)
+  * **gitignoreclean** *[bool_dry_run]* [*<b>\[Cleanup&nbsp;untracked&nbsp;paths&nbsp;from&nbsp;Git&nbsp;.gitignore\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/cleaners.rc)
 
 ---
 > ### <span class="group_label">[sources/git/commit.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)</span> ###
