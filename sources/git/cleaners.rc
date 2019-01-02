@@ -125,7 +125,11 @@ function gitignoreclean()
       fi;
 
       # Expand paths
-      LC_ALL=C find "${gitignore_path:-./}" -name "${gitignore_line}" | sort > "${gitignore_items}";
+      if [ "${gitignore_line: -1}" = '/' ]; then
+        LC_ALL=C find "${gitignore_path:-./}" -name "${gitignore_line%/}" -type d | sort > "${gitignore_items}";
+      else
+        LC_ALL=C find "${gitignore_path:-./}" -name "${gitignore_line}" | sort > "${gitignore_items}";
+      fi;
       while read -r gitignore_item; do
 
         # Remove folders contents
