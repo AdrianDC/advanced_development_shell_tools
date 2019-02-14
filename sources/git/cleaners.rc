@@ -93,16 +93,19 @@ function gitignoreclean()
 
   # Variables
   local dry_run="${1}";
+  local gitignore_exclusions;
   local gitignore_file;
   local gitignore_files;
   local gitignore_item;
   local gitignore_items;
   local gitignore_line;
+  local gitignore_negated;
   local gitignore_path;
 
   # Create temporary files
   gitignore_items=$(mktemp);
   gitignore_files=$(mktemp);
+  gitignore_negated=$(mktemp);
 
   # Travel through .gitignore paths
   LC_ALL=C find ./ -name .gitignore ! -path './.git/*' | sort > "${gitignore_files}";
@@ -116,20 +119,32 @@ function gitignoreclean()
       gitignore_path="${gitignore_path}/";
     fi;
 
-    # Read .gitignore files
+    # Access folder path
+    pushd "${gitignore_path}" > /dev/null;
+
+    # Parse negated strings
+    gitignore_exclusions=();
+    grep '^!' ./.gitignore | cut -c 2- > "${gitignore_negated}";
+    while read -r gitignore_line; do
+      gitignore_exclusions+=(! -path "./${gitignore_line}");
+    done < "${gitignore_negated}";
+
+    # Read .gitignore file
     while read -r gitignore_line; do
 
-      # Ignore empty or commented lines
-      if [ -z "${gitignore_line}" ] || [ "${gitignore_line:0:1}" = '#' ]; then
+      # Ignore empty, negated or commented lines
+      if [ -z "${gitignore_line}" ] || [ "${gitignore_line:0:1}" = '#' ] || [ "${gitignore_line:0:1}" = '!' ]; then
         continue;
       fi;
 
       # Expand paths
       if [ "${gitignore_line: -1}" = '/' ]; then
-        LC_ALL=C find "${gitignore_path:-./}" -name "${gitignore_line%/}" ! -path '*/.git/*' -type d | sort > "${gitignore_items}";
+        LC_ALL=C find ./ -name "${gitignore_line%/}" ! -path '*/.git/*' -type d "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
       else
-        LC_ALL=C find "${gitignore_path:-./}" -name "${gitignore_line}" ! -path '*/.git/*' | sort > "${gitignore_items}";
+        LC_ALL=C find ./ -name "${gitignore_line}" ! -path '*/.git/*' "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
       fi;
+
+      # Read found items
       while read -r gitignore_item; do
 
         # Remove folders contents
@@ -157,7 +172,11 @@ function gitignoreclean()
         fi;
 
       done < "${gitignore_items}";
-    done < "${gitignore_file}";
+    done < ./.gitignore;
+
+    # Restore path
+    popd > /dev/null;
+
   done < "${gitignore_files}";
 
   # Cleanup
