@@ -57,7 +57,7 @@ alias gitcp='git cherry-pick';
 alias gitcpc='git reset; git cherry-pick --continue';
 function gitcpa() { for sha1 in "${@}"; do echo ''; echo "${sha1}"; git cherry-pick "${sha1}"; done; }
 function gitcpf() { git fetch "${1}" "${2}"; git cherry-pick FETCH_HEAD; }
-function gitcpr() { git show "${1}" --no-color | sed "s/${2}/${3}/g" | patch; }
+function gitcpr() { git show "${1}" --no-color | sed "s#${2}#${3}#g" | patch; }
 
 # === Git Cherry-Pick Path ===
 function gitfcp()
