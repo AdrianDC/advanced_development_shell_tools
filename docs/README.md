@@ -1441,6 +1441,11 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **rpmfindlist** [*<b>\[Find&nbsp;all&nbsp;.rpm&nbsp;files&nbsp;and&nbsp;list&nbsp;contents\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/rpm.rc)
 
 ---
+> ### <span class="group_label">[extensions/linux/virtualbox.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/virtualbox.rc)</span> ###
+>
+  * **virtualboxroot** [*<b>\[Launch&nbsp;VirtualBox&nbsp;as&nbsp;root\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/virtualbox.rc)
+
+---
 </details>
 
 <details class='group_details'>
