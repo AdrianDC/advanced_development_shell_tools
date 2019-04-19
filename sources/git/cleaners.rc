@@ -112,10 +112,11 @@ function gitignoreclean()
   while read -r gitignore_file; do
 
     # Acquire folder path
-    gitignore_path="${gitignore_file#./}";
-    gitignore_path="${gitignore_path#.gitignore}";
+    gitignore_path="${gitignore_file#.gitignore}";
     gitignore_path="${gitignore_path%/*}";
-    if [ ! -z "${gitignore_path}" ]; then
+    if [ -z "${gitignore_path}" ]; then
+      gitignore_path='./';
+    elif [ ! "${gitignore_path: -1}" = '/' ]; then
       gitignore_path="${gitignore_path}/";
     fi;
 
@@ -126,6 +127,12 @@ function gitignoreclean()
     gitignore_exclusions=();
     grep '^!' ./.gitignore | cut -c 2- > "${gitignore_negated}";
     while read -r gitignore_line; do
+      if [ "${gitignore_line: -1}" = '/' ]; then
+        gitignore_line="${gitignore_line%/}";
+      fi;
+      if [ "${gitignore_line:0:1}" = '/' ]; then
+        gitignore_line="${gitignore_line#/}";
+      fi;
       gitignore_exclusions+=(! -path "./${gitignore_line}");
     done < "${gitignore_negated}";
 
@@ -146,28 +153,29 @@ function gitignoreclean()
 
       # Read found items
       while read -r gitignore_item; do
+        gitignore_item=${gitignore_item#./};
 
         # Remove folders contents
-        if [ -d "${gitignore_item}" ]; then
+        if [ -d "./${gitignore_item}" ]; then
           gitignore_item=${gitignore_item%/};
-          if [ ! -z "$(ls -A "${gitignore_item}")" ]; then
-            echo "gitignoreclean: Removing folder contents '${gitignore_item}'";
+          if [ ! -z "$(ls -A "./${gitignore_item}")" ]; then
+            echo -e " \e[1;33mgitignoreclean: \e[1;32mRemoving contents: \e[1;36m${gitignore_path}${gitignore_item} \e[1;37m[${gitignore_line} @${gitignore_path}]\e[0m";
             if [ ! -z "${dry_run}" ]; then
-              find "${gitignore_item}/" -mindepth 1 ! -path '*/.git/*' -print;
+              find "./${gitignore_item}/" -mindepth 1 ! -path '*/.git/*' -print;
             else
-              find "${gitignore_item}/" -mindepth 1 ! -path '*/.git/*' -delete;
+              find "./${gitignore_item}/" -mindepth 1 ! -path '*/.git/*' -delete;
             fi;
           fi;
-          echo "gitignoreclean: Removing folder '${gitignore_item}'";
+          echo -e " \e[1;33mgitignoreclean: \e[1;32mRemoving folder: \e[1;36m${gitignore_path}${gitignore_item} \e[1;37m[${gitignore_line} @${gitignore_path}]\e[0m";
           if [ -z "${dry_run}" ]; then
-            rm -rf "${gitignore_item}";
+            rm -rf "./${gitignore_item}";
           fi;
 
         # Remove files
-        elif [ -f "${gitignore_item}" ]; then
-          echo "gitignoreclean: Removing file '${gitignore_item}'";
+        elif [ -f "./${gitignore_item}" ]; then
+          echo -e " \e[1;33mgitignoreclean: \e[1;32mRemoving file: \e[1;36m${gitignore_path}${gitignore_item} \e[1;37m[${gitignore_line} @${gitignore_path}]\e[0m";
           if [ -z "${dry_run}" ]; then
-            rm -f "${gitignore_item}";
+            rm -f "./${gitignore_item}";
           fi;
         fi;
 
