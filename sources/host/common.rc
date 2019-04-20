@@ -55,11 +55,11 @@ function fileedit()
 
     # Root GUI xdg directory viewer
     if [ "${EUID}" -eq 0 ] && type dbus-launch >/dev/null 2>&1; then
-      dbus-launch xdg-open "${file}" 2>/dev/null;
+      dbus-launch xdg-open "${file}" >/dev/null 2>&1;
 
     # User GUI xdg directory viewer
     else
-      xdg-open "${file}" 2>/dev/null;
+      xdg-open "${file}" >/dev/null 2>&1;
     fi;
     opened=${?};
 
