@@ -33,7 +33,7 @@ function autoreleaseaospsony8960o()
   local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdaosp 8960 && ! __shtools-builds-nosync-active; then
+  if ! pathchanged cdaosp O && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -84,7 +84,7 @@ function autoreleaseaospsony8960p()
   local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdaosp 8960 && ! __shtools-builds-nosync-active; then
+  if ! pathchanged cdaosp P && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -135,7 +135,7 @@ function autoreleaselineagesony8960o()
   local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdlineage 8960 && ! __shtools-builds-nosync-active; then
+  if ! pathchanged cdlineage O && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
@@ -186,7 +186,7 @@ function autoreleaselineagesony8960p()
   local devices=${*:-huashan mint hayabusa tsubasa};
 
   # Access device repository and when option enabled, sync tree
-  if ! pathchanged cdlineage 8960 && ! __shtools-builds-nosync-active; then
+  if ! pathchanged cdlineage P && ! __shtools-builds-nosync-active; then
     reposy;
   fi;
 
