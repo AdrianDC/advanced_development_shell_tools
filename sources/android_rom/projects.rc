@@ -744,7 +744,7 @@ function androidprojectrebaser()
     project_github="https://github.com/${projects_owner}/${project_name}";
 
     # Fetch
-    if ! git fetch "${project_github}" "${push_branch}"; then
+    if ! git fetch "${project_upstream}" "${push_branch}"; then
       echo 'Remote project branch not found, ignoring...';
       continue;
     fi;
@@ -759,7 +759,7 @@ function androidprojectrebaser()
         shallow_count=$((shallow_count + 10));
         echo -en "\r\033[K  \e[1;33m> Searching common history with depth ${shallow_count}...\e[0m";
         git fetch --depth "${shallow_count}" "${remote_name}" "${remote_branch}" >/dev/null 2>&1;
-        git fetch --depth "${shallow_count}" "${project_github}" "${push_branch}" >/dev/null 2>&1;
+        git fetch --depth "${shallow_count}" "${project_upstream}" "${push_branch}" >/dev/null 2>&1;
       done;
       echo '';
     fi;
