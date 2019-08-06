@@ -770,7 +770,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **gitcp** : *git cherry-pick* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcpc** : *git reset; git cherry-pick &#8208;&#8208;continue* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcpa** *for sha1 in "${@}"; do echo ''; echo "${sha1}"; git cherry-pick "${sha1}"; done* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)
-  * **gitcpf** *git fetch "${1}" "${2}"; git cherry-pick FETCH_HEAD* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)
+  * **gitcpf** *git fetch "${1}" "${2}"; git cherry-pick FETCH_HEAD~${3:-0}^..FETCH_HEAD* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitcpr** *git show "${1}" &#8208;&#8208;no-color \| sed "s#${2}#${3}#g" \| patch* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitfcp** *&lt;path&gt; [amount_of_commits]* [*<b>\[Git&nbsp;cherry-pick&nbsp;from&nbsp;path\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)
   * **gitc** : *git commit $(gitgpgparam)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/commit.rc)
