@@ -304,7 +304,7 @@ function gerritssh()
 
 
   # Commits on Review
-  tmpfileidscount=$(wc -w "${tmpfileidsfor}");
+  tmpfileidscount=$(wc -w <"${tmpfileidsfor}");
   echo '';
   echo -e "  \e[1;34m\e[4;34mChanges on Review (${tmpfileidscount} commits)\e[0m";
   while IFS= read -r i; do
