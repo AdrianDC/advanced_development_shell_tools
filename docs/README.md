@@ -970,7 +970,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **gitst** : *gitstat* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/stats.rc)
   * **gitsto** : *gitremoteverify origin gitrao && gitstat origin $(git rev-parse &#8208;&#8208;abbrev-ref HEAD)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/stats.rc)
   * **gitstom** : *gitremoteverify origin gitrao && gitstat origin master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/stats.rc)
-  * **gitsta** : *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) lineage-15.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/stats.rc)
+  * **gitsta** : *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) lineage-16.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/stats.rc)
   * **gitstam** : *gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/stats.rc)
   * **gitstg** : *gitremoteverify github false && gitstat github* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/stats.rc)
   * **gitstaosp** : *gitremoteverify aosp false && gitstat aosp master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/stats.rc)
