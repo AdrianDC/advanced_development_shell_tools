@@ -174,7 +174,7 @@ function kerneltoolchains()
 
   # CCache environment
   local ccache=;
-  if [ ! -z "${USE_CCACHE}" ] && [ "${USE_CCACHE}" -eq 1 ]; then
+  if [ ! -z "${USE_CCACHE}" ] && [ "${USE_CCACHE/false/0}" -eq 1 ]; then
     ccache=$(command -v ccache);
   fi;
 
