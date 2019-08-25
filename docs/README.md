@@ -1507,6 +1507,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **aospsony8960opatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;O&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
   * **aospsony8960omr1patcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;O&nbsp;MR1&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
   * **aospsony8960ppatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;P&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
+  * **aospsony8960qpatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;Q&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
   * **aospsony8960masterpatcher** *[specific_paths]* [*<b>\[AOSP&nbsp;Sony&nbsp;8960&nbsp;Master&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/aosp_sony8960.rc)
 
 ---

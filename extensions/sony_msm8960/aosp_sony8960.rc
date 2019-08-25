@@ -55,6 +55,15 @@ function aospsony8960ppatcher()
   androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_p' 'radian.dc@gmail.com' "${@}";
 }
 
+# === AOSP Sony 8960 Q Patcher ===
+function aospsony8960qpatcher()
+{
+  # Usage: aospsony8960qpatcher [specific_paths] (AOSP Sony 8960 Q Patcher)
+
+  # Use the androidprojectpatcher helper
+  androidprojectpatcher 'AdrianDC' 'aosp_development_sony8960_q' 'radian.dc@gmail.com' "${@}";
+}
+
 # === AOSP Sony 8960 Master Patcher ===
 function aospsony8960masterpatcher()
 {
