@@ -394,6 +394,7 @@ function androidprojectpatcher()
   local project_github;
   local project_path;
   local remote_branch;
+  local remote_marked;
   local remote_name;
   local shallow_count;
   local user_is_owner='';
@@ -431,8 +432,15 @@ function androidprojectpatcher()
       continue;
     fi;
 
+    # Detect patches marked projects
+    if git log --committer='marker.commit' --reverse --format=format:%H FETCH_HEAD | grep -q '.'; then
+      remote_marked='true';
+    else
+      remote_marked='';
+    fi;
+
     # Fetch until history base match
-    if ! git merge-base HEAD FETCH_HEAD >/dev/null; then
+    if ! git merge-base HEAD FETCH_HEAD >/dev/null && [ -z "${remote_marked}" ]; then
       echo '';
       shallow_count=0;
       remote_name=$(gitgetreporemote);
@@ -447,8 +455,13 @@ function androidprojectpatcher()
     fi;
 
     # Compare
-    git_revs_count_local=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<');
-    git_revs_count_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
+    if [ ! -z "${remote_marked}" ]; then
+      git_revs_count_local=0;
+      git_revs_count_remote=$(git log --committer="radian.dc@gmail.com" --committer='marker.commit' --format=format:%H:%ae FETCH_HEAD | sed '/marker.commit/Q' | wc -l);
+    else
+      git_revs_count_local=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<');
+      git_revs_count_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
+    fi;
     echo '';
     if [ ! -z "${git_revs_count_local}" ] && [ "${git_revs_count_local}" -eq 0 ]; then
       echo -e "  \e[1;32m> Differences: ${git_revs_count_local} ${git_revs_count_remote}\e[0m";
@@ -478,11 +491,11 @@ function androidprojectpatcher()
       echo -e '  \e[1;37m> Commands: Y (Rebase on local history)';
       echo -e '              n (Use the remote project history)';
       echo -e '              i (Ignore this project'\''s sources)';
-      if [ ! -z "${user_is_owner}" ]; then
-      echo -e '              a (Automatically update all projects)';
+      if [ ! -z "${user_is_owner}" ] && [ -z "${remote_marked}" ]; then
+        echo -e '              a (Automatically update all projects)';
       fi;
       echo -e '              l (Automatically patch all projects)';
-      if [ ! -z "${user_is_owner}" ]; then
+      if [ ! -z "${user_is_owner}" ] && [ -z "${remote_marked}" ]; then
         echo -e '              p (Push local changes upstream)';
       fi;
       echo '';
@@ -585,7 +598,7 @@ function androidprojectpatcher()
         done;
 
         # Automatic push
-        if [ ! -z "${user_is_owner}" ]; then
+        if [ ! -z "${user_is_owner}" ] && [ -z "${remote_marked}" ]; then
           gitbranchpusher "${key_automated_push}" "${project_github}" "${project_branch}";
         fi;
 
@@ -593,7 +606,7 @@ function androidprojectpatcher()
       elif [ "${key_automated_push}" = 'y' ]; then
 
         # Automatic push
-        if [ ! -z "${user_is_owner}" ]; then
+        if [ ! -z "${user_is_owner}" ] && [ -z "${remote_marked}" ]; then
           gitbranchpusher "${key_automated_push}" "${project_github}" "${project_branch}";
         fi;
 
@@ -607,7 +620,7 @@ function androidprojectpatcher()
     elif [ "${git_revs_count_local}" -ne 0 ]; then
 
       # Automatic push
-      if [ ! -z "${user_is_owner}" ]; then
+      if [ ! -z "${user_is_owner}" ] && [ -z "${remote_marked}" ]; then
         gitbranchpusher "${key_automated_push}" "${project_github}" "${project_branch}";
       fi;
 
