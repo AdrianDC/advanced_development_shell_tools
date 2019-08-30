@@ -148,7 +148,7 @@ function gitgetbranch()
     >&2 echo -en " \e[1;33mgitgetbranch:\e[1;31m Delete local branch '${branch}' ? [Y/n] \e[0m";
     key='';
     read -r key;
-    if [ ! "${key}" = 'n' ]; then
+    if [ ! "${key}" = 'n' ] && [ ! "${key}" = 'N' ]; then
       remote=$(git branch -ar \
              | grep -v 'HEAD' \
              | grep --color=never -- "${remote}/" \
@@ -156,6 +156,26 @@ function gitgetbranch()
              | sed 's# *\([^ /]*\)/\([^ ]*\)\(\| .*\)#\1#');
       git branch -d "${branch}" 2>&1 | grep -v 'branch .* not found.';
       git update-ref -d "refs/remotes/${remote}/${branch}";
+    fi;
+    >&2 echo '';
+    gitgetbranch "${1}";
+    return;
+  elif [ "${key}" = '-0' ]; then
+    key=$((-1 - key));
+    branch=${branches[${key}]};
+    >&2 echo -en " \e[1;33mgitgetbranch:\e[1;31m Delete all local branches ? [y/N] \e[0m";
+    key='';
+    read -r key;
+    if [ "${key}" = 'y' ] || [ "${key}" = 'Y' ]; then
+      for branch in "${branches[@]}"; do
+        remote=$(git branch -ar \
+               | grep -v 'HEAD' \
+               | grep --color=never -- "${remote}/" \
+               | grep --color=never -- "${branch}$" \
+               | sed 's# *\([^ /]*\)/\([^ ]*\)\(\| .*\)#\1#');
+        git branch -d "${branch}" 2>&1 | grep -v 'branch .* not found.';
+        git update-ref -d "refs/remotes/${remote}/${branch}";
+      done;
     fi;
     >&2 echo '';
     gitgetbranch "${1}";
