@@ -151,7 +151,7 @@ function adbro()
   systemaccess=$(echo "${systemmount}" | grep rw);
   if [ ! -z "${systemmount}" ] && [ -z "${systemaccess}" ]; then
     adbwait;
-    ${adb_timeout} 'remount';
+    ${adb_timeout} shell 'mount -o rw,remount -t auto /system';
     sleep 1;
     adbwait;
   fi;
