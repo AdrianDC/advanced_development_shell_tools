@@ -168,7 +168,7 @@ function fboota()
   elif [[ "${params}" == *'flash'* ]]; then
 
     # Detect modules
-    modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f);
+    modules=$(find "./out/target/product/${device}/system/lib/modules/" -type f 2>/dev/null);
 
     # Handle kernel modules
     if [ ! -z "${modules}" ]; then
