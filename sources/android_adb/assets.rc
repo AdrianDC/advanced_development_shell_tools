@@ -76,6 +76,7 @@ function sepmsg()
   # Fallback to sepaud without a context
   if [ -z "${2}" ]; then
     sepaud "${1}";
+    return;
   fi;
 
   # Usage
