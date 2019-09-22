@@ -143,6 +143,7 @@ function repoinitlineage()
     15.0) branch='lineage-15.0';;
     15.1) branch='lineage-15.1';;
     16.0) branch='lineage-16.0';;
+    17.0) branch='lineage-17.0';;
     *)
       branch='';
       echo '';
