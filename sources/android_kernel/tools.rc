@@ -33,7 +33,7 @@ function fboota()
   if [ ! "$(type -t hmm 2> /dev/null)" = 'function' ] ||
       [ -z "${TARGET_PRODUCT}" ] || [ "${1}" = '-h' ]; then
     echo '';
-    echo ' Usage: fboota [fastupl,flash,full,inject,push,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
+    echo ' Usage: fboota [fastupl,flash,full,inject,mrom,push,recovery,sep,unsecure,zip] (Advanced bootimage builder)';
     echo '  Details: fboota needs the envbuild and lunch variables';
     echo '';
     return;
@@ -50,6 +50,7 @@ function fboota()
   local modules;
   local module_file;
   local params=${1};
+  local options=${2};
   local tmpfile;
 
   # Initialize variables
@@ -74,7 +75,7 @@ function fboota()
   echo '';
 
   # Root holder for fastboot flash
-  if [[ "${params}" == *'flash'* ]]; then
+  if [[ "${params}" == *'flash'* ]] || [[ "${params}" == *'mrom'* ]]; then
     sudo echo -n '';
   fi;
 
@@ -143,6 +144,20 @@ function fboota()
     echo '';
     echo ' fboota: Bootimage build failed';
     echo '';
+
+  # Handle MultiROM targets
+  elif [[ "${params}" == *'mrom'* ]]; then
+
+    # Inject kernel inside MultiROM bootimage
+    if [[ "${params}" == *'inject'* ]]; then
+      adbmrominjector "$(dirname "${bootimg}")/kernel" "${options}";
+      adbre;
+
+    # Inject bootimage inside MultiROM ROM
+    else
+      adbmrombootimage "${bootimg}" "${options}";
+      adbre;
+    fi;
 
   # Inject kernel inside bootimage
   elif [[ "${params}" == *'inject'* ]]; then
