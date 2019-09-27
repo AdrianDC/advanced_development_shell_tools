@@ -165,6 +165,7 @@ function kerneltoolchains()
 
   # Architecture environment
   export CROSS_COMPILE=;
+  export CROSS_COMPILE_ARM32=;
   local cross_compiler=;
   local dir_cross_compiler;
   echo '';
@@ -204,6 +205,37 @@ function kerneltoolchains()
     # Failed Cross-Compiler search
     if [ -z "${cross_compiler}" ] || [ -z "${CROSS_COMPILE}" ]; then
       echo "  kerneltoolchains: No ${ARCH} cross compiler found!";
+      echo '';
+      return;
+    fi;
+
+    # Architecture ARM-32 on ARM-64
+    # Please check https://patchwork.kernel.org/patch/10060445/
+    # Android 4.9 toolchain
+    cross_compiler=$([ "${version:-4.9}" = '4.9' ] && readlink -f "${dir_cross_compiler}/arm/arm-linux-androideabi-4.9/bin");
+    if [ ! -z "${cross_compiler}" ]; then
+      echo '  kerneltoolchains: Using Android 4.9 toolchain for ARM32';
+    else
+
+      # Android 4.8 toolchain
+      cross_compiler=$([ "${version:-4.8}" = '4.8' ] && readlink -f "${dir_cross_compiler}/arm/arm-linux-androideabi-4.8/bin");
+      if [ ! -z "${cross_compiler}" ]; then
+        echo '  kerneltoolchains: Falling back to Android 4.8 toolchain for ARM32';
+      fi;
+    fi;
+
+    # Cross-Compiler environment variable
+    if [ -e "${cross_compiler}/arm-linux-androidkernel-ld" ]; then
+      export CROSS_COMPILE_ARM32="${ccache} arm-linux-androidkernel-";
+    elif [ -e "${cross_compiler}/arm-linux-androideabi-ld" ]; then
+      export CROSS_COMPILE_ARM32="${ccache} arm-linux-androideabi-";
+    elif [ -e "${cross_compiler}/arm-eabi-ld" ]; then
+      export CROSS_COMPILE_ARM32="${ccache} arm-eabi-";
+    fi;
+
+    # Failed Cross-Compiler search
+    if [ -z "${cross_compiler}" ] || [ -z "${CROSS_COMPILE_ARM32}" ]; then
+      echo "  kerneltoolchains: No cross compiler found for ARM32!";
       echo '';
       return;
     fi;
@@ -262,6 +294,7 @@ function kerneltoolchains()
     fi;
 
   fi;
+
   echo '';
 
   # Path environment variable
