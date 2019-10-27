@@ -1446,6 +1446,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 > ### <span class="group_label">[extensions/linux/virtualbox.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/virtualbox.rc)</span> ###
 >
   * **virtualboxroot** [*<b>\[Launch&nbsp;VirtualBox&nbsp;as&nbsp;root\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/virtualbox.rc)
+  * **virtualboxmodulessign** [*<b>\[Sign&nbsp;VirtualBox&nbsp;modules\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/virtualbox.rc)
 
 ---
 </details>

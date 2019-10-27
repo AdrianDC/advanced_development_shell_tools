@@ -26,3 +26,52 @@ function virtualboxroot()
   # Launch and detach VirtualBox as root
   sudo virtualbox >/dev/null 2>&1 </dev/null &
 }
+
+# === VirtualBox Modules Sign ===
+function virtualboxmodulessign()
+{
+  # Usage: virtualboxmodulessign (Sign VirtualBox modules)
+
+  # Variables
+  local module_name;
+
+  # Validate root access
+  if [ ! "$(whoami)" = 'root' ]; then
+    echo '';
+    echo ' WARNING: Please run virtualboxmodulessign as root only';
+    echo '';
+    return;
+  fi;
+
+  # Prepare signature keys
+  if [ ! -d /root/module-signing ]; then
+    mkdir -p /root/module-signing/;
+    cd /root/module-signing/;
+    openssl req -new -x509 -newkey rsa:2048 -keyout ./MOK.priv -outform DER -out ./MOK.der -nodes -days 36500 -subj "/CN=VirtualBoxModulesSignature/";
+    chmod 600 ./MOK.priv;
+    echo '';
+    echo -e ' \e[1;33mINFORMATION: Please enter a one-time simple password to import the keys...\e[0m';
+    echo '';
+    mokutil --import /root/module-signing/MOK.der;
+    echo '';
+    echo -e ' \e[1;33mWARNING: Please reboot, enter the previous password, and run virtualboxmodulessign again\e[0m';
+    echo '';
+    return;
+  fi;
+
+  # Iterate through modules
+  for module_name in vboxdrv vboxnetflt vboxnetadp vboxpci; do
+
+    # Sign module
+    /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 /root/module-signing/MOK.priv /root/module-signing/MOK.der $(modinfo -n "${module_name}");
+
+    # Load module
+    echo -e " \e[1;33mvirtualboxmodulessign: \e[1;37mLoading module ${module_name}...\e[0m";
+    if modprobe "${module_name}"; then
+      echo -e " \e[1;33mvirtualboxmodulessign: \e[1;32mSuccessfully loaded ${module_name}\e[0m";
+    else
+      echo -e " \e[1;33mvirtualboxmodulessign: \e[1;31mFailed to load ${module_name}\e[0m"
+    fi
+
+  done
+}
