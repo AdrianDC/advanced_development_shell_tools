@@ -98,6 +98,10 @@ function gitdi()
   git ls-files --others --exclude-standard | awk '{print "U       " $0}';
 }
 
+# === Git Diff Helpers ===
+alias gitdiffw='git diff --color-words';
+alias gitdiffc='git diff --color-words=.';
+
 # === Git Diff Status SHA1 ===
 function gitdfs()
 {
