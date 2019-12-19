@@ -682,6 +682,18 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 
 <details class='group_details'>
 <summary class="group_header">
+#### <span class="group_category">Docker &bull; </span><span class="group_label">Docker Helpers</span> ####
+</summary>
+
+> ### <span class="group_label">[sources/docker/helpers.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/docker/helpers.rc)</span> ###
+>
+  * **dockerrunhere** : *docker run -it -v "${PWD}/..:${PWD}/.." -w "${PWD}" &#8208;&#8208;rm* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/docker/helpers.rc)
+
+---
+</details>
+
+<details class='group_details'>
+<summary class="group_header">
 #### <span class="group_category">Git &bull; </span><span class="group_label">Gerrit Tools</span> ####
 </summary>
 
