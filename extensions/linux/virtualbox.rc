@@ -63,7 +63,7 @@ function virtualboxmodulessign()
   for module_name in vboxdrv vboxnetflt vboxnetadp vboxpci; do
 
     # Sign module
-    /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 /root/module-signing/MOK.priv /root/module-signing/MOK.der $(modinfo -n "${module_name}");
+    "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 /root/module-signing/MOK.priv /root/module-signing/MOK.der "$(modinfo -n "${module_name}")";
 
     # Load module
     echo -e " \e[1;33mvirtualboxmodulessign: \e[1;37mLoading module ${module_name}...\e[0m";
