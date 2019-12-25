@@ -135,9 +135,9 @@ function fboota()
   fi;
 
   # Bootimage file path
-  bootimg=$(grep -a ".*image.*${image_file}\.img" "${tmpfile}" \
+  bootimg=$(grep -a ".*\(image\|build \).*${image_file}\.img" "${tmpfile}" \
             | head -1 \
-            | sed "s/.*: \(.*${image_file}\.img\).*/\1/g");
+            | sed "s/.*\(:\|build \)\(.*${image_file}\.img\).*/\2/g");
 
   # Detect failed build
   if [ -z "${bootimg}" ] || [ ! -f "${bootimg}" ]; then
