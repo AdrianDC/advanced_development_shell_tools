@@ -257,6 +257,7 @@ function gitgetrepobranch()
     branch=$(echo "${infos}" \
           | grep -i --color=never 'Current revision:' \
           | head -n 1 \
+          | grep 'refs/' \
           | sed 's/.*: \(refs\/heads\/\|refs\/tags\/\|\)\(.*\)/\2/');
   fi;
 
