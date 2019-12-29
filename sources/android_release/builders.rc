@@ -288,6 +288,12 @@ function autobuild()
     cleanrambuild;
   fi;
 
+  # When option enabled, use debuggable bootimages
+  if __shtools-builds-debug-active; then
+    bootimagedebuggable "${rom_target}" true;
+    export WITH_SU=true;
+  fi;
+
   # Prepare device and 'brunch' environment
   repos "${1}";
 
@@ -300,6 +306,12 @@ function autobuild()
   # Build device for AOSP
   else
     makes otapackage;
+  fi;
+
+  # When option enabled, use debuggable bootimages
+  if __shtools-builds-debug-active; then
+    bootimagedebuggable "${rom_target}" false;
+    export WITH_SU=;
   fi;
 
   # When option enabled, clean RAM after build
