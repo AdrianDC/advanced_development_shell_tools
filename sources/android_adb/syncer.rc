@@ -31,8 +31,8 @@ function adbpushsync()
 
   # Variables
   local cur_path;
-  local local_path=${1};
-  local remote_path=${2};
+  local local_path=${1%/};
+  local remote_path=${2%/};
   local local_folders;
   local local_files;
   local local_files_ls;
@@ -56,18 +56,18 @@ function adbpushsync()
   echo '';
 
   # List local folders
-  find ./* -type d > "${local_folders}";
+  find * -type d > "${local_folders}";
 
   # List target folders
   adb shell "cd '${remote_path}'; find * -type d | sort -r" | while read -r line; do
     echo -en "\r\033[K  Checking folder '${line}'";
     if [ -d "${line}" ]; then
-      sed -i "/^${line}/d" "${local_folders}";
+      sed -i "\|^${line}|d" "${local_folders}";
     else
 
       # Delete additional folders
       echo -e "\r\033[K adbpushsync: Deleting target folder '${line}'";
-      adb shell "rm -rf \"${remote_path}/${line}\"";
+      adb shell "rm -rf \"${remote_path}/${line}\"" >/dev/null 2>&1;
 
     fi;
   done;
@@ -75,7 +75,7 @@ function adbpushsync()
   # Create missing remote folders
   while read -r line; do
     echo -e "\r\033[K adbpushsync: Creating target '${line}'";
-    adb shell "mkdir \"${remote_path}/${line}\"";
+    adb shell "mkdir -p \"${remote_path}/${line}\"";
   done < "${local_folders}";
 
   # List local files
@@ -87,16 +87,18 @@ function adbpushsync()
     echo -en "\r\033[K  Checking file '${line}'";
     line_esc=${line//\&/\\\&};
     line_esc=${line_esc//\//\\\/};
-    file_size=$(grep "${line}" "${local_files_ls}" 2> /dev/null | cut -d' ' -f2);
+    line_esc=${line_esc//\[/\\\[};
+    line_esc=${line_esc//\]/\\\]};
+    file_size=$(grep "${line_esc}" "${local_files_ls}" 2> /dev/null | cut -d' ' -f5);
     # shellcheck disable=SC2012
-    file_size_loc=$(ls -l "${line}" 2> /dev/null | cut -d' ' -f2);
+    file_size_loc=$(ls -l "${line}" 2> /dev/null | cut -d' ' -f5);
     if [ -e "${line}" ] && [ "${file_size}" -eq "${file_size_loc}" ]; then
-      sed -i "/^${line_esc}/d" "${local_files}";
+      sed -i "\|^./${line_esc}|d" "${local_files}";
     else
 
       # Delete additional files
       echo -e "\r\033[K adbpushsync: Deleting target file '${line}' (${file_size} / ${file_size_loc:-Not local})";
-      adb shell "rm -rf \"${remote_path}/${line}\"";
+      adb shell "rm -rf \"${remote_path}/${line}\"" >/dev/null 2>&1;
 
     fi;
   done;
