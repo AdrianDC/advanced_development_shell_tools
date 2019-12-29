@@ -146,14 +146,25 @@ function adbro()
     adbwait;
   fi;
 
-  # Get rw system
-  systemmount=$(${adb_timeout} shell mount | grep '/system ');
-  systemaccess=$(echo "${systemmount}" | grep rw);
-  if [ ! -z "${systemmount}" ] && [ -z "${systemaccess}" ]; then
+  # Get rw system (/system)
+  systemmount=$(${adb_timeout} shell mount | grep '/system ' | grep -v 'rootfs');
+  systempartition=$(echo "${systemmount}" | grep -o '[^ ]*/system[^ ]*' | head -n 1);
+  if ! echo "${systemmount}" | grep -q 'rw' && [ ! -z "${systempartition}" ]; then
     adbwait;
-    ${adb_timeout} shell 'mount -o rw,remount -t auto /system';
+    ${adb_timeout} shell "mount -o rw,remount -t auto ${systempartition}";
     sleep 1;
     adbwait;
+
+  # Get rw system (/)
+  else
+    systemmount=$(${adb_timeout} shell mount | grep '/ ' | grep -v 'rootfs');
+    systempartition=$(echo "${systemmount}" | grep -o '[^ ]*/[^ ]*' | head -n 1);
+    if ! echo "${systemmount}" | grep -q 'rw' && [ ! -z "${systempartition}" ]; then
+      adbwait;
+      ${adb_timeout} shell "mount -o rw,remount -t auto /";
+      sleep 1;
+      adbwait;
+    fi;
   fi;
 }
 
