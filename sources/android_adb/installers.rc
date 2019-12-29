@@ -250,6 +250,8 @@ function adbpf()
   # Detect system in system structure
   if adb shell "test -d /system/system"; then
     systemprefix='/system';
+  elif adb shell "test -d /mnt/system"; then
+    systemprefix='/mnt/system';
   fi;
 
   # Input files
