@@ -108,7 +108,7 @@ function gitignoreclean()
   gitignore_negated=$(mktemp);
 
   # Travel through .gitignore paths
-  LC_ALL=C find ./ -name .gitignore ! -path './.git/*' | sort > "${gitignore_files}";
+  LC_ALL=C find ./ -name .gitignore ! -path './.git/*' ! -path './.repo/*' | sort > "${gitignore_files}";
   while read -r gitignore_file; do
 
     # Acquire folder path
