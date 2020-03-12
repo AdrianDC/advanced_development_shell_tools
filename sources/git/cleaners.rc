@@ -161,21 +161,21 @@ function gitignoreclean()
           if [ ! -z "$(ls -A "./${gitignore_item}")" ]; then
             echo -e " \e[1;33mgitignoreclean: \e[1;32mRemoving contents: \e[1;36m${gitignore_path}${gitignore_item} \e[1;37m[${gitignore_line} @${gitignore_path}]\e[0m";
             if [ ! -z "${dry_run}" ]; then
-              find "./${gitignore_item}/" -mindepth 1 ! -path '*/.git/*' -print;
+              find "./${gitignore_item}/" -mindepth 1 ! -path '*/.git/*' ! -name '.gitignore' -print;
             else
-              find "./${gitignore_item}/" -mindepth 1 ! -path '*/.git/*' -delete;
+              find "./${gitignore_item}/" -mindepth 1 ! -path '*/.git/*' ! -name '.gitignore' -delete;
             fi;
           fi;
           echo -e " \e[1;33mgitignoreclean: \e[1;32mRemoving folder: \e[1;36m${gitignore_path}${gitignore_item} \e[1;37m[${gitignore_line} @${gitignore_path}]\e[0m";
           if [ -z "${dry_run}" ]; then
-            rm -rf "./${gitignore_item}";
+            find './' -name "${gitignore_item}" -mindepth 1 -maxdepth 1 ! -name '.gitignore' -exec rm -rf {} \;;
           fi;
 
         # Remove files
         elif [ -f "./${gitignore_item}" ]; then
           echo -e " \e[1;33mgitignoreclean: \e[1;32mRemoving file: \e[1;36m${gitignore_path}${gitignore_item} \e[1;37m[${gitignore_line} @${gitignore_path}]\e[0m";
           if [ -z "${dry_run}" ]; then
-            rm -f "./${gitignore_item}";
+            find './' -name "${gitignore_item}" -mindepth 1 -maxdepth 1 ! -name '.gitignore' -exec rm -f {} \;;
           fi;
         fi;
 
