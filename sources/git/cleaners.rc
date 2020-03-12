@@ -146,9 +146,9 @@ function gitignoreclean()
 
       # Expand paths
       if [ "${gitignore_line: -1}" = '/' ]; then
-        LC_ALL=C find ./ -name "${gitignore_line%/}" ! -path '*/.git/*' -type d "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
+        LC_ALL=C find ./ -name "${gitignore_line%/}" -mindepth 1 ! -path '*/.git/*' ! -name '.gitignore' -type d "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
       else
-        LC_ALL=C find ./ -name "${gitignore_line}" ! -path '*/.git/*' "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
+        LC_ALL=C find ./ -name "${gitignore_line}" -mindepth 1 ! -path '*/.git/*' ! -name '.gitignore' "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
       fi;
 
       # Read found items
