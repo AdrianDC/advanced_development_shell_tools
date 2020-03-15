@@ -31,3 +31,12 @@ function rpmfindlist()
   done < <(find ./ -name '*.rpm');
   echo '';
 }
+
+# === RPM Find Storage ===
+function rpmfindstorage()
+{
+  # Usage: rpmfindstorage (Find RPM packages storage sorted usage)
+
+  # Find RPM packages storage sorted usage
+  rpm -qa --queryformat '%10{size} - %-35{name} \t %{version}\n' | sort -n;
+}

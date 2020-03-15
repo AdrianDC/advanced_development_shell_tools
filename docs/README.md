@@ -1453,6 +1453,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 > ### <span class="group_label">[extensions/linux/rpm.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/rpm.rc)</span> ###
 >
   * **rpmfindlist** [*<b>\[Find&nbsp;all&nbsp;.rpm&nbsp;files&nbsp;and&nbsp;list&nbsp;contents\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/rpm.rc)
+  * **rpmfindstorage** [*<b>\[Find&nbsp;RPM&nbsp;packages&nbsp;storage&nbsp;sorted&nbsp;usage\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/rpm.rc)
 
 ---
 > ### <span class="group_label">[extensions/linux/virtualbox.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/virtualbox.rc)</span> ###
