@@ -60,7 +60,7 @@ function virtualboxmodulessign()
   fi;
 
   # Iterate through modules
-  for module_name in vboxdrv vboxnetflt vboxnetadp vboxpci; do
+  for module_name in vboxdrv vboxnetflt vboxnetadp; do
 
     # Sign module
     "/usr/src/linux-headers-$(uname -r)/scripts/sign-file" sha256 /root/module-signing/MOK.priv /root/module-signing/MOK.der "$(modinfo -n "${module_name}")";
