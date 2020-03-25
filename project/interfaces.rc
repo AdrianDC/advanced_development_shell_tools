@@ -280,7 +280,7 @@ function shtoolskits()
       # Group variables
       name=$(cat "${file_path}/.name" 2>/dev/null);
       file_path=${file_path#${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/};
-      if [ "${file_path}" = 'project' ]; then
+      if [ "${file_path}" = 'project' ] || [ "${file_path}" = 'extensions/template' ]; then
         continue;
       fi;
       list+=("${file_path}");
