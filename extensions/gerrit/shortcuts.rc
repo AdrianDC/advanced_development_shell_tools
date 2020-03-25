@@ -48,12 +48,6 @@ alias gitpghaicp='gerritreview http://gerrit.aicp-rom.com AICP . heads n7.1';
 alias gitprgaicp='gitpraicp; gitpgaicp';
 alias gitprghaicp='gitprhaicp; gitpghaicp';
 
-# === Gerrit LegacyXperia ===
-alias gitpr7='gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia . for';
-alias gitpr7h='gerritreview http://review.msm7x30.org LegacyXperia . for';
-alias gitpr7d='gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia . drafts';
-alias gitpr7dh='gerritreview http://review.msm7x30.org LegacyXperia . drafts';
-
 # === Gerrit Omni ===
 alias gitpromni='gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM for android-8.1';
 alias gitprhomni='gerritreview http://gerrit.omnirom.org . OmniROM for android-8.1';

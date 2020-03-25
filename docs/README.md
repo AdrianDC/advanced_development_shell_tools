@@ -1394,10 +1394,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **gitpghaicp** : *gerritreview http://gerrit.aicp-rom.com AICP . heads n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprgaicp** : *gitpraicp; gitpgaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprghaicp** : *gitprhaicp; gitpghaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpr7** : *gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia . for* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpr7h** : *gerritreview http://review.msm7x30.org LegacyXperia . for* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpr7d** : *gerritreview ssh://radian.dc@review.msm7x30.org:29418 LegacyXperia . drafts* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpr7dh** : *gerritreview http://review.msm7x30.org LegacyXperia . drafts* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitpromni** : *gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM for android-8.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprhomni** : *gerritreview http://gerrit.omnirom.org . OmniROM for android-8.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprdomni** : *gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM drafts android-8.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
@@ -1447,31 +1443,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 > ### <span class="group_label">[extensions/mega/reload.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/mega/reload.rc)</span> ###
 >
   * **meganzreload** [*<b>\[Reload&nbsp;Mega.nz&nbsp;account&nbsp;and&nbsp;keys\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/mega/reload.rc)
-
----
-</details>
-
-<details class='group_details'>
-<summary class="group_header">
-#### <span class="group_category">Extensions &bull; </span><span class="group_label">LegacyXperia MSM7x30</span> ####
-</summary>
-
-> ### <span class="group_label">[extensions/semc_msm7x30/autorelease.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/semc_msm7x30/autorelease.rc)</span> ###
->
-  * **autoreleaselegacyxperia** *[devices]* [*<b>\[Automated&nbsp;LegacyXperia&nbsp;7x30&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/semc_msm7x30/autorelease.rc)
-
----
-> ### <span class="group_label">[extensions/semc_msm7x30/legacyxperia.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/semc_msm7x30/legacyxperia.rc)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_kernel/defconfig.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/semc_msm7x30/legacyxperia.rc)
-  ```
->  </div>
-  * **lineagelxpatcher** *[local_manifests_branch]* [*<b>\[LineageOS&nbsp;LegacyXperia&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/semc_msm7x30/legacyxperia.rc)
-  * **lxrepopick** *&lt;commit_id&gt;* [*<b>\[LineageOS&nbsp;LegacyXperia&nbsp;repopick&nbsp;tool\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/semc_msm7x30/legacyxperia.rc)
-  * **lxdefconfig** [*<b>\[Edit&nbsp;all&nbsp;lx&nbsp;defconfigs\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/semc_msm7x30/legacyxperia.rc)
 
 ---
 </details>
