@@ -1326,6 +1326,20 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **lineagecvetracker** *[bool_install]* [*<b>\[CVE&nbsp;tracker&nbsp;instance&nbsp;helper\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/lineageos.rc)
 
 ---
+> ### <span class="group_label">[extensions/android_rom/remotes.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/remotes.rc)</span> ###
+>
+>  <div class='standalone-import'>
+  ```Shell
+source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/config.rc)
+source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/remotes.rc)
+source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/android_rom/remotes.rc)
+  ```
+>  </div>
+  * **gitrao** [*<b>\[Add&nbsp;LineageOS&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/remotes.rc)
+  * **gitraos** [*<b>\[Add&nbsp;sonyxperiadev&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/remotes.rc)
+  * **gitrap** [*<b>\[Development&nbsp;projects&nbsp;selector\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/remotes.rc)
+
+---
 </details>
 
 <details class='group_details'>
@@ -1390,27 +1404,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **gitprdhomni** : *gerritreview http://gerrit.omnirom.org . OmniROM drafts android-8.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprdtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-
----
-</details>
-
-<details class='group_details'>
-<summary class="group_header">
-#### <span class="group_category">Extensions &bull; </span><span class="group_label">Git Helpers</span> ####
-</summary>
-
-> ### <span class="group_label">[extensions/git/remotes.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/remotes.rc)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/config.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/remotes.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/git/remotes.rc)
-  ```
->  </div>
-  * **gitrao** [*<b>\[Add&nbsp;LineageOS&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/remotes.rc)
-  * **gitraos** [*<b>\[Add&nbsp;sonyxperiadev&nbsp;origin&nbsp;remote\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/remotes.rc)
-  * **gitrap** [*<b>\[Development&nbsp;projects&nbsp;selector\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/remotes.rc)
 
 ---
 </details>
