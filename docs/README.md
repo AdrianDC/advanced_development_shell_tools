@@ -1394,10 +1394,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **gitpghaicp** : *gerritreview http://gerrit.aicp-rom.com AICP . heads n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprgaicp** : *gitpraicp; gitpgaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprghaicp** : *gitprhaicp; gitpghaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpromni** : *gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM for android-8.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprhomni** : *gerritreview http://gerrit.omnirom.org . OmniROM for android-8.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprdomni** : *gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM drafts android-8.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprdhomni** : *gerritreview http://gerrit.omnirom.org . OmniROM drafts android-8.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
   * **gitprdtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
 

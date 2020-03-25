@@ -48,12 +48,6 @@ alias gitpghaicp='gerritreview http://gerrit.aicp-rom.com AICP . heads n7.1';
 alias gitprgaicp='gitpraicp; gitpgaicp';
 alias gitprghaicp='gitprhaicp; gitpghaicp';
 
-# === Gerrit Omni ===
-alias gitpromni='gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM for android-8.1';
-alias gitprhomni='gerritreview http://gerrit.omnirom.org . OmniROM for android-8.1';
-alias gitprdomni='gerritreview ssh://$(gerritusername)@gerrit.omnirom.org:29418 . OmniROM drafts android-8.1';
-alias gitprdhomni='gerritreview http://gerrit.omnirom.org . OmniROM drafts android-8.1';
-
 # === Gerrit TWRP ===
 alias gitprtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0';
 alias gitprdtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0';
