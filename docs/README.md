@@ -169,7 +169,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 >  <div class='standalone-import'>
   ```Shell
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_devices/target.rc)
+source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_build/target.rc)
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/flash.rc)
   ```
 >  </div>
@@ -324,18 +324,11 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **makes** *&lt;parameters&gt;* [*<b>\[Helper&nbsp;to&nbsp;'make&nbsp;-jPROCESSORS'&nbsp;with&nbsp;SCHED_BATCH\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_build/make.rc)
 
 ---
-</details>
-
-<details class='group_details'>
-<summary class="group_header">
-#### <span class="group_category">Android &bull; </span><span class="group_label">Devices Definitions</span> ####
-</summary>
-
-> ### <span class="group_label">[sources/android_devices/target.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_devices/target.rc)</span> ###
+> ### <span class="group_label">[sources/android_build/target.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_build/target.rc)</span> ###
 >
-  * **androiddevicestarget** *[boot/system/...] [device]* [*<b>\[Devices&nbsp;targets&nbsp;mapper\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_devices/target.rc)
-  * **codenametotarget** *&lt;codename&gt;* [*<b>\[Codename&nbsp;to&nbsp;build&nbsp;target\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_devices/target.rc)
-  * **repogetdevice** [*<b>\[Detect&nbsp;device&nbsp;name&nbsp;from&nbsp;repo&nbsp;environment\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_devices/target.rc)
+  * **androiddevicestarget** *[boot/system/...] [device]* [*<b>\[Devices&nbsp;targets&nbsp;mapper\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_build/target.rc)
+  * **codenametotarget** *&lt;codename&gt;* [*<b>\[Codename&nbsp;to&nbsp;build&nbsp;target\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_build/target.rc)
+  * **repogetdevice** [*<b>\[Detect&nbsp;device&nbsp;name&nbsp;from&nbsp;repo&nbsp;environment\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_build/target.rc)
 
 ---
 </details>
@@ -389,7 +382,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   ```Shell
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/tools.rc)
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_build/helpers.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_devices/target.rc)
+source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_build/target.rc)
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/host/common.rc)
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_release/cleaners.rc)
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_kernel/tools.rc)

@@ -55,7 +55,7 @@ if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ] && [ ! -f "${ADVANC
 fi;
 
 # === Advanced Development Shell Tools Toolkits ===
-export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID='|sources/android_adb|sources/android_build|sources/android_devices|sources/android_kernel|sources/android_release|sources/android_repo|sources/android_rom|sources/gerrit|sources/git|sources/host|sources/ssh|sources/uploads|extensions/linux|';
+export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID='|sources/android_adb|sources/android_build|sources/android_kernel|sources/android_release|sources/android_repo|sources/android_rom|sources/gerrit|sources/git|sources/host|sources/ssh|sources/uploads|extensions/linux|';
 export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST='|sources/host|extensions/linux|';
 export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT='|sources/android_repo|sources/git|sources/host|sources/ssh|extensions/linux|';
 export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY='|sources/git|sources/host|';
