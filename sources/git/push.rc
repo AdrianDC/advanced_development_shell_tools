@@ -27,7 +27,7 @@ alias gitpf='git push -f';
 function gitpu()
 {
   # Variables
-  local branch;
+  local branch='';
   local cmd;
   local commits_remote;
   local fetch_sha1;
@@ -35,14 +35,15 @@ function gitpu()
   local option;
   local params;
   local remote;
-  local tags='';
+  local tags_diff='';
+  local tags_mode='';
 
   # Tags option
   case "${1}" in
 
     # Tags option
     -t|--tags)
-      tags=' --tags';
+      tags_mode='true';
       shift;;
 
   esac;
@@ -101,19 +102,38 @@ function gitpu()
 
   # Variables detection
   remote=${params[0]:-$(gitgetremote)};
-  branch=${params[1]:-$(gitgetbranch "${remote}")};
+  if [ -z "${tags_mode}" ]; then
+    branch=${params[1]:-$(gitgetbranch "${remote}")};
+  fi;
 
   # Header information
   echo '';
-  echo -e " \e[1;32m=== gitpu - Pushing to branch '${branch}' ===\e[0m";
+  if [ -z "${tags_mode}" ]; then
+    echo -e " \e[1;32m=== gitpu - Pushing branch '${branch}' to remote '${remote}' ===\e[0m";
+  else
+    echo -e " \e[1;32m=== gitpu - Pushing tags to remote '${remote}' ===\e[0m";
+  fi;
   echo '';
 
   # Get remote stats
-  gitstat "${remote}" "${branch}" true;
-  fetch_sha1=$(git rev-parse FETCH_HEAD 2>/dev/null | grep -v 'FETCH_HEAD');
+  if [ ! -z "${tags_mode}" ]; then
+    LC_ALL=C git push -n --tags "${remote}" 2>&1 | grep -v 'failed to push some refs\|Updates were rejected';
+    tags_diff=${PIPESTATUS[0]};
+  else
+    gitstat "${remote}" "${branch}" true;
+    fetch_sha1=$(git rev-parse FETCH_HEAD 2>/dev/null | grep -v 'FETCH_HEAD');
+  fi;
+
+  # Analyse tags differences
+  if [ ! -z "${tags_mode}" ]; then
+    if [ "${tags_diff}" -eq 0 ]; then
+      option='-t';
+    else
+      option='-T';
+    fi;
 
   # Analyse existing branches
-  if [ ! -z "${fetch_sha1}" ]; then
+  elif [ ! -z "${fetch_sha1}" ]; then
     commits_remote=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
 
   # Handle new branches
@@ -127,15 +147,19 @@ function gitpu()
 
   # Validate force pushing
   case "${option}" in
-    -d)
+    -d|-t)
       ;;
     -f)
       if [ "${commits_remote}" -ne 0 ]; then
         echo '';
         echo -e " \e[1;33mgitpu: \e[1;31m${commits_remote} commits will be lost on the remote.\e[0m";
-      elif [ -z "${tags}" ]; then
+      elif [ -z "${tags_mode}" ]; then
         option='-y';
       fi;;
+    -T)
+      echo '';
+      echo -en " \e[1;33mgitpu: \e[1;31mOlder tags will be lost on the remote. Continue ? [Enter] \e[0m";
+      read -r;;
     *)
       if [ "${commits_remote}" -ne 0 ]; then
         echo '';
@@ -160,7 +184,7 @@ function gitpu()
 
     # Force push
     -f)
-      cmd="git push -f${tags} ${remote} HEAD:refs/heads/${branch}";
+      cmd="git push -f ${remote} HEAD:refs/heads/${branch}";
       case "${input}" in
         -f) key='y';;
         *) key='';;
@@ -169,7 +193,7 @@ function gitpu()
 
     # Creation push
     -c)
-      cmd="git push${tags} ${remote} HEAD:refs/heads/${branch}";
+      cmd="git push ${remote} HEAD:refs/heads/${branch}";
       case "${input}" in
         -f|-y) key='y';;
         *) key='';;
@@ -178,9 +202,27 @@ function gitpu()
 
     # Regular push
     -y|-n|'')
-      cmd="git push${tags} ${remote} HEAD:refs/heads/${branch}";
+      cmd="git push ${remote} HEAD:refs/heads/${branch}";
       key=${option:1};
       echo -en "\e[0;32m${cmd} \e[1;32m# Update: Y/n ? \e[0m";;
+
+    # Tags push
+    -t)
+      cmd="git push --tags ${remote}";
+      case "${input}" in
+        -f) key='y';;
+        *) key='';;
+      esac;
+      echo -en "\e[0;32m${cmd} \e[1;32m# Push tags: Y/n ? \e[0m";;
+
+    # Tags force push
+    -T)
+      cmd="git push -f --tags ${remote}";
+      case "${input}" in
+        -f) key='y';;
+        *) key='';;
+      esac;
+      echo -en "\e[0;31m${cmd} \e[1;31m# Rewrite tags: Y/n ? \e[0m";
 
   esac;
 
