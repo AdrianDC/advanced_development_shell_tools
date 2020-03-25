@@ -1309,6 +1309,40 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **aospcafpatcher** *[specific_paths]* [*<b>\[AOSP-CAF&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/aospcaf.rc)
 
 ---
+> ### <span class="group_label">[extensions/android_rom/gerrit.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)</span> ###
+>
+>  <div class='standalone-import'>
+  ```Shell
+source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/review.rc)
+source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
+source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/android_rom/gerrit.rc)
+  ```
+>  </div>
+  * **gitpr** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprh** : *gerritreview http://review.lineageos.org LineageOS . for* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpr14** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for cm-14.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpr15** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-15.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpr16** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-16.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpg** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . heads* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpgh** : *gerritreview http://review.lineageos.org LineageOS . heads* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprg** : *gitpr; gitpg* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprgy** : *echo -n "ynyn" \| gitpr; echo -n "yny" \| gitpg* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpraosp** : *gerritreview https://android.googlesource.com aosp . for* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpraospma** : *gerritreview https://android.googlesource.com aosp . for master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprdaosp** : *gerritreview https://android.googlesource.com aosp . drafts* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprdaospma** : *gerritreview https://android.googlesource.com aosp . drafts master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpraicp** : *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . for n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprhaicp** : *gerritreview http://gerrit.aicp-rom.com AICP . for n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprdaicp** : *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . drafts n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprdhaicp** : *gerritreview http://gerrit.aicp-rom.com AICP . drafts n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpgaicp** : *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . heads n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitpghaicp** : *gerritreview http://gerrit.aicp-rom.com AICP . heads n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprgaicp** : *gitpraicp; gitpgaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprghaicp** : *gitprhaicp; gitpghaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+  * **gitprdtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
+
+---
 > ### <span class="group_label">[extensions/android_rom/lineageoms.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/lineageoms.rc)</span> ###
 >
   * **lineageomspatcher** [*<b>\[LineageOMS&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/lineageoms.rc)
@@ -1355,47 +1389,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   ```
 >  </div>
   * **byobusessionscleanup** [*<b>\[Exit&nbsp;all&nbsp;unattached&nbsp;byobu&nbsp;sessions\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/byobu/helpers.rc)
-
----
-</details>
-
-<details class='group_details'>
-<summary class="group_header">
-#### <span class="group_category">Extensions &bull; </span><span class="group_label">Gerrit Helpers</span> ####
-</summary>
-
-> ### <span class="group_label">[extensions/gerrit/shortcuts.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/review.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/gerrit/shortcuts.rc)
-  ```
->  </div>
-  * **gitpr** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprh** : *gerritreview http://review.lineageos.org LineageOS . for* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpr14** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for cm-14.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpr15** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-15.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpr16** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-16.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpg** : *gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . heads* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpgh** : *gerritreview http://review.lineageos.org LineageOS . heads* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprg** : *gitpr; gitpg* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprgy** : *echo -n "ynyn" \| gitpr; echo -n "yny" \| gitpg* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpraosp** : *gerritreview https://android.googlesource.com aosp . for* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpraospma** : *gerritreview https://android.googlesource.com aosp . for master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprdaosp** : *gerritreview https://android.googlesource.com aosp . drafts* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprdaospma** : *gerritreview https://android.googlesource.com aosp . drafts master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpraicp** : *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . for n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprhaicp** : *gerritreview http://gerrit.aicp-rom.com AICP . for n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprdaicp** : *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . drafts n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprdhaicp** : *gerritreview http://gerrit.aicp-rom.com AICP . drafts n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpgaicp** : *gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . heads n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitpghaicp** : *gerritreview http://gerrit.aicp-rom.com AICP . heads n7.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprgaicp** : *gitpraicp; gitpgaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprghaicp** : *gitprhaicp; gitpghaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
-  * **gitprdtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/gerrit/shortcuts.rc)
 
 ---
 </details>
