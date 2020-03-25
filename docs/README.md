@@ -688,6 +688,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 > ### <span class="group_label">[sources/docker/helpers.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/docker/helpers.rc)</span> ###
 >
   * **dockerrunhere** : *docker run -it -v "${PWD}/..:${PWD}/.." -w "${PWD}" &#8208;&#8208;rm* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/docker/helpers.rc)
+  * **dockerimages** : *docker images &#8208;&#8208;format='{{.Repository}}:{{.Tag}}' \| sort -n* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/docker/helpers.rc)
 
 ---
 </details>

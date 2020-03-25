@@ -17,3 +17,4 @@
 
 # === Docker Run Helpers ===
 alias dockerrunhere='docker run -it -v "${PWD}/..:${PWD}/.." -w "${PWD}" --rm';
+alias dockerimages="docker images --format='{{.Repository}}:{{.Tag}}' | sort -n";
