@@ -203,6 +203,9 @@ function gitpu()
   echo '';
 }
 
+# === Git Push Helpers ===
+alias gitput='gitpu -t';
+
 # === Git Full Url Push ===
 function gitpurl()
 {
