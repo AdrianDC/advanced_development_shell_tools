@@ -1398,31 +1398,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 #### <span class="group_category">Extensions &bull; </span><span class="group_label">Git Helpers</span> ####
 </summary>
 
-> ### <span class="group_label">[extensions/git/push.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/remotes.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/stats.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/tools.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/push.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/git/push.rc)
-  ```
->  </div>
-  * **gitpa** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpama** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpa14** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) cm-14.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpa15** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) lineage-15.1* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpal** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) local_manifests* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpaman** : *gitremoteverify $(githubusername) gitraa && gitpu $(githubusername) manifests* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpo** : *gitremoteverify origin false && gitpu origin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpom** : *gitremoteverify origin false && gitpu origin master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpp** : *gitremoteverify project gitrap && gitpu project* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitppm** : *gitremoteverify project gitrap && gitpu project master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitppriv** : *gitremoteverify private false && gitpu private* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-  * **gitpprivm** : *gitremoteverify private false && gitpu private master* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/push.rc)
-
----
 > ### <span class="group_label">[extensions/git/remotes.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/git/remotes.rc)</span> ###
 >
 >  <div class='standalone-import'>
