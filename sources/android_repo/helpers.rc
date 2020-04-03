@@ -177,8 +177,6 @@ function reposy()
   repo sync -j"$(grep -c ^processor /proc/cpuinfo)" \
             --current-branch \
             --detach \
-            -f \
-            --force-broken \
             --force-sync \
             -c \
             --no-clone-bundle\
@@ -289,7 +287,7 @@ function reposycl()
                   git stash >/dev/null 2>&1;
                   git stash -u >/dev/null 2>&1;
                   git reset --hard HEAD >/dev/null 2>&1;';
-  repo sync -j"$(grep -c ^processor /proc/cpuinfo)" --current-branch --detach -f --force-broken --force-sync -c --no-clone-bundle --no-tags;
+  repo sync -j"$(grep -c ^processor /proc/cpuinfo)" --current-branch --detach --force-sync -c --no-clone-bundle --no-tags;
 }
 
 # === Repo Foreach ===

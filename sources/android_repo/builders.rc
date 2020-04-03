@@ -40,7 +40,7 @@ function repotwrp()
 
   # Sources Sync
   if [[ ! "${BuildParams}" == *'nosync'* ]]; then
-    repo sync --current-branch --detach --force-broken --force-sync --no-clone-bundle --no-tags;
+    repo sync --current-branch --detach --force-sync --no-clone-bundle --no-tags;
   fi;
 
   # Clean
@@ -249,7 +249,7 @@ function repomrom()
 
   # Sources Sync
   if [[ ! "${BuildParams}" == *'nosync'* ]]; then
-    repo sync --current-branch --detach --force-broken --force-sync --no-clone-bundle --no-tags;
+    repo sync --current-branch --detach --force-sync --no-clone-bundle --no-tags;
 
     # MutiROM submodules
     cd ./system/extras/multirom/;
