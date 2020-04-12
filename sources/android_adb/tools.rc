@@ -128,7 +128,6 @@ function adbro()
   # Variables
   local adb_timeout;
   local rootaccess;
-  local systemaccess;
   local systemmount;
 
   # Verify adb is ready
