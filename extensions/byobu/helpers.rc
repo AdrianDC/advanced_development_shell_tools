@@ -46,3 +46,12 @@ function byobusessionscleanup()
   done < <(byobu list-sessions);
   echo '';
 }
+
+# === Byobu Renumber Windows ===
+function byoburenumberwindows()
+{
+  # Usage: byoburenumberwindows (Renumber all Byobu windows incrementally)
+
+  # Renumber all Byobu windows incrementally
+  tmux move-window -r;
+}

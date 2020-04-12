@@ -1383,6 +1383,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   ```
 >  </div>
   * **byobusessionscleanup** [*<b>\[Exit&nbsp;all&nbsp;unattached&nbsp;byobu&nbsp;sessions\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/byobu/helpers.rc)
+  * **byoburenumberwindows** [*<b>\[Renumber&nbsp;all&nbsp;Byobu&nbsp;windows&nbsp;incrementally\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/byobu/helpers.rc)
 
 ---
 </details>
