@@ -993,6 +993,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   ```
 >  </div>
   * **gittagdescribe** [*<b>\[Describe&nbsp;git&nbsp;history&nbsp;relative&nbsp;to&nbsp;tags\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/tags.rc)
+  * **gitretag** [*<b>\[Reapply&nbsp;latest&nbsp;created&nbsp;git&nbsp;tag\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/tags.rc)
 
 ---
 > ### <span class="group_label">[sources/git/tools.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/git/tools.rc)</span> ###

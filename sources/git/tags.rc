@@ -26,3 +26,54 @@ function gittagdescribe()
   # Describe git history relative to tags
   git describe --always;
 }
+
+# === Git Retag ===
+function gitretag()
+{
+  # Usage: gitretag (Reapply latest created git tag)
+
+  # Variables
+  local tag_message;
+  local tag_name;
+  local tag_type;
+
+  # Acquire latest tag
+  tag_name=$(git for-each-ref refs/tags --sort=-creatordate --format='%(refname:short)' --count=1)
+
+  # Validate latest tag
+  if [ -z "${tag_name}" ]; then
+    echo '';
+    echo -e " \e[1;31mgitretag: Failure finding the latest tag name\e[0m";
+    echo '';
+    return;
+  fi;
+
+  # Acquire tag type
+  tag_type=$(git for-each-ref "refs/tags/${tag_name}" --format='%(objecttype)');
+
+  # Acquire tag message
+  if [ "${tag_type}" = 'tag' ]; then
+    tag_message=$(git tag -l --format='%(subject)' "${tag_name}");
+  else
+    tag_message='';
+  fi
+
+  # Delete previous tag
+  git tag -d "${tag_name}" >/dev/null;
+
+  # Reapply latest tag
+  if [ "${tag_type}" = 'tag' ]; then
+    git tag -f -m "${tag_message}" "${tag_name}";
+  else
+    git tag -f "${tag_name}";
+  fi;
+
+  # Check new description
+  tag_name=$(git describe --tags);
+  echo '';
+  if [ "${tag_type}" = 'tag' ]; then
+    echo -e " \e[1;33mgitretag: \e[1;37m${tag_name} (${tag_message})\e[0m";
+  else
+    echo -e " \e[1;33mgitretag: \e[1;37m${tag_name}\e[0m";
+  fi
+}
