@@ -21,10 +21,20 @@
 # === Repo Changes Logger ===
 function repochanges()
 {
-  # Usage: repochanges ["filter_projects"] (Detect all repo projects differences)
+  # Usage: repochanges [--local] ["filter_projects"] (Detect all repo projects differences)
 
   # Variables
-  local filter_projects=${1};
+  local filter_projects;
+  local mode_local='';
+
+  # Local mode
+  if [ "${1}" = '--local' ]; then
+    mode_local='true';
+    shift;
+  fi;
+
+  # Project filters
+  filter_projects=${1};
 
   # Diff execution
   echo '';
@@ -45,7 +55,7 @@ function repochanges()
 
        # Detect new remote commits
        changescount=\$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
-       if [ \${changescount} -ne 0 ]; then
+       if [ -z '${mode_local}' ] && [ \${changescount} -ne 0 ]; then
          printf \"\r\033[K [Project \${REPO_PROJECT}] \${changescount} remote updates\";
          echo '';
          git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
