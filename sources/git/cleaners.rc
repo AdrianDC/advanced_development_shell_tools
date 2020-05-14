@@ -98,8 +98,10 @@ function gitignoreclean()
   local gitignore_files;
   local gitignore_item;
   local gitignore_items;
+  local gitignore_level;
   local gitignore_line;
   local gitignore_negated;
+  local gitignore_parameters;
   local gitignore_path;
 
   # Create temporary files
@@ -144,12 +146,33 @@ function gitignoreclean()
         continue;
       fi;
 
-      # Expand paths
-      if [ "${gitignore_line: -1}" = '/' ]; then
-        LC_ALL=C find ./ -name "${gitignore_line%/}" -mindepth 1 ! -path '*/.git/*' ! -name '.gitignore' -type d "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
-      else
-        LC_ALL=C find ./ -name "${gitignore_line}" -mindepth 1 ! -path '*/.git/*' ! -name '.gitignore' "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
+      # Prepare parameters
+      gitignore_parameters=(-mindepth 1);
+
+      # Detect root
+      if [ "${gitignore_line:0:1}" = '/' ]; then
+        gitignore_line=${gitignore_line#/};
+        gitignore_level=$(echo "${gitignore_line%/}" | tr -cd '/' | wc -c)
+        gitignore_parameters+=(-maxdepth "$((gitignore_level + 1))");
       fi;
+
+      # Detect folders
+      if [ "${gitignore_line: -1}" = '/' ]; then
+        gitignore_line=${gitignore_line%/};
+        gitignore_parameters+=(-type d);
+      fi;
+
+      # Path criteria
+      if [ -z "${gitignore_line##*/*}" ]; then
+        gitignore_parameters+=(-path "*/${gitignore_line}");
+
+      # Name criteria
+      else
+        gitignore_parameters+=(-name "${gitignore_line}");
+      fi
+
+      # Expand paths
+      LC_ALL=C find ./ "${gitignore_parameters[@]}" ! -path '*/.git/*' ! -name '.gitignore' "${gitignore_exclusions[@]}" | sort > "${gitignore_items}";
 
       # Read found items
       while read -r gitignore_item; do
