@@ -103,7 +103,7 @@ function cls()
   clear;
 
   # Clean tmux history
-  if type tmux >/dev/null 2>&1; then
+  if type tmux >/dev/null 2>&1 && [ ! -z "${TMUX}" ]; then
     tmux clear-history;
   fi;
 }
