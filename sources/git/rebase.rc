@@ -101,10 +101,9 @@ function gitrbl()
   # Get local commits count
   echo '';
   gitstat "${remote}" "${branch}";
-  commits_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<' | xargs echo -n);
 
   # Rebase local commits
-  echo '';
+  commits_count=$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<' | xargs echo -n);
   git rebase -i HEAD~"${commits_count}";
   echo '';
 }
@@ -127,7 +126,6 @@ function gitrb()
   gitstat "${remote}" "${branch}";
 
   # Rebase commits
-  echo '';
   git rebase FETCH_HEAD;
   echo '';
 }

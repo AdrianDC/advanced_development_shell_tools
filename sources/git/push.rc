@@ -151,26 +151,25 @@ function gitpu()
       ;;
     -f)
       if [ "${commits_remote}" -ne 0 ]; then
-        echo '';
         echo -e " \e[1;33mgitpu: \e[1;31m${commits_remote} commits will be lost on the remote.\e[0m";
+        echo '';
       elif [ -z "${tags_mode}" ]; then
         option='-y';
       fi;;
     -T)
-      echo '';
       echo -en " \e[1;33mgitpu: \e[1;31mOlder tags will be lost on the remote. Continue ? [Enter] \e[0m";
-      read -r;;
+      read -r;
+      echo '';;
     *)
       if [ "${commits_remote}" -ne 0 ]; then
-        echo '';
         echo -en " \e[1;33mgitpu: \e[1;31m${commits_remote} commits will be lost on the remote. Continue ? [Enter] \e[0m";
         read -r;
+        echo '';
         option='-f';
       fi;;
   esac;
 
   # Prefix
-  echo '';
   echo -en ' \e[1;33mgitpu: ';
 
   # Push force command

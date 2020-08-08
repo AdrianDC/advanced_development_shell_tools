@@ -63,6 +63,7 @@ function gitstat()
     echo -en ' \e[1;37m| Upstream commits:\e[1;33m ';
     git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>';
     echo -en '\e[0m';
+    echo '';
 
   # Missing remote branch
   else
@@ -70,6 +71,7 @@ function gitstat()
     # Present missing branch information
     echo '';
     echo -e " \e[1;33mgitstat: \e[1;37mRemote branch '${branch}' branch was not found...\e[0m";
+    echo '';
     sleep 1;
 
   fi;
