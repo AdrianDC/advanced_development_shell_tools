@@ -329,9 +329,9 @@ function repoinittwrp()
 
   # Repo init
   if [[ "${params}" == *'referenced'* ]]; then
-    init_command="repo init -u https://github.com/AdrianDC/platform_manifest_twrp_omni.git -b ${branch} ${depth} --reference=$(readlink -f "$(getand)/TWRP")";
+    init_command="repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b ${branch} ${depth} --reference=$(readlink -f "$(getand)/TWRP")";
   else
-    init_command="repo init -u https://github.com/AdrianDC/platform_manifest_twrp_omni.git -b ${branch} ${depth}";
+    init_command="repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b ${branch} ${depth}";
   fi;
 
   # Output init command
