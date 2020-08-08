@@ -538,6 +538,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **repos** *&lt;device_name&gt;* [*<b>\[Prepare&nbsp;Android&nbsp;device&nbsp;environment\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **reporoomserv** [*<b>\[Manifest&nbsp;and&nbsp;local_manifests&nbsp;editor\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **reposy** [*<b>\[Optimized&nbsp;relevant&nbsp;repo&nbsp;sync\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
+  * **reposyr** [*<b>\[Optimized&nbsp;and&nbsp;rebased&nbsp;relevant&nbsp;repo&nbsp;sync\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **reposysafe** [*<b>\[Safeguarded&nbsp;repo&nbsp;projects&nbsp;sync\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **reposybranch** [*<b>\[Individual&nbsp;repo&nbsp;projects&nbsp;sync\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/helpers.rc)
   * **repoprune** [*<b>\[Apply&nbsp;repo-wide&nbsp;prune&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/helpers.rc)

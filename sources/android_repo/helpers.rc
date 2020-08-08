@@ -178,8 +178,19 @@ function reposy()
             --current-branch \
             --detach \
             --force-sync \
-            -c \
-            --no-clone-bundle\
+            --no-clone-bundle \
+            --no-tags \
+            "${@}";
+}
+
+# === Repo Sync and Rebase Efficiently ===
+function reposyr()
+{
+  # Usage: reposyr (Optimized and rebased relevant repo sync)
+
+  # Optimized and rebase relevant repo sync
+  repo sync -j"$(grep -c ^processor /proc/cpuinfo)" \
+            --current-branch \
             --no-tags \
             "${@}";
 }
@@ -287,7 +298,7 @@ function reposycl()
                   git stash >/dev/null 2>&1;
                   git stash -u >/dev/null 2>&1;
                   git reset --hard HEAD >/dev/null 2>&1;';
-  repo sync -j"$(grep -c ^processor /proc/cpuinfo)" --current-branch --detach --force-sync -c --no-clone-bundle --no-tags;
+  repo sync -j"$(grep -c ^processor /proc/cpuinfo)" --current-branch --detach --force-sync --no-clone-bundle --no-tags;
 }
 
 # === Repo Foreach ===
