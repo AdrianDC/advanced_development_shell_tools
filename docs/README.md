@@ -1598,23 +1598,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 
 <details class='group_details'>
 <summary class="group_header">
-#### <span class="group_category">Scripts &bull; </span><span class="group_label">Android Repository</span> ####
-</summary>
-
-> ### <span class="group_label">[scripts/android_repo/install.sh](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/scripts/android_repo/install.sh)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/scripts/android_repo/install.sh)
-  ```
->  </div>
-  * [**\./install.sh** *<b>\[Automated&nbsp;install&nbsp;of&nbsp;Android&nbsp;repo&nbsp;requirements\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/scripts/android_repo/install.sh)
-
----
-</details>
-
-<details class='group_details'>
-<summary class="group_header">
 #### <span class="group_category">Scripts &bull; </span><span class="group_label">Linux Host</span> ####
 </summary>
 
