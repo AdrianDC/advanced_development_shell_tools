@@ -18,29 +18,32 @@
 # Usage: install.sh (Automated install of Android repo requirements)
 
 # Variables
-TimeStart=$(date +%s);
-
-# Introduction
-echo '';
-echo '';
-echo ' [ Installing the repo components ]';
-echo '';
+local time_start=$(date +%s);
+local current_bash_dir=$(pwd);
+local current_user_name=$(whoami);
 
 # Verify apt based Linux
 if ! type apt > /dev/null 2>&1; then
-  echo 'install_repo.sh is meant to be used with apt';
+  echo '';
+  echo -e ' \e[1;31mError: "install.sh" is meant to be used with apt\e[0m';
   echo '';
   return;
 fi;
 
+# Introduction
+echo '';
+echo -e " \e[1;37m[ Advanced Development Shell Tools - Android Repo Components Install ]";
+echo '';
+
 # Update Java JDK (argument to ignore the purge)
+# TODO 1: Even if it is to be done only once, the correct thing is to check,
+#         give the warning and add an option to be chosen.
 if [ -z "${1}" ]; then
   sudo apt-get -f purge --yes openjdk-\* icedtea-\* icedtea6-\*;
 fi;
 sudo add-apt-repository --yes ppa:webupd8team/java;
 sudo apt-get update --yes;
 sudo apt-get install --yes openjdk-8-jdk;
-java -version;
 
 # Install generic required packages
 sudo apt-get install --yes bc bison build-essential curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev;
@@ -57,8 +60,10 @@ curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/rep
 chmod a+x ~/bin/repo;
 
 # Configure the .bashrc exports
-current_bash_dir=$(pwd);
-current_user_name=$(whoami);
+# TODO 2: Write all these variable direct on .bashrc
+# TODO 3: Check if these variables are already set to not write multiple times
+#         (to not break the installation if performed more than once)
+# TODO 4: Add option to ignore or overwrite
 echo '';
 echo '';
 echo ' [ Copy, Paste & Adapt these lines at the end of .bashrc ]';
@@ -77,12 +82,10 @@ echo '';
 echo '# Bash Scripts';
 echo "source ${current_bash_dir}/advanced_development_shell_tools.rc;";
 echo '';
-sudo gedit ~/.bashrc;
 
 # Done
-TimeDiff=$(($(date +%s) - TimeStart));
+time_span=$(($(date +%s) - time_start));
 echo '';
 echo '';
-echo " [ Done in ${TimeDiff} secs ]";
+echo -e " \e[1;37m[ Install done in ${time_span} secs ]\e[0m";
 echo '';
-read -r;
