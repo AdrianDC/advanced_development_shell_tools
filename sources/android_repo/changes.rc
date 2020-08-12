@@ -56,7 +56,8 @@ function repochanges()
        # Detect new remote commits
        changescount=\$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
        if [ -z '${mode_local}' ] && [ \${changescount} -ne 0 ]; then
-         printf \"\r\033[K [Project \${REPO_PROJECT}] \${changescount} remote updates\";
+         printf \"\r\033[K \033[32;1m[Project \${REPO_PROJECT}] \${changescount} remote updates\033[0m\";
+         echo '';
          echo '';
          git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
          echo '';
@@ -65,7 +66,8 @@ function repochanges()
        # Detect local commits
        changescount=\$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<');
        if [ \${changescount} -ne 0 ]; then
-         printf \"\r\033[K [Project \${REPO_PROJECT}] \${changescount} local changes\";
+         printf \"\r\033[K \033[33;1m[Project \${REPO_PROJECT}] \${changescount} local changes\033[0m\";
+         echo '';
          echo '';
          git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
          echo '';
@@ -73,7 +75,8 @@ function repochanges()
 
        # Detect local differences
        if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
-         printf \"\r\033[K [Project \${REPO_PROJECT}] Unmerged differences\";
+         printf \"\r\033[K \033[31;1m[Project \${REPO_PROJECT}] Unmerged differences\033[0m\";
+         echo '';
          echo '';
          git --no-pager diff;
          echo '';
