@@ -31,7 +31,7 @@ function gitcpu()
 
   # Variables
   local link=${1};
-  local branch=${2:-lineage-16.0};
+  local branch=${2:-lineage-17.1};
   local project;
   local commit;
 
