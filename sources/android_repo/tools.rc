@@ -30,6 +30,7 @@ function repocache()
   fi;
 
   # Variables
+  local ccache_path;
   local currentdir;
   local max_size;
 
@@ -37,17 +38,23 @@ function repocache()
   currentdir=$(pwd);
   croot;
 
-  # Validate CCache binary
-  if [ ! -f ./prebuilts/misc/linux-x86/ccache/ccache ]; then
+  # Validate CCache prebuilt binary
+  ccache_path='./prebuilts/misc/linux-x86/ccache/ccache';
+  if [ ! -f "${ccache_path}" ]; then
+    ccache_path=$(which ccache);
+  fi;
+
+  # Validate CCache native binary
+  if [ ! -f "${ccache_path}" ]; then
     echo '';
-    echo -e ' \e[1;31mrepocache: ccache or repository not found...\e[0m';
+    echo -e ' \e[1;31mrepocache: ccache not installed...\e[0m';
     echo '';
     return;
   fi;
 
   # Clean CCache
   if [ "${1}" = 'clean' ]; then
-    ./prebuilts/misc/linux-x86/ccache/ccache -C;
+    "${ccache_path}" -C;
 
   # Reinit CCache
   elif [ "${1}" = 'reinit' ]; then
@@ -65,7 +72,7 @@ function repocache()
       # Cleanup and reinit
       echo '';
       echo -en ' \e[1;33mrepocache:\e[0m ';
-      ./prebuilts/misc/linux-x86/ccache/ccache -M "${max_size}";
+      "${ccache_path}" -M "${max_size}";
       echo '';
     fi;
 
@@ -80,11 +87,11 @@ function repocache()
 
   # Update the maximum on input (example 20G)
   elif [ ! -z "${1}" ]; then
-    ./prebuilts/misc/linux-x86/ccache/ccache -M "${1}";
+    "${ccache_path}" -M "${1}";
   fi;
 
   # Study the CCache
-  watch -n 1 -d "./prebuilts/misc/linux-x86/ccache/ccache" -s;
+  watch -n 1 -d "${ccache_path}" -s;
 
   # Restore path
   cd "${currentdir}/";
