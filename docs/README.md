@@ -1459,6 +1459,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **autoreleaseaospsony8960p** *[devices]* [*<b>\[Automated&nbsp;AOSP&nbsp;Oreo&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
   * **autoreleaselineagesony8960o** *[devices]* [*<b>\[Automated&nbsp;LineageOS&nbsp;Oreo&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
   * **autoreleaselineagesony8960p** *[devices]* [*<b>\[Automated&nbsp;LineageOS&nbsp;Pie&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
+  * **autoreleaselineagesony8960q** *[devices]* [*<b>\[Automated&nbsp;LineageOS&nbsp;Q&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/autorelease.rc)
 
 ---
 > ### <span class="group_label">[extensions/sony_msm8960/lineageos.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/lineageos.rc)</span> ###

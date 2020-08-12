@@ -218,3 +218,49 @@ function autoreleaselineagesony8960p()
     repoclean;
   fi;
 }
+
+# === LineageOS Q Automatic Releaser ===
+function autoreleaselineagesony8960q()
+{
+  # Usage: autoreleaselineagesony8960q [devices] (Automated LineageOS Q Sony 8960 releaser)
+
+  # AndroidDev
+  cdand;
+
+  # When option enabled, sync repository tree
+  if ! __shtools-builds-nosync-active && [ -z "${1}" ]; then
+    cdlineage;
+    reposy;
+  fi;
+
+  # Devices to build
+  local devices=${*:-huashan mint hayabusa tsubasa};
+
+  # Access device repository and when option enabled, sync tree
+  if ! pathchanged cdlineage P && ! __shtools-builds-nosync-active; then
+    reposy;
+  fi;
+
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
+
+  # Walk through devices
+  for device in ${devices}; do
+
+    # ROM build and release
+    ROM_RELEASE=17.1 romautorelease "${device}" lineage;
+
+  done;
+
+  # When option enabled and not local, reinit CCache
+  if __shtools-builds-cleanccache-active && ! __shtools-builds-local-active; then
+    repocache 'reinit';
+  fi;
+
+  # When option enabled and not local, clean out folder
+  if __shtools-builds-clean-active && ! __shtools-builds-local-active; then
+    repoclean;
+  fi;
+}
