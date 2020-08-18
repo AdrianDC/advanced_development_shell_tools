@@ -20,7 +20,7 @@ ui_print(" ");
 
 show_progress(1.000000, 0);
 ui_print("  - Flashing System for MultiROM...");
-package_extract_dir("system", "/system");
+ifelse(run_program("/sbin/test", "-f", "/system/system/build.prop"), package_extract_dir("system", "/system/system"), package_extract_dir("system", "/system"));
 ui_print("     Done.");
 ui_print(" ");
 

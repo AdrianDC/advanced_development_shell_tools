@@ -23,7 +23,7 @@ ui_print("     Done.");
 
 set_progress(0.500000);
 ui_print("  - Updating the system...");
-package_extract_dir("system", "/system");
+ifelse(run_program("/sbin/test", "-f", "/system/system/build.prop"), package_extract_dir("system", "/system/system"), package_extract_dir("system", "/system"));
 ui_print("     Done.");
 ui_print(" ");
 
