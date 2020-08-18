@@ -63,6 +63,7 @@ function meganzreload()
   mega-reload;
 
   # Stop mega-cmd server
+  killall -9 mega-cmd-server 2>/dev/null
   kill -9 "${proc_id}" 2>/dev/null;
   kill "${proc_id}" 2>/dev/null;
   echo '';
