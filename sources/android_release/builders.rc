@@ -308,12 +308,6 @@ function autobuild()
     makes otapackage;
   fi;
 
-  # When option enabled, use debuggable bootimages
-  if __shtools-builds-debug-active; then
-    bootimagedebuggable "${rom_target}" false;
-    export WITH_SU=;
-  fi;
-
   # When option enabled, clean RAM after build
   if [ -z "${2}" ] && __shtools-builds-cleanram-active; then
     cleanrambuild;
