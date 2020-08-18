@@ -168,6 +168,15 @@ function outsepdevcl()
   rm -f "${out_device_path}/recovery/root/file_contexts"*;
   rm -f "${out_device_path}/recovery/root/"*"_contexts";
   rm -f "${out_device_path}/recovery/root/sepolicy";
+  rm -f "${out_device_path}/system/etc/selinux/"*"_contexts";
+  rm -f "${out_device_path}/system/etc/selinux/plat_sepolicy_and_mapping.sha256";
+  rm -f "${out_device_path}/system/etc/selinux/plat_sepolicy.cil";
+  rm -f "${out_device_path}/system/vendor/etc/selinux/"*"_contexts";
+  rm -f "${out_device_path}/system/vendor/etc/selinux/plat_pub_versioned.cil";
+  rm -f "${out_device_path}/system/vendor/etc/selinux/precompiled_sepolicy";
+  rm -f "${out_device_path}/system/vendor/etc/selinux/precompiled_sepolicy.plat_sepolicy_and_mapping.sha256";
+  rm -f "${out_device_path}/system/vendor/etc/selinux/precompiled_sepolicy.product_sepolicy_and_mapping.sha256";
+  rm -f "${out_device_path}/system/vendor/etc/selinux/vendor_sepolicy.cil";
 }
 
 # === ROM Output System Cleaner ===

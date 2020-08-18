@@ -819,6 +819,7 @@ function makesep()
   local cwd;
   local device;
   local out_device_path;
+  local result;
 
   # Access repo root
   cwd=$(pwd);
@@ -840,16 +841,56 @@ function makesep()
   export USE_NINJA=false;
   export USE_SOONG_UI=false;
 
-  # Start sepolicies full compilations
-  if [ -d ./system/sepolicy ]; then
-    mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./system/sepolicy/;
-  else
-    mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./external/sepolicy/;
-  fi;
+  # Start sepolicies vendor compilations
+  if grep -q 'vendor_file_contexts' ./system/sepolicy/file_contexts.mk; then
 
-  # Optionally inject sepolicies to device
-  if [ ! -z "${1}" ]; then
-    sepinject "${out_device_path}/root";
+    # Build vendor sepolicies
+    makel \
+        plat_file_contexts \
+        plat_hwservice_contexts \
+        plat_property_contexts \
+        plat_seapp_contexts \
+        plat_sepolicy_and_mapping.sha256 \
+        plat_sepolicy.cil \
+        plat_service_contexts \
+        plat_pub_versioned.cil \
+        precompiled_sepolicy \
+        precompiled_sepolicy.plat_sepolicy_and_mapping.sha256 \
+        precompiled_sepolicy.product_sepolicy_and_mapping.sha256 \
+        selinux_denial_metadata \
+        vendor_file_contexts \
+        vendor_hwservice_contexts \
+        vendor_property_contexts \
+        vendor_seapp_contexts \
+        vendor_sepolicy.cil \
+        vndservice_contexts \
+        ;
+    result=${?};
+
+    # Optionally inject ramdisk sepolicies to device
+    if [ "${result}" -eq 0 ] && [ ! -z "${1}" ]; then
+      adbppr;
+    fi
+
+  # Start sepolicies ramdisk compilations
+  else
+
+    # Build system sepolicies
+    if [ -d ./system/sepolicy ]; then
+      mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./system/sepolicy/;
+      result=${?};
+
+    # Build legacy sepolicies
+    else
+      mmm -j"$(grep -c ^processor /proc/cpuinfo)" ./external/sepolicy/;
+      result=${?};
+    fi;
+
+    # Optionally inject ramdisk sepolicies to device
+    if [ "${result}" -eq 0 ] && [ ! -z "${1}" ]; then
+      sepinject "${out_device_path}/root";
+    fi;
+
   fi;
 
   # Restore build environment and path
