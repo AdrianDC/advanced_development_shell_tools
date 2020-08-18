@@ -106,7 +106,7 @@ function adbif()
 
   # Find installed files
   repo_top=$(gettop 2> /dev/null);
-  tmp_installs=$(grep -aoh '[^ ]*target/product/[^\/]*/system[^ ]*' "${tmp_file}" \
+  tmp_installs=$(grep -aoh '[^ ]*target/product/[^\/]*/system[^ ]*\|[^ ]*target/product/[^\/]*/root/[^ ]*' "${tmp_file}" \
                | sort \
                | uniq);
 
@@ -114,7 +114,8 @@ function adbif()
   for file_path in ${tmp_installs[*]}; do
     if [[ ! "${file_path}" == *'/system.img' ]] &&
         [[ "${file_path}" == *'/system'* ]] &&
-        [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
+        [[ ! "${file_path}" == *'/NOTICE_FILES'* ]] ||
+        [[ "${file_path}" == *'/root/'* ]]; then
       file_path=$(echo -n "${file_path}" | tail -1 \
                 | sed 's/\x1B\[[0-9;]*[JKmsu]//g');
       if [ ! -f "${file_path}" ]; then
@@ -172,8 +173,11 @@ function adbil()
   "${@}" | tee "${tmp_file}";
   ret=${PIPESTATUS[0]};
 
+  # Header
+  echo '';
+
   # Find installed files
-  tmp_installs=$(grep -aoh '[^ ]*target/product/[^\/]*/system[^ ]*' "${tmp_file}" \
+  tmp_installs=$(grep -aoh '[^ ]*target/product/[^\/]*/system[^ ]*\|[^ ]*target/product/[^\/]*/root/[^ ]*' "${tmp_file}" \
                | sort \
                | uniq);
 
@@ -181,7 +185,8 @@ function adbil()
   for file_path in ${tmp_installs[*]}; do
     if [[ ! "${file_path}" == *'/system.img' ]] &&
         [[ "${file_path}" == *'/system'* ]] &&
-        [[ ! "${file_path}" == *'/NOTICE_FILES'* ]]; then
+        [[ ! "${file_path}" == *'/NOTICE_FILES'* ]] ||
+        [[ "${file_path}" == *'/root/'* ]]; then
       file_path=$(echo -n "${file_path}" | tail -1 \
                 | sed 's/\x1B\[[0-9;]*[JKmsu]//g');
       if [ ! -f "${file_path}" ] && [ ! "${file_path:0:1}" = '/' ]; then
@@ -193,7 +198,6 @@ function adbil()
 
         # List installed files
         if [ "${ret}" -eq 0 ]; then
-          echo '';
           echo -e " \e[1;36m${file_path}\e[0m";
         fi;
       fi;
@@ -298,6 +302,10 @@ function adbpf()
       fi;
       if [[ "${filepathtest}" == *'system/'* ]]; then
         filetarget=$(echo -n "${filepathtest}" | sed "s/.*\(system\/.*\)/\/\1/g");
+        filepathtest=${filetarget};
+      fi;
+      if [[ "${filepathtest}" == *'/root/'* ]]; then
+        filetarget=$(echo -n "${filepathtest}" | sed "s/.*\/root\/\(.*\)/\/\1/g");
         filepathtest=${filetarget};
       fi;
       if [[ "${filepathtest}" == "${filepath}" ]]; then
