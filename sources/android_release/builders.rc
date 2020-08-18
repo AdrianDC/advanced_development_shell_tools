@@ -266,6 +266,22 @@ function romlogs()
   echo '';
 }
 
+# === ROM Automated Preparation Helper ===
+function autoprepare()
+{
+  # Usage: autoprepare (Development automated ROM preparation)
+
+  # Prepare docs targets
+  if grep -q 'api-stubs-docs' ./frameworks/base/Android.bp 2>/dev/null; then
+    mka -j2 \
+      api-stubs-docs \
+      hiddenapi-lists-docs \
+      system-api-stubs-docs \
+      test-api-stubs-docs \
+      ;
+  fi;
+}
+
 # === ROM Automated Builder Helper ===
 function autobuild()
 {
@@ -296,6 +312,9 @@ function autobuild()
 
   # Prepare device and 'brunch' environment
   repos "${1}";
+
+  # Prepare build targets
+  autoprepare;
 
   # Build device for Lineage
   if type brunch >/dev/null 2>&1; then
