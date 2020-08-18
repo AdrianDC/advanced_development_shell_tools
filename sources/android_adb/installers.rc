@@ -372,6 +372,9 @@ function adbside()
   local adb_cmd;
   local rebooted=;
 
+  # Verify adb is ready
+  adbready;
+
   # Initialize adb
   echo '';
   adb_cmd=$(adbcmd);
