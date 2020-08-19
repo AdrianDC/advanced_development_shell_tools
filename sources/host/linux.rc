@@ -99,18 +99,6 @@ function videoresize()
   echo '';
 }
 
-# === Automount Disabler ===
-function disableautomount()
-{
-  # Usage: disableautomount (Linux USB automount disabler)
-
-  # Linux USB automount disabler
-  gsettings set org.cinnamon.desktop.media-handling automount-open false
-  gsettings set org.cinnamon.desktop.media-handling automount false
-  gsettings set org.gnome.desktop.media-handling automount-open false;
-  gsettings set org.gnome.desktop.media-handling automount false;
-}
-
 # === Reown Recursively ===
 function reownas()
 {
@@ -185,22 +173,6 @@ function drivespeedtest()
   value=$((104857600 * 1000 / time_diff));
   echo -e " \e[1;33m[ Path transfer performance: ${value} MB/s ]\e[0m";
   echo '';
-}
-
-# === USB MTP Mounts ===
-function mtpmountdisable()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: mtpmountdisable (Disable MTP automount)';
-    echo '';
-    return;
-  fi;
-
-  # Disable MTP automount
-  gsettings set org.cinnamon.desktop.media-handling automount-open false;
-  gsettings set org.cinnamon.desktop.media-handling automount false;
 }
 
 # === Network Manager Restart ===
