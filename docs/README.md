@@ -26,15 +26,15 @@
 #### See how to install and update the project
 </summary>
 
- * **Clone the project locally with git**
+ * **Clone the project locally with git:**
    ```Shell
    git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master
    ```
- * **Load the project in a Shell terminal**
+ * **Load the project in a Shell terminal:**
    ```Shell
    source /path/to/folder/advanced_development_shell_tools.rc
    ```
- * **Permanently load the project**
+ * **Permanently load the project:**
    <br />
    Open *`~/.bashrc`*, adapt and add:
    ```Shell
@@ -43,7 +43,7 @@
    ```
    **`ANDROID_DEV_DRIVE`**: Optional folder for Android functions.
    <br />
- * **Synchronize new project additions**
+ * **Synchronize new project additions:**
    ```Shell
    shtoolssync
    ```
