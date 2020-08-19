@@ -1187,8 +1187,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   ```
 >  </div>
   * **haste** *&lt;file&gt; or \| haste* [*<b>\[Share&nbsp;hastebin&nbsp;logs\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
-  * **pbin** *&lt;file&gt; or \| pbin* [*<b>\[Share&nbsp;Pastebin&nbsp;logs\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
-  * **pbinperm** : *PASTEBIN_EXPIRE=N pbin* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
   * **dogbin** *&lt;file&gt; or \| dogbin* [*<b>\[Share&nbsp;dogbin&nbsp;logs\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
   * **remotescript** *&lt;url&gt; [bool_automated]* [*<b>\[Remote&nbsp;script&nbsp;launcher&nbsp;with&nbsp;confirmations\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
   * **buildlock** *&lt;command...&gt;* [*<b>\[Mutex-locked&nbsp;command&nbsp;execution\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
