@@ -1289,22 +1289,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 #### <span class="group_category">Extensions &bull; </span><span class="group_label">Android ROM Helpers</span> ####
 </summary>
 
-> ### <span class="group_label">[extensions/android_rom/aicp.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/aicp.rc)</span> ###
->
-  * **gitcpaicp** [*<b>\[Automated&nbsp;upstream&nbsp;to&nbsp;AICP&nbsp;device&nbsp;merger\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/aicp.rc)
-
----
-> ### <span class="group_label">[extensions/android_rom/aospcaf.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/aospcaf.rc)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_rom/projects.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/android_rom/aospcaf.rc)
-  ```
->  </div>
-  * **aospcafpatcher** *[specific_paths]* [*<b>\[AOSP-CAF&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/aospcaf.rc)
-
----
 > ### <span class="group_label">[extensions/android_rom/gerrit.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)</span> ###
 >
 >  <div class='standalone-import'>
@@ -1337,11 +1321,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **gitprghaicp** : *gitprhaicp; gitpghaicp* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
   * **gitprtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
   * **gitprdtwrp** : *gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/gerrit.rc)
-
----
-> ### <span class="group_label">[extensions/android_rom/lineageoms.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/lineageoms.rc)</span> ###
->
-  * **lineageomspatcher** [*<b>\[LineageOMS&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/lineageoms.rc)
 
 ---
 > ### <span class="group_label">[extensions/android_rom/lineageos.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_rom/lineageos.rc)</span> ###
