@@ -1,12 +1,12 @@
-[CENTER][IMG]https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1545583809[/IMG][/CENTER]
+[CENTER][IMG]https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1545587767[/IMG][/CENTER]
 
 
 [INDENT][LIST]
 
 [SIZE=5][B]During 2020:[/B][/SIZE]
 
-[*]Project cleanups and refactors
-[*]Android 10 related upgrades
+* Project cleanups and refactors
+* Android 10 related upgrades
 
 [SIZE=5][B]During 2019:[/B][/SIZE]
 

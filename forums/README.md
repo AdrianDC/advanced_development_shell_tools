@@ -1,4 +1,4 @@
-[CENTER][IMG]https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1545583809[/IMG][/CENTER]
+[CENTER][IMG]https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/docs/assets/res/logo.png?timestamp=1545587767[/IMG][/CENTER]
 
 
 [SIZE=5][B][U]Disclaimer[/U][/B][/SIZE]
@@ -14,7 +14,7 @@
     *
     * I am not responsible for bricked devices, dead SD cards,
     * thermonuclear war, or you getting fired because the alarm app failed. Please
-    * do some research if you have any concerns about features included in this ROM
+    * do some research if you have any concerns about features included in this project
     * before flashing it! YOU are choosing to make these modifications, and if
     * you point the finger at me for messing up your device, I will laugh at you.
     */
@@ -34,9 +34,9 @@
 
 [*]The sources written and shared here are either [B]meant to be used as they are[/B],
    or to [B]serve as a reference for commands and functions[/B] an Android developer needs.
-   [B]Developers or beginners[/B] interested in Shell commands and scripting
+   [B]Developers or beginners[/B] interested in shell commands and scripting
    can look into my sources and find documented [B]commands and syntaxes[/B],
-   which can be used as a reference for Shell scripting and help making their own.
+   which can be used as a reference for shell scripting and help making their own.
 [/LIST][/INDENT]
 
 
@@ -44,13 +44,9 @@
 
 [INDENT][LIST]
 [*][B]To keep a local sync of 'advanced_development_shell_tools' updated with upstream changes[/B],
-   simply run the [B][FONT="Courier New"][I]`shtoolssync;`[/I][/FONT][/B] command and the updates will be downloaded.
+   simply run the [B][FONT="Courier New"][I]`shtoolssync`[/I][/FONT][/B] command and the updates will be downloaded.
    Local modifications will be lost through the update (read about [FONT="Courier New"][I]`git stash pop`[/I][/FONT] in that case)
    and the [B]newest commits / improvements will be added[/B] to your available tools.
-
-[*]If you intend to keep personal or unfinished functions along this project,
-   you can also look at the [B][URL=https://github.com/AdrianDC/android_development_shell_users]android_development_shell_users[/URL][/B] project, a minimal variant
-   that allows holding functions or macros separately (like credentials).
 [/LIST][/INDENT]
 
 
@@ -58,19 +54,14 @@
 
 [INDENT][LIST]
 [*]The linked [B]documentation holds a reference point to all functions and macros[/B]
-   that this project provides, which details their purpose, and if present,
-   details the [B][FONT="Courier New"][I]`<required>` or `[optional]`[/I][/FONT] parameters[/B] available.
+   that this project provides, with details on their usage purpose,
+    and if present, the [B][FONT="Courier New"][I]`<required>` or `[optional]`[/I][/FONT] parameters[/B] available.
 
-[*][B]The documentation is completely dynamically built[/B], through a function I wrote
-   to parse the whole project and to create this unique reference point.
-   Functions and macros seen there will exist as presented in the documentation,
-   there is no risk of irregularities between the list and the actual sources.
+[*][B]The documentation is completely dynamically built.[/B]
 
 [*]Scripts flagged [B]"Standalone Import Ready"[/B] and starting with [B][FONT="Courier New"][I]`source <(curl -Ls...`[/I][/FONT][/B]
    are able to be directly sourced through the provided commands in any terminal
-   [B]without the need of this project being synced locally[/B] or loaded in the Shell.
-   This can be useful when using a different computer, when running from a root Shell,
-   or even if you need a few functions for work to ease something.
+   [B]without the need of this project being installed locally[/B] or loaded in the shell.
 [/LIST][/INDENT]
 
 
@@ -86,15 +77,15 @@
 
 [INDENT][LIST]
 [*][B]Clone the project locally with git:[/B]
-   [I][FONT="Courier New"][I]`git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master;`[/I][/FONT][/I]
+   [I][FONT="Courier New"][I]`git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master`[/I][/FONT][/I]
 
 [*][B]Load the project in the current Shell terminal:[/B]
-   [I][FONT="Courier New"][I]`source /path/to/folder/advanced_development_shell_tools.rc;`[/I][/FONT][/I]
+   [I][FONT="Courier New"][I]`source /path/to/folder/advanced_development_shell_tools.rc`[/I][/FONT][/I]
 
 [*][B]Permanently load the project:[/B] Open [I][FONT="Courier New"][I]`~/.bashrc`[/I][/FONT][/I], adapt and add:
    [CODE]
-   export ANDROID_DEV_DRIVE='/media/../AndroidDev';
-   source '/.../advanced_development_shell_tools.rc';
+   export ANDROID_DEV_DRIVE='/media/../AndroidDev'
+   source '/.../advanced_development_shell_tools.rc'
    [/CODE]
 [*][B]The [I][FONT="Courier New"][I]`ANDROID_DEV_DRIVE`[/I][/FONT][/I] variable[/B] is a folder used for Android ROMs and kernels.
    You do not [I]need[/I] it, but a few functions rely on it to ease things.
@@ -105,8 +96,8 @@
 
 [INDENT][LIST]
 [*]Perform the [B]scripts modifications, fixes or additions[/B]
-[*]Validate the code thanks to ShellCheck with [B][FONT="Courier New"][I]`shtoolscheck;`[/I][/FONT][/B]
-[*]Update README.md documentation with [B][FONT="Courier New"][I]`shtoolsreadme;`[/I][/FONT][/B]
+[*]Validate the code thanks to ShellCheck with [B][FONT="Courier New"][I]`shtoolscheck`[/I][/FONT][/B]
+[*]Update README.md documentation with [B][FONT="Courier New"][I]`shtoolsreadme`[/I][/FONT][/B]
 [*][B]Commit the changes[/B] with git (refer to older commits for style)
 [*]Push your changes and [B]create a pull-request[/B] once ready
 [/LIST][/INDENT]
