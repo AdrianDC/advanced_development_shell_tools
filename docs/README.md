@@ -1188,7 +1188,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 >  </div>
   * **haste** *&lt;file&gt; or \| haste* [*<b>\[Share&nbsp;hastebin&nbsp;logs\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
   * **remotescript** *&lt;url&gt; [bool_automated]* [*<b>\[Remote&nbsp;script&nbsp;launcher&nbsp;with&nbsp;confirmations\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
-  * **wip** *[commands to store]* [*<b>\[Work&nbsp;in&nbsp;progress&nbsp;commands&nbsp;to&nbsp;store&nbsp;and&nbsp;use\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
 
 ---
 </details>
