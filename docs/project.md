@@ -51,11 +51,11 @@
    <br />
    or to **serve as a reference for commands and functions** an Android developer needs.
    <br />
-   **Developers or beginners** interested in Shell commands and scripting
+   **Developers or beginners** interested in shell commands and scripting
    <br />
    can look into my sources and find documented **commands and syntaxes**,
    <br />
-   which can be used as a reference for Shell scripting and help making their own.
+   which can be used as a reference for shell scripting and help making their own.
 <!-- /List -->
 <!-- /Indent -->
 
@@ -72,12 +72,6 @@
    Local modifications will be lost through the update (read about `git stash pop` in that case)
    <br />
    and the **newest commits / improvements will be added** to your available tools.
-
- * If you intend to keep personal or unfinished functions along this project,
-   <br />
-   you can also look at the **[android_development_shell_users](https://github.com/AdrianDC/android_development_shell_users)** project, a minimal variant
-   <br />
-   that allows holding functions or macros separately (like credentials).
 <!-- /List -->
 <!-- /Indent -->
 
@@ -89,27 +83,17 @@
 <!-- List -->
  * The linked **documentation holds a reference point to all functions and macros**
    <br />
-   that this project provides, which details their purpose, and if present,
+   that this project provides, with details on their usage purpose,
    <br />
-   details the **`<required>` or `[optional]` parameters** available.
+    and if present, the **`<required>` or `[optional]` parameters** available.
 
- * **The documentation is completely dynamically built**, through a function I wrote
-   <br />
-   to parse the whole project and to create this unique reference point.
-   <br />
-   Functions and macros seen there will exist as presented in the documentation,
-   <br />
-   there is no risk of irregularities between the list and the actual sources.
+ * **The documentation is completely dynamically built.**
 
  * Scripts flagged **"Standalone Import Ready"** and starting with **`source <(curl -Ls...`**
    <br />
    are able to be directly sourced through the provided commands in any terminal
    <br />
-   **without the need of this project being synced locally** or loaded in the Shell.
-   <br />
-   This can be useful when using a different computer, when running from a root Shell,
-   <br />
-   or even if you need a few functions for work to ease something.
+   **without the need of this project being installed locally** or loaded in the shell.
 <!-- /List -->
 <!-- /Indent -->
 
