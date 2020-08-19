@@ -1548,7 +1548,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 ---
 > ### <span class="group_label">[extensions/sony_msm8996/shortcuts.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/shortcuts.rc)</span> ###
 >
-  * **sonysodpkernelrebase** : *git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/shortcuts.rc)
   * **doradefconf** : *makedefconf msm-perf dora common* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/shortcuts.rc)
   * **dorazipkernel** : *kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/shortcuts.rc)
   * **kaguradefconf** : *makedefconf msm-perf kagura common* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/shortcuts.rc)

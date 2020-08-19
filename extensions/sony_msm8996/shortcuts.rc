@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-# === Xperia SODP Kernel Shortcuts ===
-alias sonysodpkernelrebase='git fetch https://github.com/sonyxperiadev/kernel aosp/LA.UM.5.5.r1; git rebase FETCH_HEAD; gitpa';
-
 # === Xperia X Performance Kernel Shortcuts ===
 alias doradefconf='makedefconf msm-perf dora common';
 alias dorazipkernel='kernelinjectorzip dora arch/arm64/boot/Image.gz-dtb .';
