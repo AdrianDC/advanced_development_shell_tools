@@ -1478,14 +1478,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **autoreleasetwrpsony8960** *[devices]* [*<b>\[Automated&nbsp;TWRP&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/release.rc)
 
 ---
-> ### <span class="group_label">[extensions/sony_msm8960/shortcuts.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/shortcuts.rc)</span> ###
->
-  * **cdspker** *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8960t/g')"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/shortcuts.rc)
-  * **cdblueker** *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/kernel/sony/msm8x60/g')"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/shortcuts.rc)
-  * **cdvendsony** *cd "$(pwd \| sed 's/(.*)Android([^/]*/[^/]*).*/1Android2/vendor/sony/g')"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/shortcuts.rc)
-  * **meldblue** *pathscompare "./${1}" "../blue-common/${1}"* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/shortcuts.rc)
-
----
 </details>
 
 <details class='group_details'>
