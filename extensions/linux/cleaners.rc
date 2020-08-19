@@ -32,19 +32,3 @@ function cleanrambuild()
   # Run cleanram script
   "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts/linux/cleanrambuild.sh";
 }
-
-# === CleanRAM with Kills ===
-function cleanramkill()
-{
-  # Usage: cleanramkill [bool_cleanram] (Complete RAM cleanup including "java")
-
-  # Kill relevant RAM eating processes
-  killall adb;
-  killall java;
-  killall mega-cmd;
-
-  # Run cleanram script
-  if [ ! -z "${1}" ]; then
-    cleanram;
-  fi;
-}

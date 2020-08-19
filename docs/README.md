@@ -1399,7 +1399,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 >
   * **cleanram** [*<b>\[RAM&nbsp;caches&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/cleaners.rc)
   * **cleanrambuild** [*<b>\[RAM&nbsp;caches&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/cleaners.rc)
-  * **cleanramkill** *[bool_cleanram]* [*<b>\[Complete&nbsp;RAM&nbsp;cleanup&nbsp;including&nbsp;"java"\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/cleaners.rc)
 
 ---
 > ### <span class="group_label">[extensions/linux/rpm.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/rpm.rc)</span> ###
