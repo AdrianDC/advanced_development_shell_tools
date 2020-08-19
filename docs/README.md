@@ -5,15 +5,15 @@
 
  * Created by [Adrian DC](https://github.com/AdrianDC) - 2015-2020
 
- * Project description : [About...](project.md)
+ * Project description : [About](project.md)
    <br />
-   Regularly used functions : [Previews...](previews.md)
+   Regularly used functions : [Previews](previews.md)
    <br />
-   Some commands examples : [Samples...](samples.md)
+   Some commands examples : [Samples](samples.md)
    <br />
-   Project user functions : [Handlers...](shtools.md)
+   Project user functions : [Handlers](shtools.md)
    <br />
-   XDA-Developers forum : [Thread...](http://forum.xda-developers.com/-/-/-t3622382)
+   XDA-Developers forum : [Thread](http://forum.xda-developers.com/-/-/-t3622382)
 
  * This project is meant to provide multiple advanced functions and shortcuts to **ease Android, Git and Linux developments**
 
