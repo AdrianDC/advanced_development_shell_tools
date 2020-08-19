@@ -176,12 +176,12 @@ function adbstcln()
 
 # === ADB Loggers Helpers ===
 function adblc() { adb logcat -c; adbl; }
-function adbk() { echo -n '' > kmsg; adbsu cat /proc/kmsg | tee -a kmsg; }
-function adbdm() { echo -n '' > dmesg; adbsu dmesg | tee -a dmesg; }
-function adbkd() { echo -n '' > kmsg; adbsu cat /proc/kmsg | tee -a kmsg; }
-function adbkl() { cls; echo -n '' > last_kmsg; adbsu cat /proc/last_kmsg | tee -a last_kmsg; }
-function adbpl() { cls; echo -n '' > last_kmsg; adbsu cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg; }
-function adbrl() { cls; echo -n '' > recovery_log; adbsu cat /tmp/recovery.log | tee -a recovery_log; }
+function adbk() { echo -n '' > kmsg; adbready; adbsu cat /proc/kmsg | tee -a kmsg; }
+function adbdm() { echo -n '' > dmesg; adbready; adbsu dmesg | tee -a dmesg; }
+function adbkd() { echo -n '' > kmsg; adbready; adbsu cat /proc/kmsg | tee -a kmsg; }
+function adbkl() { cls; echo -n '' > last_kmsg; adbready; adbsu cat /proc/last_kmsg | tee -a last_kmsg; }
+function adbpl() { cls; echo -n '' > last_kmsg; adbready; adbsu cat /sys/fs/pstore/console-ramoops | tee -a last_kmsg; }
+function adbrl() { cls; echo -n '' > recovery_log; adbready; adbsu cat /tmp/recovery.log | tee -a recovery_log; }
 function adbdumpsensors() { adbsu dumpsys sensorservice; }
 function adbtrampoline() { adbsu 'dmesg | grep -i trampoline'; }
 
