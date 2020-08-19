@@ -6,6 +6,11 @@
 <!-- Indent -->
 <!-- List -->
 
+### During 2020: ###
+
+* Project cleanups and refactors
+* Android 10 related upgrades
+
 ### During 2019: ###
 
  * Project rename from Android Development Shell Tools

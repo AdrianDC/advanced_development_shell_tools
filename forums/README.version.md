@@ -3,6 +3,11 @@
 
 [INDENT][LIST]
 
+[SIZE=5][B]During 2020:[/B][/SIZE]
+
+[*]Project cleanups and refactors
+[*]Android 10 related upgrades
+
 [SIZE=5][B]During 2019:[/B][/SIZE]
 
 [*]Project rename from Android Development Shell Tools
