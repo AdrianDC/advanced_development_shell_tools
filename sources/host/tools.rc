@@ -52,39 +52,6 @@ function haste()
   rm "${tmp}";
 }
 
-# === dogbin ===
-function dogbin()
-{
-  # Usage: dogbin <file> or | dogbin (Share dogbin logs)
-
-  # Based upon the haste function above
-
-  # Variables
-  local tmp;
-  local url;
-
-  # Get output
-  tmp=$(mktemp);
-  if [ ! -z "${1}" ] && [ -f "${1}" ]; then
-    tee "${tmp}" < "${1}";
-  else
-    cat | tee "${tmp}";
-  fi;
-  echo '';
-
-  # Trim line rewrites
-  edittrimoutput "${tmp}";
-
-  # Upload to dogbin
-  url="http://del.dog/$(timeout -k 10 10 curl -X POST -s --data-binary @"${tmp}" \
-      https://del.dog/documents | grep key | cut -d \" -f 4)";
-  echo " dogbin: ${url}";
-
-  # Open url and delete temp file
-  urlopen "${url}";
-  rm "${tmp}";
-}
-
 # === Remote Script Launcher ===
 function remotescript()
 {
