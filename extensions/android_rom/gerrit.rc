@@ -23,12 +23,7 @@
 
 # === Gerrit LineageOS ===
 alias gitpr='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for';
-alias gitprh='gerritreview http://review.lineageos.org LineageOS . for';
-alias gitpr14='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for cm-14.1';
-alias gitpr15='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-15.1';
-alias gitpr16='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for lineage-16.0';
 alias gitpg='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . heads';
-alias gitpgh='gerritreview http://review.lineageos.org LineageOS . heads';
 alias gitprg='gitpr; gitpg';
 alias gitprgy='echo -n "y\ny\n" | gitpr; echo -n "y\ny" | gitpg';
 
@@ -40,13 +35,8 @@ alias gitprdaospma='gerritreview https://android.googlesource.com aosp . drafts 
 
 # === Gerrit AICP ===
 alias gitpraicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . for n7.1';
-alias gitprhaicp='gerritreview http://gerrit.aicp-rom.com AICP . for n7.1';
 alias gitprdaicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . drafts n7.1';
-alias gitprdhaicp='gerritreview http://gerrit.aicp-rom.com AICP . drafts n7.1';
 alias gitpgaicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . heads n7.1';
-alias gitpghaicp='gerritreview http://gerrit.aicp-rom.com AICP . heads n7.1';
-alias gitprgaicp='gitpraicp; gitpgaicp';
-alias gitprghaicp='gitprhaicp; gitpghaicp';
 
 # === Gerrit TWRP ===
 alias gitprtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0';
