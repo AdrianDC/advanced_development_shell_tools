@@ -1623,16 +1623,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * [**\./cleanrambuild.sh** *<b>\[Build&nbsp;RAM&nbsp;processes&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/scripts/linux/cleanrambuild.sh)
 
 ---
-> ### <span class="group_label">[scripts/linux/reboot.sh](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/scripts/linux/reboot.sh)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/scripts/linux/reboot.sh)
-  ```
->  </div>
-  * [**\./reboot.sh** *<b>\[Crontab&nbsp;script&nbsp;to&nbsp;reboot&nbsp;when&nbsp;not&nbsp;building\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/scripts/linux/reboot.sh)
-
----
 </details>
 
 <div class="group_footer">
