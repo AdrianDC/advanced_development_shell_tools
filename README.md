@@ -7,25 +7,9 @@
 
 <!-- Indent -->
 <!-- List -->
- * `No wrong use or side effect of this project shall involve the responsibility of its developers.`
-   <br />
-   `The scripts are shared as they are. Improvements are regularly done based on personal use`
-   <br />
-   `and developers reports, but no instantaneous changes shall be requested by anyone.`
-   <br />
-   <br />
-   ```cpp
-   #include <std_disclaimer.h>
-   /*
-    * Your warranty is now void.
-    *
-    * I am not responsible for bricked devices, dead SD cards,
-    * thermonuclear war, or you getting fired because the alarm app failed. Please
-    * do some research if you have any concerns about features included in this project
-    * before flashing it! YOU are choosing to make these modifications, and if
-    * you point the finger at me for messing up your device, I will laugh at you.
-    */
-   ```
+ * No wrong use or side effect of this project shall involve the responsibility of its developers.
+   The scripts are shared as they are. Improvements are regularly done based on personal use
+   and developers reports, but no instantaneous changes shall be requested by anyone.
 <!-- /List -->
 <!-- /Indent -->
 
