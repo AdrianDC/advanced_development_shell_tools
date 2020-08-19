@@ -16,10 +16,29 @@
 #
 
 # === Make with Packages Installs ===
-alias makei='adbi makes';
+function makei()
+{
+  # Usage: makei [module] (Make Android modules and install them)
+
+  # Make Android modules and install them
+  adbi makes "${@:-installed-file-list}";
+}
 
 # === Make with Packages Results ===
-alias makel='adbil makes';
+function makel()
+{
+  # Usage: makel [module] (Make Android modules and list them)
+
+  # Make Android modules and list them
+  adbil makes "${@:-installed-file-list}";
+}
 
 # === Make with Packages Zip ===
-function makez() { adbil makes "${@}"; packzippr; }
+function makez()
+{
+  # Usage: makez [module] (Make Android modules and zip them)
+
+  # Make Android modules and zip them
+  adbil makes "${@:-installed-file-list}";
+  packzippr;
+}

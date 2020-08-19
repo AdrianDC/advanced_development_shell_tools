@@ -234,9 +234,9 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 ---
 > ### <span class="group_label">[sources/android_adb/make.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)</span> ###
 >
-  * **makei** : *adbi makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
-  * **makel** : *adbil makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
-  * **makez** *adbil makes "${@}"; packzippr* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
+  * **makei** *[module]* [*<b>\[Make&nbsp;Android&nbsp;modules&nbsp;and&nbsp;install&nbsp;them\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
+  * **makel** *[module]* [*<b>\[Make&nbsp;Android&nbsp;modules&nbsp;and&nbsp;list&nbsp;them\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
+  * **makez** *[module]* [*<b>\[Make&nbsp;Android&nbsp;modules&nbsp;and&nbsp;zip&nbsp;them\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
 
 ---
 > ### <span class="group_label">[sources/android_adb/multirom.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/multirom.rc)</span> ###
