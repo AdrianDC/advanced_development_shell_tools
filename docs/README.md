@@ -232,6 +232,13 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **adbple** [*<b>\[ADB&nbsp;Ramoops&nbsp;Compressed&nbsp;Logger\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/logs.rc)
 
 ---
+> ### <span class="group_label">[sources/android_adb/make.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)</span> ###
+>
+  * **makei** : *adbi makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
+  * **makel** : *adbil makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
+  * **makez** *adbil makes "${@}"; packzippr* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/make.rc)
+
+---
 > ### <span class="group_label">[sources/android_adb/multirom.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/multirom.rc)</span> ###
 >
   * **adbmromselect** *[preselect]* [*<b>\[Select&nbsp;MultiROM&nbsp;installation&nbsp;for&nbsp;path\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_adb/multirom.rc)
@@ -1266,20 +1273,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **uploadmega** *&lt;file_path&gt; [target_folder]* [*<b>\[Upload&nbsp;to&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/mega.rc)
   * **downloadmega** *&lt;remote_path&gt; [boot_remove_remote]* [*<b>\[Download&nbsp;from&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/mega.rc)
   * **uploadprivatemega** *&lt;device_name&gt;* [*<b>\[Upload&nbsp;to&nbsp;private&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/mega.rc)
-
----
-</details>
-
-<details class='group_details'>
-<summary class="group_header">
-#### <span class="group_category">Extensions &bull; </span><span class="group_label">Build Wrappers</span> ####
-</summary>
-
-> ### <span class="group_label">[extensions/android_build/make.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_build/make.rc)</span> ###
->
-  * **makei** : *adbi makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_build/make.rc)
-  * **makel** : *adbil makes* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_build/make.rc)
-  * **makez** *adbil makes "${@}"; packzippr* [*<b>(Inline)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/android_build/make.rc)
 
 ---
 </details>
