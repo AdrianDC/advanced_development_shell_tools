@@ -845,7 +845,7 @@ function makesep()
   if grep -q 'vendor_file_contexts' ./system/sepolicy/file_contexts.mk; then
 
     # Build vendor sepolicies
-    makel \
+    adbil makes \
         plat_file_contexts \
         plat_hwservice_contexts \
         plat_property_contexts \
