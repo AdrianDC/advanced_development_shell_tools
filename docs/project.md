@@ -67,7 +67,7 @@
 <!-- List -->
  * **To keep a local sync of 'advanced_development_shell_tools' updated with upstream changes**,
    <br />
-   simply run the **`shtoolssync;`** command and the updates will be downloaded.
+   simply run the **`shtoolssync`** command and the updates will be downloaded.
    <br />
    Local modifications will be lost through the update (read about `git stash pop` in that case)
    <br />
@@ -132,16 +132,16 @@
 <!-- List -->
  * **Clone the project locally with git:**
    <br />
-   *`git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master;`*
+   *`git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master`*
 
  * **Load the project in the current Shell terminal:**
    <br />
-   *`source /path/to/folder/advanced_development_shell_tools.rc;`*
+   *`source /path/to/folder/advanced_development_shell_tools.rc`*
 
  * **Permanently load the project:** Open *`~/.bashrc`*, adapt and add:
    ```Shell
-   export ANDROID_DEV_DRIVE='/media/../AndroidDev';
-   source '/.../advanced_development_shell_tools.rc';
+   export ANDROID_DEV_DRIVE='/media/../AndroidDev'
+   source '/.../advanced_development_shell_tools.rc'
    ```
  * **The *`ANDROID_DEV_DRIVE`* variable** is a folder used for Android ROMs and kernels.
    <br />
@@ -156,8 +156,8 @@
 <!-- Indent -->
 <!-- List -->
  * Perform the **scripts modifications, fixes or additions**
- * Validate the code thanks to ShellCheck with **`shtoolscheck;`**
- * Update README.md documentation with **`shtoolsreadme;`**
+ * Validate the code thanks to ShellCheck with **`shtoolscheck`**
+ * Update README.md documentation with **`shtoolsreadme`**
  * **Commit the changes** with git (refer to older commits for style)
  * Push your changes and **create a pull-request** once ready
 <!-- /List -->

@@ -28,24 +28,24 @@
 
  * **Clone the project locally with git**
    ```Shell
-   git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master;
+   git clone https://github.com/AdrianDC/advanced_development_shell_tools -b master
    ```
  * **Load the project in a Shell terminal**
    ```Shell
-   source /path/to/folder/advanced_development_shell_tools.rc;
+   source /path/to/folder/advanced_development_shell_tools.rc
    ```
  * **Permanently load the project**
    <br />
    Open *`~/.bashrc`*, adapt and add:
    ```Shell
-   export ANDROID_DEV_DRIVE='/media/../AndroidDev';
-   source '/.../advanced_development_shell_tools.rc';
+   export ANDROID_DEV_DRIVE='/media/../AndroidDev'
+   source '/.../advanced_development_shell_tools.rc'
    ```
    **`ANDROID_DEV_DRIVE`**: Optional folder for Android functions.
    <br />
  * **Synchronize new project additions**
    ```Shell
-   shtoolssync;
+   shtoolssync
    ```
 </details>
 
