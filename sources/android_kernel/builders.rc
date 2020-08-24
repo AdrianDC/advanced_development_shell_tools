@@ -60,19 +60,24 @@ function makekernel()
   fi;
 
   # Variables
-  local time_diff;
   local make_parameters=${*:3};
+  local result;
+  local time_diff;
 
   # Kernel build
   time_diff=$(date +%s);
   make_parameters="makes ${make_parameters}";
   ${make_parameters} O=./.build;
+  result=${?};
 
   # Show compilation time
   time_diff=$(($(date +%s) - time_diff));
   echo '';
   echo -e " \e[1;37m[ Done compiling in ${time_diff} secs ]\e[0m";
   echo '';
+
+  # Result
+  [ "${result}" -eq 0 ];
 }
 
 # === Kernel Defconfig Selection ===
