@@ -1382,7 +1382,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 ---
 > ### <span class="group_label">[extensions/mega/reload.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/mega/reload.rc)</span> ###
 >
-  * **meganzreload** [*<b>\[Reload&nbsp;Mega.nz&nbsp;account&nbsp;and&nbsp;keys\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/mega/reload.rc)
+  * **meganzreload** *[keep_service]* [*<b>\[Reload&nbsp;Mega.nz&nbsp;account&nbsp;and&nbsp;keys\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/mega/reload.rc)
 
 ---
 </details>

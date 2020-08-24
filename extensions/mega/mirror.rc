@@ -39,10 +39,10 @@ function megamirror()
 
   # =======================================================
   # Reload mega.nz account
-  meganzreload;
+  meganzreload true;
 
   # Ignore missing credentials
-  if ! mega-ls > /dev/null; then
+  if ! mega-ls >/dev/null; then
     return;
   fi;
 
