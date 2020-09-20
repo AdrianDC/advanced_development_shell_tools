@@ -21,11 +21,19 @@
 # === Repo Changes Logger ===
 function repochanges()
 {
-  # Usage: repochanges [--local] ["filter_projects"] (Detect all repo projects differences)
+  # Usage: repochanges [--list/--local] ["filter_projects"] (Detect all repo projects differences)
 
   # Variables
   local filter_projects;
+  local mode_list='';
   local mode_local='';
+  local project_label;
+
+  # List mode
+  if [ "${1}" = '--list' ]; then
+    mode_list='true';
+    shift;
+  fi;
 
   # Local mode
   if [ "${1}" = '--local' ]; then
@@ -42,44 +50,59 @@ function repochanges()
   printf '\r\033[K Scanning...';
   repo forall -j"$(grep -c ^processor /proc/cpuinfo)" -c "
 
+     # List mode
+     if [ ! -z '${mode_list}' ]; then
+       project_label=\${REPO_PATH};
+
+     # Default mode
+     else
+       project_label=\${REPO_PROJECT};
+     fi;
+
      # Filter out projects
      if [ ! -z \"${filter_projects}\" ] && ! echo \"\${REPO_PATH}\" | grep -iq \"${filter_projects}\"; then
-       printf \"\r\033[K Ignoring \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       printf \"\r\033[K Ignoring \${project_label} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
 
      # Study projects
      else
 
        # Show and fetch projects
-       printf \"\r\033[K Scanning \${REPO_PROJECT} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
+       printf \"\r\033[K Scanning \${project_label} [\${REPO_REMOTE}/\${REPO_RREV##*/}] \";
        git fetch --quiet \${REPO_REMOTE} \${REPO_RREV##*/};
 
        # Detect new remote commits
        changescount=\$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^>');
        if [ -z '${mode_local}' ] && [ \${changescount} -ne 0 ]; then
-         printf \"\r\033[K \033[32;1m[Project \${REPO_PROJECT}] \${changescount} remote updates\033[0m\";
+         printf \"\r\033[K \033[0;1m[Project \${project_label}] \033[32;1m\${changescount} remote updates\033[0m\";
          echo '';
-         echo '';
-         git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
-         echo '';
+         if [ -z '${mode_list}' ]; then
+           echo '';
+           git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} FETCH_HEAD;
+           echo '';
+         fi;
        fi;
 
        # Detect local commits
        changescount=\$(git rev-list --left-right HEAD...FETCH_HEAD | grep -c '^<');
        if [ \${changescount} -ne 0 ]; then
-         printf \"\r\033[K \033[33;1m[Project \${REPO_PROJECT}] \${changescount} local changes\033[0m\";
+         printf \"\r\033[K \033[0;1m[Project \${project_label}] \033[33;1m\${changescount} local changes\033[0m\";
          echo '';
-         echo '';
-         git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
-         echo '';
+         if [ -z '${mode_list}' ]; then
+           echo '';
+           git --no-pager log --pretty=oneline --abbrev-commit --max-count=\${changescount} HEAD;
+           echo '';
+         fi;
        fi;
 
        # Detect local differences
        if [ \$(git diff --quiet; echo \${?}) -ne 0 ]; then
-         printf \"\r\033[K \033[31;1m[Project \${REPO_PROJECT}] Unmerged differences\033[0m\";
+         printf \"\r\033[K \033[0;1m[Project \${project_label}] \033[31;1mUnmerged differences\033[0m\";
          echo '';
-         echo '';
-         git --no-pager diff;
-         echo '';
+         if [ -z '${mode_list}' ]; then
+           echo '';
+           git --no-pager diff;
+           echo '';
+         fi;
        fi;
 
      fi;
@@ -87,6 +110,5 @@ function repochanges()
 
   # Done
   printf '\r\033[K';
-  echo '';
   echo '';
 }

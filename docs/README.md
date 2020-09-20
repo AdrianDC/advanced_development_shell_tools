@@ -499,7 +499,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_repo/changes.rc)
   ```
 >  </div>
-  * **repochanges** *[&#8208;&#8208;local] ["filter_projects"]* [*<b>\[Detect&nbsp;all&nbsp;repo&nbsp;projects&nbsp;differences\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/changes.rc)
+  * **repochanges** *[&#8208;&#8208;list/&#8208;&#8208;local] ["filter_projects"]* [*<b>\[Detect&nbsp;all&nbsp;repo&nbsp;projects&nbsp;differences\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/changes.rc)
 
 ---
 > ### <span class="group_label">[sources/android_repo/cleaners.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/cleaners.rc)</span> ###
