@@ -128,6 +128,9 @@ function adbif()
     fi;
   done;
 
+  # Prepare public PACKAGES_RESULTS
+  export PACKAGES_RESULTS="${packages_res}";
+
   # Push installed files
   if [ "${ret}" -eq 0 ]; then
     adbpf "${packages_arr[@]}";
@@ -139,9 +142,6 @@ function adbif()
     echo -e ' \e[1;31m-----------------------------------------------------------------------------\e[0m';
     rm -f "${packages_arr[@]}";
   fi;
-
-  # Prepare public PACKAGES_RESULTS
-  export PACKAGES_RESULTS="${packages_res}";
 
   # End of process
   rm -f "${tmp_file}";
@@ -204,6 +204,9 @@ function adbil()
     fi;
   done;
 
+  # Prepare public PACKAGES_RESULTS
+  export PACKAGES_RESULTS="${packages_res}";
+
   # Cleanup incomplete files
   if [ "${ret}" -ne 0 ]; then
     echo -e ' \e[1;31m-----------------------------------------------------------------------------';
@@ -211,9 +214,6 @@ function adbil()
     echo -e ' \e[1;31m-----------------------------------------------------------------------------\e[0m';
     rm -f "${packages_arr[@]}";
   fi;
-
-  # Prepare public PACKAGES_RESULTS
-  export PACKAGES_RESULTS="${packages_res}";
 
   # End of process
   rm -f "${tmp_file}";
