@@ -47,6 +47,15 @@ function byobusessionscleanup()
   echo '';
 }
 
+# === Byobu Detach Clients ===
+function byobudetachothers()
+{
+  # Usage: byobudetachothers (Detach other Byobu clients)
+
+  # Detach other Byobu clients
+  /usr/lib*/byobu/include/tmux-detach-all-but-current-client "${@}"
+}
+
 # === Byobu Renumber Windows ===
 function byoburenumberwindows()
 {
