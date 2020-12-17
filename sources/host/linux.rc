@@ -199,3 +199,6 @@ alias isdone='notify-send "Process execution finished !"';
 # === Resources Monitor  ===
 alias topcpu='top -o %CPU';
 alias topmem='top -o %MEM';
+
+# === Keyboard Inputs ===
+alias keyboardinputs='xev | grep "keycode .* (.*)"'

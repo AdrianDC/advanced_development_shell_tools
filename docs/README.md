@@ -1145,6 +1145,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **isdone** : *notify-send "Process execution finished !"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/linux.rc)
   * **topcpu** : *top -o %CPU* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/linux.rc)
   * **topmem** : *top -o %MEM* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/linux.rc)
+  * **keyboardinputs** : *xev \| grep "keycode .* (.*)"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/linux.rc)
 
 ---
 > ### <span class="group_label">[sources/host/network.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/network.rc)</span> ###
