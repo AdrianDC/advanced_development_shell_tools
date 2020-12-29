@@ -47,7 +47,7 @@ function virtualboxmodulessign()
   if [ ! -d /root/module-signing ]; then
     mkdir -p /root/module-signing/;
     cd /root/module-signing/;
-    openssl req -new -x509 -newkey rsa:2048 -keyout ./MOK.priv -outform DER -out ./MOK.der -nodes -days 36500 -subj "/CN=VirtualBoxModulesSignature/";
+    openssl req -new -x509 -newkey rsa:2048 -keyout ./MOK.priv -outform DER -out ./MOK.der -nodes -days 36500 -subj "/CN=PrivateModulesSignature/";
     chmod 600 ./MOK.priv;
     echo '';
     echo -e ' \e[1;33mINFORMATION: Please enter a one-time simple password to import the keys...\e[0m';
