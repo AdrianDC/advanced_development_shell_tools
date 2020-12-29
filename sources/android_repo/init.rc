@@ -587,10 +587,12 @@ function repoinit()
     else
       read -r options;
     fi;
+    options=${options#,};
     echo -n "${options}" > '.repo/local_manifests/.repoinit.options';
     options="${options_prepend},${options}";
   else
     options="${options_prepend},${ANDROID_REPO_INIT_OPTIONS}";
+    options=${options#,};
     echo "${options}";
   fi;
 
