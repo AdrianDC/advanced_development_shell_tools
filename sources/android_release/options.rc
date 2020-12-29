@@ -95,26 +95,6 @@ function __shtools-builds-cleandevices-active()
   [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANDEVICES}" ];
 }
 
-# === Options - Builds - cleanram ===
-function __shtools-builds-cleanram-enable()
-{
-  # Usage: __shtools-builds-cleanram-enable (Enable cleanram builds option)
-  __shtoolsoptions '__shtools-builds-cleanram-' 'enable';
-  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM=true;
-}
-function __shtools-builds-cleanram-disable()
-{
-  # Usage: __shtools-builds-cleanram-disable (Disable cleanram builds option)
-  __shtoolsoptions '__shtools-builds-cleanram-' 'disable';
-  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM=;
-}
-function __shtools-builds-cleanram-active()
-{
-  # Usage: __shtools-builds-cleanram-active (Get cleanram builds option)
-  __shtoolsoptions '__shtools-builds-cleanram-';
-  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_BUILD_CLEANRAM}" ];
-}
-
 # === Options - Builds - debug ===
 function __shtools-builds-debug-enable()
 {
