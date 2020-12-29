@@ -33,11 +33,6 @@ alias gitpraospma='gerritreview https://android.googlesource.com aosp . for mast
 alias gitprdaosp='gerritreview https://android.googlesource.com aosp . drafts';
 alias gitprdaospma='gerritreview https://android.googlesource.com aosp . drafts master';
 
-# === Gerrit AICP ===
-alias gitpraicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . for n7.1';
-alias gitprdaicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . drafts n7.1';
-alias gitpgaicp='gerritreview ssh://$(gerritusername)@gerrit.aicp-rom.com:29418 AICP . heads n7.1';
-
 # === Gerrit TWRP ===
 alias gitprtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin for android-6.0';
 alias gitprdtwrp='gerritreview ssh://$(gerritusername)@gerrit.twrp.me:29418 . TeamWin drafts android-6.0';
