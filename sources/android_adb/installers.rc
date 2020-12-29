@@ -252,9 +252,9 @@ function adbpf()
   local systemprefix='';
 
   # Detect system in system structure
-  if adb shell "test -d /system/system"; then
+  if adb shell 'test -d /system/system; echo "${?}"' | grep -q '^0$'; then
     systemprefix='/system';
-  elif adb shell "test -d /mnt/system"; then
+  elif adb shell 'test -d /mnt/system; echo "${?}"' | grep -q '^0$'; then
     systemprefix='/mnt/system';
   fi;
 
