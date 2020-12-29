@@ -123,11 +123,6 @@ function romautorelease()
     outdevcl "${rom_target}";
   fi;
 
-  # When option enabled, clean RAM before build
-  if __shtools-builds-cleanram-active; then
-    cleanrambuild;
-  fi;
-
   # Compilation logs
   rom_logs_output=${rom_logs}/Build.${rom_device}.${rom_tag}.log;
 
@@ -180,11 +175,6 @@ function romautorelease()
   if (__shtools-builds-clean-active || __shtools-builds-cleandevices-active) &&
       ! __shtools-builds-local-active && ! __shtools-builds-bringup-active; then
     repodevclean;
-  fi;
-
-  # When option enabled, clean RAM after build
-  if __shtools-builds-cleanram-active; then
-    cleanrambuild;
   fi;
 
   # Restore original path
@@ -299,11 +289,6 @@ function autobuild()
   # Cleanup device outputs
   outdevcl "${1}" 'minimal';
 
-  # When option enabled, clean RAM before build
-  if [ -z "${2}" ] && __shtools-builds-cleanram-active; then
-    cleanrambuild;
-  fi;
-
   # When option enabled, use debuggable bootimages
   if __shtools-builds-debug-active; then
     bootimagedebuggable "${rom_target}" true;
@@ -325,11 +310,6 @@ function autobuild()
   # Build device for AOSP
   else
     makes otapackage;
-  fi;
-
-  # When option enabled, clean RAM after build
-  if [ -z "${2}" ] && __shtools-builds-cleanram-active; then
-    cleanrambuild;
   fi;
 
   # When option enabled, notify build result

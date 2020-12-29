@@ -23,12 +23,3 @@ function cleanram()
   # Run cleanram script
   "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts/linux/cleanram.sh";
 }
-
-# === CleanRAM after builds ===
-function cleanrambuild()
-{
-  # Usage: cleanrambuild (RAM caches cleanup)
-
-  # Run cleanram script
-  "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/scripts/linux/cleanrambuild.sh";
-}

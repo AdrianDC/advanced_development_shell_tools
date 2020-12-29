@@ -1355,7 +1355,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 > ### <span class="group_label">[extensions/linux/cleaners.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/cleaners.rc)</span> ###
 >
   * **cleanram** [*<b>\[RAM&nbsp;caches&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/cleaners.rc)
-  * **cleanrambuild** [*<b>\[RAM&nbsp;caches&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/cleaners.rc)
 
 ---
 > ### <span class="group_label">[extensions/linux/rpm.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/linux/rpm.rc)</span> ###
@@ -1555,16 +1554,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   ```
 >  </div>
   * [**\./cleanram.sh** *<b>\[RAM&nbsp;caches&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/scripts/linux/cleanram.sh)
-
----
-> ### <span class="group_label">[scripts/linux/cleanrambuild.sh](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/scripts/linux/cleanrambuild.sh)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/scripts/linux/cleanrambuild.sh)
-  ```
->  </div>
-  * [**\./cleanrambuild.sh** *<b>\[Build&nbsp;RAM&nbsp;processes&nbsp;cleanup\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/scripts/linux/cleanrambuild.sh)
 
 ---
 </details>
