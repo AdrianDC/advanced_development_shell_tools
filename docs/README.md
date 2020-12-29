@@ -1235,7 +1235,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **devuplboot** *&lt;device&gt;* [*<b>\[Upload&nbsp;ROM&nbsp;bootimage\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/helpers.rc)
   * **devuplrom** *&lt;device&gt; [folder_path]* [*<b>\[Upload&nbsp;ROM&nbsp;build\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/helpers.rc)
   * **pushbrom** *&lt;device_name&gt; [rom_name]* [*<b>\[Notify&nbsp;build&nbsp;success\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/helpers.rc)
-  * **makep** *&lt;parameters&gt;* [*<b>\[Use&nbsp;"makes"&nbsp;with&nbsp;Pushbullet&nbsp;notification\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/helpers.rc)
 
 ---
 > ### <span class="group_label">[sources/uploads/local.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/local.rc)</span> ###
