@@ -427,7 +427,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **romautorelease** *&lt;device_name&gt; &lt;rom_tag&gt; [nowipe,j1/j2]* [*<b>\[Advanced&nbsp;automated&nbsp;ROM&nbsp;builder\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/builders.rc)
   * **autorelease** [*<b>\[Helper&nbsp;menu&nbsp;access&nbsp;to&nbsp;autorelease*&nbsp;functions\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/builders.rc)
   * **romlogs** *&lt;device&gt; &lt;rom&gt; [logs_count_default_200]* [*<b>\[View&nbsp;ROMs&nbsp;build&nbsp;logs&nbsp;from&nbsp;romautorelease\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/builders.rc)
-  * **autoprepare** [*<b>\[Development&nbsp;automated&nbsp;ROM&nbsp;preparation\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/builders.rc)
   * **autobuild** *&lt;device&gt; [bool_nocleanram]* [*<b>\[Development&nbsp;automated&nbsp;ROM&nbsp;builder\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/builders.rc)
 
 ---
