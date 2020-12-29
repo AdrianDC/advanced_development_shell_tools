@@ -84,10 +84,6 @@ alias gitst='gitstat';
 alias gitsto='gitremoteverify origin gitrao && gitstat origin $(git rev-parse --abbrev-ref HEAD)';
 alias gitstom='gitremoteverify origin gitrao && gitstat origin master';
 
-# === Git Projects Statistics (username) ===
-alias gitsta='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) lineage-16.0';
-alias gitstam='gitremoteverify $(githubusername) gitraa && gitstat $(githubusername) master';
-
 # === Git Projects Statistics (github) ===
 alias gitstg='gitremoteverify github false && gitstat github';
 
