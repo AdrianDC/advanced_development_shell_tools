@@ -354,7 +354,8 @@ function adbppr()
   done;
 
   # adb automated PACKAGES_RESULTS files pusher
-  adbp "${results[@]}";
+  adbro;
+  adbpf "${results[@]}";
 }
 
 # === ADB Sideload Helper ===
