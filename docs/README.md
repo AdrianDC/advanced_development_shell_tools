@@ -699,17 +699,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 #### <span class="group_category">Git &bull; </span><span class="group_label">Gerrit Tools</span> ####
 </summary>
 
-> ### <span class="group_label">[sources/gerrit/repopicks.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/gerrit/repopicks.rc)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/repopicks.rc)
-  ```
->  </div>
-  * **gerritrepopicks** *&lt;change_number&gt; [branch]* [*<b>\[Gerrit&nbsp;repopicks&nbsp;automated&nbsp;extractor\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/gerrit/repopicks.rc)
-
----
 > ### <span class="group_label">[sources/gerrit/review.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/gerrit/review.rc)</span> ###
 >
 >  <div class='standalone-import'>
