@@ -67,7 +67,7 @@ function signzip()
   case "${java_version%%.*}" in
 
     # OpenJDK Java
-    1)
+    1|11)
       java_version=${java_version#1.};
       java_version=${java_version%%.*};
       javac_version=${javac_version#1.};
