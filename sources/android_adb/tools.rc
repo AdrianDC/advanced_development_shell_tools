@@ -33,7 +33,7 @@ function adbscr()
   # Take a screenshot from connected device
   mkdir -p ./screenshots;
   file_path="./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png";
-  adb shell 'screencap -p' >"${file_path}";
+  adb exec-out 'screencap -p' >"${file_path}";
   ls -la "${file_path}";
 }
 
