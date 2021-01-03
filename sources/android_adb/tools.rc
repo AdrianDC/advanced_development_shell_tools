@@ -24,14 +24,17 @@ function adbscr()
 {
   # Usage: adbscr (Take a screenshot from connected device)
 
+  # Variables
+  local file_path;
+
   # Verify adb is ready
   adbready;
 
   # Take a screenshot from connected device
   mkdir -p ./screenshots;
-  adb shell 'screencap /sdcard/screenshot.png';
-  adb pull /sdcard/screenshot.png "./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png";
-  adb shell 'rm -f /sdcard/screenshot.png';
+  file_path="./screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png";
+  adb shell 'screencap -p' >"${file_path}";
+  ls -la "${file_path}";
 }
 
 # === ADB Root Mounter ===
