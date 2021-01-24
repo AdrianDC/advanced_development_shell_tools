@@ -120,7 +120,7 @@ function romautorelease()
 
   # Delete the devices relevant results
   elif [[ ! "${rom_params}" == *'nowipe'* ]]; then
-    outdevcl "${rom_target}";
+    m installclean >/dev/null || outdevcl "${rom_target}";
   fi;
 
   # Compilation logs
@@ -236,9 +236,6 @@ function autobuild()
   # Variables
   local time_start;
 
-  # Cleanup device outputs
-  outdevcl "${1}" 'minimal';
-
   # When option enabled, use debuggable bootimages
   if __shtools-builds-debug-active; then
     bootimagedebuggable "${rom_target}" true;
@@ -247,6 +244,9 @@ function autobuild()
 
   # Prepare device and 'brunch' environment
   repos "${1}";
+
+  # Cleanup device outputs
+  m installclean >/dev/null || outdevcl "${1}" 'minimal';
 
   # Build device for Lineage
   if type brunch >/dev/null 2>&1; then
