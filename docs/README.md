@@ -1141,18 +1141,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **cls** [*<b>\[Clean&nbsp;terminal&nbsp;screen\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/terminal.rc)
 
 ---
-> ### <span class="group_label">[sources/host/tools.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/host/edit.rc)
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/host/tools.rc)
-  ```
->  </div>
-  * **haste** *&lt;file&gt; or \| haste* [*<b>\[Share&nbsp;hastebin&nbsp;logs\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
-  * **remotescript** *&lt;url&gt; [bool_automated]* [*<b>\[Remote&nbsp;script&nbsp;launcher&nbsp;with&nbsp;confirmations\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/tools.rc)
-
----
 </details>
 
 <details class='group_details'>
