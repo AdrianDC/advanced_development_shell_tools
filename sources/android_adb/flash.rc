@@ -40,13 +40,13 @@ function adbbootdump()
   if [ ! -z "${cmdaddr}" ] && [ "$(echo "${cmdaddr}" | wc -l)" -eq 1 ] && \
      [ ! -z "${cmdsize}" ] && [ "$(echo "${cmdsize}" | wc -l)" -eq 1 ]; then
     local bootsize=$((16#${cmdaddr}+16#${cmdsize}));
-    adbsu "dd if=${kernel} of=/sdcard/boot.img skip=0 bs=${bootsize} count=1";
-    adb pull /sdcard/boot.img;
-    adbsu 'rm -f /sdcard/boot.img';
+    adbsu "dd if=${kernel} of=/data/boot.img skip=0 bs=${bootsize} count=1";
+    adb pull /data/boot.img;
+    adbsu 'rm -f /data/boot.img';
   else
-    adbsu "dd if=${kernel} of=/sdcard/boot.dump";
-    adb pull /sdcard/boot.dump;
-    adbsu 'rm -f /sdcard/boot.dump';
+    adbsu "dd if=${kernel} of=/data/boot.dump";
+    adb pull /data/boot.dump;
+    adbsu 'rm -f /data/boot.dump';
     adbbootcut boot.dump;
   fi;
 }
@@ -93,10 +93,10 @@ function adbrecoveryinstall()
   # Inject and reboot recovery
   filename=$(basename "${1}");
   adbro;
-  adb shell 'mkdir -p /sdcard/';
-  adb push "${1}" "/sdcard/${filename}";
+  adb shell 'mkdir -p /data/';
+  adb push "${1}" "/data/${filename}";
   adb shell 'mkdir -p /cache/recovery';
-  adb shell "echo 'install /sdcard/${filename}' > /cache/recovery/command";
+  adb shell "echo 'install /data/${filename}' >/cache/recovery/command";
   adb shell 'cat /cache/recovery/command';
   adb reboot recovery;
 }
