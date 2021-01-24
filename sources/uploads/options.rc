@@ -15,26 +15,6 @@
 # limitations under the License.
 #
 
-# === Options - Files Uploader - BasketBuild ===
-function __shtools-uploads-basketbuild-enable()
-{
-  # Usage: __shtools-uploads-basketbuild-enable (Enable optional BasketBuild uploads)
-  __shtoolsoptions '__shtools-uploads-basketbuild-' 'enable';
-  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=true;
-}
-function __shtools-uploads-basketbuild-disable()
-{
-  # Usage: __shtools-uploads-basketbuild-disable (Disable optional BasketBuild uploads)
-  __shtoolsoptions '__shtools-uploads-basketbuild-' 'disable';
-  export ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD=;
-}
-function __shtools-uploads-basketbuild-active()
-{
-  # Usage: __shtools-uploads-basketbuild-active (Get optional BasketBuild uploads)
-  __shtoolsoptions '__shtools-uploads-basketbuild-';
-  [ ! -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_UPLOADS_BASKETBUILD}" ];
-}
-
 # === Options - Files Uploader - FTP ===
 function __shtools-uploads-ftp-enable()
 {

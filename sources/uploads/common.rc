@@ -33,9 +33,6 @@ function fileupl()
   if __shtools-uploads-mega-active; then
     uploadmega "${1}" "${2}";
   fi;
-  if __shtools-uploads-basketbuild-active; then
-    uploadbasketbuild "${1}" "${2}";
-  fi;
 }
 
 # === File Downloader Wrapper ===
@@ -55,9 +52,6 @@ function fileget()
   fi;
   if __shtools-uploads-mega-active; then
     downloadmega "${1}" "${2}";
-  fi;
-  if __shtools-uploads-basketbuild-active; then
-    downloadbasketbuild "${1}" "${2}";
   fi;
 }
 
@@ -85,9 +79,6 @@ function fastupl()
   if __shtools-uploads-mega-active; then
     uploadprivatemega "${1}" "${2}";
     cmd="downloadmega 'Private/${filename}';";
-  elif __shtools-uploads-basketbuild-active; then
-    uploadprivatebasketbuild "${1}" "${2}";
-    cmd="downloadbasketbuild 'Private/${filename}';";
   fi;
 
   # Abort if no command provided

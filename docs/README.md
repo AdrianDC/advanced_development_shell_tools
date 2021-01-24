@@ -1172,14 +1172,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 #### <span class="group_category">Files &bull; </span><span class="group_label">Uploads Helpers</span> ####
 </summary>
 
-> ### <span class="group_label">[sources/uploads/basketbuild.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)</span> ###
->
-  * **uploadbasketbuild** *&lt;file_path&gt; [target_folder]* [*<b>\[File&nbsp;to&nbsp;BasketBuild&nbsp;server&nbsp;uploader\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
-  * **downloadbasketbuild** *&lt;remote_path&gt;* [*<b>\[Download&nbsp;from&nbsp;BasketBuild\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
-  * **uploadprivatebasketbuild** *&lt;device_name&gt;* [*<b>\[Upload&nbsp;to&nbsp;private&nbsp;BasketBuild\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
-  * **syncbasketbuild** *&lt;local_path&gt; &lt;remote_path&gt; &lt;&#8208;&#8208;download/&#8208;&#8208;upload&gt;* [*<b>\[Folder&nbsp;with&nbsp;BasketBuild&nbsp;server&nbsp;syncer\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/basketbuild.rc)
-
----
 > ### <span class="group_label">[sources/uploads/common.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/common.rc)</span> ###
 >
   * **fileupl** *&lt;file_path&gt; [target_folder]* [*<b>\[File&nbsp;to&nbsp;release&nbsp;server&nbsp;uploader\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/uploads/common.rc)
