@@ -106,12 +106,13 @@ function repos()
     if [ ! -L ./out -a ! -d ./out ] || readlink ./out | grep -q '^./'; then
       mkdir -p "./out-${device}/";
       rm -f ./out;
-      ln -sf "./out-${device}" ./out;
+      export OUT_DIR;
+      OUT_DIR=$(readlink -f "./out-${device}");
 
     # Override OUT for symlinks
     else
       export OUT_DIR;
-      OUT_DIR=$(readlink './out');
+      OUT_DIR=$(readlink -f './out');
     fi
 
   fi;
