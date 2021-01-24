@@ -116,6 +116,7 @@ function repos()
 
   # Prepare device environment for LineageOS
   elif type breakfast >/dev/null 2>&1; then
+    export LINEAGE_FIXUP_COMMON_OUT=true;
     breakfast "${device}";
 
   # Prepare device environment for AOSP
