@@ -1387,12 +1387,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **lineagesony8960rebaser** *[specific_paths]* [*<b>\[LineageOS&nbsp;Devices&nbsp;Rebaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/lineageos.rc)
 
 ---
-> ### <span class="group_label">[extensions/sony_msm8960/release.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/release.rc)</span> ###
->
-  * **autoreleasemultiromsony8960** *[devices]* [*<b>\[Automated&nbsp;MultiROM&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/release.rc)
-  * **autoreleasetwrpsony8960** *[devices]* [*<b>\[Automated&nbsp;TWRP&nbsp;Sony&nbsp;8960&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8960/release.rc)
-
----
 </details>
 
 <details class='group_details'>
@@ -1453,12 +1447,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 >  </div>
   * **lineagesonysodppatcher** *[specific_paths]* [*<b>\[LineageOS&nbsp;SONY&nbsp;SODP&nbsp;Patcher\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/lineageos_sonysodp.rc)
   * **lineagesonysodprebaser** *[specific_paths]* [*<b>\[LineageOS&nbsp;SONY&nbsp;SODP&nbsp;Rebaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/lineageos_sonysodp.rc)
-
----
-> ### <span class="group_label">[extensions/sony_msm8996/release.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/release.rc)</span> ###
->
-  * **autoreleasemultiromsony8996** *[devices]* [*<b>\[Automated&nbsp;MultiROM&nbsp;Sony&nbsp;8996&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/release.rc)
-  * **autoreleasetwrpsony8996** *[devices]* [*<b>\[Automated&nbsp;TWRP&nbsp;Sony&nbsp;8996&nbsp;releaser\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/release.rc)
 
 ---
 > ### <span class="group_label">[extensions/sony_msm8996/shortcuts.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/extensions/sony_msm8996/shortcuts.rc)</span> ###
