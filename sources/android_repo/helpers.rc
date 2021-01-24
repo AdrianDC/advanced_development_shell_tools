@@ -93,17 +93,28 @@ function repos()
     return;
   fi;
 
-  # Override OUT for symlinks
-  if [ -L './out' ]; then
-    export OUT_DIR;
-    OUT_DIR=$(readlink './out');
-  else
-    unset OUT_DIR;
-  fi;
-
-  # Unset Lineage variables
+  # Unset previous variables
   unset LINEAGE_BUILD;
   unset LINEAGE_DEVICES_ONLY;
+  unset LINEAGE_FIXUP_COMMON_OUT;
+  unset OUT_DIR;
+
+  # Isolate out folders
+  if [ -L ./out ] || [ ! -d ./out ]; then
+
+    # Local isolated out folder
+    if [ ! -L ./out -a ! -d ./out ] || readlink ./out | grep -q '^./'; then
+      mkdir -p "./out-${device}/";
+      rm -f ./out;
+      ln -sf "./out-${device}" ./out;
+
+    # Override OUT for symlinks
+    else
+      export OUT_DIR;
+      OUT_DIR=$(readlink './out');
+    fi
+
+  fi;
 
   # Unset CM/Lineage functions and load envsetup
   unset -f breakfast;
