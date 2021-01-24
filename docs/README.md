@@ -1169,20 +1169,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 
 <details class='group_details'>
 <summary class="group_header">
-#### <span class="group_category">SSH &bull; </span><span class="group_label">Server Tools</span> ####
-</summary>
-
-> ### <span class="group_label">[sources/ssh/remote.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/ssh/remote.rc)</span> ###
->
-  * **sshremote** [*<b>\[Get&nbsp;the&nbsp;configured&nbsp;SSH&nbsp;target\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/ssh/remote.rc)
-  * **sshserv** : *ssh $(sshremote)* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/ssh/remote.rc)
-  * **sshsync** *&lt;up/down&gt; &lt;local_path&gt; &lt;remote_path&gt; [params]* [*<b>\[Mirror&nbsp;remote&nbsp;server&nbsp;folder\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/ssh/remote.rc)
-
----
-</details>
-
-<details class='group_details'>
-<summary class="group_header">
 #### <span class="group_category">Files &bull; </span><span class="group_label">Uploads Helpers</span> ####
 </summary>
 
