@@ -1041,7 +1041,6 @@ function rompatcher()
   local search_patcher;
 
   # Reset inputs
-  key='';
   search_patcher='';
 
   # Detect the existence of roomservice.xml
@@ -1054,6 +1053,10 @@ function rompatcher()
     if [ ! -z "${search_patcher}" ]; then
       echo '';
       echo -e  " \e[1;32mDetected rompatcher to use : '${search_patcher}'\e[0m ";
+      echo '';
+      ${search_patcher};
+      echo '';
+      return;
     fi;
   fi;
 
@@ -1081,9 +1084,6 @@ function rompatcher()
 
     # Item choice
     cnt=$((cnt + 1));
-    if [ "${line_function}" = "${search_patcher}" ]; then
-      key=${cnt};
-    fi;
     echo -e "  \e[1;33m${cnt}: \e[1;37m${line_function} \e[1;32m[${line_usage}]\e[0m";
 
   done;
@@ -1091,11 +1091,7 @@ function rompatcher()
 
   # Request user input
   echo -n " > Command to run [1-${cnt}] : ";
-  if [ -z "${key}" ]; then
-    read -r key;
-  else
-    echo "${key}";
-  fi;
+  read -r key;
   echo '';
 
   # Execute requested function
