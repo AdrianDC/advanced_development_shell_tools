@@ -1122,7 +1122,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 > ### <span class="group_label">[sources/host/pushbullet.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/pushbullet.rc)</span> ###
 >
   * **pushb** *[message]* [*<b>\[Pushbullet&nbsp;notification&nbsp;helper\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/pushbullet.rc)
-  * **pushbsizes** *&lt;paths&gt;* [*<b>\[Path&nbsp;sizes&nbsp;in&nbsp;Pushbullet&nbsp;notification\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/pushbullet.rc)
 
 ---
 > ### <span class="group_label">[sources/host/terminal.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/terminal.rc)</span> ###
