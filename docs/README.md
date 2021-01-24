@@ -446,16 +446,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **outcommoncl** [*<b>\[ROM&nbsp;output&nbsp;cleaner&nbsp;for&nbsp;common&nbsp;rebuilds\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/cleaners.rc)
 
 ---
-> ### <span class="group_label">[sources/android_release/helpers.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/helpers.rc)</span> ###
->
->  <div class='standalone-import'>
-  ```Shell
-source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_release/helpers.rc)
-  ```
->  </div>
-  * **noccache** *&lt;command...&gt;* [*<b>\[Run&nbsp;command&nbsp;without&nbsp;CCache\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/helpers.rc)
-
----
 > ### <span class="group_label">[sources/android_release/packages.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/packages.rc)</span> ###
 >
   * **signzip** *&lt;zip_to_sign&gt; [signed_output_zip]* [*<b>\[Sign&nbsp;flashable&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_release/packages.rc)
