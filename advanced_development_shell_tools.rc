@@ -54,14 +54,6 @@ if [ -f "${ANDROID_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" ] && [ ! -f "${ADVANC
   sed -i 's/Android Development Shell Tools/Advanced Development Shell Tools/g' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}";
 fi;
 
-# === Advanced Development Shell Tools Toolkits ===
-export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_ANDROID='|sources/android_adb|sources/android_build|sources/android_kernel|sources/android_release|sources/android_repo|sources/android_rom|sources/docker|sources/gerrit|sources/git|sources/host|sources/ssh|sources/uploads|extensions/linux|';
-export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_HOST='|sources/host|extensions/linux|';
-export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_GIT='|sources/android_repo|sources/docker|sources/git|sources/host|sources/ssh|extensions/linux|';
-export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS_MANDATORY='|sources/git|sources/host|';
-ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS=$(grep --color=never '^# Toolkits: ' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}" 2>/dev/null);
-export ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS;
-
 # === Advanced Development Shell Tools Sources ===
 function shtoolssources()
 {
@@ -137,15 +129,13 @@ function shtoolsinstance()
   # Header
   echo -en ' \e[1;33madvanced_development_shell_tools: \e[1;37mLoading project...\e[0m';
 
-  # Import enabled kits
+  # Import sources
   tmp_list=$(mktemp);
   shtoolssources > "${tmp_list}";
   while read -r file_path; do
     group=${file_path#${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/};
     group=${group%/*};
-    if [ "${group}" = 'project' ] || [[ "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_TOOLKITS}" == *"|${group}|"* ]]; then
-      source "${file_path}";
-    fi;
+    source "${file_path}";
   done < "${tmp_list}"
   rm -f "${tmp_list}";
 
@@ -183,11 +173,6 @@ function shtoolsinstance()
   # Automated project news
   if __shtools-config-news-active; then
     ADVANCED_DEVELOPMENT_SHELL_TOOLS_INSTANTIATION=true shtoolsnews;
-  fi;
-
-  # Automated project kits
-  if ! grep -q '^# Toolkits: ' "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_CONFIGURATION}"; then
-    shtoolskits;
   fi;
 }
 
