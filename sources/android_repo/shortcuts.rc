@@ -292,24 +292,12 @@ function pathchanged()
 # === ROMs Shortcuts ===
 function toaosp()       { torompaths 'AOSP' "${1}"; }
 function tolineage()    { torompaths 'LineageOS' "${1}"; }
-function toaospcaf()    { toaosp 'AOSP' 'CAF'; }
-function tomultirom()   { torompaths 'MultiROM'; }
-function torr()         { torompaths 'ResurrectionRemix' "${1}"; }
-function totwrp()       { torompaths 'TWRP'; }
 function cdaosp()       { cd "$(toaosp "${1}")"; }
 function cdlineage()    { cd "$(tolineage "${1}")"; }
-function cdaospcaf()    { cd "$(toaospcaf)"; }
-function cdmultirom()   { cd "$(tomultirom)"; }
-function cdrr()         { cd "$(torr "${1}")"; }
-function cdtwrp()       { cd "$(totwrp)"; }
 
 # === Private Shortcuts ===
 function cdand()        { cd "$(getand)"; }
 function cddev()        { cd "$(getand)/Development/${1}" 2> /dev/null; }
-function cddevaosp()    { cd "$(getand)/Development/aosp_"*"${1}" 2> /dev/null; }
-function cddevlineage() { cd "$(getand)/Development/lineage_"*"${1}" 2> /dev/null; }
-function cddevmrom()    { cd "$(getand)/Development/multirom_development_sony" 2> /dev/null; }
-function cddevtwrp()    { cd "$(getand)/Development/twrp_development_sony" 2> /dev/null; }
 function cdprojects()   { cd "$(getand)/Projects/${1}"; }
 function cdref()        { cd "$(getand)/References/${1}"; }
 function cdrefapk()     { cd "$(getand)/References/apk"; }
@@ -318,16 +306,5 @@ function adbapks()      { cdrefapk; adbapkinstall; }
 function cpaosp()       { cp -fv "./${1}" "$(toaosp "${2}")/${1}"; }
 function cplineage()    { cp -fv "./${1}" "$(tolineage "${2}")/${1}"; }
 function meldaosp()     { pathscompare "./${1}" "$(toaosp "${2}")/${1}"; }
-function meldaospsony() { pathscompare "./${1}" "$(toaosp sony)/${1}"; }
-function meldaospcaf()  { pathscompare "./${1}" "$(toaospcaf)/${1}"; }
 function meldlineage()  { pathscompare "./${1}" "$(tolineage "${2}")/${1}"; }
-function meldmrom()     { pathscompare "./${1}" "$(tomultirom)/${1}"; }
-function meldtwrp()     { pathscompare "./${1}" "$(totwrp)/${1}"; }
 function nout()         { diropen "$(toout "${1}")"; }
-
-# === Repository Shortcuts ===
-function cdmromboot()  { croot; cd ./system/extras/libbootimg/; }
-function cdmromcore()  { croot; cd ./system/extras/multirom/; }
-function cdlsdk()      { croot; cd ./lineage-sdk/; }
-function cdrecovery()  { croot; cd ./bootable/recovery/; }
-function cdsepolicy()  { croot; cd ./system/sepolicy/; }
