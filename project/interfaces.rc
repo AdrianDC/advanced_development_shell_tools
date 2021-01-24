@@ -476,10 +476,11 @@ function shtoolsnews()
     done < <(git log --abbrev-commit --pretty=oneline -n "${commits_remote_count}" FETCH_HEAD);
 
     # Present upgrade hint
+    echo '';
     if [ -z "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_SYNC}" ]; then
-      echo '';
       echo -e ' \e[1;33m> \e[1;37mUse \e[1;32mshtoolssync\e[1;37m to upgrade the local project';
     fi;
+    echo -e ' \e[1;33m> \e[1;37mUse \e[1;32mshtools-\e[1;37m to disable this "config-news" notification';
     echo '';
   fi;
 
