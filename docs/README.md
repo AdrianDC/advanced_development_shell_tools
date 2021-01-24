@@ -477,8 +477,8 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 
 > ### <span class="group_label">[sources/android_repo/builders.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/builders.rc)</span> ###
 >
-  * **repotwrp** *{device} [nosync,nowipe,outcl,fota,local +fotareboot]* [*<b>\[Advanced&nbsp;builder&nbsp;for&nbsp;TWRP\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/builders.rc)
-  * **repomrom** *{device} [nosync,nowipe,outcl,fota,local +fotareboot]* [*<b>\[Advanced&nbsp;builder&nbsp;for&nbsp;MultiROM\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/builders.rc)
+  * **repotwrp** *{device} [nowipe,outcl,fota,local]* [*<b>\[Advanced&nbsp;builder&nbsp;for&nbsp;TWRP\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/builders.rc)
+  * **repomrom** *{device} [nosync,nowipe,outcl,fota,local]* [*<b>\[Advanced&nbsp;builder&nbsp;for&nbsp;MultiROM\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/builders.rc)
 
 ---
 > ### <span class="group_label">[sources/android_repo/changelog.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_repo/changelog.rc)</span> ###
