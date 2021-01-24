@@ -1041,7 +1041,7 @@ function bootimagedebuggable()
     # Apply changes build/core/main.mk
     file_path=./build/core/main.mk;
     echo "  bootimagedebuggable: Apply debug unsecure in ${file_path}";
-    sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/ADDITIONAL_DEFAULT_PROPERTIES +=  ro.secure=0/' "${file_path}";
+    sed -i 's/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1/ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0/' "${file_path}";
     sed -i 's/ro.adb.secure=1/ro.adb.secure=0/' "${file_path}";
 
     # Apply changes build/tools/post_process_props.py
