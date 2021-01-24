@@ -381,7 +381,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 > ### <span class="group_label">[sources/android_kernel/helpers.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_kernel/helpers.rc)</span> ###
 >
   * **makekernelinjector** *&lt;device_names&gt;* [*<b>\[Helper&nbsp;to&nbsp;makekernel&nbsp;with&nbsp;injector&nbsp;zip\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_kernel/helpers.rc)
-  * **gitcpupprima** *&lt;url&gt;* [*<b>\[Git&nbsp;URL&nbsp;prima&nbsp;patch&nbsp;applier&nbsp;on&nbsp;a&nbsp;kernel\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_kernel/helpers.rc)
 
 ---
 > ### <span class="group_label">[sources/android_kernel/tools.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_kernel/tools.rc)</span> ###
