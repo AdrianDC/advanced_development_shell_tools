@@ -153,11 +153,6 @@ function romautorelease()
     export WITH_SU=;
   fi;
 
-  # When option enabled, notify build result
-  if __shtools-host-pushbullet-active; then
-    pushbrom "${rom_device}" "${rom_tag}";
-  fi;
-
   # ==========================================================
   # Upload ROM when not working locally
   if ! __shtools-builds-local-active; then

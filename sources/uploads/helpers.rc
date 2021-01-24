@@ -95,37 +95,3 @@ function devuplrom()
   # End of process
   cd "${cwd}";
 }
-
-# === Pushbullet ROM Status ===
-function pushbrom()
-{
-  # Usage
-  if [ -z "${1}" ]; then
-    echo '';
-    echo ' Usage: pushbrom <device_name> [rom_name] (Notify build success)';
-    echo '';
-    return;
-  fi;
-
-  # Variables
-  local device=${1};
-  local rom=${2:-ROM};
-  local cwd;
-  local host;
-
-  # Access repo root
-  cwd=$(pwd);
-  croot;
-
-  # ROM file
-  romfile=$(find "./out/target/product/${device}/"*"${device}"*".zip" -mmin -30 | tail -n 1);
-  host=$(hostname);
-  if [ ! -z "${romfile}" ]; then
-     pushb "${host}: ${rom} for ${device} ready";
-  else
-     pushb "${host}: ${rom} for ${device} failed";
-  fi;
-
-  # Restore ROM path
-  cd "${cwd}";
-}
