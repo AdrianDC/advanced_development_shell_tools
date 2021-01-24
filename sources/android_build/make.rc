@@ -21,7 +21,7 @@
 # === Make with Jobs and SCHED_BATCH ===
 function makes()
 {
-  # Usage: makes <parameters> (Helper to 'make -jPROCESSORS' with SCHED_BATCH)
+  # Usage: makes <parameters> (Helper to make with job controls or with m)
 
   # Variables
   local ret;
@@ -30,8 +30,13 @@ function makes()
   # Store compilation start time
   time_start=$(date +%s);
 
+  # Use m build wrapper
+  if type m >/dev/null 2>&1; then
+    m "${@}";
+    ret=${?};
+
   # Make with SCHED_BATCH and all processors
-  if type schedtool >/dev/null 2>&1; then
+  elif type schedtool >/dev/null 2>&1; then
     schedtool -B -n 10 -e ionice -n 7 make -j"$(grep -c ^processor /proc/cpuinfo)" "${@}";
     ret=${?};
 
