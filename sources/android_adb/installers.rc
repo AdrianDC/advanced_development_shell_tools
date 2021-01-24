@@ -510,6 +510,81 @@ function adbsiderom()
   fi;
 }
 
+# === ADB Wipe Helper ===
+function adbwipe()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: adbwipe <data/system/cache/all> [boot_reboot] (adb wipe helper)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local adb_cmd;
+  local rebooted=;
+
+  # Verify adb is ready
+  adbready;
+
+  # Initialize adb
+  echo '';
+  adb_cmd=$(adbcmd);
+  ${adb_cmd} devices;
+
+  # Reboot to recovery if needed
+  if ! timeout -k 2 2 sh -c "${adb_cmd} devices | grep -q 'recovery'" 2> /dev/null; then
+    echo -e ' \e[1;33madbwipdata: \e[1;37mRebooting to recovery\e[0m';
+    ${adb_cmd} reboot recovery;
+    rebooted=true;
+  fi;
+
+  # Wait for an adb recovery
+  while true; do
+    if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'recovery'" 2> /dev/null; then
+      break;
+    fi;
+    echo -e ' \e[1;33madbwipdata: \e[1;37mWaiting for recovery\e[0m';
+    sleep 2;
+  done;
+
+  # Perform twrp wipe
+  echo -e ' \e[1;33madbwipdata: \e[1;37mWipping data...\e[0m';
+  echo '';
+  if [ "${1}" = 'all' ] || [ "${1}" = 'system' ]; then
+    ${adb_cmd} shell twrp wipe system 2>/dev/null;
+    sleep 1;
+  fi;
+  if [ "${1}" = 'cache' ]; then
+    ${adb_cmd} shell twrp wipe cache 2>/dev/null;
+    sleep 1;
+  fi;
+  if [ "${1}" = 'all' ] || [ "${1}" = 'data' ]; then
+    ${adb_cmd} shell twrp format data 2>/dev/null;
+    sleep 1;
+  fi;
+  echo '';
+
+  # Wait for an adb recovery
+  while true; do
+    if timeout -k .5 .5 sh -c "${adb_cmd} devices | grep -q 'recovery\|unauthorized'" 2> /dev/null; then
+      break;
+    fi;
+    echo -e ' \e[1;33madbwipdata: \e[1;37mWaiting for recovery\e[0m';
+    sleep 2;
+  done;
+
+  # Reboot to Android if requested or forced reboot to recovery
+  if [ -z "${2}" ] && [ -z "${rebooted}" ] || [ "${2}" = 'false' ]; then
+    echo -e ' \e[1;33madbwipdata: \e[1;37mStaying in recovery\e[0m';
+  else
+    echo -e ' \e[1;33madbwipdata: \e[1;37mRebooting to Android\e[0m';
+    ${adb_cmd} reboot;
+  fi;
+  echo '';
+}
+
 # === ADB File Pusher and Installer ===
 function adbpi()
 {
