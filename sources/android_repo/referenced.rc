@@ -90,19 +90,6 @@ function reporefupdate()
     fi;
   fi;
 
-  # Detect and update TWRP references
-  if cddevtwrp && git submodule update --init --remote &&
-      git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)" &&
-      git add -N ./ && ! git diff-index --quiet HEAD --; then
-    echo '';
-    echo " Updating TWRP references...";
-    git add "${params}";
-    if ! git diff --cached --quiet; then
-      GIT_EDITOR="sed -i '/^#/d'" git commit --amend
-      gitpu origin local_manifests -f;
-    fi;
-  fi;
-
   # Path restore
   cd "${current_dir}";
 }
@@ -165,19 +152,6 @@ function reporefsync()
   if cddevmrom; then
     echo '';
     echo " Syncing MultiROM references...";
-    git fetch origin local_manifests;
-    git --no-pager diff -R --ws-error-highlight=context,new,old FETCH_HEAD;
-    if [ -z "${1}" ]; then
-      git reset FETCH_HEAD;
-      gitsu;
-    fi;
-    git submodule update --init --remote;
-  fi;
-
-  # Fetch and update TWRP references
-  if cddevtwrp; then
-    echo '';
-    echo " Syncing TWRP references...";
     git fetch origin local_manifests;
     git --no-pager diff -R --ws-error-highlight=context,new,old FETCH_HEAD;
     if [ -z "${1}" ]; then
