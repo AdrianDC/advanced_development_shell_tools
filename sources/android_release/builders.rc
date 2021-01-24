@@ -228,7 +228,7 @@ function autobuild()
   # Usage
   if [ -z "${1}" ]; then
     echo '';
-    echo ' Usage: autobuild <device> [bool_nocleanram] (Development automated ROM builder)';
+    echo ' Usage: autobuild <device> (Development automated ROM builder)';
     echo '';
     return;
   fi;
