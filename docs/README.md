@@ -328,7 +328,6 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
 source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_build/make.rc)
   ```
 >  </div>
-  * **makej** *&lt;parameters&gt;* [*<b>\[Helper&nbsp;to&nbsp;'make&nbsp;-jPROCESSORS'\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_build/make.rc)
   * **makes** *&lt;parameters&gt;* [*<b>\[Helper&nbsp;to&nbsp;'make&nbsp;-jPROCESSORS'&nbsp;with&nbsp;SCHED_BATCH\]&nbsp;</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/android_build/make.rc)
 
 ---

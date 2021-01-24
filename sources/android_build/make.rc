@@ -18,13 +18,6 @@
 # === Standalone Source Helper ===
 # source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_build/make.rc)
 
-# === Make with Jobs ===
-function makej()
-{
-  # Usage: makej <parameters> (Helper to 'make -jPROCESSORS')
-  make -j"$(grep -c ^processor /proc/cpuinfo)" "${@}";
-}
-
 # === Make with Jobs and SCHED_BATCH ===
 function makes()
 {
