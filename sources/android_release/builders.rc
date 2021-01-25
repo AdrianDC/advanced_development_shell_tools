@@ -43,15 +43,10 @@ function romautorelease()
   local rom_name=${2};
   local rom_params=${3};
   local cwd;
-  local rom_logs;
   local rom_phone;
   local rom_target;
   local rom_tag;
   local rom_upload;
-
-  # Logs path handling
-  rom_logs=${ANDROID_DEV_DRIVE}/Logs;
-  mkdir -p "${rom_logs}";
 
   # ==========================================================
   # Access ROM root
@@ -123,9 +118,6 @@ function romautorelease()
     m installclean >/dev/null || outdevcl "${rom_target}";
   fi;
 
-  # Compilation logs
-  rom_logs_output=${rom_logs}/Build.${rom_device}.${rom_tag}.log;
-
   # ==========================================================
   # Build Android
   case "${rom_name}" in
@@ -133,12 +125,12 @@ function romautorelease()
     # AOSP Release | AOSP Master | Sony SODP
     aosp|sodp)
       repos "${rom_target}";
-      makes otapackage | tee "${rom_logs_output}";;
+      makes otapackage;;
 
     # LineageOS Release | Lineage Next | LegacyXperia
     lineage|lx)
       repos "${rom_target}";
-      brunch "${rom_target}" | tee "${rom_logs_output}";;
+      brunch "${rom_target}";;
 
     # Unknown ROM
     *)
