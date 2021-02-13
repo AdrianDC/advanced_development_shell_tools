@@ -1097,6 +1097,7 @@ source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/
   * **topcpu** : *top -o %CPU* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/linux.rc)
   * **topmem** : *top -o %MEM* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/linux.rc)
   * **keyboardinputs** : *xev \| grep "keycode .* (.*)"* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/linux.rc)
+  * **aptinstallbroken** : *sudo apt install -o Dpkg::Options::="&#8208;&#8208;force-overwrite" &#8208;&#8208;fix-broken* [*<b>(Alias)</b>*](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/linux.rc)
 
 ---
 > ### <span class="group_label">[sources/host/network.rc](https://github.com/AdrianDC/advanced_development_shell_tools/blob/master/sources/host/network.rc)</span> ###

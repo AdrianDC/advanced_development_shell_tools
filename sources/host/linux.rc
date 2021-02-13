@@ -201,4 +201,7 @@ alias topcpu='top -o %CPU';
 alias topmem='top -o %MEM';
 
 # === Keyboard Inputs ===
-alias keyboardinputs='xev | grep "keycode .* (.*)"'
+alias keyboardinputs='xev | grep "keycode .* (.*)"';
+
+# === APT Install Broken ===
+alias aptinstallbroken='sudo apt install -o Dpkg::Options::="--force-overwrite" --fix-broken';
