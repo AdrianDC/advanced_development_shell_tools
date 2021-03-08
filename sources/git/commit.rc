@@ -15,12 +15,6 @@
 # limitations under the License.
 #
 
-# === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/cleaners.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/config.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/host/common.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/commit.rc)
-
 # === Git Show Helpers ===
 alias gitshow='git show -M --name-status';
 alias gitshf='git show -M --pretty=fuller';

@@ -15,13 +15,6 @@
 # limitations under the License.
 #
 
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_adb/tools.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_build/helpers.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_build/target.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/host/common.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_release/cleaners.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/android_kernel/tools.rc)
-
 # === Build paths ===
 export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg;
 export ADVANCED_DEVELOPMENT_SHELL_TOOLS_BBOOTIMG_HOST=${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/addons/bbootimg/bbootimg_host;

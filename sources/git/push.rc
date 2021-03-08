@@ -15,11 +15,6 @@
 # limitations under the License.
 #
 
-# === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/stats.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/tools.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/push.rc)
-
 # === Git Push Helpers ===
 alias gitpf='git push -f';
 

@@ -138,20 +138,16 @@ function shtoolsreadme()
   local header_buffer;
   local line;
   local line_function;
-  local line_standalone;
   local line_summary;
   local line_type;
   local line_usage;
   local path_file;
   local path_relative;
-  local path_standalone;
-  local paths_standalone;
   local readme_buffer=;
   local stats_aliases=0;
   local stats_functions=0;
   local stats_hidden=0;
   local stats_sources=0;
-  local test_standalone;
   local tmp_grep;
   local tmp_list;
   local url;
@@ -207,14 +203,6 @@ function shtoolsreadme()
       # Parsing header
       >&2 echo -en "\r\033[K  Parsing ${path_relative}";
 
-      # Detect standalone ready scripts
-      line_standalone=$(grep -a --color=never '^# source <(curl -Ls1' "${path_file}");
-
-      # Detect .sh executable scripts
-      if [ "${path_relative: -3}" = '.sh' ]; then
-        line_standalone=${github_project_url}/${github_raw_path}/${path_relative};
-      fi;
-
       # Extract file group
       group_current=${path_relative%/*};
 
@@ -251,41 +239,6 @@ function shtoolsreadme()
 
       # Prepend documentation arrow
       readme_buffer+="> ### ${header_buffer} ###\n>\n";
-
-      # Inject standalone import script
-      if [ ! -z "${line_standalone}" ]; then
-        paths_standalone=${line_standalone#*${github_raw_path}\/};
-        paths_standalone=${paths_standalone//\)*${github_raw_path}\// };
-        paths_standalone=${paths_standalone%\)*};
-
-        # Warning about missing linkages
-        test_standalone=$(mktemp);
-        echo "${paths_standalone}" | tr ' ' '\n' | grep -v '^$' > "${test_standalone}";
-        while read -r path_standalone; do
-          if [ ! -f "${ADVANCED_DEVELOPMENT_SHELL_TOOLS_DIR}/${path_standalone}" ]; then
-            >&2 echo -e "\r\033[K  \e[1;37m${path_relative}: \e[1;31mERROR: Standalone import link not found (${path_standalone})";
-            >&2 echo '';
-            return;
-          fi;
-        done < "${test_standalone}";
-
-        # Parse standalone import lines
-        line_standalone=${line_standalone//\# source <\(curl -Ls1/};
-        line_standalone=${line_standalone//\)/};
-
-        # Build standalone import outputs
-        echo -en "${readme_buffer}>  <div class='standalone-import'>\n";
-        readme_buffer='';
-        echo -en "  \`\`\`Shell\n";
-        echo "${line_standalone}" | tr ' ' '\n' | grep -v '^$' > "${test_standalone}"
-        while read -r url; do
-          echo -en "source <(curl -Ls1 ${url})\n";
-        done < "${test_standalone}";
-        rm -f "${test_standalone}";
-        echo -en "  \`\`\`\n";
-        echo -en ">  </div>\n";
-
-      fi;
 
       # Handle shell scripts content
       if [ "${path_relative: -3}" = '.sh' ]; then

@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-# === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
-
 # === Gerrit Username ===
 function gerritusername()
 {
@@ -301,7 +298,6 @@ function gerritssh()
   echo -e '                 s (+1+2 Submit commit)';
   echo -e '                 a (+1+2 Submit all)';
   echo -e '                 u (Only undraft all)\e[0m';
-
 
   # Commits on Review
   tmpfileidscount=$(wc -w <"${tmpfileidsfor}");

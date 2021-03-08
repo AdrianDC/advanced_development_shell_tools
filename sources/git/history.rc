@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-# === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/history.rc)
-
 # === Git Log Helpers ===
 alias gitlo='git log --pretty=oneline --abbrev-commit';
 alias gitlod='git log --pretty=oneline --abbrev-commit --';

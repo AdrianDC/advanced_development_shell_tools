@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-# === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/git/pick.rc)
-
 # === GitHub Url Cherry-Pick ===
 function gitcpu()
 {

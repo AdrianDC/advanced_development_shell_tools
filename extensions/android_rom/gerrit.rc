@@ -15,12 +15,6 @@
 # limitations under the License.
 #
 
-# === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/review.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/sources/gerrit/ssh.rc)
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/android_rom/gerrit.rc)
-
-
 # === Gerrit LineageOS ===
 alias gitpr='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . for';
 alias gitpg='gerritreview ssh://$(gerritusername)@review.lineageos.org:29418 LineageOS . heads';

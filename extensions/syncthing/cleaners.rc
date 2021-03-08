@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-# === Standalone Source Helper ===
-# source <(curl -Ls1 https://github.com/AdrianDC/advanced_development_shell_tools/raw/master/extensions/syncthing/cleaners.rc)
-
 # === SyncThing Untracked Paths From Git ===
 function stignorefromgit()
 {
