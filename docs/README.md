@@ -3,7 +3,7 @@
 <!-- /Center -->
 
 
- * Created by [Adrian DC](https://github.com/AdrianDC) - 2015-2020
+ * Created by [Adrian DC](https://github.com/AdrianDC) - 2015-2025
 
  * Project description : [About](project.md)
    <br />
@@ -14,6 +14,9 @@
    Project user functions : [Handlers](shtools.md)
    <br />
    XDA-Developers forum : [Thread](http://forum.xda-developers.com/-/-/-t3622382)
+
+ * **Archived:** This project is no longer maintained since 2020.  
+   Some of its Git aliases and tools can be now found in [git-dct](https://radiandevcore.gitlab.io/tools/git-dct).
 
  * This project is meant to provide multiple advanced functions and shortcuts to **ease Android, Git and Linux developments**
 

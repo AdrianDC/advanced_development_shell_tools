@@ -3,6 +3,17 @@
 <!-- /Center -->
 
 
+### __Archived__ ###
+
+<!-- Indent -->
+<!-- List -->
+ * This project is no longer maintained since 2020.  
+   Some of its Git aliases and tools can be now found in [git-dct](https://radiandevcore.gitlab.io/tools/git-dct).
+<!-- /List -->
+<!-- /Indent -->
+
+---
+
 ### __Disclaimer__ ###
 
 <!-- Indent -->
